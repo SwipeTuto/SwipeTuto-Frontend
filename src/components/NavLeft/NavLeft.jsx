@@ -6,15 +6,25 @@ import "./NavLeft.scss";
 const NavLeft = () => {
   return (
     <div className="NavLeft">
-      <Link className="NavLeft__link" to="/">
-        Item1
-      </Link>
-      <Link className="NavLeft__link" to="/">
-        Item2
-      </Link>
-      <Link className="NavLeft__link" to="/">
-        Item3
-      </Link>
+      <p className="NavLeft__title">Collections</p>
+      <div className="NavLeft__links">
+        <Link className="NavLeft__link" to="/">
+          HTML
+        </Link>
+        <Link className="NavLeft__link" to="/">
+          CSS
+        </Link>
+        <Link className="NavLeft__link" to="/">
+          JAVASCRIPT
+        </Link>
+        <Link className="NavLeft__link" to="/">
+          DJANGO
+        </Link>
+        <Link className="NavLeft__link" to="/">
+          AUTRE
+        </Link>
+      </div>
+      <p className="NavLeft__footer">&copy; MemoCode 2020</p>
     </div>
   );
 };

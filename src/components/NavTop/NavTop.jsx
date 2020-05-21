@@ -28,13 +28,13 @@ const NavTop = () => {
           <img className="NavTop__logo--image" src={logo} alt="" />
         </Link>
         <Link className="NavTop__link" to="/">
-          Item1
+          Théorie
         </Link>
         <Link className="NavTop__link" to="/">
-          Item2
+          Lexique
         </Link>
         <Link className="NavTop__link" to="/">
-          Item3
+          Ressources
         </Link>
       </div>
       <div className="NavTop__center">

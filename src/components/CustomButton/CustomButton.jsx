@@ -1,3 +1,5 @@
+// Boutons réutilisables avec style adaptatif, présents dans NavTop,
+
 import React from "react";
 
 const CustomButton = ({ children, color, ...otherProps }) => {

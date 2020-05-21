@@ -1,3 +1,5 @@
+// Présent dans App.js
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/navtop_logo.png";
@@ -21,6 +23,7 @@ const NavTop = () => {
     setSearch(searchText);
   };
 
+  // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription
   return (
     <div className="NavTop">
       <div className="NavTop__left">

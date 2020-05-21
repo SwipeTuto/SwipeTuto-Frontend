@@ -17,15 +17,11 @@
   transition: all 0.2s;
 
   &::-webkit-scrollbar {
-    width: 0.8rem;
+    width: 0;
   }
-  &::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
-  }
+
   &::-webkit-scrollbar-thumb {
-    background-color: $primary-light;
-    outline: none;
-    border-radius: 30px;
+    background-color: transparent;
   }
 
   &__title {
@@ -43,6 +39,10 @@
 
   &:hover {
     transform: translateX(0);
+  }
+
+  &:hover::-webkit-scrollbar {
+    opacity: 1;
   }
 
   &:hover > &__title {

@@ -1,3 +1,5 @@
+// Présent dans App.js dans une Route ("/search")
+
 import React from "react";
 
 import NavTop from "../../components/NavTop/NavTop";

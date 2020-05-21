@@ -1,3 +1,5 @@
+// Présent dans App.js dans une Route ("/")
+
 import React from "react";
 
 const HomePage = () => {

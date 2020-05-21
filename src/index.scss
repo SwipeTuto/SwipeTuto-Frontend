@@ -1,0 +1,68 @@
+@import "./variables.scss";
+
+// RESET GENERAL
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+button,
+input,
+textarea {
+  border: none;
+  outline: none;
+  font-family: inherit;
+  background-color: inherit;
+  padding: 0.3rem 1.5rem;
+  font-size: inherit;
+}
+
+button::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: $black;
+}
+
+button {
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  font-family: inherit;
+}
+
+body {
+  margin: 0;
+  font-size: 1.2rem;
+  font-family: sans-serif;
+  padding: 12vh 4rem 1rem 4rem;
+}
+
+// Components spécifiques
+.custom-button {
+  color: $white;
+  border-radius: $box-radius;
+  margin: 0 0.5rem;
+  transition: background-color 0.2s;
+
+  &.dark {
+    background-color: $primary-dark;
+    &:hover {
+      background-color: lighten($primary-dark, 10%);
+    }
+  }
+
+  &.light {
+    background-color: $primary-light;
+    &:hover {
+      background-color: lighten($primary-light, 10%);
+    }
+  }
+}

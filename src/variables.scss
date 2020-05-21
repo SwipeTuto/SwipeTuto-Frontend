@@ -1,0 +1,14 @@
+// VARIABLES
+$primary-light: #ff6699;
+$primary-dark: #331277;
+$white: #ffffff;
+$grey-light: #ebebeb;
+$black: #000000;
+$box-radius: 3px;
+
+@mixin input-style {
+  background: $grey-light;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  line-height: 1.2rem;
+}

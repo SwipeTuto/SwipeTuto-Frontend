@@ -5,7 +5,7 @@ import * as serviceWorker from './serviceWorker';
 
 import { BrowserRouter } from 'react-router-dom'
 
-import './index.css';
+import './index.scss';
 
 
 

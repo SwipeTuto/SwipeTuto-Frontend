@@ -3,10 +3,16 @@
 .HomeHeader {
   width: 100%;
   background-color: $primary-lighter;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
   padding: $inner-component-padding;
+
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 75rem;
+    margin: 0 auto;
+  }
 
   &__left {
     max-width: 45%;

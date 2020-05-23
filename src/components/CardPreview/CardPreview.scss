@@ -3,42 +3,52 @@
 .CardPreview {
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
   border: 1px solid $grey-medium;
   background-color: $white;
   border-radius: $box-radius;
   box-shadow: none;
-  position: relative;
   transition: all 0.2s ease;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
 
   &__image {
-    height: 80%;
+    height: 100%;
+    width: 100%;
     background-color: lightblue;
   }
 
   &__details {
-    height: max-content;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    padding: 1rem;
+    background-color: $white;
+    transform: translateY(-100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+  }
 
-    & > * {
-      padding: 0.4rem 0.8rem;
-    }
+  &:hover &__details {
+    transform: translateY(0%);
   }
 
   .CardPreview__title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    // white-space: nowrap;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
     font-size: 1.1rem;
-    margin-bottom: 0.4rem;
     text-align: center;
   }
 
   &__tags {
     display: flex;
     justify-content: center;
-    margin-bottom: 0.4rem;
 
     .tag {
       @include small-tag-style;
@@ -50,44 +60,15 @@
     }
   }
 
-  &__hidden_details {
-    visibility: hidden;
-    display: none;
-    height: 0;
-    transition: all 0.2s ease;
-  }
-
-  &:hover &__hidden_details {
-    display: block;
-    visibility: visible;
-    height: max-content;
-
-    .details__user {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      &_avatar {
-        border-radius: 50%;
-        height: 1.5rem;
-        width: 1.5rem;
-        background-color: coral;
-        margin-right: 0.6rem;
-      }
-
-      &_name {
-        font-size: 0.8rem;
-      }
-    }
-  }
-
   &__category {
-    margin-bottom: 1.5rem;
-
     .category__text {
       font-size: 1rem;
       color: $primary-dark;
       text-align: center;
     }
+  }
+
+  &__author {
+    font-size: 0.8rem;
   }
 }

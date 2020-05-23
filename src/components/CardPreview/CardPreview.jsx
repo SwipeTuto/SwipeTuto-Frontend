@@ -1,6 +1,9 @@
 // Component qui présente en résumé dans la grille un slide avec image de preview, auteur etc ...
 import React from "react";
 
+import UserNameAndAvatarSmall from "../UserNameAndAvatarSmall/UserNameAndAvatarSmall";
+import CustomButton from "../CustomButton/CustomButton";
+
 import "./CardPreview.scss";
 
 const CardPreview = (props) => {
@@ -18,17 +21,11 @@ const CardPreview = (props) => {
           <span className="tag">#HTML</span>
           <span className="tag">#JS</span>
         </div>
-        <div className="CardPreview__hidden_details">
-          <div className="CardPreview__category">
-            <p className="category__text">Catégorie : Design</p>
-          </div>
-          <div className="details__user">
-            <div className="details__user_avatar">
-              {/* <img src="" alt="" /> */}
-            </div>
-            <h4 className="title title-4 details__user_name">Wikode</h4>
-          </div>
+        <div className="CardPreview__category">
+          <p className="category__text">Catégorie : Design</p>
         </div>
+        <UserNameAndAvatarSmall className="CardPreview__author" />
+        <CustomButton color="dark">Voir &rarr;</CustomButton>
       </div>
     </div>
   );

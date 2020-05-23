@@ -2,9 +2,14 @@
 
 .FiltersBar {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid $primary-dark;
+
+  &__wrapper {
+    max-width: 75rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid $primary-dark;
+  }
 
   &__options {
     &--item {

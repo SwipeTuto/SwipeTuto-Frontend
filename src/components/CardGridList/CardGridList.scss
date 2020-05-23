@@ -3,9 +3,14 @@
 .CardGridList {
   width: 100%;
   padding: 3rem 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 15rem);
-  grid-auto-rows: 15rem;
-  grid-gap: 2rem;
-  justify-content: center;
+
+  &__wrapper {
+    max-width: 75rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 15rem);
+    grid-auto-rows: 15rem;
+    grid-gap: 2rem;
+    justify-content: center;
+  }
 }

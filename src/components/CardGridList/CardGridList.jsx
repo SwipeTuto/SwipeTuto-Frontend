@@ -8,14 +8,16 @@ import "./CardGridList.scss";
 const CardGridList = () => {
   return (
     <div className="CardGridList">
-      <CardPreview />
-      <CardPreview />
-      <CardPreview />
-      <CardPreview />
-      <CardPreview />
-      <CardPreview />
-      <CardPreview />
-      <CardPreview />
+      <div className="CardGridList__wrapper">
+        <CardPreview />
+        <CardPreview />
+        <CardPreview />
+        <CardPreview />
+        <CardPreview />
+        <CardPreview />
+        <CardPreview />
+        <CardPreview />
+      </div>
     </div>
   );
 };

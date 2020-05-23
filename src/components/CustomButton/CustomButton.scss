@@ -1,0 +1,22 @@
+@import "../../variables.scss";
+
+.custom-button {
+  color: $white;
+  border-radius: $box-radius;
+  margin: 0 0.5rem;
+  transition: background-color 0.2s;
+
+  &.dark {
+    background-color: $primary-dark;
+    &:hover {
+      background-color: lighten($primary-dark, 10%);
+    }
+  }
+
+  &.light {
+    background-color: $primary-light;
+    &:hover {
+      background-color: lighten($primary-light, 10%);
+    }
+  }
+}

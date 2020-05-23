@@ -5,7 +5,7 @@ import "./CardPreview.scss";
 
 const CardPreview = (props) => {
   // Faire une vérification : si le titre > X caractères : le couper et remplacer par "..."
-  // Au clic doit renvoyer sur la page CardPage
+  // Au clic doit renvoyer sur la page CardPage "/card/:id"
   return (
     <div className="CardPreview">
       <div className="CardPreview__image">{/* <img src="" alt="" /> */}</div>

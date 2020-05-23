@@ -1,0 +1,39 @@
+@import "../../variables.scss";
+
+.HomePage {
+  &__section {
+    padding: $inner-component-padding;
+  }
+
+  &__section.cta-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: $primary-lighter;
+  }
+
+  &__cta {
+    margin-bottom: 2rem;
+    font-weight: bold;
+  }
+
+  &__tags {
+    display: flex;
+
+    button {
+      @include big-tag-style;
+      margin-right: 1rem;
+
+      &:hover {
+        @include tag-hover-style;
+      }
+    }
+  }
+
+  &__informations {
+    padding: $inner-component-padding;
+    background-color: $primary-dark;
+    color: $white;
+  }
+}

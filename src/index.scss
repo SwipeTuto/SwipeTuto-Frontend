@@ -9,7 +9,8 @@
 
 button,
 input,
-textarea {
+textarea,
+select {
   border: none;
   outline: none;
   font-family: inherit;
@@ -24,8 +25,15 @@ textarea::placeholder {
   color: $black;
 }
 
-button {
+button,
+select {
   cursor: pointer;
+}
+
+select {
+  background-color: $white;
+  border: 1px solid $grey-medium;
+  border-radius: $box-radius;
 }
 
 ul {
@@ -42,7 +50,7 @@ body {
   margin: 0;
   font-size: 1.2rem;
   font-family: sans-serif;
-  padding: 8vh 0vw 1rem 3.5vw;
+  padding: 3.5rem 0vw 0 3.5vw;
 }
 
 // Components spécifiques
@@ -69,4 +77,8 @@ body {
 
 .primary-text {
   color: $primary-light;
+}
+
+.text-bold {
+  font-weight: bold;
 }

@@ -1,0 +1,19 @@
+@import "../../variables.scss";
+
+.FiltersBar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid $primary-dark;
+
+  &__options {
+    &--item {
+      padding-bottom: 0.6rem;
+    }
+
+    &--item.active {
+      background-color: $primary-dark;
+      color: $white;
+    }
+  }
+}

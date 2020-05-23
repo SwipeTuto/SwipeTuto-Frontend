@@ -1,9 +1,9 @@
 @import "../../variables.scss";
 
 .NavTop {
-  height: 8vh;
+  height: 10vh;
   max-height: 3.5rem;
-  box-shadow: 0 0 6px $grey-light;
+  box-shadow: 0 0 2px $grey-dark;
   background-color: $white;
   position: fixed;
   top: 0;
@@ -11,8 +11,8 @@
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0.5rem;
-  z-index: 100;
+  padding: 1rem 0.5rem;
+  z-index: 100000;
 
   &__left {
     text-align: left;
@@ -51,6 +51,9 @@
   &__center {
     height: 100%;
     flex-grow: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 
     .NavTop__search {
       height: 100%;
@@ -96,5 +99,11 @@
     flex-grow: 0;
     display: flex;
     justify-content: flex-end;
+
+    // A remettre pour afficher btn connexion et inscription
+    .custom-button {
+      visibility: hidden;
+      opacity: 0;
+    }
   }
 }

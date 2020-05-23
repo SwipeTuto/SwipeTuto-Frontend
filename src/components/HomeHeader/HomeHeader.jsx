@@ -15,19 +15,6 @@ const HomeHeader = () => {
           <br />
           <span className="primary-text">Efficacement.</span>
         </h1>
-        <p className="HomeHeader__left--subtitle">
-          Lire des pages entière de documentation ?<br />
-          Regarder des heures de vidéos ?<br />
-          Et si vous pouviez avoir l'information en un coup d'oeil ?
-        </p>
-        <p className="HomeHeader__left--cta">
-          Essayez une recherche par tag en cliquant dessus :
-        </p>
-        <div className="HomeHeader__left--tags">
-          <button>#HTML</button>
-          <button>#CSS</button>
-          <button>#JAVASCRIPT</button>
-        </div>
       </div>
       <div className="HomeHeader__right">
         <HeaderLogo className="HomeHeader__right--logo" />

@@ -5,6 +5,7 @@ import HomePage from './pages/Homepage/HomePage'
 import SearchPage from './pages/SearchPage/SearchPage'
 import NavTop from "./components/NavTop/NavTop";
 import NavLeft from "./components/NavLeft/NavLeft";
+import Footer from "./components/Footer/Footer";
 
 import './index.scss'
 
@@ -19,6 +20,7 @@ function App() {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/search" component={SearchPage} />
       </Switch>
+      <Footer />
     </div>
   );
 }

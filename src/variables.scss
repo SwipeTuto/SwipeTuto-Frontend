@@ -1,14 +1,38 @@
 // VARIABLES
 $primary-light: #ff6699;
+$primary-lighter: #f5f1ff;
 $primary-dark: #331277;
 $white: #ffffff;
-$grey-light: #ebebeb;
+$grey-light: #eeeeee;
+$grey-medium: #e2e2e2;
+$grey-dark: #bdbdbd;
 $black: #000000;
+
 $box-radius: 3px;
+$button-radius: 30px;
+
+$tag-shadow: 0 2px 3px rgba($grey-dark, 0.3);
+
+$inner-component-padding: 3rem 5rem;
 
 @mixin input-style {
   background: $grey-light;
   border-radius: 30px;
   font-size: 0.8rem;
   line-height: 1.2rem;
+}
+
+@mixin tag-style {
+  padding: 0.4rem 1.8rem;
+  background-image: linear-gradient(120deg, $grey-light 75%, $grey-medium 100%);
+  border-radius: $button-radius;
+  border: 0.5px solid $grey-dark;
+  font-size: 1rem;
+  box-shadow: none;
+  transition: all 0.2s ease;
+}
+
+@mixin tag-hover-style {
+  transform: translateY(-2px);
+  box-shadow: $tag-shadow;
 }

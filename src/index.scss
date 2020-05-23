@@ -42,7 +42,7 @@ body {
   margin: 0;
   font-size: 1.2rem;
   font-family: sans-serif;
-  padding: 14vh 7vw 1rem 7vw;
+  padding: 8vh 0vw 1rem 3.5vw;
 }
 
 // Components spécifiques
@@ -65,4 +65,8 @@ body {
       background-color: lighten($primary-light, 10%);
     }
   }
+}
+
+.primary-text {
+  color: $primary-light;
 }

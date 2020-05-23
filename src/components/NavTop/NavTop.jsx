@@ -8,7 +8,13 @@ import CustomButton from "../CustomButton/CustomButton";
 
 import "./NavTop.scss";
 
+
 const NavTop = () => {
+
+
+
+
+
   const [search, setSearch] = useState("");
 
   const handleSubmit = (e) => {
@@ -22,6 +28,7 @@ const NavTop = () => {
     const searchText = e.target.value;
     setSearch(searchText);
   };
+
 
   // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription
   return (
@@ -55,7 +62,13 @@ const NavTop = () => {
         </form>
       </div>
       <div className="NavTop__right">
-        <CustomButton color="dark">Connexion</CustomButton>
+        <CustomButton
+          color="dark">
+          <Link className="NavTop__link" to="/login">
+            Connexion
+        </Link>
+
+        </CustomButton>
         <CustomButton color="light">Inscription</CustomButton>
       </div>
     </div>

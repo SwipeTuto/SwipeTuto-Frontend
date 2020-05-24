@@ -1,0 +1,74 @@
+@import "../../variables.scss";
+
+.CardPreview {
+  height: 100%;
+  width: 100%;
+  border: 1px solid $grey-medium;
+  background-color: $white;
+  border-radius: $box-radius;
+  box-shadow: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  &__image {
+    height: 100%;
+    width: 100%;
+    background-color: lightblue;
+  }
+
+  &__details {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    padding: 1rem;
+    background-color: $white;
+    transform: translateY(-100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+  }
+
+  &:hover &__details {
+    transform: translateY(0%);
+  }
+
+  .CardPreview__title {
+    // white-space: nowrap;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+
+  &__tags {
+    display: flex;
+    justify-content: center;
+
+    .tag {
+      @include small-tag-style;
+      margin-right: 0.5rem;
+
+      &:hover {
+        @include tag-hover-style;
+      }
+    }
+  }
+
+  &__category {
+    .category__text {
+      font-size: 1rem;
+      color: $primary-dark;
+      text-align: center;
+    }
+  }
+
+  &__author {
+    font-size: 0.8rem;
+  }
+}

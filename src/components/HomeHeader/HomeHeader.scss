@@ -3,39 +3,29 @@
 .HomeHeader {
   width: 100%;
   background-color: $primary-lighter;
-  display: flex;
+
   padding: $inner-component-padding;
 
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 75rem;
+    margin: 0 auto;
+  }
+
   &__left {
-    width: 60%;
+    max-width: 45%;
+    margin-right: 10%;
 
     .title.title-1 {
       margin-bottom: 3rem;
+      font-size: 3rem;
       text-transform: uppercase;
     }
 
     &--subtitle {
       margin-bottom: 1.5rem;
-    }
-
-    &--cta {
-      margin-top: 2.5rem;
-      margin-bottom: 1.5rem;
-      font-weight: bold;
-    }
-
-    &--tags {
-      width: 70%;
-      display: flex;
-      justify-content: space-between;
-
-      button {
-        @include tag-style;
-
-        &:hover {
-          @include tag-hover-style;
-        }
-      }
     }
   }
 

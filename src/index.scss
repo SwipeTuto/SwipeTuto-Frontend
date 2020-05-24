@@ -9,7 +9,8 @@
 
 button,
 input,
-textarea {
+textarea,
+select {
   border: none;
   outline: none;
   font-family: inherit;
@@ -24,8 +25,15 @@ textarea::placeholder {
   color: $black;
 }
 
-button {
+button,
+select {
   cursor: pointer;
+}
+
+select {
+  background-color: $white;
+  border: 1px solid $grey-medium;
+  border-radius: $box-radius;
 }
 
 ul {
@@ -42,31 +50,33 @@ body {
   margin: 0;
   font-size: 1.2rem;
   font-family: sans-serif;
-  padding: 8vh 0vw 1rem 3.5vw;
+  padding: 3.5rem 0vw 0 3.5vw;
 }
 
 // Components spécifiques
-.custom-button {
-  color: $white;
-  border-radius: $box-radius;
-  margin: 0 0.5rem;
-  transition: background-color 0.2s;
-
-  &.dark {
-    background-color: $primary-dark;
-    &:hover {
-      background-color: lighten($primary-dark, 10%);
-    }
-  }
-
-  &.light {
-    background-color: $primary-light;
-    &:hover {
-      background-color: lighten($primary-light, 10%);
-    }
-  }
-}
 
 .primary-text {
   color: $primary-light;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.title {
+  &-1 {
+    margin-bottom: 1.4rem;
+  }
+
+  &-2 {
+    margin-bottom: 1.2rem;
+  }
+
+  &-3 {
+    margin-bottom: 1rem;
+  }
+
+  &-4 {
+    margin-bottom: 0.8rem;
+  }
 }

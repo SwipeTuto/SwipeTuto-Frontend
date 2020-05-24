@@ -1,0 +1,21 @@
+@import "../../variables.scss";
+
+.UserNameAndAvatarBig {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__avatar {
+    border-radius: 50%;
+    height: 5rem;
+    width: 5rem;
+    background-color: coral;
+    margin-bottom: 0.6rem;
+  }
+
+  &__name {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+}

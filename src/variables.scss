@@ -1,10 +1,10 @@
 // VARIABLES
 $primary-light: #ff6699;
-$primary-lighter: #f5f1ff;
+$primary-lighter: #faf9ff;
 $primary-dark: #331277;
 $white: #ffffff;
-$grey-light: #eeeeee;
-$grey-medium: #e2e2e2;
+$grey-light: #f8f8f8;
+$grey-medium: #f1f1f1;
 $grey-dark: #bdbdbd;
 $black: #000000;
 
@@ -12,23 +12,37 @@ $box-radius: 3px;
 $button-radius: 30px;
 
 $tag-shadow: 0 2px 3px rgba($grey-dark, 0.3);
+$card-shadow: 0 2px 3px rgba($grey-dark, 0.3);
 
 $inner-component-padding: 3rem 5rem;
 
 @mixin input-style {
   background: $grey-light;
+  border: 1px solid $grey-medium;
   border-radius: 30px;
   font-size: 0.8rem;
   line-height: 1.2rem;
 }
 
-@mixin tag-style {
+@mixin big-tag-style {
   padding: 0.4rem 1.8rem;
   background-image: linear-gradient(120deg, $grey-light 75%, $grey-medium 100%);
   border-radius: $button-radius;
   border: 0.5px solid $grey-dark;
   font-size: 1rem;
   box-shadow: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+@mixin small-tag-style {
+  padding: 0.2rem 0.9rem;
+  background-image: linear-gradient(120deg, $grey-light 75%, $grey-medium 100%);
+  border-radius: $button-radius;
+  border: 0.5px solid $grey-dark;
+  font-size: 0.5rem;
+  box-shadow: none;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
@@ -36,3 +50,10 @@ $inner-component-padding: 3rem 5rem;
   transform: translateY(-2px);
   box-shadow: $tag-shadow;
 }
+
+.horizontal-separation-primary {
+  width: 60%;
+  height: 1px;
+  background-color: $primary-light;
+}
+// <span className="horizontal-separation-primary"></span>

@@ -4,13 +4,14 @@ import React, { Fragment } from "react";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import { loginGoogle } from '../../services/userService'
 
-
+import firebase from 'firebase';
+import "firebase/auth";
 
 const LoginPage = () => {
 
- 
 
-  const handleClick =  (e) => {
+
+  const handleClick = (e) => {
     loginGoogle()
   }
 
@@ -23,8 +24,6 @@ const LoginPage = () => {
         color="dark">
         SingnUp with Google
         </CustomButton>
-  
-
     </Fragment>
   )
 

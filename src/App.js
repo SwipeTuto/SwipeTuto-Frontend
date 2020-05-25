@@ -23,7 +23,8 @@ function App() {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/search" component={SearchPage} />
         <Route exact path="/card/:id" component={CardPage} />
-        <PrivateRoute exact path="/login" component={Login} />
+        <Route exact path="/login" component={Login} />
+        {/* <PrivateRoute exact path="/login" component={Login} /> */}
       </Switch>
       <Footer />
     </div>

@@ -1,8 +1,8 @@
 // Présent dans App.js dans une Route ("/")
 
 import React from "react";
-import HomeHeader from "../../components/HomeHeader/HomeHeader";
-import CardGridList from "../../components/CardGridList/CardGridList";
+import HomeHeader from "../../components/LayoutComponents/HomeHeader/HomeHeader";
+import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
 
 import "./HomePage.scss";
 
@@ -10,7 +10,7 @@ const HomePage = () => {
   return (
     <div className="HomePage">
       <HomeHeader />
-      <CardGridList />
+      <CardGridList cardsSize="small" />
       <div className="HomePage__section cta-section">
         <p className="HomePage__cta">
           Essayez une recherche par tag en cliquant dessus :

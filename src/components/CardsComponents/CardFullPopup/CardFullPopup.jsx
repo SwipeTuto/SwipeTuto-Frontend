@@ -1,34 +1,57 @@
 import React from "react";
-import { ReactComponent as ChevronLeft } from "../../assets/images/chevron-back.svg";
-import { ReactComponent as ChevronRight } from "../../assets/images/chevron-forward.svg";
-import { ReactComponent as LogoFacebook } from "../../assets/images/logo-facebook.svg";
-import { ReactComponent as LogoTwitter } from "../../assets/images/logo-twitter.svg";
-import { ReactComponent as LogoYoutube } from "../../assets/images/logo-youtube.svg";
-import { ReactComponent as LogoGithub } from "../../assets/images/logo-github.svg";
-import { ReactComponent as BookmarkEmpty } from "../../assets/images/bookmark-outline.svg";
-import { ReactComponent as BookmarkFilled } from "../../assets/images/bookmark.svg";
-import { ReactComponent as HeartEmpty } from "../../assets/images/heart-outline.svg";
-import { ReactComponent as HeartFilled } from "../../assets/images/heart.svg";
-import UserNameAndAvatarBig from "../../components/UserComponents/UserNameAndAvatarBig/UserNameAndAvatarBig";
 
-import "./CardPage.scss";
+// import CardSlider from "../CardSlider/CardSlider";
+import CardSliderFullCard from "../CardSlider/CardSliderFullCard";
 
-const CardPage = () => {
+import { ReactComponent as ChevronLeft } from "../../../assets/images/chevron-back.svg";
+import { ReactComponent as ChevronRight } from "../../../assets/images/chevron-forward.svg";
+import { ReactComponent as ChevronCircleRight } from "../../../assets/images/chevron-back-circle.svg";
+import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevron-forward-circle.svg";
+import { ReactComponent as LogoFacebook } from "../../../assets/images/logo-facebook.svg";
+import { ReactComponent as LogoTwitter } from "../../../assets/images/logo-twitter.svg";
+import { ReactComponent as LogoYoutube } from "../../../assets/images/logo-youtube.svg";
+import { ReactComponent as LogoGithub } from "../../../assets/images/logo-github.svg";
+import { ReactComponent as BookmarkEmpty } from "../../../assets/images/bookmark-outline.svg";
+import { ReactComponent as BookmarkFilled } from "../../../assets/images/bookmark.svg";
+import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outline.svg";
+import { ReactComponent as HeartFilled } from "../../../assets/images/heart.svg";
+import UserNameAndAvatarBig from "../../UserComponents/UserNameAndAvatarBig/UserNameAndAvatarBig";
+
+import "./CardFullPopup.scss";
+
+// Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
+
+const CardFullPopup = ({
+  showCardFullPopup,
+  handleCloseCardFullPopupClick,
+  clickedCard,
+}) => {
   return (
-    <div className="CardPage">
-      <div className="CardPage__wrapper">
-        <div className="CardPage__header">
-          <h1 className="title title-1">Titre de la card cliquée</h1>
-          <div className="CardPage__action-button">
-            <BookmarkEmpty className="card-action-button" />
-            <HeartEmpty className="card-action-button" />
+    <div
+      className={`CardFullPopup ${showCardFullPopup ? "active" : ""}`}
+      onClick={(e) => {
+        if (
+          e.target.classList.contains("CardFullPopup") &&
+          e.target.classList.contains("active")
+        ) {
+          handleCloseCardFullPopupClick(e);
+        } else {
+          return;
+        }
+      }}
+    >
+      <div className="CardFullPopup__wrapper">
+        <div className="CardFullPopup__grid">
+          <div className="CardFullPopup__header">
+            <h1 className="title title-1">Titre de la card cliquée</h1>
+            <div className="CardFullPopup__action-button">
+              <BookmarkEmpty className="card-action-button" />
+              <HeartEmpty className="card-action-button" />
+            </div>
           </div>
-        </div>
-        <div className="CardPage__grid">
-          <div className="CardPage__grid__slide">
-            <div className="grid__slide"></div>
-            <ChevronLeft className="grid__chevron chevron-left" />
-            <ChevronRight className="grid__chevron chevron-right" />
+          <div className="CardFullPopup__grid__slide">
+            {/* <CardSlider /> */}
+            <CardSliderFullCard forPreview={true} />
           </div>
           <div className="grid__description">
             <h1 className="title title-1">Description</h1>
@@ -124,19 +147,12 @@ const CardPage = () => {
             alias. Et facilis voluptas culpa corporis!
           </div>
         </div>
-        <div className="CardPage__navigation">
-          <div className="navigation__previous">
-            <ChevronLeft className="nav__chevron" />
-            <p>Précédent Post</p>
-          </div>
-          <div className="navigation__next">
-            <p>Post Suivant</p>
-            <ChevronRight className="nav__chevron" />
-          </div>
-        </div>
+
+        <ChevronCircleLeft className="nav__chevron nav__chevron--right" />
+        <ChevronCircleRight className="nav__chevron nav__chevron--left" />
       </div>
     </div>
   );
 };
 
-export default CardPage;
+export default CardFullPopup;

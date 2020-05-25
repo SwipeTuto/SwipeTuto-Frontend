@@ -1,5 +1,10 @@
 @import "../../variables.scss";
 
 .SearchPage {
-  padding: $inner-component-padding;
+  min-height: 100vh;
+  background-color: $white;
+
+  &__wrapper {
+    padding: $inner-component-padding;
+  }
 }

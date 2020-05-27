@@ -34,9 +34,7 @@ const LoginPage = props => {
           null
       }
       <h1>Login page</h1>
-      <CustomButton
-        onClick={e => handleClick(e)}
-        color="dark">
+      <CustomButton onClick={(e) => handleClick(e)} color="dark">
         SingnUp with Google
         </CustomButton>
       <CustomButton
@@ -45,8 +43,6 @@ const LoginPage = props => {
         test
         </CustomButton>
     </Fragment>
-  )
-
-
-}
+  );
+};
 export default LoginPage;

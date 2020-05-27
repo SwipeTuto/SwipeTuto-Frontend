@@ -1,0 +1,101 @@
+@import "../../variables.scss";
+
+.RessourcesPage {
+  padding: $inner-component-padding;
+  min-height: 100vh;
+  position: relative;
+
+  .title.title-1 {
+    font-size: 2.7rem;
+    text-align: center;
+    background-color: $primary-dark;
+    color: $white;
+    padding: 2rem;
+    margin: 0;
+  }
+
+  .ressource {
+    &-navigation {
+      background-color: $primary-lighter;
+      padding: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      &__item {
+        display: inline-block;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: $primary-dark;
+        border-bottom: 0.3rem solid transparent;
+        margin: 0.5rem 1.5rem;
+        transition: all 0.2s ease;
+
+        &:hover {
+          border-bottom: 0.3rem solid $primary-light;
+        }
+      }
+    }
+
+    &-note {
+      margin-bottom: 2rem;
+    }
+
+    &-category {
+      margin: 8rem 0;
+
+      .title.title-2 {
+        @include pale-underline;
+        display: inline-block;
+        padding-right: 2rem;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+      }
+    }
+
+    &-liste {
+      padding-left: 2rem;
+      list-style-type: disc;
+    }
+
+    &-item {
+      margin-bottom: 1.8rem;
+
+      a:link,
+      a:visited {
+        display: inline-block;
+        color: $primary-medium;
+        font-weight: bold;
+        padding: 0.2rem;
+        margin-bottom: 0.2rem;
+        font-size: 1.4rem;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background-color: $primary-dark;
+          color: white;
+        }
+      }
+
+      &__description {
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  .goTop__button {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    height: 2rem;
+    width: 2rem;
+    cursor: pointer;
+    fill: $grey-dark;
+    transition: all 0.2s ease;
+
+    &:hover {
+      fill: $primary-light;
+      transform: translateY(-2px);
+    }
+  }
+}

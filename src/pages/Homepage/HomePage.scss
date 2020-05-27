@@ -41,6 +41,17 @@
     flex-direction: column;
     align-items: center;
 
+    &__cta {
+      margin: 4rem;
+      font-weight: bold;
+      font-size: 1.4rem;
+      text-align: center;
+
+      & h1.title.title-1 {
+        text-transform: none;
+      }
+    }
+
     .title {
       text-transform: uppercase;
       margin-bottom: 4rem;
@@ -93,13 +104,7 @@
           margin-top: 4rem;
           font-size: 2rem;
           font-weight: bold;
-          background-image: linear-gradient(
-            to bottom,
-            transparent 0%,
-            transparent 70%,
-            lighten($primary-light, 22%) 70%,
-            lighten($primary-light, 22%) 100%
-          );
+          @include pale-underline;
         }
       }
     }

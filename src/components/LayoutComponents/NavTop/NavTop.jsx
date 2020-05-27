@@ -36,7 +36,7 @@ const NavTop = () => {
         <Link className="NavTop__link" to="/search">
           Cartes
         </Link>
-        <Link className="NavTop__link" to="/">
+        <Link className="NavTop__link" to="/ressources">
           Ressources
         </Link>
       </div>

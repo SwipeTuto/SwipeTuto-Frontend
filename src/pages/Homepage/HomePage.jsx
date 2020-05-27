@@ -106,8 +106,8 @@ const HomePage = () => {
           </div>
         </div>
         <span className="horizontal-separation-primary-dark"></span>
-        <div className="AboutPage__cta">
-          <h1>
+        <div className="About__cta">
+          <h1 className="title title-1">
             Alors qu'attendez-vous ?<br />
             On apprend ?{" "}
             <span role="img" aria-label="emoji">

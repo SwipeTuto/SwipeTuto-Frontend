@@ -52,6 +52,16 @@ $inner-component-padding: 3rem 5rem;
   box-shadow: $tag-shadow;
 }
 
+@mixin pale-underline {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 70%,
+    lighten($primary-light, 22%) 70%,
+    lighten($primary-light, 22%) 100%
+  );
+}
+
 .horizontal-separation {
   &-primary-light {
     width: 60%;

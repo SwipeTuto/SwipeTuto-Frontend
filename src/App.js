@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment, useState, useEffect } from "react";
 import { Switch, Route } from 'react-router-dom';
 
 import HomePage from './pages/Homepage/HomePage';
@@ -14,16 +14,27 @@ import './index.scss'
 
 import './App.scss';
 
+
 function App() {
+  const [avatar, setAvatar] = useState(null);
+  const getAvatar = JSON.parse(sessionStorage.getItem('user'))
+
+  useEffect(() => {
+    getAvatar && setAvatar(getAvatar.avatar)
+    console.log('getAvatar', getAvatar)
+  }, [getAvatar, avatar])
+  console.log('app OK')
+
   return (
     <div className="App">
-      <NavTop />
+      <NavTop avatar={avatar} />
       <NavLeft />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/search" component={SearchPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/ressources" component={RessourcesPage} />
+        {/* <PrivateRoute exact path="/login" component={Login} /> */}
       </Switch>
       <Footer />
     </div>

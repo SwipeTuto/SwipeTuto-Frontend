@@ -4,14 +4,14 @@ import { baseURL } from '../services/configService'
 
 
 export const loginGoogle = () => {
-  auth().signInWithPopup(provider)
+  return auth().signInWithPopup(provider)
     .then(result => {
       var user = result.user;
-      console.log('user', user)
-
-      user.getIdToken()
+      return user.getIdToken()
         .then(idToken => {
-          login(idToken)
+          var user = '';
+          login(idToken).then(rep => {
+          })
         })
         .catch(function (error) {
           console.log('errorGoogle', error)
@@ -25,9 +25,13 @@ export const login = idToken => {
 
   return axios.post(`${baseURL}google-login/`, JSON.stringify(data), config)
     .then(rep => {
-      console.log('rep', rep)
+      sessionStorage.setItem('user', JSON.stringify(rep.data.user))
+      sessionStorage.setItem('token', rep.data.token)
+     
     })
     .catch(function (err) {
-      console.log('errLogin', err)
+      sessionStorage.removeItem('user')
+      sessionStorage.removeItem('token')
+      return err
     })
 }

@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route  } from 'react-router-dom';
 
 import HomePage from './pages/Homepage/HomePage';
 import Login from './pages/Login/Login';
@@ -16,24 +16,26 @@ import './App.scss';
 
 
 function App() {
-  const [avatar, setAvatar] = useState(null);
+
+  const [avatar, setAvatar] = useState('');
   const getAvatar = JSON.parse(sessionStorage.getItem('user'))
 
-  useEffect(() => {
+  const test2 = () => {
     getAvatar && setAvatar(getAvatar.avatar)
-    console.log('getAvatar', getAvatar)
-  }, [getAvatar, avatar])
-  console.log('app OK')
+  }
 
+  console.log('avatarAPP', avatar)
   return (
     <div className="App">
-      <NavTop avatar={avatar} />
+      <NavTop 
+      avatar={avatar}
+      getAvatar={getAvatar} />
       <NavLeft />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/search" component={SearchPage} />
         <Route exact path="/card/:id" component={CardPage} />
-        <Route exact path="/login" component={Login} />
+        <Route exact path="/login" render={(props) => ( <Login {...props} test2={test2} />) } />
         {/* <PrivateRoute exact path="/login" component={Login} /> */}
       </Switch>
       <Footer />

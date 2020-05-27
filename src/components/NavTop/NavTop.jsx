@@ -9,9 +9,16 @@ import CustomButton from "../CustomButton/CustomButton";
 import "./NavTop.scss";
 
 
-const NavTop = ({ avatar }) => {
+const NavTop = ({ avatar, getAvatar }) => {
+ 
   const [search, setSearch] = useState("");
+  const [test, setTest] = useState(null)
 
+
+  useEffect(() => {
+      avatar && setTest(avatar) 
+      getAvatar && setTest(getAvatar.avatar)
+  })
   
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,13 +32,13 @@ const NavTop = ({ avatar }) => {
     setSearch(searchText);
   };
 
-  console.log('TOP OK')
+
   // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription
   return (
     <div className="NavTop">
       <div className="NavTop__left">
         <Link to="/" className="NavTop__logo">
-          <img className="NavTop__logo--image" src={avatar ? avatar : logo} alt="" />
+          <img className="NavTop__logo--image" src={test ? test : logo} alt="" />
         </Link>
         <Link className="NavTop__link" to="/search">
           Cartes

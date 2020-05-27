@@ -12,7 +12,8 @@ const LoginPage = props => {
 
   const handleClick = (e) => {
     loginGoogle().then(user => {
-      props.history.push('/', {state: { detail: user }})
+      props.history.push('/')
+      props.test2()
     })
   }
 

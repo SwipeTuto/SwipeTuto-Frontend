@@ -1,6 +1,6 @@
 // Présent dans App.js
 
-import React, { useState } from "react";
+import React, { useState, useEffect, } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/navtop_logo.png";
 import { ReactComponent as SearchLogo } from "../../assets/images/search.svg";
@@ -9,14 +9,10 @@ import CustomButton from "../CustomButton/CustomButton";
 import "./NavTop.scss";
 
 
-const NavTop = () => {
-
-
-
-
-
+const NavTop = ({ avatar }) => {
   const [search, setSearch] = useState("");
 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     let searchCopy = search;
@@ -29,13 +25,13 @@ const NavTop = () => {
     setSearch(searchText);
   };
 
-
+  console.log('TOP OK')
   // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription
   return (
     <div className="NavTop">
       <div className="NavTop__left">
         <Link to="/" className="NavTop__logo">
-          <img className="NavTop__logo--image" src={logo} alt="" />
+          <img className="NavTop__logo--image" src={avatar ? avatar : logo} alt="" />
         </Link>
         <Link className="NavTop__link" to="/search">
           Cartes
@@ -51,6 +47,7 @@ const NavTop = () => {
         <form className="NavTop__search" onSubmit={handleSubmit}>
           <input
             className="NavTop__input"
+            id="kword"
             type="text"
             placeholder="Recherche..."
             onChange={handleChange}

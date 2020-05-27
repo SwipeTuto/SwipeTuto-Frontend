@@ -6,7 +6,7 @@ import CardGridList from "../../components/CardGridList/CardGridList";
 
 import "./HomePage.scss";
 
-const HomePage = () => {
+const HomePage = props => {
   return (
     <div className="HomePage">
       <HomeHeader />

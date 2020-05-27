@@ -5,24 +5,24 @@ export const categorieList = () => {
   var config = { headers: { 'Content-Type': 'application/json' }, }
 
   return axios.get(`${baseURL}search/categorie/`, config)
-    .then(rep => {
-      console.log('rep', rep)
-    })
-    .catch(function (err) {
-      console.log('errLogin', err)
-    })
+  .then(rep => {
+    return rep
+  })
+  .catch(function (err) {
+    return err
+  })
 }
 
 export const tagList = () => {
   var config = { headers: { 'Content-Type': 'application/json' }, }
 
   return axios.get(`${baseURL}search/categorie/`, config)
-    .then(rep => {
-      console.log('rep', rep)
-    })
-    .catch(function (err) {
-      console.log('errLogin', err)
-    })
+  .then(rep => {
+    return rep
+  })
+  .catch(function (err) {
+    return err
+  })
 }
 
 export const langageList = () => {
@@ -30,9 +30,9 @@ export const langageList = () => {
 
   return axios.get(`${baseURL}search/categorie/`, config)
     .then(rep => {
-      console.log('rep', rep)
+      return rep
     })
     .catch(function (err) {
-      console.log('errLogin', err)
+      return err
     })
 }

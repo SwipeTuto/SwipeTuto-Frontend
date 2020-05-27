@@ -30,11 +30,11 @@ const NavTop = () => {
         <Link to="/" className="NavTop__logo">
           <img className="NavTop__logo--image" src={logo} alt="" />
         </Link>
+        <Link className="NavTop__link" to="/">
+          Accueil
+        </Link>
         <Link className="NavTop__link" to="/search">
           Cartes
-        </Link>
-        <Link className="NavTop__link" to="/">
-          Lexique
         </Link>
         <Link className="NavTop__link" to="/">
           Ressources

@@ -1,8 +1,10 @@
 // Présent dans App.js dans une Route ("/")
 
-import React, { Fragment } from "react";
+import React from "react";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { loginGoogle } from "../../services/userService";
+
+import "./Login.scss";
 
 const LoginPage = () => {
   const handleClick = (e) => {
@@ -10,12 +12,12 @@ const LoginPage = () => {
   };
 
   return (
-    <Fragment>
-      <h1>Login page</h1>
+    <div className="LoginPage">
+      <h1>Connexion</h1>
       <CustomButton onClick={(e) => handleClick(e)} color="dark">
-        SingnUp with Google
+        Se connecter avec Google
       </CustomButton>
-    </Fragment>
+    </div>
   );
 };
 export default LoginPage;

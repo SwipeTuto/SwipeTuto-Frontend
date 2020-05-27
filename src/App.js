@@ -4,7 +4,6 @@ import { Switch, Route } from 'react-router-dom';
 import HomePage from './pages/Homepage/HomePage';
 import Login from './pages/Login/Login';
 import SearchPage from './pages/SearchPage/SearchPage'
-import CardPage from './pages/CardPage/CardPage'
 import NavTop from "./components/LayoutComponents/NavTop/NavTop";
 import NavLeft from "./components/LayoutComponents/NavLeft/NavLeft";
 import Footer from "./components/LayoutComponents/Footer/Footer";
@@ -22,7 +21,6 @@ function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/search" component={SearchPage} />
-        <Route exact path="/card/:id" component={CardPage} />
         <Route exact path="/login" component={Login} />
       </Switch>
       <Footer />

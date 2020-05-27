@@ -100,7 +100,7 @@ const CardFullPopup = ({
               <p>Publié le :</p>
               <p>20/05/2020</p>
             </div>
-            <span className="horizontal-separation-primary"></span>
+            <span className="horizontal-separation-primary-light"></span>
             <div className="infos__tags">
               <h3 className="title title-3">Tags du Post :</h3>
               <div className="infos__tags--container">
@@ -109,7 +109,7 @@ const CardFullPopup = ({
                 <span className="tag">#JS</span>
               </div>
             </div>
-            <span className="horizontal-separation-primary"></span>
+            <span className="horizontal-separation-primary-light"></span>
             <div className="infos__autres-posts">
               <h3 className="title title-3">Du même auteur :</h3>
               <div className="autres-posts--grid">
@@ -120,7 +120,7 @@ const CardFullPopup = ({
                 <div className="autres-posts--preview"></div>
               </div>
             </div>
-            <span className="horizontal-separation-primary"></span>
+            <span className="horizontal-separation-primary-light"></span>
             <div className="infos__social">
               <h3 className="title title-3">Réseaux sociaux :</h3>
               <div className="social-grid">

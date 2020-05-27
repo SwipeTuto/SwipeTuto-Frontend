@@ -30,7 +30,7 @@ export const langageList = () => {
 
   return axios.get(`${baseURL}search/categorie/`, config)
     .then(rep => {
-      return rep
+    
     })
     .catch(function (err) {
       return err

@@ -13,6 +13,7 @@ const LoginPage = props => {
   const handleClick = (e) => {
     loginGoogle().then(user => {
       props.history.push('/')
+      console.log('3')
       props.test2()
     })
   }

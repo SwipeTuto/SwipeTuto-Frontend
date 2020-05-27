@@ -9,15 +9,19 @@ import CustomButton from "../CustomButton/CustomButton";
 import "./NavTop.scss";
 
 
-const NavTop = ({ avatar, getAvatar }) => {
+const NavTop = ({ avatar }) => {
+  console.log('5')
+  console.log('avatar', avatar)
  
   const [search, setSearch] = useState("");
   const [test, setTest] = useState(null)
 
 
   useEffect(() => {
-      avatar && setTest(avatar) 
-      getAvatar && setTest(getAvatar.avatar)
+   
+      avatar ? setTest(avatar) : setTest('')
+   
+   
   })
   
   const handleSubmit = (e) => {

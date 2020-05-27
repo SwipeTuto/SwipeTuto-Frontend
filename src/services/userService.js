@@ -11,6 +11,7 @@ export const loginGoogle = () => {
         .then(idToken => {
           var user = '';
           login(idToken).then(rep => {
+            console.log('2')
             return rep
           })
         })
@@ -28,6 +29,7 @@ export const login = idToken => {
     .then(rep => {
       sessionStorage.setItem('user', JSON.stringify(rep.data.user))
       sessionStorage.setItem('token', rep.data.token)
+      console.log('1')
       return rep
      
     })

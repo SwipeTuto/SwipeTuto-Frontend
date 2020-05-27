@@ -1,45 +1,23 @@
 // Présent dans App.js dans une Route ("/")
 
-import React, { Fragment } from "react";
-import { auth } from '../../services/firebaseService';
-import CustomButton from "../../components/CustomButton/CustomButton";
+import React from "react";
+import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
+import { loginGoogle } from "../../services/userService";
 
-
+import "./Login.scss";
 
 const LoginPage = () => {
-
-  const provider = new auth.GoogleAuthProvider();
-
-  const handleClick = e => {
-
-    auth().signInWithPopup(provider).then(function (result) {
-      // fireBase Token
-      var token = result.credential.idToken;
-      console.log('token', token)
-      console.log('token', result.credential)
-      var user = result.user;
-      console.log('user', user)
-    }).catch(function (error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      var email = error.email;
-      var credential = error.credential;
-    });
-
-  }
+  const handleClick = (e) => {
+    loginGoogle();
+  };
 
   return (
-    <Fragment>
-      <h1>Login page</h1>
-      <CustomButton
-        onClick={e => handleClick(e)}
-        color="dark">
-        SingnUp with Google
-          </CustomButton>
-
-    </Fragment>
-  )
-
-
-}
+    <div className="LoginPage">
+      <h1>Connexion</h1>
+      <CustomButton onClick={(e) => handleClick(e)} color="dark">
+        Se connecter avec Google
+      </CustomButton>
+    </div>
+  );
+};
 export default LoginPage;

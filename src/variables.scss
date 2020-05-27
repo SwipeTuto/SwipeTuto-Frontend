@@ -1,6 +1,7 @@
 // VARIABLES
 $primary-light: #ff6699;
 $primary-lighter: #faf9ff;
+$primary-medium: #d400ff;
 $primary-dark: #331277;
 $white: #ffffff;
 $grey-light: #f8f8f8;
@@ -31,6 +32,7 @@ $inner-component-padding: 3rem 5rem;
   border: 0.5px solid $grey-dark;
   font-size: 1rem;
   box-shadow: none;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
@@ -41,6 +43,7 @@ $inner-component-padding: 3rem 5rem;
   border: 0.5px solid $grey-dark;
   font-size: 0.5rem;
   box-shadow: none;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
@@ -48,3 +51,22 @@ $inner-component-padding: 3rem 5rem;
   transform: translateY(-2px);
   box-shadow: $tag-shadow;
 }
+
+.horizontal-separation {
+  &-primary-light {
+    width: 60%;
+    height: 1px;
+    background-color: $primary-light;
+  }
+  &-primary-medium {
+    width: 60%;
+    height: 1px;
+    background-color: $primary-medium;
+  }
+  &-primary-dark {
+    width: 60%;
+    height: 1px;
+    background-color: $primary-dark;
+  }
+}
+// <span className="horizontal-separation-primary"></span>

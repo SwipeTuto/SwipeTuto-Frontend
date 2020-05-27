@@ -1,0 +1,61 @@
+@import "../../../variables.scss";
+
+.CardPreviewBig {
+  height: 100%;
+  width: 100%;
+  border: 1px solid $grey-medium;
+  background-color: $white;
+  border-radius: $box-radius;
+  // box-shadow: none;
+  // transition: all 0.2s ease;
+  cursor: pointer;
+  // position: relative;
+  // overflow: hidden;
+  display: grid;
+  grid-template-columns: 20rem 1fr;
+
+  &__slider {
+    grid-column: 1/2;
+  }
+
+  &__details {
+    grid-column: 2/3;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    height: 3rem;
+
+    font-size: 1.2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__tags {
+    width: 100%;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+
+    .tag {
+      @include small-tag-style;
+      margin: 0.3rem;
+
+      &:hover {
+        @include tag-hover-style;
+      }
+    }
+  }
+
+  &__category {
+    .category__text {
+      text-align: center;
+      font-size: 1rem;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 import "firebase/auth";
 
-
+// Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBh5k4llmNOav5gvCidYYYi2yIdUdmb3Os",
   authDomain: "memo-53937.firebaseapp.com",
@@ -12,9 +12,13 @@ const firebaseConfig = {
   appId: "1:755676020460:web:9d51efa2dcf34976de2fc9"
 };
 
+
+
 // Initialize Firebase
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
+export const provider = new firebase.auth.GoogleAuthProvider();
 export const auth = firebase.auth;
+

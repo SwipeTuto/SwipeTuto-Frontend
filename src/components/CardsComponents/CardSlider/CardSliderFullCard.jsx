@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-// import ImageGallery from "react-image-gallery";
-import CardSliderForPreview from "./CardSliderForPreview";
+import React, { Fragment, useState, useEffect } from "react";
 
 import { ReactComponent as ChevronLeft } from "../../../assets/images/chevron-back.svg";
+import { ReactComponent as ChevronLeftWhite } from "../../../assets/images/chevron-back-white.svg";
 import { ReactComponent as ChevronRight } from "../../../assets/images/chevron-forward.svg";
+import { ReactComponent as ChevronRightWhite } from "../../../assets/images/chevron-forward-white.svg";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as FullscreenLogo } from "../../../assets/images/fullscreen.svg";
 import img1 from "../../../assets/images/slide-test/img1.png";
@@ -22,7 +22,7 @@ import "./CardSliderFullCard.scss";
 const slides = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
 const totalSlides = slides.length;
 
-const CardSlider = ({ forPreview }) => {
+const CardSlider = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isFullScreen, setIsFullScreen] = useState(false);
 
@@ -54,7 +54,7 @@ const CardSlider = ({ forPreview }) => {
 
   const handleFullScreen = () => {
     setIsFullScreen(true);
-    document.querySelector(".CardSlider").requestFullscreen();
+    document.querySelector(".CardSliderLarge").requestFullscreen();
   };
 
   const closeFullScreen = () => {
@@ -63,21 +63,74 @@ const CardSlider = ({ forPreview }) => {
   };
 
   return (
-    <div className="CardSlider">
+    <div className="CardSliderLarge">
       {isFullScreen ? (
-        <div className="CardSlider__fullscreen-close" onClick={closeFullScreen}>
-          <CloseLogo />
-        </div>
+        <Fragment>
+          <div
+            className="CardSliderLarge__fullscreen-close"
+            onClick={closeFullScreen}
+          >
+            <CloseLogo />
+          </div>
+
+          <ChevronLeftWhite
+            aria-label="Previous"
+            className="CardSliderLarge__chevron--fullpage chevron-left-white"
+            onClick={(e) => goToPrevSlide(e)}
+          />
+          <ChevronRightWhite
+            aria-label="Next"
+            className="CardSliderLarge__chevron--fullpage chevron-right-white"
+            onClick={(e) => goToNextSlide(e)}
+          />
+
+          <div className="CardSliderLarge__indicators--fullscreen">
+            {`${activeIndex + 1} / ${totalSlides}`}
+          </div>
+        </Fragment>
       ) : (
-        ""
+        <Fragment>
+          <ChevronLeft
+            aria-label="Previous"
+            className="CardSliderLarge__chevron--fullpage chevron-left"
+            onClick={(e) => goToPrevSlide(e)}
+          />
+          <ChevronRight
+            aria-label="Next"
+            className="CardSliderLarge__chevron--fullpage chevron-right"
+            onClick={(e) => goToNextSlide(e)}
+          />
+
+          <ul className="CardSliderLarge__indicators">
+            {slides.map((slide, index) => (
+              <li
+                key={index}
+                index={index}
+                activeIndex={activeIndex}
+                isActive={activeIndex === index}
+                onClick={(e) => goToSlide(index)}
+              >
+                <a
+                  className={
+                    index === activeIndex
+                      ? "CardSliderLarge__indicator CardSliderLarge__indicator--active"
+                      : "CardSliderLarge__indicator"
+                  }
+                  onClick={(e) => goToSlide(index)}
+                  href="#"
+                />
+              </li>
+            ))}
+          </ul>
+        </Fragment>
       )}
-      <ul className="CardSlider__slides">
+      <ul className="CardSliderLarge__slides">
         {slides.map((slide, index) => (
           <img
             className={
               index === activeIndex
-                ? "CardSlider__slide CardSlider__slide--active"
-                : "CardSlider__slide"
+                ? "CardSliderLarge__slide CardSliderLarge__slide--active"
+                : "CardSliderLarge__slide"
             }
             key={index}
             index={index}
@@ -89,30 +142,55 @@ const CardSlider = ({ forPreview }) => {
         ))}
       </ul>
 
-      <ChevronLeft
+      {/* <ChevronLeft
         aria-label="Previous"
-        className={`CardSlider__chevron--fullpage chevron-left ${
-          isFullScreen ? "chevron__fullpage" : ""
-        }`}
+        className="CardSliderLarge__chevron--fullpage chevron-left"
         onClick={(e) => goToPrevSlide(e)}
       />
       <ChevronRight
         aria-label="Next"
-        className={`CardSlider__chevron--fullpage chevron-right ${
-          isFullScreen ? "chevron__fullpage" : ""
-        }`}
+        className="CardSliderLarge__chevron--fullpage chevron-right"
         onClick={(e) => goToNextSlide(e)}
-      />
+      /> */}
+
+      {/* {isFullScreen ? (
+        <>
+        <ChevronLeft
+            aria-label="Previous"
+            className="CardSliderLarge__chevron--fullpage chevron-left"
+            onClick={(e) => goToPrevSlide(e)}
+          />
+          <ChevronRight
+            aria-label="Next"
+            className="CardSliderLarge__chevron--fullpage chevron-right"
+            onClick={(e) => goToNextSlide(e)}
+          />
+        </>
+      ) : (
+        <>
+          <ChevronLeftWhite
+            aria-label="Previous"
+            className="CardSliderLarge__chevron--fullpage chevron-left-white"
+            onClick={(e) => goToPrevSlide(e)}
+          />
+          <ChevronRightWhite
+            aria-label="Next"
+            className="CardSliderLarge__chevron--fullpage chevron-right-white"
+            onClick={(e) => goToNextSlide(e)}
+          />
+        </>
+      )} */}
+
       <FullscreenLogo
-        className="CardSlider__fullscreen-logo"
+        className="CardSliderLarge__fullscreen-logo"
         onClick={handleFullScreen}
       />
-      {isFullScreen ? (
-        <div className="CardSlider__indicators--fullscreen">
+      {/* {isFullScreen ? (
+        <div className="CardSliderLarge__indicators--fullscreen">
           {`${activeIndex + 1} / ${totalSlides}`}
         </div>
       ) : (
-        <ul className="CardSlider__indicators">
+        <ul className="CardSliderLarge__indicators">
           {slides.map((slide, index) => (
             <li
               key={index}
@@ -123,9 +201,9 @@ const CardSlider = ({ forPreview }) => {
             >
               <a
                 className={
-                  index == activeIndex
-                    ? "CardSlider__indicator CardSlider__indicator--active"
-                    : "CardSlider__indicator"
+                  index === activeIndex
+                    ? "CardSliderLarge__indicator CardSliderLarge__indicator--active"
+                    : "CardSliderLarge__indicator"
                 }
                 onClick={(e) => goToSlide(index)}
                 href="#"
@@ -133,7 +211,7 @@ const CardSlider = ({ forPreview }) => {
             </li>
           ))}
         </ul>
-      )}
+      )} */}
     </div>
   );
 };

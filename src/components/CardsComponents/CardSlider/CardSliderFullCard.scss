@@ -1,10 +1,10 @@
 @import "../../../variables.scss";
 
-.CardSlider {
+.CardSliderLarge {
   position: relative;
   height: 100%;
   width: 100%;
-  background-color: $white;
+  background-color: $black;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,27 +15,26 @@
     transform: translateY(-50%);
     height: max-content;
     width: 6rem;
-    stroke: $primary-dark;
+    // stroke: $primary-dark;
     opacity: 1;
     cursor: pointer;
     transition: all 0.2s ease;
 
     &.chevron-right {
       left: 100%;
-
-      &.chevron__fullpage {
-        left: unset;
-        right: 0;
-      }
+    }
+    &.chevron-right-white {
+      left: unset;
+      right: 0;
     }
 
     &.chevron-left {
       right: 100%;
+    }
 
-      &.chevron__fullpage {
-        right: unset;
-        left: 0;
-      }
+    &.chevron-left-white {
+      right: unset;
+      left: 0;
     }
 
     &:hover {
@@ -82,8 +81,8 @@
   }
 
   &__indicators {
-    // position: absolute;
-    // top: 100%;
+    position: absolute;
+    top: 100%;
     padding: 0.6rem;
     width: 100%;
     background-color: $primary-dark;
@@ -96,6 +95,7 @@
     }
 
     &--fullscreen {
+      color: $white;
       position: absolute;
       bottom: 1rem;
       left: 1rem;
@@ -109,6 +109,7 @@
     top: 1rem;
     right: 1rem;
     cursor: pointer;
+    fill: $white;
     transition: all 0.2s ease;
 
     & > svg {

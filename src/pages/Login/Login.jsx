@@ -5,6 +5,7 @@ import CustomButton from "../../components/LayoutComponents/CustomButton/CustomB
 import { loginGoogle } from "../../services/userService";
 import { langageList } from "../../services/searchService";
 
+// Props history, location, match, depuis react router dom
 const LoginPage = (props) => {
   const [test, setTest] = useState(null);
 

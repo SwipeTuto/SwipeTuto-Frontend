@@ -48,14 +48,14 @@ const CardSliderForPreview = () => {
   };
 
   return (
-    <div className="CardSlider CardSlider--preview">
-      <ul className="CardSlider__slides">
+    <div className="cardSliderPreview cardSliderPreview--preview">
+      <ul className="cardSliderPreview__slides">
         {slides.map((slide, index) => (
           <img
             className={
               index === activeIndex
-                ? "CardSlider__slide CardSlider__slide--active"
-                : "CardSlider__slide"
+                ? "cardSliderPreview__slide cardSliderPreview__slide--active"
+                : "cardSliderPreview__slide"
             }
             key={index}
             index={index}
@@ -68,16 +68,16 @@ const CardSliderForPreview = () => {
       </ul>
       <ChevronLeft
         aria-label="Previous"
-        className="CardSlider__chevron--preview chevron-left"
+        className="cardSliderPreview__chevron--preview chevron-left"
         onClick={(e) => goToPrevSlide(e)}
       />
       <ChevronRight
         aria-label="Next"
-        className="CardSlider__chevron--preview chevron-right"
+        className="cardSliderPreview__chevron--preview chevron-right"
         onClick={(e) => goToNextSlide(e)}
       />
 
-      <ul className="CardSlider__indicators--preview">
+      <ul className="cardSliderPreview__indicators--preview">
         {slides.map((slide, index) => (
           <li
             key={index}
@@ -89,8 +89,8 @@ const CardSliderForPreview = () => {
             <a
               className={
                 index == activeIndex
-                  ? "CardSlider__indicator--preview CardSlider__indicator--preview--active"
-                  : "CardSlider__indicator--preview"
+                  ? "cardSliderPreview__indicator--preview cardSliderPreview__indicator--preview--active"
+                  : "cardSliderPreview__indicator--preview"
               }
               onClick={(e) => goToSlide(index)}
               href="#"

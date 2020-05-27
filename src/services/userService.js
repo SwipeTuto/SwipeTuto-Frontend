@@ -6,7 +6,9 @@ import { baseURL } from '../services/configService'
 export const loginGoogle = () => {
   return auth().signInWithPopup(provider)
     .then(result => {
+      console.log(result)
       var user = result.user;
+      // getIdToken est une fonction de firebase qui renvoie le token pour identifier le user dans les services firebase
       return user.getIdToken()
         .then(idToken => {
           var user = '';
@@ -25,9 +27,10 @@ export const login = idToken => {
 
   return axios.post(`${baseURL}google-login/`, JSON.stringify(data), config)
     .then(rep => {
+      // aller dans devTools : Application : Session Storage pour voir user et token stockés ici
       sessionStorage.setItem('user', JSON.stringify(rep.data.user))
       sessionStorage.setItem('token', rep.data.token)
-     
+
     })
     .catch(function (err) {
       sessionStorage.removeItem('user')

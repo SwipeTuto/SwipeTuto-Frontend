@@ -20,7 +20,7 @@ import UserNameAndAvatarBig from "../../UserComponents/UserNameAndAvatarBig/User
 import "./CardFullPopup.scss";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
-
+// handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
 const CardFullPopup = ({
   showCardFullPopup,
   handleCloseCardFullPopupClick,
@@ -51,7 +51,7 @@ const CardFullPopup = ({
           </div>
           <div className="CardFullPopup__grid__slide">
             {/* <CardSlider /> */}
-            <CardSliderFullCard forPreview={true} />
+            <CardSliderFullCard />
           </div>
           <div className="grid__description">
             <h1 className="title title-1">Description</h1>

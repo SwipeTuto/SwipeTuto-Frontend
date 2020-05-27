@@ -32,9 +32,9 @@ const CardPreviewBig = ({ handleCardFullPopupClick }) => {
         </div>
         <CustomButton
           color="dark"
-          onClick={(e) =>
-            handleCardFullPopupClick(e.target.parentElement.parentElement)
-          }
+          onClick={(e) => {
+            handleCardFullPopupClick(e.target.parentElement.parentElement);
+          }}
         >
           Voir &rarr;
         </CustomButton>

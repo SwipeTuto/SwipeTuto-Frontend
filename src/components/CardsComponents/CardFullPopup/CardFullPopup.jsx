@@ -1,6 +1,7 @@
+// Popup qui s'ouvre au clic sur une card. Contient CardSliderFull et aussi toutes les infos de la card cliquée
+
 import React from "react";
 
-// import CardSlider from "../CardSlider/CardSlider";
 import CardSliderFullCard from "../CardSlider/CardSliderFullCard";
 
 import { ReactComponent as ChevronLeft } from "../../../assets/images/chevron-back.svg";
@@ -24,7 +25,7 @@ import "./CardFullPopup.scss";
 const CardFullPopup = ({
   showCardFullPopup,
   handleCloseCardFullPopupClick,
-  clickedCard,
+  clickedcard,
 }) => {
   return (
     <div
@@ -51,7 +52,7 @@ const CardFullPopup = ({
           </div>
           <div className="CardFullPopup__grid__slide">
             {/* <CardSlider /> */}
-            <CardSliderFullCard />
+            <CardSliderFullCard clickedcard={clickedcard} />
           </div>
           <div className="grid__description">
             <h1 className="title title-1">Description</h1>

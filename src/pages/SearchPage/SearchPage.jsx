@@ -14,7 +14,7 @@ import "./SearchPage.scss";
 const SearchPage = () => {
   const [gridSize, setGridSize] = useState("small");
   const [showCardFullPopup, setShowCardFullPopup] = useState(false);
-  const [clickedCard, setClickedCard] = useState(null);
+  const [clickedcard, setClickedcard] = useState(null);
 
   const handleClickSize = (e) => {
     const allGridSizeItems = [
@@ -26,9 +26,10 @@ const SearchPage = () => {
     e.target.classList.add("active");
   };
 
-  const handleCardFullPopupClick = (etarget) => {
-    // récupérer le id pour récupérer les infos du slide cliqué et les afficher dans CardFullPopup
-    setClickedCard(etarget);
+  const handleCardFullPopupClick = (etarget, card) => {
+    // récupérer le id pour récupérer les infos du slide cliqué et les afficher dans CardFullPopup; depuis CardPreviewBig et CardPreviewSmall
+    setClickedcard(card);
+    console.log(clickedcard);
     setShowCardFullPopup(true);
     document.getElementsByClassName("App")[0].style.position = "fixed";
     document.getElementsByClassName("App")[0].style.overflow = "hidden";
@@ -38,6 +39,7 @@ const SearchPage = () => {
     document.getElementsByClassName("App")[0].style.position = "static";
     document.getElementsByClassName("App")[0].style.overflow = "visible";
     e.target.classList.remove("active");
+    setClickedcard(null);
 
     setShowCardFullPopup(false);
   };
@@ -54,7 +56,7 @@ const SearchPage = () => {
       </div>
       <CardFullPopup
         showCardFullPopup={showCardFullPopup}
-        clickedCard={clickedCard}
+        clickedcard={clickedcard}
         handleCloseCardFullPopupClick={handleCloseCardFullPopupClick}
       />
     </div>

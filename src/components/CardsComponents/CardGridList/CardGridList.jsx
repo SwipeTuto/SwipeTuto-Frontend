@@ -7,8 +7,11 @@ import CardPreviewBig from "../CardPreviewBig/CardPreviewBig";
 
 import "./CardGridList.scss";
 
+import SLIDES_DATA_TEST from "../../../SLIDES_DATA_TEST.js"; //collection d'objets avec toutes les infos propres aux slides
+
 const CardGridList = ({ cardsSize, handleCardFullPopupClick }) => {
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
+  const [cardsArray, setcardsArray] = useState(SLIDES_DATA_TEST);
 
   useEffect(() => setCardPreviewSize(cardsSize), [cardsSize]);
 
@@ -16,30 +19,12 @@ const CardGridList = ({ cardsSize, handleCardFullPopupClick }) => {
     return (
       <div className="CardGridList">
         <div className="CardGridList__wrapper--small">
-          <CardPreviewSmall
-            handleCardFullPopupClick={handleCardFullPopupClick}
-          />
-          <CardPreviewSmall
-            handleCardFullPopupClick={handleCardFullPopupClick}
-          />
-          <CardPreviewSmall
-            handleCardFullPopupClick={handleCardFullPopupClick}
-          />
-          <CardPreviewSmall
-            handleCardFullPopupClick={handleCardFullPopupClick}
-          />
-          <CardPreviewSmall
-            handleCardFullPopupClick={handleCardFullPopupClick}
-          />
-          <CardPreviewSmall
-            handleCardFullPopupClick={handleCardFullPopupClick}
-          />
-          <CardPreviewSmall
-            handleCardFullPopupClick={handleCardFullPopupClick}
-          />
-          <CardPreviewSmall
-            handleCardFullPopupClick={handleCardFullPopupClick}
-          />
+          {cardsArray.map((card) => (
+            <CardPreviewSmall
+              handleCardFullPopupClick={handleCardFullPopupClick}
+              card={card}
+            />
+          ))}
         </div>
       </div>
     );
@@ -47,14 +32,12 @@ const CardGridList = ({ cardsSize, handleCardFullPopupClick }) => {
     return (
       <div className="CardGridList">
         <div className="CardGridList__wrapper--big">
-          <CardPreviewBig handleCardFullPopupClick={handleCardFullPopupClick} />
-          <CardPreviewBig handleCardFullPopupClick={handleCardFullPopupClick} />
-          <CardPreviewBig handleCardFullPopupClick={handleCardFullPopupClick} />
-          <CardPreviewBig handleCardFullPopupClick={handleCardFullPopupClick} />
-          <CardPreviewBig handleCardFullPopupClick={handleCardFullPopupClick} />
-          <CardPreviewBig handleCardFullPopupClick={handleCardFullPopupClick} />
-          <CardPreviewBig handleCardFullPopupClick={handleCardFullPopupClick} />
-          <CardPreviewBig handleCardFullPopupClick={handleCardFullPopupClick} />
+          {cardsArray.map((card) => (
+            <CardPreviewBig
+              handleCardFullPopupClick={handleCardFullPopupClick}
+              card={card}
+            />
+          ))}
         </div>
       </div>
     );

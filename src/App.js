@@ -21,9 +21,9 @@ function App() {
 
   useEffect(() => {
     getAvatar && setAvatar(getAvatar.avatar)
-    console.log('getAvatar', getAvatar)
+
   }, [getAvatar, avatar])
-  console.log('app OK')
+
 
   return (
     <div className="App">

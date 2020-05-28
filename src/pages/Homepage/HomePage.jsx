@@ -37,10 +37,7 @@ const HomePage = () => {
   return (
     <div className="HomePage">
       <HomeHeader />
-      <CardGridList
-        cardsSize="small"
-        handleCardFullPopupClick={handleCardFullPopupClick}
-      />
+      <CardGridList cardsSize="small" />
       <CardFullPopup
         showCardFullPopup={showCardFullPopup}
         clickedCard={clickedCard}

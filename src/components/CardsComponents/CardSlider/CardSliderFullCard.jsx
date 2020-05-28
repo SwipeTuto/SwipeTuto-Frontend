@@ -11,15 +11,18 @@ import { ReactComponent as FullscreenLogo } from "../../../assets/images/fullscr
 
 import "./CardSliderFullCard.scss";
 
-const CardSlider = ({ clickedcard }) => {
-  console.log(clickedcard);
+const CardSlider = ({ clickedcardSlides }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isFullScreen, setIsFullScreen] = useState(false);
+
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [clickedcardSlides]);
 
   const goToPrevSlide = (e) => {
     let index = activeIndex;
     // let { slides } = props;
-    let slidesLength = clickedcard.length;
+    let slidesLength = clickedcardSlides.length;
     if (index < 1) {
       index = slidesLength;
     }
@@ -30,7 +33,7 @@ const CardSlider = ({ clickedcard }) => {
   const goToNextSlide = (e) => {
     let index = activeIndex;
     // let { slides } = props;
-    let slidesLength = clickedcard.length - 1;
+    let slidesLength = clickedcardSlides.length - 1;
     if (index === slidesLength) {
       index = -1;
     }
@@ -75,7 +78,9 @@ const CardSlider = ({ clickedcard }) => {
           />
 
           <div className="CardSliderLarge__indicators--fullscreen">
-            {`${activeIndex + 1} / ${clickedcard && clickedcard.length}`}
+            {`${activeIndex + 1} / ${
+              clickedcardSlides && clickedcardSlides.length
+            }`}
           </div>
         </Fragment>
       ) : (
@@ -92,8 +97,8 @@ const CardSlider = ({ clickedcard }) => {
           />
 
           <ul className="CardSliderLarge__indicators">
-            {clickedcard &&
-              clickedcard.map((slide, index) => (
+            {clickedcardSlides &&
+              clickedcardSlides.map((slide, index) => (
                 <li
                   key={index}
                   index={index}
@@ -116,8 +121,8 @@ const CardSlider = ({ clickedcard }) => {
         </Fragment>
       )}
       <ul className="CardSliderLarge__slides">
-        {clickedcard &&
-          clickedcard.map((slide, index) => (
+        {clickedcardSlides &&
+          clickedcardSlides.map((slide, index) => (
             <img
               className={
                 index === activeIndex
@@ -133,77 +138,10 @@ const CardSlider = ({ clickedcard }) => {
             />
           ))}
       </ul>
-
-      {/* <ChevronLeft
-        aria-label="Previous"
-        className="CardSliderLarge__chevron--fullpage chevron-left"
-        onClick={(e) => goToPrevSlide(e)}
-      />
-      <ChevronRight
-        aria-label="Next"
-        className="CardSliderLarge__chevron--fullpage chevron-right"
-        onClick={(e) => goToNextSlide(e)}
-      /> */}
-
-      {/* {isFullScreen ? (
-        <>
-        <ChevronLeft
-            aria-label="Previous"
-            className="CardSliderLarge__chevron--fullpage chevron-left"
-            onClick={(e) => goToPrevSlide(e)}
-          />
-          <ChevronRight
-            aria-label="Next"
-            className="CardSliderLarge__chevron--fullpage chevron-right"
-            onClick={(e) => goToNextSlide(e)}
-          />
-        </>
-      ) : (
-        <>
-          <ChevronLeftWhite
-            aria-label="Previous"
-            className="CardSliderLarge__chevron--fullpage chevron-left-white"
-            onClick={(e) => goToPrevSlide(e)}
-          />
-          <ChevronRightWhite
-            aria-label="Next"
-            className="CardSliderLarge__chevron--fullpage chevron-right-white"
-            onClick={(e) => goToNextSlide(e)}
-          />
-        </>
-      )} */}
-
       <FullscreenLogo
         className="CardSliderLarge__fullscreen-logo"
         onClick={handleFullScreen}
       />
-      {/* {isFullScreen ? (
-        <div className="CardSliderLarge__indicators--fullscreen">
-          {`${activeIndex + 1} / ${totalSlides}`}
-        </div>
-      ) : (
-        <ul className="CardSliderLarge__indicators">
-          {slides.map((slide, index) => (
-            <li
-              key={index}
-              index={index}
-              activeIndex={activeIndex}
-              isActive={activeIndex === index}
-              onClick={(e) => goToSlide(index)}
-            >
-              <a
-                className={
-                  index === activeIndex
-                    ? "CardSliderLarge__indicator CardSliderLarge__indicator--active"
-                    : "CardSliderLarge__indicator"
-                }
-                onClick={(e) => goToSlide(index)}
-                href="#"
-              />
-            </li>
-          ))}
-        </ul>
-      )} */}
     </div>
   );
 };

@@ -23,7 +23,6 @@ const NavTop = ({ avatar }) => {
     setSearch(searchText);
   };
 
-  console.log("TOP OK");
   // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription
   return (
     <div className="NavTop">
@@ -62,7 +61,7 @@ const NavTop = ({ avatar }) => {
       </div>
       <div className="NavTop__right">
         <CustomButton color="dark">
-          <Link className="NavTop__link" to="/login">
+          <Link className="NavTop__linkConnexion" to="/login">
             Connexion
           </Link>
         </CustomButton>

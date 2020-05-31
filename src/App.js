@@ -28,10 +28,10 @@ function App() {
   return (
     <div className="App">
       <NavTop avatar={avatar} />
-      <NavLeft />
+      {/* <NavLeft /> */}
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route exact path="/search" component={SearchPage} />
+        <Route exact path="/cards" component={SearchPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/ressources" component={RessourcesPage} />
         {/* <PrivateRoute exact path="/login" component={Login} /> */}

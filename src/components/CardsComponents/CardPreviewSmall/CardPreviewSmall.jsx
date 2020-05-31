@@ -1,6 +1,7 @@
 // Component qui présente en résumé dans la grille un slide avec image de preview, auteur etc ...
 import React from "react";
 import { truncate } from "../../../utilsFunctions";
+import UserNameAndAvatarSmall from "../../UserComponents/UserNameAndAvatarSmall/UserNameAndAvatarSmall";
 
 import "./CardPreviewSmall.scss";
 
@@ -16,11 +17,13 @@ const CardPreviewSmall = ({ handleCardFullPopupClick, card }) => {
     >
       <div className="CardPreviewSmall__image">
         <img src={card.slides[0]} alt="slides presentation" />
+        <div className="CardPreviewSmall__hover">
+          <h1 className="title title-1">{truncate(card.title, 60, false)}</h1>
+          {/* <h1 className="title title-1">{card.title}</h1> */}
+        </div>
       </div>
       <div className="CardPreviewSmall__details">
-        <div className="CardPreviewSmall__title">
-          {truncate(card.title, 22, false)}
-        </div>
+        <UserNameAndAvatarSmall authorName={truncate(card.author, 12, false)} />
       </div>
     </div>
   );

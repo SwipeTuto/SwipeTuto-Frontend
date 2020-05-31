@@ -27,7 +27,7 @@ const SearchPage = () => {
     <div className="SearchPage">
       <div className="SearchPage__wrapper">
         <FiltersBar handleClickSize={handleClickSize} />
-        <CardGridList cardsSize={gridSize} />
+        <CardGridList cardsSize={gridSize} cardsNumber={12} />
       </div>
     </div>
   );

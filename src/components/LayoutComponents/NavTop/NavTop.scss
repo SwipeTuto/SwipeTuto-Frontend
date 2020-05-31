@@ -2,8 +2,8 @@
 
 .NavTop {
   height: 10vh;
-  max-height: 3.5rem;
-  // box-shadow: 0 0 2px $grey-dark;
+  max-height: 4rem;
+  box-shadow: 0 1px 8px rgba($grey-dark, 0.5);
   border: 0.5px solid $grey-medium;
   background-color: $white;
   position: fixed;
@@ -54,22 +54,31 @@
     flex-grow: 1;
     display: flex;
     align-items: flex-end;
-    justify-content: center;
+    justify-content: flex-end;
 
     .NavTop__search {
       height: 100%;
-      width: 100%;
+      width: max-content;
       display: flex;
-      justify-content: center;
+      flex-direction: row-reverse;
       align-items: center;
+      margin-right: 1rem;
+
+      &:hover .NavTop__input {
+        visibility: visible;
+        width: 100%;
+      }
 
       .NavTop__input {
         @include input-style;
-        width: 35%;
+        width: 0%;
+
+        visibility: hidden;
         transition: all 0.3s ease;
 
         &:focus {
-          width: 70%;
+          visibility: visible;
+          width: 100%;
           &::placeholder {
             color: transparent;
           }
@@ -102,9 +111,9 @@
     justify-content: flex-end;
 
     // A remettre pour afficher btn connexion et inscription
-    .custom-button {
-      visibility: hidden;
-      opacity: 0;
-    }
+    // .custom-button {
+    //   visibility: hidden;
+    //   opacity: 0;
+    // }
   }
 }

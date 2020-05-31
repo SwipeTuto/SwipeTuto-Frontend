@@ -10,12 +10,13 @@ $grey-dark: #bdbdbd;
 $black: #000000;
 
 $box-radius: 3px;
+$card-border-radius: 6px;
 $button-radius: 30px;
 
 $tag-shadow: 0 2px 3px rgba($grey-dark, 0.3);
-$card-shadow: 0 2px 3px rgba($grey-dark, 0.3);
-
-$inner-component-padding: 3rem 5rem;
+$card-shadow: 0 4px 5px $grey-dark;
+$card-shadow-2: 0 0px 8px rgba($grey-dark, 0.4);
+$inner-component-padding: 4rem 17vw;
 
 @mixin input-style {
   background: $grey-light;

@@ -29,11 +29,9 @@
   }
 
   &__title {
-    height: 3rem;
-
+    height: 4rem;
+    text-align: center;
     font-size: 1.2rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   &__tags {

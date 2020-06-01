@@ -2,7 +2,14 @@
 
 import React from "react";
 
-import CardSliderFullCard from "../CardSlider/CardSliderFullCard";
+import CardSliderPopup from "../CardSlider/CardSliderPopup";
+
+import { useSelector, useDispatch } from "react-redux";
+import { selectShowPopupCard } from "../../../redux/layout/layout-selectors";
+import { selectClickedCard } from "../../../redux/cards/cards-selectors";
+import { setClickedCard } from "../../../redux/cards/cards-actions";
+import { setNoClickedCard } from "../../../redux/cards/cards-actions";
+import { closePopupCard } from "../../../redux/layout/layout-actions";
 
 import { ReactComponent as ChevronLeft } from "../../../assets/images/chevron-back.svg";
 import { ReactComponent as ChevronRight } from "../../../assets/images/chevron-forward.svg";
@@ -25,19 +32,24 @@ import "./CardFullPopup.scss";
 const CardFullPopup = ({
   showCardFullPopup,
   handleCloseCardFullPopupClick,
-  clickedcard,
+
   goPreviousCard,
   goNextCard,
 }) => {
+  const clickedCard = useSelector(selectClickedCard);
+  const popupShown = useSelector(selectShowPopupCard);
+  const dispatch = useDispatch();
+
   return (
     <div
-      className={`CardFullPopup ${showCardFullPopup ? "active" : ""}`}
+      className={`CardFullPopup ${popupShown ? "active" : ""}`}
       onClick={(e) => {
         if (
           e.target.classList.contains("CardFullPopup") &&
           e.target.classList.contains("active")
         ) {
-          handleCloseCardFullPopupClick(e);
+          dispatch(closePopupCard());
+          dispatch(setNoClickedCard());
         } else {
           return;
         }
@@ -46,41 +58,37 @@ const CardFullPopup = ({
       <div className="CardFullPopup__wrapper">
         <div className="CardFullPopup__grid">
           <div className="CardFullPopup__header">
-            <h1 className="title title-1">
-              {clickedcard && clickedcard.title}
-            </h1>
+            <h1 className="title title-1">{clickedCard && clickedCard.name}</h1>
             <div className="CardFullPopup__action-button">
               <BookmarkEmpty className="card-action-button" />
               <HeartEmpty className="card-action-button" />
             </div>
           </div>
           <div className="CardFullPopup__grid__slide">
-            <CardSliderFullCard
-              clickedcardSlides={clickedcard && clickedcard.slides}
-            />
+            {clickedCard && <CardSliderPopup />}
           </div>
           <div className="grid__description">
             <h1 className="title title-1">Description</h1>
-            <p>{clickedcard && clickedcard.description}</p>
+            <p>{clickedCard && clickedCard.description}</p>
           </div>
           <div className="grid__aside-infos-grid">
             <UserNameAndAvatarBig />
             <div className="infos__published-date">
               <p>Publié le :</p>
               <p>
-                {clickedcard &&
-                  `${clickedcard.created_at.getDate()}/${
-                    clickedcard.created_at.getMonth() + 1
-                  }/${clickedcard.created_at.getFullYear()}`}
+                {/* {clickedCard &&
+                  `${clickedCard.created_at.getDate()}/${
+                    clickedCard.created_at.getMonth() + 1
+                  }/${clickedCard.created_at.getFullYear()}`} */}
               </p>
             </div>
             <span className="horizontal-separation-primary-light"></span>
             <div className="infos__tags">
               <h3 className="title title-3">Tags du Post :</h3>
               <div className="infos__tags--container">
-                {clickedcard &&
-                  clickedcard.tags.map((tag) => (
-                    <span className="tag" key={tag}>{`#${tag}`}</span>
+                {clickedCard &&
+                  clickedCard.tag.map((tag) => (
+                    <span className="tag" key={tag.name}>{`#${tag.name}`}</span>
                   ))}
               </div>
             </div>
@@ -125,11 +133,11 @@ const CardFullPopup = ({
 
         <ChevronCircleRight
           className="nav__chevron nav__chevron--right"
-          onClick={() => goNextCard(clickedcard)}
+          onClick={() => goNextCard(clickedCard)}
         />
         <ChevronCircleLeft
           className="nav__chevron nav__chevron--left"
-          onClick={() => goPreviousCard(clickedcard)}
+          onClick={() => goPreviousCard(clickedCard)}
         />
       </div>
     </div>

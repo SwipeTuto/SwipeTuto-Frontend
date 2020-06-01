@@ -13,37 +13,17 @@ import SLIDES_DATA_TEST from "../../../SLIDES_DATA_TEST.js"; //collection d'obje
 
 const CardGridList = ({ cardsSize, cardsNumber }) => {
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
-  const [cardsArray, setcardsArray] = useState(SLIDES_DATA_TEST);
+  const [cardsArray, setcardsArray] = useState(SLIDES_DATA_TEST.results);
   const [showCardFullPopup, setShowCardFullPopup] = useState(false);
   const [clickedcard, setClickedcard] = useState(null);
 
   useEffect(() => setCardPreviewSize(cardsSize), [cardsSize]);
-  console.log(cardsNumber);
   useEffect(() => {
     if (cardsNumber && cardsArray) {
-      console.log(cardsArray);
       const cardsArrayCopy = cardsArray.slice(0, cardsNumber);
-      console.log(cardsArrayCopy);
       setcardsArray(cardsArrayCopy);
     }
-  }, []);
-
-  const handleCardFullPopupClick = (etarget, card) => {
-    // récupérer le id pour récupérer les infos du slide cliqué et les afficher dans CardFullPopup; depuis CardPreviewBig et CardPreviewSmall
-    setClickedcard(card);
-    setShowCardFullPopup(true);
-    document.getElementsByClassName("App")[0].style.position = "fixed";
-    document.getElementsByClassName("App")[0].style.overflow = "hidden";
-  };
-
-  const handleCloseCardFullPopupClick = (e) => {
-    document.getElementsByClassName("App")[0].style.position = "static";
-    document.getElementsByClassName("App")[0].style.overflow = "visible";
-    e.target.classList.remove("active");
-    setClickedcard(null);
-
-    setShowCardFullPopup(false);
-  };
+  });
 
   const goPreviousCard = (currentCard) => {
     const indexOfCurrentCard = cardsArray.indexOf(currentCard);
@@ -60,69 +40,23 @@ const CardGridList = ({ cardsSize, cardsNumber }) => {
   };
 
   return (
-    <>
-      {/* {cardPreviewSize === "small" ? (
-        <div className="CardGridList">
-          <div className="CardGridList__wrapper--small">
-            {cardsArray.map((card) => (
-              <CardPreviewSmall
-                handleCardFullPopupClick={handleCardFullPopupClick}
-                card={card}
-                key={card.id}
-              />
-            ))}
-          </div>
-          <CardFullPopup
-            showCardFullPopup={showCardFullPopup}
-            clickedcard={clickedcard}
-            handleCloseCardFullPopupClick={handleCloseCardFullPopupClick}
-            goPreviousCard={goPreviousCard}
-            goNextCard={goNextCard}
-          />
-        </div>
-      ) : (
-        <div className="CardGridList">
-          <div className="CardGridList__wrapper--big">
-            {cardsArray.map((card) => (
-              <CardPreviewBig
-                handleCardFullPopupClick={handleCardFullPopupClick}
-                card={card}
-                key={card.id}
-              />
-            ))}
-          </div>
-          <CardFullPopup
-            showCardFullPopup={showCardFullPopup}
-            clickedcard={clickedcard}
-            handleCloseCardFullPopupClick={handleCloseCardFullPopupClick}
-            goPreviousCard={goPreviousCard}
-            goNextCard={goNextCard}
-          />
-        </div>
-      )} */}
-      <div className="CardGridList">
-        <div
-          className={`CardGridList__wrapper${
-            cardPreviewSize === "small" ? "--small" : "--big"
-          }`}
-        >
-          {cardsArray.map((card) => (
-            <CardPreviewSmall
-              handleCardFullPopupClick={handleCardFullPopupClick}
-              card={card}
-              key={card.id}
-            />
-          ))}
-        </div>
-        <CardFullPopup
-          showCardFullPopup={showCardFullPopup}
-          clickedcard={clickedcard}
-          handleCloseCardFullPopupClick={handleCloseCardFullPopupClick}
-          goPreviousCard={goPreviousCard}
-          goNextCard={goNextCard}
-        />
+    <div className="CardGridList">
+      <div
+        className={`CardGridList__wrapper${
+          cardPreviewSize === "small" ? "--small" : "--big"
+        }`}
+      >
+        {cardsArray.map((card) => (
+          <CardPreviewSmall card={card} key={card.id} />
+        ))}
       </div>
-    </>
+      <CardFullPopup
+        showCardFullPopup={showCardFullPopup}
+        clickedcard={clickedcard}
+        goPreviousCard={goPreviousCard}
+        goNextCard={goNextCard}
+      />
+    </div>
   );
 };
 

@@ -1,6 +1,13 @@
 // Slider pour la CardFullPopup et aussi pour le mode plein écran
 
 import React, { Fragment, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { selectClickedCardSlides } from "../../../redux/cards/cards-selectors";
+import { selectFullscreen } from "../../../redux/layout/layout-selectors";
+import {
+  closeFullscreen,
+  showFullscreen,
+} from "../../../redux/layout/layout-actions";
 
 import { ReactComponent as ChevronLeft } from "../../../assets/images/chevron-back.svg";
 import { ReactComponent as ChevronLeftWhite } from "../../../assets/images/chevron-back-white.svg";
@@ -9,20 +16,23 @@ import { ReactComponent as ChevronRightWhite } from "../../../assets/images/chev
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as FullscreenLogo } from "../../../assets/images/fullscreen.svg";
 
-import "./CardSliderFullCard.scss";
+import "./CardSliderPopup.scss";
 
-const CardSlider = ({ clickedcardSlides }) => {
+const CardSliderPopup = () => {
+  const clickedCardSlides = useSelector(selectClickedCardSlides);
+  const isFullScreen = useSelector(selectFullscreen);
+  const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isFullScreen, setIsFullScreen] = useState(false);
+  // const [isFullScreen, setIsFullScreen] = useState(false);
 
   useEffect(() => {
     setActiveIndex(0);
-  }, [clickedcardSlides]);
+  }, [clickedCardSlides]);
 
   const goToPrevSlide = (e) => {
     let index = activeIndex;
     // let { slides } = props;
-    let slidesLength = clickedcardSlides.length;
+    let slidesLength = clickedCardSlides.length;
     if (index < 1) {
       index = slidesLength;
     }
@@ -33,7 +43,7 @@ const CardSlider = ({ clickedcardSlides }) => {
   const goToNextSlide = (e) => {
     let index = activeIndex;
     // let { slides } = props;
-    let slidesLength = clickedcardSlides.length - 1;
+    let slidesLength = clickedCardSlides.length - 1;
     if (index === slidesLength) {
       index = -1;
     }
@@ -45,15 +55,25 @@ const CardSlider = ({ clickedcardSlides }) => {
     setActiveIndex(index);
   };
 
-  const handleFullScreen = () => {
-    setIsFullScreen(true);
-    document.querySelector(".CardSliderLarge").requestFullscreen();
-  };
+  // detecter fullscreen : si non, alors actualisation state
+  const onFullScreenChange = () => {
+    const fullscreenElement =
+      document.fullscreenElement ||
+      document.mozFullScreenElement ||
+      document.webkitFullscreenElement;
 
-  const closeFullScreen = () => {
-    setIsFullScreen(false);
-    document.exitFullscreen();
+    // if in fullscreen mode fullscreenElement won't be null
+    if (!fullscreenElement) {
+      dispatch(closeFullscreen());
+    }
   };
+  document.addEventListener("fullscreenchange", onFullScreenChange, false);
+  document.addEventListener(
+    "webkitfullscreenchange",
+    onFullScreenChange,
+    false
+  );
+  document.addEventListener("mozfullscreenchange", onFullScreenChange, false);
 
   return (
     <div className="CardSliderLarge">
@@ -61,7 +81,7 @@ const CardSlider = ({ clickedcardSlides }) => {
         <Fragment>
           <div
             className="CardSliderLarge__fullscreen-close"
-            onClick={closeFullScreen}
+            onClick={() => dispatch(closeFullscreen())}
           >
             <CloseLogo />
           </div>
@@ -79,7 +99,7 @@ const CardSlider = ({ clickedcardSlides }) => {
 
           <div className="CardSliderLarge__indicators--fullscreen">
             {`${activeIndex + 1} / ${
-              clickedcardSlides && clickedcardSlides.length
+              clickedCardSlides && clickedCardSlides.length
             }`}
           </div>
         </Fragment>
@@ -97,8 +117,8 @@ const CardSlider = ({ clickedcardSlides }) => {
           />
 
           <ul className="CardSliderLarge__indicators">
-            {clickedcardSlides &&
-              clickedcardSlides.map((slide, index) => (
+            {clickedCardSlides &&
+              clickedCardSlides.map((slide, index) => (
                 <li
                   key={index}
                   index={index}
@@ -121,8 +141,8 @@ const CardSlider = ({ clickedcardSlides }) => {
         </Fragment>
       )}
       <ul className="CardSliderLarge__slides">
-        {clickedcardSlides &&
-          clickedcardSlides.map((slide, index) => (
+        {clickedCardSlides &&
+          clickedCardSlides.map((slide, index) => (
             <img
               className={
                 index === activeIndex
@@ -140,10 +160,10 @@ const CardSlider = ({ clickedcardSlides }) => {
       </ul>
       <FullscreenLogo
         className="CardSliderLarge__fullscreen-logo"
-        onClick={handleFullScreen}
+        onClick={() => dispatch(showFullscreen())}
       />
     </div>
   );
 };
 
-export default CardSlider;
+export default CardSliderPopup;

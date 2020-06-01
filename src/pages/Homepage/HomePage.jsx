@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import HomeHeader from "../../components/LayoutComponents/HomeHeader/HomeHeader";
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
 import CardFullPopup from "../../components/CardsComponents/CardFullPopup/CardFullPopup";
@@ -12,16 +13,23 @@ import { ReactComponent as RechercheIllustration } from "../../assets/images/ill
 import { ReactComponent as GrilleIllustration } from "../../assets/images/illustration-grille.svg";
 import { ReactComponent as SuccessIllustration } from "../../assets/images/illustration-success.svg";
 
+import { setClickedCard } from "../../redux/cards/cards-actions";
+import { selectClickedCard } from "../../redux/cards/cards-selectors";
+import { showPopupCard } from "../../redux/layout/layout-actions";
+import { selectShowPopupCard } from "../../redux/layout/layout-selectors";
+
 import "./HomePage.scss";
 
 const HomePage = () => {
-  const [showCardFullPopup, setShowCardFullPopup] = useState(false);
-  const [clickedCard, setClickedCard] = useState(null);
+  const clickedCard = useSelector(selectClickedCard);
+  const popupShown = useSelector(selectShowPopupCard);
+  // const [showCardFullPopup, setShowCardFullPopup] = useState(false);
+  // const [clickedCard, setClickedCard] = useState(null);
 
   const handleCardFullPopupClick = (etarget) => {
     // récupérer le id pour récupérer les infos du slide cliqué et les afficher dans CardFullPopup
     setClickedCard(etarget);
-    setShowCardFullPopup(true);
+    // setShowCardFullPopup(true);
     document.getElementsByClassName("App")[0].style.position = "fixed";
     document.getElementsByClassName("App")[0].style.overflow = "hidden";
   };
@@ -31,7 +39,7 @@ const HomePage = () => {
     document.getElementsByClassName("App")[0].style.overflow = "visible";
     e.target.classList.remove("active");
 
-    setShowCardFullPopup(false);
+    // setShowCardFullPopup(false);
   };
 
   return (
@@ -40,7 +48,7 @@ const HomePage = () => {
       {/* <CardGridList cardsSize="small" cardsNumber={8} /> */}
       <CardGridList cardsSize="big" cardsNumber={6} />
       <CardFullPopup
-        showCardFullPopup={showCardFullPopup}
+        showPopupCard={showPopupCard}
         clickedCard={clickedCard}
         handleCloseCardFullPopupClick={handleCloseCardFullPopupClick}
       />
@@ -134,5 +142,14 @@ const HomePage = () => {
     </div>
   );
 };
+
+// const mapDispatchToProps = (dispatch) => ({
+//   showPopupCard: () => dispatch(showPopupCard()),
+// });
+
+// const mapStateToProps = (state) => ({
+//   clickedCard: selectClickedCard(state),
+//   popupShown: selectShowPopupCard(state),
+// });
 
 export default HomePage;

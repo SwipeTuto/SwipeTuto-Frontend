@@ -1,0 +1,12 @@
+import { createSelector } from 'reselect'
+
+export const selectLayout = state => state.layout;
+export const selectShowPopupCard = createSelector(
+  [selectLayout],
+  layout => layout.popupShown
+)
+
+export const selectFullscreen = createSelector(
+  [selectLayout],
+  layout => layout.fullscreen
+)

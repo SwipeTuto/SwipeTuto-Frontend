@@ -1,0 +1,4 @@
+export const CardsActionTypes = {
+  SET_CLICKED_CARD: 'SET_CLICKED_CARD',
+  SET_NO_CLICKED_CARD: 'SET_NO_CLICKED_CARD'
+}

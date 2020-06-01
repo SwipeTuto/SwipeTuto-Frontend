@@ -1,33 +1,4 @@
-// Simule l'envoi de plusieurs slides
-
-import img1 from "./assets/images/slide-test/img1.png";
-import img2 from "./assets/images/slide-test/img2.png";
-import img3 from "./assets/images/slide-test/img3.png";
-import img4 from "./assets/images/slide-test/img4.png";
-import img5 from "./assets/images/slide-test/img5.png";
-import img6 from "./assets/images/slide-test/img6.png";
-import img7 from "./assets/images/slide-test/img7.png";
-import img8 from "./assets/images/slide-test/img8.png";
-import img9 from "./assets/images/slide-test/img9.png";
-
-import imga from "./assets/images/slide-test-2/imga.png";
-import imgb from "./assets/images/slide-test-2/imgb.png";
-import imgc from "./assets/images/slide-test-2/imgc.png";
-import imgd from "./assets/images/slide-test-2/imgd.png";
-import imge from "./assets/images/slide-test-2/imge.png";
-import imgf from "./assets/images/slide-test-2/imgf.png";
-import imgg from "./assets/images/slide-test-2/imgg.png";
-
-import aa from "./assets/images/slide-test-3/aa.png";
-import bb from "./assets/images/slide-test-3/bb.png";
-import cc from "./assets/images/slide-test-3/cc.png";
-import dd from "./assets/images/slide-test-3/dd.png";
-import ee from "./assets/images/slide-test-3/ee.png";
-import ff from "./assets/images/slide-test-3/ff.png";
-import gg from "./assets/images/slide-test-3/gg.png";
-import hh from "./assets/images/slide-test-3/hh.png";
-
-const SLIDES_DATA_TEST = {
+{
   "count": 3,
   "next": null,
   "previous": null,
@@ -62,31 +33,31 @@ const SLIDES_DATA_TEST = {
       },
       "media_image": [
         {
-          "image": img1
+          "image": "/media/Media%20object%20(None)/img1.png"
         },
         {
-          "image": img2
+          "image": "/media/Media%20object%20(None)/img2.png"
         },
         {
-          "image": img3
+          "image": "/media/Media%20object%20(None)/img3.png"
         },
         {
-          "image": img4
+          "image": "/media/Media%20object%20(None)/img4.png"
         },
         {
-          "image": img5
+          "image": "/media/Media%20object%20(None)/img5.png"
         },
         {
-          "image": img6
+          "image": "/media/Media%20object%20(None)/img6.png"
         },
         {
-          "image": img7
+          "image": "/media/Media%20object%20(None)/img7.png"
         },
         {
-          "image": img8
+          "image": "/media/Media%20object%20(None)/img8.png"
         },
         {
-          "image": img9
+          "image": "/media/Media%20object%20(None)/img9.png"
         }
       ]
     },
@@ -123,25 +94,25 @@ const SLIDES_DATA_TEST = {
       },
       "media_image": [
         {
-          "image": imga
+          "image": "/media/Media%20object%20(None)/imga.png"
         },
         {
-          "image": imgb
+          "image": "/media/Media%20object%20(None)/imgb.png"
         },
         {
-          "image": imgc
+          "image": "/media/Media%20object%20(None)/imgc.png"
         },
         {
-          "image": imgd
+          "image": "/media/Media%20object%20(None)/imgd.png"
         },
         {
-          "image": imge
+          "image": "/media/Media%20object%20(None)/imge.png"
         },
         {
-          "image": imgf
+          "image": "/media/Media%20object%20(None)/imgf.png"
         },
         {
-          "image": imgg
+          "image": "/media/Media%20object%20(None)/imgg.png"
         }
       ]
     },
@@ -178,182 +149,30 @@ const SLIDES_DATA_TEST = {
       },
       "media_image": [
         {
-          "image": aa
+          "image": "/media/Media%20object%20(None)/aa.png"
         },
         {
-          "image": bb
+          "image": "/media/Media%20object%20(None)/bb.png"
         },
         {
-          "image": cc
+          "image": "/media/Media%20object%20(None)/cc.png"
         },
         {
-          "image": dd
+          "image": "/media/Media%20object%20(None)/dd.png"
         },
         {
-          "image": ee
+          "image": "/media/Media%20object%20(None)/ee.png"
         },
         {
-          "image": ff
+          "image": "/media/Media%20object%20(None)/ff.png"
         },
         {
-          "image": gg
+          "image": "/media/Media%20object%20(None)/gg.png"
         },
         {
-          "image": hh
+          "image": "/media/Media%20object%20(None)/hh.png"
         }
       ]
     }
   ]
 }
-
-export default SLIDES_DATA_TEST;
-
-
-// const SLIDES_DATA_TEST =
-//   [
-//     {
-//       id: 1,
-//       created_at: new Date(1590653037626),
-//       title: "Icones gratuites avec ionicons super simple d'installation et d'utilisation",
-//       author: "Pierre",
-//       category: "design",
-//       langage: 'autre',
-//       tags: [
-//         "logo",
-//         "icones",
-//         "gratuit",
-//         "ionicons"
-//       ],
-//       slides: [img1, img2, img3, img4, img5, img6, img7, img8, img9],
-      // description: " "
-//     },
-//     {
-//       id: 2,
-//       created_at: new Date(1590653037626),
-//       title: "Top 5 des banques d'images gratuites",
-//       author: "Jean-eudes de la place",
-//       category: "design",
-//       langage: 'autre',
-//       tags: [
-//         "images",
-//         "banque",
-//         "gratuit",
-//         "ressource"
-//       ],
-//       slides: [imga, imgb, imgc, imgd, imge, imgf, imgg],
-//       description: ""
-//     },
-//     {
-//       id: 3,
-//       created_at: new Date(1590653037626),
-//       title: "Les objets Javascript",
-//       author: "Marc",
-//       category: "theorie",
-//       langage: 'javascript',
-//       tags: [
-//         "javascript",
-//         "objet",
-//         "code",
-//         "oop"
-//       ],
-//       slides: [aa, bb, cc, dd, ee, ff, gg, hh],
-//       description: " "
-//     },
-//     {
-//       id: 4,
-//       created_at: new Date(1590653037626),
-//       title: "Icones gratuites avec ionicons blablajfefpf jddp odpd mmflf jsdjosfk fjofj sodfjsf fjdosfdkjfl fodfkdsqkf sdfksofk sofk fksfsk fqojfofj jsfjqksfj fsfjosf",
-//       author: "Pierre",
-//       category: "design",
-//       langage: 'autre',
-//       tags: [
-//         "logo",
-//         "icones",
-//         "gratuit",
-//         "ionicons"
-//       ],
-//       slides: [img1, img2, img3, img4, img5, img6, img7, img8, img9],
-//       description: " "
-//     },
-//     {
-//       id: 5,
-//       created_at: new Date(1590653037626),
-//       title: "Top 5 des banques d'images gratuites",
-//       author: "Jean-eudes de la place",
-//       category: "design",
-//       langage: 'autre',
-//       tags: [
-//         "images",
-//         "banque",
-//         "gratuit",
-//         "ressource"
-//       ],
-//       slides: [imga, imgb, imgc, imgd, imge, imgf, imgg],
-//       description: " "
-//     },
-//     {
-//       id: 6,
-//       created_at: new Date(1590653037626),
-//       title: "Les objets Javascript",
-//       author: "Marc",
-//       category: "theorie",
-//       langage: 'javascript',
-//       tags: [
-//         "javascript",
-//         "objet",
-//         "code",
-//         "oop"
-//       ],
-//       slides: [aa, bb, cc, dd, ee, ff, gg, hh],
-//       description: ""
-//     },
-//     {
-//       id: 7,
-//       created_at: new Date(1590653037626),
-//       title: "Icones gratuites avec ionicons blablajfefpf jddp odpd mmflf jsdjosfk fjofj sodfjsf fjdosfdkjfl fodfkdsqkf sdfksofk sofk fksfsk fqojfofj jsfjqksfj fsfjosf",
-//       author: "Pierre",
-//       category: "design",
-//       langage: 'autre',
-//       tags: [
-//         "logo",
-//         "icones",
-//         "gratuit",
-//         "ionicons"
-//       ],
-//       slides: [img1, img2, img3, img4, img5, img6, img7, img8, img9],
-//       description: " "
-//     },
-//     {
-//       id: 8,
-//       created_at: new Date(1590653037626),
-//       title: "Top 5 des banques d'images gratuites",
-//       author: "Jean-eudes de la place",
-//       category: "design",
-//       langage: 'autre',
-//       tags: [
-//         "images",
-//         "banque",
-//         "gratuit",
-//         "ressource"
-//       ],
-//       slides: [imga, imgb, imgc, imgd, imge, imgf, imgg],
-//       description: ""
-//     },
-//     {
-//       id: 9,
-//       created_at: new Date(1590653037626),
-//       title: "Les objets Javascript",
-//       author: "Marc",
-//       category: "theorie",
-//       langage: 'javascript',
-//       tags: [
-//         "javascript",
-//         "objet",
-//         "code",
-//         "oop"
-//       ],
-//       slides: [aa, bb, cc, dd, ee, ff, gg, hh],
-//       description: " "
-//     }
-//   ]
-

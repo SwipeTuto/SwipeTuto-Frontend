@@ -14,11 +14,11 @@ const RessourcesPage = () => {
     let goTopButton = document.querySelector(".goTop__button");
     console.log(goTopButton);
     if (
-      document.body.scrollTop > 20 ||
-      document.documentElement.scrollTop > 20
+      goTopButton &&
+      (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20)
     ) {
       goTopButton.style.display = "block";
-    } else {
+    } else if (goTopButton) {
       goTopButton.style.display = "none";
     }
   };

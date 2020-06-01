@@ -2,6 +2,7 @@ import { CardsActionTypes } from './cards-types'
 
 const INITIAL_STATE = {
   clickedCard: null,
+  categoryFilter: "all"
 };
 
 const cardsReducer = (state = INITIAL_STATE, action) => {
@@ -15,6 +16,11 @@ const cardsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         clickedCard: null,
+      };
+    case CardsActionTypes.SET_CATEGORY_FILTER:
+      return {
+        ...state,
+        categoryFilter: action.payload,
       };
     default:
       return state;

@@ -1,16 +1,30 @@
 // Présent dans App.js
 
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/images/navtop_logo.png";
 import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg";
 import CustomButton from "../CustomButton/CustomButton";
+import { selectCurrentUser } from "../../../redux/user/user-selectors";
+import { setCurrentUser } from "../../../redux/user/user-actions";
+import { toggleUserNav } from "../../../redux/layout/layout-actions";
+import { selectUserNav } from "../../../redux/layout/layout-selectors";
 
 import "./NavTop.scss";
 
-const NavTop = ({ avatar }) => {
+const NavTop = () => {
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
+  const currentUserNav = useSelector(selectUserNav);
   const [search, setSearch] = useState("");
-  const [avatarUser, setAvatarUser] = useState(null);
+
+  const getUser = JSON.parse(sessionStorage.getItem("user"));
+
+  useEffect(() => {
+    getUser && dispatch(setCurrentUser(getUser));
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,8 +38,6 @@ const NavTop = ({ avatar }) => {
     setSearch(searchText);
   };
 
-  // useEffect(() => (avatar ? setAvatarUser(avatar) : logo), [avatarUser]);
-
   // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription
   return (
     <div className="NavTop">
@@ -36,11 +48,11 @@ const NavTop = ({ avatar }) => {
         <Link className="NavTop__link" to="/cards">
           Cartes
         </Link>
-        <Link className="NavTop__link" to="/ressources">
-          Ressources
-        </Link>
         <Link className="NavTop__link" to="/cards">
           Catégories
+        </Link>
+        <Link className="NavTop__link" to="/ressources">
+          Ressources
         </Link>
       </div>
       <div className="NavTop__center">
@@ -59,14 +71,19 @@ const NavTop = ({ avatar }) => {
         </form>
       </div>
       <div className="NavTop__right">
-        {avatarUser ? (
-          <Link to="/" className="NavTop__logo">
-            <img
-              className="NavTop__logo--image"
-              src={avatarUser}
-              alt="user avatar"
-            />
-          </Link>
+        {currentUser && currentUser.avatar ? (
+          <>
+            <div
+              onClick={() => dispatch(toggleUserNav())}
+              className="NavTop__avatar"
+            >
+              <img
+                className="NavTop__avatar--userAvatar"
+                src={currentUser.avatar}
+                alt="user avatar"
+              />
+            </div>
+          </>
         ) : (
           <>
             <Link className="NavTop__linkConnexion" to="/login">
@@ -78,6 +95,22 @@ const NavTop = ({ avatar }) => {
           </>
         )}
       </div>
+      {currentUserNav ? (
+        <div className="NavTop__userMenu">
+          <p className="NavTop__userMenu--text">Bonjour</p>
+          <p className="NavTop__userMenu--text">{currentUser.username}</p>
+          <span className="horizontal-separation-primary-light"></span>
+          <Link className="NavTop__userMenu--link" to="/">
+            Compte
+          </Link>
+          <Link className="NavTop__userMenu--link" to="/">
+            Paramètres
+          </Link>
+          <Link className="NavTop__userMenu--link" to="/">
+            Deconnexion
+          </Link>
+        </div>
+      ) : null}
     </div>
   );
 };

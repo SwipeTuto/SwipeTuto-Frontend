@@ -11,38 +11,34 @@ $black: #000000;
 
 $box-radius: 3px;
 $card-border-radius: 6px;
-$button-radius: 30px;
+$button-radius: 3rem;
 
-$tag-shadow: 0 2px 3px rgba($grey-dark, 0.3);
+$pill-shadow: 0 2px 3px $grey-dark;
 $card-shadow: 0 4px 5px $grey-dark;
 $card-shadow-2: 0 0px 8px rgba($grey-dark, 0.4);
-$inner-component-padding: 4rem 17vw;
+$inner-component-padding: 7rem 17vw;
 
 @mixin input-style {
   background: $grey-light;
   border: 1px solid $grey-medium;
-  border-radius: 30px;
-  font-size: 0.8rem;
-  line-height: 1.2rem;
+  border-radius: $button-radius;
 }
 
 @mixin big-tag-style {
-  padding: 0.4rem 1.8rem;
-  background-image: linear-gradient(120deg, $grey-light 75%, $grey-medium 100%);
-  border-radius: $button-radius;
-  border: 0.5px solid $grey-dark;
-  font-size: 1rem;
+  padding: 0.4rem 1.4rem;
+
+  transform: skew(-5deg);
+  color: white;
+  font-size: 1.2rem;
   box-shadow: none;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 @mixin small-tag-style {
-  padding: 0.2rem 0.9rem;
+  padding: 0.2rem 0.7rem;
   background-image: linear-gradient(120deg, $grey-light 75%, $grey-medium 100%);
-  border-radius: $button-radius;
-  border: 0.5px solid $grey-dark;
-  font-size: 0.5rem;
+  font-size: 0.8rem;
   box-shadow: none;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -50,7 +46,7 @@ $inner-component-padding: 4rem 17vw;
 
 @mixin tag-hover-style {
   transform: translateY(-2px);
-  box-shadow: $tag-shadow;
+  box-shadow: $pill-shadow;
 }
 
 @mixin pale-underline {

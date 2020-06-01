@@ -3,6 +3,7 @@ import { LayoutActionTypes } from './layout-types'
 const INITIAL_STATE = {
   popupShown: false,
   fullscreen: false,
+  showUserNav: false
 };
 
 const layoutReducer = (state = INITIAL_STATE, action) => {
@@ -34,6 +35,11 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         fullscreen: false,
+      };
+    case LayoutActionTypes.TOGGLE_USER_NAV:
+      return {
+        ...state,
+        showUserNav: !state.showUserNav,
       };
     default:
       return state;

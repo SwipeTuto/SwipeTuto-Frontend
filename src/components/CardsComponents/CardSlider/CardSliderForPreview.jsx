@@ -1,29 +1,15 @@
 import React, { useState } from "react";
-// import ImageGallery from "react-image-gallery";
 
 import { ReactComponent as ChevronLeft } from "../../../assets/images/chevron-back.svg";
 import { ReactComponent as ChevronRight } from "../../../assets/images/chevron-forward.svg";
-// import img1 from "../../../assets/images/slide-test/img1.png";
-// import img2 from "../../../assets/images/slide-test/img2.png";
-// import img3 from "../../../assets/images/slide-test/img3.png";
-// import img4 from "../../../assets/images/slide-test/img4.png";
-// import img5 from "../../../assets/images/slide-test/img5.png";
-// import img6 from "../../../assets/images/slide-test/img6.png";
-// import img7 from "../../../assets/images/slide-test/img7.png";
-// import img8 from "../../../assets/images/slide-test/img8.png";
-// import img9 from "../../../assets/images/slide-test/img9.png";
 
 import "./CardSliderForPreview.scss";
-
-// const slides = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
-// const slides = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
 
 const CardSliderForPreview = ({ cardSlides }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const goToPrevSlide = (e) => {
     let index = activeIndex;
-    // let { slides } = props;
     let slidesLength = cardSlides.length;
     if (index < 1) {
       index = slidesLength;
@@ -34,7 +20,6 @@ const CardSliderForPreview = ({ cardSlides }) => {
 
   const goToNextSlide = (e) => {
     let index = activeIndex;
-    // let { slides } = props;
     let slidesLength = cardSlides.length - 1;
     if (index === slidesLength) {
       index = -1;
@@ -84,8 +69,8 @@ const CardSliderForPreview = ({ cardSlides }) => {
             <li
               key={index}
               index={index}
-              activeIndex={activeIndex}
-              isActive={activeIndex === index}
+              // activeIndex={activeIndex}
+              // isactive={activeIndex === index}
               onClick={(e) => goToSlide(index)}
             >
               <a

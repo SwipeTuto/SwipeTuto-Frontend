@@ -2,6 +2,10 @@
 // Présent sur la Homepage "/" et la "/search" et par défaut sera en affichage "small" pour les cardPreview
 import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setClickedCard } from "../../../redux/cards/cards-actions";
+import { selectClickedCard } from "../../../redux/cards/cards-selectors";
+import { selectCategoryFilter } from "../../../redux/cards/cards-selectors";
 
 import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
 import CardPreviewBig from "../CardPreviewBig/CardPreviewBig";
@@ -12,10 +16,9 @@ import "./CardGridList.scss";
 import SLIDES_DATA_TEST from "../../../SLIDES_DATA_TEST.js"; //collection d'objets avec toutes les infos propres aux slides
 
 const CardGridList = ({ cardsSize, cardsNumber }) => {
+  const categoryFilter = useSelector(selectCategoryFilter);
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
   const [cardsArray, setcardsArray] = useState(SLIDES_DATA_TEST.results);
-  const [showCardFullPopup, setShowCardFullPopup] = useState(false);
-  const [clickedcard, setClickedcard] = useState(null);
 
   useEffect(() => setCardPreviewSize(cardsSize), [cardsSize]);
   useEffect(() => {
@@ -23,21 +26,7 @@ const CardGridList = ({ cardsSize, cardsNumber }) => {
       const cardsArrayCopy = cardsArray.slice(0, cardsNumber);
       setcardsArray(cardsArrayCopy);
     }
-  });
-
-  const goPreviousCard = (currentCard) => {
-    const indexOfCurrentCard = cardsArray.indexOf(currentCard);
-    if (indexOfCurrentCard <= 0) return;
-    const previousCard = cardsArray[indexOfCurrentCard - 1];
-    setClickedcard(previousCard);
-  };
-
-  const goNextCard = (currentCard) => {
-    const indexOfCurrentCard = cardsArray.indexOf(currentCard);
-    if (indexOfCurrentCard >= cardsArray.length - 1) return;
-    const nextCard = cardsArray[indexOfCurrentCard + 1];
-    setClickedcard(nextCard);
-  };
+  }, []);
 
   return (
     <div className="CardGridList">
@@ -46,16 +35,15 @@ const CardGridList = ({ cardsSize, cardsNumber }) => {
           cardPreviewSize === "small" ? "--small" : "--big"
         }`}
       >
-        {cardsArray.map((card) => (
-          <CardPreviewSmall card={card} key={card.id} />
-        ))}
+        {categoryFilter === "all"
+          ? cardsArray.map((card) => (
+              <CardPreviewSmall card={card} key={card.id} />
+            ))
+          : cardsArray
+              .filter((card) => card.categorie[0].name === categoryFilter)
+              .map((card) => <CardPreviewSmall card={card} key={card.id} />)}
       </div>
-      <CardFullPopup
-        showCardFullPopup={showCardFullPopup}
-        clickedcard={clickedcard}
-        goPreviousCard={goPreviousCard}
-        goNextCard={goNextCard}
-      />
+      <CardFullPopup cardsArray={cardsArray} />
     </div>
   );
 };

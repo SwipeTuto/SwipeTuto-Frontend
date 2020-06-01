@@ -2,9 +2,8 @@
 
 .CardSliderLarge {
   position: relative;
-  height: 100%;
-  width: 100%;
-  background-color: $black;
+  height: 500px;
+  width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,7 +13,7 @@
     top: 50%;
     transform: translateY(-50%);
     height: max-content;
-    width: 6rem;
+    width: 3.5rem;
     // stroke: $primary-dark;
     opacity: 1;
     cursor: pointer;
@@ -59,8 +58,8 @@
 
   &__fullscreen-logo {
     position: absolute;
-    top: 0;
-    left: calc(100% + 0.5rem);
+    top: -0.8rem;
+    left: calc(100% + 0.8rem);
     width: 3rem;
     height: 3rem;
     cursor: pointer;
@@ -81,11 +80,10 @@
   }
 
   &__indicators {
-    position: absolute;
-    top: 100%;
     padding: 0.6rem;
     width: 100%;
-    background-color: $primary-dark;
+    background-color: $black;
+    // border: 1px solid $grey-medium;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -133,12 +131,14 @@
 
     &:hover {
       opacity: 0.8;
+      background-color: $primary-light;
     }
 
     &--active {
       &,
       &:hover {
         opacity: 1;
+        background-color: $primary-light;
       }
     }
   }

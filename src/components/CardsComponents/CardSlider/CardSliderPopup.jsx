@@ -23,7 +23,6 @@ const CardSliderPopup = () => {
   const isFullScreen = useSelector(selectFullscreen);
   const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState(0);
-  // const [isFullScreen, setIsFullScreen] = useState(false);
 
   useEffect(() => {
     setActiveIndex(0);
@@ -31,7 +30,6 @@ const CardSliderPopup = () => {
 
   const goToPrevSlide = (e) => {
     let index = activeIndex;
-    // let { slides } = props;
     let slidesLength = clickedCardSlides.length;
     if (index < 1) {
       index = slidesLength;
@@ -42,7 +40,6 @@ const CardSliderPopup = () => {
 
   const goToNextSlide = (e) => {
     let index = activeIndex;
-    // let { slides } = props;
     let slidesLength = clickedCardSlides.length - 1;
     if (index === slidesLength) {
       index = -1;
@@ -115,29 +112,6 @@ const CardSliderPopup = () => {
             className="CardSliderLarge__chevron--fullpage chevron-right"
             onClick={(e) => goToNextSlide(e)}
           />
-
-          <ul className="CardSliderLarge__indicators">
-            {clickedCardSlides &&
-              clickedCardSlides.map((slide, index) => (
-                <li
-                  key={index}
-                  index={index}
-                  activeIndex={activeIndex}
-                  isActive={activeIndex === index}
-                  onClick={(e) => goToSlide(index)}
-                >
-                  <a
-                    className={
-                      index === activeIndex
-                        ? "CardSliderLarge__indicator CardSliderLarge__indicator--active"
-                        : "CardSliderLarge__indicator"
-                    }
-                    onClick={(e) => goToSlide(index)}
-                    href="#"
-                  />
-                </li>
-              ))}
-          </ul>
         </Fragment>
       )}
       <ul className="CardSliderLarge__slides">
@@ -151,13 +125,30 @@ const CardSliderPopup = () => {
               }
               key={index}
               index={index}
-              activeIndex={activeIndex}
               src={slide}
               slide={slide}
               alt="slide element"
             />
           ))}
       </ul>
+      {isFullScreen ? null : (
+        <ul className="CardSliderLarge__indicators">
+          {clickedCardSlides &&
+            clickedCardSlides.map((slide, index) => (
+              <li key={index} index={index} onClick={(e) => goToSlide(index)}>
+                <a
+                  className={
+                    index === activeIndex
+                      ? "CardSliderLarge__indicator CardSliderLarge__indicator--active"
+                      : "CardSliderLarge__indicator"
+                  }
+                  onClick={(e) => goToSlide(index)}
+                  href="#"
+                />
+              </li>
+            ))}
+        </ul>
+      )}
       <FullscreenLogo
         className="CardSliderLarge__fullscreen-logo"
         onClick={() => dispatch(showFullscreen())}

@@ -16,3 +16,5 @@ export const selectClickedCardSlides = createSelector(
     return slidesArray;
   }
 )
+
+export const selectCategoryFilter = state => state.cards.categoryFilter;

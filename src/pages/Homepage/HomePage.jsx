@@ -1,57 +1,32 @@
 // Présent dans App.js dans une Route ("/")
 
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+import { Link } from "react-router-dom";
 import HomeHeader from "../../components/LayoutComponents/HomeHeader/HomeHeader";
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
 import CardFullPopup from "../../components/CardsComponents/CardFullPopup/CardFullPopup";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
+import { setCategoryFilter } from "../../redux/cards/cards-actions";
 
 import { ReactComponent as QuestionIllustration } from "../../assets/images/illustration-question.svg";
-import { ReactComponent as RechercheIllustration } from "../../assets/images/illustration-recherche.svg";
 import { ReactComponent as GrilleIllustration } from "../../assets/images/illustration-grille.svg";
 import { ReactComponent as SuccessIllustration } from "../../assets/images/illustration-success.svg";
 
-import { setClickedCard } from "../../redux/cards/cards-actions";
-import { selectClickedCard } from "../../redux/cards/cards-selectors";
-import { showPopupCard } from "../../redux/layout/layout-actions";
-import { selectShowPopupCard } from "../../redux/layout/layout-selectors";
-
 import "./HomePage.scss";
+import SLIDES_DATA_TEST from "../../SLIDES_DATA_TEST";
 
 const HomePage = () => {
-  const clickedCard = useSelector(selectClickedCard);
-  const popupShown = useSelector(selectShowPopupCard);
-  // const [showCardFullPopup, setShowCardFullPopup] = useState(false);
-  // const [clickedCard, setClickedCard] = useState(null);
-
-  const handleCardFullPopupClick = (etarget) => {
-    // récupérer le id pour récupérer les infos du slide cliqué et les afficher dans CardFullPopup
-    setClickedCard(etarget);
-    // setShowCardFullPopup(true);
-    document.getElementsByClassName("App")[0].style.position = "fixed";
-    document.getElementsByClassName("App")[0].style.overflow = "hidden";
-  };
-
-  const handleCloseCardFullPopupClick = (e) => {
-    document.getElementsByClassName("App")[0].style.position = "static";
-    document.getElementsByClassName("App")[0].style.overflow = "visible";
-    e.target.classList.remove("active");
-
-    // setShowCardFullPopup(false);
-  };
+  const dispatch = useDispatch();
+  dispatch(setCategoryFilter("all"));
+  const [cardsArray, setcardsArray] = useState(SLIDES_DATA_TEST.results);
 
   return (
     <div className="HomePage">
       <HomeHeader />
-      {/* <CardGridList cardsSize="small" cardsNumber={8} /> */}
       <CardGridList cardsSize="big" cardsNumber={6} />
-      <CardFullPopup
-        showPopupCard={showPopupCard}
-        clickedCard={clickedCard}
-        handleCloseCardFullPopupClick={handleCloseCardFullPopupClick}
-      />
+      <CardFullPopup cardsArray={cardsArray} />
 
       <div className="About">
         <div className="about-section section-1">
@@ -142,14 +117,5 @@ const HomePage = () => {
     </div>
   );
 };
-
-// const mapDispatchToProps = (dispatch) => ({
-//   showPopupCard: () => dispatch(showPopupCard()),
-// });
-
-// const mapStateToProps = (state) => ({
-//   clickedCard: selectClickedCard(state),
-//   popupShown: selectShowPopupCard(state),
-// });
 
 export default HomePage;

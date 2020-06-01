@@ -46,21 +46,17 @@
     text-align: center;
     justify-content: center;
     color: $white;
-    padding: 0.8rem;
+    padding: 0 1.2rem 1rem 1.2rem;
     position: absolute;
     top: 100%;
     left: 0;
     transition: all 0.2s ease;
-
-    & .title.title-1 {
-      font-size: 1rem;
-    }
   }
 
   &__details {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.3rem 0.5rem;
+    padding: 0.35rem 1rem;
   }
 }

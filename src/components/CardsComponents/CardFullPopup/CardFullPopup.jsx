@@ -29,16 +29,24 @@ import "./CardFullPopup.scss";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
 // handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
-const CardFullPopup = ({
-  showCardFullPopup,
-  handleCloseCardFullPopupClick,
-
-  goPreviousCard,
-  goNextCard,
-}) => {
+const CardFullPopup = ({ cardsArray }) => {
   const clickedCard = useSelector(selectClickedCard);
   const popupShown = useSelector(selectShowPopupCard);
   const dispatch = useDispatch();
+
+  const goPreviousCard = () => {
+    const indexOfCurrentCard = cardsArray.indexOf(clickedCard);
+    if (indexOfCurrentCard <= 0) return;
+    const previousCard = cardsArray[indexOfCurrentCard - 1];
+    dispatch(setClickedCard(previousCard));
+  };
+
+  const goNextCard = () => {
+    const indexOfCurrentCard = cardsArray.indexOf(clickedCard);
+    if (indexOfCurrentCard >= cardsArray.length - 1) return;
+    const nextCard = cardsArray[indexOfCurrentCard + 1];
+    dispatch(setClickedCard(nextCard));
+  };
 
   return (
     <div
@@ -72,7 +80,9 @@ const CardFullPopup = ({
             <p>{clickedCard && clickedCard.description}</p>
           </div>
           <div className="grid__aside-infos-grid">
-            <UserNameAndAvatarBig />
+            <UserNameAndAvatarBig
+              authorName={clickedCard && clickedCard.user.username}
+            />
             <div className="infos__published-date">
               <p>Publié le :</p>
               <p>
@@ -84,7 +94,7 @@ const CardFullPopup = ({
             </div>
             <span className="horizontal-separation-primary-light"></span>
             <div className="infos__tags">
-              <h3 className="title title-3">Tags du Post :</h3>
+              <h3 className="title title-4">Tags du Post :</h3>
               <div className="infos__tags--container">
                 {clickedCard &&
                   clickedCard.tag.map((tag) => (
@@ -94,7 +104,7 @@ const CardFullPopup = ({
             </div>
             <span className="horizontal-separation-primary-light"></span>
             <div className="infos__autres-posts">
-              <h3 className="title title-3">Du même auteur :</h3>
+              <h3 className="title title-4">Du même auteur :</h3>
               <div className="autres-posts--grid">
                 {/* A chnger pour cliquable : */}
                 <div className="autres-posts--preview"></div>
@@ -105,7 +115,7 @@ const CardFullPopup = ({
             </div>
             <span className="horizontal-separation-primary-light"></span>
             <div className="infos__social">
-              <h3 className="title title-3">Réseaux sociaux :</h3>
+              <h3 className="title title-4">Réseaux sociaux :</h3>
               <div className="social-grid">
                 <LogoYoutube className="social-grid--item" />
                 <LogoGithub className="social-grid--item" />
@@ -116,28 +126,18 @@ const CardFullPopup = ({
           </div>
           <div className="grid__commentaires">
             <h1 className="title title-1">Commentaires</h1>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit
-            recusandae nulla cum illo harum totam magni optio quas earum aliquid
-            eius, doloribus itaque? Optio at unde ex ullam, assumenda
-            perspiciatis numquam ipsam, minus distinctio placeat temporibus
-            laborum maiores ad pariatur. Porro inventore quae non doloribus cum
-            possimus veniam quia voluptatibus molestias! Labore maxime iusto
-            nisi recusandae ex, molestiae saepe neque dolorem quo placeat,
-            excepturi cupiditate at perferendis obcaecati! Sunt sint voluptates
-            aperiam, excepturi unde voluptatibus, quaerat, aspernatur quasi
-            tempore harum nisi aut exercitationem possimus! Excepturi voluptates
-            minus dolorum maxime exercitationem quisquam aliquid in similique
-            alias. Et facilis voluptas culpa corporis!
+            Liste des commentaires
           </div>
         </div>
 
         <ChevronCircleRight
           className="nav__chevron nav__chevron--right"
-          onClick={() => goNextCard(clickedCard)}
+          // onClick={() => goNextCard()}
+          onClick={() => goNextCard()}
         />
         <ChevronCircleLeft
           className="nav__chevron nav__chevron--left"
-          onClick={() => goPreviousCard(clickedCard)}
+          onClick={() => goPreviousCard()}
         />
       </div>
     </div>

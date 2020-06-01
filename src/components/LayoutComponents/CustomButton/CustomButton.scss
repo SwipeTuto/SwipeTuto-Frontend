@@ -1,6 +1,8 @@
 @import "../../../variables.scss";
 
 .custom-button {
+  display: inline-block;
+  padding: 0.8rem 1.4rem;
   color: $white;
   border-radius: $box-radius;
   margin: 0 0.5rem;

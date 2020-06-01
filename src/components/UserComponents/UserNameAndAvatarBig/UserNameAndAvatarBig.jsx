@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./UserNameAndAvatarBig.scss";
 
 // Faire vérif taille username : si trop grand (à définir) tronquer avec "..."

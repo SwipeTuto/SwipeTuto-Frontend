@@ -10,3 +10,8 @@ export const selectFullscreen = createSelector(
   [selectLayout],
   layout => layout.fullscreen
 )
+
+export const selectUserNav = createSelector(
+  [selectLayout],
+  layout => layout.showUserNav
+)

@@ -1,16 +1,20 @@
 // Bar avec les items pour filtrer les slides
 import React, { useState } from "react";
 import "./FiltersBar.scss";
+import { useDispatch } from "react-redux";
+import { setCategoryFilter } from "../../../redux/cards/cards-actions";
 import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
 import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";
 
 const FiltersBar = ({ handleClickSize }) => {
-  const [searchFilter, setSearchFilter] = useState("all");
+  // const [searchFilter, setSearchFilter] = useState("all");
   // const [gridSize, setGridSize] = useState("small");
+  const dispatch = useDispatch();
 
   const handleClick = (e) => {
     const newSearchFilter = e.target.dataset.filter;
-    setSearchFilter(newSearchFilter);
+    // setSearchFilter(newSearchFilter);
+    dispatch(setCategoryFilter(newSearchFilter));
     const allFiltersItems = [
       ...document.querySelectorAll("button.FiltersBar__options--item"),
     ];
@@ -36,7 +40,7 @@ const FiltersBar = ({ handleClickSize }) => {
             </button>
             <button
               className="FiltersBar__options--item"
-              data-filter="theory"
+              data-filter="theorie"
               onClick={handleClick}
             >
               Théorie
@@ -57,7 +61,7 @@ const FiltersBar = ({ handleClickSize }) => {
             </button>
             <button
               className="FiltersBar__options--item"
-              data-filter="performance"
+              data-filter="performances"
               onClick={handleClick}
             >
               Performances
@@ -71,7 +75,7 @@ const FiltersBar = ({ handleClickSize }) => {
             </button>
             <button
               className="FiltersBar__options--item"
-              data-filter="other"
+              data-filter="autre"
               onClick={handleClick}
             >
               Autre

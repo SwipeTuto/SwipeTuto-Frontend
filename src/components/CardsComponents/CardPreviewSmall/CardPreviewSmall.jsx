@@ -8,20 +8,11 @@ import UserNameAndAvatarSmall from "../../UserComponents/UserNameAndAvatarSmall/
 
 import "./CardPreviewSmall.scss";
 
-const CardPreviewSmall = ({
-  handleCardFullPopupClick,
-  card,
-  // setClickedCard,
-  // showPopupCard,
-}) => {
+const CardPreviewSmall = ({ handleCardFullPopupClick, card }) => {
   const dispatch = useDispatch();
-  // Faire une vérification : si le titre > X caractères : le couper et remplacer par "..."
-  // Au clic doit renvoyer sur la page CardPage "/card/:id"
-  // Associer le slideid avec soit le id du slide soit le index de la liste des résultats de recherche (permettra navigation après)
   return (
     <div
       className="CardPreviewSmall"
-      // onClick={(e) => handleCardFullPopupClick(e.target, card)}
       onClick={() => {
         dispatch(setClickedCard(card));
         dispatch(showPopupCard());
@@ -31,8 +22,7 @@ const CardPreviewSmall = ({
       <div className="CardPreviewSmall__image">
         <img src={card.media_image[0].image} alt="slides presentation" />
         <div className="CardPreviewSmall__hover">
-          <h1 className="title title-1">{truncate(card.name, 60, false)}</h1>
-          {/* <h1 className="title title-1">{card.title}</h1> */}
+          <p>{truncate(card.name, 60, false)}</p>
         </div>
       </div>
       <div className="CardPreviewSmall__details">
@@ -43,10 +33,5 @@ const CardPreviewSmall = ({
     </div>
   );
 };
-
-const mapDispatchToProps = (dispatch) => ({
-  setClickedCard: (card) => dispatch(setClickedCard(card)),
-  showPopupCard: () => dispatch(showPopupCard()),
-});
 
 export default CardPreviewSmall;

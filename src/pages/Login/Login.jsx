@@ -1,7 +1,7 @@
 // Présent dans App.js dans une Route ("/")
 
 import React, { Fragment, useState } from "react";
-import CustomButton from "../../components/CustomButton/CustomButton";
+import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { loginGoogle } from '../../services/userService'
 import { langageList } from '../../services/searchService'
 

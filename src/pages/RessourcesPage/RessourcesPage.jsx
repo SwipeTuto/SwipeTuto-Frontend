@@ -10,12 +10,9 @@ const RessourcesPage = () => {
     scrollFunction();
   };
 
-  let goTopButton;
-  useEffect(() => {
-    goTopButton = document.querySelector(".goTop__button");
-  });
-
   const scrollFunction = () => {
+    let goTopButton = document.querySelector(".goTop__button");
+    console.log(goTopButton);
     if (
       document.body.scrollTop > 20 ||
       document.documentElement.scrollTop > 20

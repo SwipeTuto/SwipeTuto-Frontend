@@ -14,8 +14,12 @@ const NavTop = ({ avatar }) => {
   console.log('avatar', avatar)
  
   const [search, setSearch] = useState("");
+<<<<<<< HEAD
   const [test, setTest] = useState(null)
 
+=======
+  const [avatarUser, setAvatarUser] = useState(null);
+>>>>>>> a64c162192726d3fb56fcd2bfce366754e927e2c
 
   useEffect(() => {
    
@@ -36,11 +40,13 @@ const NavTop = ({ avatar }) => {
     setSearch(searchText);
   };
 
-  console.log("TOP OK");
+  // useEffect(() => (avatar ? setAvatarUser(avatar) : logo), [avatarUser]);
+
   // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription
   return (
     <div className="NavTop">
       <div className="NavTop__left">
+<<<<<<< HEAD
         <Link to="/" className="NavTop__logo">
           <img className="NavTop__logo--image" src={test ? test : logo} alt="" />
           <img
@@ -49,18 +55,26 @@ const NavTop = ({ avatar }) => {
             alt=""
           />
         </Link>
+=======
+>>>>>>> a64c162192726d3fb56fcd2bfce366754e927e2c
         <Link className="NavTop__link" to="/">
           Accueil
         </Link>
-        <Link className="NavTop__link" to="/search">
+        <Link className="NavTop__link" to="/cards">
           Cartes
         </Link>
         <Link className="NavTop__link" to="/ressources">
           Ressources
         </Link>
+        <Link className="NavTop__link" to="/cards">
+          Catégories
+        </Link>
       </div>
       <div className="NavTop__center">
         <form className="NavTop__search" onSubmit={handleSubmit}>
+          <button type="submit" className="NavTop__button">
+            <SearchLogo className="NavTop__button--logo" />
+          </button>
           <input
             className="NavTop__input"
             id="kword"
@@ -69,18 +83,27 @@ const NavTop = ({ avatar }) => {
             onChange={handleChange}
             value={search}
           />
-          <button type="submit" className="NavTop__button">
-            <SearchLogo className="NavTop__button--logo" />
-          </button>
         </form>
       </div>
       <div className="NavTop__right">
-        <CustomButton color="dark">
-          <Link className="NavTop__link" to="/login">
-            Connexion
+        {avatarUser ? (
+          <Link to="/" className="NavTop__logo">
+            <img
+              className="NavTop__logo--image"
+              src={avatarUser}
+              alt="user avatar"
+            />
           </Link>
-        </CustomButton>
-        <CustomButton color="light">Inscription</CustomButton>
+        ) : (
+          <>
+            <Link className="NavTop__linkConnexion" to="/login">
+              <CustomButton color="dark">Connexion</CustomButton>
+            </Link>
+            <Link className="NavTop__linkConnexion" to="/login">
+              <CustomButton color="light">Inscription</CustomButton>
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 @import "../../variables.scss";
 
 .RessourcesPage {
-  padding: $inner-component-padding;
   min-height: 100vh;
   position: relative;
 
@@ -10,7 +9,7 @@
     text-align: center;
     background-color: $primary-dark;
     color: $white;
-    padding: 2rem;
+    padding: 4rem 0;
     margin: 0;
   }
 
@@ -28,7 +27,7 @@
         font-weight: bold;
         color: $primary-dark;
         border-bottom: 0.3rem solid transparent;
-        margin: 0.5rem 1.5rem;
+        margin: 1rem 1.5rem;
         transition: all 0.2s ease;
 
         &:hover {
@@ -42,7 +41,8 @@
     }
 
     &-category {
-      margin: 8rem 0;
+      // margin: 8rem 0;
+      padding: $inner-component-padding;
 
       .title.title-2 {
         @include pale-underline;

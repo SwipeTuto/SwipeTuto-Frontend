@@ -18,10 +18,15 @@ const HomePage = props => {
   return (
     <div className="HomePage">
       <HomeHeader />
+<<<<<<< HEAD
       <CardGridList
         cardsSize="small"
         // handleCardFullPopupClick={handleCardFullPopupClick}
       />
+=======
+      {/* <CardGridList cardsSize="small" cardsNumber={8} /> */}
+      <CardGridList cardsSize="big" cardsNumber={6} />
+>>>>>>> a64c162192726d3fb56fcd2bfce366754e927e2c
       <CardFullPopup
         // showCardFullPopup={showCardFullPopup}
         // clickedCard={clickedCard}
@@ -78,8 +83,11 @@ const HomePage = props => {
             </h2>
             <p>
               Pour découvrir de nouvelles notions ou en réviser d'autres, soyez
-              efficaces dans votre parcours. Un gain de temps signifie une
-              progression plus rapide pour atteindre vos objectifs !
+              efficaces dans votre parcours.
+            </p>
+            <p>
+              Un gain de temps signifie une progression plus rapide pour
+              atteindre vos objectifs !
             </p>
           </div>
           <div className="about-section__image">

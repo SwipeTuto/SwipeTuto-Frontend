@@ -1,5 +1,6 @@
 // Component qui présente en résumé dans la grille un slide avec image de preview, auteur etc ...
 import React from "react";
+import { truncate } from "../../../utilsFunctions";
 
 import UserNameAndAvatarSmall from "../../UserComponents/UserNameAndAvatarSmall/UserNameAndAvatarSmall";
 import CustomButton from "../../LayoutComponents/CustomButton/CustomButton";
@@ -7,34 +8,48 @@ import CardSliderForPreview from "../CardSlider/CardSliderForPreview";
 
 import "./CardPreviewBig.scss";
 
-const CardPreviewBig = ({ handleCardFullPopupClick }) => {
-  // Faire une vérification : si le titre > X caractères : le couper et remplacer par "..."
-  // Faire une vérif : si + que 4 tags enlever les autres
-  // Associer le slideid avec soit le id du slide soit le index de la liste des résultats de recherche (permettra navigation après)
+const CardPreviewBig = ({ handleCardFullPopupClick, card }) => {
+  // card = l'objet card qui contient toutes les infos d'une card
+
   return (
     <div className="CardPreviewBig" data-slideid="1">
       {/* faire le component ci-dessous sans les indicateurs de slide et avec chevron qui apparaissent au-dessus des slides a survol */}
-      <CardSliderForPreview className="CardPreviewBig__slider" />
+      <CardSliderForPreview
+        className="CardPreviewBig__slider"
+        cardSlides={card.slides}
+      />
       <div className="CardPreviewBig__details">
         <div className="CardPreviewBig__title">
-          Titre Card blablabl ablabafo fkgfrpgl
+          {truncate(card.title, 30, true)}
         </div>
         <span className="horizontal-separation-primary-dark"></span>
-        <UserNameAndAvatarSmall className="CardPreviewBig__author" />
+        <UserNameAndAvatarSmall
+          className="CardPreviewBig__author"
+          authorName={truncate(card.author, 10, false)}
+        />
         <div className="CardPreviewBig__tags">
-          <span className="tag">#CSS</span>
-          <span className="tag">#HTML</span>
-          <span className="tag">#JS</span>
+          {card.tags.length > 3
+            ? card.tags
+                .slice(0, 3)
+                .map((tag) => <span className="tag">{`#${tag}`}</span>)
+            : card.tags.map((tag) => <span className="tag">{`#${tag}`}</span>)}
         </div>
         <div className="CardPreviewBig__category">
-          <p className="category__text">Catégorie : Design</p>
-          <p className="category__text">Collection : HTML</p>
+          <p className="category__text">
+            {`Catégorie : ${card.category.toUpperCase()}`}
+          </p>
+          <p className="category__text">
+            {`Langage : ${card.langage.toUpperCase()}`}
+          </p>
         </div>
         <CustomButton
           color="dark"
-          onClick={(e) =>
-            handleCardFullPopupClick(e.target.parentElement.parentElement)
-          }
+          onClick={(e) => {
+            handleCardFullPopupClick(
+              e.target.parentElement.parentElement,
+              card
+            );
+          }}
         >
           Voir &rarr;
         </CustomButton>

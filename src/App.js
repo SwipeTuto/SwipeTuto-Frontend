@@ -21,6 +21,7 @@ function App() {
   const getAvatar = JSON.parse(sessionStorage.getItem('user'))
 
   useEffect(() => {
+<<<<<<< HEAD
   
     getAvatar ? setAvatar(getAvatar.avatar) : setAvatar('')
     
@@ -33,15 +34,21 @@ function App() {
      setAvatar(getAvatar.avatar) 
      
   }
+=======
+    getAvatar && setAvatar(getAvatar.avatar)
+
+  }, [getAvatar, avatar])
+
+>>>>>>> a64c162192726d3fb56fcd2bfce366754e927e2c
 
   console.log('avatarAPP', avatar)
   return (
     <div className="App">
       <NavTop avatar={avatar} />
-      <NavLeft />
+      {/* <NavLeft /> */}
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route exact path="/search" component={SearchPage} />
+        <Route exact path="/cards" component={SearchPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/ressources" component={RessourcesPage} />
         {/* <PrivateRoute exact path="/login" component={Login} /> */}

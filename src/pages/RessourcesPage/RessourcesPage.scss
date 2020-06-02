@@ -5,7 +5,7 @@
   position: relative;
 
   .title.title-1 {
-    font-size: 2.7rem;
+    font-size: 3rem;
     text-align: center;
     background-color: $primary-dark;
     color: $white;
@@ -43,12 +43,14 @@
     &-category {
       // margin: 8rem 0;
       padding: $inner-component-padding;
+      padding-top: 4rem;
+      padding-bottom: 4rem;
 
       .title.title-2 {
         @include pale-underline;
         display: inline-block;
         padding-right: 2rem;
-        font-size: 2.5rem;
+        font-size: 2.8rem;
         margin-bottom: 3rem;
       }
     }
@@ -59,7 +61,7 @@
     }
 
     &-item {
-      margin-bottom: 1.8rem;
+      margin-bottom: 4rem;
 
       a:link,
       a:visited {
@@ -68,17 +70,13 @@
         font-weight: bold;
         padding: 0.2rem;
         margin-bottom: 0.2rem;
-        font-size: 1.4rem;
+        font-size: 2rem;
         transition: all 0.2s ease;
 
         &:hover {
           background-color: $primary-dark;
           color: white;
         }
-      }
-
-      &__description {
-        font-size: 1.1rem;
       }
     }
   }
@@ -87,8 +85,8 @@
     position: fixed;
     bottom: 2rem;
     right: 2rem;
-    height: 2rem;
-    width: 2rem;
+    height: 4rem;
+    width: 4rem;
     cursor: pointer;
     fill: $grey-dark;
     transition: all 0.2s ease;

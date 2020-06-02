@@ -1,11 +1,16 @@
 import React, { useEffect } from "react";
 
-import { ReactComponent as GoTopLogo } from "../../assets/images/arrow-up-circle.svg";
+import { ReactComponent as GoTopLogo } from "../../assets/images/chevrons/arrow-up-circle.svg";
 
 import "./RessourcesPage.scss";
 import { RESSOURCES_WEB } from "./RESSOURCES_WEB";
 
 const RessourcesPage = () => {
+  // scroll reset
+  if (window.scrollY) {
+    window.scroll(0, 0);
+  }
+
   window.onscroll = function () {
     scrollFunction();
   };
@@ -14,11 +19,11 @@ const RessourcesPage = () => {
     let goTopButton = document.querySelector(".goTop__button");
     console.log(goTopButton);
     if (
-      document.body.scrollTop > 20 ||
-      document.documentElement.scrollTop > 20
+      goTopButton &&
+      (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20)
     ) {
       goTopButton.style.display = "block";
-    } else {
+    } else if (goTopButton) {
       goTopButton.style.display = "none";
     }
   };

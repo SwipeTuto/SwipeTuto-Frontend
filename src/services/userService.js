@@ -32,13 +32,9 @@ export const login = idToken => {
       // aller dans devTools : Application : Session Storage pour voir user et token stockés ici
       sessionStorage.setItem('user', JSON.stringify(rep.data.user))
       sessionStorage.setItem('token', rep.data.token)
-<<<<<<< HEAD
-      console.log('1')
+  
       return rep
      
-=======
-
->>>>>>> a64c162192726d3fb56fcd2bfce366754e927e2c
     })
     .catch(function (err) {
       sessionStorage.removeItem('user')

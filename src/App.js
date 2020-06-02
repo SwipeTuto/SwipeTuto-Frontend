@@ -1,5 +1,7 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, {  useEffect } from "react";
 import { Switch, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 
 import HomePage from './pages/Homepage/HomePage';
 import Login from './pages/Login/Login';
@@ -9,42 +11,26 @@ import NavTop from "./components/LayoutComponents/NavTop/NavTop";
 import NavLeft from "./components/LayoutComponents/NavLeft/NavLeft";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 import PrivateRoute from "./PrivateRoute";
+import { getCardsAction } from './redux/cards/cards-actions'
+
 
 import './index.scss'
 
 import './App.scss';
 
 
-function App() {
-
-  const [avatar, setAvatar] = useState('');
-  const getAvatar = JSON.parse(sessionStorage.getItem('user'))
-
-  useEffect(() => {
-<<<<<<< HEAD
-  
-    getAvatar ? setAvatar(getAvatar.avatar) : setAvatar('')
-    
-  })
-
-
-  const test2 = () => {
    
-    console.log('getAvatar', getAvatar)
-     setAvatar(getAvatar.avatar) 
-     
-  }
-=======
-    getAvatar && setAvatar(getAvatar.avatar)
 
-  }, [getAvatar, avatar])
+function App() {
+  const dispatch = useDispatch();
 
->>>>>>> a64c162192726d3fb56fcd2bfce366754e927e2c
-
-  console.log('avatarAPP', avatar)
+useEffect(() => {
+  dispatch(getCardsAction())
+}, []);
+ 
   return (
     <div className="App">
-      <NavTop avatar={avatar} />
+      <NavTop />
       {/* <NavLeft /> */}
       <Switch>
         <Route exact path="/" component={HomePage} />

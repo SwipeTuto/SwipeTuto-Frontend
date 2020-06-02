@@ -1,9 +1,8 @@
 @import "../../../variables.scss";
 
 .NavTop {
-  height: 10vh;
-  max-height: 4rem;
-  box-shadow: 0 1px 8px rgba($grey-dark, 0.5);
+  height: 6rem;
+  box-shadow: 0 3px 3px rgba($grey-dark, 0.5);
   border: 0.5px solid $grey-medium;
   background-color: $white;
   position: fixed;
@@ -12,25 +11,21 @@
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 1rem 0.5rem;
+  padding: 0rem 2rem;
   z-index: 100000;
+
+  &__left,
+  &__center,
+  &__right {
+    padding: 0.25rem 0;
+  }
 
   &__left {
     text-align: left;
     display: flex;
     align-items: center;
     flex-grow: 0;
-  }
-
-  &__logo {
     height: 100%;
-
-    &--image {
-      display: block;
-      max-height: 2.5rem;
-      height: 100%;
-      margin-right: 1rem;
-    }
   }
 
   &__link {
@@ -41,11 +36,23 @@
     justify-content: center;
     align-items: center;
     transform: translateY(0.2rem);
-    border-bottom: 0.2rem solid transparent;
-    transition: border-bottom 0.3s;
+    // border-bottom: 0.4rem solid transparent;
+    // font-weight: bold;
+    transition: all 0.3s;
+
+    &--category:hover ~ .NavTop__dropdown--category {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    &--logo {
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-left: 0.4rem;
+    }
 
     &:hover {
-      border-bottom: 0.2rem solid $primary-light;
+      color: $primary-light;
     }
   }
 
@@ -53,16 +60,16 @@
     height: 100%;
     flex-grow: 1;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: flex-end;
 
     .NavTop__search {
       height: 100%;
-      width: max-content;
+      width: 80%;
       display: flex;
       flex-direction: row-reverse;
       align-items: center;
-      margin-right: 1rem;
+      margin-right: 1.6rem;
 
       &:hover .NavTop__input {
         visibility: visible;
@@ -89,7 +96,7 @@
         height: 100%;
         fill: $primary-dark;
         padding: 0;
-        margin-left: 0.4rem;
+        margin-left: 0.8rem;
         transition: fill 0.2s ease;
 
         &:hover {
@@ -98,7 +105,7 @@
 
         .NavTop__button--logo {
           display: block;
-          height: 100%;
+          height: 70%;
           width: auto;
         }
       }
@@ -107,13 +114,131 @@
 
   &__right {
     flex-grow: 0;
+    height: 100%;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+
+    .NavTop__avatar {
+      height: 70%;
+
+      &--userAvatar {
+        border-radius: 50%;
+        height: 100%;
+        width: auto;
+        display: block;
+        box-shadow: $pill-shadow;
+        cursor: pointer;
+      }
+    }
 
     // A remettre pour afficher btn connexion et inscription
     // .custom-button {
     //   visibility: hidden;
     //   opacity: 0;
     // }
+  }
+
+  &__userMenu {
+    position: absolute;
+    top: 100%;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    background-color: $white;
+    border-radius: 0 0 $box-radius $box-radius;
+    box-shadow: 0 3px 3px rgba($grey-dark, 0.5);
+    overflow: hidden;
+
+    p {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 1rem 2rem;
+      text-transform: capitalize;
+
+      &:nth-of-type(1) {
+        padding-bottom: 0.1rem;
+      }
+
+      &:nth-of-type(2) {
+        padding-bottom: 0.5rem;
+        padding-top: 0.1rem;
+      }
+
+      &:last-of-type {
+        padding-top: 0.1rem;
+        text-transform: none;
+        font-size: 1.2rem;
+      }
+    }
+
+    .horizontal-separation-primary-light {
+      width: 100%;
+    }
+
+    &--logo {
+      width: 1.8rem;
+      height: 1.8rem;
+      margin-right: 0.8rem;
+    }
+
+    &--link {
+      padding: 0 2rem 1.8rem 2rem;
+      width: 100%;
+      display: flex;
+      transition: all 0.2s ease;
+
+      &:nth-of-type(1) {
+        padding-top: 2rem;
+      }
+
+      &:last-child {
+        padding-bottom: 2rem;
+      }
+
+      &:hover {
+        color: $primary-light;
+        fill: $primary-light;
+      }
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    z-index: 1000;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: $white;
+    box-shadow: 0 3px 3px rgba($grey-dark, 0.5);
+    border-top: 0.5px solid $grey-medium;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    z-index: -1;
+    padding: 0 2rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    &--logo {
+      height: 3.5rem;
+      box-sizing: content-box;
+      // width: auto;
+      padding: 2rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        box-shadow: inset $pill-shadow;
+        background-color: $white;
+      }
+    }
   }
 }

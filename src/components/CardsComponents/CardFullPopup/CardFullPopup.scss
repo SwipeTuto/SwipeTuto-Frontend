@@ -3,24 +3,29 @@
 .CardFullPopup {
   display: none;
   visibility: hidden;
-  z-index: 1000;
+  z-index: 10000000;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   &.active {
-    display: block;
+    display: flex;
+    justify-content: center;
     visibility: visible;
-    padding: $inner-component-padding;
     width: 100%;
     height: 100%;
-    background-color: rgba($black, 0.75);
-    position: absolute;
+    background-color: rgba($black, 0.6);
+    position: fixed;
     top: 0;
     left: 0;
     overflow-y: scroll;
   }
 
   &__wrapper {
-    max-width: 55rem;
-    margin: 3rem auto;
+    max-width: 70%;
+
+    height: 100%;
   }
 
   &__header {
@@ -35,8 +40,9 @@
 
   &__action-button {
     width: 7rem;
-    height: 2.5rem;
+    height: 3rem;
     display: flex;
+    margin-left: 2rem;
 
     .card-action-button {
       width: 100%;
@@ -51,12 +57,14 @@
   }
 
   &__grid {
-    padding: 2rem;
+    padding: 2rem 4rem;
     display: grid;
-    grid-gap: 3rem;
+    grid-gap: 3rem 5rem;
     background-color: $white;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 3fr 1fr;
     grid-auto-rows: max-content;
+    margin: 5rem auto;
+    border-radius: $box-radius;
 
     &__slide {
       position: relative;
@@ -77,10 +85,17 @@
       background-color: limegreen;
     }
 
+    &__description {
+      margin-top: 1.5rem;
+      p {
+        line-height: 1.4;
+      }
+    }
+
     &__chevron {
       position: absolute;
       height: 100%;
-      width: calc(30% + 5rem);
+      width: calc(20% + 5rem);
       stroke: $primary-dark;
       cursor: pointer;
       opacity: 0;
@@ -89,12 +104,12 @@
       &.chevron-right {
         position: absolute;
         right: 0;
-        padding-left: 30%;
+        padding-left: 20%;
       }
 
       &.chevron-left {
         left: 0;
-        padding-right: 30%;
+        padding-right: 20%;
       }
 
       &:hover {
@@ -105,6 +120,7 @@
   }
 
   .grid__aside-infos-grid {
+    margin-top: 1.5rem;
     display: grid;
     grid-template-columns: 1fr;
     grid-auto-rows: max-content;
@@ -114,11 +130,17 @@
 
   .infos {
     &__published-date {
-      font-size: 1rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+    }
+
+    &__category--stamp {
+      font-size: 1.3rem;
+      padding: 0.3rem 1rem;
+      background-color: $primary-medium;
+      color: white;
     }
 
     &__tags {
@@ -132,7 +154,8 @@
 
         .tag {
           @include big-tag-style;
-          margin: 0.2rem;
+          background-color: $primary-dark;
+          margin: 0.3rem;
 
           &:hover {
             @include tag-hover-style;
@@ -143,16 +166,20 @@
   }
 
   .infos__autres-posts {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
     .autres-posts {
       &--grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: max-content max-content;
         grid-gap: 0.5rem;
       }
     }
 
     .autres-posts--preview {
-      width: 100%;
+      width: 5rem;
       height: 5rem;
       background-color: lightblue;
     }
@@ -166,8 +193,8 @@
       justify-items: center;
 
       &--item {
-        width: 2rem;
-        height: 2rem;
+        width: 2.3rem;
+        height: 2.3rem;
         fill: $primary-dark;
         cursor: pointer;
         transition: fill 0.2s ease;
@@ -183,8 +210,8 @@
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    height: 4rem;
-    width: 4rem;
+    height: 5rem;
+    width: 5rem;
     cursor: pointer;
     fill: rgba($grey-medium, 0.3);
     transition: all 0.2s ease;
@@ -194,11 +221,11 @@
     }
 
     &--left {
-      left: calc(4vw + 3.5rem);
+      left: 2rem;
     }
 
     &--right {
-      right: 3.5rem;
+      right: 2rem;
     }
   }
 }

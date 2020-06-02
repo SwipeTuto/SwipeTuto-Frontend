@@ -1,7 +1,89 @@
 @import "../../variables.scss";
 
 .LoginPage {
-  min-height: 100vh;
+  // min-height: 100vh;
+  height: max-content;
   width: 100%;
-  padding: $inner-component-padding;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  &__background {
+    background-color: $primary-dark;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    clip-path: polygon(0 80%, 100% 40%, 100% 100%, 0 100%);
+    z-index: 10;
+  }
+
+  &--wrapper {
+    margin: 3rem;
+    box-shadow: $card-shadow-2;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: $white;
+    z-index: 100;
+    width: 70%;
+  }
+
+  .login,
+  .signup {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 4rem;
+
+    .title.title-1 {
+      text-align: center;
+    }
+
+    &__form {
+      display: flex;
+      flex-direction: column;
+
+      &--input {
+        @include input-style;
+        margin-bottom: 2rem;
+
+        &:focus:valid {
+          border: 0.5px solid #00b109;
+        }
+
+        &:focus:invalid {
+          border: 0.5px solid #f76300;
+        }
+
+        &:focus {
+          background-color: $white;
+        }
+      }
+    }
+
+    .horizontal-separation-primary-light {
+      margin: 3rem auto;
+      width: 80%;
+    }
+
+    &__google {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      // background-color: red;
+      align-items: center;
+
+      .title.title-1 {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .custom-button {
+    margin: 1rem auto;
+    display: inline-block;
+  }
 }

@@ -3,8 +3,8 @@
 .Footer {
   background-color: $black;
   color: $white;
-  font-size: 0.8rem;
-  padding: $inner-component-padding;
-  padding-top: 0.6rem;
-  padding-bottom: 0.6rem;
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+  padding: 1rem;
 }

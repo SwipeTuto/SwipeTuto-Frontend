@@ -1,37 +1,39 @@
 // Présent dans App.js dans une Route ("/")
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { Link } from "react-router-dom";
 import HomeHeader from "../../components/LayoutComponents/HomeHeader/HomeHeader";
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
 import CardFullPopup from "../../components/CardsComponents/CardFullPopup/CardFullPopup";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
+import { setCategoryFilter } from "../../redux/cards/cards-actions";
 
-import { ReactComponent as QuestionIllustration } from "../../assets/images/illustration-question.svg";
-import { ReactComponent as RechercheIllustration } from "../../assets/images/illustration-recherche.svg";
-import { ReactComponent as GrilleIllustration } from "../../assets/images/illustration-grille.svg";
-import { ReactComponent as SuccessIllustration } from "../../assets/images/illustration-success.svg";
+import { ReactComponent as QuestionIllustration } from "../../assets/images/illustrations/illustration-question.svg";
+import { ReactComponent as GrilleIllustration } from "../../assets/images/illustrations/illustration-grille.svg";
+import { ReactComponent as SuccessIllustration } from "../../assets/images/illustrations/illustration-success.svg";
 
 import "./HomePage.scss";
+import SLIDES_DATA_TEST from "../../SLIDES_DATA_TEST";
 
-const HomePage = props => {
+
+const HomePage = () => {
+  const dispatch = useDispatch();
+  dispatch(setCategoryFilter("all"));
+  const [cardsArray, setcardsArray] = useState(SLIDES_DATA_TEST.results);
+
+  // scroll reset
+  if (window.scrollY) {
+    window.scroll(0, 0);
+  }
+
   return (
     <div className="HomePage">
       <HomeHeader />
-<<<<<<< HEAD
-      <CardGridList
-        cardsSize="small"
-        // handleCardFullPopupClick={handleCardFullPopupClick}
-      />
-=======
-      {/* <CardGridList cardsSize="small" cardsNumber={8} /> */}
       <CardGridList cardsSize="big" cardsNumber={6} />
->>>>>>> a64c162192726d3fb56fcd2bfce366754e927e2c
-      <CardFullPopup
-        // showCardFullPopup={showCardFullPopup}
-        // clickedCard={clickedCard}
-        // handleCloseCardFullPopupClick={handleCloseCardFullPopupClick}
-      />
+      <CardFullPopup cardsArray={cardsArray} />
+
 
       <div className="About">
         <div className="about-section section-1">

@@ -13,6 +13,11 @@ import "./SearchPage.scss";
 const SearchPage = () => {
   const [gridSize, setGridSize] = useState("small");
 
+  // scroll reset
+  if (window.scrollY) {
+    window.scroll(0, 0);
+  }
+
   const handleClickSize = (e) => {
     const allGridSizeItems = [
       ...document.querySelectorAll(".FiltersBar__size-logo"),

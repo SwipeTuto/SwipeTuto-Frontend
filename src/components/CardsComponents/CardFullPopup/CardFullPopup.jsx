@@ -86,11 +86,15 @@ const CardFullPopup = ({ cardsArray }) => {
             <div className="infos__published-date">
               <p>Publié le :</p>
               <p>
+                02/06/2020
                 {/* {clickedCard &&
                   `${clickedCard.created_at.getDate()}/${
                     clickedCard.created_at.getMonth() + 1
                   }/${clickedCard.created_at.getFullYear()}`} */}
               </p>
+            </div>
+            <div className="infos__category--stamp">
+              {clickedCard && clickedCard.categorie[0].name}
             </div>
             <span className="horizontal-separation-primary-light"></span>
             <div className="infos__tags">

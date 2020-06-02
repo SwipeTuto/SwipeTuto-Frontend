@@ -6,6 +6,11 @@ import "./RessourcesPage.scss";
 import { RESSOURCES_WEB } from "./RESSOURCES_WEB";
 
 const RessourcesPage = () => {
+  // scroll reset
+  if (window.scrollY) {
+    window.scroll(0, 0);
+  }
+
   window.onscroll = function () {
     scrollFunction();
   };

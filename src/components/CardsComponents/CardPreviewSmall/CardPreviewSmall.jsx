@@ -23,6 +23,9 @@ const CardPreviewSmall = ({ handleCardFullPopupClick, card }) => {
         <img src={card.media_image[0].image} alt="slides presentation" />
         <div className="CardPreviewSmall__hover">
           <p>{truncate(card.name, 60, false)}</p>
+          <div className="CardPreviewSmall__category--stamp">
+            {card.categorie[0].name}
+          </div>
         </div>
       </div>
       <div className="CardPreviewSmall__details">

@@ -2,7 +2,7 @@
 
 .NavTop {
   height: 6rem;
-  box-shadow: 0 1px 8px rgba($grey-dark, 0.5);
+  box-shadow: 0 3px 3px rgba($grey-dark, 0.5);
   border: 0.5px solid $grey-medium;
   background-color: $white;
   position: fixed;
@@ -147,7 +147,7 @@
     flex-direction: column;
     background-color: $white;
     border-radius: 0 0 $box-radius $box-radius;
-    box-shadow: $pill-shadow;
+    box-shadow: 0 3px 3px rgba($grey-dark, 0.5);
     overflow: hidden;
 
     p {
@@ -210,13 +210,16 @@
     top: 100%;
     left: 0;
     width: 100%;
-    background-color: $grey-light;
-    box-shadow: 0 1px 8px rgba($grey-dark, 0.5);
+    background-color: $white;
+    box-shadow: 0 3px 3px rgba($grey-dark, 0.5);
+    border-top: 0.5px solid $grey-medium;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     opacity: 0;
     visibility: hidden;
+    z-index: -1;
+    padding: 0 2rem;
     transition: all 0.2s ease;
 
     &:hover {

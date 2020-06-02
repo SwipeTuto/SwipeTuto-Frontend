@@ -53,6 +53,16 @@
     transition: all 0.2s ease;
   }
 
+  &__category--stamp {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.3rem;
+    padding: 0.3rem 1rem;
+    background-color: $primary-medium;
+    color: white;
+  }
+
   &__details {
     display: flex;
     justify-content: space-between;

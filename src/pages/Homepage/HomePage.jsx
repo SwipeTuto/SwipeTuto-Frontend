@@ -22,6 +22,11 @@ const HomePage = () => {
   dispatch(setCategoryFilter("all"));
   const [cardsArray, setcardsArray] = useState(SLIDES_DATA_TEST.results);
 
+  // scroll reset
+  if (window.scrollY) {
+    window.scroll(0, 0);
+  }
+
   return (
     <div className="HomePage">
       <HomeHeader />

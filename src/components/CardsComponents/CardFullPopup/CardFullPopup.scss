@@ -136,6 +136,13 @@
       align-items: center;
     }
 
+    &__category--stamp {
+      font-size: 1.3rem;
+      padding: 0.3rem 1rem;
+      background-color: $primary-medium;
+      color: white;
+    }
+
     &__tags {
       text-align: center;
 

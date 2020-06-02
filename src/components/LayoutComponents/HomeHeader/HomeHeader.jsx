@@ -1,6 +1,6 @@
 // A mettre sur HomePage
 import React from "react";
-import { ReactComponent as HeaderLogo } from "../../../assets/images/header_illustration.svg";
+import { ReactComponent as HeaderLogo } from "../../../assets/images/illustrations/header_illustration.svg";
 
 import "./HomeHeader.scss";
 

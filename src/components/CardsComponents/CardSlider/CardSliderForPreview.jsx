@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import { ReactComponent as ChevronLeft } from "../../../assets/images/chevron-back.svg";
-import { ReactComponent as ChevronRight } from "../../../assets/images/chevron-forward.svg";
+import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
+import { ReactComponent as ChevronRight } from "../../../assets/images/chevrons/chevron-forward.svg";
 
 import "./CardSliderForPreview.scss";
 

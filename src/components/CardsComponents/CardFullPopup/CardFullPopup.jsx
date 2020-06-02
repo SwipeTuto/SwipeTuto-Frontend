@@ -11,10 +11,10 @@ import { setClickedCard } from "../../../redux/cards/cards-actions";
 import { setNoClickedCard } from "../../../redux/cards/cards-actions";
 import { closePopupCard } from "../../../redux/layout/layout-actions";
 
-import { ReactComponent as ChevronLeft } from "../../../assets/images/chevron-back.svg";
-import { ReactComponent as ChevronRight } from "../../../assets/images/chevron-forward.svg";
-import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevron-back-circle.svg";
-import { ReactComponent as ChevronCircleRight } from "../../../assets/images/chevron-forward-circle.svg";
+import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
+import { ReactComponent as ChevronRight } from "../../../assets/images/chevrons/chevron-forward.svg";
+import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevrons/chevron-back-circle.svg";
+import { ReactComponent as ChevronCircleRight } from "../../../assets/images/chevrons/chevron-forward-circle.svg";
 import { ReactComponent as LogoFacebook } from "../../../assets/images/logo-facebook.svg";
 import { ReactComponent as LogoTwitter } from "../../../assets/images/logo-twitter.svg";
 import { ReactComponent as LogoYoutube } from "../../../assets/images/logo-youtube.svg";

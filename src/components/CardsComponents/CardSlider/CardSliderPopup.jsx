@@ -9,10 +9,10 @@ import {
   showFullscreen,
 } from "../../../redux/layout/layout-actions";
 
-import { ReactComponent as ChevronLeft } from "../../../assets/images/chevron-back.svg";
-import { ReactComponent as ChevronLeftWhite } from "../../../assets/images/chevron-back-white.svg";
-import { ReactComponent as ChevronRight } from "../../../assets/images/chevron-forward.svg";
-import { ReactComponent as ChevronRightWhite } from "../../../assets/images/chevron-forward-white.svg";
+import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
+import { ReactComponent as ChevronLeftWhite } from "../../../assets/images/chevrons/chevron-back-white.svg";
+import { ReactComponent as ChevronRight } from "../../../assets/images/chevrons/chevron-forward.svg";
+import { ReactComponent as ChevronRightWhite } from "../../../assets/images/chevrons/chevron-forward-white.svg";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as FullscreenLogo } from "../../../assets/images/fullscreen.svg";
 

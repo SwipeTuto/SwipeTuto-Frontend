@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { ReactComponent as GoTopLogo } from "../../assets/images/arrow-up-circle.svg";
+import { ReactComponent as GoTopLogo } from "../../assets/images/chevrons/arrow-up-circle.svg";
 
 import "./RessourcesPage.scss";
 import { RESSOURCES_WEB } from "./RESSOURCES_WEB";

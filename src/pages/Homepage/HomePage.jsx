@@ -10,9 +10,9 @@ import CardFullPopup from "../../components/CardsComponents/CardFullPopup/CardFu
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { setCategoryFilter } from "../../redux/cards/cards-actions";
 
-import { ReactComponent as QuestionIllustration } from "../../assets/images/illustration-question.svg";
-import { ReactComponent as GrilleIllustration } from "../../assets/images/illustration-grille.svg";
-import { ReactComponent as SuccessIllustration } from "../../assets/images/illustration-success.svg";
+import { ReactComponent as QuestionIllustration } from "../../assets/images/illustrations/illustration-question.svg";
+import { ReactComponent as GrilleIllustration } from "../../assets/images/illustrations/illustration-grille.svg";
+import { ReactComponent as SuccessIllustration } from "../../assets/images/illustrations/illustration-success.svg";
 
 import "./HomePage.scss";
 import SLIDES_DATA_TEST from "../../SLIDES_DATA_TEST";

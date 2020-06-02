@@ -6,6 +6,21 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/images/navtop_logo.png";
 import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg";
+import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg";
+import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
+import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
+import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
+import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
+
+import HTMLLogo from "../../../assets/images/tech_logo/HTML.png";
+import CSSLogo from "../../../assets/images/tech_logo/CSS.png";
+import JavascriptLogo from "../../../assets/images/tech_logo/javascript.png";
+import SassLogo from "../../../assets/images/tech_logo/sass.png";
+import PythonLogo from "../../../assets/images/tech_logo/python.png";
+import PHPLogo from "../../../assets/images/tech_logo/PHP.png";
+import ReactJSLogo from "../../../assets/images/tech_logo/reactJS.png";
+import NodeJSLogo from "../../../assets/images/tech_logo/nodeJS.png";
+
 import CustomButton from "../CustomButton/CustomButton";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { setCurrentUser } from "../../../redux/user/user-actions";
@@ -48,12 +63,39 @@ const NavTop = () => {
         <Link className="NavTop__link" to="/cards">
           Cartes
         </Link>
-        <Link className="NavTop__link" to="/cards">
+        <Link className="NavTop__link NavTop__link--category" to="/cards">
           Catégories
+          <DropDownLogo className="NavTop__link--logo" />
         </Link>
         <Link className="NavTop__link" to="/ressources">
           Ressources
         </Link>
+        <div className=" NavTop__dropdown NavTop__dropdown--category">
+          <img src={HTMLLogo} className="NavTop__dropdown--logo" alt="HTML" />
+          <img src={CSSLogo} className="NavTop__dropdown--logo" alt="CSS" />
+          <img
+            src={JavascriptLogo}
+            className="NavTop__dropdown--logo"
+            alt="Javascript"
+          />
+          <img
+            src={ReactJSLogo}
+            className="NavTop__dropdown--logo"
+            alt="React JS"
+          />
+          <img
+            src={NodeJSLogo}
+            className="NavTop__dropdown--logo"
+            alt="Node JS"
+          />
+          <img
+            src={PythonLogo}
+            className="NavTop__dropdown--logo"
+            alt="Python"
+          />
+          <img src={PHPLogo} className="NavTop__dropdown--logo" alt="PHP" />
+          <img src={SassLogo} className="NavTop__dropdown--logo" alt="Sass" />
+        </div>
       </div>
       <div className="NavTop__center">
         <form className="NavTop__search" onSubmit={handleSubmit}>
@@ -99,14 +141,22 @@ const NavTop = () => {
         <div className="NavTop__userMenu">
           <p className="NavTop__userMenu--text">Bonjour</p>
           <p className="NavTop__userMenu--text">{currentUser.username}</p>
+          <p className="NavTop__userMenu--text">{currentUser.email}</p>
           <span className="horizontal-separation-primary-light"></span>
           <Link className="NavTop__userMenu--link" to="/">
+            <AccountLogo className="NavTop__userMenu--logo" />
             Compte
           </Link>
           <Link className="NavTop__userMenu--link" to="/">
+            <SettingsLogo className="NavTop__userMenu--logo" />
             Paramètres
           </Link>
           <Link className="NavTop__userMenu--link" to="/">
+            <HelpLogo className="NavTop__userMenu--logo" />
+            Aide
+          </Link>
+          <Link className="NavTop__userMenu--link" to="/">
+            <LogOutLogo className="NavTop__userMenu--logo" />
             Deconnexion
           </Link>
         </div>

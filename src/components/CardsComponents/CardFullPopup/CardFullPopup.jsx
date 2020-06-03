@@ -11,8 +11,6 @@ import { setClickedCard } from "../../../redux/cards/cards-actions";
 import { setNoClickedCard } from "../../../redux/cards/cards-actions";
 import { closePopupCard } from "../../../redux/layout/layout-actions";
 
-import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
-import { ReactComponent as ChevronRight } from "../../../assets/images/chevrons/chevron-forward.svg";
 import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevrons/chevron-back-circle.svg";
 import { ReactComponent as ChevronCircleRight } from "../../../assets/images/chevrons/chevron-forward-circle.svg";
 import { ReactComponent as LogoFacebook } from "../../../assets/images/logo-facebook.svg";
@@ -20,10 +18,14 @@ import { ReactComponent as LogoTwitter } from "../../../assets/images/logo-twitt
 import { ReactComponent as LogoYoutube } from "../../../assets/images/logo-youtube.svg";
 import { ReactComponent as LogoGithub } from "../../../assets/images/logo-github.svg";
 import { ReactComponent as BookmarkEmpty } from "../../../assets/images/bookmark-outline.svg";
-import { ReactComponent as BookmarkFilled } from "../../../assets/images/bookmark.svg";
+// import { ReactComponent as BookmarkFilled } from "../../../assets/images/bookmark.svg";
 import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outline.svg";
-import { ReactComponent as HeartFilled } from "../../../assets/images/heart.svg";
+// import { ReactComponent as HeartFilled } from "../../../assets/images/heart.svg";
 import UserNameAndAvatarBig from "../../UserComponents/UserNameAndAvatarBig/UserNameAndAvatarBig";
+
+import { formattedDate } from "../../../utilsFunctions";
+import { renameCategory } from "../../../utilsFunctions";
+import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 
 import "./CardFullPopup.scss";
 
@@ -34,7 +36,16 @@ const CardFullPopup = ({ cardsArray }) => {
   const popupShown = useSelector(selectShowPopupCard);
   const dispatch = useDispatch();
 
+  const clickedCardDate =
+    clickedCard && formattedDate(new Date(clickedCard.modified));
+
   const goPreviousCard = () => {
+    const currentClickedCard = clickedCard
+      ? document.querySelector(".CardFullPopup.active")
+      : null;
+
+    currentClickedCard.scroll(0, 0);
+
     const indexOfCurrentCard = cardsArray.indexOf(clickedCard);
     if (indexOfCurrentCard <= 0) return;
     const previousCard = cardsArray[indexOfCurrentCard - 1];
@@ -42,28 +53,45 @@ const CardFullPopup = ({ cardsArray }) => {
   };
 
   const goNextCard = () => {
+    const currentClickedCard = clickedCard
+      ? document.querySelector(".CardFullPopup.active")
+      : null;
+    currentClickedCard.scroll(0, 0);
+
     const indexOfCurrentCard = cardsArray.indexOf(clickedCard);
     if (indexOfCurrentCard >= cardsArray.length - 1) return;
     const nextCard = cardsArray[indexOfCurrentCard + 1];
     dispatch(setClickedCard(nextCard));
   };
 
+  const handlePopupClose = () => {
+    const currentClickedCard = clickedCard
+      ? document.querySelector(".CardFullPopup.active")
+      : null;
+
+    console.log(currentClickedCard);
+    if (!currentClickedCard) return;
+    if (
+      currentClickedCard.classList.contains("CardFullPopup") &&
+      currentClickedCard.classList.contains("active")
+    ) {
+      dispatch(closePopupCard());
+      dispatch(setNoClickedCard());
+    } else {
+      return;
+    }
+  };
+
   return (
     <div
       className={`CardFullPopup ${popupShown ? "active" : ""}`}
-      onClick={(e) => {
-        if (
-          e.target.classList.contains("CardFullPopup") &&
-          e.target.classList.contains("active")
-        ) {
-          dispatch(closePopupCard());
-          dispatch(setNoClickedCard());
-        } else {
-          return;
-        }
-      }}
+      onClick={() => handlePopupClose()}
     >
       <div className="CardFullPopup__wrapper">
+        <CloseLogo
+          className="CardFullPopup__close"
+          onClick={() => handlePopupClose()}
+        />
         <div className="CardFullPopup__grid">
           <div className="CardFullPopup__header">
             <h1 className="title title-1">{clickedCard && clickedCard.name}</h1>
@@ -85,16 +113,10 @@ const CardFullPopup = ({ cardsArray }) => {
             />
             <div className="infos__published-date">
               <p>Publié le :</p>
-              <p>
-                02/06/2020
-                {/* {clickedCard &&
-                  `${clickedCard.created_at.getDate()}/${
-                    clickedCard.created_at.getMonth() + 1
-                  }/${clickedCard.created_at.getFullYear()}`} */}
-              </p>
+              <p>{clickedCardDate}</p>
             </div>
             <div className="infos__category--stamp">
-              {clickedCard && clickedCard.categorie[0].name}
+              {clickedCard && renameCategory(clickedCard.categorie[0].name)}
             </div>
             <span className="horizontal-separation-primary-light"></span>
             <div className="infos__tags">
@@ -137,11 +159,17 @@ const CardFullPopup = ({ cardsArray }) => {
         <ChevronCircleRight
           className="nav__chevron nav__chevron--right"
           // onClick={() => goNextCard()}
-          onClick={() => goNextCard()}
+          onClick={(event) => {
+            event.stopPropagation();
+            goNextCard();
+          }}
         />
         <ChevronCircleLeft
           className="nav__chevron nav__chevron--left"
-          onClick={() => goPreviousCard()}
+          onClick={(event) => {
+            event.stopPropagation();
+            goPreviousCard();
+          }}
         />
       </div>
     </div>

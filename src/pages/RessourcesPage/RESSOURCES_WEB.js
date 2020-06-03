@@ -37,22 +37,22 @@ export const RESSOURCES_WEB = [
       {
         nom: "Collection de cours gratuits",
         lien: "https://www.freecodecamp.org/news/tag/online-courses/",
-        description: "FreeCodeCamp rassemble souvent des tonnes de cours disponibles gratuitement un peu partout sur internet. Vous y trouverez votre bonheur ! (Un grand merci à FreeCodeCamp pour ce superbe travail !)."
+        description: "FreeCodeCamp rassemble souvent des tonnes de cours disponibles gratuitement un peu partout sur internet."
       },
       {
         nom: "Flexbox Froggy",
         lien: "https://flexboxfroggy.com/#fr",
-        description: "Il s'agit d'un jeu pour apprendre à utiliser Flexbox en CSS. Vous y trouverez également un lien vers le jeu Grid Garden qui permet d'apprendre CSS grid ! Vaut vraiment le détour pour aborder ces notions."
+        description: "Il s'agit d'un jeu pour apprendre à utiliser Flexbox en CSS. Vous y trouverez également un lien vers le jeu Grid Garden qui permet d'apprendre CSS grid."
       },
       {
         nom: "Udemy",
         lien: "https://www.udemy.com/",
-        description: "D'innombrables cours mais payants. Attendez les promotions (qui arrivent très souvent) pour avoir des cours entre 10 et 15 euros ! Privilégiez les cours Anglais qui seront souvent les meilleurs."
+        description: "Des cours gratuits et payants. Attendez les promotions (qui arrivent très souvent) pour avoir des cours peu chers.Privilégiez les cours Anglais qui seront souvent les meilleurs."
       },
       {
         nom: "SkillShare",
         lien: "https://www.skillshare.com/",
-        description: "D'innombrables cours mais payants, comme sur Udemy. Cependant, ici vous payez au mois et avez accès à tous les cours que vous voulez."
+        description: "D'innombrables cours mais payants, comme sur Udemy. Cependant, ici vous payez au mois et avez accès à tous les cours disponibles."
       },
     ]
   },
@@ -74,7 +74,7 @@ export const RESSOURCES_WEB = [
       {
         nom: "CodeSandbox",
         lien: "https://codesandbox.io/",
-        description: "Permet de coder directement dans votre navigateur et de visualiser le résultat en live. Supporte de nombreux langages y comprit des frameworks / librairies. Interface plus complète mais peut prendre plus de temps à prendre en main."
+        description: "Permet de coder directement dans votre navigateur et de visualiser le résultat en live. Supporte de nombreux langages y comprit des frameworks / librairies."
       },
 
       {
@@ -105,7 +105,7 @@ export const RESSOURCES_WEB = [
       {
         nom: "Picsum",
         lien: "https://picsum.photos/",
-        description: "Vous n'avez pas le temps de chercher une image pendant la création de votre projet web ? Avec cet outil, une image aléatoire sera générée. Vous pouvez spécifier une catégorie, un id, la taille de l'image souhaitée, ou même des effets (flou, niveau de gris...) en un simple URL !"
+        description: "Trouver une image rapidement pendant la création de votre projet web ? Voici de quoi génerer une image aléatoire. Vous pouvez spécifier une catégorie, un id, la taille de l'image souhaitée, ou même des effets !"
       },
       {
         nom: "CORS anywhere",
@@ -248,7 +248,7 @@ export const RESSOURCES_WEB = [
       {
         nom: "Ionicons",
         lien: "https://ionicons.com/",
-        description: "Difficile de faire plus simple à utiliser que celui-ci. Bien qu'il ne propose pas une quantité immense d'icônes, les essentielles sont là et chacune en plusieurs variantes. Il suffit d'implémenter un CDN et de copier les tags HTML généré au clic sur une icône pour le mettre dans votre code, et le tour est joué !"
+        description: "Difficile de faire plus simple à utiliser que celui-ci. Il suffit d'implémenter un CDN et de copier les tags HTML généré au clic sur une icône pour le mettre dans votre code, et le tour est joué !"
       },
       {
         nom: "IconStore",

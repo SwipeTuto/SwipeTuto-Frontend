@@ -1,5 +1,5 @@
 // Bar avec les items pour filtrer les slides
-import React, { useState } from "react";
+import React from "react";
 import "./FiltersBar.scss";
 import { useDispatch } from "react-redux";
 import { setCategoryFilter } from "../../../redux/cards/cards-actions";

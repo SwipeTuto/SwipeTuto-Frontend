@@ -1,8 +1,6 @@
 // Présent dans App.js
 
-
-import React, { useState, useEffect, } from "react";
-
+import React, { useState, useEffect } from "react";
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -32,7 +30,6 @@ import { selectUserNav } from "../../../redux/layout/layout-selectors";
 import "./NavTop.scss";
 
 const NavTop = () => {
-
   const currentUser = useSelector(selectCurrentUser);
   const currentUserNav = useSelector(selectUserNav);
   const [search, setSearch] = useState("");
@@ -43,14 +40,10 @@ const NavTop = () => {
     // getUser && dispatch(setCurrentUser(getUser));
   }, []);
 
-
   useEffect(() => {
-   
-      // avatar ? setTest(avatar) : setTest('')
-   
-   
-  })
-  
+    // avatar ? setTest(avatar) : setTest('')
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let searchCopy = search;
@@ -137,14 +130,9 @@ const NavTop = () => {
             </div>
           </>
         ) : (
-          <>
-            <Link className="NavTop__linkConnexion" to="/login">
-              <CustomButton color="dark">Connexion</CustomButton>
-            </Link>
-            <Link className="NavTop__linkConnexion" to="/login">
-              <CustomButton color="light">Inscription</CustomButton>
-            </Link>
-          </>
+          <Link className="NavTop__linkConnexion" to="/login">
+            <CustomButton color="dark">Connexion / Inscription</CustomButton>
+          </Link>
         )}
       </div>
       {currentUserNav ? (

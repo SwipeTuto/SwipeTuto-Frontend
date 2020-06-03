@@ -24,8 +24,23 @@
 
   &__wrapper {
     max-width: 70%;
-
+    position: relative;
     height: 100%;
+  }
+
+  &__close {
+    width: 6.5rem;
+    height: 6.5rem;
+    position: fixed;
+    right: 2rem;
+    top: 1rem;
+    fill: rgba($grey-medium, 0.7);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      fill: $primary-light;
+    }
   }
 
   &__header {
@@ -213,7 +228,7 @@
     height: 5rem;
     width: 5rem;
     cursor: pointer;
-    fill: rgba($grey-medium, 0.3);
+    fill: rgba($grey-medium, 0.7);
     transition: all 0.2s ease;
 
     &:hover {

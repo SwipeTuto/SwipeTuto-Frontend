@@ -3,7 +3,7 @@ import { CardsActionTypes } from './cards-types'
 const INITIAL_STATE = {
   clickedCard: null,
   categoryFilter: "all",
-  cards: {},
+  cardsFetched: {},
   errors: {}
 };
 
@@ -24,11 +24,16 @@ const cardsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         categoryFilter: action.payload,
       };
-
     case CardsActionTypes.GET_ALL_CARDS_SUCCESS:
-      return {...state, cards: action.payload }
-      case CardsActionTypes.GET_ALL_CARDS_FAILURE:
-      return {...state, errors: action.payload }
+      return {
+        ...state,
+        cardsFetched: action.payload
+      }
+    case CardsActionTypes.GET_ALL_CARDS_FAILURE:
+      return {
+        ...state,
+        errors: action.payload
+      }
     default:
       return state;
   }

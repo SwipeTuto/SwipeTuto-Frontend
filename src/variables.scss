@@ -59,6 +59,16 @@ $inner-component-padding: 7rem 17vw;
   );
 }
 
+@mixin medium-underline {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 70%,
+    $primary-medium 70%,
+    $primary-medium 100%
+  );
+}
+
 .horizontal-separation {
   &-primary-light {
     width: 60%;

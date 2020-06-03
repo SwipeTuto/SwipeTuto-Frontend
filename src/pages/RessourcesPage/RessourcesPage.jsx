@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { ReactComponent as GoTopLogo } from "../../assets/images/chevrons/arrow-up-circle.svg";
+import CardPreviewSmallRessources from "../../components/CardPreviewSmallRessources/CardPreviewSmallRessources";
 
 import "./RessourcesPage.scss";
 import { RESSOURCES_WEB } from "./RESSOURCES_WEB";
@@ -17,7 +18,7 @@ const RessourcesPage = () => {
 
   const scrollFunction = () => {
     let goTopButton = document.querySelector(".goTop__button");
-    console.log(goTopButton);
+
     if (
       goTopButton &&
       (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20)
@@ -56,21 +57,7 @@ const RessourcesPage = () => {
             <p className="ressource-note">{category.note}</p>
             <ul className="ressource-liste">
               {category.ressources.map((ressource) => {
-                return (
-                  <li className="ressource-item">
-                    <a
-                      href={ressource.lien}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      alt="ressource website link"
-                    >
-                      {ressource.nom}
-                    </a>
-                    <p className="ressource-item__description">
-                      {ressource.description}
-                    </p>
-                  </li>
-                );
+                return <CardPreviewSmallRessources ressource={ressource} />;
               })}
             </ul>
           </div>
@@ -82,3 +69,17 @@ const RessourcesPage = () => {
 };
 
 export default RessourcesPage;
+
+/* <li className="ressource-item">
+                    <a
+                      href={ressource.lien}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      alt="ressource website link"
+                    >
+                      {ressource.nom}
+                    </a>
+                    <p className="ressource-item__description">
+                      {ressource.description}
+                    </p>
+                  </li> */

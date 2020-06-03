@@ -3,18 +3,22 @@
 .RessourcesPage {
   min-height: 100vh;
   position: relative;
+  background-color: $primary-dark;
 
   .title.title-1 {
     font-size: 3rem;
     text-align: center;
-    background-color: $primary-dark;
-    color: $white;
+    // background-color: $primary-dark;
+    background-color: $white;
+    // color: $white;
+    color: $primary-dark;
     padding: 4rem 0;
     margin: 0;
   }
 
   .ressource {
     &-navigation {
+      // background-color: $primary-lighter;
       background-color: $primary-lighter;
       padding: 2rem;
       display: flex;
@@ -38,6 +42,14 @@
 
     &-note {
       margin-bottom: 2rem;
+      color: $white;
+    }
+
+    &-liste {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 23.5%);
+      grid-auto-rows: max-content;
+      grid-gap: 4% 2%;
     }
 
     &-category {
@@ -47,11 +59,12 @@
       padding-bottom: 4rem;
 
       .title.title-2 {
-        @include pale-underline;
+        @include medium-underline;
         display: inline-block;
         padding-right: 2rem;
         font-size: 2.8rem;
         margin-bottom: 3rem;
+        color: $white;
       }
     }
 

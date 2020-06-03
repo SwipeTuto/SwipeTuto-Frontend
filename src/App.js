@@ -1,4 +1,4 @@
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import { Switch, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -8,7 +8,6 @@ import Login from './pages/Login/Login';
 import SearchPage from './pages/SearchPage/SearchPage'
 import RessourcesPage from './pages/RessourcesPage/RessourcesPage'
 import NavTop from "./components/LayoutComponents/NavTop/NavTop";
-import NavLeft from "./components/LayoutComponents/NavLeft/NavLeft";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 import PrivateRoute from "./PrivateRoute";
 import { getCardsAction } from './redux/cards/cards-actions'
@@ -19,15 +18,15 @@ import './index.scss'
 import './App.scss';
 
 
-   
+
 
 function App() {
   const dispatch = useDispatch();
 
-useEffect(() => {
-  dispatch(getCardsAction())
-}, []);
- 
+  useEffect(() => {
+    dispatch(getCardsAction())
+  }, []);
+
   return (
     <div className="App">
       <NavTop />

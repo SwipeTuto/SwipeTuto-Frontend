@@ -20,6 +20,7 @@ import "./CardSliderPopup.scss";
 
 const CardSliderPopup = () => {
   const clickedCardSlides = useSelector(selectClickedCardSlides);
+  // console.log(clickedCardSlides);
   const isFullScreen = useSelector(selectFullscreen);
   const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -136,7 +137,7 @@ const CardSliderPopup = () => {
           {clickedCardSlides &&
             clickedCardSlides.map((slide, index) => (
               <li key={index} index={index} onClick={(e) => goToSlide(index)}>
-                <a
+                <div
                   className={
                     index === activeIndex
                       ? "CardSliderLarge__indicator CardSliderLarge__indicator--active"

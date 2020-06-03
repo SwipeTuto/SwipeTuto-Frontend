@@ -1,29 +1,29 @@
 // Présent dans App.js dans une Route ("/")
 
-import React, { Fragment, useState } from "react";
-import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton"
-import { loginGoogle } from '../../services/userService'
-import { langageList } from '../../services/searchService'
+import React from "react";
+import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
+import { loginGoogle } from "../../services/userService";
+// import { langageList } from "../../services/searchService";
+// import { useDispatch } from "react-redux";
+// import { setCurrentUser } from "../../redux/user/user-actions";
 
 import "./Login.scss";
 
-
-
-
 // Props history, location, match, depuis react router dom
 const LoginPage = (props) => {
+  // const dispatch = useDispatch();
+
   // scroll reset
   if (window.scrollY) {
     window.scroll(0, 0);
   }
 
   const handleClick = (e) => {
-    loginGoogle().then(user => {
-      props.history.push('/')
-      console.log('3')
-      props.test2()
-    })
-  }
+    loginGoogle().then((user) => {
+      props.history.push("/");
+      // dispatch(setCurrentUser(user));
+    });
+  };
 
   return (
     <div className="LoginPage">
@@ -50,7 +50,7 @@ const LoginPage = (props) => {
               className="login__form--input"
               required
             />
-            <CustomButton onClick={""} color="dark" type="submit">
+            <CustomButton color="dark" type="submit">
               Connexion
             </CustomButton>
           </form>
@@ -120,7 +120,7 @@ const LoginPage = (props) => {
               className="signup__form--input"
               required
             />
-            <CustomButton onClick={""} color="light" type="submit">
+            <CustomButton color="light" type="submit">
               Inscription
             </CustomButton>
           </form>

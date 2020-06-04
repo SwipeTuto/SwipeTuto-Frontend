@@ -1,4 +1,5 @@
-import { FilterActionTypesv, FilterActionTypes} from "./filter-types"
+import {  FilterActionTypes} from "./filter-types"
+import {  CardsActionTypes} from "../cards/cards-types"
 import { searchBar } from '../../services/searchService'
 
 export const searchAction = kword => {

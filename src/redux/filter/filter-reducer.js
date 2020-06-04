@@ -11,6 +11,7 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, cardFilter:action.payload};
     case FilterActionTypes.SEARCH_SUCCESS:
       return { ...state, errors: action.payload};
+   
 
     default:
       return state;

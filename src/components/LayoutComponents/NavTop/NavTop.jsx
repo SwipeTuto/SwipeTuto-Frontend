@@ -27,6 +27,7 @@ import { setCurrentUser } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
 import { selectUserNav } from "../../../redux/layout/layout-selectors";
 import { searchAction } from "../../../redux/filter/filter-actions"
+import { setCategoryFilter } from "../../../redux/cards/cards-actions"
 
 import "./NavTop.scss";
 
@@ -50,6 +51,7 @@ const NavTop = () => {
   // ACTION POUR LE FILTRE
   const handleClick = e => {
     dispatch(searchAction(searchInput))
+    dispatch(setCategoryFilter('search'))
   }
 
   // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription

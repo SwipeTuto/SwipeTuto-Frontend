@@ -34,8 +34,6 @@ export const getCardsAction = () => {
 
 };
 
-
-
 const getCardsSuccess = card => ({
   type: CardsActionTypes.GET_ALL_CARDS_SUCCESS,
   payload: card

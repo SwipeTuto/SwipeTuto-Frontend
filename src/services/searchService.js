@@ -30,7 +30,19 @@ export const langageList = () => {
 
   return axios.get(`${baseURL}search/categorie/`, config)
     .then(rep => {
-    
+    return rep
+    })
+    .catch(function (err) {
+      return err
+    })
+}
+
+export const searchBar = kkord => {
+  console.log('kkordFromService', kkord)
+  var config = { headers: { 'Content-Type': 'application/json' }, }
+  return axios.get(`${baseURL}card/?search=${kkord}`, config)
+  .then(rep => {
+    return rep
     })
     .catch(function (err) {
       return err

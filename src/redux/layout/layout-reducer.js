@@ -22,12 +22,12 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         popupShown: false,
       };
-    case LayoutActionTypes.SHOW_FULLSCREEN:
-      document.querySelector(".CardSliderLarge").requestFullscreen();
-      return {
-        ...state,
-        fullscreen: true,
-      };
+      case LayoutActionTypes.SHOW_FULLSCREEN:
+        document.querySelector(".CardSliderLarge").requestFullscreen();
+        return {
+          ...state,
+          fullscreen: true,
+        };
     case LayoutActionTypes.CLOSE_FULLSCREEN:
       if (document.fullscreen) {
         document.exitFullscreen()

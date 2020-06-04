@@ -15,17 +15,20 @@ import "./CardGridList.scss";
 const CardGridList = ({ cardsSize, cardsNumber }) => {
   const categoryFilter = useSelector(selectCategoryFilter);
   const cards = useSelector(selectCardsFetched);
+  // ICI TU PEUX TROUVE LES CARTES APRES LE FILTRE
+  const searchCard = useSelector(state => state.filter.cardFilter)
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
   const [cardsArray, setcardsArray] = useState();
 
   useEffect(() => {
+    console.log('searchCard',searchCard)
     setCardPreviewSize(cardsSize);
     if (cardsNumber && cardsArray) {
       const cardsArrayCopy = cardsArray.slice(0, cardsNumber);
       setcardsArray(cardsArrayCopy);
     }
     setcardsArray(cards);
-  }, [cards, cardsSize, cardsNumber, cardsArray]);
+  }, [cards, cardsSize, cardsNumber, cardsArray,searchCard]);
 
   return (
     <div className="CardGridList">

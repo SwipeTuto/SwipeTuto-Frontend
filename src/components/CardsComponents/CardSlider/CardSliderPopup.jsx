@@ -53,26 +53,6 @@ const CardSliderPopup = () => {
     setActiveIndex(index);
   };
 
-  // detecter fullscreen : si non, alors actualisation state
-  const onFullScreenChange = () => {
-    const fullscreenElement =
-      document.fullscreenElement ||
-      document.mozFullScreenElement ||
-      document.webkitFullscreenElement;
-
-    // if in fullscreen mode fullscreenElement won't be null
-    if (!fullscreenElement) {
-      dispatch(closeFullscreen());
-    }
-  };
-  document.addEventListener("fullscreenchange", onFullScreenChange, false);
-  document.addEventListener(
-    "webkitfullscreenchange",
-    onFullScreenChange,
-    false
-  );
-  document.addEventListener("mozfullscreenchange", onFullScreenChange, false);
-
   // changement de slide avec les flèches du clavien
   // document.addEventListener("keydown", (e) => {
   //   console.log(e.keyCode);
@@ -106,7 +86,11 @@ const CardSliderPopup = () => {
         <Fragment>
           <div
             className="CardSliderLarge__fullscreen-close"
-            onClick={() => dispatch(closeFullscreen())}
+            onClick={(e) => {
+              e.stopPropagation();
+              // dispatch(closeFullscreen());
+              dispatch(closeFullscreen());
+            }}
           >
             <CloseLogo />
           </div>
@@ -177,7 +161,7 @@ const CardSliderPopup = () => {
             ))}
         </ul>
       )}
-        <FullscreenLogo
+      <FullscreenLogo
         className="CardSliderLarge__fullscreen-logo"
         onClick={() => dispatch(showFullscreen())}
       />

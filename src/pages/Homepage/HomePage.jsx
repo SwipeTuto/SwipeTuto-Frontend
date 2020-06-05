@@ -1,6 +1,6 @@
 // Présent dans App.js dans une Route ("/")
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
@@ -8,7 +8,6 @@ import HomeHeader from "../../components/LayoutComponents/HomeHeader/HomeHeader"
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
 import CardFullPopup from "../../components/CardsComponents/CardFullPopup/CardFullPopup";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
-import { setCategoryFilter } from "../../redux/cards/cards-actions";
 
 import { ReactComponent as QuestionIllustration } from "../../assets/images/illustrations/illustration-question.svg";
 import { ReactComponent as GrilleIllustration } from "../../assets/images/illustrations/illustration-grille.svg";
@@ -20,8 +19,6 @@ import "./HomePage.scss";
 
 const HomePage = () => {
   const cards = useSelector(selectCardsFetched);
-  const dispatch = useDispatch();
-  dispatch(setCategoryFilter("all"));
 
   // scroll reset
   if (window.scrollY) {

@@ -92,7 +92,10 @@ const CardFullPopup = ({ cardsArray }) => {
       >
         <CloseLogo
           className="CardFullPopup__close"
-          onClick={() => handlePopupClose()}
+          onClick={(e) => {
+            e.stopPropagation();
+            handlePopupClose();
+          }}
         />
         <div className="CardFullPopup__grid">
           <div className="CardFullPopup__header">

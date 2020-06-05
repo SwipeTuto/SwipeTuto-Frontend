@@ -11,6 +11,8 @@ import NavTop from "./components/LayoutComponents/NavTop/NavTop";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 import PrivateRoute from "./PrivateRoute";
 import { getCardsAction } from './redux/cards/cards-actions'
+import { setCategoryFilter } from "./redux/cards/cards-actions";
+
 
 
 import './index.scss'
@@ -22,6 +24,10 @@ import './App.scss';
 
 function App() {
   const dispatch = useDispatch();
+
+
+
+  useEffect(() => dispatch(setCategoryFilter("all")), []);
 
   useEffect(() => {
     dispatch(getCardsAction())

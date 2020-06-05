@@ -177,7 +177,7 @@ const CardSliderPopup = () => {
             ))}
         </ul>
       )}
-      <FullscreenLogo
+        <FullscreenLogo
         className="CardSliderLarge__fullscreen-logo"
         onClick={() => dispatch(showFullscreen())}
       />

@@ -1,7 +1,13 @@
 import { UserActionTypes } from './user-types'
 
+let user = JSON.parse(localStorage.getItem('user'));
+let currentUser = JSON.parse(localStorage.getItem('user'));
+let token = localStorage.getItem('token');
+
 const INITIAL_STATE = {
-  currentUser: null,
+  currentUser: currentUser ? currentUser : null,
+  user: user ? user : {},
+  token: token ? token : null,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {

@@ -15,10 +15,13 @@ import "./CardGridList.scss";
 const CardGridList = ({ cardsSize, cardsNumber }) => {
   const categoryFilter = useSelector(selectCategoryFilter);
   const cards = useSelector(selectCardsFetched);
+  // ICI TU PEUX TROUVER LES CARTES APRES LE FILTRE
+  const searchCard = useSelector(state => state.filter.cardFilter)
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
   const [cardsArray, setcardsArray] = useState();
 
   useEffect(() => {
+
     setCardPreviewSize(cardsSize);
     if (cardsNumber && cardsArray) {
       const cardsArrayCopy = cardsArray.slice(0, cardsNumber);
@@ -27,21 +30,41 @@ const CardGridList = ({ cardsSize, cardsNumber }) => {
     setcardsArray(cards);
   }, [cards, cardsSize, cardsNumber, cardsArray]);
 
+  const setCategory = filter => {
+    if (filter === 'all') {
+      console.log('cardsArray', cardsArray)
+      return cardsArray &&
+        cardsArray.map((card) => (
+          <CardPreviewSmall card={card} key={card.id} />))
+    } else if (filter === 'search') {
+      return searchCard &&
+        searchCard.map((card) => (
+          <CardPreviewSmall card={card} key={card.id} />))
+    } else {
+      return cardsArray
+        .filter((card) => card.categorie[0].name === categoryFilter)
+        .map((card) => <CardPreviewSmall card={card} key={card.id} />)
+    }
+  }
+
+
   return (
     <div className="CardGridList">
       <div
         className={`CardGridList__wrapper${
           cardPreviewSize === "small" ? "--small" : "--big"
-        }`}
+          }`}
       >
-        {categoryFilter === "all"
+        
+        {setCategory(categoryFilter)}
+        {/* {categoryFilter === "all"
           ? cardsArray &&
             cardsArray.map((card) => (
               <CardPreviewSmall card={card} key={card.id} />
             ))
           : cardsArray
               .filter((card) => card.categorie[0].name === categoryFilter)
-              .map((card) => <CardPreviewSmall card={card} key={card.id} />)}
+              .map((card) => <CardPreviewSmall card={card} key={card.id} />)} */}
       </div>
       <CardFullPopup cardsArray={cardsArray} />
     </div>

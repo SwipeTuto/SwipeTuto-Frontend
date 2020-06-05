@@ -5,4 +5,5 @@ export const CardsActionTypes = {
 
   GET_ALL_CARDS_SUCCESS: 'GET_ALL_CARDS_SUCCESS',
   GET_ALL_CARDS_FAILURE: 'GET_ALL_CARDS_FAILURE'
+
 }

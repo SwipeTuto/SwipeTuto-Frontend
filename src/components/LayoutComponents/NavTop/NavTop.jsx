@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/images/navtop_logo.png";
 import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg";
@@ -26,35 +26,33 @@ import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { setCurrentUser } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
 import { selectUserNav } from "../../../redux/layout/layout-selectors";
+import { searchAction } from "../../../redux/filter/filter-actions"
+import { setCategoryFilter } from "../../../redux/cards/cards-actions"
 
 import "./NavTop.scss";
 
 const NavTop = () => {
+  const dispatch = useDispatch()
   const currentUser = useSelector(selectCurrentUser);
   const currentUserNav = useSelector(selectUserNav);
-  const [search, setSearch] = useState("");
-
-  const getUser = JSON.parse(sessionStorage.getItem("user"));
-
-  useEffect(() => {
-    // getUser && dispatch(setCurrentUser(getUser));
-  }, []);
-
-  useEffect(() => {
-    // avatar ? setTest(avatar) : setTest('')
-  });
+  const [searchInput, setSearchInput] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let searchCopy = search;
+    let searchCopy = searchInput;
     searchCopy = e.target.value;
-    setSearch(searchCopy);
+    setSearchInput(searchCopy);
   };
 
   const handleChange = (e) => {
     const searchText = e.target.value;
-    setSearch(searchText);
+    setSearchInput(searchText);
   };
+  // ACTION POUR LE FILTRE
+  const handleClick = e => {
+    dispatch(searchAction(searchInput))
+    dispatch(setCategoryFilter('search'))
+  }
 
   // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription
   return (
@@ -102,16 +100,21 @@ const NavTop = () => {
       </div>
       <div className="NavTop__center">
         <form className="NavTop__search" onSubmit={handleSubmit}>
-          <button type="submit" className="NavTop__button">
+          <button 
+          type="submit"  
+          onClick={e => handleClick(e)} 
+          className="NavTop__button">
             <SearchLogo className="NavTop__button--logo" />
           </button>
           <input
             className="NavTop__input"
-            id="kword"
+            id="search"
+            name="search"
             type="text"
             placeholder="Recherche..."
             onChange={handleChange}
-            value={search}
+           
+            value={searchInput}
           />
         </form>
       </div>
@@ -119,7 +122,7 @@ const NavTop = () => {
         {currentUser && currentUser.avatar ? (
           <>
             <div
-              // onClick={() => dispatch(toggleUserNav())}
+              onClick={() => dispatch(toggleUserNav())}
               className="NavTop__avatar"
             >
               <img
@@ -135,6 +138,7 @@ const NavTop = () => {
           </Link>
         )}
       </div>
+          
       {currentUserNav ? (
         <div className="NavTop__userMenu">
           <p className="NavTop__userMenu--text">Bonjour</p>

@@ -104,7 +104,7 @@ const HomePage = () => {
               😄
             </span>{" "}
           </h1>
-          <Link to="/search">
+          <Link to="/cards">
             <CustomButton color="dark">Voir les cartes</CustomButton>
           </Link>
         </div>

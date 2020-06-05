@@ -69,7 +69,6 @@ const CardFullPopup = ({ cardsArray }) => {
       ? document.querySelector(".CardFullPopup.active")
       : null;
 
-    console.log(currentClickedCard);
     if (!currentClickedCard) return;
     if (
       currentClickedCard.classList.contains("CardFullPopup") &&
@@ -87,7 +86,10 @@ const CardFullPopup = ({ cardsArray }) => {
       className={`CardFullPopup ${popupShown ? "active" : ""}`}
       onClick={() => handlePopupClose()}
     >
-      <div className="CardFullPopup__wrapper">
+      <div
+        className="CardFullPopup__wrapper"
+        onClick={(e) => e.stopPropagation()}
+      >
         <CloseLogo
           className="CardFullPopup__close"
           onClick={() => handlePopupClose()}

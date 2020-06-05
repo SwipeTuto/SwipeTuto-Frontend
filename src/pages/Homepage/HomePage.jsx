@@ -1,13 +1,15 @@
 // Présent dans App.js dans une Route ("/")
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
 import HomeHeader from "../../components/LayoutComponents/HomeHeader/HomeHeader";
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
+import CardPreviewSmall from "../../components/CardsComponents/CardPreviewSmall/CardPreviewSmall";
 import CardFullPopup from "../../components/CardsComponents/CardFullPopup/CardFullPopup";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
+import Loading from "../../components/Loading/Loading";
 
 import { ReactComponent as QuestionIllustration } from "../../assets/images/illustrations/illustration-question.svg";
 import { ReactComponent as GrilleIllustration } from "../../assets/images/illustrations/illustration-grille.svg";
@@ -18,7 +20,17 @@ import { selectCardsFetched } from "../../redux/cards/cards-selectors";
 import "./HomePage.scss";
 
 const HomePage = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const cards = useSelector(selectCardsFetched);
+  const [cardsArrayCut, setCardsArrayCut] = useState([]);
+  console.log(cards);
+
+  useEffect(() => {
+    if (cards) {
+      setIsLoading(false);
+      setCardsArrayCut(cards.slice(0, 6));
+    }
+  }, [cards]);
 
   // scroll reset
   if (window.scrollY) {
@@ -28,8 +40,14 @@ const HomePage = () => {
   return (
     <div className="HomePage">
       <HomeHeader />
-      <CardGridList cardsSize="big" cardsNumber={6} />
-      <CardFullPopup cardsArray={cards} />
+      <div className="HomePage__grid">
+        {isLoading ? (
+          <Loading />
+        ) : (
+          cardsArrayCut.map((card) => <CardPreviewSmall card={card} />)
+        )}
+      </div>
+      <CardFullPopup cardsArray={cardsArrayCut} />
 
       <div className="About">
         <div className="about-section section-1">

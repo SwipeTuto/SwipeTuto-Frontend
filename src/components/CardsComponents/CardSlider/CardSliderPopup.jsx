@@ -94,17 +94,24 @@ const CardSliderPopup = () => {
           >
             <CloseLogo />
           </div>
-
-          <ChevronLeftWhite
-            aria-label="Previous"
-            className="CardSliderLarge__chevron--fullpage chevron-left-white"
-            onClick={(e) => goToPrevSlide(e)}
-          />
-          <ChevronRightWhite
-            aria-label="Next"
-            className="CardSliderLarge__chevron--fullpage chevron-right-white"
-            onClick={(e) => goToNextSlide(e)}
-          />
+          {activeIndex === 0 ? (
+            ""
+          ) : (
+            <ChevronLeftWhite
+              aria-label="Previous"
+              className="CardSliderLarge__chevron--fullpage chevron-left-white"
+              onClick={(e) => goToPrevSlide(e)}
+            />
+          )}
+          {activeIndex === clickedCardSlides.length - 1 ? (
+            ""
+          ) : (
+            <ChevronRightWhite
+              aria-label="Next"
+              className="CardSliderLarge__chevron--fullpage chevron-right-white"
+              onClick={(e) => goToNextSlide(e)}
+            />
+          )}
 
           <div className="CardSliderLarge__indicators--fullscreen">
             {`${activeIndex + 1} / ${
@@ -114,16 +121,24 @@ const CardSliderPopup = () => {
         </Fragment>
       ) : (
         <Fragment>
-          <ChevronLeft
-            aria-label="Previous"
-            className="CardSliderLarge__chevron--fullpage chevron-left"
-            onClick={(e) => goToPrevSlide(e)}
-          />
-          <ChevronRight
-            aria-label="Next"
-            className="CardSliderLarge__chevron--fullpage chevron-right"
-            onClick={(e) => goToNextSlide(e)}
-          />
+          {activeIndex === 0 ? (
+            ""
+          ) : (
+            <ChevronLeft
+              aria-label="Previous"
+              className="CardSliderLarge__chevron--fullpage chevron-left"
+              onClick={(e) => goToPrevSlide(e)}
+            />
+          )}
+          {activeIndex === clickedCardSlides.length - 1 ? (
+            ""
+          ) : (
+            <ChevronRight
+              aria-label="Next"
+              className="CardSliderLarge__chevron--fullpage chevron-right"
+              onClick={(e) => goToNextSlide(e)}
+            />
+          )}
         </Fragment>
       )}
       <ul className="CardSliderLarge__slides">

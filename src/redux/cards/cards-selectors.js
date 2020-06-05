@@ -20,4 +20,4 @@ export const selectClickedCardSlides = createSelector(
   }
 )
 
-export const selectCategoryFilter = state => state.cards.categoryFilter;
+export const selectCategoryFilter = state => state.cards.categoryFilter ? state.cards.categoryFilter : "all";

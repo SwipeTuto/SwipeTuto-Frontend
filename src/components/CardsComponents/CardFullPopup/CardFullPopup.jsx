@@ -1,6 +1,6 @@
 // Popup qui s'ouvre au clic sur une card. Contient CardSliderFull et aussi toutes les infos de la card cliquée
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import CardSliderPopup from "../CardSlider/CardSliderPopup";
 
@@ -35,6 +35,21 @@ const CardFullPopup = ({ cardsArray }) => {
   const clickedCard = useSelector(selectClickedCard);
   const popupShown = useSelector(selectShowPopupCard);
   const dispatch = useDispatch();
+  const [indexOfCurrentCard, setIndexOfCurrentCard] = useState();
+  const [cardsArrayLength, setCardsArrayLength] = useState();
+
+  useEffect(() => {
+    if (!clickedCard || !cardsArray) return;
+    setCardsArrayLength(cardsArray.length);
+    setIndexOfCurrentCard(cardsArray.indexOf(clickedCard));
+  }, [clickedCard, cardsArray, cardsArrayLength, indexOfCurrentCard]);
+
+  // scroll reset
+  useEffect(() => {
+    if (popupShown && document.querySelector(".CardFullPopup.active")) {
+      document.querySelector(".CardFullPopup.active").scroll(0, 0);
+    }
+  }, [popupShown]);
 
   const clickedCardDate =
     clickedCard && formattedDate(new Date(clickedCard.modified));
@@ -161,21 +176,42 @@ const CardFullPopup = ({ cardsArray }) => {
           </div>
         </div>
 
-        <ChevronCircleRight
-          className="nav__chevron nav__chevron--right"
-          // onClick={() => goNextCard()}
-          onClick={(event) => {
-            event.stopPropagation();
-            goNextCard();
-          }}
-        />
-        <ChevronCircleLeft
-          className="nav__chevron nav__chevron--left"
-          onClick={(event) => {
-            event.stopPropagation();
-            goPreviousCard();
-          }}
-        />
+        {indexOfCurrentCard === 0 ? (
+          <ChevronCircleRight
+            className="nav__chevron nav__chevron--right"
+            // onClick={() => goNextCard()}
+            onClick={(event) => {
+              event.stopPropagation();
+              goNextCard();
+            }}
+          />
+        ) : indexOfCurrentCard === cardsArrayLength - 1 ? (
+          <ChevronCircleLeft
+            className="nav__chevron nav__chevron--left"
+            onClick={(event) => {
+              event.stopPropagation();
+              goPreviousCard();
+            }}
+          />
+        ) : (
+          <>
+            <ChevronCircleRight
+              className="nav__chevron nav__chevron--right"
+              // onClick={() => goNextCard()}
+              onClick={(event) => {
+                event.stopPropagation();
+                goNextCard();
+              }}
+            />
+            <ChevronCircleLeft
+              className="nav__chevron nav__chevron--left"
+              onClick={(event) => {
+                event.stopPropagation();
+                goPreviousCard();
+              }}
+            />
+          </>
+        )}
       </div>
     </div>
   );

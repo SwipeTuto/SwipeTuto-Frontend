@@ -9,6 +9,7 @@ import { selectCategoryFilter } from "../../../redux/cards/cards-selectors";
 
 import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
 import CardFullPopup from "../../CardsComponents/CardFullPopup/CardFullPopup";
+import Loading from "../../Loading/Loading";
 
 import "./CardGridList.scss";
 
@@ -19,34 +20,46 @@ const CardGridList = ({ cardsSize, cardsNumber }) => {
   const searchCard = useSelector((state) => state.filter.cardFilter);
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
   const [cardsArray, setcardsArray] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setCardPreviewSize(cardsSize);
-    if (cardsNumber && cardsArray) {
-      const cardsArrayCopy = cardsArray.slice(0, cardsNumber);
-      setcardsArray(cardsArrayCopy);
+    if (cards) {
+      setIsLoading(false);
     }
+    setCardPreviewSize(cardsSize);
     setcardsArray(cards);
   }, [cards, cardsSize, cardsNumber, cardsArray]);
 
   const setCategory = (filter) => {
     if (filter === "all") {
-      console.log("cardsArray", cardsArray);
+      // const cardsArrayToMap = checkForNumberToDisplay(cardsArray, cardsNumber);
       return (
         cardsArray &&
         cardsArray.map((card) => <CardPreviewSmall card={card} key={card.id} />)
       );
     } else if (filter === "search") {
+      // const cardsArrayToMap = checkForNumberToDisplay(searchCard, cardsNumber);
       return (
         searchCard &&
         searchCard.map((card) => <CardPreviewSmall card={card} key={card.id} />)
       );
     } else {
+      // const cardsArrayToMap = checkForNumberToDisplay(cardsArray, cardsNumber);
       return cardsArray
         .filter((card) => card.categorie[0].name === categoryFilter)
         .map((card) => <CardPreviewSmall card={card} key={card.id} />);
     }
   };
+
+  // const checkForNumberToDisplay = (array, number) => {
+  //   let cardsArrayToMap;
+  //   if (array && cardsNumber) {
+  //     cardsArrayToMap = array.slice(0, cardsNumber);
+  //   } else {
+  //     cardsArrayToMap = array;
+  //   }
+  //   return cardsArrayToMap;
+  // };
 
   return (
     <div className="CardGridList">
@@ -55,15 +68,7 @@ const CardGridList = ({ cardsSize, cardsNumber }) => {
           cardPreviewSize === "small" ? "--small" : "--big"
         }`}
       >
-        {setCategory(categoryFilter)}
-        {/* {categoryFilter === "all"
-          ? cardsArray &&
-            cardsArray.map((card) => (
-              <CardPreviewSmall card={card} key={card.id} />
-            ))
-          : cardsArray
-              .filter((card) => card.categorie[0].name === categoryFilter)
-              .map((card) => <CardPreviewSmall card={card} key={card.id} />)} */}
+        {isLoading ? <Loading /> : setCategory(categoryFilter)}
       </div>
       <CardFullPopup cardsArray={cardsArray} />
     </div>

@@ -38,7 +38,6 @@ export const langageList = () => {
 }
 
 export const searchBar = kkord => {
-  console.log('kkordFromService', kkord)
   var config = { headers: { 'Content-Type': 'application/json' }, }
   return axios.get(`${baseURL}card/?search=${kkord}`, config)
   .then(rep => {
@@ -47,4 +46,23 @@ export const searchBar = kkord => {
     .catch(function (err) {
       return err
     })
+}
+
+export const langageFilter = langage => {
+  var config = { headers: { 'Content-Type': 'application/json' }}
+  return axios.get(`${baseURL}card/${langage}/`, config)
+  .then(rep => {
+   console.log(rep)
+   return rep
+  })
+}
+
+
+export const langageAndCategorieFilter = (langage, categorie) => {
+  var config = { headers: { 'Content-Type': 'application/json' }}
+  return axios.get(`${baseURL}card/${langage}/${categorie}`, config)
+  .then(rep => {
+   console.log(rep)
+   return rep
+  })
 }

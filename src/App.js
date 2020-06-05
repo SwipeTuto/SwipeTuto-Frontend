@@ -40,6 +40,9 @@ function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/cards" component={SearchPage} />
+        <Route exact path="/cards/:langage" component={SearchPage} />
+        {/* EN TEST */}
+        <Route exact path="/cards/:langage/:categorie" component={SearchPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/ressources" component={RessourcesPage} />
         {/* <PrivateRoute exact path="/login" component={Login} /> */}

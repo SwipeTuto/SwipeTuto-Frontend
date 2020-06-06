@@ -9,15 +9,15 @@ const INITIAL_STATE = {
 const layoutReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LayoutActionTypes.SHOW_POPUP_CARD:
-      document.getElementsByClassName("App")[0].style.position = "fixed";
-      document.getElementsByClassName("App")[0].style.overflow = "hidden";
+      // document.getElementsByClassName("App")[0].style.position = "fixed";
+      // document.getElementsByClassName("App")[0].style.overflow = "hidden";
       return {
         ...state,
         popupShown: true,
       };
     case LayoutActionTypes.CLOSE_POPUP_CARD:
-      document.getElementsByClassName("App")[0].style.position = "static";
-      document.getElementsByClassName("App")[0].style.overflow = "visible";
+      // document.getElementsByClassName("App")[0].style.position = "static";
+      // document.getElementsByClassName("App")[0].style.overflow = "visible";
       return {
         ...state,
         popupShown: false,

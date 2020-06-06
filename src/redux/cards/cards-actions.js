@@ -16,10 +16,7 @@ export const setNoClickedCard = () => ({
   payload: null,
 });
 
-export const setCategoryFilter = (category) => ({
-  type: CardsActionTypes.SET_CATEGORY_FILTER,
-  payload: category,
-});
+
 
 export const getCardsAction = () => {
   return dispatch => {

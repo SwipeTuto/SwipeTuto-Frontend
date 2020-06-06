@@ -2,7 +2,7 @@
 import React from "react";
 import "./FiltersBar.scss";
 import { useDispatch } from "react-redux";
-import { setCategoryFilter } from "../../../redux/cards/cards-actions";
+import { setCategoryFilter } from "../../../redux/filter/filter-actions";
 import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
 import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";
 

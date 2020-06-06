@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import NavTop from "../../components/LayoutComponents/NavTop/NavTop";
 import FiltersBar from "../../components/LayoutComponents/FiltersBar/FiltersBar";
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
+import CurrentSearchWords from "../../components/CurrentSearchWords/CurrentSearchWords";
 
 import "./SearchPage.scss";
 
@@ -14,9 +15,9 @@ const SearchPage = () => {
   const [gridSize, setGridSize] = useState("small");
 
   // scroll reset
-  if (window.scrollY) {
-    window.scroll(0, 0);
-  }
+  // if (window.scrollY) {
+  //   window.scroll(0, 0);
+  // }
 
   const handleClickSize = (e) => {
     const allGridSizeItems = [
@@ -31,6 +32,7 @@ const SearchPage = () => {
   return (
     <div className="SearchPage">
       <div className="SearchPage__wrapper">
+        <CurrentSearchWords />
         <FiltersBar handleClickSize={handleClickSize} />
         <CardGridList cardsSize={gridSize} cardsNumber={12} />
       </div>

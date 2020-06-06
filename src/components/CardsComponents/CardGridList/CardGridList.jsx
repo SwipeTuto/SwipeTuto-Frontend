@@ -2,95 +2,67 @@
 // Présent sur la Homepage "/" et la "/search" et par défaut sera en affichage "small" pour les cardPreview
 // import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
-import { useSelector,useDispatch } from "react-redux";
-import { withRouter } from 'react-router-dom';
-
+import { useSelector, useDispatch } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import { selectCardsFetched } from "../../../redux/cards/cards-selectors";
-import { selectCategoryFilter } from "../../../redux/cards/cards-selectors";
-
+import { selectCategoryFilter } from "../../../redux/filter/filter-selectors";
+import { selectCardFilter } from "../../../redux/filter/filter-selectors";
+import { selectSearchType } from "../../../redux/filter/filter-selectors";
 
 import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
 import CardFullPopup from "../../CardsComponents/CardFullPopup/CardFullPopup";
 import Loading from "../../Loading/Loading";
 // EN TEST
-import {langageAndCategorieFilter} from '../../../services/searchService'
+import { langageAndCategorieFilter } from "../../../services/searchService";
 
 import "./CardGridList.scss";
 
-const CardGridList = ({ cardsSize, cardsNumber, location}) => {
-
+const CardGridList = ({ cardsSize, cardsNumber, location }) => {
   const categoryFilter = useSelector(selectCategoryFilter);
   const cards = useSelector(selectCardsFetched);
+  const searchType = useSelector(selectSearchType);
   // ICI TU PEUX TROUVER LES CARTES APRES LE FILTRE
-  const searchCard = useSelector((state) => state.filter.cardFilter);
+  const searchCard = useSelector(selectCardFilter);
 
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
   const [cardsArray, setcardsArray] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  
-
-
 
   useEffect(() => {
     // EN TEST
-    langageAndCategorieFilter('php', 'memo')
-
+    langageAndCategorieFilter("php", "memo");
 
     if (cards) {
       setIsLoading(false);
     }
     setCardPreviewSize(cardsSize);
-    setcardsArray(cards);
-  }, [cards, cardsSize, cardsNumber, cardsArray]);
+    // setcardsArray(cards);
 
-  const setCategory = (filter) => {
-    if (filter === "all") {
-      // const cardsArrayToMap = checkForNumberToDisplay(cardsArray, cardsNumber);
-      return (
-        cardsArray &&
-        cardsArray.map((card) => <CardPreviewSmall card={card} key={card.id} />)
-      );
-    } else if (filter === "search") {
-      // const cardsArrayToMap = checkForNumberToDisplay(searchCard, cardsNumber);
-      
-      return (
-        searchCard &&
-        searchCard.map((card) => <CardPreviewSmall card={card} key={card.id} />)
-      );
-    } else if( filter === 'langage'){
-         // const cardsArrayToMap = checkForNumberToDisplay(searchCard, cardsNumber);
-         return (
-          searchCard &&
-          searchCard.map((card) => <CardPreviewSmall card={card} key={card.id} />)
-        );
-    }else {
-      // const cardsArrayToMap = checkForNumberToDisplay(cardsArray, cardsNumber);
-      return cardsArray && cardsArray
-        .filter((card) => card.categorie[0].name === categoryFilter)
-        .map((card) => <CardPreviewSmall card={card} key={card.id} />);
+    if (searchType === "search" || searchType === "langage") {
+      setcardsArray(searchCard);
+    } else {
+      setcardsArray(cards);
     }
-  };
 
-  // const checkForNumberToDisplay = (array, number) => {
-  //   let cardsArrayToMap;
-  //   if (array && cardsNumber) {
-  //     cardsArrayToMap = array.slice(0, cardsNumber);
-  //   } else {
-  //     cardsArrayToMap = array;
-  //   }
-  //   return cardsArrayToMap;
-  // };
+    // console.log(cardsArray);
+  }, [cards, cardsSize, cardsNumber, cardsArray, searchType, searchCard]);
 
   return (
     <div className="CardGridList">
-  
       <div
         className={`CardGridList__wrapper${
           cardPreviewSize === "small" ? "--small" : "--big"
         }`}
       >
-        {isLoading ? <Loading /> : setCategory(categoryFilter)}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          cardsArray &&
+          cardsArray.map((card) => (
+            <CardPreviewSmall card={card} key={card.id} />
+          ))
+        )}
       </div>
       <CardFullPopup cardsArray={cardsArray} />
     </div>

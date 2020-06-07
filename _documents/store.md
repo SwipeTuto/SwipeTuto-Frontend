@@ -118,7 +118,7 @@ http://localhost:3000/cards/php
 Au click sur un langage
 | TYPE                      | DIFF    | REDUCER | state         |
 | ------------------------- | ------- | ------- | ------------- |
-| GET_CARDS_LANGAGE_REQUEST | langage | filter  | cardFilter2   |
+| GET_CARDS_LANGAGE_REQUEST | langage | filter  | currentSearch   |
 | SET_SEARCH_TYPE           | type    | filter  | searchType    |
 | SET_CURRENT_SEARCH        | langage | filter  | currentSearch |
 | GET_CARDS_LANGAGE_SUCCESS | cards   | filter  | cardFilter    |

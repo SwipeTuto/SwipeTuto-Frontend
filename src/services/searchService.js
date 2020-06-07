@@ -58,11 +58,10 @@ export const langageFilter = langage => {
 }
 
 
-export const langageAndCategorieFilter = (langage, categorie) => {
+export const getCardByLangageAndCategory = (langage, category) => {
   var config = { headers: { 'Content-Type': 'application/json' }}
-  return axios.get(`${baseURL}card/${langage}/${categorie}`, config)
+  return axios.get(`${baseURL}card/${langage}/${category}`, config)
   .then(rep => {
-   console.log(rep)
    return rep
   })
 }

@@ -1,20 +1,27 @@
 // Bar avec les items pour filtrer les slides
 import React from "react";
-import "./FiltersBar.scss";
-import { useDispatch } from "react-redux";
-import { setCategoryFilter } from "../../../redux/filter/filter-actions";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom"
+
 import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
 import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";
+
+import { getCardByLangageAndCategoryAction } from "../../../redux/filter/filter-actions"
+
+
+import "./FiltersBar.scss";
 
 const FiltersBar = ({ handleClickSize }) => {
   // const [searchFilter, setSearchFilter] = useState("all");
   // const [gridSize, setGridSize] = useState("small");
   const dispatch = useDispatch();
+  const langage = useSelector(state => state.filter.currentSearch)
 
   const handleClick = (e) => {
     const newSearchFilter = e.target.dataset.filter;
+    dispatch(getCardByLangageAndCategoryAction(langage, newSearchFilter));
     // setSearchFilter(newSearchFilter);
-    dispatch(setCategoryFilter(newSearchFilter));
+
     const allFiltersItems = [
       ...document.querySelectorAll("button.FiltersBar__options--item"),
     ];
@@ -52,13 +59,25 @@ const FiltersBar = ({ handleClickSize }) => {
             >
               Code
             </button>
-            <button
-              className="FiltersBar__options--item"
-              data-filter="design"
-              onClick={handleClick}
-            >
-              Design
+            <Link to={`/cards/${langage}/memo/`}>
+              <button
+                className="FiltersBar__options--item"
+                data-filter="memo"
+                onClick={handleClick}
+              >
+                memo
             </button>
+            </Link>
+            <Link to={`/cards/${langage}/bloccode/`}>
+              <button
+                name="bloc code"
+                className="FiltersBar__options--item"
+                data-filter="bloc code"
+                onClick={handleClick}
+              >
+                bloc code
+            </button>
+            </Link>
             <button
               className="FiltersBar__options--item"
               data-filter="performances"

@@ -4,7 +4,7 @@ import { selectCurrentSearch } from "../../redux/filter/filter-selectors";
 import { ReactComponent as CloseLogo } from "../../assets/images/close-circle.svg";
 import {
   deleteCurrentSearch,
-  setSearchType,
+  setType,
 } from "../../redux/filter/filter-actions";
 
 import "./CurrentSearchWords.scss";
@@ -16,7 +16,7 @@ const CurrentSearchWords = () => {
   const handleDelete = (e) => {
     e.stopPropagation();
     dispatch(deleteCurrentSearch());
-    dispatch(setSearchType("all"));
+    dispatch(setType("all"));
   };
 
   return (

@@ -1,5 +1,6 @@
 import { FilterActionTypes } from "./filter-types"
-import { searchBar, langageFilter, getCardByLangageAndCategory } from '../../services/searchService'
+import { searchBar } from '../../services/searchService'
+import { getCardAfterfilter } from '../../services/cardsService'
 
 
 
@@ -29,56 +30,33 @@ const SearchFailure = error => ({
   payload: error
 })
 
-export const getCardByLangage = langage => {
-  return dispatch => {
-    dispatch(getLangageRequest(langage))
-    return langageFilter(langage)
-      .then(search => {
-        dispatch(getLangageSuccess(search.data.results))
-      })
-      .catch(err => {
-        dispatch(getLangageFailure(err.response))
-      })
-  }
-}
-const getLangageRequest = langage => ({
-  type: FilterActionTypes.GET_CARDS_LANGAGE_REQUEST,
-  payload: langage
-})
-const getLangageSuccess = card => ({
-  type: FilterActionTypes.GET_CARDS_LANGAGE_SUCCESS,
-  payload: card
-})
-const getLangageFailure = error => ({
-  type: FilterActionTypes.GET_CARDS_LANGAGE_FAILURE,
-  payload: error
-})
 
 
-export const getCardByLangageAndCategoryAction = (langage, category) => {
+export const getCardAfterfilterAction = (langage, category) => {
   return dispatch => {
-    dispatch(getCardByLangageAndCategoryRequest(langage, category))
-    return getCardByLangageAndCategory(langage, category)
+    dispatch(getCardAfterfilteryRequest(langage, category))
+    return getCardAfterfilter(langage, category)
     .then(rep => {
-      dispatch(getCardByLangageAndCategorySuccess(rep.data.results))
+      dispatch(getCardAfterfilterSuccess(rep.data.results))
     })
     .catch (err => {
-      dispatch(getCardByLangageAndCategoryFailure(err.response))
+      dispatch(getCardAfterfilterFailure(err.response))
     })
   }
 }
-const getCardByLangageAndCategoryRequest = (langage, category) => ({
+const getCardAfterfilteryRequest = (langage, category) => ({
   type: FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_REQUEST,
   payload: { langage, category }
 })
-const getCardByLangageAndCategorySuccess = cards => ({
+const getCardAfterfilterSuccess = cards => ({
   type: FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_SUCCESS,
   payload: cards
 })
-const getCardByLangageAndCategoryFailure = err => ({
+const getCardAfterfilterFailure = err => ({
   type: FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_FAILURE,
   payload: err
 })
+
 
 
 export const setCurrentSearch = searchWords => ({

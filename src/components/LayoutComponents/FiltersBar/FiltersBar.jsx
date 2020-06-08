@@ -1,14 +1,15 @@
 // Bar avec les items pour filtrer les slides
-import React from "react";
+import React , { useState, useEffect }from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom"
 
 import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
 import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";
 
-import { getCardByLangageAndCategoryAction } from "../../../redux/filter/filter-actions"
+import { getCardAfterfilterAction } from "../../../redux/filter/filter-actions"
 
 
+import {setType} from "../../../redux/filter/filter-actions";
 import "./FiltersBar.scss";
 
 const FiltersBar = ({ handleClickSize }) => {
@@ -16,10 +17,12 @@ const FiltersBar = ({ handleClickSize }) => {
   // const [gridSize, setGridSize] = useState("small");
   const dispatch = useDispatch();
   const langage = useSelector(state => state.filter.currentSearch)
+  const category = useSelector(state => state.filter.categoryFilter)
 
   const handleClick = (e) => {
-    const newSearchFilter = e.target.dataset.filter;
-    dispatch(getCardByLangageAndCategoryAction(langage, newSearchFilter));
+  const langageUndified = (langage ? langage : undefined)
+  const newSearchFilters  = e.target.dataset.filter
+    dispatch(getCardAfterfilterAction(langageUndified, newSearchFilters)); 
     // setSearchFilter(newSearchFilter);
 
     const allFiltersItems = [
@@ -41,10 +44,11 @@ const FiltersBar = ({ handleClickSize }) => {
             <button
               className="FiltersBar__options--item active"
               data-filter="all"
-              onClick={handleClick}
+              onClick={() => dispatch(setType("all"))}
             >
               Tous
             </button>
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/theorie` : `/theorie`}`}>
             <button
               className="FiltersBar__options--item"
               data-filter="theorie"
@@ -52,14 +56,18 @@ const FiltersBar = ({ handleClickSize }) => {
             >
               Théorie
             </button>
+            </Link>
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/code` : `/code`}`}>
             <button
+            type='submit'
               className="FiltersBar__options--item"
               data-filter="code"
               onClick={handleClick}
             >
               Code
             </button>
-            <Link to={`/cards/${langage}/memo/`}>
+            </Link>
+           < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/memo` : `/memo`}`}>
               <button
                 className="FiltersBar__options--item"
                 data-filter="memo"
@@ -68,7 +76,8 @@ const FiltersBar = ({ handleClickSize }) => {
                 memo
             </button>
             </Link>
-            <Link to={`/cards/${langage}/bloccode/`}>
+           
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/bloccode` : `/bloccode`}`}>
               <button
                 name="bloc code"
                 className="FiltersBar__options--item"
@@ -78,6 +87,7 @@ const FiltersBar = ({ handleClickSize }) => {
                 bloc code
             </button>
             </Link>
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/performances` : `/performances`}`}>
             <button
               className="FiltersBar__options--item"
               data-filter="performances"
@@ -85,6 +95,8 @@ const FiltersBar = ({ handleClickSize }) => {
             >
               Performances
             </button>
+            </Link>
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/ressources` : `/ressources`}`}>
             <button
               className="FiltersBar__options--item"
               data-filter="ressources"
@@ -92,6 +104,8 @@ const FiltersBar = ({ handleClickSize }) => {
             >
               Ressources
             </button>
+            </Link>
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/autre` : `/autre`}`}>
             <button
               className="FiltersBar__options--item"
               data-filter="autre"
@@ -99,6 +113,7 @@ const FiltersBar = ({ handleClickSize }) => {
             >
               Autre
             </button>
+            </Link>
           </div>
         </div>
         <div className="FiltersBar__down">

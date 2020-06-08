@@ -23,25 +23,20 @@ import NodeJSLogo from "../../../assets/images/tech_logo/nodeJS.png";
 
 import CustomButton from "../CustomButton/CustomButton";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
-import { setCurrentUser } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
 import { selectUserNav } from "../../../redux/layout/layout-selectors";
-import {
-  searchAction,
-  setType,
-  setCurrentSearch,
-} from "../../../redux/filter/filter-actions";
-import { setSelectionType } from "../../../redux/filter/filter-actions";
-import { getCardByLangage } from "../../../redux/filter/filter-actions";
+import {searchAction,setType} from "../../../redux/filter/filter-actions";
+import { setSelectionType, getCardAfterfilterAction } from "../../../redux/filter/filter-actions";
+
 
 import "./NavTop.scss";
-import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
+
+
 
 const NavTop = (props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const currentUserNav = useSelector(selectUserNav);
-  const [getLangageLocal, setGetLangageLocal] = useState("all");
   const [searchInput, setSearchInput] = useState("");
 
   const handleSubmit = (e) => {
@@ -56,22 +51,16 @@ const NavTop = (props) => {
     const searchText = e.target.value;
     setSearchInput(searchText);
   };
-  // ACTION POUR LE FILTRE
+ 
   const handleClick = (e) => {
     dispatch(searchAction(searchInput));
     dispatch(setSelectionType("search"));
     props.history.push("/cards");
   };
+  
   const logoHandleClick = (e) => {
-    dispatch(getCardByLangage(e.target.name));
+    dispatch(getCardAfterfilterAction(e.target.name))
     dispatch(setType("langage"));
-    /**
-     * --------------------IMPORTANT A LIRE------------------------------
-     * PLUS BESOIN. MON API GET CARDBYLANGAGE SET LE LANGAGE DANS TA VARIABLE
-     * Peux-tu controler si celà est vrai
-     * (GET_CARDS_LANGAGE_REQUEST recup langage)
-     */
-    // dispatch(setCurrentSearch(e.target.alt));
   };
 
   // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription

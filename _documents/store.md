@@ -68,7 +68,7 @@ const INITIAL_STATE = {
 		searchType:  'all',
 		currentSearch:  '',
 		errors:  '',
-		categoryFilter:  'all',
+		categoryFilter:  '',
 		cardFilter:  ""
 	}
 ```
@@ -77,17 +77,13 @@ const INITIAL_STATE = {
 ### Actions
 | TYPE                               | PAYLOAD           | STATE                        | DESCRIPTION                                                                 |
 | ---------------------------------- | ----------------- | ---------------------------- | --------------------------------------------------------------------------- |
-| GET_CARDS_LANGAGE_REQUEST          | langage           | currentSearch                | Return le langage choisi                                                    |
-| GET_CARDS_LANGAGE_SUCCESS          | cards             | cardFilter                   | Return  de la liste des cartes par le back après l'ajoute de filtre langage |
-| GET_CARDS_LANGAGE_FAILURE          | errors            | errors                       | errors                                                                      |
-| -                                  | -                 | -                            |                                                                             |
 | GET_CARDS_LANGAGE_CATEGORY_REQUEST | langage, category | currentSearch,categoryFilter | set langage et category                                                     |
 | GET_CARDS_LANGAGE_CATEGORY_SUCCESS | cards             | cardFilter                   | Return  de la liste des cartes par le back après l'ajoute de filtre         |
 | GET_CARDS_LANGAGE_CATEGORY_FAILURE | errors            | errors                       | errors                                                                      |
 | -                                  | -                 | -                            |                                                                             |
 | SEARCH_SUCCESS                     | Cards             | cardFilter                   | Retour des cartes après la recherche                                        |
 | SEARCH_FAILURE                     | errors            | errors                       | errors                                                                      |
-| -                                  | -                 | -                            |      -                                                                      |
+| -                                  | -                 | -                            | -                                                                           |
 | DELETE_CURRENT_SEARCH              |                   |                              |                                                                             |
 | SET_CATEGORY_FILTER                | categories        | categoryFilter               | Applique la categorie voulu                                                 |
 | SET_TYPE                           | type              | searchType                   | Applique le type voulu (ALL, LANGAGE, SEARCH)                               |
@@ -118,10 +114,8 @@ http://localhost:3000/cards/php
 Au click sur un langage
 | TYPE                      | DIFF    | REDUCER | state         |
 | ------------------------- | ------- | ------- | ------------- |
-| GET_CARDS_LANGAGE_REQUEST | langage | filter  | currentSearch   |
 | SET_SEARCH_TYPE           | type    | filter  | searchType    |
 | SET_CURRENT_SEARCH        | langage | filter  | currentSearch |
-| GET_CARDS_LANGAGE_SUCCESS | cards   | filter  | cardFilter    |
 
 ###  Category (Sous menu Langage)
 ```javascript

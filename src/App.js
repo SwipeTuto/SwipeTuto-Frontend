@@ -11,7 +11,7 @@ import NavTop from "./components/LayoutComponents/NavTop/NavTop";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 import PrivateRoute from "./PrivateRoute";
 import { getCardsAction } from './redux/cards/cards-actions'
-import { setCategoryFilter } from "./redux/filter/filter-actions";
+
 
 
 
@@ -27,7 +27,7 @@ function App() {
 
 
 
-  useEffect(() => dispatch(setCategoryFilter("all")), []);
+ 
 
   useEffect(() => {
     dispatch(getCardsAction())
@@ -40,8 +40,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/cards" component={SearchPage} />
-        <Route exact path="/cards/:langage" component={SearchPage} />
-        {/* EN TEST */}
+        <Route  path="/cards/:langage" component={SearchPage} />
         <Route exact path="/cards/:langage/:categorie" component={SearchPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/ressources" component={RessourcesPage} />

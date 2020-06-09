@@ -48,21 +48,3 @@ export const searchBar = kkord => {
     })
 }
 
-export const langageFilter = langage => {
-  var config = { headers: { 'Content-Type': 'application/json' }}
-  return axios.get(`${baseURL}card/${langage}/`, config)
-  .then(rep => {
-   console.log(rep)
-   return rep
-  })
-}
-
-
-export const langageAndCategorieFilter = (langage, categorie) => {
-  var config = { headers: { 'Content-Type': 'application/json' }}
-  return axios.get(`${baseURL}card/${langage}/${categorie}`, config)
-  .then(rep => {
-   console.log(rep)
-   return rep
-  })
-}

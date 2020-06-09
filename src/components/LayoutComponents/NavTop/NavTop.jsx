@@ -23,25 +23,20 @@ import NodeJSLogo from "../../../assets/images/tech_logo/nodeJS.png";
 
 import CustomButton from "../CustomButton/CustomButton";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
-import { setCurrentUser } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
 import { selectUserNav } from "../../../redux/layout/layout-selectors";
+import { searchAction, setType } from "../../../redux/filter/filter-actions";
 import {
-  searchAction,
-  setSearchType,
-  setCurrentSearch,
+  setSelectionType,
+  getCardAfterfilterAction,
 } from "../../../redux/filter/filter-actions";
-import { setCategoryFilter } from "../../../redux/filter/filter-actions";
-import { getLangage } from "../../../redux/filter/filter-actions";
 
 import "./NavTop.scss";
-import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
 
 const NavTop = (props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const currentUserNav = useSelector(selectUserNav);
-  const [getLangages, setGetLangages] = useState("all");
   const [searchInput, setSearchInput] = useState("");
 
   const handleSubmit = (e) => {
@@ -56,38 +51,17 @@ const NavTop = (props) => {
     const searchText = e.target.value;
     setSearchInput(searchText);
   };
-  // ACTION POUR LE FILTRE
+
   const handleClick = (e) => {
     dispatch(searchAction(searchInput));
-    dispatch(setCategoryFilter("search"));
-    props.history.push("/cards");
-  };
-  const setPathname = (e) => {
-    // e.preventDefault()
-    dispatch(getLangage(e.target.name));
-    dispatch(setCategoryFilter("langage"));
-    dispatch(setSearchType("langage"));
-    dispatch(setCurrentSearch(e.target.alt));
+    dispatch(setSelectionType("search"));
     props.history.push("/cards");
   };
 
-  /**
-   * IMPORTANT
-   * setPathname me permet de répurer le params de URL(HTML,PHP etc)
-   * searchAction me permet de filter par rapport à la bar de recherche
-   *
-   * Concernant les categories il y a 2 solutions
-   * 1. récup les infos qui sont déjà fitrer par le langage ou search bar et filter ce résultat
-   *  - problème: comment on fait pour charger plus de memo???
-   * 2. le faire en back
-   *  - problème: peut alourdire la back (mais l'api déjà préte)
-   *
-   * il faudrait réfléchir à une solution j'ai des propositions
-   * 1. garder ta strucutre mais avoir un state(dans redux) pour chaque filtre (categorie, langage) et add ces filtres
-   * 2. Pas de filtre en front. On laisse le back nous retourner les cartes. On ferait que les affichés
-   * 3. charger un pull de 16 cartes, si dans les filtres il y a moins de 16 cartes on refait un appel à l'api les cartes retourner seront filtrer etc etc etc
-   *
-   */
+  const logoHandleClick = (e) => {
+    dispatch(getCardAfterfilterAction(e.target.name));
+    dispatch(setType("langage"));
+  };
 
   // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription
   return (
@@ -96,7 +70,11 @@ const NavTop = (props) => {
         <Link className="NavTop__link" to="/">
           Accueil
         </Link>
-        <Link className="NavTop__link" to="/cards">
+        <Link
+          className="NavTop__link"
+          to="/cards"
+          onClick={() => dispatch(setType("all"))}
+        >
           Cartes
         </Link>
         <Link className="NavTop__link NavTop__link--category" to="/cards">
@@ -110,45 +88,45 @@ const NavTop = (props) => {
           <Link to="/cards/html">
             <img src={HTMLLogo} className="NavTop__dropdown--logo" alt="HTML" />
           </Link>
-          <Link to="/cards/css">
+          <Link to="/cards/css/">
             <img
-              onClick={(e) => setPathname(e)}
+              onClick={(e) => logoHandleClick(e)}
               name="css"
               src={CSSLogo}
               className="NavTop__dropdown--logo"
               alt="CSS"
             />
           </Link>
-          <Link to="/cards/javascript">
+          <Link to="/cards/javascript/">
             <img
-              onClick={(e) => setPathname(e)}
+              onClick={(e) => logoHandleClick(e)}
               name="javascript"
               src={JavascriptLogo}
               className="NavTop__dropdown--logo"
               alt="Javascript"
             />
           </Link>
-          <Link to="/cards/react">
+          <Link to="/cards/react/">
             <img
-              onClick={(e) => setPathname(e)}
+              onClick={(e) => logoHandleClick(e)}
               name="reactjs"
               src={ReactJSLogo}
               className="NavTop__dropdown--logo"
               alt="React JS"
             />
           </Link>
-          <Link to="/cards/nodeJs">
+          <Link to="/cards/nodeJs/">
             <img
-              onClick={(e) => setPathname(e)}
+              onClick={(e) => logoHandleClick(e)}
               name="nodejs"
               src={NodeJSLogo}
               className="NavTop__dropdown--logo"
               alt="Node JS"
             />
           </Link>
-          <Link to="/cards/python">
+          <Link to="/cards/python/">
             <img
-              onClick={(e) => setPathname(e)}
+              onClick={(e) => logoHandleClick(e)}
               name="python"
               src={PythonLogo}
               className="NavTop__dropdown--logo"
@@ -157,16 +135,16 @@ const NavTop = (props) => {
           </Link>
           <Link to="/cards/php">
             <img
-              onClick={(e) => setPathname(e)}
+              onClick={(e) => logoHandleClick(e)}
               name="php"
               src={PHPLogo}
               className="NavTop__dropdown--logo"
-              alt="PHP"
+              alt="php"
             />
           </Link>
-          <Link to="/cards/sass">
+          <Link to="/cards/sass/">
             <img
-              onClick={(e) => setPathname(e)}
+              onClick={(e) => logoHandleClick(e)}
               name="sass"
               src={SassLogo}
               className="NavTop__dropdown--logo"

@@ -68,6 +68,7 @@ const NavTop = (props) => {
     dispatch(setCategoryFilter("langage"));
     dispatch(setSearchType("langage"));
     dispatch(setCurrentSearch(e.target.alt));
+    props.history.push("/cards");
   };
 
   /**

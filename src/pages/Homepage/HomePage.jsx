@@ -10,6 +10,10 @@ import CardPreviewSmall from "../../components/CardsComponents/CardPreviewSmall/
 import CardFullPopup from "../../components/CardsComponents/CardFullPopup/CardFullPopup";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import Loading from "../../components/Loading/Loading";
+import {
+  closeFullscreen,
+  closePopupCard,
+} from "../../redux/layout/layout-actions";
 
 import { ReactComponent as QuestionIllustration } from "../../assets/images/illustrations/illustration-question.svg";
 import { ReactComponent as GrilleIllustration } from "../../assets/images/illustrations/illustration-grille.svg";
@@ -23,7 +27,10 @@ const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const cards = useSelector(selectCardsFetched);
   const [cardsArrayCut, setCardsArrayCut] = useState([]);
-  console.log(cards);
+  const dispatch = useDispatch();
+  dispatch(closeFullscreen());
+  dispatch(closePopupCard(false));
+  // console.log(cards);
 
   useEffect(() => {
     if (cards) {

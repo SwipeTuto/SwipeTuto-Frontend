@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 
-import CardSliderPopup from "../CardSlider/CardSliderPopup";
-// import CardSliderSwippable from "../CardSlider/CardSliderSwippable";
+// import CardSliderPopup from "../CardSlider/CardSliderPopup";
+import CardSliderSwipable from "../CardSlider/CardSliderSwipable";
+import CardSliderFullscreen from "../CardSlider/CardSliderFullscreen";
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectShowPopupCard } from "../../../redux/layout/layout-selectors";
@@ -11,6 +12,8 @@ import { selectClickedCard } from "../../../redux/cards/cards-selectors";
 import { setClickedCard } from "../../../redux/cards/cards-actions";
 import { setNoClickedCard } from "../../../redux/cards/cards-actions";
 import { closePopupCard } from "../../../redux/layout/layout-actions";
+import { showFullscreen } from "../../../redux/layout/layout-actions";
+import { selectFullscreen } from "../../../redux/layout/layout-selectors";
 
 import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevrons/chevron-back-circle.svg";
 import { ReactComponent as ChevronCircleRight } from "../../../assets/images/chevrons/chevron-forward-circle.svg";
@@ -27,12 +30,14 @@ import UserNameAndAvatarBig from "../../UserComponents/UserNameAndAvatarBig/User
 import { formattedDate } from "../../../utilsFunctions";
 import { renameCategory } from "../../../utilsFunctions";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
+import { ReactComponent as FullscreenLogo } from "../../../assets/images/fullscreen.svg";
 
 import "./CardFullPopup.scss";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
 // handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
 const CardFullPopup = ({ cardsArray }) => {
+  const isFullScreen = useSelector(selectFullscreen);
   const clickedCard = useSelector(selectClickedCard);
   const popupShown = useSelector(selectShowPopupCard);
   const dispatch = useDispatch();
@@ -119,17 +124,25 @@ const CardFullPopup = ({ cardsArray }) => {
             <div className="CardFullPopup__action-button">
               <BookmarkEmpty className="card-action-button" />
               <HeartEmpty className="card-action-button" />
+              <FullscreenLogo
+                className="card-action-button"
+                onClick={() => dispatch(showFullscreen())}
+              />
             </div>
           </div>
-          <div className="CardFullPopup__grid__slide">
+          {/* <div className="CardFullPopup__grid__slide">
             {clickedCard && <CardSliderPopup />}
-          </div>
+          </div> */}
           {/* TEST POUR SLIDER SWIPPABLE :*/}
-          {/* {clickedCard && (
+          {clickedCard && isFullScreen ? (
+            <CardSliderFullscreen />
+          ) : clickedCard ? (
             <div className="CardFullPopup__grid__slide">
-              <CardSliderSwippable />
+              <CardSliderSwipable />
             </div>
-          )} */}
+          ) : (
+            ""
+          )}
           <div className="grid__description">
             <h1 className="title title-1">Description</h1>
             <p>{clickedCard && clickedCard.description}</p>

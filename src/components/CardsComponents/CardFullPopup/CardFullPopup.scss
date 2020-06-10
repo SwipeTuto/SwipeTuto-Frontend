@@ -55,14 +55,14 @@
   }
 
   &__action-button {
-    width: 7rem;
-    height: 3rem;
+    width: max-content;
+    height: max-content;
     display: flex;
-    margin-left: 2rem;
 
     .card-action-button {
-      width: 100%;
-      height: 100%;
+      width: 3rem;
+      height: 3rem;
+      margin-left: 1rem;
       stroke: $primary-dark;
       cursor: pointer;
 

@@ -24,7 +24,7 @@ const FiltersBar = ({ handleClickSize }) => {
   const newSearchFilters  = e.target.dataset.filter
     dispatch(getCardAfterfilterAction(langageUndified, newSearchFilters)); 
     // setSearchFilter(newSearchFilter);
-
+console.log('langage2',langage)
     const allFiltersItems = [
       ...document.querySelectorAll("button.FiltersBar__options--item"),
     ];
@@ -47,8 +47,11 @@ const FiltersBar = ({ handleClickSize }) => {
               onClick={() => dispatch(setType("all"))}
             >
               Tous
+              
             </button>
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/theorie` : `/theorie`}`}>
+            < Link to={`/cards${(langage !== "" && langage !== undefined) ? `/${langage}/theorie` : `/_theorie`}`}>
+            {/* < Link to={`/cards/theorie`}> */}
+          
             <button
               className="FiltersBar__options--item"
               data-filter="theorie"
@@ -57,7 +60,7 @@ const FiltersBar = ({ handleClickSize }) => {
               Théorie
             </button>
             </Link>
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/code` : `/code`}`}>
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/code` : `/_code`}`}>
             <button
             type='submit'
               className="FiltersBar__options--item"
@@ -67,7 +70,7 @@ const FiltersBar = ({ handleClickSize }) => {
               Code
             </button>
             </Link>
-           < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/memo` : `/memo`}`}>
+           < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/_memo` : `/_memo`}`}>
               <button
                 className="FiltersBar__options--item"
                 data-filter="memo"
@@ -77,7 +80,7 @@ const FiltersBar = ({ handleClickSize }) => {
             </button>
             </Link>
            
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/bloccode` : `/bloccode`}`}>
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/_bloccode` : `/_bloccode`}`}>
               <button
                 name="bloc code"
                 className="FiltersBar__options--item"
@@ -87,7 +90,7 @@ const FiltersBar = ({ handleClickSize }) => {
                 bloc code
             </button>
             </Link>
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/performances` : `/performances`}`}>
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/_performances` : `/_performances`}`}>
             <button
               className="FiltersBar__options--item"
               data-filter="performances"
@@ -96,7 +99,7 @@ const FiltersBar = ({ handleClickSize }) => {
               Performances
             </button>
             </Link>
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/ressources` : `/ressources`}`}>
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/_ressources` : `/_ressources`}`}>
             <button
               className="FiltersBar__options--item"
               data-filter="ressources"
@@ -105,7 +108,7 @@ const FiltersBar = ({ handleClickSize }) => {
               Ressources
             </button>
             </Link>
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/autre` : `/autre`}`}>
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/_autre` : `/_autre`}`}>
             <button
               className="FiltersBar__options--item"
               data-filter="autre"

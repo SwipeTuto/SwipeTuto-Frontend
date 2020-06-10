@@ -14,6 +14,7 @@ import { getCardsAction } from './redux/cards/cards-actions'
 
 import { getCardAfterfilterAction } from "./redux/filter/filter-actions"
 
+import {getURLParams} from "./utils/index"
 
 import './index.scss'
 
@@ -23,44 +24,31 @@ import './App.scss';
 
 
 function App(props) {
-  var langage = ''
-  var category = '';
-
-  const getURLParams = props => {
-    var pathname = props.location.pathname;
-    var params = pathname.split('/')
-  
-    if(params[3]) {
-      langage = params[2]
-      category = params[3]
-    }
-  console.log(params)
-  }
-
-  // const langage = pro
-  // const category = useSelector(state => state.filter.categoryFilter)
   const dispatch = useDispatch();
+  const [langage, category] = getURLParams(props)
+  const getType = useSelector(state => state.filter.searchType)
 
   useEffect(() => {
-    getURLParams(props)
-    console.log('langage',langage)
-    console.log('category', category)
-    // if (langage && category) {
-      dispatch(getCardAfterfilterAction(langage,category)); 
-    // } else {
-      // dispatch(getCardsAction())
-    // }
+   
+    if(getType === 'all') {
+      dispatch(getCardsAction())
+    }else{
     
-  });
+      dispatch(getCardAfterfilterAction(langage, category))
+    }
+    return () => {
+   
+    }
+  }, [getType]);
 
   return (
     <div className="App">
-      <NavTop params={props.location.pathname}/>
+      <NavTop />
       {/* <NavLeft /> */}
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/cards" component={SearchPage} />
-        <Route  path="/cards/:langage" component={SearchPage} />
+        <Route path="/cards/:langage" component={SearchPage} />
         <Route exact path="/cards/:langage/:categorie" component={SearchPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/ressources" component={RessourcesPage} />

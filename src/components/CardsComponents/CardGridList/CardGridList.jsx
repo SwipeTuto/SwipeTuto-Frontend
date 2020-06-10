@@ -57,6 +57,14 @@ const CardGridList = ({ cardsSize, cardsNumber, location }) => {
       >
         {isLoading ? (
           <Loading />
+        ) : (
+          cardsArray &&
+          cardsArray.map((card) => (
+            <CardPreviewSmall card={card} key={card.id} />
+          ))
+        )}
+        {/* {isLoading ? (
+          <Loading />
         ) : cardsArray.length === 0 ? (
           <h2 className="title title-2 nocards-message">
             Aucune carte trouvée...
@@ -66,7 +74,7 @@ const CardGridList = ({ cardsSize, cardsNumber, location }) => {
           cardsArray.map((card) => (
             <CardPreviewSmall card={card} key={card.id} />
           ))
-        )}
+        )} */}
       </div>
       <CardFullPopup cardsArray={cardsArray} />
     </div>

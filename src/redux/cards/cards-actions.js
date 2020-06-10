@@ -5,7 +5,7 @@ import {
   getCards
 } from '../../services/cardsService'
 
-import {setSelectionType,setCurrentSearch} from "../filter/filter-actions"
+import { setCurrentSearch } from "../filter/filter-actions"
 
 export const setClickedCard = (card) => ({
   type: CardsActionTypes.SET_CLICKED_CARD,
@@ -24,7 +24,7 @@ export const getCardsAction = () => {
     return getCards()
       .then(card => {
         dispatch(setCurrentSearch(''))
-        dispatch(setSelectionType(''))
+        // dispatch(setSelectionType(''))
         dispatch(getCardsSuccess(card.data))
       })
       .catch(err => {

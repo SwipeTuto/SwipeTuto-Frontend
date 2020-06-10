@@ -26,7 +26,7 @@ const FiltersBar = ({ handleClickSize }) => {
     const newSearchFilters = e.target.dataset.filter;
     dispatch(getCardAfterfilterAction(langageUndifined, newSearchFilters));
     // setSearchFilter(newSearchFilter);
-console.log('langage2',langage)
+    console.log("langage2", langage);
     const allFiltersItems = [
       ...document.querySelectorAll("button.FiltersBar__options--item"),
     ];
@@ -49,16 +49,16 @@ console.log('langage2',langage)
               onClick={handleClick}
             >
               Tous
-              
             </button>
-            < Link to={`/cards${(langage !== "" && langage !== undefined) ? `/${langage}/theorie` : `/_theorie`}`}>
-            {/* < Link to={`/cards/theorie`}> */}
-          
-            <button
-              className="FiltersBar__options--item"
-              data-filter="theorie"
-              onClick={handleClick}
+            <Link
+              to={`/cards${
+                langage !== "" && langage !== undefined
+                  ? `/${langage}/theorie`
+                  : `/_theorie`
+              }`}
             >
+              {/* < Link to={`/cards/theorie`}> */}
+
               <button
                 className="FiltersBar__options--item"
                 data-filter="theorie"
@@ -67,12 +67,12 @@ console.log('langage2',langage)
                 Théorie
               </button>
             </Link>
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/code` : `/_code`}`}>
-            <button
-            type='submit'
-              className="FiltersBar__options--item"
-              data-filter="code"
-              onClick={handleClick}
+            <Link
+              to={`/cards${
+                langage !== "" && langage !== undefined
+                  ? `/${langage}/code`
+                  : `/_code`
+              }`}
             >
               <button
                 type="submit"
@@ -83,7 +83,13 @@ console.log('langage2',langage)
                 Code
               </button>
             </Link>
-           < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/_memo` : `/_memo`}`}>
+            <Link
+              to={`/cards${
+                langage !== "" && langage !== undefined
+                  ? `/${langage}/_memo`
+                  : `/_memo`
+              }`}
+            >
               <button
                 className="FiltersBar__options--item"
                 data-filter="memo"
@@ -92,8 +98,14 @@ console.log('langage2',langage)
                 memo
               </button>
             </Link>
-           
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/_bloccode` : `/_bloccode`}`}>
+
+            <Link
+              to={`/cards${
+                langage !== "" && langage !== undefined
+                  ? `/${langage}/_bloccode`
+                  : `/_bloccode`
+              }`}
+            >
               <button
                 name="bloc code"
                 className="FiltersBar__options--item"
@@ -103,11 +115,12 @@ console.log('langage2',langage)
                 bloc code
               </button>
             </Link>
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/_performances` : `/_performances`}`}>
-            <button
-              className="FiltersBar__options--item"
-              data-filter="performances"
-              onClick={handleClick}
+            <Link
+              to={`/cards${
+                langage !== "" && langage !== undefined
+                  ? `/${langage}/_performances`
+                  : `/_performances`
+              }`}
             >
               <button
                 className="FiltersBar__options--item"
@@ -117,11 +130,12 @@ console.log('langage2',langage)
                 Performances
               </button>
             </Link>
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/_ressources` : `/_ressources`}`}>
-            <button
-              className="FiltersBar__options--item"
-              data-filter="ressources"
-              onClick={handleClick}
+            <Link
+              to={`/cards${
+                langage !== "" && langage !== undefined
+                  ? `/${langage}/_ressources`
+                  : `/_ressources`
+              }`}
             >
               <button
                 className="FiltersBar__options--item"
@@ -131,11 +145,12 @@ console.log('langage2',langage)
                 Ressources
               </button>
             </Link>
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/_autre` : `/_autre`}`}>
-            <button
-              className="FiltersBar__options--item"
-              data-filter="autre"
-              onClick={handleClick}
+            <Link
+              to={`/cards${
+                langage !== "" && langage !== undefined
+                  ? `/${langage}/_autre`
+                  : `/_autre`
+              }`}
             >
               <button
                 className="FiltersBar__options--item"

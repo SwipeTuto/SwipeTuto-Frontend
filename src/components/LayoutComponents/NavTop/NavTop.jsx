@@ -25,10 +25,11 @@ import CustomButton from "../CustomButton/CustomButton";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
 import { selectUserNav } from "../../../redux/layout/layout-selectors";
-import { searchAction, setType } from "../../../redux/filter/filter-actions";
 import {
-  setSelectionType,
+  searchAction,
+  setType,
   getCardAfterfilterAction,
+  setCategoryFilter,
 } from "../../../redux/filter/filter-actions";
 
 import "./NavTop.scss";
@@ -54,13 +55,15 @@ const NavTop = (props) => {
 
   const handleClick = (e) => {
     dispatch(searchAction(searchInput));
-    dispatch(setSelectionType("search"));
+    dispatch(setType("search"));
+    dispatch(setCategoryFilter("all"));
     props.history.push("/cards");
   };
 
   const logoHandleClick = (e) => {
     dispatch(getCardAfterfilterAction(e.target.name));
     dispatch(setType("langage"));
+    dispatch(setCategoryFilter("all"));
   };
 
   // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription

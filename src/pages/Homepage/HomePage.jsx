@@ -44,7 +44,9 @@ const HomePage = () => {
         {isLoading ? (
           <Loading />
         ) : (
-          cardsArrayCut.map((card) => <CardPreviewSmall card={card} />)
+          cardsArrayCut.map((card) => (
+            <CardPreviewSmall card={card} key={card.id} />
+          ))
         )}
       </div>
       <CardFullPopup cardsArray={cardsArrayCut} />

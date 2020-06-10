@@ -36,13 +36,13 @@ export const getCardAfterfilterAction = (langage, category) => {
   return dispatch => {
     dispatch(getCardAfterfilteryRequest(langage, category))
     return getCardAfterfilter(langage, category)
-    .then(rep => {
-      dispatch(setType('search'));
-      dispatch(getCardAfterfilterSuccess(rep.data.results))
-    })
-    .catch (err => {
-      dispatch(getCardAfterfilterFailure(err.response))
-    })
+      .then(rep => {
+        dispatch(setType('search'));
+        dispatch(getCardAfterfilterSuccess(rep.data.results))
+      })
+      .catch(err => {
+        dispatch(getCardAfterfilterFailure(err.response))
+      })
   }
 }
 const getCardAfterfilteryRequest = (langage, category) => ({
@@ -69,7 +69,7 @@ export const deleteCurrentSearch = () => ({
   type: FilterActionTypes.DELETE_CURRENT_SEARCH,
 })
 
-export const setSelectionType = (category) => ({
+export const setCategoryFilter = (category) => ({
   type: FilterActionTypes.SET_CATEGORY_FILTER,
   payload: category,
 });

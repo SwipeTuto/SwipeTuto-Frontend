@@ -29,12 +29,12 @@ function App(props) {
   const getURLParams = props => {
     var pathname = props.location.pathname;
     var params = pathname.split('/')
-  
-    if(params[3]) {
+
+    if (params[3]) {
       langage = params[2]
       category = params[3]
     }
-  console.log(params)
+    console.log(params)
   }
 
   // const langage = pro
@@ -42,25 +42,25 @@ function App(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getURLParams(props)
-    console.log('langage',langage)
-    console.log('category', category)
-    // if (langage && category) {
-      dispatch(getCardAfterfilterAction(langage,category)); 
+    // getURLParams(props)
+    // console.log('langage',langage)
+    // console.log('category', category)
+    // // if (langage && category) {
+    //   dispatch(getCardAfterfilterAction(langage,category)); 
     // } else {
-      // dispatch(getCardsAction())
+    dispatch(getCardsAction())
     // }
-    
+
   });
 
   return (
     <div className="App">
-      <NavTop params={props.location.pathname}/>
+      <NavTop params={props.location.pathname} />
       {/* <NavLeft /> */}
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/cards" component={SearchPage} />
-        <Route  path="/cards/:langage" component={SearchPage} />
+        <Route path="/cards/:langage" component={SearchPage} />
         <Route exact path="/cards/:langage/:categorie" component={SearchPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/ressources" component={RessourcesPage} />

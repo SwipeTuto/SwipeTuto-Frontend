@@ -14,23 +14,20 @@ import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
 import CardFullPopup from "../../CardsComponents/CardFullPopup/CardFullPopup";
 import Loading from "../../Loading/Loading";
 
-
-
 import "./CardGridList.scss";
 
 const CardGridList = ({ cardsSize, cardsNumber, location }) => {
-
   const cards = useSelector(selectCardsFetched);
   const searchType = useSelector(selectSearchType);
   const searchCard = useSelector(selectCardFilter);
-  console.log('cards',cards)
-  console.log('searchType',searchType)
-  console.log('searchCard',searchCard)
-
+  console.log("cards", cards);
+  console.log("searchType", searchType);
+  console.log("searchCard", searchCard);
 
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
-  const [cardsArray, setcardsArray] = useState();
+  const [cardsArray, setcardsArray] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     cards && setIsLoading(false);
     setCardPreviewSize(cardsSize);
@@ -40,25 +37,28 @@ const CardGridList = ({ cardsSize, cardsNumber, location }) => {
     } else {
       setcardsArray(cards);
     }
-
-  }, [cards, cardsSize, cardsNumber, cardsArray, searchType, searchCard] );
-  console.log('cardsArray',cardsArray)
+  }, [cards, cardsSize, cardsNumber, cardsArray, searchType, searchCard]);
+  console.log("cardsArray", cardsArray);
 
   return (
     <div className="CardGridList">
       <div
         className={`CardGridList__wrapper${
           cardPreviewSize === "small" ? "--small" : "--big"
-          }`}
+        }`}
       >
         {isLoading ? (
           <Loading />
+        ) : cardsArray.length === 0 ? (
+          <h2 className="title title-2 nocards-message">
+            Aucune carte trouvée...
+          </h2>
         ) : (
-            cardsArray &&
-            cardsArray.map((card) => (
-              <CardPreviewSmall card={card} key={card.id} />
-            ))
-          )}
+          cardsArray &&
+          cardsArray.map((card) => (
+            <CardPreviewSmall card={card} key={card.id} />
+          ))
+        )}
       </div>
       <CardFullPopup cardsArray={cardsArray} />
     </div>

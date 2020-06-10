@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 
-import CardSliderPopup from "../CardSlider/CardSliderPopup";
+// import CardSliderPopup from "../CardSlider/CardSliderPopup";
+import CardSliderSwippable from "../CardSlider/CardSliderSwippable";
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectShowPopupCard } from "../../../redux/layout/layout-selectors";
@@ -120,9 +121,15 @@ const CardFullPopup = ({ cardsArray }) => {
               <HeartEmpty className="card-action-button" />
             </div>
           </div>
-          <div className="CardFullPopup__grid__slide">
+          {/* <div className="CardFullPopup__grid__slide">
             {clickedCard && <CardSliderPopup />}
-          </div>
+          </div> */}
+          {/* TEST POUR SLIDER SWIPPABLE :*/}
+          {clickedCard && (
+            <div className="CardFullPopup__grid__slide">
+              <CardSliderSwippable />
+            </div>
+          )}
           <div className="grid__description">
             <h1 className="title title-1">Description</h1>
             <p>{clickedCard && clickedCard.description}</p>

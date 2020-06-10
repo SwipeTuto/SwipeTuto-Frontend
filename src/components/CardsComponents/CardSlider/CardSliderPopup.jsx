@@ -53,33 +53,6 @@ const CardSliderPopup = () => {
     setActiveIndex(index);
   };
 
-  // changement de slide avec les flèches du clavien
-  // document.addEventListener("keydown", (e) => {
-  //   console.log(e.keyCode);
-  //   switch (e.keyCode) {
-  //     case 37:
-  //       // goToPrevSlide();
-  //       console.log(37);
-  //       break;
-  //     case 39:
-  //       // goToNextSlide();
-  //       console.log(39);
-  //       break;
-  //     default:
-  //       return;
-  //   }
-
-  // e.stopPropagation();
-  // e.preventDefault();
-  // if (e.keyCode === 37) {
-  //   goToPrevSlide();
-  // } else if (e.keyCode === 39) {
-  //   goToNextSlide();
-  // } else {
-  //   return;
-  // }
-  // });
-
   return (
     <div className="CardSliderLarge">
       {isFullScreen ? (

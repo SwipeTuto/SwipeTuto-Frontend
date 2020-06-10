@@ -49,7 +49,7 @@ console.log('langage2',langage)
               Tous
               
             </button>
-            < Link to={`/cards${(langage !== "" && langage !== undefined) ? `/${langage}/theorie` : `/_theorie`}`}>
+            < Link to={`/cards${(langage !== "" && langage !== undefined) ? `/${langage}/theorie` : `/theorie`}`}>
             {/* < Link to={`/cards/theorie`}> */}
           
             <button
@@ -60,7 +60,7 @@ console.log('langage2',langage)
               Théorie
             </button>
             </Link>
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/code` : `/_code`}`}>
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/code` : `/code`}`}>
             <button
             type='submit'
               className="FiltersBar__options--item"
@@ -70,7 +70,7 @@ console.log('langage2',langage)
               Code
             </button>
             </Link>
-           < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/_memo` : `/_memo`}`}>
+           < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/memo` : `/memo`}`}>
               <button
                 className="FiltersBar__options--item"
                 data-filter="memo"
@@ -80,7 +80,7 @@ console.log('langage2',langage)
             </button>
             </Link>
            
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/_bloccode` : `/_bloccode`}`}>
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/bloccode` : `/bloccode`}`}>
               <button
                 name="bloc code"
                 className="FiltersBar__options--item"
@@ -90,7 +90,7 @@ console.log('langage2',langage)
                 bloc code
             </button>
             </Link>
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/_performances` : `/_performances`}`}>
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/performances` : `/performances`}`}>
             <button
               className="FiltersBar__options--item"
               data-filter="performances"
@@ -99,7 +99,7 @@ console.log('langage2',langage)
               Performances
             </button>
             </Link>
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/_ressources` : `/_ressources`}`}>
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/ressources` : `/ressources`}`}>
             <button
               className="FiltersBar__options--item"
               data-filter="ressources"
@@ -108,7 +108,7 @@ console.log('langage2',langage)
               Ressources
             </button>
             </Link>
-            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/_autre` : `/_autre`}`}>
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/autre` : `/autre`}`}>
             <button
               className="FiltersBar__options--item"
               data-filter="autre"

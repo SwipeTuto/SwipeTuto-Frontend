@@ -14,22 +14,31 @@ import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
 import CardFullPopup from "../../CardsComponents/CardFullPopup/CardFullPopup";
 import Loading from "../../Loading/Loading";
 
+import {
+  getCardAfterfilterAction,
+  setType,
+} from "../../../redux/filter/filter-actions";
+import { usePrevious } from "../../../hooks/usePrevieus";
+
 import "./CardGridList.scss";
 
 const CardGridList = ({ cardsSize, cardsNumber, location }) => {
+  const dispatch = useDispatch();
   const cards = useSelector(selectCardsFetched);
   const searchType = useSelector(selectSearchType);
   const searchCard = useSelector(selectCardFilter);
-  console.log("cards", cards);
-  console.log("searchType", searchType);
-  console.log("searchCard", searchCard);
+
+  const langage = useSelector((state) => state.filter.currentSearch);
+  const category = useSelector((state) => state.filter.categoryFilter);
 
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
   const [cardsArray, setcardsArray] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    cards && setIsLoading(false);
+    if (cards || cardsArray) {
+      setIsLoading(false);
+    }
     setCardPreviewSize(cardsSize);
 
     if (searchType === "search" || searchType === "langage") {
@@ -38,13 +47,12 @@ const CardGridList = ({ cardsSize, cardsNumber, location }) => {
       setcardsArray(cards);
     }
   }, [cards, cardsSize, cardsNumber, cardsArray, searchType, searchCard]);
-  console.log("cardsArray", cardsArray);
 
   return (
     <div className="CardGridList">
       <div
         className={`CardGridList__wrapper${
-          cardPreviewSize === "small" ? "--small" : "--big"
+          cardPreviewSize === "small" ? "--small" : "--big y"
         }`}
       >
         {isLoading ? (

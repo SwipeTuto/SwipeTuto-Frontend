@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   currentSearch: '',
   errors: '',
   categoryFilter: '',
-  cardFilter: "" 
+  cardFilter: ""
 };
 
 const FilterReducer = (state = INITIAL_STATE, action) => {

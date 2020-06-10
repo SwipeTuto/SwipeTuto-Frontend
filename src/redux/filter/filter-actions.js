@@ -39,6 +39,7 @@ export const getCardAfterfilterAction = (langage, category) => {
       .then(rep => {
         dispatch(setType('search'));
         dispatch(getCardAfterfilterSuccess(rep.data.results))
+        return rep
       })
       .catch(err => {
         dispatch(getCardAfterfilterFailure(err.response))

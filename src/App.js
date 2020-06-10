@@ -12,7 +12,7 @@ import Footer from "./components/LayoutComponents/Footer/Footer";
 import PrivateRoute from "./PrivateRoute";
 import { getCardsAction } from './redux/cards/cards-actions'
 
-import { getCardAfterfilterAction } from "./redux/filter/filter-actions"
+import { getCardAfterfilterAction, setType } from "./redux/filter/filter-actions"
 
 import { getURLParams } from "./utils/index"
 
@@ -27,10 +27,19 @@ function App(props) {
   const dispatch = useDispatch();
   const [langage, category] = getURLParams(props)
   const getType = useSelector(state => state.filter.searchType)
+ 
 
   useEffect(() => {
 
+<<<<<<< HEAD
     if (getType === 'all') {
+=======
+    if (langage || category) {
+      dispatch(setType('search'))
+    }
+    console.log(getType)
+    if(getType === 'all') {
+>>>>>>> 2e94ce585cd229bcaa9e98e9f71cb21f677ad2c8
       dispatch(getCardsAction())
     } else {
 

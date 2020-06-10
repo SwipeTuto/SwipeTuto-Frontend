@@ -50,12 +50,22 @@ const FiltersBar = ({ handleClickSize }) => {
             >
               Tous
             </button>
+<<<<<<< HEAD
             <Link
               to={`/cards${
                 langage !== "" && langage !== undefined
                   ? `/${langage}/theorie`
                   : `/_theorie`
               }`}
+=======
+            < Link to={`/cards${(langage !== "" && langage !== undefined) ? `/${langage}/theorie` : `/theorie`}`}>
+            {/* < Link to={`/cards/theorie`}> */}
+          
+            <button
+              className="FiltersBar__options--item"
+              data-filter="theorie"
+              onClick={handleClick}
+>>>>>>> 2e94ce585cd229bcaa9e98e9f71cb21f677ad2c8
             >
               {/* < Link to={`/cards/theorie`}> */}
 
@@ -67,12 +77,21 @@ const FiltersBar = ({ handleClickSize }) => {
                 Théorie
               </button>
             </Link>
+<<<<<<< HEAD
             <Link
               to={`/cards${
                 langage !== "" && langage !== undefined
                   ? `/${langage}/code`
                   : `/_code`
               }`}
+=======
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/code` : `/code`}`}>
+            <button
+            type='submit'
+              className="FiltersBar__options--item"
+              data-filter="code"
+              onClick={handleClick}
+>>>>>>> 2e94ce585cd229bcaa9e98e9f71cb21f677ad2c8
             >
               <button
                 type="submit"
@@ -83,6 +102,7 @@ const FiltersBar = ({ handleClickSize }) => {
                 Code
               </button>
             </Link>
+<<<<<<< HEAD
             <Link
               to={`/cards${
                 langage !== "" && langage !== undefined
@@ -90,6 +110,9 @@ const FiltersBar = ({ handleClickSize }) => {
                   : `/_memo`
               }`}
             >
+=======
+           < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/memo` : `/memo`}`}>
+>>>>>>> 2e94ce585cd229bcaa9e98e9f71cb21f677ad2c8
               <button
                 className="FiltersBar__options--item"
                 data-filter="memo"
@@ -98,6 +121,7 @@ const FiltersBar = ({ handleClickSize }) => {
                 memo
               </button>
             </Link>
+<<<<<<< HEAD
 
             <Link
               to={`/cards${
@@ -106,6 +130,10 @@ const FiltersBar = ({ handleClickSize }) => {
                   : `/_bloccode`
               }`}
             >
+=======
+           
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/bloccode` : `/bloccode`}`}>
+>>>>>>> 2e94ce585cd229bcaa9e98e9f71cb21f677ad2c8
               <button
                 name="bloc code"
                 className="FiltersBar__options--item"
@@ -115,12 +143,20 @@ const FiltersBar = ({ handleClickSize }) => {
                 bloc code
               </button>
             </Link>
+<<<<<<< HEAD
             <Link
               to={`/cards${
                 langage !== "" && langage !== undefined
                   ? `/${langage}/_performances`
                   : `/_performances`
               }`}
+=======
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/performances` : `/performances`}`}>
+            <button
+              className="FiltersBar__options--item"
+              data-filter="performances"
+              onClick={handleClick}
+>>>>>>> 2e94ce585cd229bcaa9e98e9f71cb21f677ad2c8
             >
               <button
                 className="FiltersBar__options--item"
@@ -130,12 +166,20 @@ const FiltersBar = ({ handleClickSize }) => {
                 Performances
               </button>
             </Link>
+<<<<<<< HEAD
             <Link
               to={`/cards${
                 langage !== "" && langage !== undefined
                   ? `/${langage}/_ressources`
                   : `/_ressources`
               }`}
+=======
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/ressources` : `/ressources`}`}>
+            <button
+              className="FiltersBar__options--item"
+              data-filter="ressources"
+              onClick={handleClick}
+>>>>>>> 2e94ce585cd229bcaa9e98e9f71cb21f677ad2c8
             >
               <button
                 className="FiltersBar__options--item"
@@ -145,12 +189,20 @@ const FiltersBar = ({ handleClickSize }) => {
                 Ressources
               </button>
             </Link>
+<<<<<<< HEAD
             <Link
               to={`/cards${
                 langage !== "" && langage !== undefined
                   ? `/${langage}/_autre`
                   : `/_autre`
               }`}
+=======
+            < Link to={`/cards${langage !== "" && langage !== undefined ? `/${langage}/autre` : `/autre`}`}>
+            <button
+              className="FiltersBar__options--item"
+              data-filter="autre"
+              onClick={handleClick}
+>>>>>>> 2e94ce585cd229bcaa9e98e9f71cb21f677ad2c8
             >
               <button
                 className="FiltersBar__options--item"

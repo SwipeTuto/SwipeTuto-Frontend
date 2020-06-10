@@ -8,6 +8,7 @@ import {
   closeFullscreen,
   showFullscreen,
 } from "../../../redux/layout/layout-actions";
+import { useSwipeable } from "react-swipeable";
 
 import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
 import { ReactComponent as ChevronLeftWhite } from "../../../assets/images/chevrons/chevron-back-white.svg";
@@ -24,6 +25,12 @@ const CardSliderPopup = () => {
   const isFullScreen = useSelector(selectFullscreen);
   const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState(0);
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => goToNextSlide(),
+    onSwipedRight: () => goToPrevSlide(),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
 
   useEffect(() => {
     setActiveIndex(0);
@@ -54,7 +61,7 @@ const CardSliderPopup = () => {
   };
 
   return (
-    <div className="CardSliderLarge">
+    <div className="CardSliderLarge" {...swipeHandlers}>
       {isFullScreen ? (
         <Fragment>
           <div

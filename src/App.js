@@ -27,19 +27,15 @@ function App(props) {
   const dispatch = useDispatch();
   const [langage, category] = getURLParams(props)
   const getType = useSelector(state => state.filter.searchType)
- 
+
 
   useEffect(() => {
 
-<<<<<<< HEAD
-    if (getType === 'all') {
-=======
     if (langage || category) {
       dispatch(setType('search'))
     }
     console.log(getType)
-    if(getType === 'all') {
->>>>>>> 2e94ce585cd229bcaa9e98e9f71cb21f677ad2c8
+    if (getType === 'all') {
       dispatch(getCardsAction())
     } else {
 

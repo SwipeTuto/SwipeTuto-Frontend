@@ -1,38 +1,18 @@
-export const getURLParams = props => {
-  var langage = ''
-  var category = '';
-  var pathname = props.location.pathname;
-  var params = pathname.split('/')
+export const splitURL = location => {
+  const params = location.pathname.split('/')
+console.log(params)
+  var params1 = ''
+  var params2 = ''
 
-  if (params[2]) {
-   langage = params[2]
-  //  category  = params[2]
-  }
+
+  if (  params[2] && !params[3] ) {
+      params1 = params[2]
+      } 
   if (params[3]) {
-    langage = params[2]
-    category = params[3]
+   
+    params1 = params[2]
+    params2 = params[3]
   }
-  return [langage,category]
+  return [params1,params2]
 }
-
-// export const getURLParams = props => {
-//   var langage = ''
-//   var category = '';
-//   var pathname = props.location.pathname;
-//   var params = pathname.split('/')
-//   if (params[2]) {
-//     let filter = params[2].split('_')
-//     console.log(filter)
-//     if (filter[0] != '') {
-//       langage = filter[0]
-//     } else if (filter[1]) {
-//       category = filter[1]
-//     }
-//   }
-//   if (params[3]) {
-//     langage = params[2]
-//     category = params[3].split('_')[1]
-//   }
-//   return [langage,category]
-// }
 

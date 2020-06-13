@@ -1,11 +1,12 @@
 import { FilterActionTypes } from './filter-types'
 
 const INITIAL_STATE = {
-  searchType: 'all',
+  searchType: '',
   currentSearch: '',
   errors: '',
   categoryFilter: '',
-  cardFilter: ""
+  cardFilter: "",
+  activeClass: "all",
 };
 
 const FilterReducer = (state = INITIAL_STATE, action) => {
@@ -17,11 +18,18 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: action.payload };
 
     case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_REQUEST:
-      return { 
+      var categoryOrLangage = action.payload.category || action.payload.langage;
+      console.log(action.payload.langage)
+      // if ()
+  
+      return {
         ...state, 
         currentSearch: action.payload.langage,
+        activeClass: categoryOrLangage ,
         categoryFilter: action.payload.category 
       };
+
+    
     case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_SUCCESS:
       return { ...state, cardFilter: action.payload };
     case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_FAILURE:
@@ -31,16 +39,14 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, currentSearch: action.payload };
     case FilterActionTypes.DELETE_CURRENT_SEARCH:
       return { ...state, currentSearch: "" };
+
     case FilterActionTypes.SET_CATEGORY_FILTER:
-      return {
-        ...state,
-        categoryFilter: action.payload,
-      };
+      return { ...state,categoryFilter: action.payload,};
     case FilterActionTypes.SET_TYPE:
-      return {
-        ...state,
-        searchType: action.payload,
-      };
+      return {...state, searchType: action.payload,};
+      case FilterActionTypes.SET_ACTIVE:
+        return {...state, cardFilter: action.payload,};
+
 
 
     default:

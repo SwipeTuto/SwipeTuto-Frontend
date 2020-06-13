@@ -79,3 +79,8 @@ export const setType = (searchType) => ({
   type: FilterActionTypes.SET_TYPE,
   payload: searchType
 })
+
+export const setActive = (active) => ({
+  type: FilterActionTypes.SET_ACTIVE,
+  payload: active
+})

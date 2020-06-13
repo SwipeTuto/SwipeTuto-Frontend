@@ -22,6 +22,8 @@ import ReactJSLogo from "../../../assets/images/tech_logo/reactJS.png";
 import NodeJSLogo from "../../../assets/images/tech_logo/nodeJS.png";
 
 import CustomButton from "../CustomButton/CustomButton";
+
+import { getCardsAction } from "../../../redux/cards/cards-actions";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
 import { selectUserNav } from "../../../redux/layout/layout-selectors";
@@ -31,6 +33,8 @@ import {
   getCardAfterfilterAction,
   setCategoryFilter,
 } from "../../../redux/filter/filter-actions";
+
+import { constants } from "../../../constants"
 
 import "./NavTop.scss";
 
@@ -65,6 +69,20 @@ const NavTop = (props) => {
     dispatch(setType("langage"));
     dispatch(setCategoryFilter("all"));
   };
+  
+  const cardsClick = e => {
+     const allFiltersItems = [
+      ...document.querySelectorAll("button.FiltersBar__options--item"),
+    ];
+    
+  
+    allFiltersItems.map((item) => {
+      item.classList.remove("active")
+      item.dataset.filter === 'all' && item.classList.add('active')
+    })
+   
+    dispatch(getCardsAction())
+  }
 
   // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription
   return (
@@ -76,11 +94,11 @@ const NavTop = (props) => {
         <Link
           className="NavTop__link"
           to="/cards"
-          onClick={() => dispatch(setType("all"))}
+          onClick={(e) => cardsClick(e)}
         >
           Cartes
         </Link>
-        <Link className="NavTop__link NavTop__link--category" to="/cards">
+        <Link className="NavTop__link NavTop__link--category" to="/cards" onClick={(e) => cardsClick(e)}>
           Catégories
           <DropDownLogo className="NavTop__link--logo" />
         </Link>
@@ -91,7 +109,7 @@ const NavTop = (props) => {
           <Link to="/cards/html">
             <img src={HTMLLogo} className="NavTop__dropdown--logo" alt="HTML" />
           </Link>
-          <Link to="/cards/css/">
+          <Link to="/cards/css">
             <img
               onClick={(e) => logoHandleClick(e)}
               name="css"
@@ -100,7 +118,7 @@ const NavTop = (props) => {
               alt="CSS"
             />
           </Link>
-          <Link to="/cards/javascript/">
+          <Link to="/cards/javascript">
             <img
               onClick={(e) => logoHandleClick(e)}
               name="javascript"
@@ -109,7 +127,7 @@ const NavTop = (props) => {
               alt="Javascript"
             />
           </Link>
-          <Link to="/cards/react/">
+          <Link to="/cards/react">
             <img
               onClick={(e) => logoHandleClick(e)}
               name="reactjs"
@@ -118,7 +136,7 @@ const NavTop = (props) => {
               alt="React JS"
             />
           </Link>
-          <Link to="/cards/nodeJs/">
+          <Link to="/cards/nodeJs">
             <img
               onClick={(e) => logoHandleClick(e)}
               name="nodejs"
@@ -127,7 +145,7 @@ const NavTop = (props) => {
               alt="Node JS"
             />
           </Link>
-          <Link to="/cards/python/">
+          <Link to="/cards/python">
             <img
               onClick={(e) => logoHandleClick(e)}
               name="python"
@@ -145,7 +163,7 @@ const NavTop = (props) => {
               alt="php"
             />
           </Link>
-          <Link to="/cards/sass/">
+          <Link to="/cards/sass">
             <img
               onClick={(e) => logoHandleClick(e)}
               name="sass"

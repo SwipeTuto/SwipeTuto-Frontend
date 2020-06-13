@@ -1,38 +1,88 @@
 // Bar avec les items pour filtrer les slides
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
 import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";
 
-import { getCardAfterfilterAction } from "../../../redux/filter/filter-actions";
+import { getCardAfterfilterAction, setActive } from "../../../redux/filter/filter-actions";
+import { getCardsAction } from "../../../redux/cards/cards-actions";
 
-import {
-  setType,
-  setCategoryFilter,
-} from "../../../redux/filter/filter-actions";
+import { allFiltersItems } from "../../../constants"
+
 import "./FiltersBar.scss";
 
 const FiltersBar = ({ handleClickSize }) => {
-  // const [searchFilter, setSearchFilter] = useState("all");
-  // const [gridSize, setGridSize] = useState("small");
+
+  /**
+   * CONTROLE
+   * 1.SearchBar
+   * 
+   * TODO
+   * 1. Gestion de la croix qui ne marche pas dans le label
+   * Toujours es encore le problème de selction du men
+   * 
+   * STEP
+   * 1. recuper les params du URL
+   * 2. Split les params
+   * 3. les ajouter dans le store
+   * 
+   * PROBLEM
+   * 1. Dans le label la crois n'affiche pas all
+   * 2. La gestion du all
+   */
+
   const dispatch = useDispatch();
   const langage = useSelector((state) => state.filter.currentSearch);
-  const category = useSelector((state) => state.filter.categoryFilter);
+  const activeClass = useSelector((state) => state.filter.activeClass);
+  const [catOrLan, setCatOrLang] = useState(true)
+
+
+
+
+
+  const AllOrFilterCards = (langage, category) => {
+    langage || category ?
+      dispatch(getCardAfterfilterAction(langage, category))
+      :
+      dispatch(setActive('all'))
+    dispatch(getCardsAction())
+  }
+
+  // useEffect((e) => {
+  //   const allFiltersItems = [
+  //     ...document.querySelectorAll("button.FiltersBar__options--item"),
+  //   ];
+  //   allFiltersItems.map((item) => {
+  //     item.classList.remove("active")
+  //     if(item.dataset.filter === activeClass) {
+
+  //       item.classList.add('active')
+  //       setCatOrLang(false)
+  //     } 
+  //   })
+
+
+  // }, [activeClass])
+
+  const cardsClick = e => {
+
+    AllOrFilterCards(langage)
+    dispatch(setActive('all'))
+
+
+
+  }
 
   const handleClick = (e) => {
-    const langageUndifined = langage ? langage : undefined;
     const newSearchFilters = e.target.dataset.filter;
-    dispatch(getCardAfterfilterAction(langageUndifined, newSearchFilters));
-    // setSearchFilter(newSearchFilter);
-    console.log("langage2", langage);
-    const allFiltersItems = [
-      ...document.querySelectorAll("button.FiltersBar__options--item"),
-    ];
-    allFiltersItems.map((item) => item.classList.remove("active"));
-    e.target.classList.add("active");
-  };
+
+    setCatOrLang(true)
+    AllOrFilterCards(langage, newSearchFilters);
+
+    dispatch(setActive('all'))
+  }
 
   return (
     <div className="FiltersBar">
@@ -43,123 +93,139 @@ const FiltersBar = ({ handleClickSize }) => {
             <option value="new">Nouveau</option>
           </select>
           <div className="FiltersBar__options">
-            <button
-              className="FiltersBar__options--item active"
-              data-filter="all"
-              onClick={handleClick}
+            <NavLink
+              to={`/cards${
+                langage !== "" && langage !== undefined
+                  ? `/${catOrLan ? langage : ''}`
+                  : ``
+                }`}
             >
-              Tous
+              <button
+                className={"FiltersBar__options--item " + (activeClass === 'all' && 'active')}
+                onClick={(e) => handleClick(e)}
+                data-filter="all"
+              >
+                Tous
             </button>
-            <Link
+            </NavLink>
+            <NavLink
+
               to={`/cards${
                 langage !== "" && langage !== undefined
                   ? `/${langage}/theorie`
                   : `/theorie`
-              }`}
+                }`}
             >
-              {/* < Link to={`/cards/theorie`}> */}
+
 
               <button
-                className="FiltersBar__options--item"
+                className={"FiltersBar__options--item " + (activeClass === 'theorie' && 'active')}
                 data-filter="theorie"
                 onClick={handleClick}
               >
                 Théorie
               </button>
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to={`/cards${
                 langage !== "" && langage !== undefined
                   ? `/${langage}/code`
                   : `/code`
-              }`}
+                }`}
             >
               <button
                 type="submit"
-                className="FiltersBar__options--item"
+                // className="FiltersBar__options--item nav-link"
+                // activeClassName="active"
+                className={"FiltersBar__options--item " + (activeClass === 'code' && 'active')}
                 data-filter="code"
                 onClick={handleClick}
               >
                 Code
               </button>
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to={`/cards${
                 langage !== "" && langage !== undefined
-                  ? `/${langage}/_memo`
+                  ? `/${langage}/memo`
                   : `/memo`
-              }`}
+                }`}
             >
               <button
-                className="FiltersBar__options--item"
+                // className="FiltersBar__options--item active"
+                className={"FiltersBar__options--item " + (activeClass === 'memo' && 'active')}
                 data-filter="memo"
                 onClick={handleClick}
               >
                 memo
               </button>
-            </Link>
+            </NavLink>
 
-            <Link
+            <NavLink
               to={`/cards${
                 langage !== "" && langage !== undefined
-                  ? `/${langage}/_bloccode`
+                  ? `/${langage}/bloccode`
                   : `/bloccode`
-              }`}
+                }`}
             >
               <button
                 name="bloc code"
-                className="FiltersBar__options--item"
+                // className="FiltersBar__options--item"
+                className={"FiltersBar__options--item " + (activeClass === 'bloc code' && 'active')}
                 data-filter="bloc code"
                 onClick={handleClick}
               >
                 bloc code
               </button>
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to={`/cards${
                 langage !== "" && langage !== undefined
-                  ? `/${langage}/_performances`
+                  ? `/${langage}/performances`
                   : `/performances`
-              }`}
+                }`}
             >
               <button
-                className="FiltersBar__options--item"
+                // className="FiltersBar__options--item"
+                className={"FiltersBar__options--item " + (activeClass === 'performances' && 'active')}
                 data-filter="performances"
                 onClick={handleClick}
               >
                 Performances
               </button>
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to={`/cards${
                 langage !== "" && langage !== undefined
-                  ? `/${langage}/_ressources`
+                  ? `/${langage}/ressources`
                   : `/ressources`
-              }`}
+                }`}
             >
               <button
-                className="FiltersBar__options--item"
+                // className="FiltersBar__options--item"
+                className={"FiltersBar__options--item " + (activeClass === 'ressources' && 'active')}
                 data-filter="ressources"
                 onClick={handleClick}
               >
                 Ressources
               </button>
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to={`/cards${
                 langage !== "" && langage !== undefined
-                  ? `/${langage}/_autre`
+                  ? `/${langage}/autre`
                   : `/autre`
-              }`}
+                }`}
             >
               <button
-                className="FiltersBar__options--item"
+                // className="FiltersBar__options--item"
+                className={"FiltersBar__options--item " + (activeClass === 'autre' && 'active')}
                 data-filter="autre"
                 onClick={handleClick}
               >
                 Autre
               </button>
-            </Link>
+            </NavLink>
           </div>
         </div>
         <div className="FiltersBar__down">

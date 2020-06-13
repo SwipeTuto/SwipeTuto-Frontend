@@ -1,11 +1,6 @@
 # Filtre
 
 ## PROBLEME
-<<<<<<< HEAD
-
-=======
-- double appel au back au chargement de la page
->>>>>>> 2e94ce585cd229bcaa9e98e9f71cb21f677ad2c8
 - Problème avec le state de input Search
 - La catégorie reste sélectionner après changement de langage
 - Limiter le SET_TYPE. Si le payload et égale au type choisi ne pas faire l'appellent au store (faire un helper)

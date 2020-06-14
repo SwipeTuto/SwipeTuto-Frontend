@@ -14,22 +14,16 @@ import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
 import CardFullPopup from "../../CardsComponents/CardFullPopup/CardFullPopup";
 import Loading from "../../Loading/Loading";
 
-import {
-  getCardAfterfilterAction,
-  setType,
-} from "../../../redux/filter/filter-actions";
-import { usePrevious } from "../../../hooks/usePrevieus";
 
 import "./CardGridList.scss";
 
-const CardGridList = ({ cardsSize, cardsNumber, location }) => {
-  const dispatch = useDispatch();
+const CardGridList = ({ cardsSize, cardsNumber }) => {
+
   const cards = useSelector(selectCardsFetched);
   const searchType = useSelector(selectSearchType);
   const searchCard = useSelector(selectCardFilter);
 
-  const langage = useSelector((state) => state.filter.currentSearch);
-  const category = useSelector((state) => state.filter.categoryFilter);
+
 
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
   const [cardsArray, setcardsArray] = useState([]);
@@ -40,7 +34,6 @@ const CardGridList = ({ cardsSize, cardsNumber, location }) => {
       setIsLoading(false);
     }
     setCardPreviewSize(cardsSize);
-
     if (searchType === "search" || searchType === "langage") {
       setcardsArray(searchCard);
     } else {
@@ -50,6 +43,7 @@ const CardGridList = ({ cardsSize, cardsNumber, location }) => {
 
   return (
     <div className="CardGridList">
+
       <div
         className={`CardGridList__wrapper${
           cardPreviewSize === "small" ? "--small" : "--big y"
@@ -63,18 +57,6 @@ const CardGridList = ({ cardsSize, cardsNumber, location }) => {
             <CardPreviewSmall card={card} key={card.id} />
           ))
         )}
-        {/* {isLoading ? (
-          <Loading />
-        ) : cardsArray.length === 0 ? (
-          <h2 className="title title-2 nocards-message">
-            Aucune carte trouvée...
-          </h2>
-        ) : (
-          cardsArray &&
-          cardsArray.map((card) => (
-            <CardPreviewSmall card={card} key={card.id} />
-          ))
-        )} */}
       </div>
       <CardFullPopup cardsArray={cardsArray} />
     </div>

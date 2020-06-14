@@ -37,6 +37,7 @@ export const getCardAfterfilterAction = (langage, category) => {
     dispatch(getCardAfterfilteryRequest(langage, category))
     return getCardAfterfilter(langage, category)
       .then(rep => {
+        console.log('rep', rep.data.results)
         dispatch(setType('search'));
         dispatch(getCardAfterfilterSuccess(rep.data.results))
         return rep
@@ -78,9 +79,4 @@ export const setCategoryFilter = (category) => ({
 export const setType = (searchType) => ({
   type: FilterActionTypes.SET_TYPE,
   payload: searchType
-})
-
-export const setActive = (active) => ({
-  type: FilterActionTypes.SET_ACTIVE,
-  payload: active
 })

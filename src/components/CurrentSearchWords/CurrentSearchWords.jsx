@@ -1,11 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectCurrentSearch } from "../../redux/filter/filter-selectors";
+
 import { ReactComponent as CloseLogo } from "../../assets/images/close-circle.svg";
-import {
-  deleteCurrentSearch,
-  setType,
-} from "../../redux/filter/filter-actions";
+
+import { selectCurrentSearch } from "../../redux/filter/filter-selectors";
+import { deleteCurrentSearch, setType,} from "../../redux/filter/filter-actions";
+import { getCardsAction } from "../../redux/cards/cards-actions";
 
 import "./CurrentSearchWords.scss";
 
@@ -16,6 +16,7 @@ const CurrentSearchWords = () => {
   const handleDelete = (e) => {
     e.stopPropagation();
     dispatch(deleteCurrentSearch());
+    dispatch(getCardsAction())
     dispatch(setType("all"));
   };
 

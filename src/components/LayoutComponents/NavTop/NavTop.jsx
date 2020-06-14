@@ -34,7 +34,6 @@ import {
   setCategoryFilter,
 } from "../../../redux/filter/filter-actions";
 
-import { constants } from "../../../constants"
 
 import "./NavTop.scss";
 
@@ -43,6 +42,7 @@ const NavTop = (props) => {
   const currentUser = useSelector(selectCurrentUser);
   const currentUserNav = useSelector(selectUserNav);
   const [searchInput, setSearchInput] = useState("");
+  const category = useSelector((state) => state.filter.categoryFilter);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -98,6 +98,7 @@ const NavTop = (props) => {
         >
           Cartes
         </Link>
+        
         <Link className="NavTop__link NavTop__link--category" to="/cards" onClick={(e) => cardsClick(e)}>
           Catégories
           <DropDownLogo className="NavTop__link--logo" />
@@ -118,7 +119,7 @@ const NavTop = (props) => {
               alt="CSS"
             />
           </Link>
-          <Link to="/cards/javascript">
+          <Link to={`/search?langage=javascript&category=${category}`}>
             <img
               onClick={(e) => logoHandleClick(e)}
               name="javascript"
@@ -127,7 +128,7 @@ const NavTop = (props) => {
               alt="Javascript"
             />
           </Link>
-          <Link to="/cards/react">
+          <Link to={`/search?langage=reactjs&category=${category}`}>
             <img
               onClick={(e) => logoHandleClick(e)}
               name="reactjs"
@@ -136,7 +137,7 @@ const NavTop = (props) => {
               alt="React JS"
             />
           </Link>
-          <Link to="/cards/nodeJs">
+          <Link to={`/search?langage=nodejs&category=${category}`}>
             <img
               onClick={(e) => logoHandleClick(e)}
               name="nodejs"
@@ -145,7 +146,7 @@ const NavTop = (props) => {
               alt="Node JS"
             />
           </Link>
-          <Link to="/cards/python">
+          <Link to={`/search?langage=python&category=${category}`}>
             <img
               onClick={(e) => logoHandleClick(e)}
               name="python"
@@ -154,7 +155,7 @@ const NavTop = (props) => {
               alt="Python"
             />
           </Link>
-          <Link to="/cards/php">
+          <Link to={`/search?langage=php&category=${category}`}>
             <img
               onClick={(e) => logoHandleClick(e)}
               name="php"
@@ -163,7 +164,7 @@ const NavTop = (props) => {
               alt="php"
             />
           </Link>
-          <Link to="/cards/sass">
+          <Link to={`/search?langage=sass&category=${category}`}>
             <img
               onClick={(e) => logoHandleClick(e)}
               name="sass"

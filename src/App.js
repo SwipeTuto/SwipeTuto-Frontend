@@ -13,7 +13,7 @@ import Footer from "./components/LayoutComponents/Footer/Footer";
 import { getCardsAction } from './redux/cards/cards-actions'
 import { getCardAfterfilterAction } from "./redux/filter/filter-actions"
  
-import { splitURL } from "./utils/index"
+import { urlParams } from "./utils/index"
 
 import './index.scss'
 import './App.scss';
@@ -26,25 +26,14 @@ function App(props) {
 
   const dispatch = useDispatch();
 
-  const getType = useSelector(state => state.filter.searchType)
- 
+  const [langage, category] = urlParams(props.location)
 
   useEffect(() => {
-    const [params1, params2] = splitURL(props.location)
-    console.log('params1', params1)
-
-    params1 && params1 !== 'all'? 
-      dispatch(getCardAfterfilterAction(params1,params2)) :
+    langage  || category ? 
+      dispatch(getCardAfterfilterAction(langage,category)) 
+      :
       dispatch(getCardsAction())
-      
-  
-
-   
-
-
-
-
-  }, []);
+  }, [category,langage]);
 
   return (
     <div className="App">
@@ -53,8 +42,7 @@ function App(props) {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/cards" component={SearchPage} />
-        <Route exact path="/cards/:langage" component={SearchPage} />
-        <Route exact path="/cards/:langage/:categorie" component={SearchPage} />
+        <Route exact path="/search" component={SearchPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/ressources" component={RessourcesPage} />
         {/* <PrivateRoute exact path="/login" component={Login} /> */}

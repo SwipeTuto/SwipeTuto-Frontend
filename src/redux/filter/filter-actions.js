@@ -1,9 +1,7 @@
 import { FilterActionTypes } from "./filter-types"
+
 import { searchBar } from '../../services/searchService'
 import { getCardAfterfilter } from '../../services/cardsService'
-
-
-
 
 
 export const searchAction = kword => {
@@ -37,7 +35,6 @@ export const getCardAfterfilterAction = (langage, category) => {
     dispatch(getCardAfterfilteryRequest(langage, category))
     return getCardAfterfilter(langage, category)
       .then(rep => {
-        console.log('rep', rep.data.results)
         dispatch(setType('search'));
         dispatch(getCardAfterfilterSuccess(rep.data.results))
         return rep

@@ -31,7 +31,8 @@ import { formattedDate } from "../../../utilsFunctions";
 import { renameCategory } from "../../../utilsFunctions";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as FullscreenLogo } from "../../../assets/images/fullscreen.svg";
-
+import { getCardsByUserNameAction } from "../../../redux/filter/filter-actions";
+import { base } from "../../../services/configService"
 import "./CardFullPopup.scss";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
@@ -43,19 +44,25 @@ const CardFullPopup = ({ cardsArray }) => {
   const dispatch = useDispatch();
   const [indexOfCurrentCard, setIndexOfCurrentCard] = useState();
   const [cardsArrayLength, setCardsArrayLength] = useState();
-
+  const cardID = useSelector(state => state.cards.clickedCard);
+  const cardsByUser = useSelector(state => state.filter.cardsByUser);
+  console.log('cardsByUser', cardsByUser)
+ 
   useEffect(() => {
     if (!clickedCard || !cardsArray) return;
     setCardsArrayLength(cardsArray.length);
     setIndexOfCurrentCard(cardsArray.indexOf(clickedCard));
-  }, [clickedCard, cardsArray, cardsArrayLength, indexOfCurrentCard]);
+  }, [clickedCard, cardsArray, cardsArrayLength, indexOfCurrentCard] );
 
   // scroll reset
   useEffect(() => {
+    if(cardID)  {
+      dispatch(getCardsByUserNameAction(cardID.user.username))
+    }
     if (popupShown && document.querySelector(".CardFullPopup.active")) {
       document.querySelector(".CardFullPopup.active").scroll(0, 0);
     }
-  }, [popupShown]);
+  }, [popupShown,cardID]);
 
   const clickedCardDate =
     clickedCard && formattedDate(new Date(clickedCard.modified));
@@ -173,10 +180,12 @@ const CardFullPopup = ({ cardsArray }) => {
               <h3 className="title title-4">Du même auteur :</h3>
               <div className="autres-posts--grid">
                 {/* A chnger pour cliquable : */}
-                <div className="autres-posts--preview"></div>
-                <div className="autres-posts--preview"></div>
-                <div className="autres-posts--preview"></div>
-                <div className="autres-posts--preview"></div>
+                {cardsByUser && (
+                  cardsByUser.map(rep => 
+                  <div  className="autres-posts--preview">
+                    <img style={{width:'100%', height:'100%'}} src={base +rep.media_image['0'].image}></img>
+                  </div>
+                ))}
               </div>
             </div>
             <span className="horizontal-separation-primary-light"></span>

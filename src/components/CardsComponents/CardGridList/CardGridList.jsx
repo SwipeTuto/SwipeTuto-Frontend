@@ -7,8 +7,8 @@ import { withRouter } from "react-router-dom";
 
 import { selectCardsFetched } from "../../../redux/cards/cards-selectors";
 
-import { selectCardFilter } from "../../../redux/filter/filter-selectors";
-import { selectSearchType } from "../../../redux/filter/filter-selectors";
+import { selectCardFilter, selectSearchType } from "../../../redux/filter/filter-selectors";
+
 
 import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
 import CardFullPopup from "../../CardsComponents/CardFullPopup/CardFullPopup";
@@ -18,11 +18,11 @@ import Loading from "../../Loading/Loading";
 import "./CardGridList.scss";
 
 const CardGridList = ({ cardsSize, cardsNumber }) => {
+  const dispatch = useDispatch()
 
   const cards = useSelector(selectCardsFetched);
   const searchType = useSelector(selectSearchType);
   const searchCard = useSelector(selectCardFilter);
-
 
 
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
@@ -41,6 +41,8 @@ const CardGridList = ({ cardsSize, cardsNumber }) => {
     }
   }, [cards, cardsSize, cardsNumber, cardsArray, searchType, searchCard]);
 
+
+ 
   return (
     <div className="CardGridList">
 

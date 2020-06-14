@@ -107,10 +107,10 @@ const NavTop = (props) => {
           Ressources
         </Link>
         <div className=" NavTop__dropdown NavTop__dropdown--category">
-          <Link to="/cards/html">
+        <Link to={`/search?langage=html&category=${category}`}>
             <img src={HTMLLogo} className="NavTop__dropdown--logo" alt="HTML" />
           </Link>
-          <Link to="/cards/css">
+          <Link to={`/search?langage=css&category=${category}`}>
             <img
               onClick={(e) => logoHandleClick(e)}
               name="css"

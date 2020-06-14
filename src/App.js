@@ -29,10 +29,7 @@ function App(props) {
   const [langage, category] = urlParams(props.location)
 
   useEffect(() => {
-    langage  || category ? 
-      dispatch(getCardAfterfilterAction(langage,category)) 
-      :
-      dispatch(getCardsAction())
+    langage  || category ? dispatch(getCardAfterfilterAction(langage,category)) : dispatch(getCardsAction())
   }, [category,langage]);
 
   return (

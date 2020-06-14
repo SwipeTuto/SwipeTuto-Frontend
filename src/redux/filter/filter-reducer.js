@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   errors: '',
   categoryFilter: '',
   cardFilter: "",
+  cardsByUser: ""
 };
 
 const FilterReducer = (state = INITIAL_STATE, action) => {
@@ -22,7 +23,6 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
         currentSearch: action.payload.langage,
         categoryFilter: action.payload.category 
       };
-
     case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_SUCCESS:
       return { ...state, cardFilter: action.payload };
     case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_FAILURE:
@@ -37,6 +37,12 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state,categoryFilter: action.payload,};
     case FilterActionTypes.SET_TYPE:
       return {...state, searchType: action.payload,};
+
+   
+    case FilterActionTypes.GET_CARDS_BY_USER_SUCCESS:
+      return {...state, cardsByUser: action.payload,};
+    case FilterActionTypes.GET_CARDS_BY_USER_FAILURE:
+      return {...state, errors: action.payload,};
    
 
 

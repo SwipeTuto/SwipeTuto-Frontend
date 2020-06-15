@@ -1,19 +1,20 @@
 // Popup qui s'ouvre au clic sur une card. Contient CardSliderFull et aussi toutes les infos de la card cliquée
 
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 // import CardSliderPopup from "../CardSlider/CardSliderPopup";
 import CardSliderSwipable from "../CardSlider/CardSliderSwipable";
 import CardSliderFullscreen from "../CardSlider/CardSliderFullscreen";
+import UserNameAndAvatarBig from "../../UserComponents/UserNameAndAvatarBig/UserNameAndAvatarBig";
 
-import { useSelector, useDispatch } from "react-redux";
 import { selectShowPopupCard } from "../../../redux/layout/layout-selectors";
 import { selectClickedCard } from "../../../redux/cards/cards-selectors";
-import { setClickedCard } from "../../../redux/cards/cards-actions";
-import { setNoClickedCard } from "../../../redux/cards/cards-actions";
-import { closePopupCard } from "../../../redux/layout/layout-actions";
-import { showFullscreen } from "../../../redux/layout/layout-actions";
 import { selectFullscreen } from "../../../redux/layout/layout-selectors";
+import { setClickedCard,setNoClickedCard } from "../../../redux/cards/cards-actions";
+import { closePopupCard, showFullscreen } from "../../../redux/layout/layout-actions";
+import { getCardsByUserNameAction } from "../../../redux/filter/filter-actions";
 
 import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevrons/chevron-back-circle.svg";
 import { ReactComponent as ChevronCircleRight } from "../../../assets/images/chevrons/chevron-forward-circle.svg";
@@ -25,14 +26,12 @@ import { ReactComponent as BookmarkEmpty } from "../../../assets/images/bookmark
 // import { ReactComponent as BookmarkFilled } from "../../../assets/images/bookmark.svg";
 import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outline.svg";
 // import { ReactComponent as HeartFilled } from "../../../assets/images/heart.svg";
-import UserNameAndAvatarBig from "../../UserComponents/UserNameAndAvatarBig/UserNameAndAvatarBig";
-
-import { formattedDate } from "../../../utilsFunctions";
-import { renameCategory } from "../../../utilsFunctions";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as FullscreenLogo } from "../../../assets/images/fullscreen.svg";
-import { getCardsByUserNameAction } from "../../../redux/filter/filter-actions";
+
+import { formattedDate, renameCategory } from "../../../utilsFunctions";
 import { base } from "../../../services/configService"
+
 import "./CardFullPopup.scss";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
@@ -179,11 +178,12 @@ const CardFullPopup = ({ cardsArray }) => {
             <div className="infos__autres-posts">
               <h3 className="title title-4">Du même auteur :</h3>
               <div className="autres-posts--grid">
-                {/* A chnger pour cliquable : */}
+                {/* A MODIFER EN SCSS */}
                 {cardsByUser && (
                   cardsByUser.map(rep => 
                   <div  className="autres-posts--preview">
-                    <img style={{width:'100%', height:'100%'}} src={base +rep.media_image['0'].image}></img>
+                    {/* FAIRE LE LIEN ET LE POPUP VERS LA CARTE */}
+                      <img style={{width:'100%', height:'100%'}} src={base +rep.media_image['0'].image}></img>
                   </div>
                 ))}
               </div>

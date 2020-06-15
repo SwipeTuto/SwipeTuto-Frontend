@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+
 import { auth, provider } from '../services/firebaseService';
 import { baseURL } from '../services/configService'
 
@@ -32,12 +32,9 @@ export const login = idToken => {
 
   return axios.post(`${baseURL}google-login/`, JSON.stringify(data), config)
     .then(rep => {
-      // aller dans devTools : Application : Session Storage pour voir user et token stockés ici
       localStorage.setItem('user', JSON.stringify(rep.data.user))
       localStorage.setItem('token', rep.data.token)
-  
       return rep
-     
     })
     .catch(function (err) {
       localStorage.removeItem('user')
@@ -45,4 +42,32 @@ export const login = idToken => {
       return err
       
     })
+}
+
+
+
+export const loginManuel = (username, password) => {
+  var config = {
+      headers: { 'Content-Type': 'application/json' },
+  }
+  return axios.post(`${baseURL}login/`, JSON.stringify({ username, password }), config)
+      .then(user => {
+          localStorage.setItem('user', JSON.stringify(user.data.user))
+          localStorage.setItem('token', JSON.stringify(user.data.token))
+          return user;
+      })
+      .catch(function (err) {
+        localStorage.removeItem('user')
+        localStorage.removeItem('token')
+        return err
+        
+      })
+}
+
+export const logout = () => {
+  if (localStorage.getItem('user') && localStorage.getItem('token')) {
+      localStorage.removeItem('user')
+      localStorage.removeItem('token')
+      return true
+  }
 }

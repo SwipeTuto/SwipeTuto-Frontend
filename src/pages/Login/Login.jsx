@@ -1,29 +1,46 @@
 // Présent dans App.js dans une Route ("/")
 
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { loginGoogle } from "../../services/userService";
-// import { langageList } from "../../services/searchService";
-// import { useDispatch } from "react-redux";
-// import { setCurrentUser } from "../../redux/user/user-actions";
+import { loginAction } from "../../redux/user/user-actions"
+
 
 import "./Login.scss";
+import Register from "./Register";
+
 
 // Props history, location, match, depuis react router dom
 const LoginPage = (props) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch()
+  const [user, setUser] = useState({username: '', password:''})
+
 
   // scroll reset
   if (window.scrollY) {
     window.scroll(0, 0);
   }
 
-  const handleClick = (e) => {
+  const handleClickGoogle = (e) => {
     loginGoogle().then((user) => {
       props.history.push("/");
       // dispatch(setCurrentUser(user));
     });
   };
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  }
+
+  const handleClick = (e) => {
+    const { username, password } = user;
+    e.preventDefault();
+    if (user.username && user.password) {
+     return dispatch(loginAction(username, password))
+    }
+  }
 
   return (
     <div className="LoginPage">
@@ -32,25 +49,27 @@ const LoginPage = (props) => {
         <div className="login">
           <h1 className="title title-1">Se connecter</h1>
           <form className="login__form">
-            <label htmlFor="pseudo" className="login__form--label">
-              Pseudo :
-            </label>
+            <label htmlFor="pseudo" className="login__form--label"> Pseudo : </label>
             <input
+              onChange={e => handleChange(e)}
               type="text"
+              name="username"
+              value={user.username}
               id="pseudo"
               className="login__form--input"
               required
             />
-            <label htmlFor="mdp" className="login__form--label">
-              Mot de passe :
-            </label>
+            <label htmlFor="mdp" className="login__form--label"> Mot de passe : </label>
             <input
+              onChange={(e) => handleChange(e)}
+              value={user.password}
               type="password"
+              name="password"
               id="mdp"
               className="login__form--input"
               required
             />
-            <CustomButton color="dark" type="submit">
+            <CustomButton onClick={e => handleClick(e)} color="dark" type="submit">
               Connexion
             </CustomButton>
           </form>
@@ -58,74 +77,15 @@ const LoginPage = (props) => {
           <span className="horizontal-separation-primary-light"></span>
           <div className="login__google">
             <h1 className="title title-1">Ou</h1>
-            <CustomButton onClick={(e) => handleClick(e)} color="dark">
+            <CustomButton onClick={(e) => handleClickGoogle(e)} color="dark">
               Connexion avec Google
             </CustomButton>
           </div>
         </div>
-        <div className="signup">
-          <h1 className="title title-1">S'inscrire</h1>
-          <form className="signup__form">
-            <label htmlFor="nom" className="signup__form--label">
-              Nom :
-            </label>
-            <input
-              type="text"
-              id="nom"
-              className="signup__form--input"
-              required
-            />
-            <label htmlFor="prenom" className="signup__form--label">
-              Prénom :
-            </label>
-            <input
-              type="text"
-              id="prenom"
-              className="signup__form--input"
-              required
-            />
-            <label htmlFor="pseudo" className="signup__form--label">
-              Pseudo :
-            </label>
-            <input
-              type="text"
-              id="pseudo"
-              className="signup__form--input"
-              required
-            />
-            <label htmlFor="email" className="signup__form--label">
-              Email :
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="signup__form--input"
-              required
-            />
-            <label htmlFor="mdp" className="signup__form--label">
-              Mot de passe :
-            </label>
-            <input
-              type="password"
-              id="mdp"
-              className="signup__form--input"
-              required
-            />
-            <label htmlFor="mdp2" className="signup__form--label">
-              Confirmez mot de passe :
-            </label>
-            <input
-              type="password"
-              id="mdp2"
-              className="signup__form--input"
-              required
-            />
-            <CustomButton color="light" type="submit">
-              Inscription
-            </CustomButton>
-          </form>
-        </div>
-      </div>
+        
+        <Register />
+     
+    </div>
     </div>
   );
 };

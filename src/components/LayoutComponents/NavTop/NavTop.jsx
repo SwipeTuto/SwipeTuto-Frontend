@@ -25,6 +25,7 @@ import CustomButton from "../CustomButton/CustomButton";
 
 import { getCardsAction } from "../../../redux/cards/cards-actions";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
+import { logoutAction } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
 import { selectUserNav } from "../../../redux/layout/layout-selectors";
 import {
@@ -196,7 +197,7 @@ const NavTop = (props) => {
         </form>
       </div>
       <div className="NavTop__right">
-        {currentUser && currentUser.avatar ? (
+        {currentUser && currentUser.username ? (
           <>
             <div
               onClick={() => dispatch(toggleUserNav())}
@@ -215,7 +216,6 @@ const NavTop = (props) => {
           </Link>
         )}
       </div>
-
       {currentUserNav ? (
         <div className="NavTop__userMenu">
           <p className="NavTop__userMenu--text">Bonjour</p>
@@ -234,7 +234,7 @@ const NavTop = (props) => {
             <HelpLogo className="NavTop__userMenu--logo" />
             Aide
           </Link>
-          <Link className="NavTop__userMenu--link" to="/">
+          <Link onClick={() => dispatch(logoutAction())}  className="NavTop__userMenu--link" to="/">
             <LogOutLogo className="NavTop__userMenu--logo" />
             Deconnexion
           </Link>

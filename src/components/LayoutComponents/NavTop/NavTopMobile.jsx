@@ -121,8 +121,8 @@ const NavTopMobile = (props) => {
           <form className="NavTopMobile__search" onSubmit={handleSubmit}>
             <input
               className="NavTopMobile__input"
-              id="search"
-              name="search"
+              id="searchMobile"
+              name="searchMobile"
               type="text"
               placeholder="Recherche..."
               onChange={handleChange}

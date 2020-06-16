@@ -1,7 +1,6 @@
 // Popup qui s'ouvre au clic sur une card. Contient CardSliderFull et aussi toutes les infos de la card cliquée
 
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 // import CardSliderPopup from "../CardSlider/CardSliderPopup";
@@ -65,7 +64,7 @@ const CardFullPopup = ({ cardsArray }) => {
     if (popupShown && document.querySelector(".CardFullPopup.active")) {
       document.querySelector(".CardFullPopup.active").scroll(0, 0);
     }
-  }, [popupShown, cardID]);
+  }, [popupShown, cardID, dispatch]);
 
   const clickedCardDate =
     clickedCard && formattedDate(new Date(clickedCard.modified));
@@ -184,13 +183,22 @@ const CardFullPopup = ({ cardsArray }) => {
               <div className="autres-posts--grid">
                 {/* A MODIFER EN SCSS */}
                 {cardsByUser &&
-                  cardsByUser.map((rep) => (
-                    <div className="autres-posts--preview">
+                  cardsByUser.map((card) => (
+                    <div
+                      className="autres-posts--preview"
+                      key={card.id}
+                      card={card}
+                      // onClick={() => {
+                      //   console.log(card);
+                      //   dispatch(setClickedCard(card));
+                      // }}
+                    >
                       {/* FAIRE LE LIEN ET LE POPUP VERS LA CARTE */}
                       <img
                         style={{ width: "100%", height: "100%" }}
-                        src={base + rep.media_image["0"].image}
-                      ></img>
+                        src={base + card.media_image["0"].image}
+                        alt="Autres travaux de l'auteur"
+                      />
                     </div>
                   ))}
               </div>

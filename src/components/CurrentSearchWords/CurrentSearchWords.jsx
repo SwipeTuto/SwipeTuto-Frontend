@@ -10,6 +10,7 @@ import {
   setType,
 } from "../../redux/filter/filter-actions";
 import { getCardsAction } from "../../redux/cards/cards-actions";
+import { setTotalNumberOfCardsSearchedToNull } from "../../redux/filter/filter-actions";
 
 import "./CurrentSearchWords.scss";
 
@@ -20,6 +21,7 @@ const CurrentSearchWords = ({ history }) => {
   const handleDelete = (e) => {
     e.stopPropagation();
     dispatch(deleteCurrentSearch());
+    dispatch(setTotalNumberOfCardsSearchedToNull());
     dispatch(getCardsAction());
     dispatch(setType("all"));
     history.push("/cards");

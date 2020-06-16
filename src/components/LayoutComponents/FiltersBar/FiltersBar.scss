@@ -19,7 +19,7 @@
 
   &__down {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
   }
 
   &__size-logo {
@@ -31,6 +31,10 @@
     cursor: pointer;
     fill: $primary-dark;
     transition: all 0.2s ease;
+
+    &:first-of-type {
+      margin-left: auto;
+    }
 
     .grid-size-logo {
       width: 100%;

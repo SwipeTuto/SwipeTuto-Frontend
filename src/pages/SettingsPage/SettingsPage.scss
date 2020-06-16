@@ -1,0 +1,66 @@
+@import "../../variables.scss";
+
+.SettingsPage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $grey-lighter;
+
+  .title.title-1 {
+    margin: 3rem 0;
+  }
+
+  input:not([type="file"]) {
+    @include input-style;
+  }
+
+  input[name="mdp1"] {
+    margin-bottom: 2rem;
+  }
+
+  input:focus:valid {
+    border: 0.5px solid #00b109;
+  }
+
+  input:focus:invalid {
+    border: 0.5px solid #f76300;
+  }
+
+  input:focus {
+    background-color: $white;
+  }
+
+  .allForms {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: max-content;
+    gap: 2.5rem;
+    max-width: 80rem;
+    box-shadow: $card-shadow-2;
+    padding: 3rem;
+    background-color: $white;
+  }
+
+  form {
+    display: grid;
+    grid-template-columns: 1fr 1fr min-content;
+    grid-column-gap: 2rem;
+    grid-auto-rows: max-content;
+    align-items: center;
+    padding-bottom: 2rem;
+  }
+
+  form:not(:last-of-type) {
+    border-bottom: 1px solid $grey-dark;
+  }
+
+  label {
+    grid-column: 1/2;
+    text-align: right;
+  }
+
+  input {
+    grid-column: 2/3;
+  }
+}

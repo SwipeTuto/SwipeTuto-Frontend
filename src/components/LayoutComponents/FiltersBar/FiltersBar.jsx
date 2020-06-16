@@ -1,7 +1,13 @@
 // Bar avec les items pour filtrer les slides
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
+import {
+  selectTotalNumberOfCardsSearched,
+  selectCategoryFilter,
+  selectCurrentSearch,
+} from "../../../redux/filter/filter-selectors";
 
 import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
 import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";
@@ -9,23 +15,25 @@ import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg
 import { getCardAfterfilterAction } from "../../../redux/filter/filter-actions";
 import { getCardsAction } from "../../../redux/cards/cards-actions";
 
-
-
 import "./FiltersBar.scss";
 
 const FiltersBar = ({ handleClickSize }) => {
   const dispatch = useDispatch();
-  const langage = useSelector((state) => state.filter.currentSearch);
-  const category = useSelector((state) => state.filter.categoryFilter);
-
+  const langage = useSelector(selectCurrentSearch);
+  const category = useSelector(selectCategoryFilter);
+  const totalNumberOfCardsSearched = useSelector(
+    selectTotalNumberOfCardsSearched
+  );
 
   const AllOrFilterCards = (langage, category) => {
-    langage || category ? dispatch(getCardAfterfilterAction(langage, category)) : dispatch(getCardsAction())
-  }
+    langage || category
+      ? dispatch(getCardAfterfilterAction(langage, category))
+      : dispatch(getCardsAction());
+  };
 
   const handleClick = (e) => {
-    AllOrFilterCards(langage , e.target.dataset.filter);
-  }
+    AllOrFilterCards(langage, e.target.dataset.filter);
+  };
 
   return (
     <div className="FiltersBar">
@@ -36,20 +44,24 @@ const FiltersBar = ({ handleClickSize }) => {
             <option value="new">Nouveau</option>
           </select>
           <div className="FiltersBar__options">
-
-          <NavLink to={`/search?langage=${langage}&category=`} >
+            <NavLink to={`/search?langage=${langage}&category=`}>
               <button
-                className={"FiltersBar__options--item " + (category === '' && 'active')}
+                className={
+                  "FiltersBar__options--item " + (category === "" && "active")
+                }
                 onClick={(e) => handleClick(e)}
                 data-filter=""
               >
                 Tous
-            </button>
+              </button>
             </NavLink>
 
-            <NavLink to={`/search?langage=${langage}&category=theorie`} >
+            <NavLink to={`/search?langage=${langage}&category=theorie`}>
               <button
-                className={"FiltersBar__options--item " + (category === "theorie"  && 'active')}
+                className={
+                  "FiltersBar__options--item " +
+                  (category === "theorie" && "active")
+                }
                 data-filter="theorie"
                 onClick={handleClick}
               >
@@ -57,10 +69,13 @@ const FiltersBar = ({ handleClickSize }) => {
               </button>
             </NavLink>
 
-            <NavLink to={`/search?langage=${langage}&category=code`} >
+            <NavLink to={`/search?langage=${langage}&category=code`}>
               <button
                 type="submit"
-                className={"FiltersBar__options--item " + (category === "code"  && 'active')}
+                className={
+                  "FiltersBar__options--item " +
+                  (category === "code" && "active")
+                }
                 data-filter="code"
                 onClick={handleClick}
               >
@@ -68,9 +83,12 @@ const FiltersBar = ({ handleClickSize }) => {
               </button>
             </NavLink>
 
-            <NavLink to={`/search?langage=${langage}&category=memo`} >
+            <NavLink to={`/search?langage=${langage}&category=memo`}>
               <button
-                className={"FiltersBar__options--item " + (category === "memo"  && 'active')}
+                className={
+                  "FiltersBar__options--item " +
+                  (category === "memo" && "active")
+                }
                 data-filter="memo"
                 onClick={handleClick}
               >
@@ -78,10 +96,13 @@ const FiltersBar = ({ handleClickSize }) => {
               </button>
             </NavLink>
 
-            <NavLink to={`/search?langage=${langage}&category=bloc code`} >
+            <NavLink to={`/search?langage=${langage}&category=bloc code`}>
               <button
                 name="bloc code"
-                className={"FiltersBar__options--item " + (category === "bloc code"  && 'active')}
+                className={
+                  "FiltersBar__options--item " +
+                  (category === "bloc code" && "active")
+                }
                 data-filter="bloc code"
                 onClick={handleClick}
               >
@@ -89,9 +110,12 @@ const FiltersBar = ({ handleClickSize }) => {
               </button>
             </NavLink>
 
-            <NavLink to={`/search?langage=${langage}&category=performances`} >
+            <NavLink to={`/search?langage=${langage}&category=performances`}>
               <button
-                className={"FiltersBar__options--item " + (category === "performances"  && 'active')}
+                className={
+                  "FiltersBar__options--item " +
+                  (category === "performances" && "active")
+                }
                 data-filter="performances"
                 onClick={handleClick}
               >
@@ -99,28 +123,37 @@ const FiltersBar = ({ handleClickSize }) => {
               </button>
             </NavLink>
 
-            <NavLink to={`/search?langage=${langage}&category=ressources`} >
+            <NavLink to={`/search?langage=${langage}&category=ressources`}>
               <button
-                className={"FiltersBar__options--item " + (category === "ressources"  && 'active')}
+                className={
+                  "FiltersBar__options--item " +
+                  (category === "ressources" && "active")
+                }
                 data-filter="ressources"
                 onClick={handleClick}
               >
                 Ressources
               </button>
             </NavLink>
-            <NavLink to={`/search?langage=${langage}&category=autre`} >
+            <NavLink to={`/search?langage=${langage}&category=autre`}>
               <button
-                className={"FiltersBar__options--item " + (category === "autre"  && 'active')}
+                className={
+                  "FiltersBar__options--item " +
+                  (category === "autre" && "active")
+                }
                 data-filter="autre"
                 onClick={handleClick}
               >
                 Autre
               </button>
             </NavLink>
-
           </div>
         </div>
         <div className="FiltersBar__down">
+          <p className="FiltersBar__numberOfResults">
+            {totalNumberOfCardsSearched !== 0 &&
+              `${totalNumberOfCardsSearched} résultats trouvés.`}
+          </p>
           <div
             className="FiltersBar__size-logo active"
             data-gridsize="small"

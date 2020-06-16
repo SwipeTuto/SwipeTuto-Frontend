@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectClickedCardSlides } from "../../../redux/cards/cards-selectors";
 import { selectFullscreen } from "../../../redux/layout/layout-selectors";
 import { closeFullscreen } from "../../../redux/layout/layout-actions";
-import { useSwipeable } from "react-swipeable";
 
 import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
 import { ReactComponent as ChevronLeftWhite } from "../../../assets/images/chevrons/chevron-back-white.svg";
@@ -53,7 +52,6 @@ const CardSliderSwipebale = () => {
       ".CardSliderLarge__slides-container"
     ).scrollLeft;
     setActiveIndex(Math.floor(currentScrollLevel / (imageWidth - 10)));
-    console.log(activeIndex);
   };
 
   return (

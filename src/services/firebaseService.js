@@ -20,5 +20,6 @@ if (!firebase.apps.length) {
 }
 
 export const provider = new firebase.auth.GoogleAuthProvider();
+export const providerGit = new firebase.auth.GithubAuthProvider();
 export const auth = firebase.auth;
 

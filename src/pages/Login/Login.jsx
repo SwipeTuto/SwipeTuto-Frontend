@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
-import { loginGoogle } from "../../services/userService";
+import { loginGoogle, loginGit } from "../../services/userService";
 import { loginAction, setCurrentUser } from "../../redux/user/user-actions"
 
 
@@ -24,6 +24,9 @@ const LoginPage = (props) => {
 
   const handleClickGoogle = (e) => {
     loginGoogle()
+  };
+  const handleClickGit = (e) => {
+    loginGit()
   };
 
   const handleChange = e => {
@@ -76,6 +79,9 @@ const LoginPage = (props) => {
             <h1 className="title title-1">Ou</h1>
             <CustomButton onClick={(e) => handleClickGoogle(e)} color="dark">
               Connexion avec Google
+            </CustomButton>
+            <CustomButton onClick={(e) => handleClickGit(e)} color="dark">
+              Connexion avec Git
             </CustomButton>
           </div>
         </div>

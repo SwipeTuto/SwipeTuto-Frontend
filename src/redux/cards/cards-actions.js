@@ -23,6 +23,7 @@ export const getCardsAction = () => {
   return dispatch => {
     return getCards()
       .then(card => {
+        console.log('card', card)
         dispatch(setCurrentSearch('')) // set le langage
         dispatch(setCategoryFilter('')) // set la category
         dispatch(setType('all')) // change le type

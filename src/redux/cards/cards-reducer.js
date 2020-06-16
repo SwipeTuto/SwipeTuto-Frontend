@@ -21,9 +21,11 @@ const cardsReducer = (state = INITIAL_STATE, action) => {
       };
 
     case CardsActionTypes.GET_ALL_CARDS_SUCCESS:
+      console.log('action.payload', action.payload)
       return {
         ...state,
         cardsFetched: action.payload,
+        
         isLoaded: false
       }
     case CardsActionTypes.GET_ALL_CARDS_FAILURE:

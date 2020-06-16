@@ -29,9 +29,12 @@ function App(props) {
   const dispatch = useDispatch();
 
   const [langage, category] = urlParams(props.location)
+  const isLoaded = useSelector(state => state.cards.isLoaded)
 
   useEffect(() => {
-    langage || category ? dispatch(getCardAfterfilterAction(langage, category)) : dispatch(getCardsAction())
+    isLoaded && (
+      langage || category ? dispatch(getCardAfterfilterAction(langage, category)) : dispatch(getCardsAction())
+    )
   }, [category, langage]);
 
   return (

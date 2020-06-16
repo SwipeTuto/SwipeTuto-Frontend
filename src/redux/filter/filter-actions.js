@@ -3,6 +3,8 @@ import { FilterActionTypes } from "./filter-types"
 import { searchBar } from '../../services/searchService'
 import { getCardAfterfilter, getCardsByUser } from '../../services/cardsService'
 
+import  history   from "../../utils/history"
+
 
 export const searchAction = kword => {
   return dispatch => {

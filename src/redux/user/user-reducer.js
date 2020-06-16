@@ -6,7 +6,6 @@ let token = localStorage.getItem('token');
 
 const INITIAL_STATE = {
   currentUser: currentUser ? currentUser : null,
-  user: user ? user : {},
   token: token ? token : null,
   errors: ''
 };
@@ -25,6 +24,13 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return { ...state,errors: action.payload, };
     case UserActionTypes.LOGOUT_SUCCESS:
       return { ...state,currentUser: action.payload, };
+
+ 
+    case UserActionTypes.REGISTER_SUCCESS:
+      return {currentUser: action.payload };
+    case UserActionTypes.REGISTER_FAILURE:
+      return { error: action.payload };
+
     default:
       return state;
   }

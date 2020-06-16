@@ -35,6 +35,7 @@ import {
   setCategoryFilter,
 } from "../../../redux/filter/filter-actions";
 
+import history from "../../../utils/history";
 import "./NavTop.scss";
 
 const NavTop = (props) => {
@@ -49,7 +50,6 @@ const NavTop = (props) => {
     let searchCopy = searchInput;
     searchCopy = e.target.value;
     setSearchInput(searchCopy);
-    props.history.push("/cards");
   };
 
   const handleFocus = (e) => {
@@ -58,21 +58,21 @@ const NavTop = (props) => {
 
   const handleChange = (e) => {
     const searchText = e.target.value;
+    history.push("/cards", history.location);
+    history.go();
     setSearchInput(searchText);
   };
 
   const handleClick = (e) => {
     dispatch(searchAction(searchInput));
     dispatch(setType("search"));
-    dispatch(setCategoryFilter("all"));
-    setSearchInput("");
-    props.history.push("/cards");
+    // dispatch(setCategoryFilter("all"));
   };
 
   const logoHandleClick = (e) => {
     dispatch(getCardAfterfilterAction(e.target.name));
     dispatch(setType("langage"));
-    dispatch(setCategoryFilter("all"));
+    // dispatch(setCategoryFilter("all"));
   };
 
   const cardsClick = (e) => {

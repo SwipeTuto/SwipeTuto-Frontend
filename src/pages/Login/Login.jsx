@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { loginGoogle } from "../../services/userService";
-import { loginAction } from "../../redux/user/user-actions"
+import { loginAction, setCurrentUser } from "../../redux/user/user-actions"
 
 
 import "./Login.scss";
@@ -23,10 +23,7 @@ const LoginPage = (props) => {
   }
 
   const handleClickGoogle = (e) => {
-    loginGoogle().then((user) => {
-      props.history.push("/");
-      // dispatch(setCurrentUser(user));
-    });
+    loginGoogle()
   };
 
   const handleChange = e => {
@@ -82,7 +79,7 @@ const LoginPage = (props) => {
             </CustomButton>
           </div>
         </div>
-        
+
         <Register />
      
     </div>

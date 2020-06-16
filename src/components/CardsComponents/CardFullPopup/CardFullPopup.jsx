@@ -37,7 +37,6 @@ import { ReactComponent as FullscreenLogo } from "../../../assets/images/fullscr
 
 import { formattedDate, renameCategory } from "../../../utilsFunctions";
 import { base } from "../../../services/configService";
-
 import "./CardFullPopup.scss";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid

@@ -6,7 +6,8 @@ const INITIAL_STATE = {
   errors: '',
   categoryFilter: '',
   cardFilter: "",
-  cardsByUser: ""
+  cardsByUser: "",
+  isLoaded: true
 };
 
 const FilterReducer = (state = INITIAL_STATE, action) => {
@@ -24,7 +25,7 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
         categoryFilter: action.payload.category 
       };
     case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_SUCCESS:
-      return { ...state, cardFilter: action.payload };
+      return {  ...state,  cardFilter: action.payload, };
     case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_FAILURE:
       return { ...state, errors: action.payload };
 
@@ -40,7 +41,11 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
 
    
     case FilterActionTypes.GET_CARDS_BY_USER_SUCCESS:
-      return {...state, cardsByUser: action.payload,};
+      return {
+        ...state, 
+        cardsByUser: action.payload,
+        cardFilter: action.payload,
+      };
     case FilterActionTypes.GET_CARDS_BY_USER_FAILURE:
       return {...state, errors: action.payload,};
    

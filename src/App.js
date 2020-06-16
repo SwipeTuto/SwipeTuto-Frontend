@@ -8,9 +8,12 @@ import Login from './pages/Login/Login';
 import SearchPage from './pages/SearchPage/SearchPage'
 import RessourcesPage from './pages/RessourcesPage/RessourcesPage'
 import NavTop from "./components/LayoutComponents/NavTop/NavTop";
+import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 import PrivateRoute from "./PrivateRoute";
 import { getCardsAction } from './redux/cards/cards-actions'
+
+
 
 import { getCardAfterfilterAction, setType } from "./redux/filter/filter-actions"
 
@@ -48,7 +51,8 @@ function App(props) {
 
   return (
     <div className="App">
-      <NavTop />
+      {/* <NavTop /> */}
+      <NavTopMobile />
       {/* <NavLeft /> */}
       <Switch>
         <Route exact path="/" component={HomePage} />

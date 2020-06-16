@@ -1,9 +1,7 @@
 import { FilterActionTypes } from "./filter-types"
+
 import { searchBar } from '../../services/searchService'
-import { getCardAfterfilter } from '../../services/cardsService'
-
-
-
+import { getCardAfterfilter, getCardsByUser } from '../../services/cardsService'
 
 
 export const searchAction = kword => {
@@ -79,3 +77,29 @@ export const setType = (searchType) => ({
   type: FilterActionTypes.SET_TYPE,
   payload: searchType
 })
+
+
+
+export const getCardsByUserNameAction = username => {
+  return dispatch => {
+    return getCardsByUser(username)
+      .then(rep => {
+        console.log('rep', (rep.data.results))
+        dispatch(getCardsByUserNameSuccess(rep.data.results))
+        return rep
+      })
+      .catch(err => {
+        dispatch(getCardsByUserNameFailure(err.response))
+      })
+  }
+}
+
+const getCardsByUserNameSuccess = cards => ({
+  type: FilterActionTypes.GET_CARDS_BY_USER_SUCCESS,
+  payload: cards
+})
+const getCardsByUserNameFailure = err => ({
+  type: FilterActionTypes.GET_CARDS_BY_USER_FAILURE,
+  payload: err
+})
+

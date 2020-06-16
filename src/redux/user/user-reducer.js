@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   currentUser: currentUser ? currentUser : null,
   user: user ? user : {},
   token: token ? token : null,
+  errors: ''
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -17,6 +18,13 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         currentUser: action.payload,
       };
+  
+    case UserActionTypes.LOGIN_SUCCESS:
+      return { ...state,currentUser: action.payload, };
+    case UserActionTypes.LOGIN_FAILURE:
+      return { ...state,errors: action.payload, };
+    case UserActionTypes.LOGOUT_SUCCESS:
+      return { ...state,currentUser: action.payload, };
     default:
       return state;
   }

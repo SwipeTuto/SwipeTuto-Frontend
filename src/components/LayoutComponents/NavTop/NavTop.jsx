@@ -22,7 +22,10 @@ import ReactJSLogo from "../../../assets/images/tech_logo/reactJS.png";
 import NodeJSLogo from "../../../assets/images/tech_logo/nodeJS.png";
 
 import CustomButton from "../CustomButton/CustomButton";
+
+import { getCardsAction } from "../../../redux/cards/cards-actions";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
+import { logoutAction } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
 import { selectUserNav } from "../../../redux/layout/layout-selectors";
 import {
@@ -32,6 +35,7 @@ import {
   setCategoryFilter,
 } from "../../../redux/filter/filter-actions";
 
+
 import "./NavTop.scss";
 
 const NavTop = (props) => {
@@ -39,6 +43,7 @@ const NavTop = (props) => {
   const currentUser = useSelector(selectCurrentUser);
   const currentUserNav = useSelector(selectUserNav);
   const [searchInput, setSearchInput] = useState("");
+  const category = useSelector((state) => state.filter.categoryFilter);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,6 +70,20 @@ const NavTop = (props) => {
     dispatch(setType("langage"));
     dispatch(setCategoryFilter("all"));
   };
+  
+  const cardsClick = e => {
+     const allFiltersItems = [
+      ...document.querySelectorAll("button.FiltersBar__options--item"),
+    ];
+    
+  
+    allFiltersItems.map((item) => {
+      item.classList.remove("active")
+      item.dataset.filter === 'all' && item.classList.add('active')
+    })
+   
+    dispatch(getCardsAction())
+  }
 
   // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription
   return (
@@ -76,11 +95,12 @@ const NavTop = (props) => {
         <Link
           className="NavTop__link"
           to="/cards"
-          onClick={() => dispatch(setType("all"))}
+          onClick={(e) => cardsClick(e)}
         >
           Cartes
         </Link>
-        <Link className="NavTop__link NavTop__link--category" to="/cards">
+        
+        <Link className="NavTop__link NavTop__link--category" to="/cards" onClick={(e) => cardsClick(e)}>
           Catégories
           <DropDownLogo className="NavTop__link--logo" />
         </Link>
@@ -88,10 +108,10 @@ const NavTop = (props) => {
           Ressources
         </Link>
         <div className=" NavTop__dropdown NavTop__dropdown--category">
-          <Link to="/cards/html">
+        <Link to={`/search?langage=html&category=${category}`}>
             <img src={HTMLLogo} className="NavTop__dropdown--logo" alt="HTML" />
           </Link>
-          <Link to="/cards/css/">
+          <Link to={`/search?langage=css&category=${category}`}>
             <img
               onClick={(e) => logoHandleClick(e)}
               name="css"
@@ -100,7 +120,7 @@ const NavTop = (props) => {
               alt="CSS"
             />
           </Link>
-          <Link to="/cards/javascript/">
+          <Link to={`/search?langage=javascript&category=${category}`}>
             <img
               onClick={(e) => logoHandleClick(e)}
               name="javascript"
@@ -109,7 +129,7 @@ const NavTop = (props) => {
               alt="Javascript"
             />
           </Link>
-          <Link to="/cards/react/">
+          <Link to={`/search?langage=reactjs&category=${category}`}>
             <img
               onClick={(e) => logoHandleClick(e)}
               name="reactjs"
@@ -118,7 +138,7 @@ const NavTop = (props) => {
               alt="React JS"
             />
           </Link>
-          <Link to="/cards/nodeJs/">
+          <Link to={`/search?langage=nodejs&category=${category}`}>
             <img
               onClick={(e) => logoHandleClick(e)}
               name="nodejs"
@@ -127,7 +147,7 @@ const NavTop = (props) => {
               alt="Node JS"
             />
           </Link>
-          <Link to="/cards/python/">
+          <Link to={`/search?langage=python&category=${category}`}>
             <img
               onClick={(e) => logoHandleClick(e)}
               name="python"
@@ -136,7 +156,7 @@ const NavTop = (props) => {
               alt="Python"
             />
           </Link>
-          <Link to="/cards/php">
+          <Link to={`/search?langage=php&category=${category}`}>
             <img
               onClick={(e) => logoHandleClick(e)}
               name="php"
@@ -145,7 +165,7 @@ const NavTop = (props) => {
               alt="php"
             />
           </Link>
-          <Link to="/cards/sass/">
+          <Link to={`/search?langage=sass&category=${category}`}>
             <img
               onClick={(e) => logoHandleClick(e)}
               name="sass"
@@ -177,7 +197,7 @@ const NavTop = (props) => {
         </form>
       </div>
       <div className="NavTop__right">
-        {currentUser && currentUser.avatar ? (
+        {currentUser && currentUser.username ? (
           <>
             <div
               onClick={() => dispatch(toggleUserNav())}
@@ -196,7 +216,6 @@ const NavTop = (props) => {
           </Link>
         )}
       </div>
-
       {currentUserNav ? (
         <div className="NavTop__userMenu">
           <p className="NavTop__userMenu--text">Bonjour</p>
@@ -215,7 +234,7 @@ const NavTop = (props) => {
             <HelpLogo className="NavTop__userMenu--logo" />
             Aide
           </Link>
-          <Link className="NavTop__userMenu--link" to="/">
+          <Link onClick={() => dispatch(logoutAction())}  className="NavTop__userMenu--link" to="/">
             <LogOutLogo className="NavTop__userMenu--logo" />
             Deconnexion
           </Link>

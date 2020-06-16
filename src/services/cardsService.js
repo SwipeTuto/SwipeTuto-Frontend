@@ -32,3 +32,15 @@ export const getCardAfterfilter = (langage, category) => {
       return rep
     })
 }
+export const getCardsByUser = username => {
+  var config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  return axios
+    .get(`${baseURL}card/user/${username}/`, config)
+    .then(rep => {
+      return rep
+    })
+}

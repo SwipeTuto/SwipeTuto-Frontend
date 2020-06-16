@@ -1,38 +1,31 @@
 // Bar avec les items pour filtrer les slides
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import {  NavLink } from "react-router-dom";
 
 import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
 import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";
 
 import { getCardAfterfilterAction } from "../../../redux/filter/filter-actions";
+import { getCardsAction } from "../../../redux/cards/cards-actions";
 
-import {
-  setType,
-  setCategoryFilter,
-} from "../../../redux/filter/filter-actions";
+
+
 import "./FiltersBar.scss";
 
 const FiltersBar = ({ handleClickSize }) => {
-  // const [searchFilter, setSearchFilter] = useState("all");
-  // const [gridSize, setGridSize] = useState("small");
   const dispatch = useDispatch();
   const langage = useSelector((state) => state.filter.currentSearch);
   const category = useSelector((state) => state.filter.categoryFilter);
 
+
+  const AllOrFilterCards = (langage, category) => {
+    langage || category ? dispatch(getCardAfterfilterAction(langage, category)) : dispatch(getCardsAction())
+  }
+
   const handleClick = (e) => {
-    const langageUndifined = langage ? langage : undefined;
-    const newSearchFilters = e.target.dataset.filter;
-    dispatch(getCardAfterfilterAction(langageUndifined, newSearchFilters));
-    // setSearchFilter(newSearchFilter);
-    console.log("langage2", langage);
-    const allFiltersItems = [
-      ...document.querySelectorAll("button.FiltersBar__options--item"),
-    ];
-    allFiltersItems.map((item) => item.classList.remove("active"));
-    e.target.classList.add("active");
-  };
+    AllOrFilterCards(langage , e.target.dataset.filter);
+  }
 
   return (
     <div className="FiltersBar">
@@ -43,123 +36,88 @@ const FiltersBar = ({ handleClickSize }) => {
             <option value="new">Nouveau</option>
           </select>
           <div className="FiltersBar__options">
-            <button
-              className="FiltersBar__options--item active"
-              data-filter="all"
-              onClick={handleClick}
-            >
-              Tous
-            </button>
-            <Link
-              to={`/cards${
-                langage !== "" && langage !== undefined
-                  ? `/${langage}/theorie`
-                  : `/theorie`
-              }`}
-            >
-              {/* < Link to={`/cards/theorie`}> */}
 
+          <NavLink to={`/search?langage=${langage}&category=`} >
               <button
-                className="FiltersBar__options--item"
+                className={"FiltersBar__options--item " + (category === '' && 'active')}
+                onClick={(e) => handleClick(e)}
+                data-filter=""
+              >
+                Tous
+            </button>
+            </NavLink>
+
+            <NavLink to={`/search?langage=${langage}&category=theorie`} >
+              <button
+                className={"FiltersBar__options--item " + (category === "theorie"  && 'active')}
                 data-filter="theorie"
                 onClick={handleClick}
               >
                 Théorie
               </button>
-            </Link>
-            <Link
-              to={`/cards${
-                langage !== "" && langage !== undefined
-                  ? `/${langage}/code`
-                  : `/code`
-              }`}
-            >
+            </NavLink>
+
+            <NavLink to={`/search?langage=${langage}&category=code`} >
               <button
                 type="submit"
-                className="FiltersBar__options--item"
+                className={"FiltersBar__options--item " + (category === "code"  && 'active')}
                 data-filter="code"
                 onClick={handleClick}
               >
                 Code
               </button>
-            </Link>
-            <Link
-              to={`/cards${
-                langage !== "" && langage !== undefined
-                  ? `/${langage}/_memo`
-                  : `/memo`
-              }`}
-            >
+            </NavLink>
+
+            <NavLink to={`/search?langage=${langage}&category=memo`} >
               <button
-                className="FiltersBar__options--item"
+                className={"FiltersBar__options--item " + (category === "memo"  && 'active')}
                 data-filter="memo"
                 onClick={handleClick}
               >
                 memo
               </button>
-            </Link>
+            </NavLink>
 
-            <Link
-              to={`/cards${
-                langage !== "" && langage !== undefined
-                  ? `/${langage}/_bloccode`
-                  : `/bloccode`
-              }`}
-            >
+            <NavLink to={`/search?langage=${langage}&category=bloc code`} >
               <button
                 name="bloc code"
-                className="FiltersBar__options--item"
+                className={"FiltersBar__options--item " + (category === "bloc code"  && 'active')}
                 data-filter="bloc code"
                 onClick={handleClick}
               >
                 bloc code
               </button>
-            </Link>
-            <Link
-              to={`/cards${
-                langage !== "" && langage !== undefined
-                  ? `/${langage}/_performances`
-                  : `/performances`
-              }`}
-            >
+            </NavLink>
+
+            <NavLink to={`/search?langage=${langage}&category=performances`} >
               <button
-                className="FiltersBar__options--item"
+                className={"FiltersBar__options--item " + (category === "performances"  && 'active')}
                 data-filter="performances"
                 onClick={handleClick}
               >
                 Performances
               </button>
-            </Link>
-            <Link
-              to={`/cards${
-                langage !== "" && langage !== undefined
-                  ? `/${langage}/_ressources`
-                  : `/ressources`
-              }`}
-            >
+            </NavLink>
+
+            <NavLink to={`/search?langage=${langage}&category=ressources`} >
               <button
-                className="FiltersBar__options--item"
+                className={"FiltersBar__options--item " + (category === "ressources"  && 'active')}
                 data-filter="ressources"
                 onClick={handleClick}
               >
                 Ressources
               </button>
-            </Link>
-            <Link
-              to={`/cards${
-                langage !== "" && langage !== undefined
-                  ? `/${langage}/_autre`
-                  : `/autre`
-              }`}
-            >
+            </NavLink>
+            <NavLink to={`/search?langage=${langage}&category=autre`} >
               <button
-                className="FiltersBar__options--item"
+                className={"FiltersBar__options--item " + (category === "autre"  && 'active')}
                 data-filter="autre"
                 onClick={handleClick}
               >
                 Autre
               </button>
-            </Link>
+            </NavLink>
+
           </div>
         </div>
         <div className="FiltersBar__down">

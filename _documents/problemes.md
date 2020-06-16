@@ -6,6 +6,8 @@
 - Comment actualiser l'affichage de l'avatar sans recharger la page quand quelqu'un se connecte ?
 - Mettre chargement pendant recherche des cards, et là si aucune mettre message. Utiliser promesses ? Sinon ajouter une action au lancement de la requete (mettre un truc du style searchInProgress: true; dans le state au lancement d'une recherche -> loader affiché; et quand requete success : passer à false -> enlève le loader)
 - Problème : première card n'affiche que la première image. Les autres images ne sont pas trouvées. Les cards suivantes fonctionnent.
+- Quand on lance une recherche, puis qu'on relance la même : aucune card n'apparait (currentSearch disparait dans redux)
+- Dans userPreviewSmall : remplacer l'avatar par l'avatar du user qui a créé la card
 
 ## CORRIGE
 - Manque un api pour retourné seulement les catégories (OK)

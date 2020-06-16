@@ -1,6 +1,6 @@
 // Présent dans App.js dans une Route ("/search")
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import NavTop from "../../components/LayoutComponents/NavTop/NavTop";
 import FiltersBar from "../../components/LayoutComponents/FiltersBar/FiltersBar";
@@ -14,10 +14,12 @@ import "./SearchPage.scss";
 const SearchPage = () => {
   const [gridSize, setGridSize] = useState("small");
 
-  // scroll reset
-  // if (window.scrollY) {
-  //   window.scroll(0, 0);
-  // }
+  useEffect(() => {
+    // scroll reset
+    if (window.scrollY) {
+      window.scroll(0, 0);
+    }
+  }, []);
 
   const handleClickSize = (e) => {
     const allGridSizeItems = [

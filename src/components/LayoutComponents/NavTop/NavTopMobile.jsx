@@ -117,7 +117,7 @@ const NavTopMobile = (props) => {
         )}
       </div>
       <div className={`NavTopMobile__open ${mobileNavOpen ? "active" : ""}`}>
-        <div className="NavtTop__seacrchZone">
+        <div className="NavTopMobile__searchZone">
           <form className="NavTopMobile__search" onSubmit={handleSubmit}>
             <input
               className="NavTopMobile__input"
@@ -137,12 +137,13 @@ const NavTopMobile = (props) => {
             </button>
           </form>
         </div>
-        <span className="horizontal-separation-primary-dark mobileNavSeparation"></span>
+        {/* <div className="mobileNavSeparation"></div> */}
         <div className="NavTopMobile__menu">
           <Link
             className="NavTopMobile__link"
             onClick={() => {
               dispatch(closeMobileNav());
+              setCardsDropdownOpen(false);
             }}
             to="/"
           >
@@ -266,7 +267,7 @@ const NavTopMobile = (props) => {
             Ressources
           </Link>
         </div>
-        <span className="horizontal-separation-primary-dark mobileNavSeparation"></span>
+        {/* <div className="mobileNavSeparation"></div> */}
         {currentUser ? (
           <div className="NavTopMobile__user">
             <div className="NavTopMobile__userInfos">

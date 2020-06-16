@@ -1,6 +1,7 @@
 @import "../../../variables.scss";
 
 .NavTopMobile {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -73,6 +74,7 @@
 
     &.active {
       height: max-content;
+      height: auto;
       padding: 8rem 2rem 2rem 2rem;
       overflow: auto;
       visibility: visible;
@@ -163,7 +165,48 @@
   }
 }
 
-.horizontal-separation-primary-dark.mobileNavSeparation {
-  margin: 2.8rem 0;
-  width: 75%;
+.mobileNavSeparation {
+  max-width: 600px;
+  height: 10px;
+  background-color: $primary-light;
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .NavTopMobile__open.active {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: max-content;
+  }
+
+  .NavTopMobile {
+    display: block;
+
+    &__searchZone {
+      grid-column: 1 / -1;
+      margin-bottom: 4rem;
+    }
+  }
+}
+
+@media screen and (max-width: $bp-phone) {
+  .NavTopMobile__open.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .NavTopMobile {
+    &__menu {
+      width: 70%;
+      align-items: center;
+      padding-bottom: 4rem;
+      margin-bottom: 4rem;
+      border-bottom: 2px solid $primary-medium;
+    }
+
+    &__userMenu {
+      // align-items: center;
+      margin-left: 8rem;
+    }
+  }
 }

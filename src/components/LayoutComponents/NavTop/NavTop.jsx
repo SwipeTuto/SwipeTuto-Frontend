@@ -1,10 +1,9 @@
 // Présent dans App.js
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import logo from "../../../assets/images/navtop_logo.png";
 import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg";
 import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg";
 import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
@@ -20,6 +19,7 @@ import PythonLogo from "../../../assets/images/tech_logo/python.png";
 import PHPLogo from "../../../assets/images/tech_logo/PHP.png";
 import ReactJSLogo from "../../../assets/images/tech_logo/reactJS.png";
 import NodeJSLogo from "../../../assets/images/tech_logo/nodeJS.png";
+import allLogo from "../../../assets/images/tech_logo/all_logo.png";
 
 import CustomButton from "../CustomButton/CustomButton";
 
@@ -34,7 +34,6 @@ import {
   getCardAfterfilterAction,
   setCategoryFilter,
 } from "../../../redux/filter/filter-actions";
-
 
 import "./NavTop.scss";
 
@@ -53,6 +52,10 @@ const NavTop = (props) => {
     props.history.push("/cards");
   };
 
+  const handleFocus = (e) => {
+    setSearchInput("");
+  };
+
   const handleChange = (e) => {
     const searchText = e.target.value;
     setSearchInput(searchText);
@@ -62,6 +65,7 @@ const NavTop = (props) => {
     dispatch(searchAction(searchInput));
     dispatch(setType("search"));
     dispatch(setCategoryFilter("all"));
+    setSearchInput("");
     props.history.push("/cards");
   };
 
@@ -70,20 +74,19 @@ const NavTop = (props) => {
     dispatch(setType("langage"));
     dispatch(setCategoryFilter("all"));
   };
-  
-  const cardsClick = e => {
-     const allFiltersItems = [
+
+  const cardsClick = (e) => {
+    const allFiltersItems = [
       ...document.querySelectorAll("button.FiltersBar__options--item"),
     ];
-    
-  
+
     allFiltersItems.map((item) => {
-      item.classList.remove("active")
-      item.dataset.filter === 'all' && item.classList.add('active')
-    })
-   
-    dispatch(getCardsAction())
-  }
+      item.classList.remove("active");
+      return item.dataset.filter === "all" && item.classList.add("active");
+    });
+
+    dispatch(getCardsAction());
+  };
 
   // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription
   return (
@@ -92,15 +95,19 @@ const NavTop = (props) => {
         <Link className="NavTop__link" to="/">
           Accueil
         </Link>
-        <Link
+        {/* <Link
           className="NavTop__link"
           to="/cards"
           onClick={(e) => cardsClick(e)}
         >
           Cartes
-        </Link>
-        
-        <Link className="NavTop__link NavTop__link--category" to="/cards" onClick={(e) => cardsClick(e)}>
+        </Link> */}
+
+        <Link
+          className="NavTop__link NavTop__link--category"
+          to="/cards"
+          onClick={(e) => cardsClick(e)}
+        >
           Catégories
           <DropDownLogo className="NavTop__link--logo" />
         </Link>
@@ -108,7 +115,10 @@ const NavTop = (props) => {
           Ressources
         </Link>
         <div className=" NavTop__dropdown NavTop__dropdown--category">
-        <Link to={`/search?langage=html&category=${category}`}>
+          <Link to="/cards">
+            <img src={allLogo} className="NavTop__dropdown--logo" alt="HTML" />
+          </Link>
+          <Link to={`/search?langage=html&category=${category}`}>
             <img src={HTMLLogo} className="NavTop__dropdown--logo" alt="HTML" />
           </Link>
           <Link to={`/search?langage=css&category=${category}`}>
@@ -192,7 +202,8 @@ const NavTop = (props) => {
             type="text"
             placeholder="Recherche..."
             onChange={handleChange}
-            value={searchInput}
+            value={searchInput || ""}
+            onFocus={handleFocus}
           />
         </form>
       </div>
@@ -222,19 +233,38 @@ const NavTop = (props) => {
           <p className="NavTop__userMenu--text">{currentUser.username}</p>
           <p className="NavTop__userMenu--text">{currentUser.email}</p>
           <span className="horizontal-separation-primary-light"></span>
-          <Link className="NavTop__userMenu--link" to="/">
+          <Link
+            className="NavTop__userMenu--link"
+            to="/"
+            onClick={() => dispatch(toggleUserNav())}
+          >
             <AccountLogo className="NavTop__userMenu--logo" />
             Compte
           </Link>
-          <Link className="NavTop__userMenu--link" to="/">
+          <Link
+            className="NavTop__userMenu--link"
+            to="/"
+            onClick={() => dispatch(toggleUserNav())}
+          >
             <SettingsLogo className="NavTop__userMenu--logo" />
             Paramètres
           </Link>
-          <Link className="NavTop__userMenu--link" to="/">
+          <Link
+            className="NavTop__userMenu--link"
+            to="/"
+            onClick={() => dispatch(toggleUserNav())}
+          >
             <HelpLogo className="NavTop__userMenu--logo" />
             Aide
           </Link>
-          <Link onClick={() => dispatch(logoutAction())}  className="NavTop__userMenu--link" to="/">
+          <Link
+            onClick={() => {
+              dispatch(logoutAction());
+              dispatch(toggleUserNav());
+            }}
+            className="NavTop__userMenu--link"
+            to="/"
+          >
             <LogOutLogo className="NavTop__userMenu--logo" />
             Deconnexion
           </Link>

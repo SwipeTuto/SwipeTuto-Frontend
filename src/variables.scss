@@ -18,6 +18,10 @@ $card-shadow: 0 4px 5px $grey-dark;
 $card-shadow-2: 0 0px 8px rgba($grey-dark, 0.4);
 $inner-component-padding: 7rem 17vw;
 
+// Breakpoints
+$bp-tablet: 900px;
+$bp-phone: 650px;
+
 @mixin input-style {
   background: $grey-light;
   border: 1px solid $grey-medium;

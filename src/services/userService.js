@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { auth, provider } from '../services/firebaseService';
 import { baseURL } from '../services/configService'
-
+import  history   from "../utils/history"
 
 
 
@@ -11,12 +11,12 @@ export const loginGoogle = () => {
   return auth().signInWithPopup(provider)
     .then(result => {
       var user = result.user;
-      // getIdToken est une fonction de firebase qui renvoie le token pour identifier le user dans les services firebase
+      // getIdToken est une fonction de firebase qui renvoie le token pour identifier lae user dans les services firebase
       return user.getIdToken()
         .then(idToken => {
-        
           login(idToken).then(rep => {
-         
+            history.push('/cards', history.location)
+            history.go()
             return rep
           })
         })
@@ -65,9 +65,31 @@ export const loginManuel = (username, password) => {
 }
 
 export const logout = () => {
-  if (localStorage.getItem('user') && localStorage.getItem('token')) {
+  if (localStorage.getItem('user')) {
       localStorage.removeItem('user')
-      localStorage.removeItem('token')
-      return true
   }
+  if (localStorage.getItem('token')) {
+    localStorage.removeItem('token')
+  }
+  return true
+}
+
+export const register = users => {
+  const data = {
+      username: users.username,
+      first_name: users.firstname,
+      last_name: users.lastname,
+      password: users.password,
+      email: users.email,
+    
+  }
+  var config = {
+      headers: { 'Content-Type': 'application/json' },
+  }
+  return axios.post(`${baseURL}create/`, JSON.stringify(data), config)
+      .then(user => {
+        console.log('user', user)
+          localStorage.setItem('user', JSON.stringify(user.data))
+          return user;
+      });
 }

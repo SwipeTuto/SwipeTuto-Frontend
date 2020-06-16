@@ -26,7 +26,6 @@ export const getCardsAction = () => {
         dispatch(setCurrentSearch('')) // set le langage
         dispatch(setCategoryFilter('')) // set la category
         dispatch(setType('all')) // change le type
-        // dispatch(setActive('all'))
         dispatch(getCardsSuccess(card.data))
       })
       .catch(err => {

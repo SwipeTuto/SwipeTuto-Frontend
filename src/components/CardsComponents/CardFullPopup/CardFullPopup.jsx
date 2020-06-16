@@ -31,7 +31,6 @@ import { ReactComponent as FullscreenLogo } from "../../../assets/images/fullscr
 
 import { formattedDate, renameCategory } from "../../../utilsFunctions";
 import { base } from "../../../services/configService"
-
 import "./CardFullPopup.scss";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
@@ -45,7 +44,6 @@ const CardFullPopup = ({ cardsArray }) => {
   const [cardsArrayLength, setCardsArrayLength] = useState();
   const cardID = useSelector(state => state.cards.clickedCard);
   const cardsByUser = useSelector(state => state.filter.cardsByUser);
-  console.log('cardsByUser', cardsByUser)
  
   useEffect(() => {
     if (!clickedCard || !cardsArray) return;

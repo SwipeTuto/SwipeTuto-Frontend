@@ -105,5 +105,4 @@ const LoginPage = (props) => {
     </>
   );
 };
-// s
 export default LoginPage;

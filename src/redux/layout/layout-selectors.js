@@ -16,3 +16,7 @@ export const selectUserNav = createSelector(
   layout => layout.showUserNav
 )
 
+export const selectMobileNavOpen = createSelector(
+  [selectLayout],
+  layout => layout.mobileNavOpen
+)

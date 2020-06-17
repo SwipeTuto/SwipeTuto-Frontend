@@ -1,7 +1,6 @@
 // Popup qui s'ouvre au clic sur une card. Contient CardSliderFull et aussi toutes les infos de la card cliquée
 
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 // import CardSliderPopup from "../CardSlider/CardSliderPopup";
@@ -12,8 +11,14 @@ import UserNameAndAvatarBig from "../../UserComponents/UserNameAndAvatarBig/User
 import { selectShowPopupCard } from "../../../redux/layout/layout-selectors";
 import { selectClickedCard } from "../../../redux/cards/cards-selectors";
 import { selectFullscreen } from "../../../redux/layout/layout-selectors";
-import { setClickedCard,setNoClickedCard } from "../../../redux/cards/cards-actions";
-import { closePopupCard, showFullscreen } from "../../../redux/layout/layout-actions";
+import {
+  setClickedCard,
+  setNoClickedCard,
+} from "../../../redux/cards/cards-actions";
+import {
+  closePopupCard,
+  showFullscreen,
+} from "../../../redux/layout/layout-actions";
 import { getCardsByUserNameAction } from "../../../redux/filter/filter-actions";
 
 import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevrons/chevron-back-circle.svg";
@@ -30,7 +35,7 @@ import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as FullscreenLogo } from "../../../assets/images/fullscreen.svg";
 
 import { formattedDate, renameCategory } from "../../../utilsFunctions";
-import { base } from "../../../services/configService"
+import { base } from "../../../services/configService";
 import "./CardFullPopup.scss";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
@@ -42,24 +47,24 @@ const CardFullPopup = ({ cardsArray }) => {
   const dispatch = useDispatch();
   const [indexOfCurrentCard, setIndexOfCurrentCard] = useState();
   const [cardsArrayLength, setCardsArrayLength] = useState();
-  const cardID = useSelector(state => state.cards.clickedCard);
-  const cardsByUser = useSelector(state => state.filter.cardsByUser);
- 
+  const cardID = useSelector((state) => state.cards.clickedCard);
+  const cardsByUser = useSelector((state) => state.filter.cardsByUser);
+
   useEffect(() => {
     if (!clickedCard || !cardsArray) return;
     setCardsArrayLength(cardsArray.length);
     setIndexOfCurrentCard(cardsArray.indexOf(clickedCard));
-  }, [clickedCard, cardsArray, cardsArrayLength, indexOfCurrentCard] );
+  }, [clickedCard, cardsArray, cardsArrayLength, indexOfCurrentCard]);
 
   // scroll reset
   useEffect(() => {
-    if(cardID)  {
-      dispatch(getCardsByUserNameAction(cardID.user.username))
+    if (cardID) {
+      dispatch(getCardsByUserNameAction(cardID.user.username));
     }
     if (popupShown && document.querySelector(".CardFullPopup.active")) {
       document.querySelector(".CardFullPopup.active").scroll(0, 0);
     }
-  }, [popupShown,cardID]);
+  }, [popupShown, cardID, dispatch]);
 
   const clickedCardDate =
     clickedCard && formattedDate(new Date(clickedCard.modified));
@@ -177,13 +182,25 @@ const CardFullPopup = ({ cardsArray }) => {
               <h3 className="title title-4">Du même auteur :</h3>
               <div className="autres-posts--grid">
                 {/* A MODIFER EN SCSS */}
-                {cardsByUser && (
-                  cardsByUser.map(rep => 
-                  <div  className="autres-posts--preview">
-                    {/* FAIRE LE LIEN ET LE POPUP VERS LA CARTE */}
-                      <img style={{width:'100%', height:'100%'}} src={base +rep.media_image['0'].image}></img>
-                  </div>
-                ))}
+                {cardsByUser &&
+                  cardsByUser.map((card) => (
+                    <div
+                      className="autres-posts--preview"
+                      key={card.id}
+                      card={card}
+                      // onClick={() => {
+                      //   console.log(card);
+                      //   dispatch(setClickedCard(card));
+                      // }}
+                    >
+                      {/* FAIRE LE LIEN ET LE POPUP VERS LA CARTE */}
+                      <img
+                        style={{ width: "100%", height: "100%" }}
+                        src={base + card.media_image["0"].image}
+                        alt="Autres travaux de l'auteur"
+                      />
+                    </div>
+                  ))}
               </div>
             </div>
             <span className="horizontal-separation-primary-light"></span>

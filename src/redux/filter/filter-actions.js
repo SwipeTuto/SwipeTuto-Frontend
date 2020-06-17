@@ -3,14 +3,11 @@ import { FilterActionTypes } from "./filter-types"
 import { searchBar } from '../../services/searchService'
 import { getCardAfterfilter, getCardsByUser } from '../../services/cardsService'
 
-import  history   from "../../utils/history"
-
-
 export const searchAction = kword => {
   return dispatch => {
     return searchBar(kword)
       .then(search => {
-        dispatch(SearchSuccess(search.data.results))
+        dispatch(SearchSuccess(search.data))
         dispatch(setCurrentSearch(kword))
         dispatch(setType("search"))
 
@@ -81,12 +78,15 @@ export const setType = (searchType) => ({
 })
 
 
+export const setTotalNumberOfCardsSearchedToNull = () => ({
+  type: FilterActionTypes.SET_TOTAL_NUMBER_OF_CARDS_SEARCHED_TO_NULL,
+})
+
 
 export const getCardsByUserNameAction = username => {
   return dispatch => {
     return getCardsByUser(username)
       .then(rep => {
-        console.log('rep', (rep.data.results))
         dispatch(getCardsByUserNameSuccess(rep.data.results))
         return rep
       })

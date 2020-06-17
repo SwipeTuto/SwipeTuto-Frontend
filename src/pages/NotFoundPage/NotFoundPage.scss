@@ -1,0 +1,25 @@
+@import "../../variables.scss";
+
+.NotFoundPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+
+  .title.title-1 {
+    color: $primary-medium;
+    font-size: 10rem;
+    margin-bottom: 4rem;
+  }
+
+  &__text {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .color__primary {
+    color: $primary-light;
+    font-weight: bold;
+  }
+}

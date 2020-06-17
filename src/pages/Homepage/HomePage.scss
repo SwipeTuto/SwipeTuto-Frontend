@@ -50,17 +50,21 @@
   .About {
     min-height: 100vh;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 10rem;
+    align-items: start;
     padding: $inner-component-padding;
+    // padding: 5rem 8rem;
 
     & p {
       margin-bottom: 1.2rem;
     }
 
     &__cta {
-      margin: 4rem;
+      padding: $inner-component-padding;
+      padding-bottom: 20rem;
+
       font-weight: bold;
       text-align: center;
 
@@ -71,19 +75,20 @@
 
       & h1.title.title-1 {
         text-transform: none;
+        margin-bottom: 5rem;
       }
     }
 
     .title {
       text-transform: uppercase;
-      margin-bottom: 4rem;
-      font-size: 3.5rem;
+      margin-bottom: 2rem;
+      // font-size: 3.5rem;
     }
 
     .about-section {
-      display: grid;
-      grid-gap: 5rem;
-      margin: 5rem 0;
+      &__text {
+        text-align: center;
+      }
 
       &:first-child {
         margin-top: 0;
@@ -93,33 +98,15 @@
         margin-bottom: 0;
       }
 
-      &:nth-of-type(odd) {
-        grid-template-columns: 1.5fr 1fr;
-      }
-
-      &:nth-of-type(even) {
-        grid-template-columns: 1fr 1.5fr;
-        text-align: right;
+      &__image {
+        height: 15rem;
+        margin-bottom: 5rem;
       }
 
       &__image > svg {
         max-width: 100%;
         max-height: 100%;
-        min-height: 20rem;
         height: 100%;
-      }
-    }
-
-    .about-section:nth-child(1) {
-      p {
-        &:last-child {
-          display: inline-block;
-          padding: 0 1rem;
-          margin-top: 4rem;
-          font-size: 2.5rem;
-          font-weight: bold;
-          @include pale-underline;
-        }
       }
     }
   }

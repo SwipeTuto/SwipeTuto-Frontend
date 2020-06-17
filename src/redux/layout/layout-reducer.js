@@ -3,7 +3,8 @@ import { LayoutActionTypes } from './layout-types'
 const INITIAL_STATE = {
   popupShown: false,
   fullscreen: false,
-  showUserNav: false
+  showUserNav: false,
+  mobileNavOpen: false,
 };
 
 const layoutReducer = (state = INITIAL_STATE, action) => {
@@ -42,6 +43,20 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         showUserNav: !state.showUserNav,
+      };
+    case LayoutActionTypes.OPEN_MOBILE_NAV:
+      document.getElementsByClassName("App")[0].style.position = "fixed";
+      document.getElementsByClassName("App")[0].style.overflow = "hidden";
+      return {
+        ...state,
+        mobileNavOpen: true,
+      };
+    case LayoutActionTypes.CLOSE_MOBILE_NAV:
+      document.getElementsByClassName("App")[0].style.position = "static";
+      document.getElementsByClassName("App")[0].style.overflow = "visible";
+      return {
+        ...state,
+        mobileNavOpen: false,
       };
     default:
       return state;

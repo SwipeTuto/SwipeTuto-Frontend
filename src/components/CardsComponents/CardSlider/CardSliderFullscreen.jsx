@@ -1,15 +1,13 @@
 // Slider pour la CardFullPopup et aussi pour le mode plein écran
 
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectClickedCardSlides } from "../../../redux/cards/cards-selectors";
 import { selectFullscreen } from "../../../redux/layout/layout-selectors";
 import { closeFullscreen } from "../../../redux/layout/layout-actions";
-import { useSwipeable } from "react-swipeable";
 
-import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
 import { ReactComponent as ChevronLeftWhite } from "../../../assets/images/chevrons/chevron-back-white.svg";
-import { ReactComponent as ChevronRight } from "../../../assets/images/chevrons/chevron-forward.svg";
+
 import { ReactComponent as ChevronRightWhite } from "../../../assets/images/chevrons/chevron-forward-white.svg";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 
@@ -17,7 +15,6 @@ import "./CardSliderFullscreen.scss";
 
 const CardSliderFullscreen = () => {
   const clickedCardSlides = useSelector(selectClickedCardSlides); //array
-  // console.log(clickedCardSlides);
   const isFullScreen = useSelector(selectFullscreen);
   const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -41,12 +38,6 @@ const CardSliderFullscreen = () => {
     document
       .querySelector(".CardSliderLargeFullscreen__slides-container")
       .scrollBy(imageWidth, 0);
-  };
-
-  const goToSlide = (index) => {
-    document
-      .querySelector(".CardSliderLargeFullscreen__slides-container")
-      .scrollTo(imageWidth * index, 0);
   };
 
   const handleScrollLevel = (e) => {

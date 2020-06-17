@@ -21,3 +21,9 @@ export const toggleUserNav = () => ({
 export const showFullscreen = () => ({
   type: LayoutActionTypes.SHOW_FULLSCREEN,
 })
+export const openMobileNav = () => ({
+  type: LayoutActionTypes.OPEN_MOBILE_NAV,
+})
+export const closeMobileNav = () => ({
+  type: LayoutActionTypes.CLOSE_MOBILE_NAV,
+})

@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 
 export const selectFilter = state => state.filter;
+
 export const selectCurrentSearch = createSelector(
   [selectFilter],
   filter => filter.currentSearch
@@ -16,3 +17,5 @@ export const selectSearchType = createSelector(
 )
 
 export const selectCategoryFilter = state => state.filter.categoryFilter ? state.filter.categoryFilter : "all";
+
+export const selectTotalNumberOfCardsSearched = state => state.filter.totalNumberOfCardsSearched ? state.filter.totalNumberOfCardsSearched : 0;

@@ -20,3 +20,14 @@ export const selectClickedCardSlides = createSelector(
   }
 )
 
+export const selectPaginationPrevious = createSelector(
+  [selectCards],
+  cards => cards.cardsFetched && cards.cardsFetched.previous ? cards.cardsFetched.previous : null
+
+)
+
+export const selectPaginationNext = createSelector(
+  [selectCards],
+  cards => cards.cardsFetched && cards.cardsFetched.next ? cards.cardsFetched.next : null
+
+)

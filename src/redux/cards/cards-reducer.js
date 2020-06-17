@@ -36,5 +36,5 @@ const cardsReducer = (state = INITIAL_STATE, action) => {
       return state;
   }
 };
-// ss
+
 export default cardsReducer;

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 
 import { loginGoogle, loginGit } from "../../services/userService";
-import { loginAction, setCurrentUser } from "../../redux/user/user-actions"
+import { loginAction, setCurrentUser } from "../../redux/user/user-actions";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
 
 import "./Login.scss";
@@ -27,7 +27,7 @@ const LoginPage = (props) => {
     loginGoogle();
   };
   const handleClickGit = (e) => {
-    loginGit()
+    loginGit();
   };
 
   const handleChange = (e) => {
@@ -87,20 +87,19 @@ const LoginPage = (props) => {
               </CustomButton>
             </form>
 
-          <span className="horizontal-separation-primary-light"></span>
-          <div className="login__google">
-            <h1 className="title title-1">Ou</h1>
-            <CustomButton onClick={(e) => handleClickGoogle(e)} color="dark">
-              Connexion avec Google
-            </CustomButton>
-            <CustomButton onClick={(e) => handleClickGit(e)} color="dark">
-              Connexion avec Git
-            </CustomButton>
+            <span className="horizontal-separation-primary-light"></span>
+            <div className="login__google">
+              <h1 className="title title-1">Ou</h1>
+              <CustomButton onClick={(e) => handleClickGoogle(e)} color="dark">
+                Connexion avec Google
+              </CustomButton>
+              <CustomButton onClick={(e) => handleClickGit(e)} color="dark">
+                Connexion avec Git
+              </CustomButton>
+            </div>
           </div>
-
           <Register />
         </div>
-      </div>
       </div>
     </>
   );

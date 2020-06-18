@@ -16,7 +16,7 @@ const SettingsPage = () => {
 
   return (
     <div className="SettingsPage">
-      <h1 className="title title-1">Changer les informations du compte</h1>
+      <h2 className="title title-2">Changer les informations du compte</h2>
       <div className="allForms">
         <form className="form__avatar" onSubmit={handleFileSumbit}>
           <label htmlFor="avatar">

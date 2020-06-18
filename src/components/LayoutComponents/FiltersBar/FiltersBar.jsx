@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 import {
-  selectTotalNumberOfCardsSearched,
   selectCategoryFilter,
   selectCurrentSearch,
+  selectTotalNumberOfResults,
 } from "../../../redux/filter/filter-selectors";
 
 import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
@@ -21,9 +21,7 @@ const FiltersBar = ({ handleClickSize }) => {
   const dispatch = useDispatch();
   const langage = useSelector(selectCurrentSearch);
   const category = useSelector(selectCategoryFilter);
-  const totalNumberOfCardsSearched = useSelector(
-    selectTotalNumberOfCardsSearched
-  );
+  const totalNumberOfCardsSearched = useSelector(selectTotalNumberOfResults);
 
   const AllOrFilterCards = (langage, category) => {
     langage || category
@@ -151,8 +149,7 @@ const FiltersBar = ({ handleClickSize }) => {
         </div>
         <div className="FiltersBar__down">
           <p className="FiltersBar__numberOfResults">
-            {totalNumberOfCardsSearched !== 0 &&
-              `${totalNumberOfCardsSearched} résultats trouvés.`}
+            {`${totalNumberOfCardsSearched} résultats trouvés.`}
           </p>
           <div
             className="FiltersBar__size-logo active"

@@ -13,18 +13,24 @@ import {
   closeFullscreen,
   closePopupCard,
 } from "../../redux/layout/layout-actions";
+import { getCardsAction } from "../../redux/cards/cards-actions";
 
 import { ReactComponent as QuestionIllustration } from "../../assets/images/illustrations/illustration-question.svg";
 import { ReactComponent as GrilleIllustration } from "../../assets/images/illustrations/illustration-grille.svg";
 import { ReactComponent as SuccessIllustration } from "../../assets/images/illustrations/illustration-success.svg";
 
-import { selectCardsFetched } from "../../redux/cards/cards-selectors";
+import { selectCardsFetchedCards } from "../../redux/filter/filter-selectors";
+import {
+  deleteCurrentSearch,
+  setType,
+} from "../../redux/filter/filter-actions";
 
 import "./HomePage.scss";
+import { selectIsLoaded } from "../../redux/cards/cards-selectors";
 
 const HomePage = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const cards = useSelector(selectCardsFetched);
+  const isLoaded = useSelector(selectIsLoaded);
+  const cards = useSelector(selectCardsFetchedCards);
   const [cardsArrayCut, setCardsArrayCut] = useState([]);
   const dispatch = useDispatch();
   dispatch(closeFullscreen());
@@ -32,11 +38,13 @@ const HomePage = () => {
   // console.log(cards);
 
   useEffect(() => {
+    dispatch(deleteCurrentSearch());
+    dispatch(getCardsAction());
+    dispatch(setType("all"));
     if (cards) {
-      setIsLoading(false);
       setCardsArrayCut(cards.slice(0, 6));
     }
-  }, [cards]);
+  }, []);
 
   // scroll reset
   if (window.scrollY) {
@@ -47,12 +55,13 @@ const HomePage = () => {
     <div className="HomePage">
       <HomeHeader />
       <div className="HomePage__grid">
-        {isLoading ? (
+        {!isLoaded ? (
           <Loading />
         ) : (
-          cardsArrayCut.map((card) => (
-            <CardPreviewSmall card={card} key={card.id} />
-          ))
+          cards &&
+          cards
+            .slice(0, 6)
+            .map((card) => <CardPreviewSmall card={card} key={card.id} />)
         )}
       </div>
       <CardFullPopup cardsArray={cardsArrayCut} />

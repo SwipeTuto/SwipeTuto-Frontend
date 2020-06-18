@@ -1,7 +1,17 @@
 import { FilterActionTypes } from "./filter-types"
 
 import { searchBar } from '../../services/searchService'
-import { getCardAfterfilter, getCardsByUser } from '../../services/cardsService'
+import { getCardAfterfilter, getCardsByUser, getOtherPageCard } from '../../services/cardsService'
+import { getCardsSuccess } from "../cards/cards-actions"
+
+export const isLoadingAction = () => ({
+  type: FilterActionTypes.IS_LOADING,
+})
+
+export const isLoadedAction = () => ({
+  type: FilterActionTypes.IS_LOADED,
+})
+
 
 export const searchAction = kword => {
   return dispatch => {
@@ -35,7 +45,8 @@ export const getCardAfterfilterAction = (langage, category) => {
     return getCardAfterfilter(langage, category)
       .then(rep => {
         dispatch(setType('search'));
-        dispatch(getCardAfterfilterSuccess(rep.data.results))
+        dispatch(getCardAfterfilterSuccess(rep.data))
+        dispatch(getCardsSuccess())
         return rep
       })
       .catch(err => {
@@ -82,16 +93,35 @@ export const setTotalNumberOfCardsSearchedToNull = () => ({
   type: FilterActionTypes.SET_TOTAL_NUMBER_OF_CARDS_SEARCHED_TO_NULL,
 })
 
+export const setCardsFetchedInStore = (cards) => ({
+  type: FilterActionTypes.SET_CARDS_FETCHED_IN_STORE,
+  payload: cards
+})
+
 
 export const getCardsByUserNameAction = username => {
   return dispatch => {
     return getCardsByUser(username)
       .then(rep => {
-        dispatch(getCardsByUserNameSuccess(rep.data.results))
+        dispatch(getCardsByUserNameSuccess(rep.data))
         return rep
       })
       .catch(err => {
         dispatch(getCardsByUserNameFailure(err.response))
+      })
+  }
+}
+
+export const getOtherCardsByAuthorNameAction = username => {
+  return dispatch => {
+    return getCardsByUser(username)
+      .then(rep => {
+        dispatch(getOtherCardsByAuthorNameSuccess(rep.data))
+        console.log(rep.data)
+        return rep
+      })
+      .catch(err => {
+        dispatch(getOtherCardsByAuthorNameFailure(err.response))
       })
   }
 }
@@ -105,3 +135,44 @@ const getCardsByUserNameFailure = err => ({
   payload: err
 })
 
+const getOtherCardsByAuthorNameSuccess = cards => ({
+  type: FilterActionTypes.GET_OTHER_CARDS_BY_AUTHOR_SUCCESS,
+  payload: cards
+})
+const getOtherCardsByAuthorNameFailure = err => ({
+  type: FilterActionTypes.GET_OTHER_CARDS_BY_AUTHOR_FAILURE,
+  payload: err
+})
+
+export const getOtherPageAction = (navLink, newPageNumber) => {
+  return dispatch => {
+    return getOtherPageCard(navLink)
+      .then(rep => {
+        console.log(newPageNumber)
+        dispatch(getOtherPageSuccess(rep.data))
+        dispatch(setCurrentCardGridPage(newPageNumber))
+        dispatch(isLoadedAction)
+
+        return rep
+      })
+      .catch(err => {
+        dispatch(getOtherPageFailure(err.response))
+        console.log(err)
+      })
+  }
+}
+
+const getOtherPageSuccess = cards => ({
+  type: FilterActionTypes.GET_OTHER_PAGE_ACTION_SUCCESS,
+  payload: cards
+})
+const getOtherPageFailure = err => ({
+  type: FilterActionTypes.GET_OTHER_PAGE_ACTION_FAILURE,
+  payload: err
+})
+
+
+export const setCurrentCardGridPage = newPageNumber => ({
+  type: FilterActionTypes.SET_CARDS_GRID_PAGE,
+  payload: newPageNumber
+})

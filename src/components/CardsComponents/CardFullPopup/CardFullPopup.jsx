@@ -19,7 +19,7 @@ import {
   closePopupCard,
   showFullscreen,
 } from "../../../redux/layout/layout-actions";
-import { getCardsByUserNameAction } from "../../../redux/filter/filter-actions";
+import { getOtherCardsByAuthorNameAction } from "../../../redux/filter/filter-actions";
 
 import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevrons/chevron-back-circle.svg";
 import { ReactComponent as ChevronCircleRight } from "../../../assets/images/chevrons/chevron-forward-circle.svg";
@@ -37,18 +37,23 @@ import { ReactComponent as FullscreenLogo } from "../../../assets/images/fullscr
 import { formattedDate, renameCategory } from "../../../utilsFunctions";
 import { base } from "../../../services/configService";
 import "./CardFullPopup.scss";
+import {
+  selectCardsFetchedCards,
+  selectOtherCardsByAuthor,
+} from "../../../redux/filter/filter-selectors";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
 // handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
-const CardFullPopup = ({ cardsArray }) => {
+const CardFullPopup = () => {
   const isFullScreen = useSelector(selectFullscreen);
   const clickedCard = useSelector(selectClickedCard);
   const popupShown = useSelector(selectShowPopupCard);
   const dispatch = useDispatch();
   const [indexOfCurrentCard, setIndexOfCurrentCard] = useState();
+  const cardsArray = useSelector(selectCardsFetchedCards);
   const [cardsArrayLength, setCardsArrayLength] = useState();
   const cardID = useSelector((state) => state.cards.clickedCard);
-  const cardsByUser = useSelector((state) => state.filter.cardsByUser);
+  const otherCardsByAuthor = useSelector(selectOtherCardsByAuthor);
 
   useEffect(() => {
     if (!clickedCard || !cardsArray) return;
@@ -59,7 +64,7 @@ const CardFullPopup = ({ cardsArray }) => {
   // scroll reset
   useEffect(() => {
     if (cardID) {
-      dispatch(getCardsByUserNameAction(cardID.user.username));
+      dispatch(getOtherCardsByAuthorNameAction(cardID.user.username));
     }
     if (popupShown && document.querySelector(".CardFullPopup.active")) {
       document.querySelector(".CardFullPopup.active").scroll(0, 0);
@@ -181,17 +186,19 @@ const CardFullPopup = ({ cardsArray }) => {
             <div className="infos__autres-posts">
               <h3 className="title title-4">Du même auteur :</h3>
               <div className="autres-posts--grid">
-                {/* A MODIFER EN SCSS */}
-                {cardsByUser &&
-                  cardsByUser.map((card) => (
+                {/* requete getCardsByUser ne renvoie pas categorie... renvoyer tous l'objet card ! */}
+                {otherCardsByAuthor &&
+                  otherCardsByAuthor.results.map((card) => (
                     <div
                       className="autres-posts--preview"
                       key={card.id}
                       card={card}
-                      // onClick={() => {
-                      //   console.log(card);
-                      //   dispatch(setClickedCard(card));
-                      // }}
+                      onClick={() => {
+                        dispatch(setClickedCard(card));
+                        document
+                          .querySelector(".CardFullPopup.active")
+                          .scroll(0, 0);
+                      }}
                     >
                       {/* FAIRE LE LIEN ET LE POPUP VERS LA CARTE */}
                       <img

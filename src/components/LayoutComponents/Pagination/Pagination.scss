@@ -1,0 +1,38 @@
+@import "../../../variables.scss";
+
+.Pagination {
+  display: flex;
+  justify-content: center;
+
+  &__button {
+    cursor: pointer;
+    margin: 0.3rem;
+    background-color: $grey-light;
+    border-radius: $box-radius;
+    padding: 0 0.6rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: $primary-light;
+    }
+  }
+
+  &__indicator {
+    cursor: pointer;
+    margin: 0.3rem;
+    transition: all 0.2s ease;
+    padding: 0.6rem;
+
+    &.active {
+      color: $primary-medium;
+    }
+
+    &:hover {
+      color: $primary-light;
+    }
+  }
+}

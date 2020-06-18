@@ -21,7 +21,6 @@ const CurrentSearchWords = ({ history }) => {
   const handleDelete = (e) => {
     e.stopPropagation();
     dispatch(deleteCurrentSearch());
-    dispatch(setTotalNumberOfCardsSearchedToNull());
     dispatch(getCardsAction());
     dispatch(setType("all"));
     history.push("/cards");

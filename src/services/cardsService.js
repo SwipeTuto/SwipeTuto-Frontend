@@ -44,3 +44,22 @@ export const getCardsByUser = username => {
       return rep
     })
 }
+
+export const getOtherPageCard = (linkToFetch) => {
+  var config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  return axios
+    .get(linkToFetch, config)
+    .then((rep) => {
+      console.log(rep);
+      return rep;
+    })
+    .catch(function (err) {
+      console.log(err);
+      return err;
+    });
+};

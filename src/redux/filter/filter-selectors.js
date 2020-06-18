@@ -6,9 +6,33 @@ export const selectCurrentSearch = createSelector(
   [selectFilter],
   filter => filter.currentSearch
 )
-export const selectCardFilter = createSelector(
+export const selectCardsFetched = createSelector(
   [selectFilter],
-  filter => filter.cardFilter
+  filter => filter.cardsFetched && filter.cardsFetched
+)
+export const selectNewPageCards = createSelector(
+  [selectFilter],
+  filter => filter.newPageCards && filter.newPageCards
+)
+
+export const selectCurrentCardsGridPage = createSelector(
+  [selectFilter],
+  filter => filter.currentCardsGridPage && filter.currentCardsGridPage
+)
+
+export const selectOtherCardsByAuthor = createSelector(
+  [selectFilter],
+  filter => filter.otherCardsByAuthor && filter.otherCardsByAuthor
+)
+
+export const selectCardsFetchedCards = createSelector(
+  [selectCardsFetched],
+  cardsFetched => cardsFetched && cardsFetched.results
+)
+
+export const selectTotalNumberOfResults = createSelector(
+  [selectFilter],
+  filter => filter.cardsFetched && filter.cardsFetched.count
 )
 
 export const selectSearchType = createSelector(

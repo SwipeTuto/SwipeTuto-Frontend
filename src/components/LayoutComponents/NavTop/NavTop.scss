@@ -40,6 +40,10 @@
     // font-weight: bold;
     transition: all 0.3s;
 
+    &.active {
+      color: $primary-medium;
+    }
+
     &--category:hover ~ .NavTop__dropdown--category {
       opacity: 1;
       visibility: visible;

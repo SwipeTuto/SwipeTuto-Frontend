@@ -19,6 +19,7 @@ import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
 import { getCardsAction } from './redux/cards/cards-actions'
+import { selectIsLoaded } from "./redux/cards/cards-selectors"
 import { getCardAfterfilterAction } from "./redux/filter/filter-actions"
 
 import { urlParams } from "./utils/index"
@@ -37,10 +38,10 @@ function App(props) {
   const dispatch = useDispatch();
 
   const [langage, category] = urlParams(props.location)
-  const isLoaded = useSelector(state => state.cards.isLoaded)
+  const isLoaded = useSelector(selectIsLoaded)
 
   useEffect(() => {
-    isLoaded && (
+    !isLoaded && (
       langage || category ? dispatch(getCardAfterfilterAction(langage, category)) : dispatch(getCardsAction())
     )
   }, [category, langage, dispatch, isLoaded]);
@@ -52,14 +53,14 @@ function App(props) {
       {/* <NavLeft /> */}
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route exact path="/cards" component={SearchPage} />
-        <Route exact path="/search" component={SearchPage} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/ressources" component={RessourcesPage} />
-        <Route exact path="/conditions" component={ConditionsOfUsagePage} />
-        <Route exact path="/confidentiality" component={ConfidentialityPage} />
-        <Route exact path="/cookies" component={CookiesPage} />
-        <Route exact path="/contact-us" component={ContactUsPage} />
+        <Route path="/cards" component={SearchPage} />
+        <Route path="/search" component={SearchPage} />
+        <Route path="/login" component={Login} />
+        <Route path="/ressources" component={RessourcesPage} />
+        <Route path="/conditions" component={ConditionsOfUsagePage} />
+        <Route path="/confidentiality" component={ConfidentialityPage} />
+        <Route path="/cookies" component={CookiesPage} />
+        <Route path="/contact-us" component={ContactUsPage} />
         <ProtectedRoute path="/account" component={AccountPage} />
         {/* <ProtectedRoute exact path="/settings" component={SettingsPage} /> */}
         <ProtectedRoute exact path="/help" component={HelpPage} />

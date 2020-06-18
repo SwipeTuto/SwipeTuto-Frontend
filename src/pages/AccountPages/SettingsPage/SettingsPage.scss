@@ -4,12 +4,8 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  // align-items: center;
   background-color: $grey-lighter;
-
-  .title.title-1 {
-    margin: 3rem 0;
-  }
 
   input:not([type="file"]),
   textarea {

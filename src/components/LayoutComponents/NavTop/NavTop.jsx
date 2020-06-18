@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg";
 import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg";
 import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
@@ -94,28 +94,21 @@ const NavTop = (props) => {
       {researchIsSubmitted && <Redirect to="/cards" />}
       <div className="NavTop">
         <div className="NavTop__left">
-          <Link className="NavTop__link" to="/">
+          <NavLink exact className="NavTop__link" to="/">
             Accueil
-          </Link>
-          {/* <Link
-          className="NavTop__link"
-          to="/cards"
-          onClick={(e) => cardsClick(e)}
-        >
-          Cartes
-        </Link> */}
+          </NavLink>
 
-          <Link
+          <NavLink
             className="NavTop__link NavTop__link--category"
             to="/cards"
             onClick={(e) => cardsClick(e)}
           >
             Catégories
             <DropDownLogo className="NavTop__link--logo" />
-          </Link>
-          <Link className="NavTop__link" to="/ressources">
+          </NavLink>
+          <NavLink className="NavTop__link" to="/ressources">
             Ressources
-          </Link>
+          </NavLink>
           <div className=" NavTop__dropdown NavTop__dropdown--category">
             <Link to="/cards">
               <img
@@ -126,7 +119,9 @@ const NavTop = (props) => {
             </Link>
             <Link to={`/search?langage=html&category=${category}`}>
               <img
+                onClick={(e) => logoHandleClick(e)}
                 src={HTMLLogo}
+                name="html"
                 className="NavTop__dropdown--logo"
                 alt="HTML"
               />

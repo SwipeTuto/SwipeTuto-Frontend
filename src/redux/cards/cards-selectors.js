@@ -2,10 +2,15 @@ import { createSelector } from 'reselect'
 import { base } from "../../services/configService";
 
 export const selectCards = state => state.cards;
-export const selectCardsFetched = state => state.cards.cardsFetched ? state.cards.cardsFetched.results : null;
 
 
 export const selectClickedCard = state => state.cards.clickedCard;
+
+export const selectIsLoaded = createSelector(
+  [selectCards],
+  cards => cards.isLoaded
+);
+
 export const selectClickedCardMediaImage = createSelector(
   [selectClickedCard],
   clickedCard => (clickedCard ? clickedCard.media_image : null)

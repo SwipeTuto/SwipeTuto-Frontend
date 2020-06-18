@@ -2,12 +2,16 @@
 
 .AccountPage {
   min-height: 100vh;
-  padding: $inner-component-padding;
+  padding: $grid-component-padding;
   display: grid;
   grid-template-columns: 3fr 1fr;
   grid-auto-rows: max-content;
   gap: 2rem;
   background-color: $grey-lighter;
+
+  .title.title-2 {
+    margin-bottom: 6rem;
+  }
 
   & > div {
     padding: 2rem 4rem;
@@ -20,6 +24,8 @@
     // align-items: center;
     flex-direction: column;
     margin-bottom: 6rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid $grey-medium;
   }
 
   &__userInfos {
@@ -38,6 +44,7 @@
   &__userAvatar {
     height: 100%;
     width: 100%;
+    border-radius: 50%;
   }
 
   &__text {
@@ -45,7 +52,7 @@
   }
 
   &__bio {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
 
   &__userWelcome:first-of-type {

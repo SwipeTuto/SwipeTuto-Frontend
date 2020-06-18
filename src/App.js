@@ -8,10 +8,11 @@ import Login from './pages/Login/Login';
 import SearchPage from './pages/SearchPage/SearchPage'
 import RessourcesPage from './pages/RessourcesPage/RessourcesPage'
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
-import AccountPage from './pages/AccountPage/AccountPage'
-import SettingsPage from './pages/SettingsPage/SettingsPage'
+import AccountPage from './pages/AccountPages/AccountPages'
+// import SettingsPage from './pages/SettingsPage/SettingsPage'
 import HelpPage from './pages/HelpPage/HelpPage'
 import ConditionsOfUsagePage from './pages/ConditionsOfUsagePage/ConditionsOfUsagePage'
+import ContactUsPage from './pages/ContactUsPage/ContactUsPage'
 
 import NavTop from "./components/LayoutComponents/NavTop/NavTop";
 import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
@@ -58,8 +59,9 @@ function App(props) {
         <Route exact path="/conditions" component={ConditionsOfUsagePage} />
         <Route exact path="/confidentiality" component={ConfidentialityPage} />
         <Route exact path="/cookies" component={CookiesPage} />
-        <ProtectedRoute exact path="/account" component={AccountPage} />
-        <ProtectedRoute exact path="/settings" component={SettingsPage} />
+        <Route exact path="/contact-us" component={ContactUsPage} />
+        <ProtectedRoute path="/account" component={AccountPage} />
+        {/* <ProtectedRoute exact path="/settings" component={SettingsPage} /> */}
         <ProtectedRoute exact path="/help" component={HelpPage} />
         <Route component={NotFoundPage} />
       </Switch>

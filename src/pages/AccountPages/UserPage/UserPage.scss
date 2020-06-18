@@ -1,0 +1,16 @@
+@import "../../../variables.scss";
+
+.UserPage {
+  & > div:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  &__cards {
+    &--grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      position: relative;
+    }
+  }
+}

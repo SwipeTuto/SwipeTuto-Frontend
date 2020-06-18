@@ -245,7 +245,7 @@ const NavTop = (props) => {
             <span className="horizontal-separation-primary-light"></span>
             <Link
               className="NavTop__userMenu--link"
-              to="/account"
+              to="/account/user"
               onClick={() => dispatch(toggleUserNav())}
             >
               <AccountLogo className="NavTop__userMenu--logo" />
@@ -253,7 +253,7 @@ const NavTop = (props) => {
             </Link>
             <Link
               className="NavTop__userMenu--link"
-              to="/settings"
+              to="/account/settings"
               onClick={() => dispatch(toggleUserNav())}
             >
               <SettingsLogo className="NavTop__userMenu--logo" />

@@ -1,0 +1,103 @@
+@import "../../variables.scss";
+
+.AccountPage {
+  min-height: 100vh;
+  padding: $inner-component-padding;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-auto-rows: max-content;
+  gap: 2rem;
+  background-color: $grey-lighter;
+
+  & > div {
+    padding: 2rem 4rem;
+    box-shadow: $card-shadow-2;
+    background-color: $white;
+  }
+
+  &__header {
+    display: flex;
+    // align-items: center;
+    flex-direction: column;
+    margin-bottom: 6rem;
+  }
+
+  &__userInfos {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+
+  &__avatar {
+    height: 8rem;
+    width: 8rem;
+    border-radius: 50%;
+    box-shadow: $pill-shadow;
+  }
+
+  &__userAvatar {
+    height: 100%;
+    width: 100%;
+  }
+
+  &__text {
+    margin-left: 2rem;
+  }
+
+  &__bio {
+    margin-bottom: 3rem;
+  }
+
+  &__userWelcome:first-of-type {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+
+  &__social {
+    display: flex;
+    justify-content: flex-end;
+
+    &--link {
+      width: 2.5rem;
+      height: 2.5rem;
+      &:not(:last-of-type) {
+        margin-right: 1rem;
+      }
+    }
+
+    &--logo {
+      height: 100%;
+      width: 100%;
+      transition: all 0.2s ease;
+      cursor: pointer;
+
+      &:hover {
+        fill: $primary-light;
+      }
+    }
+  }
+
+  &__component {
+    background-color: red;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__navigation {
+    width: 100%;
+    height: min-content;
+    display: flex;
+    flex-direction: column;
+
+    & .active {
+      color: $primary-medium;
+    }
+  }
+
+  &__user-cards {
+    width: 100%;
+  }
+}

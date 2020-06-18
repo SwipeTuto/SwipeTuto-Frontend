@@ -5,12 +5,13 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { selectCardsFetched } from "../../../redux/cards/cards-selectors";
-
 import {
-  selectCardFilter,
+  selectCardsFetchedCards,
   selectSearchType,
+  selectTotalNumberOfResults,
 } from "../../../redux/filter/filter-selectors";
+
+import { selectIsLoaded } from "../../../redux/cards/cards-selectors";
 
 import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
 import CardFullPopup from "../../CardsComponents/CardFullPopup/CardFullPopup";
@@ -21,25 +22,18 @@ import "./CardGridList.scss";
 const CardGridList = ({ cardsSize }) => {
   // const dispatch = useDispatch()
 
-  const cards = useSelector(selectCardsFetched);
+  const cards = useSelector(selectCardsFetchedCards);
+  const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
   const searchType = useSelector(selectSearchType);
-  const searchCard = useSelector(selectCardFilter);
+  const isLoaded = useSelector(selectIsLoaded);
 
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
-  const [cardsArray, setcardsArray] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (cards || cardsArray) {
-      setIsLoading(false);
+    if (isLoaded) {
+      setCardPreviewSize(cardsSize);
     }
-    setCardPreviewSize(cardsSize);
-    if (searchType === "search" || searchType === "langage") {
-      setcardsArray(searchCard);
-    } else {
-      setcardsArray(cards);
-    }
-  }, [cards, cardsSize, cardsArray, searchType, searchCard]);
+  }, [cardsSize, searchType, isLoaded]);
 
   return (
     <div className="CardGridList">
@@ -48,16 +42,18 @@ const CardGridList = ({ cardsSize }) => {
           cardPreviewSize === "small" ? "--small" : "--big y"
         }`}
       >
-        {isLoading ? (
+        {!isLoaded ? (
           <Loading />
+        ) : totalNumberOfResults === 0 ? (
+          <h2 className="title title-2 nocards-message">
+            Désolé, aucune carte trouvée. Essayez une autre recherche.
+          </h2>
         ) : (
-          cardsArray &&
-          cardsArray.map((card) => (
-            <CardPreviewSmall card={card} key={card.id} />
-          ))
+          cards &&
+          cards.map((card) => <CardPreviewSmall card={card} key={card.id} />)
         )}
       </div>
-      <CardFullPopup cardsArray={cardsArray} />
+      <CardFullPopup cardsArray={cards} />
     </div>
   );
 };

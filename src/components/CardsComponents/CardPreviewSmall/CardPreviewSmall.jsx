@@ -1,39 +1,34 @@
 // Component qui présente en résumé dans la grille un slide avec image de preview, auteur etc ...
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 import UserNameAndAvatarSmall from "../../UserComponents/UserNameAndAvatarSmall/UserNameAndAvatarSmall";
 
 import { setClickedCard } from "../../../redux/cards/cards-actions";
 import { showPopupCard } from "../../../redux/layout/layout-actions";
-import { getCardsByUserNameAction, setType } from "../../../redux/filter/filter-actions";
+import { setType } from "../../../redux/filter/filter-actions";
 
 import { base } from "../../../services/configService";
 import { renameCategory, truncate } from "../../../utilsFunctions";
 
 import "./CardPreviewSmall.scss";
 
-
 const CardPreviewSmall = ({ card }) => {
   const { media_image, user, categorie, name } = card;
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    
-  }, [user]);
+  useEffect(() => {}, [user]);
 
   return (
-    <div
-      className="CardPreviewSmall"
-      data-slideid="1"
-    >
-      <div 
-      className="CardPreviewSmall__image"
-      onClick={() => {
-        dispatch(setClickedCard(card));
-        dispatch(showPopupCard());
-      }}>
+    <div className="CardPreviewSmall" data-slideid="1">
+      <div
+        className="CardPreviewSmall__image"
+        onClick={() => {
+          dispatch(setClickedCard(card));
+          dispatch(showPopupCard());
+        }}
+      >
         {media_image[0] && (
           <img src={base + media_image[0].image} alt="slides presentation" />
         )}
@@ -45,16 +40,16 @@ const CardPreviewSmall = ({ card }) => {
           </div>
         </div>
       </div>
-      <div 
-      className="CardPreviewSmall__details"
-      onClick={() => {
-        dispatch(setType("search"));
-        dispatch(getCardsByUserNameAction(user.username))
-      }}>
-         <Link to={`/search?user=${user.username}`}>
-        <UserNameAndAvatarSmall
-          authorName={truncate(user.username, 12, false)}
-        />
+      <div
+        className="CardPreviewSmall__details"
+        onClick={() => {
+          dispatch(setType("search"));
+        }}
+      >
+        <Link to={`/search?user=${user.username}`}>
+          <UserNameAndAvatarSmall
+            authorName={truncate(user.username, 12, false)}
+          />
         </Link>
       </div>
     </div>

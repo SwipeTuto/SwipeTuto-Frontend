@@ -5,7 +5,7 @@ import {
   getCards
 } from '../../services/cardsService'
 
-import { setCurrentSearch, setType, setCategoryFilter } from "../filter/filter-actions"
+import { setCurrentSearch, setType, setCategoryFilter, setCardsFetchedInStore } from "../filter/filter-actions"
 
 export const setClickedCard = (card) => ({
   type: CardsActionTypes.SET_CLICKED_CARD,
@@ -27,7 +27,8 @@ export const getCardsAction = () => {
         dispatch(setCurrentSearch('')) // set le langage
         dispatch(setCategoryFilter('')) // set la category
         dispatch(setType('all')) // change le type
-        dispatch(getCardsSuccess(card))
+        dispatch(getCardsSuccess()) // stop loader
+        dispatch(setCardsFetchedInStore(card)) // cards dans cardsFetched
       })
       .catch(err => {
         dispatch(getCardsErrors(err.response))
@@ -36,9 +37,9 @@ export const getCardsAction = () => {
 
 };
 
-const getCardsSuccess = card => ({
+export const getCardsSuccess = () => ({
   type: CardsActionTypes.GET_ALL_CARDS_SUCCESS,
-  payload: card
+
 })
 const getCardsErrors = error => ({
   type: CardsActionTypes.GET_ALL_CARDS_FAILURE,

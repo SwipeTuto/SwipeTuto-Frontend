@@ -1,5 +1,5 @@
 import React from "react";
-import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
+import CustomButton from "../../../components/LayoutComponents/CustomButton/CustomButton";
 
 import "./SettingsPage.scss";
 
@@ -16,7 +16,7 @@ const SettingsPage = () => {
 
   return (
     <div className="SettingsPage">
-      <h1 className="title title-1">Changer les informations du compte</h1>
+      <h2 className="title title-2">Changer les informations du compte</h2>
       <div className="allForms">
         <form className="form__avatar" onSubmit={handleFileSumbit}>
           <label htmlFor="avatar">
@@ -35,6 +35,39 @@ const SettingsPage = () => {
         <form className="form__pseudo">
           <label htmlFor="pseudo">Changez votre pseudo :</label>
           <input type="text" id="pseudo" name="pseudo" required />
+          <CustomButton color="dark">Valider</CustomButton>
+        </form>
+        <form className="form__bio">
+          <label htmlFor="bio">Changez votre bio :</label>
+          <textarea type="text" id="bio" name="bio" required />
+          <CustomButton color="dark">Valider</CustomButton>
+        </form>
+        <form className="form__youtube">
+          <label htmlFor="youtube">
+            Changez le lien vers votre chaine Youtube :
+          </label>
+          <input type="text" id="youtube" name="youtube" required />
+          <CustomButton color="dark">Valider</CustomButton>
+        </form>
+        <form className="form__github">
+          <label htmlFor="github">
+            Changez le lien vers votre compte Github :
+          </label>
+          <input type="text" id="github" name="github" required />
+          <CustomButton color="dark">Valider</CustomButton>
+        </form>
+        <form className="form__facebook">
+          <label htmlFor="facebook">
+            Changez le lien vers votre profil Facebook :
+          </label>
+          <input type="text" id="facebook" name="facebook" required />
+          <CustomButton color="dark">Valider</CustomButton>
+        </form>
+        <form className="form__twitter">
+          <label htmlFor="twitter">
+            Changez le lien vers votre profil Twitter :
+          </label>
+          <input type="text" id="twitter" name="twitter" required />
           <CustomButton color="dark">Valider</CustomButton>
         </form>
         <form className="form__mdp">

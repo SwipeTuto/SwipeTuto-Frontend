@@ -34,7 +34,7 @@ import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outli
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as FullscreenLogo } from "../../../assets/images/fullscreen.svg";
 
-import { formattedDate, renameCategory } from "../../../utilsFunctions";
+import { formattedDate, renameCategory } from "../../../helper/index";
 import { base } from "../../../services/configService";
 import "./CardFullPopup.scss";
 import {

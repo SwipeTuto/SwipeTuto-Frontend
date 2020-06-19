@@ -1,6 +1,6 @@
 import { UserActionTypes } from './user-types'
 import { loginManuel, logout, register } from '../../services/userService'
-import  history   from "../../utils/history"
+import history from "../../helper/history"
 
 export const setCurrentUser = (user) => ({
   type: UserActionTypes.SET_CURRENT_USER,
@@ -9,14 +9,14 @@ export const setCurrentUser = (user) => ({
 
 export const loginAction = (username, password) => {
   return dispatch => {
-      return loginManuel(username, password)
-          .then(user => {
-            history.push('/cards', history.location)
-            history.go()
-          })
-          .catch(err => {
-              dispatch(loginErrors(err.response))
-          })
+    return loginManuel(username, password)
+      .then(user => {
+        history.push('/cards', history.location)
+        history.go()
+      })
+      .catch(err => {
+        dispatch(loginErrors(err.response))
+      })
   }
 }
 
@@ -24,7 +24,7 @@ const loginSuccess = user => ({
   type: UserActionTypes.LOGIN_SUCCESS,
   payload: user
 })
-const loginErrors = error =>  ({
+const loginErrors = error => ({
   type: UserActionTypes.LOGIN_FAILURE,
   payload: error
 })
@@ -45,15 +45,15 @@ const logoutSuccess = () => ({
 // REGISTER
 export const registerAction = users => {
   return dispatch => {
-      register(users)
-          .then(user => {
-              dispatch(registerSuccess(user));
-              history.push('/cards', history.location)
-              history.go()
-          })
-          .catch(err => {
-              dispatch(registerErrors(err.response))
-          })
+    register(users)
+      .then(user => {
+        dispatch(registerSuccess(user));
+        history.push('/cards', history.location)
+        history.go()
+      })
+      .catch(err => {
+        dispatch(registerErrors(err.response))
+      })
   }
 }
 

@@ -24,7 +24,10 @@ import newUserAvatar from "../../../assets/images/avatar_new_user.png";
 
 import CustomButton from "../CustomButton/CustomButton";
 
-import { getCardsAction } from "../../../redux/cards/cards-actions";
+import {
+  getCardsAction,
+  getCardsLoading,
+} from "../../../redux/cards/cards-actions";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
@@ -35,7 +38,7 @@ import {
   getCardAfterfilterAction,
 } from "../../../redux/filter/filter-actions";
 
-import history from "../../../utils/history";
+import history from "../../../helper/history";
 import "./NavTop.scss";
 
 const NavTop = (props) => {
@@ -65,15 +68,19 @@ const NavTop = (props) => {
   };
 
   const handleClick = (e) => {
+    // dispatch(getCardsLoading());
     dispatch(searchAction(searchInput));
     dispatch(setType("search"));
-    // dispatch(setCategoryFilter("all"));
   };
 
   const logoHandleClick = (e) => {
     dispatch(getCardAfterfilterAction(e.target.name));
     dispatch(setType("langage"));
-    // dispatch(setCategoryFilter("all"));
+  };
+
+  const allLogoHandleClick = () => {
+    dispatch(getCardsAction());
+    console.log("all clic");
   };
 
   const cardsClick = (e) => {
@@ -115,7 +122,8 @@ const NavTop = (props) => {
               <img
                 src={allLogo}
                 className="NavTop__dropdown--logo"
-                alt="HTML"
+                alt="all"
+                onClick={() => allLogoHandleClick()}
               />
             </Link>
             <Link to={`/search?langage=html&category=${category}`}>

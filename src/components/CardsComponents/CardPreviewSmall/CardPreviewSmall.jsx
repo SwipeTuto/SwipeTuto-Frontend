@@ -10,7 +10,7 @@ import { showPopupCard } from "../../../redux/layout/layout-actions";
 import { setType } from "../../../redux/filter/filter-actions";
 
 import { base } from "../../../services/configService";
-import { renameCategory, truncate } from "../../../utilsFunctions";
+import { renameCategory, truncate } from "../../../helper/index";
 
 import "./CardPreviewSmall.scss";
 

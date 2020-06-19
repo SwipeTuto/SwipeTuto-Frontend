@@ -20,6 +20,7 @@ import PHPLogo from "../../../assets/images/tech_logo/PHP.png";
 import ReactJSLogo from "../../../assets/images/tech_logo/reactJS.png";
 import NodeJSLogo from "../../../assets/images/tech_logo/nodeJS.png";
 import allLogo from "../../../assets/images/tech_logo/all_logo.png";
+import newUserAvatar from "../../../assets/images/avatar_new_user.png";
 
 import CustomButton from "../CustomButton/CustomButton";
 
@@ -221,8 +222,8 @@ const NavTop = (props) => {
               >
                 <img
                   className="NavTop__avatar--userAvatar"
-                  src={currentUser.avatar}
-                  alt="user avatar"
+                  src={currentUser.avatar || newUserAvatar}
+                  alt="user"
                 />
               </div>
             </>

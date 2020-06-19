@@ -10,6 +10,7 @@ import { ReactComponent as LogoFacebook } from "../../assets/images/logo-faceboo
 import { ReactComponent as LogoTwitter } from "../../assets/images/logo-twitter.svg";
 import { ReactComponent as LogoYoutube } from "../../assets/images/logo-youtube.svg";
 import { ReactComponent as LogoGithub } from "../../assets/images/logo-github.svg";
+import newUserAvatar from "../../assets/images/avatar_new_user.png";
 
 import "./AccountPages.scss";
 
@@ -29,8 +30,8 @@ const AccountPage = ({ match }) => {
             <div className="AccountPage__avatar">
               <img
                 className="AccountPage__userAvatar"
-                src={currentUser.avatar}
-                alt="user avatar"
+                src={currentUser.avatar || newUserAvatar}
+                alt="user"
               />
             </div>
             <div className="AccountPage__text">

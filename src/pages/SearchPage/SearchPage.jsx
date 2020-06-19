@@ -34,8 +34,11 @@ const SearchPage = () => {
   const [gridSize, setGridSize] = useState("small");
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(0);
   const totalNumberOfCards = useSelector(selectTotalNumberOfResults);
-  const numberOfItemByPage = useSelector(selectCardsFetchedCards).length;
+
+  // A CHANGER EN FONCTION DU BACK :
+  const numberOfItemByPage = 12;
   const currentCardsGridPage = useSelector(selectCurrentCardsGridPage);
+  console.log(numberOfItemByPage);
 
   // "http://localhost:8000/api/v1/card/?page=2"
 

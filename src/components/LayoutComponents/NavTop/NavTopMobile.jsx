@@ -24,6 +24,7 @@ import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg
 import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
 import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
 import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
+import newUserAvatar from "../../../assets/images/avatar_new_user.png";
 
 import "./NavTopMobile.scss";
 
@@ -110,8 +111,8 @@ const NavTopMobile = (props) => {
           <div className="NavTopMobile__avatar">
             <img
               className="NavTopMobile__avatar--userAvatar"
-              src={currentUser.avatar}
-              alt="user avatar"
+              src={currentUser.avatar || newUserAvatar}
+              alt="user"
             />
           </div>
         )}

@@ -10,6 +10,7 @@ export const loginGoogle = () => {
  
   return auth().signInWithPopup(provider)
     .then(result => {
+      console.log('result', result.additionalUserInfo.profile)
       var user = result.user;
       // getIdToken est une fonction de firebase qui renvoie le token pour identifier lae user dans les services firebase
       return user.getIdToken()

@@ -2,15 +2,7 @@ import { FilterActionTypes } from "./filter-types"
 
 import { searchBar } from '../../services/searchService'
 import { getCardAfterfilter, getCardsByUser, getOtherPageCard } from '../../services/cardsService'
-import { getCardsSuccess } from "../cards/cards-actions"
-
-export const isLoadingAction = () => ({
-  type: FilterActionTypes.IS_LOADING,
-})
-
-export const isLoadedAction = () => ({
-  type: FilterActionTypes.IS_LOADED,
-})
+import { getCardsLoaded } from "../cards/cards-actions"
 
 
 export const searchAction = kword => {
@@ -20,6 +12,7 @@ export const searchAction = kword => {
         dispatch(SearchSuccess(search.data))
         dispatch(setCurrentSearch(kword))
         dispatch(setType("search"))
+        dispatch(getCardsLoaded())
 
       })
       .catch(err => {
@@ -46,7 +39,7 @@ export const getCardAfterfilterAction = (langage, category) => {
       .then(rep => {
         dispatch(setType('search'));
         dispatch(getCardAfterfilterSuccess(rep.data))
-        dispatch(getCardsSuccess())
+        dispatch(getCardsLoaded())
         return rep
       })
       .catch(err => {
@@ -151,7 +144,7 @@ export const getOtherPageAction = (navLink, newPageNumber) => {
         console.log(newPageNumber)
         dispatch(getOtherPageSuccess(rep.data))
         dispatch(setCurrentCardGridPage(newPageNumber))
-        dispatch(isLoadedAction)
+        dispatch(getCardsLoaded())
 
         return rep
       })

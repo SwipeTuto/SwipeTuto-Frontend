@@ -2,12 +2,12 @@ import axios from "axios";
 
 import { auth, provider, providerGit } from '../services/firebaseService';
 import { baseURL } from '../services/configService'
-import  history   from "../utils/history"
+import history from "../helper/history"
 
 
 
 export const loginGoogle = () => {
- 
+
   return auth().signInWithPopup(provider)
     .then(result => {
       console.log('result', result.additionalUserInfo.profile)
@@ -27,14 +27,14 @@ export const loginGoogle = () => {
     })
 }
 export const loginGit = () => {
- 
-  auth().signInWithPopup(providerGit).then(function(result) {
+
+  auth().signInWithPopup(providerGit).then(function (result) {
     // This gives you a GitHub Access Token. You can use it to access the GitHub API.
     var token = result.credential.accessToken;
     // The signed-in user info.
     var user = result.user;
     // ...
-  }).catch(function(error) {
+  }).catch(function (error) {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
@@ -62,7 +62,7 @@ export const login = idToken => {
       localStorage.removeItem('user')
       localStorage.removeItem('token')
       return err
-      
+
     })
 }
 
@@ -70,25 +70,25 @@ export const login = idToken => {
 
 export const loginManuel = (username, password) => {
   var config = {
-      headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' },
   }
   return axios.post(`${baseURL}login/`, JSON.stringify({ username, password }), config)
-      .then(user => {
-          localStorage.setItem('user', JSON.stringify(user.data.user))
-          localStorage.setItem('token', JSON.stringify(user.data.token))
-          return user;
-      })
-      .catch(function (err) {
-        localStorage.removeItem('user')
-        localStorage.removeItem('token')
-        return err
-        
-      })
+    .then(user => {
+      localStorage.setItem('user', JSON.stringify(user.data.user))
+      localStorage.setItem('token', JSON.stringify(user.data.token))
+      return user;
+    })
+    .catch(function (err) {
+      localStorage.removeItem('user')
+      localStorage.removeItem('token')
+      return err
+
+    })
 }
 
 export const logout = () => {
   if (localStorage.getItem('user')) {
-      localStorage.removeItem('user')
+    localStorage.removeItem('user')
   }
   if (localStorage.getItem('token')) {
     localStorage.removeItem('token')
@@ -98,20 +98,20 @@ export const logout = () => {
 
 export const register = users => {
   const data = {
-      username: users.username,
-      first_name: users.firstname,
-      last_name: users.lastname,
-      password: users.password,
-      email: users.email,
-    
+    username: users.username,
+    first_name: users.firstname,
+    last_name: users.lastname,
+    password: users.password,
+    email: users.email,
+
   }
   var config = {
-      headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' },
   }
   return axios.post(`${baseURL}create/`, JSON.stringify(data), config)
-      .then(user => {
-        console.log('user', user)
-          localStorage.setItem('user', JSON.stringify(user.data))
-          return user;
-      });
+    .then(user => {
+      console.log('user', user)
+      localStorage.setItem('user', JSON.stringify(user.data))
+      return user;
+    });
 }

@@ -18,11 +18,15 @@ const cardsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         clickedCard: null,
       };
-
-    case CardsActionTypes.GET_ALL_CARDS_SUCCESS:
+    case CardsActionTypes.GET_CARDS_LOADING:
       return {
         ...state,
-        isLoaded: true
+        isLoaded: false,
+      }
+    case CardsActionTypes.GET_CARDS_SUCCESS:
+      return {
+        ...state,
+        isLoaded: true,
       }
     case CardsActionTypes.GET_ALL_CARDS_FAILURE:
       return {

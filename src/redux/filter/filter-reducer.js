@@ -8,7 +8,6 @@ const INITIAL_STATE = {
   cardsFetched: "",
   otherCardsByAuthor: "",
   currentCardsGridPage: 1,
-  isLoaded: true
 };
 
 const FilterReducer = (state = INITIAL_STATE, action) => {
@@ -67,12 +66,6 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
 
     case FilterActionTypes.GET_OTHER_PAGE_ACTION_FAILURE:
       return { ...state, errors: action.payload };
-
-    case FilterActionTypes.IS_LOADING:
-      return { ...state, isLoaded: false };
-
-    case FilterActionTypes.IS_LOADED:
-      return { ...state, isLoaded: true };
 
     case FilterActionTypes.SET_CARDS_GRID_PAGE:
       return { ...state, currentCardsGridPage: action.payload };

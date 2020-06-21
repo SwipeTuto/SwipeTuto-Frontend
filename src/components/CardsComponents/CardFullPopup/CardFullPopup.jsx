@@ -34,7 +34,7 @@ import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outli
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as FullscreenLogo } from "../../../assets/images/fullscreen.svg";
 
-import { formattedDate, renameCategory } from "../../../utilsFunctions";
+import { formattedDate, renameCategory } from "../../../helper/index";
 import { base } from "../../../services/configService";
 import "./CardFullPopup.scss";
 import {
@@ -188,26 +188,30 @@ const CardFullPopup = () => {
               <div className="autres-posts--grid">
                 {/* requete getCardsByUser ne renvoie pas categorie... renvoyer tous l'objet card ! */}
                 {otherCardsByAuthor &&
-                  otherCardsByAuthor.results.map((card) => (
-                    <div
-                      className="autres-posts--preview"
-                      key={card.id}
-                      card={card}
-                      onClick={() => {
-                        dispatch(setClickedCard(card));
-                        document
-                          .querySelector(".CardFullPopup.active")
-                          .scroll(0, 0);
-                      }}
-                    >
-                      {/* FAIRE LE LIEN ET LE POPUP VERS LA CARTE */}
-                      <img
-                        style={{ width: "100%", height: "100%" }}
-                        src={base + card.media_image["0"].image}
-                        alt="Autres travaux de l'auteur"
-                      />
-                    </div>
-                  ))}
+                  clickedCard &&
+                  otherCardsByAuthor.results
+                    .filter((card) => card.id !== clickedCard.id)
+                    .slice(0, 4)
+                    .map((card) => (
+                      <div
+                        className="autres-posts--preview"
+                        key={card.id}
+                        card={card}
+                        onClick={() => {
+                          dispatch(setClickedCard(card));
+                          document
+                            .querySelector(".CardFullPopup.active")
+                            .scroll(0, 0);
+                        }}
+                      >
+                        {/* FAIRE LE LIEN ET LE POPUP VERS LA CARTE */}
+                        <img
+                          style={{ width: "100%", height: "100%" }}
+                          src={base + card.media_image["0"].image}
+                          alt="Autres travaux de l'auteur"
+                        />
+                      </div>
+                    ))}
               </div>
             </div>
             <span className="horizontal-separation-primary-light"></span>

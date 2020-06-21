@@ -27,20 +27,23 @@ export const getCardsAction = () => {
         dispatch(setCurrentSearch('')) // set le langage
         dispatch(setCategoryFilter('')) // set la category
         dispatch(setType('all')) // change le type
-        dispatch(getCardsSuccess()) // stop loader
         dispatch(setCardsFetchedInStore(card)) // cards dans cardsFetched
+        dispatch(getCardsLoaded()) // stop loader
       })
       .catch(err => {
         dispatch(getCardsErrors(err.response))
       })
   }
-
 };
 
-export const getCardsSuccess = () => ({
-  type: CardsActionTypes.GET_ALL_CARDS_SUCCESS,
-
+export const getCardsLoading = () => ({
+  type: CardsActionTypes.GET_CARDS_LOADING,
 })
+
+export const getCardsLoaded = () => ({
+  type: CardsActionTypes.GET_CARDS_SUCCESS,
+})
+
 const getCardsErrors = error => ({
   type: CardsActionTypes.GET_ALL_CARDS_FAILURE,
   payload: error

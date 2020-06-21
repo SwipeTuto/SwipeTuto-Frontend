@@ -20,8 +20,6 @@ import Loading from "../../Loading/Loading";
 import "./CardGridList.scss";
 
 const CardGridList = ({ cardsSize }) => {
-  // const dispatch = useDispatch()
-
   const cards = useSelector(selectCardsFetchedCards);
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
   const searchType = useSelector(selectSearchType);

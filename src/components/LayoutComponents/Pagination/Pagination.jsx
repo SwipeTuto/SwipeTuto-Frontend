@@ -61,6 +61,7 @@ const Pagination = ({
   const startIndex = startPage(currentPage, totalPages);
   const endIndex = endPage(currentPage, totalPages);
   const allLinks = getAllLinksArray(startIndex, endIndex);
+  console.log(currentPage, startIndex, endIndex);
 
   return (
     <div className="Pagination">
@@ -93,7 +94,7 @@ const Pagination = ({
             {link.content}
           </div>
         ))}
-      {currentPage === totalPages ? (
+      {currentPage === totalPages || totalPages === 0 ? (
         ""
       ) : (
         <>

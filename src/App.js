@@ -22,7 +22,7 @@ import { getCardsAction } from './redux/cards/cards-actions'
 import { selectIsLoaded } from "./redux/cards/cards-selectors"
 import { getCardAfterfilterAction } from "./redux/filter/filter-actions"
 
-import { urlParams } from "./utils/index"
+import { urlParams } from "./helper/index"
 
 import './index.scss'
 import './App.scss';

@@ -72,9 +72,9 @@ const SettingsPage = () => {
         </form>
         <form className="form__mdp">
           <label htmlFor="mdp1">Changez votre mot de passe :</label>
-          <input type="password" id="mdp1" name="mdp1" required />
+          <input type="password" id="mdp1" name="mdp" required />
           <label htmlFor="mdp2">Confirmez votre nouveau mot de passe :</label>
-          <input type="password" id="mdp2" name="mdp2" required />
+          <input type="password" id="mdp2" name="mdp" required />
           <CustomButton color="dark">Valider</CustomButton>
         </form>
       </div>

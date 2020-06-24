@@ -48,18 +48,23 @@
 
       &--input {
         @include input-style;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
 
-        &:focus:valid {
+        &:focus.valid-input {
           border: 0.5px solid #00b109;
         }
 
-        &:focus:invalid {
+        &:focus.invalid-input,
+        &:not([value=""]).invalid-input {
           border: 0.5px solid #f76300;
         }
 
         &:focus {
           background-color: $white;
+        }
+
+        &[value=""] + .input__message {
+          display: none;
         }
       }
     }
@@ -86,4 +91,18 @@
     margin: 1rem auto;
     display: inline-block;
   }
+
+  .input__message {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  // .input__message[data-inputfor="passwordConfirm"] {
+  //   display: none;
+  // }
+
+  // .input__message[data-inputfor="passwordConfirm"]:focus {
+  //   display: block;
+  // }
 }

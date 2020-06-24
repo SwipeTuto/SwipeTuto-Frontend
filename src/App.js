@@ -66,7 +66,6 @@ function App(props) {
         <Route path="/cookies" component={CookiesPage} />
         <Route path="/contact-us" component={ContactUsPage} />
         <ProtectedRoute path="/account" component={AccountPage} />
-        {/* <ProtectedRoute exact path="/settings" component={SettingsPage} /> */}
         <ProtectedRoute exact path="/help" component={HelpPage} />
         <Route component={NotFoundPage} />
       </Switch>

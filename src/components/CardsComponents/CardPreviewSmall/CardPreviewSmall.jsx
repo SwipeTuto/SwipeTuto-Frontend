@@ -48,6 +48,7 @@ const CardPreviewSmall = ({ card }) => {
       >
         <Link to={`/search?user=${user.username}`}>
           <UserNameAndAvatarSmall
+            user={user}
             authorName={truncate(user.username, 12, false)}
           />
         </Link>

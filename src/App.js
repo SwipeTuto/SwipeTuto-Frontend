@@ -46,6 +46,10 @@ function App(props) {
     )
   }, [category, langage, dispatch, isLoaded]);
 
+  // const allImages = [...document.getElementsByTagName('img')];
+  // console.log(allImages);
+  // allImages.map(image => image.addEventListener('contextmenu', e => e.preventDefault()));
+
   return (
     <div className="App">
       <NavTop />

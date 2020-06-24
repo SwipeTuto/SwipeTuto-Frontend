@@ -30,7 +30,11 @@ const CardPreviewSmall = ({ card }) => {
         }}
       >
         {media_image[0] && (
-          <img src={base + media_image[0].image} alt="slides presentation" />
+          <img
+            src={base + media_image[0].image}
+            alt="slides presentation"
+            onContextMenu={(e) => e.preventDefault()}
+          />
         )}
 
         <div className="CardPreviewSmall__hover">

@@ -307,7 +307,11 @@ const NavTopMobile = (props) => {
             </div>
           </div>
         ) : (
-          <Link className="NavTopMobile__linkConnexion" to="/login">
+          <Link
+            className="NavTopMobile__linkConnexion"
+            to="/login"
+            onClick={() => handleClick()}
+          >
             <CustomButton color="dark">Connexion / Inscription</CustomButton>
           </Link>
         )}

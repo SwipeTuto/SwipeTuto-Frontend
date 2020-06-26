@@ -1,7 +1,7 @@
 @import "../../variables.scss";
 
 .LoginPage {
-  // min-height: 100vh;
+  min-height: 95vh;
   height: max-content;
   width: 100%;
   display: flex;
@@ -105,4 +105,55 @@
   // .input__message[data-inputfor="passwordConfirm"]:focus {
   //   display: block;
   // }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .LoginPage {
+    &--wrapper {
+      width: 90%;
+    }
+
+    .login,
+    .signup {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 3rem;
+    }
+  }
+}
+
+@media screen and (max-width: $bp-phone) {
+  .LoginPage {
+    align-items: flex-start;
+
+    &--wrapper {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      flex-direction: column;
+    }
+
+    .login,
+    .signup {
+      width: 75%;
+      margin: 0 auto;
+      padding: 2rem 3rem;
+      background-color: $primary-lighter;
+      margin: 4rem auto;
+    }
+
+    .signup {
+      background-color: $primary-lighter;
+    }
+  }
+}
+@media screen and (max-width: $bp-small-phone) {
+  .LoginPage {
+    .login,
+    .signup {
+      width: 90%;
+      margin: 3rem auto;
+    }
+  }
 }

@@ -10,7 +10,7 @@ const UserNameAndAvatarBig = ({ authorName }) => {
   return (
     <div className="UserNameAndAvatarBig">
       <div className="UserNameAndAvatarBig__avatar NavTop__avatar--userAvatar">
-        <img  style={{width:'100%', height:'100%'}} className='NavTop__avatar--userAvatar' src={currentUser && currentUser.profile.avatar} alt="" />
+        <img  style={{width:'100%', height:'100%'}} className='NavTop__avatar--userAvatar' src={currentUser && (currentUser.profile && currentUser.profile.avatar)} alt="" />
       </div>
       <p className="UserNameAndAvatarBig__name">{authorName}</p>
     </div>

@@ -229,9 +229,10 @@ const NavTop = (props) => {
                 onClick={() => dispatch(toggleUserNav())}
                 className="NavTop__avatar"
               >
+                {console.log(currentUser)}
                 <img
                   className="NavTop__avatar--userAvatar"
-                  src={currentUser.profile.avatar || newUserAvatar}
+                  src={currentUser.profile && (currentUser.profile.avatar  || newUserAvatar)}
                   
                   alt="user"
                 />

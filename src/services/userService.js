@@ -101,15 +101,17 @@ export const register = users => {
     last_name: users.lastname,
     password: users.password,
     email: users.email,
-
+    // profile: {
+      
+    // }
   }
   var config = {
     headers: { 'Content-Type': 'application/json' },
   }
   return axios.post(`${baseURL}create/`, JSON.stringify(data), config)
     .then(user => {
-      console.log('user', user)
-      localStorage.setItem('user', JSON.stringify(user.data))
+      localStorage.setItem('user', JSON.stringify(user.data.user))
+      localStorage.setItem('token', JSON.stringify(user.data.token))
       return user;
     });
 }

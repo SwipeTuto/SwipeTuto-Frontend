@@ -222,7 +222,7 @@ const NavTop = (props) => {
           </form>
         </div>
         <div className="NavTop__right">
-          {console.log('currentUser', currentUser)}
+     
           {currentUser && currentUser.username ? (
             <>
               <div
@@ -231,7 +231,7 @@ const NavTop = (props) => {
               >
                 <img
                   className="NavTop__avatar--userAvatar"
-                  src={BASEMEDIA + currentUser.profile.avatar || newUserAvatar}
+                  src={currentUser.profile.avatar || newUserAvatar}
                   
                   alt="user"
                 />

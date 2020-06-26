@@ -230,11 +230,7 @@ const NavTop = (props) => {
               >
                 <img
                   className="NavTop__avatar--userAvatar"
-                  src={
-                    BASEMEDIA +
-                      (currentUser.profile && currentUser.profile.avatar) ||
-                    newUserAvatar
-                  }
+                  src={currentUser.profile.avatar || newUserAvatar}
                   alt="user"
                 />
               </div>

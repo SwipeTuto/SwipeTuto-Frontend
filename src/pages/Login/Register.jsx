@@ -62,7 +62,7 @@ const Register = (props) => {
     } else {
       setSubmitOk(true);
     }
-  }, [user]);
+  }, [user, handleChange]);
 
   return (
     <div className="signup">

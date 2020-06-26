@@ -91,7 +91,10 @@ const SearchPage = () => {
         <CurrentSearchWords />
         <FiltersBar handleClickSize={handleClickSize} />
         <CardGridList cardsSize={gridSize} />
-        {isLoaded ? (
+        {isLoaded &&
+        totalNumberOfCards &&
+        totalNumberOfCards.isInteger() &&
+        totalNumberOfCards !== 0 ? (
           <Pagination
             currentPageClicked={currentCardsGridPage}
             totalPages={totalNumberOfPages}

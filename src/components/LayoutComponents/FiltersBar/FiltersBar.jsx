@@ -21,7 +21,15 @@ const FiltersBar = ({ handleClickSize }) => {
   const dispatch = useDispatch();
   const langage = useSelector(selectCurrentSearch);
   const category = useSelector(selectCategoryFilter);
-  const totalNumberOfCardsSearched = useSelector(selectTotalNumberOfResults);
+  const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
+  const getRealNumber = (results) => {
+    if (isNaN(results)) {
+      return 0;
+    } else {
+      return results;
+    }
+  };
+  const totalNumberOfCardsSearched = getRealNumber(totalNumberOfResults);
 
   const AllOrFilterCards = (langage, category) => {
     langage || category

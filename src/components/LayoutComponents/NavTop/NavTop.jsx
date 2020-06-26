@@ -40,7 +40,7 @@ import {
 
 import history from "../../../helper/history";
 import "./NavTop.scss";
-import {BASEMEDIA} from "../../../services/configService"
+import { BASEMEDIA } from "../../../services/configService";
 const NavTop = (props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
@@ -222,7 +222,6 @@ const NavTop = (props) => {
           </form>
         </div>
         <div className="NavTop__right">
-          {console.log('currentUser', currentUser)}
           {currentUser && currentUser.username ? (
             <>
               <div
@@ -231,8 +230,11 @@ const NavTop = (props) => {
               >
                 <img
                   className="NavTop__avatar--userAvatar"
-                  src={BASEMEDIA + currentUser.profile.avatar || newUserAvatar}
-                  
+                  src={
+                    BASEMEDIA +
+                      (currentUser.profile && currentUser.profile.avatar) ||
+                    newUserAvatar
+                  }
                   alt="user"
                 />
               </div>

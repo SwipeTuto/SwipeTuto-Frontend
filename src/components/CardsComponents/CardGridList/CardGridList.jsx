@@ -42,6 +42,11 @@ const CardGridList = ({ cardsSize }) => {
       >
         {!isLoaded ? (
           <Loading />
+        ) : isNaN(totalNumberOfResults) ? (
+          <h2 className="title title-2 nocards-message">
+            Désolé, une erreur est survenue. Si le problème persiste, merci de
+            nous le signaler.
+          </h2>
         ) : totalNumberOfResults === 0 ? (
           <h2 className="title title-2 nocards-message">
             Désolé, aucune carte trouvée. Essayez une autre recherche.

@@ -106,7 +106,7 @@ const NavTopMobile = (props) => {
           />
         )}
 
-        <h1 className="title title-1">MemoCode</h1>
+        <h1 className="title title-1">SwipeTuto</h1>
         {currentUser && (
           <div className="NavTopMobile__avatar">
             <img

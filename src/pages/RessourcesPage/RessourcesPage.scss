@@ -19,7 +19,7 @@
   .ressource {
     &-navigation {
       // background-color: $primary-lighter;
-      background-color: $primary-lighter;
+      background-color: $grey-light;
       padding: 2rem;
       display: flex;
       flex-wrap: wrap;
@@ -109,4 +109,11 @@
       transform: translateY(-2px);
     }
   }
+}
+
+@media screen and (max-width: $bp-tablet) {
+}
+@media screen and (max-width: $bp-phone) {
+}
+@media screen and (max-width: $bp-small-phone) {
 }

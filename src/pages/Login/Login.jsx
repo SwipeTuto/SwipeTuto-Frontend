@@ -78,7 +78,7 @@ const LoginPage = (props) => {
     } else {
       setSubmitOk(true);
     }
-  }, [user]);
+  }, [user, handleChange]);
 
   return (
     <>
@@ -108,12 +108,12 @@ const LoginPage = (props) => {
                 Mot de passe :{" "}
               </label>
               <input
-                onChange={(e) => handleChange(e)}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
                 value={user.password}
                 type="password"
                 name="password"
                 id="mdp"
-                className="login__form--input invalid-input"
+                className="login__form--input valid-input"
                 required
               />
               <p className="input__message" data-inputfor="password"></p>

@@ -246,3 +246,9 @@
     }
   }
 }
+
+@media screen and (max-width: $bp-tablet) {
+  .NavTop {
+    display: none;
+  }
+}

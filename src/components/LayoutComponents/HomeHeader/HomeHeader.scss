@@ -2,7 +2,7 @@
 
 .HomeHeader {
   width: 100%;
-  background-color: $primary-lighter;
+  background-color: $grey-light;
   padding: $inner-component-padding;
 
   &__wrapper {
@@ -14,7 +14,6 @@
   }
 
   &__left {
-    // max-width: 35%;
     margin-right: 10%;
 
     .title.title-1 {
@@ -35,5 +34,33 @@
       width: 100%;
       height: 100%;
     }
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .HomeHeader {
+    padding: $inner-component-padding-tablet;
+  }
+}
+
+@media screen and (max-width: $bp-phone) {
+  .HomeHeader {
+    padding: $inner-component-padding-phone;
+
+    &__right {
+      display: none;
+    }
+
+    &__left {
+      width: 100%;
+      text-align: center;
+      margin: 0;
+    }
+  }
+}
+
+@media screen and (max-width: $bp-small-phone) {
+  .HomeHeader {
+    display: none;
   }
 }

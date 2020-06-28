@@ -20,12 +20,12 @@
     margin-bottom: 2rem;
   }
 
-  input:focus:valid,
+  .valid-input:focus,
   textarea:focus:valid {
     border: 0.5px solid #00b109;
   }
 
-  input:focus:invalid,
+  .invalid-input:focus,
   textarea:focus:invalid {
     border: 0.5px solid #f76300;
   }
@@ -35,20 +35,32 @@
     background-color: $white;
   }
 
+  .input__message {
+    display: none;
+  }
+
+  .invalid-input:focus + .input__message {
+    display: block;
+  }
+
   .allForms {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-auto-rows: max-content;
+    // display: grid;
+    // grid-template-columns: 1fr;
+    // grid-auto-rows: max-content;
+    display: flex;
+    flex-direction: column;
     gap: 2.5rem;
 
     background-color: $white;
   }
 
   form {
-    display: grid;
-    grid-template-columns: 1fr 20rem min-content;
-    grid-column-gap: 2rem;
-    grid-auto-rows: max-content;
+    // display: grid;
+    // grid-template-columns: 1fr 20rem min-content;
+    // grid-column-gap: 2rem;
+    // grid-auto-rows: max-content;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     padding-bottom: 2rem;
   }

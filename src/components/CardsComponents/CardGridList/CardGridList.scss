@@ -31,3 +31,21 @@
     text-align: center;
   }
 }
+@media screen and (max-width: $bp-tablet) {
+  .CardGridList {
+    padding: 0 3rem;
+
+    &__wrapper {
+      &--small {
+        grid-template-columns: repeat(3, 1fr);
+
+        grid-gap: 1.5rem;
+      }
+
+      &--big {
+        grid-template-columns: 1fr;
+        grid-gap: 3.5rem;
+      }
+    }
+  }
+}

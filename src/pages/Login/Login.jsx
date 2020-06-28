@@ -91,18 +91,18 @@ const LoginPage = (props) => {
             <form className="login__form">
               <label htmlFor="pseudo" className="login__form--label">
                 {" "}
-                Pseudo :{" "}
+                Email :{" "}
               </label>
               <input
                 onChange={(e) => handleChange(e)}
-                type="text"
-                name="username"
-                value={user.username}
-                id="pseudo"
+                type="email"
+                name="email"
+                value={user.email}
+                id="email_login"
                 className="login__form--input invalid-input"
                 required
               />
-              <p className="input__message" data-inputfor="username"></p>
+              <p className="input__message" data-inputfor="email"></p>
               <label htmlFor="mdp" className="login__form--label">
                 {" "}
                 Mot de passe :{" "}
@@ -112,7 +112,7 @@ const LoginPage = (props) => {
                 value={user.password}
                 type="password"
                 name="password"
-                id="mdp"
+                id="mdp_login"
                 className="login__form--input valid-input"
                 required
               />

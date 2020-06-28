@@ -125,15 +125,6 @@
 
     .NavTop__avatar {
       height: 70%;
-
-      &--userAvatar {
-        border-radius: 50%;
-        height: 100%;
-        width: auto;
-        display: block;
-        box-shadow: $pill-shadow;
-        cursor: pointer;
-      }
     }
 
     // A remettre pour afficher btn connexion et inscription

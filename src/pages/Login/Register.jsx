@@ -115,7 +115,7 @@ const Register = (props) => {
           value={user.email || ""}
           onChange={(e) => handleChange(e)}
           type="email"
-          id="emails"
+          id="email_register"
           className="signup__form--input invalid-input"
           required
         />
@@ -128,7 +128,7 @@ const Register = (props) => {
           value={user.password || ""}
           onChange={(e) => handleChange(e)}
           type="password"
-          id="mdp"
+          id="mdp_register"
           className="signup__form--input invalid-input"
           required
         />
@@ -143,7 +143,7 @@ const Register = (props) => {
             setPasswordConfirmation(e.target.value);
           }}
           type="password"
-          id="mdp2"
+          id="mdp_register_confirm"
           className={`signup__form--input ${
             passwordConfirmation !== password ? "invalid-input" : "valid-input"
           }`}

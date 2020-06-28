@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   fullscreen: false,
   showUserNav: false,
   mobileNavOpen: false,
+  betaAlert: true,
 };
 
 const layoutReducer = (state = INITIAL_STATE, action) => {
@@ -57,6 +58,11 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         mobileNavOpen: false,
+      };
+    case LayoutActionTypes.CLOSE_BETA_ALERT:
+      return {
+        ...state,
+        betaAlert: false,
       };
     default:
       return state;

@@ -28,6 +28,7 @@ import './index.scss'
 import './App.scss';
 import ConfidentialityPage from "./pages/ConfidentialityPage/ConfidentialityPage";
 import CookiesPage from "./pages/CookiesPage/CookiesPage";
+import InfosPage from "./pages/InfosPage/InfosPage";
 
 
 
@@ -40,21 +41,28 @@ function App(props) {
   const [langage, category] = urlParams(props.location)
   const isLoaded = useSelector(selectIsLoaded)
 
+  // useEffect(() => {
+  //   !isLoaded && (
+  //     langage || category ? dispatch(getCardAfterfilterAction(langage, category)) : dispatch(getCardsAction())
+  //   )
+  // }, [category, langage, dispatch, isLoaded]);
+
   useEffect(() => {
     !isLoaded && (
       langage || category ? dispatch(getCardAfterfilterAction(langage, category)) : dispatch(getCardsAction())
     )
-  }, [category, langage, dispatch, isLoaded]);
+  }, [isLoaded]);
 
   // const allImages = [...document.getElementsByTagName('img')];
   // console.log(allImages);
   // allImages.map(image => image.addEventListener('contextmenu', e => e.preventDefault()));
+  console.log("appJS render");
 
   return (
     <div className="App">
       <NavTop />
       <NavTopMobile />
-      {/* <NavLeft /> */}
+
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/cards" component={SearchPage} />
@@ -65,6 +73,7 @@ function App(props) {
         <Route path="/confidentiality" component={ConfidentialityPage} />
         <Route path="/cookies" component={CookiesPage} />
         <Route path="/contact-us" component={ContactUsPage} />
+        <Route path="/infos" component={InfosPage} />
         <ProtectedRoute path="/account" component={AccountPage} />
         <ProtectedRoute exact path="/help" component={HelpPage} />
         <Route component={NotFoundPage} />

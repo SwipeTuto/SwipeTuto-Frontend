@@ -37,7 +37,7 @@ const CardGridList = ({ cardsSize }) => {
     <div className="CardGridList">
       <div
         className={`CardGridList__wrapper${
-          cardPreviewSize === "small" ? "--small" : "--big y"
+          cardPreviewSize === "small" ? "--small" : "--big"
         }`}
       >
         {!isLoaded ? (

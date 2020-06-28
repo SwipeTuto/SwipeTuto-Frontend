@@ -12,7 +12,7 @@
   box-shadow: 0 3px 3px rgba($grey-dark, 0.5);
   border: 0.5px solid $grey-medium;
   font-size: 3rem;
-  z-index: 1000000000000;
+  z-index: 100000;
 
   &.active {
     height: 100vh;

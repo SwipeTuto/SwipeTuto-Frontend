@@ -9,7 +9,7 @@ const Footer = () => {
       MemoCode - &copy; MemoCode 2020 -{" "}
       <Link to="/conditions">Conditions d'utilisation</Link> -{" "}
       <Link to="/confidentiality">Confidientialité</Link> -{" "}
-      <Link to="/cookies">Cookies</Link>
+      <Link to="/cookies">Cookies</Link> - <Link to="/infos">Informations</Link>
     </div>
   );
 };

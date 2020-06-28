@@ -1,6 +1,22 @@
 @import "../../variables.scss";
 
 .HomePage {
+  .beta__alert {
+    &--button {
+      background-color: $primary-medium;
+      color: $white;
+      margin: 2rem auto 0 auto;
+      transition: all 0.2s ease;
+      border-radius: $button-radius;
+      padding: 0.5rem 3rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: lighten($primary-medium, 10%);
+      }
+    }
+  }
+
   &__section {
     padding: $inner-component-padding;
   }
@@ -112,11 +128,36 @@
     }
   }
 
+  &__infos,
+  .beta__alert {
+    padding: $grid-component-padding;
+    display: flex;
+    flex-direction: column;
+    background-color: $primary-lighter;
+    text-align: center;
+
+    h2 {
+      text-align: center;
+      text-transform: uppercase;
+      color: $primary-dark;
+      font-size: 4rem;
+    }
+
+    &--link {
+      color: $primary-light;
+      font-weight: bold;
+    }
+  }
+
   @media screen and (max-width: $bp-tablet) {
     .HomePage {
       &__section,
       &__grid {
         padding: $inner-component-padding-tablet;
+      }
+
+      &__grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
     .About {
@@ -134,6 +175,10 @@
       &__section,
       &__grid {
         padding: $inner-component-padding-phone;
+      }
+
+      &__grid {
+        grid-template-columns: 1fr;
       }
     }
     .About {

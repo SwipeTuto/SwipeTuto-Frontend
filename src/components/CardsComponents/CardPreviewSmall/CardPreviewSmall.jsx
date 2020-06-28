@@ -18,8 +18,6 @@ const CardPreviewSmall = ({ card }) => {
   const { media_image, user, categorie, name } = card;
   const dispatch = useDispatch();
 
-  useEffect(() => {}, [user]);
-
   return (
     <div className="CardPreviewSmall" data-slideid="1">
       <div

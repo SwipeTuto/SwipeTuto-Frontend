@@ -36,10 +36,10 @@ const LoginPage = (props) => {
   };
 
   const handleClick = (e) => {
-    const { username, password } = user;
+    const { email, password } = user;
     e.preventDefault();
-    if (user.username && user.password) {
-      return dispatch(loginAction(username, password));
+    if (user.email && user.password) {
+      return dispatch(loginAction(email, password));
     }
   };
 
@@ -54,13 +54,13 @@ const LoginPage = (props) => {
             <form className="login__form">
               <label htmlFor="pseudo" className="login__form--label">
                 {" "}
-                Pseudo :{" "}
+                email :{" "}
               </label>
               <input
                 onChange={(e) => handleChange(e)}
                 type="text"
-                name="username"
-                value={user.username}
+                name="email"
+                value={user.email}
                 id="pseudo"
                 className="login__form--input"
                 required

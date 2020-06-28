@@ -12,13 +12,12 @@ export const loginGoogle = () => {
     .then(result => {
     
       var user = result.user;
-      console.log('user', user)
       // getIdToken est une fonction de firebase qui renvoie le token pour identifier lae user dans les services firebase
       return user.getIdToken()
         .then(idToken => {
           login(idToken).then(rep => {
-            // history.push('/cards', history.location)
-            // history.go()
+            history.push('/cards', history.location)
+            history.go()
             return rep
           })
         })
@@ -101,17 +100,15 @@ export const register = users => {
     last_name: users.lastname,
     password: users.password,
     email: users.email,
-    // profile: {
-      
-    // }
   }
   var config = {
     headers: { 'Content-Type': 'application/json' },
   }
   return axios.post(`${baseURL}create/`, JSON.stringify(data), config)
     .then(user => {
-      localStorage.setItem('user', JSON.stringify(user.data.user))
-      localStorage.setItem('token', JSON.stringify(user.data.token))
+      console.log('user', user)
+      localStorage.setItem('user', JSON.stringify(user.data))
+      // localStorage.setItem('token', JSON.stringify(user.data.token))
       return user;
     });
 }

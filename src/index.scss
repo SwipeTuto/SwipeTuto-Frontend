@@ -60,6 +60,12 @@ body {
   margin: 0 auto;
 }
 
+@media screen and (max-width: $bp-phone) {
+  body {
+    padding: 4rem 0 0 0;
+  }
+}
+
 // Components spécifiques
 
 .primary-text {

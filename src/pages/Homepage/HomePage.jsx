@@ -12,6 +12,7 @@ import Loading from "../../components/Loading/Loading";
 import {
   closeFullscreen,
   closePopupCard,
+  closeBetaAlert,
 } from "../../redux/layout/layout-actions";
 import { getCardsAction } from "../../redux/cards/cards-actions";
 
@@ -20,6 +21,7 @@ import { ReactComponent as GrilleIllustration } from "../../assets/images/illust
 import { ReactComponent as SuccessIllustration } from "../../assets/images/illustrations/illustration-success.svg";
 
 import { selectCardsFetchedCards } from "../../redux/filter/filter-selectors";
+import { selectBetaAlertOpen } from "../../redux/layout/layout-selectors";
 import {
   deleteCurrentSearch,
   setType,
@@ -31,10 +33,11 @@ import { selectIsLoaded } from "../../redux/cards/cards-selectors";
 const HomePage = () => {
   const isLoaded = useSelector(selectIsLoaded);
   const cards = useSelector(selectCardsFetchedCards);
+  const betaAlertOpen = useSelector(selectBetaAlertOpen);
   const [cardsArrayCut, setCardsArrayCut] = useState([]);
   const dispatch = useDispatch();
-  dispatch(closeFullscreen());
-  dispatch(closePopupCard(false));
+  // dispatch(closeFullscreen());
+  // dispatch(closePopupCard(false));
   // console.log(cards);
 
   useEffect(() => {
@@ -51,8 +54,33 @@ const HomePage = () => {
     window.scroll(0, 0);
   }
 
+  const handleCloseInfoClick = () => {
+    dispatch(closeBetaAlert());
+  };
+
   return (
     <div className="HomePage">
+      {betaAlertOpen && (
+        <div className="HomePage__infos beta__alert">
+          <h2 className="title title-2">Informations</h2>
+          <p>
+            Le site est encore en construction. Certaines fonctionnalités ne
+            sont pas encore mises en place et d'autres devraient être améliorées
+            sous peu. Vous pouvez suivre les futures fonctionnalités sur la page{" "}
+            <Link to="/infos" className="HomePage__infos--link">
+              Informations
+            </Link>
+            .
+          </p>
+          <button
+            className="beta__alert--button"
+            onClick={() => handleCloseInfoClick()}
+          >
+            Fermer
+          </button>
+        </div>
+      )}
+
       <HomeHeader />
       <div className="HomePage__grid">
         {!isLoaded ? (
@@ -141,6 +169,19 @@ const HomePage = () => {
           <button>#JAVASCRIPT</button>
           <button>#CSS</button>
         </div>
+      </div>
+
+      <div className="HomePage__infos infos__section">
+        <h2 className="title title-2">Informations</h2>
+        <p>
+          Le site est encore en construction. Certaines fonctionnalités ne sont
+          pas encore mises en place et d'autres devraient être améliorées sous
+          peu. Vous pouvez suivre les futures fonctionnalités sur la page{" "}
+          <Link to="/infos" className="HomePage__infos--link">
+            Informations
+          </Link>
+          .
+        </p>
       </div>
     </div>
   );

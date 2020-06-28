@@ -20,3 +20,8 @@ export const selectMobileNavOpen = createSelector(
   [selectLayout],
   layout => layout.mobileNavOpen
 )
+
+export const selectBetaAlertOpen = createSelector(
+  [selectLayout],
+  layout => layout.betaAlert
+)

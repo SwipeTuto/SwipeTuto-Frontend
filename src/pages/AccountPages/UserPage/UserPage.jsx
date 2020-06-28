@@ -24,8 +24,8 @@ const UserPage = () => {
   const cards = useSelector(selectCardsFetchedCards);
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
-  dispatch(closeFullscreen());
-  dispatch(closePopupCard(false));
+  // dispatch(closeFullscreen());
+  // dispatch(closePopupCard(false));
 
   useEffect(() => {
     dispatch(getCardsByUserNameAction(currentUser.username));

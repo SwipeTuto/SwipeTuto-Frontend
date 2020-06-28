@@ -12,6 +12,7 @@ export const getCards = () => {
 
   return axios.get(`${baseURL}card/`, config)
     .then(rep => {
+
       return rep
     })
     .catch(function (err) {

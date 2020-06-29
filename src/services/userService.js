@@ -16,8 +16,8 @@ export const loginGoogle = () => {
       return user.getIdToken()
         .then(idToken => {
           login(idToken).then(rep => {
-            history.push('/cards', history.location)
-            history.go()
+            // history.push('/cards', history.location)
+            // history.go()
             return rep
           })
         })
@@ -51,8 +51,7 @@ export const login = idToken => {
   return axios.post(`${baseURL}google-login/`, JSON.stringify(data), config)
     .then(rep => {
       console.log('rep', rep)
-      localStorage.setItem('user', JSON.stringify(rep.data.user))
-      localStorage.setItem('token', rep.data.token)
+      localStorage.setItem('user', JSON.stringify(rep.data))
       return rep
     })
     .catch(function (err) {
@@ -71,13 +70,11 @@ export const loginManuel = (username, password) => {
   }
   return axios.post(`${baseURL}login/`, JSON.stringify({ username, password }), config)
     .then(user => {
-      localStorage.setItem('user', JSON.stringify(user.data.user))
-      localStorage.setItem('token', JSON.stringify(user.data.token))
+      localStorage.setItem('user', JSON.stringify(user.data))
       return user;
     })
     .catch(function (err) {
       localStorage.removeItem('user')
-      localStorage.removeItem('token')
       return err
 
     })
@@ -106,9 +103,7 @@ export const register = users => {
   }
   return axios.post(`${baseURL}create/`, JSON.stringify(data), config)
     .then(user => {
-      console.log('user', user)
       localStorage.setItem('user', JSON.stringify(user.data))
-      // localStorage.setItem('token', JSON.stringify(user.data.token))
       return user;
     });
 }

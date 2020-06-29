@@ -32,13 +32,11 @@ export const loginGit = () => {
   auth().signInWithPopup(providerGit).then(function (result) {
     var token = result.credential.accessToken;
     var user = result.user;
-    // ...
   }).catch(function (error) {
     var errorCode = error.code;
     var errorMessage = error.message;
     var email = error.email;
     var credential = error.credential;
-    // ...
   });
 }
 
@@ -58,7 +56,6 @@ export const login = idToken => {
       localStorage.removeItem('user')
       localStorage.removeItem('token')
       return err
-
     })
 }
 

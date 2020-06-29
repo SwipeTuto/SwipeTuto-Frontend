@@ -101,6 +101,7 @@ const CardSliderFullscreen = () => {
               src={slide}
               slide={slide}
               alt="slide element"
+              onContextMenu={(e) => e.preventDefault()}
             />
           ))}
       </div>

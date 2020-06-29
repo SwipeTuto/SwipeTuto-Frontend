@@ -125,13 +125,13 @@ const CardFullPopup = () => {
         className="CardFullPopup__wrapper"
         onClick={(e) => e.stopPropagation()}
       >
-        <CloseLogo
+        {/* <CloseLogo
           className="CardFullPopup__close"
           onClick={(e) => {
             e.stopPropagation();
             handlePopupClose();
           }}
-        />
+        /> */}
         <div className="CardFullPopup__grid">
           <div className="CardFullPopup__header">
             <h1 className="title title-1">{clickedCard && clickedCard.name}</h1>
@@ -141,6 +141,13 @@ const CardFullPopup = () => {
               <FullscreenLogo
                 className="card-action-button"
                 onClick={() => dispatch(showFullscreen())}
+              />
+              <CloseLogo
+                className="card-action-button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePopupClose();
+                }}
               />
             </div>
           </div>
@@ -163,7 +170,7 @@ const CardFullPopup = () => {
           </div>
           <div className="grid__aside-infos-grid">
             <UserNameAndAvatarBig
-              authorName={clickedCard && clickedCard.user.username}
+              userObject={clickedCard && clickedCard.user}
             />
             <div className="infos__published-date">
               <p>Publié le :</p>

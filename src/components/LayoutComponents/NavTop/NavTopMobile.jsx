@@ -24,7 +24,8 @@ import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg
 import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
 import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
 import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
-import newUserAvatar from "../../../assets/images/avatar_new_user.png";
+// import newUserAvatar from "../../../assets/images/avatar_new_user.png";
+import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 
 import "./NavTopMobile.scss";
 
@@ -106,16 +107,16 @@ const NavTopMobile = (props) => {
           />
         )}
 
-        <h1 className="title title-1">MemoCode</h1>
-        {currentUser && (
+        <h1 className="title title-1">SwipeTuto</h1>
+        {/* {currentUser && (
           <div className="NavTopMobile__avatar">
-            <img
-              className="NavTopMobile__avatar--userAvatar"
-              src={currentUser.avatar || newUserAvatar}
-              alt="user"
+            <UserAvatar
+              userImage={currentUser.user.profile.avatar}
+              userFirstName={currentUser.user.first_name}
+              userLastName={currentUser.user.last_name}
             />
           </div>
-        )}
+        )} */}
       </div>
       <div className={`NavTopMobile__open ${mobileNavOpen ? "active" : ""}`}>
         <div className="NavTopMobile__searchZone">
@@ -269,13 +270,13 @@ const NavTopMobile = (props) => {
           </Link>
         </div>
         {/* <div className="mobileNavSeparation"></div> */}
-        {currentUser ? (
+        {currentUser && currentUser.user ? (
           <div className="NavTopMobile__user">
             <div className="NavTopMobile__userInfos">
-              <img
-                className="NavTopMobile__userInfos--userAvatar"
-                src={currentUser.avatar}
-                alt="user avatar"
+              <UserAvatar
+                userImage={currentUser.user.profile.avatar}
+                userFirstName={currentUser.user.first_name}
+                userLastName={currentUser.user.last_name}
               />
               <div className="NavTopMobile__userWelcome">
                 <p className="NavTopMobile__userWelcome--text">Bonjour</p>
@@ -307,7 +308,11 @@ const NavTopMobile = (props) => {
             </div>
           </div>
         ) : (
-          <Link className="NavTopMobile__linkConnexion" to="/login">
+          <Link
+            className="NavTopMobile__linkConnexion"
+            to="/login"
+            onClick={() => handleClick()}
+          >
             <CustomButton color="dark">Connexion / Inscription</CustomButton>
           </Link>
         )}

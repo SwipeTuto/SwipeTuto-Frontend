@@ -19,11 +19,18 @@
   .ressource {
     &-navigation {
       // background-color: $primary-lighter;
-      background-color: $primary-lighter;
+      background-color: $grey-light;
       padding: 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+
+      & .scroll-logo {
+        display: none;
+      }
+
+      &-scroll {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
 
       &__item {
         display: inline-block;
@@ -107,6 +114,98 @@
     &:hover {
       fill: $primary-light;
       transform: translateY(-2px);
+    }
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .RessourcesPage {
+    .ressource {
+      &-navigation {
+        display: flex;
+        align-items: center;
+
+        &__item {
+          white-space: nowrap;
+        }
+
+        &-scroll {
+          overflow: scroll;
+          flex-wrap: nowrap;
+          justify-content: flex-start;
+          // padding: 1.2rem;
+        }
+
+        & .scroll-logo {
+          display: block;
+          top: 0.5rem;
+
+          &:first-of-type {
+            left: 1rem;
+          }
+
+          &:last-of-type {
+            right: 1rem;
+          }
+
+          & > svg {
+            height: 3rem;
+            width: 3rem;
+          }
+        }
+      }
+
+      &-category {
+        padding: $inner-component-padding-tablet;
+
+        .title.title-2 {
+          margin-bottom: 1.2rem;
+        }
+      }
+
+      &-liste {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: max-content;
+        grid-gap: 2%;
+      }
+    }
+  }
+}
+@media screen and (max-width: $bp-phone) {
+  .RessourcesPage {
+    .ressource {
+      &-navigation {
+        padding: 0.8rem;
+        &-scroll {
+        }
+      }
+
+      &-category {
+        padding-bottom: 2rem;
+      }
+
+      &-liste {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0;
+
+        .CardPreviewSmallRessources {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: $bp-small-phone) {
+  .RessourcesPage {
+    .ressource {
+      &-category {
+        padding-bottom: 0rem;
+        padding-top: 2.5rem;
+      }
     }
   }
 }

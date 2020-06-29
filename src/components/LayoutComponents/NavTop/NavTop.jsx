@@ -1,6 +1,6 @@
 // Présent dans App.js
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, Link } from "react-router-dom";
@@ -20,9 +20,10 @@ import PHPLogo from "../../../assets/images/tech_logo/PHP.png";
 import ReactJSLogo from "../../../assets/images/tech_logo/reactJS.png";
 import NodeJSLogo from "../../../assets/images/tech_logo/nodeJS.png";
 import allLogo from "../../../assets/images/tech_logo/all_logo.png";
-import newUserAvatar from "../../../assets/images/avatar_new_user.png";
+// import newUserAvatar from "../../../assets/images/avatar_new_user.png";
 
 import CustomButton from "../CustomButton/CustomButton";
+import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 
 import {
   getCardsAction,
@@ -40,14 +41,22 @@ import {
 
 import history from "../../../helper/history";
 import "./NavTop.scss";
-import {BASEMEDIA} from "../../../services/configService"
+import { BASEMEDIA } from "../../../services/configService";
+
 const NavTop = (props) => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(selectCurrentUser);
+  const currentUser = useSelector((state) => state.user.currentUser);
   const currentUserNav = useSelector(selectUserNav);
   const [searchInput, setSearchInput] = useState("");
   const [researchIsSubmitted, setResearchIsSubmitted] = useState(false);
   const category = useSelector((state) => state.filter.categoryFilter);
+  // const [userObject, setUserObject] = useState();
+
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     setUserObject(currentUser);
+  //   }
+  // }, [currentUser]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -222,18 +231,17 @@ const NavTop = (props) => {
           </form>
         </div>
         <div className="NavTop__right">
-          {console.log('currentUser', currentUser)}
-          {currentUser && currentUser.username ? (
+          {currentUser && currentUser.user ? (
             <>
               <div
                 onClick={() => dispatch(toggleUserNav())}
                 className="NavTop__avatar"
               >
-                <img
-                  className="NavTop__avatar--userAvatar"
-                  src={currentUser.profile.avatar || newUserAvatar}
-                  
-                  alt="user"
+                {/* {console.log(currentUser)} */}
+                <UserAvatar
+                  userImage={currentUser.user.profile.avatar}
+                  userFirstName={currentUser.user.first_name}
+                  userLastName={currentUser.user.last_name}
                 />
               </div>
             </>
@@ -291,4 +299,4 @@ const NavTop = (props) => {
   );
 };
 
-export default withRouter(NavTop);
+export default NavTop;

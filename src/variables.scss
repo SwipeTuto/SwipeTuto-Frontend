@@ -1,8 +1,14 @@
 // VARIABLES
-$primary-light: #ff6699;
-$primary-lighter: #faf9ff;
-$primary-medium: #d400ff;
-$primary-dark: #331277;
+$primary-light: #ff6a00;
+$primary-lighter: #c6e8ff;
+$primary-medium: #00bfe0;
+$primary-dark: #00258b;
+
+// Autre set
+// $primary-light: #ff6699;
+// $primary-lighter: #faf9ff;
+// $primary-medium: #d400ff;
+// $primary-dark: #331277;
 $white: #ffffff;
 $grey-lighter: #fefefe;
 $grey-light: #f8f8f8;
@@ -19,10 +25,15 @@ $card-shadow: 0 4px 5px $grey-dark;
 $card-shadow-2: 0 0px 8px rgba($grey-dark, 0.4);
 $inner-component-padding: 10rem 17vw;
 $grid-component-padding: 3rem 17vw;
+$inner-component-padding-tablet: 5rem 8vw;
+$grid-component-padding-tablet: 3rem 8vw;
+$inner-component-padding-phone: 4rem 2vw;
+$grid-component-padding-phone: 4rem 2vw;
 
 // Breakpoints
 $bp-tablet: 900px;
-$bp-phone: 650px;
+$bp-phone: 680px;
+$bp-small-phone: 540px;
 
 @mixin input-style {
   background: $grey-light;
@@ -92,4 +103,3 @@ $bp-phone: 650px;
     background-color: $primary-dark;
   }
 }
-// <span className="horizontal-separation-primary"></span>

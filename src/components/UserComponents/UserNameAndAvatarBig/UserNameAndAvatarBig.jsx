@@ -1,18 +1,32 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./UserNameAndAvatarBig.scss";
-import { selectCurrentUser } from "../../../redux/user/user-selectors";
+import {
+  selectCurrentUser,
+  selectUser,
+} from "../../../redux/user/user-selectors";
+import UserAvatar from "../UserAvatar/UserAvatar";
+import { selectClickedCard } from "../../../redux/cards/cards-selectors";
+import { base } from "../../../services/configService";
 
 // Faire vérif taille username : si trop grand (à définir) tronquer avec "..."
-const UserNameAndAvatarBig = ({ authorName }) => {
- const currentUser = useSelector(selectCurrentUser);
-
+const UserNameAndAvatarBig = ({ userObject }) => {
+  const clickedCard = useSelector(selectClickedCard);
+  console.log(userObject);
   return (
     <div className="UserNameAndAvatarBig">
       <div className="UserNameAndAvatarBig__avatar NavTop__avatar--userAvatar">
-        <img  style={{width:'100%', height:'100%'}} className='NavTop__avatar--userAvatar' src={currentUser && currentUser.profile.avatar} alt="" />
+        {clickedCard && (
+          <UserAvatar
+            userImage={base + userObject.profile[0].avatar}
+            userFirstName={userObject.first_name}
+            userLastName={userObject.last_name}
+          />
+        )}
       </div>
-      <p className="UserNameAndAvatarBig__name">{authorName}</p>
+      <p className="UserNameAndAvatarBig__name">
+        {clickedCard && userObject.username}
+      </p>
     </div>
   );
 };

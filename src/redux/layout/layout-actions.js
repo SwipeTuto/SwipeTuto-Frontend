@@ -27,3 +27,7 @@ export const openMobileNav = () => ({
 export const closeMobileNav = () => ({
   type: LayoutActionTypes.CLOSE_MOBILE_NAV,
 })
+
+export const closeBetaAlert = () => ({
+  type: LayoutActionTypes.CLOSE_BETA_ALERT,
+})

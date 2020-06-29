@@ -11,7 +11,7 @@ export const loginAction = (username, password) => {
   return dispatch => {
     return loginManuel(username, password)
       .then(user => {
-        history.push('/cards', history.location)
+        history.push('/', history.location)
         history.go()
       })
       .catch(err => {
@@ -48,8 +48,8 @@ export const registerAction = users => {
     register(users)
       .then(user => {
         dispatch(registerSuccess(user));
-        history.push('/cards', history.location)
-        history.go()
+        // history.push('/cards', history.location)
+        // history.go()
       })
       .catch(err => {
         dispatch(registerErrors(err.response))

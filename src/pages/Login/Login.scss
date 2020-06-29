@@ -1,7 +1,7 @@
 @import "../../variables.scss";
 
 .LoginPage {
-  // min-height: 100vh;
+  min-height: 95vh;
   height: max-content;
   width: 100%;
   display: flex;
@@ -48,18 +48,23 @@
 
       &--input {
         @include input-style;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
 
-        &:focus:valid {
+        &:focus.valid-input {
           border: 0.5px solid #00b109;
         }
 
-        &:focus:invalid {
+        &:focus.invalid-input,
+        &:not([value=""]).invalid-input {
           border: 0.5px solid #f76300;
         }
 
         &:focus {
           background-color: $white;
+        }
+
+        &[value=""] + .input__message {
+          display: none;
         }
       }
     }
@@ -85,5 +90,70 @@
   .custom-button {
     margin: 1rem auto;
     display: inline-block;
+  }
+
+  .input__message {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  // .input__message[data-inputfor="passwordConfirm"] {
+  //   display: none;
+  // }
+
+  // .input__message[data-inputfor="passwordConfirm"]:focus {
+  //   display: block;
+  // }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .LoginPage {
+    &--wrapper {
+      width: 90%;
+    }
+
+    .login,
+    .signup {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 3rem;
+    }
+  }
+}
+
+@media screen and (max-width: $bp-phone) {
+  .LoginPage {
+    align-items: flex-start;
+
+    &--wrapper {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      flex-direction: column;
+    }
+
+    .login,
+    .signup {
+      width: 75%;
+      margin: 0 auto;
+      padding: 2rem 3rem;
+      background-color: $primary-lighter;
+      margin: 4rem auto;
+    }
+
+    .signup {
+      background-color: $primary-lighter;
+    }
+  }
+}
+@media screen and (max-width: $bp-small-phone) {
+  .LoginPage {
+    .login,
+    .signup {
+      width: 90%;
+      margin: 3rem auto;
+    }
   }
 }

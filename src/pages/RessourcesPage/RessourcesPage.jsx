@@ -1,6 +1,8 @@
 import React from "react";
 
 import { ReactComponent as GoTopLogo } from "../../assets/images/chevrons/arrow-up-circle.svg";
+import { ReactComponent as ChevronLeft } from "../../assets/images/chevrons/chevron-back.svg";
+import { ReactComponent as ChevronRight } from "../../assets/images/chevrons/chevron-forward.svg";
 import CardPreviewSmallRessources from "../../components/CardPreviewSmallRessources/CardPreviewSmallRessources";
 
 import "./RessourcesPage.scss";
@@ -40,14 +42,27 @@ const RessourcesPage = () => {
         Ressources utiles pour le développeur Web
       </h1>
       <div className="ressource-navigation">
-        {RESSOURCES_WEB.map((category) => {
-          return (
-            <a href={`#${category.id}`} className="ressource-navigation__item">
-              {category.title}
-            </a>
-          );
-        })}
+        <div className="scroll-logo">
+          <ChevronLeft />
+        </div>
+        <div className="ressource-navigation-scroll">
+          {RESSOURCES_WEB.map((category) => {
+            return (
+              <a
+                href={`#${category.id}`}
+                className="ressource-navigation__item"
+              >
+                {category.title}
+              </a>
+            );
+          })}
+        </div>
+
+        <div className="scroll-logo">
+          <ChevronRight />
+        </div>
       </div>
+
       {RESSOURCES_WEB.map((category) => {
         return (
           <div className="ressource-category">
@@ -63,23 +78,10 @@ const RessourcesPage = () => {
           </div>
         );
       })}
+
       <GoTopLogo className="goTop__button" onClick={handleGoTopButton} />
     </div>
   );
 };
 
 export default RessourcesPage;
-
-/* <li className="ressource-item">
-                    <a
-                      href={ressource.lien}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      alt="ressource website link"
-                    >
-                      {ressource.nom}
-                    </a>
-                    <p className="ressource-item__description">
-                      {ressource.description}
-                    </p>
-                  </li> */

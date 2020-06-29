@@ -18,8 +18,6 @@ const CardPreviewSmall = ({ card }) => {
   const { media_image, user, categorie, name } = card;
   const dispatch = useDispatch();
 
-  useEffect(() => {}, [user]);
-
   return (
     <div className="CardPreviewSmall" data-slideid="1">
       <div
@@ -30,7 +28,11 @@ const CardPreviewSmall = ({ card }) => {
         }}
       >
         {media_image[0] && (
-          <img src={base + media_image[0].image} alt="slides presentation" />
+          <img
+            src={base + media_image[0].image}
+            alt="slides presentation"
+            onContextMenu={(e) => e.preventDefault()}
+          />
         )}
 
         <div className="CardPreviewSmall__hover">

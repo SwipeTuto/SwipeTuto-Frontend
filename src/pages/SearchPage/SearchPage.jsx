@@ -29,9 +29,10 @@ const SearchPage = () => {
   const [gridSize, setGridSize] = useState("small");
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(0);
   const totalNumberOfCards = useSelector(selectTotalNumberOfResults);
+  console.log(typeof totalNumberOfCards);
 
   // A CHANGER EN FONCTION DU BACK :
-  const numberOfItemByPage = 2;
+  const numberOfItemByPage = 16;
   const currentCardsGridPage = useSelector(selectCurrentCardsGridPage);
   console.log(numberOfItemByPage);
 
@@ -91,7 +92,7 @@ const SearchPage = () => {
         <CurrentSearchWords />
         <FiltersBar handleClickSize={handleClickSize} />
         <CardGridList cardsSize={gridSize} />
-        {isLoaded ? (
+        {isLoaded && totalNumberOfCards && totalNumberOfCards !== 0 ? (
           <Pagination
             currentPageClicked={currentCardsGridPage}
             totalPages={totalNumberOfPages}

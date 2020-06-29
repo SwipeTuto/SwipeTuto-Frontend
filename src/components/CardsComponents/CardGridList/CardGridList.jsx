@@ -37,11 +37,16 @@ const CardGridList = ({ cardsSize }) => {
     <div className="CardGridList">
       <div
         className={`CardGridList__wrapper${
-          cardPreviewSize === "small" ? "--small" : "--big y"
+          cardPreviewSize === "small" ? "--small" : "--big"
         }`}
       >
         {!isLoaded ? (
           <Loading />
+        ) : isNaN(totalNumberOfResults) ? (
+          <h2 className="title title-2 nocards-message">
+            Désolé, une erreur est survenue. Si le problème persiste, merci de
+            nous le signaler.
+          </h2>
         ) : totalNumberOfResults === 0 ? (
           <h2 className="title title-2 nocards-message">
             Désolé, aucune carte trouvée. Essayez une autre recherche.

@@ -224,6 +224,7 @@
   }
 
   .nav__chevron {
+    display: block;
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
@@ -243,6 +244,119 @@
 
     &--right {
       right: 2rem;
+    }
+  }
+
+  @media screen and (max-width: $bp-tablet) {
+    .CardFullPopup {
+      &__header {
+        grid-column: 1/-1;
+      }
+
+      &__grid {
+        margin: 0;
+        grid-template-columns: 1fr;
+
+        &__slide {
+          grid-column: 1/-1;
+          max-width: 100%;
+          width: 100%;
+        }
+      }
+
+      &__wrapper {
+        max-width: 100%;
+        width: 100%;
+
+        .horizontal-separation-primary-light {
+          display: none;
+        }
+
+        .nav__chevron {
+          display: none;
+        }
+
+        .grid__aside-infos-grid {
+          grid-gap: 4rem 2rem;
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-auto-rows: max-content;
+          border: 1px solid $grey-dark;
+          padding: 2rem;
+
+          .UserNameAndAvatarBig {
+            grid-column: 1/2;
+            grid-row: 3/4;
+          }
+        }
+
+        .infos {
+          text-align: center;
+
+          &__published-date {
+            grid-column: 1/2;
+            grid-row: 1/2;
+          }
+
+          &__category--stamp {
+            justify-self: center;
+            align-self: center;
+          }
+
+          &__tags {
+            justify-self: center;
+            align-self: center;
+
+            .title.title-4 {
+              display: none;
+            }
+          }
+        }
+
+        .infos__autres-posts {
+          grid-column: 1/-1;
+          width: 100%;
+          grid-row: 2/3;
+
+          .title.title-4 {
+            display: none;
+          }
+
+          .autres-posts {
+            &--grid {
+              width: 100%;
+              display: flex;
+            }
+
+            &--preview {
+              height: 10rem;
+              width: 10rem;
+
+              &:not(:last-child) {
+                margin-right: 1rem;
+              }
+            }
+          }
+        }
+
+        .infos__social {
+          grid-column: span 3;
+          grid-row: 3/4;
+          justify-self: start;
+
+          .social-grid {
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $bp-phone) {
+    .CardFullPopup {
+    }
+  }
+
+  @media screen and (max-width: $bp-small-phone) {
+    .CardFullPopup {
     }
   }
 }

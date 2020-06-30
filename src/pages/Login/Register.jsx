@@ -63,7 +63,7 @@ const Register = (props) => {
       setSubmitOk(true);
     }
   }, [user, handleChange]);
-// d
+
   return (
     <div className="signup">
       <h1 className="title title-1">S'inscrire</h1>

@@ -56,7 +56,6 @@ function App(props) {
   // const allImages = [...document.getElementsByTagName('img')];
   // console.log(allImages);
   // allImages.map(image => image.addEventListener('contextmenu', e => e.preventDefault()));
-  console.log("appJS render");
 
   return (
     <div className="App">

@@ -270,13 +270,15 @@ const NavTopMobile = (props) => {
           </Link>
         </div>
         {/* <div className="mobileNavSeparation"></div> */}
-        {currentUser && currentUser.user ? (
+        {currentUser ? (
           <div className="NavTopMobile__user">
             <div className="NavTopMobile__userInfos">
               <UserAvatar
-                userImage={currentUser.user.profile.avatar}
-                userFirstName={currentUser.user.first_name}
-                userLastName={currentUser.user.last_name}
+                userImage={
+                  currentUser.profile.avatar && currentUser.profile.avatar
+                }
+                userFirstName={currentUser.first_name && currentUser.first_name}
+                userLastName={currentUser.last_name && currentUser.last_name}
               />
               <div className="NavTopMobile__userWelcome">
                 <p className="NavTopMobile__userWelcome--text">Bonjour</p>

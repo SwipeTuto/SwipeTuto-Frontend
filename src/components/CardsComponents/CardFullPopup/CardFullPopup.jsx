@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 // import CardSliderPopup from "../CardSlider/CardSliderPopup";
 import CardSliderSwipable from "../CardSlider/CardSliderSwipable";
 import CardSliderFullscreen from "../CardSlider/CardSliderFullscreen";
-import UserNameAndAvatarBig from "../../UserComponents/UserNameAndAvatarBig/UserNameAndAvatarBig";
+import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 
 import { selectShowPopupCard } from "../../../redux/layout/layout-selectors";
 import { selectClickedCard } from "../../../redux/cards/cards-selectors";
@@ -41,6 +41,7 @@ import {
   selectCardsFetchedCards,
   selectOtherCardsByAuthor,
 } from "../../../redux/filter/filter-selectors";
+import { selectCurrentUser } from "../../../redux/user/user-selectors";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
 // handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
@@ -169,9 +170,29 @@ const CardFullPopup = () => {
             <p>{clickedCard && clickedCard.description}</p>
           </div>
           <div className="grid__aside-infos-grid">
-            <UserNameAndAvatarBig
-              userObject={clickedCard && clickedCard.user}
+            <UserAvatar
+              userImage={
+                clickedCard &&
+                clickedCard.user.profile[0].avatar &&
+                `${base}${clickedCard.user.profile[0].avatar}`
+              }
+              userFirstName={
+                clickedCard &&
+                clickedCard.user.first_name &&
+                clickedCard.user.first_name
+              }
+              userLastName={
+                clickedCard &&
+                clickedCard.user.last_name &&
+                clickedCard.user.last_name
+              }
             />
+            <p className="infos__author">
+              {clickedCard &&
+                clickedCard.user &&
+                clickedCard.user.username &&
+                clickedCard.user.username}
+            </p>
             <div className="infos__published-date">
               <p>Publié le :</p>
               <p>{clickedCardDate}</p>

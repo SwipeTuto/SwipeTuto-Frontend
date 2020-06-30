@@ -89,7 +89,6 @@ const NavTop = (props) => {
 
   const allLogoHandleClick = () => {
     dispatch(getCardsAction());
-    console.log("all clic");
   };
 
   const cardsClick = (e) => {
@@ -231,17 +230,20 @@ const NavTop = (props) => {
           </form>
         </div>
         <div className="NavTop__right">
-          {currentUser && currentUser.user ? (
+          {currentUser ? (
             <>
               <div
                 onClick={() => dispatch(toggleUserNav())}
                 className="NavTop__avatar"
               >
-                {/* {console.log(currentUser)} */}
                 <UserAvatar
-                  userImage={currentUser.user.profile.avatar}
-                  userFirstName={currentUser.user.first_name}
-                  userLastName={currentUser.user.last_name}
+                  userImage={
+                    currentUser.profile.avatar && currentUser.profile.avatar
+                  }
+                  userFirstName={
+                    currentUser.first_name && currentUser.first_name
+                  }
+                  userLastName={currentUser.last_name && currentUser.last_name}
                 />
               </div>
             </>

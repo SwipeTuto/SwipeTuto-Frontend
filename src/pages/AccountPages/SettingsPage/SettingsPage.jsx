@@ -12,10 +12,12 @@ const SettingsPage = () => {
 
   const handleFileSumbit = (e) => {
     e.preventDefault();
-    const newAvatarForm = document.querySelector(".form__avatar");
-    let formData = new FormData(newAvatarForm);
+    const newAvatarInput = document.querySelector("#avatar");
+    const newAvatarFile = newAvatarInput.files[0];
+    let formData = new FormData();
+    formData.append("newAvataFile", newAvatarFile);
+
     console.log(formData);
-    // envoyer formData au serveur
   };
 
   const handleChange = (e) => {

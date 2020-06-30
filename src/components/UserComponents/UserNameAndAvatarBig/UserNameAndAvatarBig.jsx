@@ -12,7 +12,7 @@ import { base } from "../../../services/configService";
 // Faire vérif taille username : si trop grand (à définir) tronquer avec "..."
 const UserNameAndAvatarBig = ({ userObject }) => {
   const clickedCard = useSelector(selectClickedCard);
-  console.log(userObject);
+
   return (
     <div className="UserNameAndAvatarBig">
       <div className="UserNameAndAvatarBig__avatar NavTop__avatar--userAvatar">

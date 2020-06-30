@@ -39,6 +39,12 @@
     width: 8rem;
     border-radius: 50%;
     box-shadow: $pill-shadow;
+
+    .user_avatar {
+      height: 100%;
+      width: 100%;
+      font-size: 2.8rem;
+    }
   }
 
   &__userAvatar {

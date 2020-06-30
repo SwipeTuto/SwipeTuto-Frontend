@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
 import SettingsPage from "./SettingsPage/SettingsPage";
 import UserPage from "./UserPage/UserPage";
+import UserAvatar from "../../components/UserComponents/UserAvatar/UserAvatar";
 
 import { ReactComponent as LogoFacebook } from "../../assets/images/logo-facebook.svg";
 import { ReactComponent as LogoTwitter } from "../../assets/images/logo-twitter.svg";
@@ -28,10 +29,12 @@ const AccountPage = ({ match }) => {
         <div className="AccountPage__header">
           <div className="AccountPage__userInfos">
             <div className="AccountPage__avatar">
-              <img
-                className="AccountPage__userAvatar"
-                src={currentUser.avatar || newUserAvatar}
-                alt="user"
+              <UserAvatar
+                userImage={
+                  currentUser.profile.avatar && currentUser.profile.avatar
+                }
+                userFirstName={currentUser.first_name && currentUser.first_name}
+                userLastName={currentUser.last_name && currentUser.last_name}
               />
             </div>
             <div className="AccountPage__text">

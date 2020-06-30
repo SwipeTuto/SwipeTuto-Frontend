@@ -1,10 +1,12 @@
 // Component qui présente en résumé dans la grille un slide avec image de preview, auteur etc ...
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import UserNameAndAvatarSmall from "../../UserComponents/UserNameAndAvatarSmall/UserNameAndAvatarSmall";
+import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 
+import { selectClickedCard } from "../../../redux/cards/cards-selectors";
 import { setClickedCard } from "../../../redux/cards/cards-actions";
 import { showPopupCard } from "../../../redux/layout/layout-actions";
 import { setType } from "../../../redux/filter/filter-actions";
@@ -49,10 +51,14 @@ const CardPreviewSmall = ({ card }) => {
         }}
       >
         <Link to={`/search?user=${user.username}`}>
-          <UserNameAndAvatarSmall
-            user={user}
-            authorName={truncate(user.username, 12, false)}
+          <UserAvatar
+            userImage={
+              user.profile[0].avatar && `${base}${user.profile[0].avatar}`
+            }
+            userFirstName={user.first_name && user.first_name}
+            userLastName={user.last_name && user.last_name}
           />
+          <p>{user.username}</p>
         </Link>
       </div>
     </div>

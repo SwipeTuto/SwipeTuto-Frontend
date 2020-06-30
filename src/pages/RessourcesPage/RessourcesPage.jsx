@@ -49,6 +49,7 @@ const RessourcesPage = () => {
           {RESSOURCES_WEB.map((category) => {
             return (
               <a
+                key={category.id}
                 href={`#${category.id}`}
                 className="ressource-navigation__item"
               >
@@ -65,14 +66,19 @@ const RessourcesPage = () => {
 
       {RESSOURCES_WEB.map((category) => {
         return (
-          <div className="ressource-category">
+          <div className="ressource-category" key={category.id}>
             <h2 className="title title-2" id={category.id}>
               {category.title}
             </h2>
             <p className="ressource-note">{category.note}</p>
             <ul className="ressource-liste">
               {category.ressources.map((ressource) => {
-                return <CardPreviewSmallRessources ressource={ressource} />;
+                return (
+                  <CardPreviewSmallRessources
+                    ressource={ressource}
+                    key={ressource.nom}
+                  />
+                );
               })}
             </ul>
           </div>

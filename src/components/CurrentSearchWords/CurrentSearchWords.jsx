@@ -17,6 +17,7 @@ import "./CurrentSearchWords.scss";
 const CurrentSearchWords = ({ history }) => {
   const dispatch = useDispatch();
   const currentSearch = useSelector(selectCurrentSearch);
+  const currentBarSearch = useSelector(selectCurrentSearch);
 
   const handleDelete = (e) => {
     e.stopPropagation();
@@ -31,7 +32,7 @@ const CurrentSearchWords = ({ history }) => {
       {currentSearch ? (
         <div className="currentSearch">
           <div className="currentSearch__button">
-            Recherche actuelle : {currentSearch}
+            Recherche actuelle : {currentSearch || currentBarSearch}
             <CloseLogo
               className="currentSearch__close"
               onClick={(e) => handleDelete(e)}

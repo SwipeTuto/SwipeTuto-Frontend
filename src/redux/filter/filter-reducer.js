@@ -2,9 +2,9 @@ import { FilterActionTypes } from './filter-types'
 
 const INITIAL_STATE = {
   searchType: '',
-  currentSearch: '',
+  currentSearch: null,
   errors: '',
-  categoryFilter: '',
+  categoryFilter: null,
   cardsFetched: "",
   otherCardsByAuthor: "",
   currentCardsGridPage: 1,
@@ -19,10 +19,12 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: action.payload };
 
     case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_REQUEST:
+
       return {
         ...state,
-        currentSearch: action.payload.langage,
-        categoryFilter: action.payload.category
+        currentSearch: action.payload.langage == null || action.payload.langage == undefined ? null : action.payload.langage,
+        categoryFilter: action.payload.category == null ||  action.payload.category == undefined ?  null : action.payload.category
+        
       };
     case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_SUCCESS:
       return { ...state, cardsFetched: action.payload, };

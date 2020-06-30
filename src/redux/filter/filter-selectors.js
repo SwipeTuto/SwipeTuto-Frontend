@@ -6,6 +6,10 @@ export const selectCurrentSearch = createSelector(
   [selectFilter],
   filter => filter.currentSearch
 )
+export const selectCategoryFilter = createSelector(
+  [selectFilter],
+  filter => filter.categoryFilter
+)
 export const selectCardsFetched = createSelector(
   [selectFilter],
   filter => filter.cardsFetched && filter.cardsFetched
@@ -40,6 +44,6 @@ export const selectSearchType = createSelector(
   filter => filter.searchType
 )
 
-export const selectCategoryFilter = state => state.filter.categoryFilter ? state.filter.categoryFilter : "all";
+// export const selectCategoryFilter = state => state.filter.categoryFilter ? state.filter.categoryFilter : "all";
 
 export const selectTotalNumberOfCardsSearched = state => state.filter.totalNumberOfCardsSearched ? state.filter.totalNumberOfCardsSearched : 0;

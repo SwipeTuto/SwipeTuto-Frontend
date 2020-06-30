@@ -6,9 +6,10 @@ export const urlParams = url => {
 
   var langage = urlParams.get('langage')
   var category = urlParams.get('category')
+  var ordering = urlParams.get('ordering')
 
 
-  return [langage, category]
+  return [langage, category, ordering]
 }
 
 

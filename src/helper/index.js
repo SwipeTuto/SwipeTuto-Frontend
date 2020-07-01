@@ -63,7 +63,6 @@ export const renameCategory = (category) => {
 
 // Récupérer les initiales :
 export const getInitials = (firstname, lastname) => {
-  console.log(firstname, lastname);
   return (firstname.slice(0, 1) + lastname.slice(0, 1)).toUpperCase();
 };
 

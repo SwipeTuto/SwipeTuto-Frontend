@@ -22,10 +22,7 @@ import { ReactComponent as SuccessIllustration } from "../../assets/images/illus
 
 import { selectCardsFetchedCards } from "../../redux/filter/filter-selectors";
 import { selectBetaAlertOpen } from "../../redux/layout/layout-selectors";
-import {
-  deleteCurrentSearch,
-  setType,
-} from "../../redux/filter/filter-actions";
+import { deleteCurrentSearch } from "../../redux/filter/filter-actions";
 
 import "./HomePage.scss";
 import { selectIsLoaded } from "../../redux/cards/cards-selectors";
@@ -43,7 +40,7 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(deleteCurrentSearch());
     dispatch(getCardsAction());
-    dispatch(setType("all"));
+
     if (cards) {
       setCardsArrayCut(cards.slice(0, 6));
     }

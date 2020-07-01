@@ -79,12 +79,10 @@ const NavTop = (props) => {
   const handleClick = (e) => {
     // dispatch(getCardsLoading());
     dispatch(searchAction(searchInput));
-    dispatch(setType("search"));
   };
 
   const logoHandleClick = (e) => {
-    dispatch(getCardAfterfilterAction(e.target.name));
-    dispatch(setType("langage"));
+    dispatch(getCardAfterfilterAction(e.target.name, ""));
   };
 
   const allLogoHandleClick = () => {
@@ -119,7 +117,7 @@ const NavTop = (props) => {
             to="/cards"
             onClick={(e) => cardsClick(e)}
           >
-            Catégories
+            Langages
             <DropDownLogo className="NavTop__link--logo" />
           </NavLink>
           <NavLink className="NavTop__link" to="/ressources">

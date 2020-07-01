@@ -6,9 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   searchAction,
-  setType,
   getCardAfterfilterAction,
-  setCategoryFilter,
+
 } from "../../../redux/filter/filter-actions";
 import { selectMobileNavOpen } from "../../../redux/layout/layout-selectors";
 import {
@@ -71,8 +70,7 @@ const NavTopMobile = (props) => {
 
   const handleClick = (e) => {
     dispatch(searchAction(searchInput));
-    dispatch(setType("search"));
-    dispatch(setCategoryFilter("all"));
+
     setCardsDropdownOpen(false);
     dispatch(closeMobileNav());
     props.history.push("/cards");
@@ -80,10 +78,9 @@ const NavTopMobile = (props) => {
 
   const logoHandleClick = (e) => {
     dispatch(getCardAfterfilterAction(e.target.name));
-    dispatch(setType("langage"));
+
     setCardsDropdownOpen(false);
     dispatch(closeMobileNav());
-    dispatch(setCategoryFilter("all"));
   };
 
   return (

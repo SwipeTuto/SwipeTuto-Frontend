@@ -6,6 +6,22 @@ export const selectCurrentSearch = createSelector(
   [selectFilter],
   filter => filter.currentSearch
 )
+export const selectSearchWords = createSelector(
+  [selectCurrentSearch],
+  currentSearch => currentSearch.searchWords
+)
+export const selectSearchLangage = createSelector(
+  [selectCurrentSearch],
+  currentSearch => currentSearch.searchLangage
+)
+export const selectSearchCategory = createSelector(
+  [selectCurrentSearch],
+  currentSearch => currentSearch.searchCategory
+)
+export const selectSearchOrder = createSelector(
+  [selectCurrentSearch],
+  currentSearch => currentSearch.searchOrder
+)
 export const selectCardsFetched = createSelector(
   [selectFilter],
   filter => filter.cardsFetched && filter.cardsFetched

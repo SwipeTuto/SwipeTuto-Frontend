@@ -10,14 +10,24 @@ export const searchAction = kword => {
     return searchBar(kword)
       .then(search => {
         dispatch(SearchSuccess(search.data))
-        dispatch(setCurrentSearch(kword))
-        dispatch(setType("search"))
+        dispatch(setCurrentSearch({
+          searchWords: kword,
+          searchLangage: '',
+          searchCategory: '',
+          searchOrder: 'chronology'
+        }))
+
         dispatch(getCardsLoaded())
 
       })
       .catch(err => {
         dispatch(SearchFailure(err.response))
-        dispatch(setCurrentSearch("Une erreur est survenue."))
+        dispatch(setCurrentSearch({
+          searchWords: "Une erreur est survenue.",
+          searchLangage: '',
+          searchCategory: '',
+          searchOrder: 'chronology'
+        }))
       })
   }
 }
@@ -37,7 +47,7 @@ export const getCardAfterfilterAction = (langage, category) => {
     dispatch(getCardAfterfilteryRequest(langage, category))
     return getCardAfterfilter(langage, category)
       .then(rep => {
-        dispatch(setType('search'));
+
         dispatch(getCardAfterfilterSuccess(rep.data))
         dispatch(getCardsLoaded())
         return rep
@@ -62,31 +72,26 @@ const getCardAfterfilterFailure = err => ({
 
 
 // Gestion de la currentSearch avec mots, catégorie, langage et ordre de recherche
-export const setCurrentSearch = searchWords => ({
+export const setCurrentSearch = parameters => ({
   type: FilterActionTypes.SET_CURRENT_SEARCH,
-  payload: searchWords
+  payload: parameters
 })
 
 export const deleteCurrentSearch = () => ({
   type: FilterActionTypes.DELETE_CURRENT_SEARCH,
 })
 
-export const setCategoryFilter = (category) => ({
-  type: FilterActionTypes.SET_CATEGORY_FILTER,
-  payload: category,
-});
-
-export const setType = (searchType) => ({
-  type: FilterActionTypes.SET_TYPE,
-  payload: searchType
+// Changement de l'ordre de classement (restera à connecter api pour requete - mixer avec requetes getCards et l'autre par langage/categorie)
+export const setSearchOrder = (order) => ({
+  type: FilterActionTypes.SET_SEARCH_ORDER,
+  payload: order
 })
+
+
+
 
 
 // Mise des cartes récupérées du back dans le store
-export const setTotalNumberOfCardsSearchedToNull = () => ({
-  type: FilterActionTypes.SET_TOTAL_NUMBER_OF_CARDS_SEARCHED_TO_NULL,
-})
-
 export const setCardsFetchedInStore = (cards) => ({
   type: FilterActionTypes.SET_CARDS_FETCHED_IN_STORE,
   payload: cards

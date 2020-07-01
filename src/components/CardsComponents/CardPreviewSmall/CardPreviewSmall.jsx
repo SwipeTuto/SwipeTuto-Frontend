@@ -46,9 +46,7 @@ const CardPreviewSmall = ({ card }) => {
       </div>
       <div
         className="CardPreviewSmall__details"
-        onClick={() => {
-          dispatch(setType("search"));
-        }}
+
       >
         <Link to={`/search?user=${user.username}`}>
           <UserAvatar

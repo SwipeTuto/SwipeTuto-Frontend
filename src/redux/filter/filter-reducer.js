@@ -2,7 +2,12 @@ import { FilterActionTypes } from './filter-types'
 
 const INITIAL_STATE = {
   searchType: '',
-  currentSearch: '',
+  currentSearch: {
+    searchWords: '',
+    searchLangage: '',
+    searchCategory: '',
+    searchOrder: 'chronology'
+  },
   errors: '',
   categoryFilter: '',
   cardsFetched: "",

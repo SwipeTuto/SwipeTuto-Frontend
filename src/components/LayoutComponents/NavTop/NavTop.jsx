@@ -35,7 +35,6 @@ import { toggleUserNav } from "../../../redux/layout/layout-actions";
 import { selectUserNav } from "../../../redux/layout/layout-selectors";
 import {
   searchAction,
-  setType,
   getCardAfterfilterAction,
 } from "../../../redux/filter/filter-actions";
 

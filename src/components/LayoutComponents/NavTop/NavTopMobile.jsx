@@ -7,13 +7,13 @@ import { Link } from "react-router-dom";
 import {
   searchAction,
   getCardAfterfilterAction,
-
 } from "../../../redux/filter/filter-actions";
 import { selectMobileNavOpen } from "../../../redux/layout/layout-selectors";
 import {
   openMobileNav,
   closeMobileNav,
 } from "../../../redux/layout/layout-actions";
+import { getCardsAction } from "../../../redux/cards/cards-actions";
 
 import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg";
 import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
@@ -77,8 +77,15 @@ const NavTopMobile = (props) => {
   };
 
   const logoHandleClick = (e) => {
-    dispatch(getCardAfterfilterAction(e.target.name));
+    console.log(e.target.dataset.name);
+    dispatch(getCardAfterfilterAction(e.target.dataset.name, ""));
 
+    setCardsDropdownOpen(false);
+    dispatch(closeMobileNav());
+  };
+
+  const allLogoHandleClick = () => {
+    dispatch(getCardsAction());
     setCardsDropdownOpen(false);
     dispatch(closeMobileNav());
   };
@@ -167,8 +174,8 @@ const NavTopMobile = (props) => {
             <Link to="/cards/">
               <p
                 className="NavTopMobile__dropdown--item"
-                name="all"
-                onClick={(e) => logoHandleClick(e)}
+                data-name="all"
+                onClick={() => allLogoHandleClick()}
               >
                 Toutes
               </p>
@@ -176,7 +183,7 @@ const NavTopMobile = (props) => {
             <Link to="/cards/html">
               <p
                 className="NavTopMobile__dropdown--item"
-                name="html"
+                data-name="html"
                 onClick={(e) => logoHandleClick(e)}
               >
                 HTML
@@ -185,7 +192,7 @@ const NavTopMobile = (props) => {
             <Link to="/cards/css/">
               <p
                 onClick={(e) => logoHandleClick(e)}
-                name="css"
+                data-name="css"
                 className="NavTopMobile__dropdown--item"
               >
                 CSS
@@ -194,7 +201,7 @@ const NavTopMobile = (props) => {
             <Link to="/cards/javascript/">
               <p
                 onClick={(e) => logoHandleClick(e)}
-                name="javascript"
+                data-name="javascript"
                 className="NavTopMobile__dropdown--item"
               >
                 Javascript
@@ -203,7 +210,7 @@ const NavTopMobile = (props) => {
             <Link to="/cards/react/">
               <p
                 onClick={(e) => logoHandleClick(e)}
-                name="reactjs"
+                data-name="reactjs"
                 className="NavTopMobile__dropdown--item"
               >
                 React JS
@@ -212,7 +219,7 @@ const NavTopMobile = (props) => {
             <Link to="/cards/nodeJs/">
               <p
                 onClick={(e) => logoHandleClick(e)}
-                name="nodejs"
+                data-name="nodejs"
                 className="NavTopMobile__dropdown--item"
               >
                 Node JS
@@ -221,7 +228,7 @@ const NavTopMobile = (props) => {
             <Link to="/cards/python/">
               <p
                 onClick={(e) => logoHandleClick(e)}
-                name="python"
+                data-name="python"
                 className="NavTopMobile__dropdown--item"
               >
                 Python
@@ -230,7 +237,7 @@ const NavTopMobile = (props) => {
             <Link to="/cards/php">
               <p
                 onClick={(e) => logoHandleClick(e)}
-                name="php"
+                data-name="php"
                 className="NavTopMobile__dropdown--item"
               >
                 PHP
@@ -239,7 +246,7 @@ const NavTopMobile = (props) => {
             <Link to="/cards/sass/">
               <p
                 onClick={(e) => logoHandleClick(e)}
-                name="sass"
+                data-name="sass"
                 className="NavTopMobile__dropdown--item"
               >
                 Sass

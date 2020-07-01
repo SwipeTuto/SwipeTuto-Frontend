@@ -54,88 +54,96 @@ const CardSliderSwipebale = () => {
     setActiveIndex(Math.floor(currentScrollLevel / (imageWidth - 10)));
   };
 
+  const getCSSobject = (boolean) => {
+    if (boolean) {
+      return {
+        visibility: "hidden",
+      };
+    } else {
+      return {};
+    }
+  };
+
   return (
     <div className="CardSliderLarge">
-      {isFullScreen ? (
-        <Fragment>
-          <div
-            className="CardSliderLarge__fullscreen-close"
-            onClick={(e) => {
-              e.stopPropagation();
-              dispatch(closeFullscreen());
-            }}
-          >
-            <CloseLogo />
-          </div>
-          {activeIndex === 0 ? (
-            ""
-          ) : (
+      <div className="CardSliderLarge__wrapper">
+        {/* Chevron left */}
+        {isFullScreen ? (
+          <Fragment>
+            <div
+              className="CardSliderLarge__fullscreen-close"
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch(closeFullscreen());
+              }}
+            >
+              <CloseLogo />
+            </div>
+
             <ChevronLeftWhite
               aria-label="Previous"
               className="CardSliderLarge__chevron--fullpage chevron-left-white"
               onClick={(e) => goToPrevSlide(e)}
+              style={getCSSobject(activeIndex === 0)}
             />
-          )}
-          {activeIndex === clickedCardSlides.length - 1 ? (
-            ""
-          ) : (
+          </Fragment>
+        ) : (
+          <ChevronLeft
+            aria-label="Previous"
+            className="CardSliderLarge__chevron--fullpage chevron-left"
+            onClick={(e) => goToPrevSlide(e)}
+            style={getCSSobject(activeIndex === 0)}
+          />
+        )}
+
+        {/* SLIDER AU CENTRE */}
+        <div
+          className={`CardSliderLarge__slides-container ${
+            isFullScreen ? "active" : ""
+          }`}
+          onScroll={(e) => handleScrollLevel(e)}
+        >
+          {clickedCardSlides &&
+            clickedCardSlides.map((slide, index) => (
+              <img
+                className={
+                  index === activeIndex
+                    ? "CardSliderLarge__slide CardSliderLarge__slide--active"
+                    : "CardSliderLarge__slide"
+                }
+                key={index}
+                index={index}
+                src={slide}
+                slide={slide}
+                alt="slide element"
+                onContextMenu={(e) => e.preventDefault()}
+              />
+            ))}
+        </div>
+        {/* Chevron left */}
+        {isFullScreen ? (
+          <Fragment>
             <ChevronRightWhite
               aria-label="Next"
               className="CardSliderLarge__chevron--fullpage chevron-right-white"
               onClick={(e) => goToNextSlide(e)}
+              style={getCSSobject(activeIndex === clickedCardSlides.length - 1)}
             />
-          )}
 
-          <div className="CardSliderLarge__indicators--fullscreen">
-            {`${activeIndex + 1} / ${
-              clickedCardSlides && clickedCardSlides.length
-            }`}
-          </div>
-        </Fragment>
-      ) : (
-        <Fragment>
-          {activeIndex === 0 ? (
-            ""
-          ) : (
-            <ChevronLeft
-              aria-label="Previous"
-              className="CardSliderLarge__chevron--fullpage chevron-left"
-              onClick={(e) => goToPrevSlide(e)}
-            />
-          )}
-          {activeIndex === clickedCardSlides.length - 1 ? (
-            ""
-          ) : (
-            <ChevronRight
-              aria-label="Next"
-              className="CardSliderLarge__chevron--fullpage chevron-right"
-              onClick={(e) => goToNextSlide(e)}
-            />
-          )}
-        </Fragment>
-      )}
-      <div
-        className={`CardSliderLarge__slides-container ${
-          isFullScreen ? "active" : ""
-        }`}
-        onScroll={(e) => handleScrollLevel(e)}
-      >
-        {clickedCardSlides &&
-          clickedCardSlides.map((slide, index) => (
-            <img
-              className={
-                index === activeIndex
-                  ? "CardSliderLarge__slide CardSliderLarge__slide--active"
-                  : "CardSliderLarge__slide"
-              }
-              key={index}
-              index={index}
-              src={slide}
-              slide={slide}
-              alt="slide element"
-              onContextMenu={(e) => e.preventDefault()}
-            />
-          ))}
+            <div className="CardSliderLarge__indicators--fullscreen">
+              {`${activeIndex + 1} / ${
+                clickedCardSlides && clickedCardSlides.length
+              }`}
+            </div>
+          </Fragment>
+        ) : (
+          <ChevronRight
+            aria-label="Next"
+            className="CardSliderLarge__chevron--fullpage chevron-right"
+            onClick={(e) => goToNextSlide(e)}
+            style={getCSSobject(activeIndex === clickedCardSlides.length - 1)}
+          />
+        )}
       </div>
       {isFullScreen ? null : (
         <ul className="CardSliderLarge__indicators">

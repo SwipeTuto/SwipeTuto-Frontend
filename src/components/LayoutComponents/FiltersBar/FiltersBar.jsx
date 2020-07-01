@@ -72,9 +72,9 @@ const FiltersBar = ({ handleClickSize }) => {
             <div className="FiltersBar__options--links">
               <NavLink to={`/search?langage=${langage}&category=`}>
                 <button
-                  className={
-                    "FiltersBar__options--item " + (category === "" && "active")
-                  }
+                  className={`FiltersBar__options--item ${
+                    (category === "" || category === undefined) && "active"
+                  }`}
                   onClick={(e) => handleClick(e)}
                   data-filter=""
                 >

@@ -111,6 +111,9 @@ const NavTop = (props) => {
             Accueil
           </NavLink>
 
+          <NavLink className="NavTop__link" to="/ressources">
+            Ressources
+          </NavLink>
           <NavLink
             className="NavTop__link NavTop__link--category"
             to="/cards"
@@ -118,9 +121,6 @@ const NavTop = (props) => {
           >
             Langages
             <DropDownLogo className="NavTop__link--logo" />
-          </NavLink>
-          <NavLink className="NavTop__link" to="/ressources">
-            Ressources
           </NavLink>
           <div className=" NavTop__dropdown NavTop__dropdown--category">
             <Link to="/cards">

@@ -25,11 +25,11 @@
     display: flex;
     align-items: center;
     flex-grow: 0;
-    height: 100%;
+    height: 60%;
   }
 
   &__link {
-    padding: 0 1rem;
+    padding: 0 2rem;
     display: inline-block;
     height: 100%;
     display: flex;
@@ -38,10 +38,16 @@
     transform: translateY(0.2rem);
     // border-bottom: 0.4rem solid transparent;
     // font-weight: bold;
+    border-radius: $button-radius;
     transition: all 0.3s;
 
     &.active {
-      color: $primary-medium;
+      color: $white;
+      background-color: $primary-dark;
+
+      & svg {
+        stroke: $white;
+      }
     }
 
     &--category:hover ~ .NavTop__dropdown--category {
@@ -53,6 +59,7 @@
       width: 1.5rem;
       height: 1.5rem;
       margin-left: 0.4rem;
+      stroke: $black;
     }
 
     &:hover {
@@ -73,11 +80,11 @@
       display: flex;
       flex-direction: row-reverse;
       align-items: center;
-      margin-right: 1.6rem;
+      margin-right: 1.2rem;
 
       &:hover .NavTop__input {
         visibility: visible;
-        width: 100%;
+        width: 20rem;
       }
 
       .NavTop__input {
@@ -89,7 +96,7 @@
 
         &:focus {
           visibility: visible;
-          width: 100%;
+          width: 20rem;
           &::placeholder {
             color: transparent;
           }
@@ -97,7 +104,7 @@
       }
 
       .NavTop__button {
-        height: 100%;
+        height: 75%;
         fill: $primary-dark;
         padding: 0;
         margin-left: 0.8rem;
@@ -231,7 +238,7 @@
       transition: all 0.2s ease;
 
       &:hover {
-        box-shadow: inset $pill-shadow;
+        box-shadow: inset $button-shadow;
         background-color: $white;
       }
     }

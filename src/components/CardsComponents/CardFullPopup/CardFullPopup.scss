@@ -66,6 +66,10 @@
       stroke: $primary-dark;
       cursor: pointer;
 
+      #card-action-button__fullscreen {
+        display: inline;
+      }
+
       &:hover {
         stroke: $primary-light;
       }
@@ -271,6 +275,12 @@
           grid-column: 1/-1;
           max-width: 100%;
           width: 100%;
+        }
+      }
+
+      &__action-button {
+        #card-action-button__fullscreen {
+          display: none;
         }
       }
 

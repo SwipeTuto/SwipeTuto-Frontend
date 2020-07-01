@@ -50,10 +50,7 @@
     display: flex;
     overflow: auto;
     flex-flow: row nowrap;
-    // height: 500px;
-    // width: 500px;
     scroll-snap-type: x mandatory;
-    // border: 1px solid red;
 
     &::-webkit-scrollbar {
       width: 0 !important;
@@ -64,11 +61,7 @@
       flex-shrink: 0;
       height: auto;
       width: 100%;
-      max-height: 100vh;
-      max-width: 100vh;
-      // user-select: none;
       scroll-snap-align: start;
-      // scroll-snap-stop: always;
     }
   }
 

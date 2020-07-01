@@ -14,6 +14,7 @@ import {
   closeMobileNav,
 } from "../../../redux/layout/layout-actions";
 import { getCardsAction } from "../../../redux/cards/cards-actions";
+import { logoutAction } from "../../../redux/user/user-actions";
 
 import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg";
 import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
@@ -295,19 +296,38 @@ const NavTopMobile = (props) => {
               </div>
             </div>
             <div className="NavTopMobile__userMenu">
-              <Link className="NavTopMobile__userMenu--link" to="/">
+              <Link
+                className="NavTopMobile__userMenu--link"
+                to="/account/user"
+                onClick={() => handleNavClose()}
+              >
                 <AccountLogo className="NavTopMobile__userMenu--logo" />
                 Compte
               </Link>
-              <Link className="NavTopMobile__userMenu--link" to="/">
+              <Link
+                className="NavTopMobile__userMenu--link"
+                to="/account/settings"
+                onClick={() => handleNavClose()}
+              >
                 <SettingsLogo className="NavTopMobile__userMenu--logo" />
                 Paramètres
               </Link>
-              <Link className="NavTopMobile__userMenu--link" to="/">
+              <Link
+                className="NavTopMobile__userMenu--link"
+                to="/help"
+                onClick={() => handleNavClose()}
+              >
                 <HelpLogo className="NavTopMobile__userMenu--logo" />
                 Aide
               </Link>
-              <Link className="NavTopMobile__userMenu--link" to="/">
+              <Link
+                className="NavTopMobile__userMenu--link"
+                to="/"
+                onClick={() => {
+                  handleNavClose();
+                  dispatch(logoutAction());
+                }}
+              >
                 <LogOutLogo className="NavTopMobile__userMenu--logo" />
                 Deconnexion
               </Link>

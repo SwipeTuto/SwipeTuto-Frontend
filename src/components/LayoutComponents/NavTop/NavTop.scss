@@ -87,18 +87,38 @@
         width: 20rem;
       }
 
-      .NavTop__input {
+      .NavTop__input--container {
+        display: flex;
         @include input-style;
-        width: 0%;
+      }
 
-        visibility: hidden;
+      .NavTop__input {
+        // @include input-style;
+        width: 15rem;
+
+        // visibility: hidden;
         transition: all 0.3s ease;
 
         &:focus {
-          visibility: visible;
           width: 20rem;
+          // visibility: visible;
           &::placeholder {
             color: transparent;
+          }
+        }
+      }
+
+      .NavTop__delete {
+        height: 2rem;
+        width: 2rem;
+        cursor: pointer;
+
+        &--logo {
+          height: 100%;
+          width: 100%;
+
+          &:hover {
+            fill: $primary-light;
           }
         }
       }

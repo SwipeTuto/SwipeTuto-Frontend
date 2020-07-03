@@ -1,21 +1,20 @@
 @import "../../variables.scss";
 
 .currentSearch {
-  padding: 0.7rem 1.5rem;
-  border-radius: $button-radius;
   margin: 2rem auto 0 auto;
   width: max-content;
   max-width: calc(100vw - 2 * 17vw);
-  text-align: center;
-  background-color: $grey-medium;
+
+  display: flex;
 
   &__button {
+    text-align: center;
+    background-color: $grey-medium;
+    padding: 0.7rem 1.5rem;
+    border-radius: $button-radius;
     display: flex;
     align-items: center;
-  }
-
-  &--hide {
-    display: none;
+    margin: 1rem;
   }
 
   &__close {
@@ -25,8 +24,13 @@
     margin-left: 1rem;
     transition: all 0.2s ease;
 
-    &:hover {
-      fill: $primary-light;
+    &--logo {
+      height: 100%;
+      width: 100%;
+
+      &:hover {
+        fill: $primary-light;
+      }
     }
   }
 }

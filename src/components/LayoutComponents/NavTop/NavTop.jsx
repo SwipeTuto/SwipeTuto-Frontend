@@ -1,6 +1,6 @@
 // Présent dans App.js
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, Link } from "react-router-dom";
@@ -20,6 +20,8 @@ import PHPLogo from "../../../assets/images/tech_logo/PHP.png";
 import ReactJSLogo from "../../../assets/images/tech_logo/reactJS.png";
 import NodeJSLogo from "../../../assets/images/tech_logo/nodeJS.png";
 import allLogo from "../../../assets/images/tech_logo/all_logo.png";
+
+import { ReactComponent as CloseLogo } from "../../../assets/images/close-circle.svg";
 // import newUserAvatar from "../../../assets/images/avatar_new_user.png";
 
 import CustomButton from "../CustomButton/CustomButton";
@@ -27,13 +29,20 @@ import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 
 import { getCardsAction } from "../../../redux/cards/cards-actions";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
-import { selectSearchCategory } from "../../../redux/filter/filter-selectors";
+import {
+  selectSearchCategory,
+  selectSearchLangage,
+  selectSearchWords,
+  selectSearchOrder,
+  selectCurrentCardsGridPage,
+} from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
 import { selectUserNav } from "../../../redux/layout/layout-selectors";
 import {
   searchAction,
   getCardAfterfilterAction,
+  setCurrentSearch,
 } from "../../../redux/filter/filter-actions";
 
 import history from "../../../helper/history";
@@ -44,28 +53,28 @@ const NavTop = (props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const currentUserNav = useSelector(selectUserNav);
+  const searchLangage = useSelector(selectSearchLangage);
+  const searchCategory = useSelector(selectSearchCategory);
+  const searchWords = useSelector(selectSearchWords);
+  const searchOrder = useSelector(selectSearchOrder);
+  const currentSearchPageNumber = useSelector(selectCurrentCardsGridPage);
   const [searchInput, setSearchInput] = useState("");
-  const [researchIsSubmitted, setResearchIsSubmitted] = useState(false);
+  const [redirection, setRedirection] = useState(false);
   const category = useSelector(selectSearchCategory);
   // const [userObject, setUserObject] = useState();
 
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     setUserObject(currentUser);
-  //   }
-  // }, [currentUser]);
+  useEffect(() => {
+    if (searchWords === null) {
+      setSearchInput("");
+    }
+    setRedirection(false);
+  }, [searchWords]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let searchCopy = searchInput;
-    searchCopy = e.target.value;
-    setSearchInput(searchCopy);
-    setResearchIsSubmitted(true);
-  };
-
-  const handleFocus = (e) => {
-    setSearchInput("");
-    setResearchIsSubmitted(false);
+    dispatch(setCurrentSearch("searchWords", searchInput));
+    dispatch(searchAction(searchInput));
+    setRedirection(true);
   };
 
   const handleChange = (e) => {
@@ -73,18 +82,17 @@ const NavTop = (props) => {
     setSearchInput(searchText);
   };
 
-  const handleClick = (e) => {
-    // dispatch(getCardsLoading());
-    dispatch(searchAction(searchInput));
+  const handleSearchDelete = () => {
+    setSearchInput("");
   };
 
   const logoHandleClick = (e) => {
-    dispatch(getCardAfterfilterAction(e.target.name, ""));
+    dispatch(getCardAfterfilterAction(e.target.name, searchCategory));
   };
 
-  const allLogoHandleClick = () => {
-    dispatch(getCardsAction());
-  };
+  // const allLogoHandleClick = () => {
+  //   dispatch(getCardsAction());
+  // };
 
   const cardsClick = (e) => {
     const allFiltersItems = [
@@ -99,10 +107,66 @@ const NavTop = (props) => {
     dispatch(getCardsAction());
   };
 
+  const rubriquesArray = [
+    {
+      queryName: null,
+      name: "all",
+      logo: allLogo,
+    },
+    {
+      queryName: "html",
+      name: "HTML",
+      logo: HTMLLogo,
+    },
+    {
+      queryName: "css",
+      name: "CSS",
+      logo: CSSLogo,
+    },
+    {
+      queryName: "javascript",
+      name: "Javascript",
+      logo: JavascriptLogo,
+    },
+    {
+      queryName: "reactjs",
+      name: "React JS",
+      logo: ReactJSLogo,
+    },
+    {
+      queryName: "nodejs",
+      name: "Node JS",
+      logo: NodeJSLogo,
+    },
+    {
+      queryName: "python",
+      name: "Python",
+      logo: PythonLogo,
+    },
+    {
+      queryName: "php",
+      name: "PHP",
+      logo: PHPLogo,
+    },
+    {
+      queryName: "sass",
+      name: "Sass",
+      logo: SassLogo,
+    },
+  ];
+
   // Ajouter changement : si utilisateur connecté afficher un accès au compte à la place des boutons connexion et inscription
   return (
     <>
-      {researchIsSubmitted && <Redirect to="/cards" />}
+      {redirection && (
+        <Redirect
+          to={`/search?${searchWords ? `search=${searchWords}&` : ""}${
+            searchLangage ? `langage=${searchLangage}&` : ""
+          }${searchOrder ? `order=${searchOrder}&` : ""}${
+            searchCategory ? `category=${searchCategory}&` : ""
+          }${currentSearchPageNumber ? `page=${currentSearchPageNumber}` : ""}`}
+        />
+      )}
       <div className="NavTop">
         <div className="NavTop__left">
           <NavLink exact className="NavTop__link" to="/">
@@ -114,138 +178,69 @@ const NavTop = (props) => {
           </NavLink>
           <NavLink
             className="NavTop__link NavTop__link--category"
-            to="/cards"
+            to={`/search?${searchWords && `search=${searchWords}&`}${
+              searchLangage && `langage=${searchLangage}&`
+            }${searchOrder && `order=${searchOrder}&`}${
+              searchCategory && `category=${searchCategory}&`
+            }${currentSearchPageNumber && `page=${currentSearchPageNumber}`}`}
             onClick={(e) => cardsClick(e)}
           >
             Langages
             <DropDownLogo className="NavTop__link--logo" />
           </NavLink>
           <div className=" NavTop__dropdown NavTop__dropdown--category">
-            <Link to="/cards">
-              <img
-                src={allLogo}
-                className="NavTop__dropdown--logo"
-                alt="all"
-                onClick={() => allLogoHandleClick()}
-              />
-            </Link>
-            <Link
-              to={`/search?langage=html${category && `&category=${category}`}`}
-            >
-              <img
-                onClick={(e) => logoHandleClick(e)}
-                src={HTMLLogo}
-                name="html"
-                className="NavTop__dropdown--logo"
-                alt="HTML"
-              />
-            </Link>
-            <Link
-              to={`/search?langage=css${category && `&category=${category}`}`}
-            >
-              <img
-                onClick={(e) => logoHandleClick(e)}
-                name="css"
-                src={CSSLogo}
-                className="NavTop__dropdown--logo"
-                alt="CSS"
-              />
-            </Link>
-            <Link
-              to={`/search?langage=javascript${
-                category && `&category=${category}`
-              }`}
-            >
-              <img
-                onClick={(e) => logoHandleClick(e)}
-                name="javascript"
-                src={JavascriptLogo}
-                className="NavTop__dropdown--logo"
-                alt="Javascript"
-              />
-            </Link>
-            <Link
-              to={`/search?langage=reactjs${
-                category && `&category=${category}`
-              }`}
-            >
-              <img
-                onClick={(e) => logoHandleClick(e)}
-                name="reactjs"
-                src={ReactJSLogo}
-                className="NavTop__dropdown--logo"
-                alt="React JS"
-              />
-            </Link>
-            <Link
-              to={`/search?langage=nodejs${
-                category && `&category=${category}`
-              }`}
-            >
-              <img
-                onClick={(e) => logoHandleClick(e)}
-                name="nodejs"
-                src={NodeJSLogo}
-                className="NavTop__dropdown--logo"
-                alt="Node JS"
-              />
-            </Link>
-            <Link
-              to={`/search?langage=python${
-                category && `&category=${category}`
-              }`}
-            >
-              <img
-                onClick={(e) => logoHandleClick(e)}
-                name="python"
-                src={PythonLogo}
-                className="NavTop__dropdown--logo"
-                alt="Python"
-              />
-            </Link>
-            <Link
-              to={`/search?langage=php${category && `&category=${category}`}`}
-            >
-              <img
-                onClick={(e) => logoHandleClick(e)}
-                name="php"
-                src={PHPLogo}
-                className="NavTop__dropdown--logo"
-                alt="php"
-              />
-            </Link>
-            <Link
-              to={`/search?langage=sass${category && `&category=${category}`}`}
-            >
-              <img
-                onClick={(e) => logoHandleClick(e)}
-                name="sass"
-                src={SassLogo}
-                className="NavTop__dropdown--logo"
-                alt="Sass"
-              />
-            </Link>
+            {rubriquesArray &&
+              rubriquesArray.map((rubrique, index) => (
+                <Link
+                  key={index}
+                  to={`/search?${searchWords ? `search=${searchWords}&` : ""}${
+                    rubrique.queryName ? `langage=${rubrique.queryName}&` : ""
+                  }${searchOrder ? `order=${searchOrder}&` : ""}${
+                    searchCategory ? `category=${searchCategory}&` : ""
+                  }${
+                    currentSearchPageNumber
+                      ? `page=${currentSearchPageNumber}`
+                      : ""
+                  }`}
+                >
+                  <img
+                    onClick={(e) => logoHandleClick(e)}
+                    src={rubrique.logo}
+                    name={rubrique.queryName}
+                    className="NavTop__dropdown--logo"
+                    alt={rubrique.name}
+                  />
+                </Link>
+              ))}
           </div>
         </div>
         <div className="NavTop__center">
           <form className="NavTop__search" onSubmit={handleSubmit}>
-            <button
-              type="submit"
-              onClick={(e) => handleClick(e)}
-              className="NavTop__button"
-            >
+            <button type="submit" className="NavTop__button">
               <SearchLogo className="NavTop__button--logo" />
             </button>
-            <input
-              className="NavTop__input"
-              id="search"
-              name="search"
-              type="text"
-              placeholder="Recherche..."
-              onChange={handleChange}
-              value={searchInput || ""}
-              onFocus={handleFocus}
-            />
+            <div className="NavTop__input--container">
+              <input
+                className="NavTop__input"
+                id="search"
+                name="search"
+                type="text"
+                placeholder="Recherche..."
+                onChange={handleChange}
+                value={searchInput || ""}
+              />
+              {searchInput && (
+                <div
+                  className="NavTop__delete"
+                  onClick={() => handleSearchDelete()}
+                >
+                  <CloseLogo
+                    className="NavTop__delete--logo"
+                    pointerEvents="none"
+                  />
+                </div>
+              )}
+            </div>
           </form>
         </div>
         <div className="NavTop__right">

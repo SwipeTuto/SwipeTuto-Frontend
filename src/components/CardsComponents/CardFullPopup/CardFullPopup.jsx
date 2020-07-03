@@ -141,6 +141,7 @@ const CardFullPopup = () => {
               <HeartEmpty className="card-action-button" />
               <FullscreenLogo
                 className="card-action-button"
+                id="card-action-button__fullscreen"
                 onClick={() => dispatch(showFullscreen())}
               />
               <CloseLogo

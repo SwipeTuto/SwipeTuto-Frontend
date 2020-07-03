@@ -8,7 +8,7 @@
   position: relative;
   overflow: hidden;
   box-shadow: $card-shadow, $card-shadow-2;
-  border-radius: $card-border-radius;
+  border-radius: $box-radius;
   display: flex;
   flex-direction: column;
   transition: all 0.2s ease;
@@ -59,7 +59,7 @@
     right: 1rem;
     font-size: 1.3rem;
     padding: 0.3rem 1rem;
-    background-color: $primary-medium;
+    background-color: $pink;
     color: white;
   }
 

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
-import HomeHeader from "../../components/LayoutComponents/HomeHeader/HomeHeader";
+
 import CardPreviewSmall from "../../components/CardsComponents/CardPreviewSmall/CardPreviewSmall";
 import CardFullPopup from "../../components/CardsComponents/CardFullPopup/CardFullPopup";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
@@ -19,13 +19,11 @@ import { getCardsAction } from "../../redux/cards/cards-actions";
 import { ReactComponent as QuestionIllustration } from "../../assets/images/illustrations/illustration-question.svg";
 import { ReactComponent as GrilleIllustration } from "../../assets/images/illustrations/illustration-grille.svg";
 import { ReactComponent as SuccessIllustration } from "../../assets/images/illustrations/illustration-success.svg";
+import { ReactComponent as HeaderLogo } from "../../assets/images/illustrations/header_illustration.svg";
 
 import { selectCardsFetchedCards } from "../../redux/filter/filter-selectors";
 import { selectBetaAlertOpen } from "../../redux/layout/layout-selectors";
-import {
-  deleteCurrentSearch,
-  setType,
-} from "../../redux/filter/filter-actions";
+import { deleteCurrentSearch } from "../../redux/filter/filter-actions";
 
 import "./HomePage.scss";
 import { selectIsLoaded } from "../../redux/cards/cards-selectors";
@@ -43,7 +41,7 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(deleteCurrentSearch());
     dispatch(getCardsAction());
-    dispatch(setType("all"));
+
     if (cards) {
       setCardsArrayCut(cards.slice(0, 6));
     }
@@ -81,7 +79,22 @@ const HomePage = () => {
         </div>
       )}
 
-      <HomeHeader />
+      <div className="HomePage__home-header ">
+        <div className="HomePage__home-header--wrapper">
+          <div className="HomePage__home-header--left">
+            <h1 className="title title-1">
+              Apprendre.
+              <br />
+              Rapidement.
+              <br />
+              <span>Efficacement.</span>
+            </h1>
+          </div>
+          <div className="HomePage__home-header--right">
+            <HeaderLogo className="HomePage__home-header--right-logo" />
+          </div>
+        </div>
+      </div>
       <div className="HomePage__grid">
         {!isLoaded ? (
           <Loading />
@@ -104,7 +117,7 @@ const HomePage = () => {
             <h2 className="title title-2">
               Le Web
               <br />
-              pour les <span className="primary-medium-text">débutants</span>
+              pour les <span className="pink-text">débutants</span>
             </h2>
             <p>
               Lire des dizaines de pages ou regarder plusieurs vidéos ? Et si on
@@ -120,7 +133,7 @@ const HomePage = () => {
           <div className="about-section__text">
             <h2 className="title title-2">
               Des cartes mémo claires et{" "}
-              <span className="primary-medium-text">simples</span>
+              <span className="pink-text">simples</span>
             </h2>
             <p>
               Un système de cartes d'une ou plusieurs images pour une recherche
@@ -137,7 +150,7 @@ const HomePage = () => {
           <div className="about-section__text">
             <h2 className="title title-2">
               Atteindre ses objectifs{" "}
-              <span className="primary-medium-text">rapidement</span>
+              <span className="pink-text">rapidement</span>
             </h2>
             <p>
               Pour découvrir de nouvelles notions ou en réviser d'autres, soyez
@@ -156,7 +169,7 @@ const HomePage = () => {
           </span>{" "}
         </h1>
         <Link to="/cards">
-          <CustomButton color="dark">Voir les cartes</CustomButton>
+          <CustomButton color="pink">Voir les cartes</CustomButton>
         </Link>
       </div>
 

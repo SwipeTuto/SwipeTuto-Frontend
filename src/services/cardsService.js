@@ -30,7 +30,7 @@ export const getCardAfterfilter = (langage, category) => {
     }
   }
   return axios
-    .get(`${baseURL}card/filter/?langage=${langage}&category=${category}&ordering=created`,
+    .get(`${baseURL}card/filter/?langage=${langage}&category=${category}`,
       config)
     .then(rep => {
       return rep

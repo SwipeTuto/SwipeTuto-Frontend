@@ -6,9 +6,21 @@ export const selectCurrentSearch = createSelector(
   [selectFilter],
   filter => filter.currentSearch
 )
-export const selectCategoryFilter = createSelector(
-  [selectFilter],
-  filter => filter.categoryFilter
+export const selectSearchWords = createSelector(
+  [selectCurrentSearch],
+  currentSearch => currentSearch.searchWords
+)
+export const selectSearchLangage = createSelector(
+  [selectCurrentSearch],
+  currentSearch => currentSearch.searchLangage
+)
+export const selectSearchCategory = createSelector(
+  [selectCurrentSearch],
+  currentSearch => currentSearch.searchCategory
+)
+export const selectSearchOrder = createSelector(
+  [selectCurrentSearch],
+  currentSearch => currentSearch.searchOrder
 )
 export const selectCardsFetched = createSelector(
   [selectFilter],
@@ -44,6 +56,6 @@ export const selectSearchType = createSelector(
   filter => filter.searchType
 )
 
-// export const selectCategoryFilter = state => state.filter.categoryFilter ? state.filter.categoryFilter : "all";
+export const selectCategoryFilter = state => state.filter.categoryFilter ? state.filter.categoryFilter : "all";
 
 export const selectTotalNumberOfCardsSearched = state => state.filter.totalNumberOfCardsSearched ? state.filter.totalNumberOfCardsSearched : 0;

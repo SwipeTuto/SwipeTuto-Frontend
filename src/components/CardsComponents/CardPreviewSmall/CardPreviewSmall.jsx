@@ -46,14 +46,11 @@ const CardPreviewSmall = ({ card }) => {
       </div>
       <div
         className="CardPreviewSmall__details"
-        onClick={() => {
-          dispatch(setType("search"));
-        }}
       >
-        <Link to={`/search?user=${user.username}`}>
+        <Link to={`/search?user=${user && user.username ? user.username : ''}`}>
           <UserAvatar
             userImage={
-              user.profile[0] && `${base}${user.profile[0].avatar}`
+              user.profile[0] && `${base}${user && user.profile[0].avatar? user.profile[0].avatar : ''}`
             }
             userFirstName={user.first_name && user.first_name}
             userLastName={user.last_name && user.last_name}

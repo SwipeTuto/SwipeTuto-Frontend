@@ -3,14 +3,14 @@
 .RessourcesPage {
   min-height: 100vh;
   position: relative;
-  background-color: $primary-dark;
+  background-color: $white;
 
   .title.title-1 {
     font-size: 3rem;
     text-align: center;
-    // background-color: $primary-dark;
+
     background-color: $white;
-    // color: $white;
+
     color: $primary-dark;
     padding: 4rem 0;
     margin: 0;
@@ -18,8 +18,7 @@
 
   .ressource {
     &-navigation {
-      // background-color: $primary-lighter;
-      background-color: $grey-light;
+      background-color: $yellow-dark;
       padding: 2rem;
 
       & .scroll-logo {
@@ -36,7 +35,7 @@
         display: inline-block;
         text-transform: uppercase;
         font-weight: bold;
-        color: $primary-dark;
+        color: $white;
         border-bottom: 0.3rem solid transparent;
         margin: 1rem 1.5rem;
         transition: all 0.2s ease;
@@ -49,35 +48,29 @@
 
     &-note {
       margin-bottom: 2rem;
-      color: $white;
+      // color: $white;
     }
 
     &-liste {
       display: grid;
       grid-template-columns: repeat(auto-fill, 23.5%);
       grid-auto-rows: max-content;
-      grid-gap: 4% 2%;
+      grid-gap: 1rem;
     }
 
     &-category {
       // margin: 8rem 0;
       padding: $inner-component-padding;
-      padding-top: 4rem;
-      padding-bottom: 4rem;
+      // margin-top: 4rem;
+      // margin-bottom: 4rem;
 
       .title.title-2 {
-        @include medium-underline;
+        @include yellow-underline;
         display: inline-block;
         padding-right: 2rem;
         font-size: 2.8rem;
         margin-bottom: 3rem;
-        color: $white;
       }
-    }
-
-    &-liste {
-      padding-left: 2rem;
-      list-style-type: disc;
     }
 
     &-item {
@@ -95,7 +88,7 @@
 
         &:hover {
           background-color: $primary-dark;
-          color: white;
+          // color: white;
         }
       }
     }

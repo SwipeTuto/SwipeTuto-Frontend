@@ -1,10 +1,13 @@
 import { FilterActionTypes } from './filter-types'
 
 const INITIAL_STATE = {
-  searchType: '',
-  currentSearch: null,
+  currentSearch: {
+    searchWords: '',
+    searchLangage: '',
+    searchCategory: '',
+    searchOrder: 'chronology'
+  },
   errors: '',
-  categoryFilter: null,
   cardsFetched: "",
   otherCardsByAuthor: "",
   currentCardsGridPage: 1,
@@ -22,9 +25,7 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
 
       return {
         ...state,
-        currentSearch: action.payload.langage == null || action.payload.langage == undefined ? null : action.payload.langage,
-        categoryFilter: action.payload.category == null ||  action.payload.category == undefined ?  null : action.payload.category
-        
+        currentSearch: { ...state.currentSearch, searchLangage: action.payload.langage, searchCategory: action.payload.category }
       };
     case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_SUCCESS:
       return { ...state, cardsFetched: action.payload, };
@@ -34,12 +35,25 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
     case FilterActionTypes.SET_CURRENT_SEARCH:
       return { ...state, currentSearch: action.payload };
     case FilterActionTypes.DELETE_CURRENT_SEARCH:
-      return { ...state, currentSearch: "", cardsFetched: "" };
+      return {
+        ...state, currentSearch: {
+          searchWords: '',
+          searchLangage: '',
+          searchCategory: '',
+          searchOrder: 'chronology'
+        }, cardsFetched: ""
+      };
+
+    case FilterActionTypes.SET_SEARCH_ORDER:
+      return {
+        ...state, currentSearch: {
+          ...state.currentSearch,
+          searchOrder: action.payload
+        }
+      };
 
     case FilterActionTypes.SET_CATEGORY_FILTER:
-      return { ...state, categoryFilter: action.payload, };
-    case FilterActionTypes.SET_TYPE:
-      return { ...state, searchType: action.payload, };
+      return { ...state, currentSearch: { ...state.currentSearch, searchCategory: action.payload }, };
 
 
     case FilterActionTypes.GET_CARDS_BY_USER_SUCCESS:

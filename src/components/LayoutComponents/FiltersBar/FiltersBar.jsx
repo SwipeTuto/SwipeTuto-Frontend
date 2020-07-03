@@ -4,15 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 import {
-  selectCategoryFilter,
-  selectCurrentSearch,
+  selectSearchLangage,
   selectTotalNumberOfResults,
+  selectSearchCategory,
 } from "../../../redux/filter/filter-selectors";
 
 import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
 import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";
 
-import { getCardAfterfilterAction } from "../../../redux/filter/filter-actions";
+import {
+  getCardAfterfilterAction,
+  setSearchOrder,
+} from "../../../redux/filter/filter-actions";
 import { getCardsAction } from "../../../redux/cards/cards-actions";
 
 import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
@@ -22,8 +25,8 @@ import "./FiltersBar.scss";
 
 const FiltersBar = ({ handleClickSize }) => {
   const dispatch = useDispatch();
-  const langage = useSelector(selectCurrentSearch);
-  const category = useSelector(selectCategoryFilter);
+  const langage = useSelector(selectSearchLangage);
+  const category = useSelector(selectSearchCategory);
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
   const getRealNumber = (results) => {
     if (isNaN(results)) {
@@ -44,13 +47,23 @@ const FiltersBar = ({ handleClickSize }) => {
     AllOrFilterCards(langage, e.target.dataset.filter);
   };
 
+  const handleOrderChange = (e) => {
+    const newOrder = e.target.options[e.target.selectedIndex].value;
+
+    dispatch(setSearchOrder(newOrder));
+  };
+
   return (
     <div className="FiltersBar">
       <div className="FiltersBar__wrapper">
         <div className="FiltersBar__up">
-          <select name="cards-filter" id="cards-filter">
-            <option value="popular">Populaire</option>
-            <option value="new">Nouveau</option>
+          <select
+            name="cards-filter"
+            id="cards-filter"
+            onChange={(e) => handleOrderChange(e)}
+          >
+            <option value="chronology">Nouveau</option>
+            <option value="popularity">Populaire</option>
           </select>
           <div className="FiltersBar__options">
             <div className="scroll-logo">
@@ -59,9 +72,9 @@ const FiltersBar = ({ handleClickSize }) => {
             <div className="FiltersBar__options--links">
               <NavLink to={`/search?${langage && `langage=${langage}`}`}>
                 <button
-                  className={
-                    "FiltersBar__options--item " + (category === "" && "active")
-                  }
+                  className={`FiltersBar__options--item ${
+                    (category === "" || category === undefined) && "active"
+                  }`}
                   onClick={(e) => handleClick(e)}
                   data-filter=""
                 >

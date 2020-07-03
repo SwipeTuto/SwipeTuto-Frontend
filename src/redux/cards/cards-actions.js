@@ -5,7 +5,7 @@ import {
   getCards
 } from '../../services/cardsService'
 
-import { setCurrentSearch, setType, setCategoryFilter, setCardsFetchedInStore } from "../filter/filter-actions"
+import { setCurrentSearch, setCardsFetchedInStore } from "../filter/filter-actions"
 
 export const setClickedCard = (card) => ({
   type: CardsActionTypes.SET_CLICKED_CARD,
@@ -23,9 +23,13 @@ export const getCardsAction = () => {
   return dispatch => {
     return getCards()
       .then(card => {
-        dispatch(setCurrentSearch('')) // set le langage
-        dispatch(setCategoryFilter('')) // set la category
-        dispatch(setType('all')) // change le type
+        dispatch(setCurrentSearch({
+          searchWords: '',
+          searchLangage: '',
+          searchCategory: '',
+          searchOrder: 'chronology'
+        })) // set le langage
+
         dispatch(setCardsFetchedInStore(card)) // cards dans cardsFetched
         dispatch(getCardsLoaded()) // stop loader
       })

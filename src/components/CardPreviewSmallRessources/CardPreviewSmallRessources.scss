@@ -1,21 +1,22 @@
 @import "../../variables.scss";
 
 .CardPreviewSmallRessources {
-  border-radius: $card-border-radius;
+  border-radius: $box-radius;
   transition: all 0.2s ease;
 
   &:hover {
-    box-shadow: 0 3px 8px rgba($black, 0.6);
-    transform: translateY(-3px);
+    box-shadow: $card-shadow, $card-shadow-2;
+    transform: translateY(-2px);
   }
 
   & a {
-    border-radius: $card-border-radius;
+    border-radius: $box-radius;
     padding: 1rem 1.4rem;
     display: block;
     height: 100%;
     width: 100%;
     background-color: $white;
+    border: 1px solid $grey-medium;
     transition: all 0.2s ease;
 
     & h4 {
@@ -32,14 +33,11 @@
     }
 
     &:hover {
-      // background-color: $primary-dark;
-
       & h4 {
-        color: $primary-light;
+        color: $yellow;
       }
 
       & p {
-        // color: white;
       }
     }
   }

@@ -30,13 +30,12 @@ import {
   getCardsLoading,
 } from "../../../redux/cards/cards-actions";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
-import { selectCategoryFilter, selectCurrentSearch } from "../../../redux/filter/filter-selectors";
+import { selectCategoryFilter } from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
 import { selectUserNav } from "../../../redux/layout/layout-selectors";
 import {
   searchAction,
-  setType,
   getCardAfterfilterAction,
 } from "../../../redux/filter/filter-actions";
 
@@ -80,12 +79,10 @@ const NavTop = (props) => {
   const handleClick = (e) => {
     // dispatch(getCardsLoading());
     dispatch(searchAction(searchInput));
-    dispatch(setType("search"));
   };
 
   const logoHandleClick = (e) => {
-    dispatch(getCardAfterfilterAction(e.target.name, category));
-    dispatch(setType("langage"));
+    dispatch(getCardAfterfilterAction(e.target.name, ""));
   };
 
   const allLogoHandleClick = () => {
@@ -115,16 +112,16 @@ const NavTop = (props) => {
             Accueil
           </NavLink>
 
+          <NavLink className="NavTop__link" to="/ressources">
+            Ressources
+          </NavLink>
           <NavLink
             className="NavTop__link NavTop__link--category"
             to="/cards"
             onClick={(e) => cardsClick(e)}
           >
-            Catégories
+            Langages
             <DropDownLogo className="NavTop__link--logo" />
-          </NavLink>
-          <NavLink className="NavTop__link" to="/ressources">
-            Ressources
           </NavLink>
           <div className=" NavTop__dropdown NavTop__dropdown--category">
             <Link to="/cards">

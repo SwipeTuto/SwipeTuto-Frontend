@@ -4,20 +4,30 @@ import { searchBar } from '../../services/searchService'
 import { getCardAfterfilter, getCardsByUser, getOtherPageCard } from '../../services/cardsService'
 import { getCardsLoaded } from "../cards/cards-actions"
 
-
+// Recherche avec le back avec mots
 export const searchAction = kword => {
   return dispatch => {
     return searchBar(kword)
       .then(search => {
         dispatch(SearchSuccess(search.data))
-        dispatch(setCurrentSearch(kword))
-        dispatch(setType("search"))
+        dispatch(setCurrentSearch({
+          searchWords: kword,
+          searchLangage: '',
+          searchCategory: '',
+          searchOrder: 'chronology'
+        }))
+
         dispatch(getCardsLoaded())
 
       })
       .catch(err => {
         dispatch(SearchFailure(err.response))
-        dispatch(setCurrentSearch("Une erreur est survenue."))
+        dispatch(setCurrentSearch({
+          searchWords: "Une erreur est survenue.",
+          searchLangage: '',
+          searchCategory: '',
+          searchOrder: 'chronology'
+        }))
       })
   }
 }
@@ -31,13 +41,13 @@ const SearchFailure = error => ({
 })
 
 
-
+// recherche vers le back avec langage et catégorie
 export const getCardAfterfilterAction = (langage, category) => {
   return dispatch => {
     dispatch(getCardAfterfilteryRequest(langage, category))
     return getCardAfterfilter(langage, category)
       .then(rep => {
-        dispatch(setType('search'));
+
         dispatch(getCardAfterfilterSuccess(rep.data))
         dispatch(getCardsLoaded())
         return rep
@@ -61,37 +71,34 @@ const getCardAfterfilterFailure = err => ({
 })
 
 
-
-export const setCurrentSearch = searchWords => ({
+// Gestion de la currentSearch avec mots, catégorie, langage et ordre de recherche
+export const setCurrentSearch = parameters => ({
   type: FilterActionTypes.SET_CURRENT_SEARCH,
-  payload: searchWords
+  payload: parameters
 })
 
 export const deleteCurrentSearch = () => ({
   type: FilterActionTypes.DELETE_CURRENT_SEARCH,
 })
 
-export const setCategoryFilter = (category) => ({
-  type: FilterActionTypes.SET_CATEGORY_FILTER,
-  payload: category,
-});
-
-export const setType = (searchType) => ({
-  type: FilterActionTypes.SET_TYPE,
-  payload: searchType
+// Changement de l'ordre de classement (restera à connecter api pour requete - mixer avec requetes getCards et l'autre par langage/categorie)
+export const setSearchOrder = (order) => ({
+  type: FilterActionTypes.SET_SEARCH_ORDER,
+  payload: order
 })
 
 
-export const setTotalNumberOfCardsSearchedToNull = () => ({
-  type: FilterActionTypes.SET_TOTAL_NUMBER_OF_CARDS_SEARCHED_TO_NULL,
-})
 
+
+
+// Mise des cartes récupérées du back dans le store
 export const setCardsFetchedInStore = (cards) => ({
   type: FilterActionTypes.SET_CARDS_FETCHED_IN_STORE,
   payload: cards
 })
 
 
+// Fetch des cards à partir du nom de l'auteur
 export const getCardsByUserNameAction = username => {
   return dispatch => {
     return getCardsByUser(username)
@@ -105,12 +112,12 @@ export const getCardsByUserNameAction = username => {
   }
 }
 
+// Fetch des autres cards de l'auteur
 export const getOtherCardsByAuthorNameAction = username => {
   return dispatch => {
     return getCardsByUser(username)
       .then(rep => {
         dispatch(getOtherCardsByAuthorNameSuccess(rep.data))
-        console.log(rep.data)
         return rep
       })
       .catch(err => {
@@ -118,6 +125,7 @@ export const getOtherCardsByAuthorNameAction = username => {
       })
   }
 }
+
 
 const getCardsByUserNameSuccess = cards => ({
   type: FilterActionTypes.GET_CARDS_BY_USER_SUCCESS,
@@ -137,6 +145,8 @@ const getOtherCardsByAuthorNameFailure = err => ({
   payload: err
 })
 
+
+// Fetch des données d'une autre page
 export const getOtherPageAction = (navLink, newPageNumber) => {
   return dispatch => {
     return getOtherPageCard(navLink)

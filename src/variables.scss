@@ -1,28 +1,44 @@
 // VARIABLES
-$primary-light: #ff6a00;
-$primary-lighter: #c6e8ff;
-$primary-medium: #00bfe0;
-$primary-dark: #00258b;
+// $primary-light: #ff6a00;
+// $primary-lighter: #c6e8ff;
+// $primary-medium: #00bfe0;
+// $primary-dark: #00258b;
 
 // Autre set
 // $primary-light: #ff6699;
 // $primary-lighter: #faf9ff;
 // $primary-medium: #d400ff;
 // $primary-dark: #331277;
-$white: #ffffff;
-$grey-lighter: #fefefe;
+// $white: #ffffff;
+// $grey-lighter: #fefefe;
+// $grey-light: #f8f8f8;
+// $grey-medium: #f1f1f1;
+// $grey-dark: #bdbdbd;
+// $black: #000000;
+
+// TESTS PALETTE
+$primary-dark: #270788ff;
+$primary-medium: #683af6ff;
+$primary-light: #9777f8;
+$blue: #8aebffff;
+$blue-dark: #0099ff;
+$yellow: #ffc154ff;
+$yellow-dark: #f59b00;
+$pink: #e96f91ff;
+$pink-dark: #f64879;
 $grey-light: #f8f8f8;
 $grey-medium: #f1f1f1;
 $grey-dark: #bdbdbd;
+$white: #ffffffff;
 $black: #000000;
 
-$box-radius: 3px;
-$card-border-radius: 6px;
+$box-radius: 5px;
 $button-radius: 3rem;
 
-$pill-shadow: 0 2px 3px $grey-dark;
-$card-shadow: 0 4px 5px $grey-dark;
+$button-shadow: 0 2px 3px $grey-dark;
+$card-shadow: 0 2px 3px $grey-dark;
 $card-shadow-2: 0 0px 8px rgba($grey-dark, 0.4);
+
 $inner-component-padding: 10rem 17vw;
 $grid-component-padding: 3rem 17vw;
 $inner-component-padding-tablet: 5rem 8vw;
@@ -31,7 +47,7 @@ $inner-component-padding-phone: 4rem 2vw;
 $grid-component-padding-phone: 4rem 2vw;
 
 // Breakpoints
-$bp-tablet: 900px;
+$bp-tablet: 960px;
 $bp-phone: 680px;
 $bp-small-phone: 540px;
 
@@ -63,16 +79,26 @@ $bp-small-phone: 540px;
 
 @mixin tag-hover-style {
   transform: translateY(-2px);
-  box-shadow: $pill-shadow;
+  box-shadow: $button-shadow;
 }
 
-@mixin pale-underline {
+@mixin light-underline {
   background-image: linear-gradient(
     to bottom,
     transparent 0%,
     transparent 70%,
     lighten($primary-light, 22%) 70%,
     lighten($primary-light, 22%) 100%
+  );
+}
+
+@mixin yellow-underline {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 70%,
+    lighten($yellow, 22%) 70%,
+    lighten($yellow, 22%) 100%
   );
 }
 

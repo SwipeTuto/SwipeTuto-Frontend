@@ -70,7 +70,7 @@ const FiltersBar = ({ handleClickSize }) => {
               <ChevronLeft />
             </div>
             <div className="FiltersBar__options--links">
-              <NavLink to={`/search?langage=${langage}&category=`}>
+              <NavLink to={`/search?${langage && `langage=${langage}`}`}>
                 <button
                   className={`FiltersBar__options--item ${
                     (category === "" || category === undefined) && "active"
@@ -81,8 +81,8 @@ const FiltersBar = ({ handleClickSize }) => {
                   Tous
                 </button>
               </NavLink>
-
-              <NavLink to={`/search?langage=${langage}&category=theorie`}>
+              
+              <NavLink to={`/search?${langage && `langage=${langage}&`}category=theorie`}>
                 <button
                   className={
                     "FiltersBar__options--item " +
@@ -94,8 +94,7 @@ const FiltersBar = ({ handleClickSize }) => {
                   Théorie
                 </button>
               </NavLink>
-
-              <NavLink to={`/search?langage=${langage}&category=code`}>
+              <NavLink to={`/search?${langage && `langage=${langage}&`}category=code`}>
                 <button
                   type="submit"
                   className={
@@ -109,7 +108,7 @@ const FiltersBar = ({ handleClickSize }) => {
                 </button>
               </NavLink>
 
-              <NavLink to={`/search?langage=${langage}&category=memo`}>
+              <NavLink to={`/search?${langage && `langage=${langage}&`}category=memo`}>
                 <button
                   className={
                     "FiltersBar__options--item " +
@@ -122,7 +121,7 @@ const FiltersBar = ({ handleClickSize }) => {
                 </button>
               </NavLink>
 
-              <NavLink to={`/search?langage=${langage}&category=bloc code`}>
+              <NavLink to={`/search?${langage && `langage=${langage}&`}category=bloc code`}>
                 <button
                   name="bloc code"
                   className={
@@ -136,7 +135,7 @@ const FiltersBar = ({ handleClickSize }) => {
                 </button>
               </NavLink>
 
-              <NavLink to={`/search?langage=${langage}&category=performances`}>
+              <NavLink to={`/search?${langage && `langage=${langage}&`}category=performances`}>
                 <button
                   className={
                     "FiltersBar__options--item " +
@@ -149,7 +148,7 @@ const FiltersBar = ({ handleClickSize }) => {
                 </button>
               </NavLink>
 
-              <NavLink to={`/search?langage=${langage}&category=ressources`}>
+              <NavLink to={`/search?${langage && `langage=${langage}&`}category=ressources`}>
                 <button
                   className={
                     "FiltersBar__options--item " +
@@ -161,7 +160,7 @@ const FiltersBar = ({ handleClickSize }) => {
                   Ressources
                 </button>
               </NavLink>
-              <NavLink to={`/search?langage=${langage}&category=autre`}>
+              <NavLink to={`/search?${langage && `langage=${langage}&`}category=autre`}>
                 <button
                   className={
                     "FiltersBar__options--item " +

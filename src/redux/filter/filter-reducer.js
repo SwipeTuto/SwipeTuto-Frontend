@@ -22,6 +22,7 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: action.payload };
 
     case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_REQUEST:
+
       return {
         ...state,
         currentSearch: { ...state.currentSearch, searchLangage: action.payload.langage, searchCategory: action.payload.category }

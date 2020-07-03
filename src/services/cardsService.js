@@ -1,7 +1,7 @@
 import axios from "axios"
-import {
-  baseURL
-} from '../services/configService'
+import { baseURL } from '../services/configService'
+
+
 
 export const getCards = () => {
   var config = {
@@ -21,13 +21,16 @@ export const getCards = () => {
 }
 
 export const getCardAfterfilter = (langage, category) => {
+  
+
+  
   var config = {
     headers: {
       'Content-Type': 'application/json'
     }
   }
   return axios
-    .get(`${baseURL}card/filter/?langage=${langage}&category=${category}`,
+    .get(`${baseURL}card/filter/?langage=${langage}&category=${category}&ordering=created`,
       config)
     .then(rep => {
       return rep

@@ -1,7 +1,7 @@
 // Présent dans App.js
 
-import React, { useState, useEffect } from "react";
-import { withRouter, Redirect } from "react-router-dom";
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, Link } from "react-router-dom";
 import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg";
@@ -25,11 +25,9 @@ import allLogo from "../../../assets/images/tech_logo/all_logo.png";
 import CustomButton from "../CustomButton/CustomButton";
 import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 
-import {
-  getCardsAction,
-  getCardsLoading,
-} from "../../../redux/cards/cards-actions";
+import { getCardsAction } from "../../../redux/cards/cards-actions";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
+import { selectSearchCategory } from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
 import { selectUserNav } from "../../../redux/layout/layout-selectors";
@@ -44,11 +42,11 @@ import { BASEMEDIA } from "../../../services/configService";
 
 const NavTop = (props) => {
   const dispatch = useDispatch();
-  const currentUser = useSelector((state) => state.user.currentUser);
+  const currentUser = useSelector(selectCurrentUser);
   const currentUserNav = useSelector(selectUserNav);
   const [searchInput, setSearchInput] = useState("");
   const [researchIsSubmitted, setResearchIsSubmitted] = useState(false);
-  const category = useSelector((state) => state.filter.categoryFilter);
+  const category = useSelector(selectSearchCategory);
   // const [userObject, setUserObject] = useState();
 
   // useEffect(() => {
@@ -131,7 +129,9 @@ const NavTop = (props) => {
                 onClick={() => allLogoHandleClick()}
               />
             </Link>
-            <Link to={`/search?langage=html&category=${category}`}>
+            <Link
+              to={`/search?langage=html${category && `&category=${category}`}`}
+            >
               <img
                 onClick={(e) => logoHandleClick(e)}
                 src={HTMLLogo}
@@ -140,7 +140,9 @@ const NavTop = (props) => {
                 alt="HTML"
               />
             </Link>
-            <Link to={`/search?langage=css&category=${category}`}>
+            <Link
+              to={`/search?langage=css${category && `&category=${category}`}`}
+            >
               <img
                 onClick={(e) => logoHandleClick(e)}
                 name="css"
@@ -149,7 +151,11 @@ const NavTop = (props) => {
                 alt="CSS"
               />
             </Link>
-            <Link to={`/search?langage=javascript&category=${category}`}>
+            <Link
+              to={`/search?langage=javascript${
+                category && `&category=${category}`
+              }`}
+            >
               <img
                 onClick={(e) => logoHandleClick(e)}
                 name="javascript"
@@ -158,7 +164,11 @@ const NavTop = (props) => {
                 alt="Javascript"
               />
             </Link>
-            <Link to={`/search?langage=reactjs&category=${category}`}>
+            <Link
+              to={`/search?langage=reactjs${
+                category && `&category=${category}`
+              }`}
+            >
               <img
                 onClick={(e) => logoHandleClick(e)}
                 name="reactjs"
@@ -167,7 +177,11 @@ const NavTop = (props) => {
                 alt="React JS"
               />
             </Link>
-            <Link to={`/search?langage=nodejs&category=${category}`}>
+            <Link
+              to={`/search?langage=nodejs${
+                category && `&category=${category}`
+              }`}
+            >
               <img
                 onClick={(e) => logoHandleClick(e)}
                 name="nodejs"
@@ -176,7 +190,11 @@ const NavTop = (props) => {
                 alt="Node JS"
               />
             </Link>
-            <Link to={`/search?langage=python&category=${category}`}>
+            <Link
+              to={`/search?langage=python${
+                category && `&category=${category}`
+              }`}
+            >
               <img
                 onClick={(e) => logoHandleClick(e)}
                 name="python"
@@ -185,7 +203,9 @@ const NavTop = (props) => {
                 alt="Python"
               />
             </Link>
-            <Link to={`/search?langage=php&category=${category}`}>
+            <Link
+              to={`/search?langage=php${category && `&category=${category}`}`}
+            >
               <img
                 onClick={(e) => logoHandleClick(e)}
                 name="php"
@@ -194,7 +214,9 @@ const NavTop = (props) => {
                 alt="php"
               />
             </Link>
-            <Link to={`/search?langage=sass&category=${category}`}>
+            <Link
+              to={`/search?langage=sass${category && `&category=${category}`}`}
+            >
               <img
                 onClick={(e) => logoHandleClick(e)}
                 name="sass"

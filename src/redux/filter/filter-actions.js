@@ -10,24 +10,14 @@ export const searchAction = kword => {
     return searchBar(kword)
       .then(search => {
         dispatch(SearchSuccess(search.data))
-        dispatch(setCurrentSearch({
-          searchWords: kword,
-          searchLangage: '',
-          searchCategory: '',
-          searchOrder: 'chronology'
-        }))
+        dispatch(setCurrentSearch("searchWords", kword))
 
         dispatch(getCardsLoaded())
 
       })
       .catch(err => {
         dispatch(SearchFailure(err.response))
-        dispatch(setCurrentSearch({
-          searchWords: "Une erreur est survenue.",
-          searchLangage: '',
-          searchCategory: '',
-          searchOrder: 'chronology'
-        }))
+        dispatch(setCurrentSearch("searchWords", "Une erreur est survenue."))
       })
   }
 }
@@ -42,10 +32,10 @@ const SearchFailure = error => ({
 
 
 // recherche vers le back avec langage et catégorie
-export const getCardAfterfilterAction = (langage, category) => {
+export const getCardAfterfilterAction = (langage, category, currentUser) => {
   return dispatch => {
     dispatch(getCardAfterfilteryRequest(langage, category))
-    return getCardAfterfilter(langage, category)
+    return getCardAfterfilter(currentUser)
       .then(rep => {
 
         dispatch(getCardAfterfilterSuccess(rep.data))
@@ -72,13 +62,14 @@ const getCardAfterfilterFailure = err => ({
 
 
 // Gestion de la currentSearch avec mots, catégorie, langage et ordre de recherche
-export const setCurrentSearch = parameters => ({
+export const setCurrentSearch = (item, value) => ({
   type: FilterActionTypes.SET_CURRENT_SEARCH,
-  payload: parameters
+  payload: { item, value }
 })
 
-export const deleteCurrentSearch = () => ({
+export const deleteCurrentSearch = (item) => ({
   type: FilterActionTypes.DELETE_CURRENT_SEARCH,
+  payload: item
 })
 
 // Changement de l'ordre de classement (restera à connecter api pour requete - mixer avec requetes getCards et l'autre par langage/categorie)

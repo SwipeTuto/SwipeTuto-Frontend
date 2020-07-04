@@ -56,9 +56,15 @@
 
   &__options {
     display: flex;
+
     &--item {
-      padding-bottom: 0.6rem;
-      // font-size: 1rem;
+      display: inline-block;
+      height: 100%;
+      padding: 0.6rem;
+
+      &:not(:first-of-type) {
+        margin-left: 0.6rem;
+      }
     }
 
     &--item.active {

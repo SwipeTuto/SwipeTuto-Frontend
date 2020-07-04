@@ -23,13 +23,6 @@ export const getCardsAction = () => {
   return dispatch => {
     return getCards()
       .then(card => {
-        dispatch(setCurrentSearch({
-          searchWords: '',
-          searchLangage: '',
-          searchCategory: '',
-          searchOrder: 'chronology'
-        })) // set le langage
-
         dispatch(setCardsFetchedInStore(card)) // cards dans cardsFetched
         dispatch(getCardsLoaded()) // stop loader
       })

@@ -1,12 +1,15 @@
 // Bar avec les items pour filtrer les slides
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
   selectSearchLangage,
   selectTotalNumberOfResults,
   selectSearchCategory,
+  selectSearchWords,
+  selectSearchOrder,
+  selectCurrentCardsGridPage,
 } from "../../../redux/filter/filter-selectors";
 
 import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
@@ -25,8 +28,14 @@ import "./FiltersBar.scss";
 
 const FiltersBar = ({ handleClickSize }) => {
   const dispatch = useDispatch();
-  const langage = useSelector(selectSearchLangage);
-  const category = useSelector(selectSearchCategory);
+  // paramètres de recherche :
+  const currentSearch = useSelector(state => state.filter.currentSearch);
+  const searchLangage = useSelector(selectSearchLangage);
+  const searchCategory = useSelector(selectSearchCategory);
+  const searchWords = useSelector(selectSearchWords);
+  const searchOrder = useSelector(selectSearchOrder);
+  const currentSearchPageNumber = useSelector(selectCurrentCardsGridPage);
+  // pages de requêtes :
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
   const getRealNumber = (results) => {
     if (isNaN(results)) {
@@ -37,14 +46,14 @@ const FiltersBar = ({ handleClickSize }) => {
   };
   const totalNumberOfCardsSearched = getRealNumber(totalNumberOfResults);
 
-  const AllOrFilterCards = (langage, category) => {
-    langage || category
-      ? dispatch(getCardAfterfilterAction(langage, category))
+  const AllOrFilterCards = (searchLangage, searchCategory) => {
+    searchLangage || searchCategory
+      ? dispatch(getCardAfterfilterAction(searchLangage, searchCategory, currentSearch))
       : dispatch(getCardsAction());
   };
 
   const handleClick = (e) => {
-    AllOrFilterCards(langage, e.target.dataset.filter);
+    AllOrFilterCards(searchLangage, e.target.dataset.filter);
   };
 
   const handleOrderChange = (e) => {
@@ -52,6 +61,41 @@ const FiltersBar = ({ handleClickSize }) => {
 
     dispatch(setSearchOrder(newOrder));
   };
+
+  const categoryArray = [
+    {
+      queryName: null,
+      barName: "Tous",
+    },
+    {
+      queryName: "theorie",
+      barName: "Théorie",
+    },
+    {
+      queryName: "code",
+      barName: "Code",
+    },
+    {
+      queryName: "memo",
+      barName: "Mémo",
+    },
+    {
+      queryName: "bloc code",
+      barName: "Bloc Code",
+    },
+    {
+      queryName: "performances",
+      barName: "Performances",
+    },
+    {
+      queryName: "ressources",
+      barName: "Ressources",
+    },
+    {
+      queryName: "autre",
+      barName: "Autre",
+    },
+  ];
 
   return (
     <div className="FiltersBar">
@@ -62,116 +106,41 @@ const FiltersBar = ({ handleClickSize }) => {
             id="cards-filter"
             onChange={(e) => handleOrderChange(e)}
           >
-            <option value="chronology">Nouveau</option>
-            <option value="popularity">Populaire</option>
+            <option value="created">Nouveau</option>
+            <option value="update">Modifié</option>
+            <option value="like">Populaire</option>
           </select>
           <div className="FiltersBar__options">
             <div className="scroll-logo">
               <ChevronLeft />
             </div>
             <div className="FiltersBar__options--links">
-              <NavLink to={`/search?${langage && `langage=${langage}`}`}>
-                <button
-                  className={`FiltersBar__options--item ${
-                    (category === "" || category === undefined) && "active"
-                  }`}
-                  onClick={(e) => handleClick(e)}
-                  data-filter=""
-                >
-                  Tous
-                </button>
-              </NavLink>
-              
-              <NavLink to={`/search?${langage && `langage=${langage}&`}category=theorie`}>
-                <button
-                  className={
-                    "FiltersBar__options--item " +
-                    (category === "theorie" && "active")
-                  }
-                  data-filter="theorie"
-                  onClick={handleClick}
-                >
-                  Théorie
-                </button>
-              </NavLink>
-              <NavLink to={`/search?${langage && `langage=${langage}&`}category=code`}>
-                <button
-                  type="submit"
-                  className={
-                    "FiltersBar__options--item " +
-                    (category === "code" && "active")
-                  }
-                  data-filter="code"
-                  onClick={handleClick}
-                >
-                  Code
-                </button>
-              </NavLink>
-
-              <NavLink to={`/search?${langage && `langage=${langage}&`}category=memo`}>
-                <button
-                  className={
-                    "FiltersBar__options--item " +
-                    (category === "memo" && "active")
-                  }
-                  data-filter="memo"
-                  onClick={handleClick}
-                >
-                  memo
-                </button>
-              </NavLink>
-
-              <NavLink to={`/search?${langage && `langage=${langage}&`}category=bloc code`}>
-                <button
-                  name="bloc code"
-                  className={
-                    "FiltersBar__options--item " +
-                    (category === "bloc code" && "active")
-                  }
-                  data-filter="bloc code"
-                  onClick={handleClick}
-                >
-                  bloc code
-                </button>
-              </NavLink>
-
-              <NavLink to={`/search?${langage && `langage=${langage}&`}category=performances`}>
-                <button
-                  className={
-                    "FiltersBar__options--item " +
-                    (category === "performances" && "active")
-                  }
-                  data-filter="performances"
-                  onClick={handleClick}
-                >
-                  Performances
-                </button>
-              </NavLink>
-
-              <NavLink to={`/search?${langage && `langage=${langage}&`}category=ressources`}>
-                <button
-                  className={
-                    "FiltersBar__options--item " +
-                    (category === "ressources" && "active")
-                  }
-                  data-filter="ressources"
-                  onClick={handleClick}
-                >
-                  Ressources
-                </button>
-              </NavLink>
-              <NavLink to={`/search?${langage && `langage=${langage}&`}category=autre`}>
-                <button
-                  className={
-                    "FiltersBar__options--item " +
-                    (category === "autre" && "active")
-                  }
-                  data-filter="autre"
-                  onClick={handleClick}
-                >
-                  Autre
-                </button>
-              </NavLink>
+              {categoryArray &&
+                categoryArray.map((category, index) => (
+                  <Link
+                    className={`FiltersBar__options--item ${
+                      searchCategory === category.queryName && "active"
+                    }`}
+                    to={`/search?${
+                      searchWords ? `search=${searchWords}&` : ""
+                    }${searchLangage ? `langage=${searchLangage}&` : ""}${
+                      searchOrder ? `order=${searchOrder}&` : ""
+                    }${
+                      category.queryName
+                        ? `category=${category.queryName}&`
+                        : ""
+                    }${
+                      currentSearchPageNumber
+                        ? `page=${currentSearchPageNumber}`
+                        : ""
+                    }`}
+                    key={index}
+                    onClick={(e) => handleClick(e)}
+                    data-filter={category.queryName}
+                  >
+                    {category.barName}
+                  </Link>
+                ))}
             </div>
             <div className="scroll-logo">
               <ChevronRight />

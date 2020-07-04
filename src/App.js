@@ -64,7 +64,6 @@ function App(props) {
 
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/cards" component={SearchPage} />
         <Route path="/search" component={SearchPage} />
         <Route path="/login" component={Login} />
         <Route path="/ressources" component={RessourcesPage} />

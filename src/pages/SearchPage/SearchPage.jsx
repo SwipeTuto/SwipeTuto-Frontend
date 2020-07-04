@@ -14,7 +14,10 @@ import {
 } from "../../redux/filter/filter-selectors";
 import { baseURL } from "../../services/configService";
 
-import { getOtherPageAction } from "../../redux/filter/filter-actions";
+import {
+  getOtherPageAction,
+  deleteCurrentSearch,
+} from "../../redux/filter/filter-actions";
 import { getCardsLoading } from "../../redux/cards/cards-actions";
 import Pagination from "../../components/LayoutComponents/Pagination/Pagination";
 import { setCurrentCardGridPage } from "../../redux/filter/filter-actions";
@@ -34,6 +37,10 @@ const SearchPage = () => {
   const numberOfItemByPage = 16;
   const currentCardsGridPage = useSelector(selectCurrentCardsGridPage);
 
+  // useEffect(() => {
+  //   dispatch(deleteCurrentSearch());
+  // }, []);
+
   // "http://localhost:8000/api/v1/card/?page=2"
 
   const handleClickSize = (e) => {
@@ -49,7 +56,7 @@ const SearchPage = () => {
   const handlePaginationNavigation = (e) => {
     const navLink = e.target.dataset.link;
     console.log(navLink);
-    const newPageNumber = e.target.dataset.page;
+    const newPageNumber = parseInt(e.target.dataset.page);
     dispatch(getCardsLoading());
     dispatch(getOtherPageAction(navLink, newPageNumber));
   };

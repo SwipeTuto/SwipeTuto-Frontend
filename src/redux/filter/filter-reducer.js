@@ -2,10 +2,10 @@ import { FilterActionTypes } from './filter-types'
 
 const INITIAL_STATE = {
   currentSearch: {
-    searchWords: '',
-    searchLangage: '',
-    searchCategory: '',
-    searchOrder: 'chronology'
+    searchWords: null,
+    searchLangage: null,
+    searchCategory: null,
+    searchOrder: '-created'
   },
   errors: '',
   cardsFetched: "",
@@ -33,16 +33,36 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: action.payload };
 
     case FilterActionTypes.SET_CURRENT_SEARCH:
-      return { ...state, currentSearch: action.payload };
-    case FilterActionTypes.DELETE_CURRENT_SEARCH:
-      return {
-        ...state, currentSearch: {
-          searchWords: '',
-          searchLangage: '',
-          searchCategory: '',
-          searchOrder: 'chronology'
-        }, cardsFetched: ""
+      if (action.payload) {
+        return {
+          ...state, currentSearch: {
+            ...state.currentSearch,
+            [action.payload.item]: action.payload.value,
+          }
+        }
+      } else {
+        return {
+          ...state
+        }
       };
+    case FilterActionTypes.DELETE_CURRENT_SEARCH:
+      if (action.payload) {
+        return {
+          ...state, currentSearch: {
+            ...state.currentSearch,
+            [action.payload]: null,
+          }
+        }
+      } else {
+        return {
+          ...state, currentSearch: {
+            searchWords: null,
+            searchLangage: null,
+            searchCategory: null,
+            searchOrder: '-created'
+          }, cardsFetched: ""
+        }
+      }
 
     case FilterActionTypes.SET_SEARCH_ORDER:
       return {

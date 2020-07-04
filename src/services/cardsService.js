@@ -1,6 +1,6 @@
 import axios from "axios"
 import { baseURL } from '../services/configService'
-
+import store from '../redux/store'
 
 
 export const getCards = () => {
@@ -20,18 +20,19 @@ export const getCards = () => {
     })
 }
 
-export const getCardAfterfilter = (langage, category) => {
+export const getCardAfterfilter = (lan) => {
+  console.log('langage', lan)
   
+  // const state = store.getState();
 
-  
   var config = {
     headers: {
       'Content-Type': 'application/json'
     }
   }
   return axios
-    .get(`${baseURL}card/filter/?langage=${langage}&category=${category}`,
-      config)
+    // .get(`${baseURL}card/filter/?langage=${langage}&category=${langage}`, config)
+    .get(`${baseURL}card/filter/`, {params: lan}, config)
     .then(rep => {
       return rep
     })

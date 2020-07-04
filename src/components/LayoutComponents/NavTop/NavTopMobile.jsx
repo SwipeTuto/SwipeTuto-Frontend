@@ -236,7 +236,7 @@ const NavTopMobile = (props) => {
             <Link
               className="NavTopMobile__linkConnexion"
               to="/login"
-              onClick={() => handleClick()}
+              onClick={() => handleNavClose()}
             >
               <CustomButton color="dark">Connexion / Inscription</CustomButton>
             </Link>

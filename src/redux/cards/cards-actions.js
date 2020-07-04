@@ -23,7 +23,6 @@ export const getCardsAction = () => {
   return dispatch => {
     return getCards()
       .then(card => {
-
         dispatch(setCardsFetchedInStore(card)) // cards dans cardsFetched
         dispatch(getCardsLoaded()) // stop loader
       })

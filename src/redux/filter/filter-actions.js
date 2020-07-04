@@ -32,10 +32,10 @@ const SearchFailure = error => ({
 
 
 // recherche vers le back avec langage et catégorie
-export const getCardAfterfilterAction = (topic, category) => {
+export const getCardAfterfilterAction = (topic, category, search) => {
   return dispatch => {
     dispatch(getCardAfterfilteryRequest(topic, category))
-    return getCardAfterfilter(topic, category)
+    return getCardAfterfilter(search)
       .then(rep => {
 
         dispatch(getCardAfterfilterSuccess(rep.data))

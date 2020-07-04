@@ -1,5 +1,7 @@
 import axios from "axios"
 import { baseURL } from '../services/configService'
+import GetSearchStore from "./GetSearchStore"
+console.log('GetSearchStore', GetSearchStore)
 
 
 
@@ -20,7 +22,8 @@ export const getCards = () => {
     })
 }
 
-export const getCardAfterfilter = (topic, category) => {
+export const getCardAfterfilter = (search) => {
+  console.log('search', search)
 
 
 
@@ -30,7 +33,7 @@ export const getCardAfterfilter = (topic, category) => {
     }
   }
   return axios
-    .get(`${baseURL}card/filter/?topic=${topic}&category=${category}&ordering=created`,
+    .get(`${baseURL}card/filter/?topic=${search}&category=${search}&ordering=created`,
       config)
     .then(rep => {
       return rep

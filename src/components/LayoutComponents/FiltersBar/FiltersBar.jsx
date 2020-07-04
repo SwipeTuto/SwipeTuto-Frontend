@@ -140,5 +140,4 @@ const FiltersBar = ({ handleClickSize }) => {
     </>
   );
 };
-
 export default FiltersBar;

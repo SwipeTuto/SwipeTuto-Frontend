@@ -22,6 +22,8 @@ import {
   selectSearchWords,
   selectSearchOrder,
   selectSearchPage,
+  selectCurrentSearch,
+  selectSearchTopic,
 } from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
@@ -37,19 +39,22 @@ const NavTop = (props) => {
   const currentUser = useSelector(selectCurrentUser);
   const currentUserNav = useSelector(selectUserNav);
 
+  const search = useSelector(selectCurrentSearch);
   const searchCategory = useSelector(selectSearchCategory);
+  const searchTopic = useSelector(selectSearchTopic);
   const searchWords = useSelector(selectSearchWords);
   const searchOrder = useSelector(selectSearchOrder);
   const currentSearchPageNumber = useSelector(selectSearchPage);
+
   const [redirection, setRedirection] = useState(false);
 
   useEffect(() => {
     setRedirection(true);
     setRedirection(false);
-  }, [searchWords]);
+  }, [searchWords,search]);
 
   const logoHandleClick = (e) => {
-    dispatch(getCardAfterfilterAction(e.target.name, searchCategory));
+    dispatch(getCardAfterfilterAction(e.target.name, searchCategory, search));
   };
 
   const cardsClick = (e) => {

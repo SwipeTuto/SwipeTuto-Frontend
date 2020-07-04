@@ -5,7 +5,7 @@ const INITIAL_STATE = {
     searchWords: null,
     searchTopic: null,
     searchCategory: null,
-    searchOrder: 'create',
+    searchOrder: '-created',
     searchPage: 1,
   },
   errors: '',
@@ -59,7 +59,7 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
             searchWords: null,
             searchTopic: null,
             searchCategory: null,
-            searchOrder: 'create'
+            searchOrder: '-created'
           }, cardsFetched: ""
         }
       }

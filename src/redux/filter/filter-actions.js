@@ -32,10 +32,10 @@ const SearchFailure = error => ({
 
 
 // recherche vers le back avec langage et catégorie
-export const getCardAfterfilterAction = (langage, category) => {
+export const getCardAfterfilterAction = (topic, category) => {
   return dispatch => {
-    dispatch(getCardAfterfilteryRequest(langage, category))
-    return getCardAfterfilter(langage, category)
+    dispatch(getCardAfterfilteryRequest(topic, category))
+    return getCardAfterfilter(topic, category)
       .then(rep => {
 
         dispatch(getCardAfterfilterSuccess(rep.data))
@@ -47,16 +47,16 @@ export const getCardAfterfilterAction = (langage, category) => {
       })
   }
 }
-const getCardAfterfilteryRequest = (langage, category) => ({
-  type: FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_REQUEST,
-  payload: { langage, category }
+const getCardAfterfilteryRequest = (topic, category) => ({
+  type: FilterActionTypes.GET_CARDS_TOPIC_CATEGORY_REQUEST,
+  payload: { topic, category }
 })
 const getCardAfterfilterSuccess = cards => ({
-  type: FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_SUCCESS,
+  type: FilterActionTypes.GET_CARDS_TOPIC_CATEGORY_SUCCESS,
   payload: cards
 })
 const getCardAfterfilterFailure = err => ({
-  type: FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_FAILURE,
+  type: FilterActionTypes.GET_CARDS_TOPIC_CATEGORY_FAILURE,
   payload: err
 })
 
@@ -142,7 +142,6 @@ export const getOtherPageAction = (navLink, newPageNumber) => {
   return dispatch => {
     return getOtherPageCard(navLink)
       .then(rep => {
-        console.log(newPageNumber)
         dispatch(getOtherPageSuccess(rep.data))
         dispatch(setCurrentCardGridPage(newPageNumber))
         dispatch(getCardsLoaded())

@@ -10,7 +10,7 @@ import CurrentSearchWords from "../../components/CurrentSearchWords/CurrentSearc
 import { selectIsLoaded } from "../../redux/cards/cards-selectors";
 import {
   selectTotalNumberOfResults,
-  selectCurrentCardsGridPage,
+  selectSearchPage,
 } from "../../redux/filter/filter-selectors";
 import { baseURL } from "../../services/configService";
 
@@ -35,7 +35,7 @@ const SearchPage = () => {
 
   // A CHANGER EN FONCTION DU BACK :
   const numberOfItemByPage = 16;
-  const currentCardsGridPage = useSelector(selectCurrentCardsGridPage);
+  const currentCardsGridPage = useSelector(selectSearchPage);
 
   // useEffect(() => {
   //   dispatch(deleteCurrentSearch());
@@ -55,7 +55,6 @@ const SearchPage = () => {
 
   const handlePaginationNavigation = (e) => {
     const navLink = e.target.dataset.link;
-    console.log(navLink);
     const newPageNumber = parseInt(e.target.dataset.page);
     dispatch(getCardsLoading());
     dispatch(getOtherPageAction(navLink, newPageNumber));

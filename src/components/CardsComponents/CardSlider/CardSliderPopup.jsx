@@ -21,7 +21,6 @@ import "./CardSliderPopup.scss";
 
 const CardSliderPopup = () => {
   const clickedCardSlides = useSelector(selectClickedCardSlides);
-  // console.log(clickedCardSlides);
   const isFullScreen = useSelector(selectFullscreen);
   const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState(0);

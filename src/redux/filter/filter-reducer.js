@@ -3,14 +3,14 @@ import { FilterActionTypes } from './filter-types'
 const INITIAL_STATE = {
   currentSearch: {
     searchWords: null,
-    searchLangage: null,
+    searchTopic: null,
     searchCategory: null,
-    searchOrder: 'create'
+    searchOrder: 'create',
+    searchPage: 1,
   },
   errors: '',
   cardsFetched: "",
   otherCardsByAuthor: "",
-  currentCardsGridPage: 1,
 };
 
 const FilterReducer = (state = INITIAL_STATE, action) => {
@@ -21,15 +21,15 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
     case FilterActionTypes.SEARCH_FAILURE:
       return { ...state, errors: action.payload };
 
-    case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_REQUEST:
+    case FilterActionTypes.GET_CARDS_TOPIC_CATEGORY_REQUEST:
 
       return {
         ...state,
-        currentSearch: { ...state.currentSearch, searchLangage: action.payload.langage, searchCategory: action.payload.category }
+        currentSearch: { ...state.currentSearch, searchTopic: action.payload.topic, searchCategory: action.payload.category }
       };
-    case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_SUCCESS:
+    case FilterActionTypes.GET_CARDS_TOPIC_CATEGORY_SUCCESS:
       return { ...state, cardsFetched: action.payload, };
-    case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_FAILURE:
+    case FilterActionTypes.GET_CARDS_TOPIC_CATEGORY_FAILURE:
       return { ...state, errors: action.payload };
 
     case FilterActionTypes.SET_CURRENT_SEARCH:
@@ -57,7 +57,7 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
         return {
           ...state, currentSearch: {
             searchWords: null,
-            searchLangage: null,
+            searchTopic: null,
             searchCategory: null,
             searchOrder: 'create'
           }, cardsFetched: ""
@@ -104,7 +104,7 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: action.payload };
 
     case FilterActionTypes.SET_CARDS_GRID_PAGE:
-      return { ...state, currentCardsGridPage: action.payload };
+      return { ...state, currentSearch: { ...state.currentSearch, searchPage: action.payload } };
 
 
     default:

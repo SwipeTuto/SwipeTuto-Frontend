@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
+import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
 import "./Pagination.scss";
 
 const Pagination = ({
@@ -12,6 +13,11 @@ const Pagination = ({
   handlePaginationNavigation,
 }) => {
   const currentPage = parseInt(currentPageClicked);
+  const [redirection, setRedirection] = useState(false);
+
+  useEffect(() => {
+    setRedirection(true);
+  }, [currentPageClicked]);
 
   const startPage = (currentPage, totalPages) => {
     if (totalPages < 6) {
@@ -61,52 +67,56 @@ const Pagination = ({
   const startIndex = startPage(currentPage, totalPages);
   const endIndex = endPage(currentPage, totalPages);
   const allLinks = getAllLinksArray(startIndex, endIndex);
-  // console.log(currentPage, startIndex, endIndex, totalPages);
+
+  const redirectLink = SearchLinkRedirect();
 
   return (
-    <div className="Pagination">
-      {currentPage === 1 ? (
-        ""
-      ) : (
-        <>
-          <div className="Pagination__button" onClick={() => goToFirstPage()}>
-            &#171;
-          </div>
-          <div
-            className="Pagination__button"
-            onClick={() => goToPreviousPage()}
-          >
-            &#8249;
-          </div>
-        </>
-      )}
-      {allLinks &&
-        allLinks.map((link) => (
-          <div
-            className={`Pagination__indicator ${
-              link["data-page"] === currentPage ? "active" : ""
-            }`}
-            data-link={link["data-link"]}
-            data-page={link["data-page"]}
-            key={link.key}
-            onClick={(e) => handlePaginationNavigation(e)}
-          >
-            {link.content}
-          </div>
-        ))}
-      {currentPage === totalPages || totalPages === 0 ? (
-        ""
-      ) : (
-        <>
-          <div className="Pagination__button" onClick={() => goToNextPage()}>
-            &#8250;
-          </div>
-          <div className="Pagination__button" onClick={() => goToLastPage()}>
-            &#187;
-          </div>
-        </>
-      )}
-    </div>
+    <>
+      {redirection && <Redirect to={redirectLink} />}
+      <div className="Pagination">
+        {currentPage === 1 ? (
+          ""
+        ) : (
+          <>
+            <div className="Pagination__button" onClick={() => goToFirstPage()}>
+              &#171;
+            </div>
+            <div
+              className="Pagination__button"
+              onClick={() => goToPreviousPage()}
+            >
+              &#8249;
+            </div>
+          </>
+        )}
+        {allLinks &&
+          allLinks.map((link) => (
+            <div
+              className={`Pagination__indicator ${
+                link["data-page"] === currentPage ? "active" : ""
+              }`}
+              data-link={link["data-link"]}
+              data-page={link["data-page"]}
+              key={link.key}
+              onClick={(e) => handlePaginationNavigation(e)}
+            >
+              {link.content}
+            </div>
+          ))}
+        {currentPage === totalPages || totalPages === 0 ? (
+          ""
+        ) : (
+          <>
+            <div className="Pagination__button" onClick={() => goToNextPage()}>
+              &#8250;
+            </div>
+            <div className="Pagination__button" onClick={() => goToLastPage()}>
+              &#187;
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

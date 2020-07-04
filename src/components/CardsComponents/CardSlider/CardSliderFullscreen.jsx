@@ -25,7 +25,6 @@ const CardSliderFullscreen = () => {
     setActiveIndex(0);
     const slideForWidth = window.screen.height;
     setImageWidth(slideForWidth);
-    console.log("fullscreen slidewidth useeffect : ", slideForWidth);
   }, [isFullScreen]);
 
   const goToPrevSlide = (e) => {
@@ -45,7 +44,6 @@ const CardSliderFullscreen = () => {
       ".CardSliderLargeFullscreen__slides-container"
     ).scrollLeft;
     setActiveIndex(Math.floor(currentScrollLevel / (imageWidth - 10)));
-    console.log(activeIndex);
   };
 
   return (

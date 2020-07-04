@@ -38,24 +38,15 @@ function App(props) {
 
   const dispatch = useDispatch();
 
-  const [langage, category] = urlParams(props.location)
+  const [topic, category] = urlParams(props.location)
   const isLoaded = useSelector(selectIsLoaded)
-
-  // useEffect(() => {
-  //   !isLoaded && (
-  //     langage || category ? dispatch(getCardAfterfilterAction(langage, category)) : dispatch(getCardsAction())
-  //   )
-  // }, [category, langage, dispatch, isLoaded]);
 
   useEffect(() => {
     !isLoaded && (
-      langage || category ? dispatch(getCardAfterfilterAction(langage, category)) : dispatch(getCardsAction())
+      topic || category ? dispatch(getCardAfterfilterAction(topic, category)) : dispatch(getCardsAction())
     )
   }, [isLoaded]);
 
-  // const allImages = [...document.getElementsByTagName('img')];
-  // console.log(allImages);
-  // allImages.map(image => image.addEventListener('contextmenu', e => e.preventDefault()));
 
   return (
     <div className="App">

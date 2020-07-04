@@ -20,17 +20,17 @@ export const getCards = () => {
     })
 }
 
-export const getCardAfterfilter = (langage, category) => {
-  
+export const getCardAfterfilter = (topic, category) => {
 
-  
+
+
   var config = {
     headers: {
       'Content-Type': 'application/json'
     }
   }
   return axios
-    .get(`${baseURL}card/filter/?langage=${langage}&category=${category}&ordering=created`,
+    .get(`${baseURL}card/filter/?topic=${topic}&category=${category}&ordering=created`,
       config)
     .then(rep => {
       return rep

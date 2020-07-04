@@ -122,6 +122,10 @@
     &--item {
       padding: 1rem 1rem;
     }
+
+    &--logo {
+      stroke: $black;
+    }
   }
 
   &__user,

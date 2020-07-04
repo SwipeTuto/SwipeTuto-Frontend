@@ -29,12 +29,14 @@ const CardPreviewSmall = ({ card }) => {
           dispatch(showPopupCard());
         }}
       >
-        {media_image[0] && (
+        {media_image[0] && media_image[0].image ? (
           <img
             src={base + media_image[0].image}
             alt="slides presentation"
             onContextMenu={(e) => e.preventDefault()}
           />
+        ) : (
+          <img src="https://fakeimg.pl/500x500/" />
         )}
 
         <div className="CardPreviewSmall__hover">
@@ -44,13 +46,14 @@ const CardPreviewSmall = ({ card }) => {
           </div>
         </div>
       </div>
-      <div
-        className="CardPreviewSmall__details"
-      >
-        <Link to={`/search?user=${user && user.username ? user.username : ''}`}>
+      <div className="CardPreviewSmall__details">
+        <Link to={`/search?user=${user.username}`}>
           <UserAvatar
             userImage={
-              user.profile[0] && `${base}${user && user.profile[0].avatar? user.profile[0].avatar : ''}`
+              user.profile &&
+              user.profile[0] &&
+              user.profile[0].avatar &&
+              `${base}${user.profile[0].avatar}`
             }
             userFirstName={user.first_name && user.first_name}
             userLastName={user.last_name && user.last_name}

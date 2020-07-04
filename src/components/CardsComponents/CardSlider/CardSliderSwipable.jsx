@@ -64,6 +64,15 @@ const CardSliderSwipebale = () => {
     }
   };
 
+  const fakeArray = [
+    "https://fakeimg.pl/500x500/?text=Hello",
+    "https://fakeimg.pl/500x500/?text=Card2",
+    "https://fakeimg.pl/500x500/?text=HEyyyy",
+    "https://fakeimg.pl/500x500/?text=Salut!",
+    "https://fakeimg.pl/500x500/?text=Aurevoir!",
+    "https://fakeimg.pl/500x500/?text=Youhouu",
+  ];
+
   return (
     <div className="CardSliderLarge">
       <div className="CardSliderLarge__wrapper">
@@ -103,8 +112,40 @@ const CardSliderSwipebale = () => {
           }`}
           onScroll={(e) => handleScrollLevel(e)}
         >
-          {clickedCardSlides &&
-            clickedCardSlides.map((slide, index) => (
+          {/* {clickedCardSlides !== ["http://localhost:8000null"]
+            ? clickedCardSlides.map((slide, index) => (
+                <img
+                  className={
+                    index === activeIndex
+                      ? "CardSliderLarge__slide CardSliderLarge__slide--active"
+                      : "CardSliderLarge__slide"
+                  }
+                  key={index}
+                  index={index}
+                  src={slide}
+                  slide={slide}
+                  alt="slide element"
+                  onContextMenu={(e) => e.preventDefault()}
+                />
+              ))
+            : fakeArray.map((source, index) => (
+                <img
+                  className={
+                    index === activeIndex
+                      ? "CardSliderLarge__slide CardSliderLarge__slide--active"
+                      : "CardSliderLarge__slide"
+                  }
+                  key={index}
+                  index={index}
+                  src={source}
+                  slide={source}
+                  alt="slide element"
+                  onContextMenu={(e) => e.preventDefault()}
+                />
+              ))} */}
+          {fakeArray.map((source, index) => (
+            <>
+              {console.log(source)}
               <img
                 className={
                   index === activeIndex
@@ -113,12 +154,13 @@ const CardSliderSwipebale = () => {
                 }
                 key={index}
                 index={index}
-                src={slide}
-                slide={slide}
+                src={source}
+                slide={source}
                 alt="slide element"
                 onContextMenu={(e) => e.preventDefault()}
               />
-            ))}
+            </>
+          ))}
         </div>
         {/* Chevron left */}
         {isFullScreen ? (

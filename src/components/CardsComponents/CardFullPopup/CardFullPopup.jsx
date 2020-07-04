@@ -174,6 +174,9 @@ const CardFullPopup = () => {
             <UserAvatar
               userImage={
                 clickedCard &&
+                clickedCard.user &&
+                clickedCard.user.profile &&
+                clickedCard.user.profile[0] &&
                 clickedCard.user.profile[0].avatar &&
                 `${base}${clickedCard.user.profile[0].avatar}`
               }

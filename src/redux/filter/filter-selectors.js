@@ -10,9 +10,9 @@ export const selectSearchWords = createSelector(
   [selectCurrentSearch],
   currentSearch => currentSearch.searchWords
 )
-export const selectSearchLangage = createSelector(
+export const selectSearchTopic = createSelector(
   [selectCurrentSearch],
-  currentSearch => currentSearch.searchLangage
+  currentSearch => currentSearch.searchTopic
 )
 export const selectSearchCategory = createSelector(
   [selectCurrentSearch],
@@ -31,9 +31,9 @@ export const selectNewPageCards = createSelector(
   filter => filter.newPageCards && filter.newPageCards
 )
 
-export const selectCurrentCardsGridPage = createSelector(
-  [selectFilter],
-  filter => filter.currentCardsGridPage && filter.currentCardsGridPage
+export const selectSearchPage = createSelector(
+  [selectCurrentSearch],
+  currentSearch => currentSearch.searchPage && currentSearch.searchPage
 )
 
 export const selectOtherCardsByAuthor = createSelector(

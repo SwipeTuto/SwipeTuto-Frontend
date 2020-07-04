@@ -84,10 +84,15 @@
     }
   }
 
-  &__search {
+  &__searchZone {
+    height: 3rem;
+    // background-color: red;
     display: flex;
     justify-content: center;
-    margin: 1rem 0;
+
+    form.SearchForm {
+      font-size: 1.8rem;
+    }
   }
 
   &__input {

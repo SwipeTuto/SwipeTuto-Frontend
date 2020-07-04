@@ -16,7 +16,6 @@ import "./CardSliderSwipable.scss";
 
 const CardSliderSwipebale = () => {
   const clickedCardSlides = useSelector(selectClickedCardSlides); //array
-  // console.log(clickedCardSlides);
   const isFullScreen = useSelector(selectFullscreen);
   const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -145,7 +144,6 @@ const CardSliderSwipebale = () => {
               ))} */}
           {fakeArray.map((source, index) => (
             <>
-              {console.log(source)}
               <img
                 className={
                   index === activeIndex

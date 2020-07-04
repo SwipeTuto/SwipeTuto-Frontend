@@ -34,12 +34,8 @@ const HomePage = () => {
   const betaAlertOpen = useSelector(selectBetaAlertOpen);
   const [cardsArrayCut, setCardsArrayCut] = useState([]);
   const dispatch = useDispatch();
-  // dispatch(closeFullscreen());
-  // dispatch(closePopupCard(false));
-  // console.log(cards);
 
   useEffect(() => {
-    dispatch(deleteCurrentSearch());
     dispatch(getCardsAction());
 
     if (cards) {

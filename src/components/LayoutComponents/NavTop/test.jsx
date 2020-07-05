@@ -16,13 +16,13 @@ const GetSearchStore = () => {
   const searchOrder = useSelector(selectSearchOrder);
   const searchPage = useSelector(selectSearchPage);
 
-  return ({
+  return {
     searchWords,
     searchTopic,
     searchCategory,
     searchOrder,
-    searchPage
-  });
+    searchPage,
+  };
 };
 
 export default GetSearchStore;

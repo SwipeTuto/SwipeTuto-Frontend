@@ -1,7 +1,7 @@
 import axios from "axios"
 import { baseURL } from '../services/configService'
 import GetSearchStore from "./GetSearchStore"
-console.log('GetSearchStore', GetSearchStore)
+
 
 
 
@@ -23,7 +23,8 @@ export const getCards = () => {
 }
 
 export const getCardAfterfilter = (search) => {
-  console.log('search', search)
+  // const searchStore = GetSearchStore();
+  // console.log(searchStore)
 
 
 
@@ -39,6 +40,8 @@ export const getCardAfterfilter = (search) => {
       return rep
     })
 }
+
+
 export const getCardsByUser = username => {
   var config = {
     headers: {

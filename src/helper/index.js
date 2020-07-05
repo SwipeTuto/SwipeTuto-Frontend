@@ -97,6 +97,7 @@ export const urlRegexErrorMessage = "L'URL n'est pas dans un format valide. Merc
 export const strongPasswordRegex = RegExp(/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/); //1 lowercase, 1 uppercase, 1 number, 8 caractères mini
 export const passwordRegexErrorMessage = "Le mot de passe doit contenir au moins 8 caratcères, dont une lettre minuscule, une lettre majuscule et un nombre.";
 const passwordConfirmMessage = "Le mot de passe ne correspond pas à celui ajouté précédemment."
+const descriptionErrorMessage = "Entrez une description valide."
 
 export const errorMessageToDisplay = (name) => {
   switch (name) {
@@ -114,6 +115,8 @@ export const errorMessageToDisplay = (name) => {
       return emailRegexErrorMessage;
     case "url":
       return urlRegexErrorMessage;
+    case "description":
+      return descriptionErrorMessage
     default:
       return;
   }
@@ -124,9 +127,9 @@ export const checkRegexInput = (name, value) => {
   switch (name) {
     case "username":
       return usernameRegex.test(value);
-    case "firstname":
+    case "first_name":
       return nameRegex.test(value);
-    case "lastname":
+    case "last_name":
       return nameRegex.test(value);
     case "password":
       return strongPasswordRegex.test(value);
@@ -134,6 +137,8 @@ export const checkRegexInput = (name, value) => {
       return emailRegex.test(value);
     case "url":
       return urlRegex.test(value);
+    case "description":
+      return true;
     default:
       return;
   }

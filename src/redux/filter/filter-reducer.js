@@ -21,15 +21,15 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
     case FilterActionTypes.SEARCH_FAILURE:
       return { ...state, errors: action.payload };
 
-    case FilterActionTypes.GET_CARDS_TOPIC_CATEGORY_REQUEST:
-
+    case FilterActionTypes.GET_CARDS_FILTER_REQUEST:
       return {
         ...state,
-        currentSearch: { ...state.currentSearch, searchTopic: action.payload.topic, searchCategory: action.payload.category }
+        currentSearch: { ...action.payload }
       };
-    case FilterActionTypes.GET_CARDS_TOPIC_CATEGORY_SUCCESS:
+    case FilterActionTypes.GET_CARDS_FILTER_SUCCESS:
+
       return { ...state, cardsFetched: action.payload, };
-    case FilterActionTypes.GET_CARDS_TOPIC_CATEGORY_FAILURE:
+    case FilterActionTypes.GET_CARDS_FILTER_FAILURE:
       return { ...state, errors: action.payload };
 
     case FilterActionTypes.SET_CURRENT_SEARCH:

@@ -22,10 +22,27 @@ export const getCards = () => {
     })
 }
 
-export const getCardAfterfilter = (search) => {
-  // const searchStore = GetSearchStore();
-  // console.log(searchStore)
+// export const getCardAfterfilter = (search) => {
+//   // const searchStore = GetSearchStore();
 
+
+
+
+//   var config = {
+//     headers: {
+//       'Content-Type': 'application/json'
+//     }
+//   }
+//   return axios
+//     .get(`${baseURL}card/filter/?topic=${search}&category=${search}&ordering=created`,
+//       config)
+//     .then(rep => {
+//       return rep
+//     })
+// }
+
+export const getCardAfterfilter = (search) => {
+  console.log('object to the back : ', search)
 
 
   var config = {
@@ -34,7 +51,16 @@ export const getCardAfterfilter = (search) => {
     }
   }
   return axios
-    .get(`${baseURL}card/filter/?topic=${search}&category=${search}&ordering=created`,
+    .get(`${baseURL}card/filter/`, {
+      params: {
+        'topic': search.searchTopic,
+        'category': search.searchCategory,
+        'word': search.searchWords,
+        'order': search.searchOrder,
+        'page': search.searchPage
+
+      }
+    },
       config)
     .then(rep => {
       return rep

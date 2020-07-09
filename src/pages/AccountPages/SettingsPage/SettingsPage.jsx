@@ -28,7 +28,6 @@ const SettingsPage = () => {
     const newAvatarFile = newAvatarInput.files[0];
     let avatarFormData = new FormData();
     avatarFormData.append("avatar", newAvatarFile);
-    console.log("avatar change");
 
     setNewUserInfos({
       ...currentUser,
@@ -74,7 +73,7 @@ const SettingsPage = () => {
           });
           break;
         default:
-          console.log(name, value, "erreur");
+          return
       }
     }
   };

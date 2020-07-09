@@ -10,7 +10,7 @@ export const searchAction = kword => {
     return searchBar(kword)
       .then(search => {
         dispatch(SearchSuccess(search.data))
-        dispatch(setCurrentSearch("searchWords", kword))
+        // dispatch(setCurrentSearch("searchWords", kword))
 
         dispatch(getCardsLoaded())
 
@@ -32,9 +32,25 @@ const SearchFailure = error => ({
 
 
 // recherche vers le back avec langage et catégorie
-export const getCardAfterfilterAction = (topic, category, search) => {
+// export const getCardAfterfilterAction = (topic, category, search) => {
+//   return dispatch => {
+//     dispatch(getCardAfterfilteryRequest(topic, category))
+//     return getCardAfterfilter(search)
+//       .then(rep => {
+
+//         dispatch(getCardAfterfilterSuccess(rep.data))
+//         dispatch(getCardsLoaded())
+//         return rep
+//       })
+//       .catch(err => {
+//         dispatch(getCardAfterfilterFailure(err.response))
+//       })
+//   }
+// }
+export const getCardAfterfilterAction = (search) => {
+  console.log('in getCardAfterFilterAction', search)
   return dispatch => {
-    dispatch(getCardAfterfilteryRequest(topic, category))
+    // dispatch(getCardAfterfilteryRequest(search))
     return getCardAfterfilter(search)
       .then(rep => {
 
@@ -47,16 +63,17 @@ export const getCardAfterfilterAction = (topic, category, search) => {
       })
   }
 }
-const getCardAfterfilteryRequest = (topic, category) => ({
-  type: FilterActionTypes.GET_CARDS_TOPIC_CATEGORY_REQUEST,
-  payload: { topic, category }
-})
+
+// const getCardAfterfilteryRequest = (search) => ({
+//   type: FilterActionTypes.GET_CARDS_FILTER_REQUEST,
+//   payload: search
+// })
 const getCardAfterfilterSuccess = cards => ({
-  type: FilterActionTypes.GET_CARDS_TOPIC_CATEGORY_SUCCESS,
+  type: FilterActionTypes.GET_CARDS_FILTER_SUCCESS,
   payload: cards
 })
 const getCardAfterfilterFailure = err => ({
-  type: FilterActionTypes.GET_CARDS_TOPIC_CATEGORY_FAILURE,
+  type: FilterActionTypes.GET_CARDS_FILTER_FAILURE,
   payload: err
 })
 
@@ -150,7 +167,7 @@ export const getOtherPageAction = (navLink, newPageNumber) => {
       })
       .catch(err => {
         dispatch(getOtherPageFailure(err.response))
-        console.log(err)
+        // console.log(err)
       })
   }
 }

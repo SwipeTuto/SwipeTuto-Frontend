@@ -5,6 +5,8 @@ import {
   selectSearchCategory,
   selectSearchTopic,
   selectSearchWords,
+  selectSearchOrder,
+  selectSearchPage
 } from "../../../redux/filter/filter-selectors";
 import {
   searchAction,
@@ -23,9 +25,13 @@ const SearchForm = () => {
   const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState("");
   const [redirection, setRedirection] = useState(false);
+
+
   const searchWords = useSelector(selectSearchWords);
   const searchTopic = useSelector(selectSearchTopic);
   const searchCategory = useSelector(selectSearchCategory);
+  const searchOrder = useSelector(selectSearchOrder);
+  const currentSearchPageNumber = useSelector(selectSearchPage);
 
   useEffect(() => {
     if (searchWords === null) {
@@ -43,7 +49,13 @@ const SearchForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(setCurrentSearch("searchWords", searchInput));
+    dispatch(getCardAfterfilterAction(
+      e.target.name,
+      searchCategory,
+      searchWords,
+      searchOrder,
+      currentSearchPageNumber
+    ))
     dispatch(searchAction(searchInput));
     dispatch(closeMobileNav());
     setRedirection(true);

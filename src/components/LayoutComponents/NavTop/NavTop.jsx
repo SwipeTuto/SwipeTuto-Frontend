@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, withRouter } from "react-router-dom";
 import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg";
 import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
 import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
@@ -34,12 +34,14 @@ import SearchForm from "../SearchForm/SearchForm";
 
 import "./NavTop.scss";
 
+import { urlParams } from "../../../helper/index"
+import { test2 } from "../../../services/cardsService"
+
 const NavTop = (props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const currentUserNav = useSelector(selectUserNav);
 
-  const search = useSelector(selectCurrentSearch);
   const searchCategory = useSelector(selectSearchCategory);
   const searchTopic = useSelector(selectSearchTopic);
   const searchWords = useSelector(selectSearchWords);
@@ -48,15 +50,22 @@ const NavTop = (props) => {
 
   const [redirection, setRedirection] = useState(false);
 
+
   useEffect(() => {
+  
     setRedirection(true);
     setRedirection(false);
-  }, [searchWords,search]);
-
+  }, [searchWords]);
+ 
   const logoHandleClick = (e) => {
-    dispatch(getCardAfterfilterAction(e.target.name, searchCategory, search));
-  };
-
+    dispatch(getCardAfterfilterAction(
+      e.target.name,
+      searchCategory,
+      searchWords,
+      searchOrder,
+      currentSearchPageNumber
+    ))
+  }
   const cardsClick = (e) => {
     const allFiltersItems = [
       ...document.querySelectorAll("button.FiltersBar__options--item"),
@@ -193,4 +202,4 @@ const NavTop = (props) => {
   );
 };
 
-export default NavTop;
+export default withRouter(NavTop);

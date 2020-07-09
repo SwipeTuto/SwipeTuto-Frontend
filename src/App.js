@@ -24,6 +24,7 @@ import { getCardAfterfilterAction } from "./redux/filter/filter-actions"
 
 import { urlParams } from "./helper/index"
 
+
 import './index.scss'
 import './App.scss';
 import ConfidentialityPage from "./pages/ConfidentialityPage/ConfidentialityPage";
@@ -32,13 +33,11 @@ import InfosPage from "./pages/InfosPage/InfosPage";
 
 
 
-
 function App(props) {
-
-
   const dispatch = useDispatch();
 
-  const [topic, category] = urlParams(props.location)
+  const [topic, category ] = urlParams(props.location)
+
   const isLoaded = useSelector(selectIsLoaded)
 
   useEffect(() => {
@@ -47,12 +46,10 @@ function App(props) {
     )
   }, [isLoaded]);
 
-
   return (
     <div className="App">
       <NavTop />
       <NavTopMobile />
-
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/search" component={SearchPage} />

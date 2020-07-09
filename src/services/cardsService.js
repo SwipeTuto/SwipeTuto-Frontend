@@ -1,6 +1,6 @@
 import axios from "axios"
 import { baseURL } from '../services/configService'
-import GetSearchStore from "./GetSearchStore"
+
 
 
 
@@ -22,29 +22,7 @@ export const getCards = () => {
     })
 }
 
-// export const getCardAfterfilter = (search) => {
-//   // const searchStore = GetSearchStore();
-
-
-
-
-//   var config = {
-//     headers: {
-//       'Content-Type': 'application/json'
-//     }
-//   }
-//   return axios
-//     .get(`${baseURL}card/filter/?topic=${search}&category=${search}&ordering=created`,
-//       config)
-//     .then(rep => {
-//       return rep
-//     })
-// }
-
 export const getCardAfterfilter = (search) => {
-  console.log('object to the back : ', search)
-
-
   var config = {
     headers: {
       'Content-Type': 'application/json'
@@ -55,7 +33,7 @@ export const getCardAfterfilter = (search) => {
       params: {
         'topic': search.searchTopic,
         'category': search.searchCategory,
-        'word': search.searchWords,
+        'search': search.searchWords,
         'order': search.searchOrder,
         'page': search.searchPage
 

@@ -17,9 +17,11 @@ export const urlParams = url => {
   var topic = urlParams.get('topic')
   var category = urlParams.get('category')
   var ordering = urlParams.get('ordering')
+  var search = urlParams.get('search')
+  var page = urlParams.get('page')
 
 
-  return [topic, category, ordering]
+  return [topic, category, ordering, search, page]
 }
 
 
@@ -166,8 +168,8 @@ export const categoryArray = [
     name: "Mémo",
   },
   {
-    queryName: "bloc code",
-    name: "Bloc Code",
+    queryName: "design",
+    name: "Design",
   },
   {
     queryName: "performances",

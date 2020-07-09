@@ -9,10 +9,13 @@ import {
   selectSearchWords,
   selectSearchTopic,
   selectSearchCategory,
+  selectCurrentSearch,
 } from "../../redux/filter/filter-selectors";
 import { topicArray, categoryArray } from "../../helper/index";
-import { deleteCurrentSearch } from "../../redux/filter/filter-actions";
-import { getCardsAction } from "../../redux/cards/cards-actions";
+import {
+  deleteCurrentSearch,
+  getCardAfterfilterAction,
+} from "../../redux/filter/filter-actions";
 import SearchLinkRedirect from "../../helper/SearchLinkRedirect";
 
 import "./CurrentSearchWords.scss";
@@ -24,14 +27,20 @@ const CurrentSearchWords = ({ history }) => {
   const searchTopic = useSelector(selectSearchTopic);
   const searchCategory = useSelector(selectSearchCategory);
   const searchWords = useSelector(selectSearchWords);
+  const currentSearch = useSelector(selectCurrentSearch);
 
   const handleDelete = (e) => {
     e.stopPropagation();
     const itemToDelete = () =>
       e.target.dataset.searchitem ? e.target.dataset.searchitem : null;
     dispatch(deleteCurrentSearch(itemToDelete()));
+    dispatch(
+      getCardAfterfilterAction({
+        ...currentSearch,
+        [e.target.dataset.searchitem]: null,
+      })
+    );
     setRedirection(true);
-    dispatch(getCardsAction());
   };
 
   const paramsArray = [

@@ -2,55 +2,38 @@ import { FilterActionTypes } from "./filter-types"
 
 import { searchBar } from '../../services/searchService'
 import { getCardAfterfilter, getCardsByUser, getOtherPageCard } from '../../services/cardsService'
-import { getCardsLoaded } from "../cards/cards-actions"
+import { getCardsLoaded, getCardsLoading } from "../cards/cards-actions"
 
 // Recherche avec le back avec mots
-export const searchAction = kword => {
-  return dispatch => {
-    return searchBar(kword)
-      .then(search => {
-        dispatch(SearchSuccess(search.data))
-        // dispatch(setCurrentSearch("searchWords", kword))
-
-        dispatch(getCardsLoaded())
-
-      })
-      .catch(err => {
-        dispatch(SearchFailure(err.response))
-        dispatch(setCurrentSearch("searchWords", "Une erreur est survenue."))
-      })
-  }
-}
-const SearchSuccess = kword => ({
-  type: FilterActionTypes.SEARCH_SUCCESS,
-  payload: kword
-})
-const SearchFailure = error => ({
-  type: FilterActionTypes.SEARCH_FAILURE,
-  payload: error
-})
-
-
-// recherche vers le back avec langage et catégorie
-// export const getCardAfterfilterAction = (topic, category, search) => {
+// export const searchAction = kword => {
 //   return dispatch => {
-//     dispatch(getCardAfterfilteryRequest(topic, category))
-//     return getCardAfterfilter(search)
-//       .then(rep => {
+//     return searchBar(kword)
+//       .then(search => {
+//         dispatch(SearchSuccess(search.data))
+//         // dispatch(setCurrentSearch("searchWords", kword))
 
-//         dispatch(getCardAfterfilterSuccess(rep.data))
 //         dispatch(getCardsLoaded())
-//         return rep
+
 //       })
 //       .catch(err => {
-//         dispatch(getCardAfterfilterFailure(err.response))
+//         dispatch(SearchFailure(err.response))
+//         dispatch(setCurrentSearch("searchWords", "Une erreur est survenue."))
 //       })
 //   }
 // }
+// const SearchSuccess = kword => ({
+//   type: FilterActionTypes.SEARCH_SUCCESS,
+//   payload: kword
+// })
+// const SearchFailure = error => ({
+//   type: FilterActionTypes.SEARCH_FAILURE,
+//   payload: error
+// })
+
 export const getCardAfterfilterAction = (search) => {
-  console.log('in getCardAfterFilterAction', search)
   return dispatch => {
     // dispatch(getCardAfterfilteryRequest(search))
+    dispatch(getCardsLoading());
     return getCardAfterfilter(search)
       .then(rep => {
 
@@ -79,7 +62,7 @@ const getCardAfterfilterFailure = err => ({
 
 
 // Gestion de la currentSearch avec mots, catégorie, langage et ordre de recherche
-export const setCurrentSearch = (item, value) => ({
+export const setCurrentSearch = (item, value = null) => ({
   type: FilterActionTypes.SET_CURRENT_SEARCH,
   payload: { item, value }
 })

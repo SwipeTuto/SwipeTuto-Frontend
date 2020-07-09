@@ -24,6 +24,7 @@ import {
   setCurrentSearch,
 } from "../../../redux/filter/filter-actions";
 import { getCardsAction } from "../../../redux/cards/cards-actions";
+import { urlParams } from "../../../helper/index";
 
 import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
 import { ReactComponent as ChevronRight } from "../../../assets/images/chevrons/chevron-forward.svg";
@@ -40,6 +41,7 @@ const FiltersBar = ({ handleClickSize }) => {
   const searchOrder = useSelector(selectSearchOrder);
   const currentSearchPageNumber = useSelector(selectSearchPage);
   const [redirection, setRedirection] = useState(false);
+  // const [topic, category, ordering, search, page] = urlParams(props.location);
 
   useEffect(() => {
     setRedirection(false);
@@ -55,14 +57,6 @@ const FiltersBar = ({ handleClickSize }) => {
     }
   };
   const totalNumberOfCardsSearched = getRealNumber(totalNumberOfResults);
-
-  // const AllOrFilterCards = (searchTopic, searchCategory) => {
-  //   searchTopic || searchCategory
-  //     ? dispatch(
-  //         getCardAfterfilterAction(searchTopic, searchCategory, currentSearch)
-  //       )
-  //     : dispatch(getCardsAction());
-  // };
 
   const handleOrderChange = (e) => {
     const newOrder = e.target.options[e.target.selectedIndex].value;
@@ -100,9 +94,9 @@ const FiltersBar = ({ handleClickSize }) => {
               id="cards-filter"
               onChange={(e) => handleOrderChange(e)}
             >
-              <option value="create">Nouveau</option>
-              <option value="update">Modifié</option>
-              <option value="like">Populaire</option>
+              <option value="-created">Nouveau</option>
+              <option value="-update">Modifié</option>
+              <option value="-like">Populaire</option>
             </select>
             <div className="FiltersBar__options">
               <div className="scroll-logo">

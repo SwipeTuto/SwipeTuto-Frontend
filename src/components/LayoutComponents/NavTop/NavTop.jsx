@@ -31,6 +31,7 @@ import { selectUserNav } from "../../../redux/layout/layout-selectors";
 import {
   getCardAfterfilterAction,
   setCurrentSearch,
+  deleteCurrentSearch,
 } from "../../../redux/filter/filter-actions";
 import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
 import SearchForm from "../SearchForm/SearchForm";
@@ -54,7 +55,7 @@ const NavTop = (props) => {
   const [newTopic, setNewTopic] = useState("");
 
   useEffect(() => {
-    setRedirection(true);
+    // setRedirection(true);
     setRedirection(false);
   }, [searchWords, search]);
 
@@ -67,16 +68,16 @@ const NavTop = (props) => {
   };
 
   const cardsClick = (e) => {
-    const allFiltersItems = [
-      ...document.querySelectorAll("button.FiltersBar__options--item"),
-    ];
-
-    allFiltersItems.map((item) => {
-      item.classList.remove("active");
-      return item.dataset.filter === "all" && item.classList.add("active");
-    });
-
-    dispatch(getCardsAction());
+    dispatch(deleteCurrentSearch());
+    dispatch(
+      getCardAfterfilterAction({
+        searchWords: null,
+        searchTopic: null,
+        searchCategory: null,
+        searchOrder: "-created",
+        searchPage: 1,
+      })
+    );
   };
 
   const redirectLink = SearchLinkRedirect();
@@ -95,7 +96,7 @@ const NavTop = (props) => {
           </NavLink>
           <NavLink
             className="NavTop__link NavTop__link--category"
-            to={redirectLink}
+            to="/search"
             onClick={(e) => cardsClick(e)}
           >
             Langages

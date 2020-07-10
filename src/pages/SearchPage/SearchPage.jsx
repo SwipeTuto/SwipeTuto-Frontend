@@ -45,7 +45,7 @@ const SearchPage = (props) => {
   const currentCardsGridPage = useSelector(selectSearchPage);
 
   useEffect(() => {
-    if (!isLoaded && (topic || category || ordering || search || page)) {
+    if (topic || category || ordering || search || page) {
       dispatch(
         getCardAfterfilterAction({
           searchWords: search,
@@ -110,9 +110,9 @@ const SearchPage = (props) => {
       window.scroll(0, 0);
     }
 
-    setTotalNumberOfPages(Math.ceil(totalNumberOfCards / numberOfItemByPage));
-    dispatch(setCurrentCardGridPage(1));
-  }, [totalNumberOfCards, numberOfItemByPage]);
+    // setTotalNumberOfPages(Math.ceil(totalNumberOfCards / numberOfItemByPage));
+    // dispatch(setCurrentCardGridPage(1));
+  }, []);
 
   return (
     <div className="SearchPage">
@@ -122,13 +122,13 @@ const SearchPage = (props) => {
         <CardGridList cardsSize={gridSize} />
         {isLoaded && totalNumberOfCards && totalNumberOfCards !== 0 ? (
           <Pagination
-            currentPageClicked={currentCardsGridPage}
-            totalPages={totalNumberOfPages}
-            goToFirstPage={goToFirstPage}
-            goToLastPage={goToLastPage}
-            goToPreviousPage={goToPreviousPage}
-            goToNextPage={goToNextPage}
-            handlePaginationNavigation={handlePaginationNavigation}
+          // currentPageClicked={currentCardsGridPage}
+          // totalPages={totalNumberOfPages}
+          // goToFirstPage={goToFirstPage}
+          // goToLastPage={goToLastPage}
+          // goToPreviousPage={goToPreviousPage}
+          // goToNextPage={goToNextPage}
+          // handlePaginationNavigation={handlePaginationNavigation}
           />
         ) : (
           ""

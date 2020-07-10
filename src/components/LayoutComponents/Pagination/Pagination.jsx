@@ -17,6 +17,7 @@ const Pagination = ({
 
   useEffect(() => {
     setRedirection(true);
+    // setRedirection(false);
   }, [currentPageClicked]);
 
   const startPage = (currentPage, totalPages) => {

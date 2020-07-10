@@ -59,6 +59,15 @@ const SearchForm = () => {
     setSearchInput("");
     // dispatch(deleteCurrentSearch("searchWords"));
     dispatch(deleteCurrentSearch());
+    dispatch(
+      getCardAfterfilterAction({
+        searchWords: null,
+        searchTopic: null,
+        searchCategory: null,
+        searchOrder: "-created",
+        searchPage: 1,
+      })
+    );
     setRedirection(true);
   };
 

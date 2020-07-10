@@ -20,7 +20,9 @@ import Footer from "./components/LayoutComponents/Footer/Footer";
 
 import { getCardsAction } from './redux/cards/cards-actions'
 import { selectIsLoaded } from "./redux/cards/cards-selectors"
-import { getCardAfterfilterAction } from "./redux/filter/filter-actions"
+import { getCardAfterfilterAction, setCurrentSearch } from "./redux/filter/filter-actions"
+import { getCardAfterfilter } from './services/cardsService'
+
 
 import { urlParams } from "./helper/index"
 
@@ -30,21 +32,38 @@ import './App.scss';
 import ConfidentialityPage from "./pages/ConfidentialityPage/ConfidentialityPage";
 import CookiesPage from "./pages/CookiesPage/CookiesPage";
 import InfosPage from "./pages/InfosPage/InfosPage";
+import { selectCurrentSearch } from "./redux/filter/filter-selectors";
 
 
 
 function App(props) {
+
+  const currentSearch = useSelector(selectCurrentSearch)
   const dispatch = useDispatch();
-
-  const [topic, category ] = urlParams(props.location)
-
+  const [topic, category, ordering, search, page] = urlParams(props.location)
   const isLoaded = useSelector(selectIsLoaded)
 
   useEffect(() => {
-    !isLoaded && (
-      topic || category ? dispatch(getCardAfterfilterAction(topic, category)) : dispatch(getCardsAction())
-    )
-  }, [isLoaded]);
+    if (!isLoaded && (topic || category || ordering || search || page)) {
+      dispatch(getCardAfterfilterAction({
+        searchWords: search,
+        searchTopic: topic,
+        searchCategory: category,
+        searchOrder: ordering,
+        searchPage: page,
+      }));
+      dispatch(setCurrentSearch("searchWords", search))
+      dispatch(setCurrentSearch("searchTopic", topic))
+      dispatch(setCurrentSearch("searchCategory", category))
+      dispatch(setCurrentSearch("searchOrder", ordering))
+      dispatch(setCurrentSearch("searchPage", page))
+    } else {
+      dispatch(getCardAfterfilterAction(currentSearch))
+    }
+  }, []);
+
+
+
 
   return (
     <div className="App">

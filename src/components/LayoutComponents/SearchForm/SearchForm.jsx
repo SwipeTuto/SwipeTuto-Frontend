@@ -5,8 +5,7 @@ import {
   selectSearchCategory,
   selectSearchTopic,
   selectSearchWords,
-  selectSearchOrder,
-  selectSearchPage
+  selectCurrentSearch,
 } from "../../../redux/filter/filter-selectors";
 import {
   searchAction,
@@ -25,13 +24,11 @@ const SearchForm = () => {
   const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState("");
   const [redirection, setRedirection] = useState(false);
-
-
+  const currentSearch = useSelector(selectCurrentSearch);
   const searchWords = useSelector(selectSearchWords);
   const searchTopic = useSelector(selectSearchTopic);
   const searchCategory = useSelector(selectSearchCategory);
-  const searchOrder = useSelector(selectSearchOrder);
-  const currentSearchPageNumber = useSelector(selectSearchPage);
+
 
   useEffect(() => {
     if (searchWords === null) {
@@ -49,22 +46,19 @@ const SearchForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getCardAfterfilterAction(
-      e.target.name,
-      searchCategory,
-      searchWords,
-      searchOrder,
-      currentSearchPageNumber
-    ))
-    dispatch(searchAction(searchInput));
+    dispatch(setCurrentSearch("searchWords", searchInput));
+    // dispatch(searchAction(searchInput));
+    dispatch(
+      getCardAfterfilterAction({ ...currentSearch, searchWords: searchInput })
+    );
     dispatch(closeMobileNav());
     setRedirection(true);
   };
 
   const handleSearchDelete = () => {
     setSearchInput("");
-    dispatch(deleteCurrentSearch("searchWords"));
-    dispatch(getCardAfterfilterAction(searchTopic, searchCategory));
+    // dispatch(deleteCurrentSearch("searchWords"));
+    dispatch(deleteCurrentSearch());
     setRedirection(true);
   };
 

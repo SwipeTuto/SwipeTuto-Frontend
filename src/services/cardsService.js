@@ -1,8 +1,8 @@
 import axios from "axios"
 import { baseURL } from '../services/configService'
-import  createBrowserHistory  from "../helper/history"
 
-const history = createBrowserHistory
+
+
 
 
 export const getCards = () => {
@@ -23,15 +23,23 @@ export const getCards = () => {
 }
 
 export const getCardAfterfilter = (search) => {
-  console.log('history', history)
-  console.log('search', search)
   var config = {
     headers: {
       'Content-Type': 'application/json'
     }
   }
   return axios
-    .get(`${baseURL}card/filter/`,{},config)
+    .get(`${baseURL}card/filter/`, {
+      params: {
+        'topic': search.searchTopic,
+        'category': search.searchCategory,
+        'search': search.searchWords,
+        'order': search.searchOrder,
+        'page': search.searchPage
+
+      }
+    },
+      config)
     .then(rep => {
       return rep
     })

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 
 import {
+  selectCurrentSearch,
   selectSearchTopic,
   selectTotalNumberOfResults,
   selectSearchCategory,
@@ -32,6 +33,7 @@ import "./FiltersBar.scss";
 const FiltersBar = ({ handleClickSize }) => {
   const dispatch = useDispatch();
   // paramètres de recherche :
+  const currentSearch = useSelector(selectCurrentSearch);
   const searchTopic = useSelector(selectSearchTopic);
   const searchCategory = useSelector(selectSearchCategory);
   const searchWords = useSelector(selectSearchWords);
@@ -54,23 +56,34 @@ const FiltersBar = ({ handleClickSize }) => {
   };
   const totalNumberOfCardsSearched = getRealNumber(totalNumberOfResults);
 
-  const AllOrFilterCards = (searchTopic, searchCategory) => {
-    searchTopic || searchCategory
-      ? dispatch(getCardAfterfilterAction(searchTopic, searchCategory))
-      : dispatch(getCardsAction());
-  };
+  // const AllOrFilterCards = (searchTopic, searchCategory) => {
+  //   searchTopic || searchCategory
+  //     ? dispatch(
+  //         getCardAfterfilterAction(searchTopic, searchCategory, currentSearch)
+  //       )
+  //     : dispatch(getCardsAction());
+  // };
 
   const handleOrderChange = (e) => {
     const newOrder = e.target.options[e.target.selectedIndex].value;
     // lancer nouvelle requete cards
     dispatch(setCurrentSearch("searchOrder", newOrder));
+    dispatch(
+      getCardAfterfilterAction({ ...currentSearch, searchOrder: newOrder })
+    );
     setRedirection(true);
   };
 
   const handleCategoryChange = (e) => {
     const newCategory = e.target.dataset.filter;
-    AllOrFilterCards(searchTopic, newCategory);
+    // AllOrFilterCards(searchTopic, newCategory);
     dispatch(setCurrentSearch("searchCategory", newCategory));
+    dispatch(
+      getCardAfterfilterAction({
+        ...currentSearch,
+        searchCategory: newCategory,
+      })
+    );
     setRedirection(true);
   };
 

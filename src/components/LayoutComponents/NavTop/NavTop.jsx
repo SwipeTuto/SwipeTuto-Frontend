@@ -28,7 +28,10 @@ import {
 import { logoutAction } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
 import { selectUserNav } from "../../../redux/layout/layout-selectors";
-import { getCardAfterfilterAction } from "../../../redux/filter/filter-actions";
+import {
+  getCardAfterfilterAction,
+  setCurrentSearch,
+} from "../../../redux/filter/filter-actions";
 import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
 import SearchForm from "../SearchForm/SearchForm";
 
@@ -41,6 +44,7 @@ const NavTop = (props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const currentUserNav = useSelector(selectUserNav);
+  const currentSearch = useSelector(selectCurrentSearch);
 
   const searchCategory = useSelector(selectSearchCategory);
   const searchTopic = useSelector(selectSearchTopic);
@@ -49,23 +53,22 @@ const NavTop = (props) => {
   const currentSearchPageNumber = useSelector(selectSearchPage);
 
   const [redirection, setRedirection] = useState(false);
+  const [newTopic, setNewTopic] = useState("");
 
 
   useEffect(() => {
-  
     setRedirection(true);
     setRedirection(false);
   }, [searchWords]);
- 
-  const logoHandleClick = (e) => {
-    dispatch(getCardAfterfilterAction(
-      e.target.name,
-      searchCategory,
-      searchWords,
-      searchOrder,
-      currentSearchPageNumber
-    ))
-  }
+
+  const logoHandleClick = async (e) => {
+    // dispatch(getCardAfterfilterAction(e.target.name, searchCategory, search));
+    dispatch(setCurrentSearch("searchTopic", e.target.name));
+    dispatch(
+      getCardAfterfilterAction({ ...currentSearch, searchTopic: e.target.name })
+    );
+  };
+
   const cardsClick = (e) => {
     const allFiltersItems = [
       ...document.querySelectorAll("button.FiltersBar__options--item"),
@@ -202,4 +205,4 @@ const NavTop = (props) => {
   );
 };
 
-export default withRouter(NavTop);
+export default NavTop;

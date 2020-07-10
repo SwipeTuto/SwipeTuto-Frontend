@@ -104,3 +104,8 @@ export const register = users => {
       return user;
     });
 }
+
+// update des infos user qui vient du component SettingsPage, sous forme d'objet
+export const updateUserInfos = newUserInfos => {
+  console.log(newUserInfos)
+}

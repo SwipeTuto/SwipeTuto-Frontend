@@ -2,54 +2,39 @@ import { FilterActionTypes } from "./filter-types"
 
 import { searchBar } from '../../services/searchService'
 import { getCardAfterfilter, getCardsByUser, getOtherPageCard } from '../../services/cardsService'
-import { getCardsLoaded } from "../cards/cards-actions"
+import { getCardsLoaded, getCardsLoading } from "../cards/cards-actions"
 
 
 // Recherche avec le back avec mots
-export const searchAction = kword => {
+// export const searchAction = kword => {
+//   return dispatch => {
+//     return searchBar(kword)
+//       .then(search => {
+//         dispatch(SearchSuccess(search.data))
+//         // dispatch(setCurrentSearch("searchWords", kword))
+
+//         dispatch(getCardsLoaded())
+
+//       })
+//       .catch(err => {
+//         dispatch(SearchFailure(err.response))
+//         dispatch(setCurrentSearch("searchWords", "Une erreur est survenue."))
+//       })
+//   }
+// }
+// const SearchSuccess = kword => ({
+//   type: FilterActionTypes.SEARCH_SUCCESS,
+//   payload: kword
+// })
+// const SearchFailure = error => ({
+//   type: FilterActionTypes.SEARCH_FAILURE,
+//   payload: error
+// })
+
+export const getCardAfterfilterAction = (search) => {
   return dispatch => {
-    return searchBar(kword)
-      .then(search => {
-        dispatch(SearchSuccess(search.data))
-        dispatch(setCurrentSearch("searchWords", kword))
-
-        dispatch(getCardsLoaded())
-
-      })
-      .catch(err => {
-        dispatch(SearchFailure(err.response))
-        dispatch(setCurrentSearch("searchWords", "Une erreur est survenue."))
-      })
-  }
-}
-const SearchSuccess = kword => ({
-  type: FilterActionTypes.SEARCH_SUCCESS,
-  payload: kword
-})
-const SearchFailure = error => ({
-  type: FilterActionTypes.SEARCH_FAILURE,
-  payload: error
-})
-
-
-// recherche vers le back avec langage et catégorie
-export const getCardAfterfilterAction = (
-  topic, 
-  category, 
-  searchWords,
-  searchOrder,
-  currentSearchPageNumber ) => {
-
-  const search = {
-    'topic' : topic,
-    'category' : category,
-    'word' : searchWords,
-    'order' : searchOrder,
-    'page' : currentSearchPageNumber 
-  }
- 
-  return dispatch => {
-    dispatch(getCardAfterfilteryRequest(topic, category))
+    // dispatch(getCardAfterfilteryRequest(search))
+    dispatch(getCardsLoading());
     return getCardAfterfilter(search)
       .then(rep => {
         dispatch(getCardAfterfilterSuccess(rep.data))
@@ -61,22 +46,23 @@ export const getCardAfterfilterAction = (
       })
   }
 }
-const getCardAfterfilteryRequest = (topic, category) => ({
-  type: FilterActionTypes.GET_CARDS_TOPIC_CATEGORY_REQUEST,
-  payload: { topic, category }
-})
+
+// const getCardAfterfilteryRequest = (search) => ({
+//   type: FilterActionTypes.GET_CARDS_FILTER_REQUEST,
+//   payload: search
+// })
 const getCardAfterfilterSuccess = cards => ({
-  type: FilterActionTypes.GET_CARDS_TOPIC_CATEGORY_SUCCESS,
+  type: FilterActionTypes.GET_CARDS_FILTER_SUCCESS,
   payload: cards
 })
 const getCardAfterfilterFailure = err => ({
-  type: FilterActionTypes.GET_CARDS_TOPIC_CATEGORY_FAILURE,
+  type: FilterActionTypes.GET_CARDS_FILTER_FAILURE,
   payload: err
 })
 
 
 // Gestion de la currentSearch avec mots, catégorie, langage et ordre de recherche
-export const setCurrentSearch = (item, value) => ({
+export const setCurrentSearch = (item, value = null) => ({
   type: FilterActionTypes.SET_CURRENT_SEARCH,
   payload: { item, value }
 })
@@ -164,7 +150,7 @@ export const getOtherPageAction = (navLink, newPageNumber) => {
       })
       .catch(err => {
         dispatch(getOtherPageFailure(err.response))
-        console.log(err)
+        // console.log(err)
       })
   }
 }

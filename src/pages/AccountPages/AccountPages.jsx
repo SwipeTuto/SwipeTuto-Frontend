@@ -51,7 +51,7 @@ const AccountPage = ({ match }) => {
             </p>
           </div>
           <div className="AccountPage__social">
-            <a href="#" target="_blank" className="AccountPage__social--link">
+            {/* <a href="#" target="_blank" className="AccountPage__social--link">
               <LogoYoutube className="AccountPage__social--logo" />
             </a>
             <a href="#" target="_blank" className="AccountPage__social--link">
@@ -62,7 +62,7 @@ const AccountPage = ({ match }) => {
             </a>
             <a href="#" target="_blank" className="AccountPage__social--link">
               <LogoTwitter className="AccountPage__social--logo" />
-            </a>
+            </a> */}
           </div>
         </div>
 

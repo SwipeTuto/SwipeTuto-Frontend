@@ -4,7 +4,10 @@ import CustomButton from "../CustomButton/CustomButton";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { getCardAfterfilterAction } from "../../../redux/filter/filter-actions";
+import {
+  getCardAfterfilterAction,
+  setCurrentSearch,
+} from "../../../redux/filter/filter-actions";
 import { selectMobileNavOpen } from "../../../redux/layout/layout-selectors";
 import {
   openMobileNav,
@@ -32,6 +35,7 @@ import {
   selectSearchWords,
   selectSearchOrder,
   selectSearchPage,
+  selectCurrentSearch,
 } from "../../../redux/filter/filter-selectors";
 
 const NavTopMobile = (props) => {
@@ -39,6 +43,7 @@ const NavTopMobile = (props) => {
   const dispatch = useDispatch();
   const [cardsDropdownOpen, setCardsDropdownOpen] = useState(false);
   const currentUser = useSelector(selectCurrentUser);
+  const currentSearch = useSelector(selectCurrentSearch);
   const mobileNavOpen = useSelector(selectMobileNavOpen);
   const searchCategory = useSelector(selectSearchCategory);
   const searchWords = useSelector(selectSearchWords);
@@ -72,7 +77,14 @@ const NavTopMobile = (props) => {
   };
 
   const handleTopicClick = (e) => {
-    dispatch(getCardAfterfilterAction(e.target.dataset.name, searchCategory));
+    // dispatch(getCardAfterfilterAction(e.target.dataset.name, searchCategory));
+    dispatch(setCurrentSearch("searchTopic", e.target.dataset.name));
+    dispatch(
+      getCardAfterfilterAction({
+        ...currentSearch,
+        searchTopic: e.target.dataset.name,
+      })
+    );
 
     setCardsDropdownOpen(false);
     dispatch(closeMobileNav());
@@ -236,7 +248,7 @@ const NavTopMobile = (props) => {
             <Link
               className="NavTopMobile__linkConnexion"
               to="/login"
-              onClick={() => handleClick()}
+              onClick={() => handleNavClose()}
             >
               <CustomButton color="dark">Connexion / Inscription</CustomButton>
             </Link>

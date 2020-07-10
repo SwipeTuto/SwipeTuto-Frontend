@@ -35,13 +35,13 @@ const FiltersBar = ({ handleClickSize }) => {
   const dispatch = useDispatch();
   // paramètres de recherche :
   const currentSearch = useSelector(selectCurrentSearch);
+  const currentPage = useSelector(selectSearchPage);
   const searchTopic = useSelector(selectSearchTopic);
   const searchCategory = useSelector(selectSearchCategory);
   const searchWords = useSelector(selectSearchWords);
   const searchOrder = useSelector(selectSearchOrder);
   const currentSearchPageNumber = useSelector(selectSearchPage);
   const [redirection, setRedirection] = useState(false);
-  // const [topic, category, ordering, search, page] = urlParams(props.location);
 
   useEffect(() => {
     setRedirection(false);
@@ -70,14 +70,15 @@ const FiltersBar = ({ handleClickSize }) => {
 
   const handleCategoryChange = (e) => {
     const newCategory = e.target.dataset.filter;
-    // AllOrFilterCards(searchTopic, newCategory);
     dispatch(setCurrentSearch("searchCategory", newCategory));
     dispatch(
       getCardAfterfilterAction({
         ...currentSearch,
         searchCategory: newCategory,
+        searchPage: 1,
       })
     );
+    dispatch(setCurrentSearch("searchPage", 1));
     setRedirection(true);
   };
 
@@ -124,7 +125,7 @@ const FiltersBar = ({ handleClickSize }) => {
           </div>
           <div className="FiltersBar__down">
             <p className="FiltersBar__numberOfResults">
-              {`${totalNumberOfCardsSearched} résultats trouvés.`}
+              {`${totalNumberOfCardsSearched} résultats trouvés - Page ${currentPage}`}
             </p>
             <div
               className="FiltersBar__size-logo active"

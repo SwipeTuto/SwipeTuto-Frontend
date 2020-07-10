@@ -17,39 +17,61 @@ import {
   setCurrentSearch,
 } from "../../../redux/filter/filter-actions";
 import { baseURL } from "../../../services/configService";
+import { selectIsLoaded } from "../../../redux/cards/cards-selectors";
 
-const Pagination = ({ location }) => {
+const Pagination = ({
+  currentSearch,
+  totalPages,
+  goToFirstPage,
+  goToLastPage,
+  goToPreviousPage,
+  goToNextPage,
+  handlePaginationNavigation,
+  location,
+}) => {
   const dispatch = useDispatch();
 
   const [redirection, setRedirection] = useState(false);
   const [firstPart, setFirstPart] = useState();
   const [lastPart, setLastPart] = useState();
-  const currentSearch = useSelector(selectCurrentSearch);
-  const currentPage = useSelector(selectSearchPage);
-  const [totalNumberOfPages, setTotalNumberOfPages] = useState(0);
+  const [startIndex, setStartIndex] = useState();
+  const [endIndex, setEndIndex] = useState();
+  const [allLinks, setAllLinks] = useState();
+  const currentPage = currentSearch.searchPage;
+  const isLoaded = useSelector(selectIsLoaded);
+
   const totalNumberOfCards = useSelector(selectTotalNumberOfResults);
 
   const cardsFetched = useSelector(selectCardsFetched);
-  if (cardsFetched.next || cardsFetched.previous) {
-    const nextLink =
-      (cardsFetched.next && cardsFetched.next) ||
-      (cardsFetched.previous && cardsFetched.previous);
-    const splitNextLink = nextLink.split("page=");
-    setFirstPart([...splitNextLink[0]].join("") + "page=");
-    setLastPart([...splitNextLink[1].slice(1)].join(""));
-  }
-
-  // A CHANGER EN FONCTION DU BACK :
-  const numberOfItemByPage = 16;
-
-  const [topic, category, ordering, search, page] = urlParams(location);
 
   useEffect(() => {
     setRedirection(true);
     setRedirection(false);
+    if (cardsFetched.next || cardsFetched.previous) {
+      const nextLink =
+        (cardsFetched.next && cardsFetched.next) ||
+        (cardsFetched.previous && cardsFetched.previous);
+      const splitNextLink = nextLink.split("page=");
+      const firstLinkPart = [...splitNextLink[0]]
+        ? [...splitNextLink[0]].join("") + "page="
+        : "page=";
+      const lastLinkPart = splitNextLink[1]
+        ? [...splitNextLink[1].slice(1)].join("")
+        : "";
+      setFirstPart(firstLinkPart);
+      setLastPart(lastLinkPart);
+    }
 
-    setTotalNumberOfPages(Math.ceil(totalNumberOfCards / numberOfItemByPage));
-  }, [totalNumberOfCards]);
+    const start = startPage(parseInt(currentPage), totalPages);
+    const end = endPage(parseInt(currentPage), totalPages);
+    const links = getAllLinksArray(start, end, firstPart, lastPart);
+
+    // console.log(firstPart, lastPart);
+
+    setStartIndex(start);
+    setEndIndex(end);
+    setAllLinks(links);
+  }, [totalPages, currentPage]);
 
   const startPage = (currentPage, totalPages) => {
     if (totalPages < 6) {
@@ -80,16 +102,18 @@ const Pagination = ({ location }) => {
       return 5;
     } else if (currentPage + 2 < totalPages) {
       return currentPage + 2;
+    } else {
+      console.log("erreur endPage");
     }
   };
 
-  const getAllLinksArray = (start, end) => {
+  const getAllLinksArray = (start, end, firstPart, lastPart) => {
     let array = [];
 
     for (let i = start; i <= end; i++) {
       let object = {};
       object["data-page"] = i;
-      object["data-link"] = firstPart + i + lastPart;
+      object["data-link"] = `${firstPart}${i}${lastPart}`;
       object["key"] = i;
       object["content"] = i;
       array.push(object);
@@ -98,81 +122,28 @@ const Pagination = ({ location }) => {
     return array;
   };
 
-  const handlePaginationNavigation = (e) => {
-    const navPageNumber = e.target.dataset.page;
-
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        searchPage: navPageNumber,
-      })
-    );
-    dispatch(setCurrentSearch("searchPage", navPageNumber));
-  };
-
-  const goToFirstPage = () => {
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        searchPage: 1,
-      })
-    );
-    dispatch(setCurrentSearch("searchPage", 1));
-    setRedirection(true);
-  };
-  const goToLastPage = () => {
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        searchPage: totalNumberOfPages,
-      })
-    );
-    dispatch(setCurrentSearch("searchPage", totalNumberOfPages));
-    setRedirection(true);
-  };
-  const goToPreviousPage = () => {
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        searchPage: currentPage - 1,
-      })
-    );
-    dispatch(setCurrentSearch("searchPage", currentPage - 1));
-    setRedirection(true);
-  };
-  const goToNextPage = () => {
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        searchPage: currentPage + 1,
-      })
-    );
-    dispatch(setCurrentSearch("searchPage", currentPage + 1));
-    setRedirection(true);
-  };
-
-  const startIndex = startPage(currentPage, totalNumberOfPages);
-  const endIndex = endPage(currentPage, totalNumberOfPages);
-  const allLinks = getAllLinksArray(startIndex, endIndex);
-
-  const redirectLink = SearchLinkRedirect();
+  // const redirectLink = SearchLinkRedirect();
 
   return (
     <>
-      {redirection && <Redirect to={redirectLink} />}
+      {/* {redirection && <Redirect to={redirectLink} />} */}
       <div className="Pagination">
         {currentPage === 1 ? (
           ""
         ) : (
           <>
-            <div className="Pagination__button" onClick={goToFirstPage}>
+            <div className="Pagination__button" onClick={() => goToFirstPage()}>
               &#171;
             </div>
-            <div className="Pagination__button" onClick={goToPreviousPage}>
+            <div
+              className="Pagination__button"
+              onClick={() => goToPreviousPage()}
+            >
               &#8249;
             </div>
           </>
         )}
+
         {allLinks &&
           allLinks.map((link) => (
             <div
@@ -187,14 +158,15 @@ const Pagination = ({ location }) => {
               {link.content}
             </div>
           ))}
-        {currentPage === totalNumberOfPages || totalNumberOfPages === 0 ? (
+
+        {currentPage === totalPages || totalPages === 0 ? (
           ""
         ) : (
           <>
-            <div className="Pagination__button" onClick={goToNextPage}>
+            <div className="Pagination__button" onClick={() => goToNextPage()}>
               &#8250;
             </div>
-            <div className="Pagination__button" onClick={goToLastPage}>
+            <div className="Pagination__button" onClick={() => goToLastPage()}>
               &#187;
             </div>
           </>
@@ -204,4 +176,4 @@ const Pagination = ({ location }) => {
   );
 };
 
-export default withRouter(Pagination);
+export default Pagination;

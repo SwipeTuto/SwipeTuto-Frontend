@@ -189,7 +189,7 @@ const NavTopMobile = (props) => {
               <div className="NavTopMobile__userInfos">
                 <UserAvatar
                   userImage={
-                    currentUser.profile.avatar && currentUser.profile.avatar
+                    currentUser.profile && currentUser.profile.avatar ? currentUser.profile.avatar : null
                   }
                   userFirstName={
                     currentUser.first_name && currentUser.first_name

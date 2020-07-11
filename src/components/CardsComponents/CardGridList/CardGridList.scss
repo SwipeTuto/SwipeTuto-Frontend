@@ -49,3 +49,16 @@
     }
   }
 }
+
+@media screen and (max-width: $bp-smallest) {
+  .CardGridList {
+    padding: 0 3rem;
+
+    &__wrapper {
+      &--small {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 1rem;
+      }
+    }
+  }
+}

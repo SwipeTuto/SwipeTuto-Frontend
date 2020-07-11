@@ -3,11 +3,13 @@
 .Pagination {
   display: flex;
   justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 
   &__button {
     cursor: pointer;
     margin: 0.3rem;
-    background-color: $grey-light;
+    background-color: $grey-medium;
     border-radius: $box-radius;
     padding: 0 0.6rem;
     font-weight: bold;
@@ -28,7 +30,9 @@
     padding: 0.6rem;
 
     &.active {
-      color: $primary-medium;
+      background-color: $primary-medium;
+      border-radius: $box-radius;
+      color: $white;
     }
 
     &:hover {

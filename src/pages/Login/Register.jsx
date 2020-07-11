@@ -81,7 +81,7 @@ const Register = (props) => {
           required
         />
         <p className="input__message" data-inputfor="username"></p>
-        <label htmlFor="nom" className="signup__form--label">
+        {/* <label htmlFor="nom" className="signup__form--label">
           Nom :
         </label>
         <input
@@ -106,7 +106,7 @@ const Register = (props) => {
           className="signup__form--input invalid-input"
           required
         />
-        <p className="input__message" data-inputfor="lastname"></p>
+        <p className="input__message" data-inputfor="lastname"></p> */}
         <label htmlFor="email" className="signup__form--label">
           Email :
         </label>

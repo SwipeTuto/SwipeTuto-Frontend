@@ -47,30 +47,30 @@ const Pagination = ({
   useEffect(() => {
     setRedirection(true);
     setRedirection(false);
-    if (cardsFetched.next || cardsFetched.previous) {
-      const nextLink =
-        (cardsFetched.next && cardsFetched.next) ||
-        (cardsFetched.previous && cardsFetched.previous);
-      const splitNextLink = nextLink.split("page=");
-      const firstLinkPart = [...splitNextLink[0]]
-        ? [...splitNextLink[0]].join("") + "page="
-        : "page=";
-      const lastLinkPart = splitNextLink[1]
-        ? [...splitNextLink[1].slice(1)].join("")
-        : "";
-      setFirstPart(firstLinkPart);
-      setLastPart(lastLinkPart);
-    }
+    // if (cardsFetched.next || cardsFetched.previous) {
+    //   const nextLink =
+    //     (cardsFetched.next && cardsFetched.next) ||
+    //     (cardsFetched.previous && cardsFetched.previous);
+    //   const splitNextLink = nextLink.split("page=");
+    //   const firstLinkPart = [...splitNextLink[0]]
+    //     ? [...splitNextLink[0]].join("") + "page="
+    //     : "page=";
+    //   const lastLinkPart = splitNextLink[1]
+    //     ? [...splitNextLink[1].slice(1)].join("")
+    //     : "";
+    //   setFirstPart(firstLinkPart);
+    //   setLastPart(lastLinkPart);
+    // }
 
     const start = startPage(parseInt(currentPage), totalPages);
     const end = endPage(parseInt(currentPage), totalPages);
     const links = getAllLinksArray(start, end, firstPart, lastPart);
 
-    // console.log(firstPart, lastPart);
-
     setStartIndex(start);
     setEndIndex(end);
     setAllLinks(links);
+
+    // currentPageIndicator && currentPageIndicator.classList.add("active");
   }, [totalPages, currentPage]);
 
   const startPage = (currentPage, totalPages) => {
@@ -113,7 +113,7 @@ const Pagination = ({
     for (let i = start; i <= end; i++) {
       let object = {};
       object["data-page"] = i;
-      object["data-link"] = `${firstPart}${i}${lastPart}`;
+      // object["data-link"] = `${firstPart}${i}${lastPart}`;
       object["key"] = i;
       object["content"] = i;
       array.push(object);
@@ -148,9 +148,9 @@ const Pagination = ({
           allLinks.map((link) => (
             <div
               className={`Pagination__indicator ${
-                link["data-page"] === currentPage ? "active" : ""
+                link["data-page"] === parseInt(currentPage) ? "active" : ""
               }`}
-              data-link={link["data-link"]}
+              // data-link={link["data-link"]}
               data-page={link["data-page"]}
               key={link.key}
               onClick={(e) => handlePaginationNavigation(e)}

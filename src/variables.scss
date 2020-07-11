@@ -51,6 +51,7 @@ $grid-component-padding-phone: 4rem 2vw;
 $bp-tablet: 960px;
 $bp-phone: 680px;
 $bp-small-phone: 540px;
+$bp-smallest: 360px;
 
 @mixin input-style {
   background: $grey-light;

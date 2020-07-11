@@ -76,13 +76,15 @@ const NavTopMobile = (props) => {
     setRedirection(true);
   };
 
-  const handleTopicClick = (e) => {
+  const topicHandleClick = (e) => {
     // dispatch(getCardAfterfilterAction(e.target.dataset.name, searchCategory));
     dispatch(setCurrentSearch("searchTopic", e.target.dataset.name));
+    dispatch(setCurrentSearch("searchPage", 1));
     dispatch(
       getCardAfterfilterAction({
         ...currentSearch,
         searchTopic: e.target.dataset.name,
+        searchPage: 1,
       })
     );
 
@@ -174,7 +176,7 @@ const NavTopMobile = (props) => {
                     }`}
                   >
                     <p
-                      onClick={(e) => handleTopicClick(e)}
+                      onClick={(e) => topicHandleClick(e)}
                       data-name={rubrique.queryName}
                       className="NavTopMobile__dropdown--item"
                     >

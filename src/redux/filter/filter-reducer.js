@@ -3,33 +3,33 @@ import { FilterActionTypes } from './filter-types'
 const INITIAL_STATE = {
   currentSearch: {
     searchWords: null,
-    searchLangage: null,
+    searchTopic: null,
     searchCategory: null,
-    searchOrder: '-created'
+    searchOrder: '-created',
+    searchPage: 1,
   },
   errors: '',
   cardsFetched: "",
   otherCardsByAuthor: "",
-  currentCardsGridPage: 1,
 };
 
 const FilterReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     //RECHERCHE
-    case FilterActionTypes.SEARCH_SUCCESS:
-      return { ...state, cardsFetched: action.payload, };
-    case FilterActionTypes.SEARCH_FAILURE:
-      return { ...state, errors: action.payload };
+    // case FilterActionTypes.SEARCH_SUCCESS:
+    //   return { ...state, cardsFetched: action.payload, };
+    // case FilterActionTypes.SEARCH_FAILURE:
+    //   return { ...state, errors: action.payload };
 
-    case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_REQUEST:
+    // case FilterActionTypes.GET_CARDS_FILTER_REQUEST:
+    //   return {
+    //     ...state,
+    //     currentSearch: { ...action.payload }
+    //   };
+    case FilterActionTypes.GET_CARDS_FILTER_SUCCESS:
 
-      return {
-        ...state,
-        currentSearch: { ...state.currentSearch, searchLangage: action.payload.langage, searchCategory: action.payload.category }
-      };
-    case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_SUCCESS:
       return { ...state, cardsFetched: action.payload, };
-    case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_FAILURE:
+    case FilterActionTypes.GET_CARDS_FILTER_FAILURE:
       return { ...state, errors: action.payload };
 
     case FilterActionTypes.SET_CURRENT_SEARCH:
@@ -57,9 +57,10 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
         return {
           ...state, currentSearch: {
             searchWords: null,
-            searchLangage: null,
+            searchTopic: null,
             searchCategory: null,
-            searchOrder: '-created'
+            searchOrder: '-created',
+            searchPage: 1,
           }, cardsFetched: ""
         }
       }
@@ -104,7 +105,7 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: action.payload };
 
     case FilterActionTypes.SET_CARDS_GRID_PAGE:
-      return { ...state, currentCardsGridPage: action.payload };
+      return { ...state, currentSearch: { ...state.currentSearch, searchPage: action.payload } };
 
 
     default:

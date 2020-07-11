@@ -204,8 +204,8 @@ const CardFullPopup = () => {
             <div className="infos__category--stamp">
               {clickedCard && renameCategory(clickedCard.categorie[0].name)}
             </div>
-            <span className="horizontal-separation-primary-light"></span>
-            <div className="infos__tags">
+            {/* <span className="horizontal-separation-primary-light"></span> */}
+            {/* <div className="infos__tags">
               <h3 className="title title-4">Tags du Post :</h3>
               <div className="infos__tags--container">
                 {clickedCard &&
@@ -213,7 +213,7 @@ const CardFullPopup = () => {
                     <span className="tag" key={tag.name}>{`#${tag.name}`}</span>
                   ))}
               </div>
-            </div>
+            </div> */}
             <span className="horizontal-separation-primary-light"></span>
             <div className="infos__autres-posts">
               <h3 className="title title-4">Du même auteur :</h3>
@@ -246,7 +246,7 @@ const CardFullPopup = () => {
                     ))}
               </div>
             </div>
-            <span className="horizontal-separation-primary-light"></span>
+            {/* <span className="horizontal-separation-primary-light"></span>
             <div className="infos__social">
               <h3 className="title title-4">Réseaux sociaux :</h3>
               <div className="social-grid">
@@ -255,7 +255,7 @@ const CardFullPopup = () => {
                 <LogoFacebook className="social-grid--item" />
                 <LogoTwitter className="social-grid--item" />
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="grid__commentaires">
             <h1 className="title title-1">Commentaires</h1>

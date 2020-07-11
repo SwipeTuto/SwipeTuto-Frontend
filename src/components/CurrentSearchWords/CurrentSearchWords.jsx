@@ -7,13 +7,17 @@ import { ReactComponent as CloseLogo } from "../../assets/images/close-circle.sv
 
 import {
   selectSearchWords,
-  selectSearchLangage,
+  selectSearchTopic,
   selectSearchCategory,
-  selectSearchOrder,
-  selectCurrentCardsGridPage,
+  selectCurrentSearch,
 } from "../../redux/filter/filter-selectors";
-import { deleteCurrentSearch } from "../../redux/filter/filter-actions";
-import { getCardsAction } from "../../redux/cards/cards-actions";
+import { topicArray, categoryArray } from "../../helper/index";
+import {
+  deleteCurrentSearch,
+  getCardAfterfilterAction,
+  setCurrentSearch,
+} from "../../redux/filter/filter-actions";
+import SearchLinkRedirect from "../../helper/SearchLinkRedirect";
 
 import "./CurrentSearchWords.scss";
 
@@ -21,53 +25,73 @@ const CurrentSearchWords = ({ history }) => {
   const dispatch = useDispatch();
   const [redirection, setRedirection] = useState(false);
 
-  const searchLangage = useSelector(selectSearchLangage);
+  const searchTopic = useSelector(selectSearchTopic);
   const searchCategory = useSelector(selectSearchCategory);
   const searchWords = useSelector(selectSearchWords);
-  const searchOrder = useSelector(selectSearchOrder);
-  const currentSearchPageNumber = useSelector(selectCurrentCardsGridPage);
+  const currentSearch = useSelector(selectCurrentSearch);
 
   const handleDelete = (e) => {
     e.stopPropagation();
     const itemToDelete = () =>
       e.target.dataset.searchitem ? e.target.dataset.searchitem : null;
-    console.log(itemToDelete());
     dispatch(deleteCurrentSearch(itemToDelete()));
+    dispatch(
+      getCardAfterfilterAction({
+        ...currentSearch,
+        [e.target.dataset.searchitem]: null,
+        searchPage: 1,
+      })
+    );
+    dispatch(setCurrentSearch("searchPage", 1));
     setRedirection(true);
-    dispatch(getCardsAction());
   };
 
   const paramsArray = [
-    { value: searchWords, name: "searchWords" },
-    { value: searchLangage, name: "searchLangage" },
-    { value: searchCategory, name: "searchCategory" },
+    { name: "searchWords", value: searchWords },
+    { name: "searchTopic", value: searchTopic },
+    { name: "searchCategory", value: searchCategory },
   ];
 
   useEffect(() => {
     setRedirection(false);
   }, []);
 
+  const getParamName = (param) => {
+    switch (param.name) {
+      case "searchTopic":
+        const topic = topicArray.find((item) => item.queryName === param.value);
+        const topicIndex = topicArray.indexOf(topic);
+        return `Langage : ${topicArray[topicIndex].name}`;
+
+      case "searchCategory":
+        const category = categoryArray.find(
+          (item) => item.queryName === param.value
+        );
+        const categoryIndex = categoryArray.indexOf(category);
+        return `Catégorie : ${categoryArray[categoryIndex].name}`;
+      case "searchWords":
+        return `Termes : ${param.value}`;
+
+      default:
+        return param.value;
+    }
+  };
+  const redirectLink = SearchLinkRedirect();
+
   return (
     <>
-      {redirection && (
-        <Redirect
-          to={`/search?${searchWords ? `search=${searchWords}&` : ""}${
-            searchLangage ? `langage=${searchLangage}&` : ""
-          }${searchOrder ? `order=${searchOrder}&` : ""}${
-            searchCategory ? `category=${searchCategory}&` : ""
-          }${currentSearchPageNumber ? `page=${currentSearchPageNumber}` : ""}`}
-        />
-      )}
+      {redirection && <Redirect to={redirectLink} />}
 
-      {(searchWords || searchLangage || searchCategory) && (
+      {(searchWords || searchTopic || searchCategory) && (
         <div className="currentSearch">
           {paramsArray &&
             paramsArray.map(
               (param, index) =>
                 param &&
                 param.value && (
-                  <div className="currentSearch__button">
-                    {param.value}
+                  <div className="currentSearch__button" key={index}>
+                    {getParamName(param)}
+
                     <div
                       onClick={(e) => handleDelete(e)}
                       data-searchitem={param.name}

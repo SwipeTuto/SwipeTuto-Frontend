@@ -1,16 +1,30 @@
 // Récupérer les paramètres de l'URL dans les recherches par langage et catégorie
+import HTMLLogo from "../assets/images/tech_logo/HTML.png";
+import CSSLogo from "../assets/images/tech_logo/CSS.png";
+import JavascriptLogo from "../assets/images/tech_logo/javascript.png";
+import SassLogo from "../assets/images/tech_logo/sass.png";
+import PythonLogo from "../assets/images/tech_logo/python.png";
+import PHPLogo from "../assets/images/tech_logo/PHP.png";
+import ReactJSLogo from "../assets/images/tech_logo/reactJS.png";
+import NodeJSLogo from "../assets/images/tech_logo/nodeJS.png";
+import allLogo from "../assets/images/tech_logo/all_logo.png";
+
 export const urlParams = url => {
 
   var queryString = url.search ? url.search.split('?')[1] : window.location.search;
   const urlParams = new URLSearchParams(queryString);
 
-  var langage = urlParams.get('langage')
+  var topic = urlParams.get('topic')
   var category = urlParams.get('category')
   var ordering = urlParams.get('ordering')
+  var search = urlParams.get('search')
+  var page = urlParams.get('page')
 
 
-  return [langage, category, ordering]
+  return [topic, category, ordering, search, page]
 }
+
+
 
 
 // Pour les mots / phrases trop longue, permet de couper. Params : phrase, nombre de caractères max, true/false pour couper les mots
@@ -85,6 +99,7 @@ export const urlRegexErrorMessage = "L'URL n'est pas dans un format valide. Merc
 export const strongPasswordRegex = RegExp(/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/); //1 lowercase, 1 uppercase, 1 number, 8 caractères mini
 export const passwordRegexErrorMessage = "Le mot de passe doit contenir au moins 8 caratcères, dont une lettre minuscule, une lettre majuscule et un nombre.";
 const passwordConfirmMessage = "Le mot de passe ne correspond pas à celui ajouté précédemment."
+const descriptionErrorMessage = "Entrez une description valide."
 
 export const errorMessageToDisplay = (name) => {
   switch (name) {
@@ -102,6 +117,8 @@ export const errorMessageToDisplay = (name) => {
       return emailRegexErrorMessage;
     case "url":
       return urlRegexErrorMessage;
+    case "description":
+      return descriptionErrorMessage
     default:
       return;
   }
@@ -112,9 +129,9 @@ export const checkRegexInput = (name, value) => {
   switch (name) {
     case "username":
       return usernameRegex.test(value);
-    case "firstname":
+    case "first_name":
       return nameRegex.test(value);
-    case "lastname":
+    case "last_name":
       return nameRegex.test(value);
     case "password":
       return strongPasswordRegex.test(value);
@@ -122,8 +139,98 @@ export const checkRegexInput = (name, value) => {
       return emailRegex.test(value);
     case "url":
       return urlRegex.test(value);
+    case "description":
+      return true;
     default:
       return;
   }
 };
 // cas avatar ?
+
+
+// liste des catégories 
+
+export const categoryArray = [
+  {
+    queryName: null,
+    name: "Tous",
+  },
+  {
+    queryName: "theorie",
+    name: "Théorie",
+  },
+  {
+    queryName: "code",
+    name: "Code",
+  },
+  {
+    queryName: "memo",
+    name: "Mémo",
+  },
+  {
+    queryName: "design",
+    name: "Design",
+  },
+  {
+    queryName: "performances",
+    name: "Performances",
+  },
+  {
+    queryName: "ressources",
+    name: "Ressources",
+  },
+  {
+    queryName: "autre",
+    name: "Autre",
+  },
+];
+
+
+// liste des topics
+export const topicArray = [
+  {
+    queryName: null,
+    name: "Tous",
+    logo: allLogo,
+  },
+  {
+    queryName: "html",
+    name: "HTML",
+    logo: HTMLLogo,
+  },
+  {
+    queryName: "css",
+    name: "CSS",
+    logo: CSSLogo,
+  },
+  {
+    queryName: "javascript",
+    name: "Javascript",
+    logo: JavascriptLogo,
+  },
+  {
+    queryName: "reactjs",
+    name: "React JS",
+    logo: ReactJSLogo,
+  },
+  {
+    queryName: "nodejs",
+    name: "Node JS",
+    logo: NodeJSLogo,
+  },
+  {
+    queryName: "python",
+    name: "Python",
+    logo: PythonLogo,
+  },
+  {
+    queryName: "php",
+    name: "PHP",
+    logo: PHPLogo,
+  },
+  {
+    queryName: "sass",
+    name: "Sass",
+    logo: SassLogo,
+  },
+];

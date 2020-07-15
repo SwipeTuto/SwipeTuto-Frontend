@@ -62,8 +62,13 @@ const FiltersBar = ({ handleClickSize }) => {
     const newOrder = e.target.options[e.target.selectedIndex].value;
     // lancer nouvelle requete cards
     dispatch(setCurrentSearch("searchOrder", newOrder));
+    dispatch(setCurrentSearch("searchPage", 1));
     dispatch(
-      getCardAfterfilterAction({ ...currentSearch, searchOrder: newOrder })
+      getCardAfterfilterAction({
+        ...currentSearch,
+        searchOrder: newOrder,
+        searchPage: 1,
+      })
     );
     setRedirection(true);
   };

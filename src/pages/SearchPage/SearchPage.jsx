@@ -36,6 +36,7 @@ const SearchPage = (props) => {
   const isLoaded = useSelector(selectIsLoaded);
   const [redirection, setRedirection] = useState(false);
   const currentSearch = useSelector(selectCurrentSearch);
+  const currentPage = currentSearch.searchPage;
   const dispatch = useDispatch();
   const [gridSize, setGridSize] = useState("small");
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(0);

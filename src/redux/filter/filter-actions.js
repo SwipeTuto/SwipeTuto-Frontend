@@ -43,6 +43,7 @@ export const getCardAfterfilterAction = (search) => {
       })
       .catch(err => {
         dispatch(getCardAfterfilterFailure(err.response))
+        dispatch(getCardsLoaded())
       })
   }
 }

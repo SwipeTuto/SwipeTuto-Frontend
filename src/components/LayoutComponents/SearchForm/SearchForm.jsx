@@ -47,9 +47,14 @@ const SearchForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(setCurrentSearch("searchWords", searchInput));
+    dispatch(setCurrentSearch("searchPage", 1));
     // dispatch(searchAction(searchInput));
     dispatch(
-      getCardAfterfilterAction({ ...currentSearch, searchWords: searchInput })
+      getCardAfterfilterAction({
+        ...currentSearch,
+        searchWords: searchInput,
+        searchPage: 1,
+      })
     );
     dispatch(closeMobileNav());
     setRedirection(true);

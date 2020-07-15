@@ -61,11 +61,11 @@ export const login = idToken => {
 
 
 
-export const loginManuel = (username, password) => {
+export const loginManuel = (email, password) => {
   var config = {
     headers: { 'Content-Type': 'application/json' },
   }
-  return axios.post(`${baseURL}login/`, JSON.stringify({ username, password }), config)
+  return axios.post(`${baseURL}login/`, { email, password }, config)
     .then(user => {
       localStorage.setItem('user', JSON.stringify(user.data))
       return user;

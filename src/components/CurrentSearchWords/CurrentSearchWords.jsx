@@ -15,6 +15,7 @@ import { topicArray, categoryArray } from "../../helper/index";
 import {
   deleteCurrentSearch,
   getCardAfterfilterAction,
+  setCurrentSearch,
 } from "../../redux/filter/filter-actions";
 import SearchLinkRedirect from "../../helper/SearchLinkRedirect";
 
@@ -38,8 +39,10 @@ const CurrentSearchWords = ({ history }) => {
       getCardAfterfilterAction({
         ...currentSearch,
         [e.target.dataset.searchitem]: null,
+        searchPage: 1,
       })
     );
+    dispatch(setCurrentSearch("searchPage", 1));
     setRedirection(true);
   };
 

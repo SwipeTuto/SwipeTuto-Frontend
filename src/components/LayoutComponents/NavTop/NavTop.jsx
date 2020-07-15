@@ -58,15 +58,20 @@ const NavTop = (props) => {
 
 
   useEffect(() => {
-    // setRedirection(true);
+    setRedirection(true);
     setRedirection(false);
-  }, [searchWords]);
+  }, [searchWords, searchTopic, searchOrder, searchCategory]);
 
-  const logoHandleClick = async (e) => {
+  const topicHandleClick = async (e) => {
     // dispatch(getCardAfterfilterAction(e.target.name, searchCategory, search));
     dispatch(setCurrentSearch("searchTopic", e.target.name));
+    dispatch(setCurrentSearch("searchPage", 1));
     dispatch(
-      getCardAfterfilterAction({ ...currentSearch, searchTopic: e.target.name })
+      getCardAfterfilterAction({
+        ...currentSearch,
+        searchTopic: e.target.name,
+        searchPage: 1,
+      })
     );
   };
 
@@ -121,7 +126,7 @@ const NavTop = (props) => {
                   }`}
                 >
                   <img
-                    onClick={(e) => logoHandleClick(e)}
+                    onClick={(e) => topicHandleClick(e)}
                     src={rubrique.logo}
                     name={rubrique.queryName}
                     className="NavTop__dropdown--logo"

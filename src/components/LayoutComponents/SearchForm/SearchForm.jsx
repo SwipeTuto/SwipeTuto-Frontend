@@ -30,6 +30,7 @@ const SearchForm = () => {
   const searchTopic = useSelector(selectSearchTopic);
   const searchCategory = useSelector(selectSearchCategory);
 
+
   useEffect(() => {
     if (searchWords === null) {
       setSearchInput("");

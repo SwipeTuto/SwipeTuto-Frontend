@@ -41,13 +41,15 @@ import SearchForm from "../SearchForm/SearchForm";
 
 import "./NavTop.scss";
 
+import { urlParams } from "../../../helper/index";
+import { test2 } from "../../../services/cardsService";
+
 const NavTop = (props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const currentUserNav = useSelector(selectUserNav);
   const currentSearch = useSelector(selectCurrentSearch);
 
-  const search = useSelector(selectCurrentSearch);
   const searchCategory = useSelector(selectSearchCategory);
   const searchTopic = useSelector(selectSearchTopic);
   const searchWords = useSelector(selectSearchWords);
@@ -60,7 +62,7 @@ const NavTop = (props) => {
   useEffect(() => {
     setRedirection(true);
     setRedirection(false);
-  }, [searchWords, search, searchTopic, searchOrder, searchCategory]);
+  }, [searchWords, searchTopic, searchOrder, searchCategory]);
 
   const topicHandleClick = async (e) => {
     // dispatch(getCardAfterfilterAction(e.target.name, searchCategory, search));
@@ -144,10 +146,9 @@ const NavTop = (props) => {
               >
                 <UserAvatar
                   userImage={
-                    currentUser &&
-                    currentUser.profile &&
-                    currentUser.profile.avatar &&
-                    currentUser.profile.avatar
+                    currentUser.profile && currentUser.profile.avatar
+                      ? currentUser.profile.avatar
+                      : null
                   }
                   userFirstName={
                     currentUser &&

@@ -4,6 +4,7 @@ import { searchBar } from '../../services/searchService'
 import { getCardAfterfilter, getCardsByUser, getOtherPageCard } from '../../services/cardsService'
 import { getCardsLoaded, getCardsLoading } from "../cards/cards-actions"
 
+
 // Recherche avec le back avec mots
 // export const searchAction = kword => {
 //   return dispatch => {
@@ -36,7 +37,6 @@ export const getCardAfterfilterAction = (search) => {
     dispatch(getCardsLoading());
     return getCardAfterfilter(search)
       .then(rep => {
-
         dispatch(getCardAfterfilterSuccess(rep.data))
         dispatch(getCardsLoaded())
         return rep

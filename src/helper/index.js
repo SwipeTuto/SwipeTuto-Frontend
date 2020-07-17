@@ -9,11 +9,12 @@ import ReactJSLogo from "../assets/images/tech_logo/reactJS.png";
 import NodeJSLogo from "../assets/images/tech_logo/nodeJS.png";
 import allLogo from "../assets/images/tech_logo/all_logo.png";
 
+
 export const urlParams = url => {
 
   var queryString = url.search ? url.search.split('?')[1] : window.location.search;
   const urlParams = new URLSearchParams(queryString);
-
+ 
   var topic = urlParams.get('topic')
   var category = urlParams.get('category')
   var ordering = urlParams.get('ordering')
@@ -23,8 +24,6 @@ export const urlParams = url => {
 
   return [topic, category, ordering, search, page]
 }
-
-
 
 
 // Pour les mots / phrases trop longue, permet de couper. Params : phrase, nombre de caractères max, true/false pour couper les mots
@@ -39,7 +38,6 @@ export const truncate = (str, n, useWordBoundary) => {
       : subString) + "..."
   );
 };
-
 
 // renvoyer un objet date au format JJ/MM/AAAA
 export const formattedDate = (date) => {

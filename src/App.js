@@ -26,13 +26,13 @@ import { getCardAfterfilter } from './services/cardsService'
 
 import { urlParams } from "./helper/index"
 
+
 import './index.scss'
 import './App.scss';
 import ConfidentialityPage from "./pages/ConfidentialityPage/ConfidentialityPage";
 import CookiesPage from "./pages/CookiesPage/CookiesPage";
 import InfosPage from "./pages/InfosPage/InfosPage";
 import { selectCurrentSearch } from "./redux/filter/filter-selectors";
-
 
 
 
@@ -65,12 +65,10 @@ function App(props) {
 
 
 
-
   return (
     <div className="App">
       <NavTop />
       <NavTopMobile />
-
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/search" component={SearchPage} />

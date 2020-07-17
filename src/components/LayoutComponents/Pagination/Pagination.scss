@@ -9,7 +9,7 @@
   &__button {
     cursor: pointer;
     margin: 0.3rem;
-    background-color: $grey-medium;
+    background-color: $grey;
     border-radius: $box-radius;
     padding: 0 0.6rem;
     font-weight: bold;
@@ -30,7 +30,7 @@
     padding: 0.6rem;
 
     &.active {
-      background-color: $primary-medium;
+      background-color: $primary-light;
       border-radius: $box-radius;
       color: $white;
     }

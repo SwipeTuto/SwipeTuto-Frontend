@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Route, Switch } from "react-router-dom";
+import { NavLink, Route, Switch, Link } from "react-router-dom";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
@@ -11,6 +11,8 @@ import { ReactComponent as LogoFacebook } from "../../assets/images/logo-faceboo
 import { ReactComponent as LogoTwitter } from "../../assets/images/logo-twitter.svg";
 import { ReactComponent as LogoYoutube } from "../../assets/images/logo-youtube.svg";
 import { ReactComponent as LogoGithub } from "../../assets/images/logo-github.svg";
+import { ReactComponent as SettingsLogo } from "../../assets/images/settings.svg";
+import { ReactComponent as AccountLogo } from "../../assets/images/person.svg";
 import newUserAvatar from "../../assets/images/avatar_new_user.png";
 
 import "./AccountPages.scss";
@@ -40,6 +42,17 @@ const AccountPage = ({ match }) => {
             <div className="AccountPage__text">
               <p className="AccountPage__userWelcome">{currentUser.username}</p>
               <p className="AccountPage__userWelcome">{currentUser.email}</p>
+            </div>
+            <div className="AccountPage__mobile">
+              <Link className="AccountPage__mobile--link" to="/account/user">
+                <AccountLogo />
+              </Link>
+              <Link
+                className="AccountPage__mobile--link"
+                to="/account/settings"
+              >
+                <SettingsLogo />
+              </Link>
             </div>
           </div>
           <div className="AccountPage__bio">

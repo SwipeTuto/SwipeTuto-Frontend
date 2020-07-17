@@ -9,6 +9,8 @@ import "./RessourcesPage.scss";
 import { RESSOURCES_WEB } from "./RESSOURCES_WEB";
 
 const RessourcesPage = () => {
+  const linkBar = document.querySelector(".ressource-navigation-scroll");
+
   // scroll reset
   if (window.scrollY) {
     window.scroll(0, 0);
@@ -36,13 +38,20 @@ const RessourcesPage = () => {
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   };
 
+  const handleScollRight = () => {
+    linkBar.scrollBy(50, 0);
+  };
+  const handleScollLeft = () => {
+    linkBar.scrollBy(-50, 0);
+  };
+
   return (
     <div className="RessourcesPage">
       <h1 className="title title-1">
         Ressources utiles pour le développeur Web
       </h1>
       <div className="ressource-navigation">
-        <div className="scroll-logo">
+        <div className="scroll-logo" onClick={handleScollLeft}>
           <ChevronLeft />
         </div>
         <div className="ressource-navigation-scroll">
@@ -59,14 +68,14 @@ const RessourcesPage = () => {
           })}
         </div>
 
-        <div className="scroll-logo">
+        <div className="scroll-logo" onClick={handleScollRight}>
           <ChevronRight />
         </div>
       </div>
 
       {RESSOURCES_WEB.map((category) => {
         return (
-          <div className="ressource-category" key={category.id}>
+          <div className="ressource-category section" key={category.id}>
             <h2 className="title title-2" id={category.id}>
               {category.title}
             </h2>

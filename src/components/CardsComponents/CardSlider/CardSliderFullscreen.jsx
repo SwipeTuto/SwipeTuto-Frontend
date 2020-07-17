@@ -21,11 +21,17 @@ const CardSliderFullscreen = () => {
   const [imageWidth, setImageWidth] = useState(0);
 
   useEffect(() => {
-    document.querySelector(".CardSliderLargeFullscreen").requestFullscreen();
+    // document.querySelector(".CardSliderLargeFullscreen").requestFullscreen();
     setActiveIndex(0);
     const slideForWidth = window.screen.height;
     setImageWidth(slideForWidth);
   }, [isFullScreen]);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.keyCode && e.keyCode === 27) {
+      dispatch(closeFullscreen());
+    }
+  });
 
   const goToPrevSlide = (e) => {
     document

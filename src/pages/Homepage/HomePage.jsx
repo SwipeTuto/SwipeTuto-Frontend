@@ -15,6 +15,7 @@ import {
   closeBetaAlert,
 } from "../../redux/layout/layout-actions";
 import { getCardsAction } from "../../redux/cards/cards-actions";
+import HeaderImage from "../../assets/logos/header_image.png";
 
 import { ReactComponent as QuestionIllustration } from "../../assets/images/illustrations/illustration-question.svg";
 import { ReactComponent as GrilleIllustration } from "../../assets/images/illustrations/illustration-grille.svg";
@@ -54,7 +55,7 @@ const HomePage = () => {
 
   return (
     <div className="HomePage">
-      {betaAlertOpen && (
+      {/* {betaAlertOpen && (
         <div className="HomePage__infos beta__alert">
           <h2 className="title title-2">Informations</h2>
           <p>
@@ -73,25 +74,31 @@ const HomePage = () => {
             Fermer
           </button>
         </div>
-      )}
+      )} */}
 
-      <div className="HomePage__home-header ">
+      <div className="HomePage__home-header section">
         <div className="HomePage__home-header--wrapper">
+          <img className="HomePage__header-image" src={HeaderImage} alt="" />
           <div className="HomePage__home-header--left">
-            <h1 className="title title-1">
-              Apprendre.
+            <h1 className="title title-1">Apprendre Rapidement</h1>
+            <p>
+              SwipeTuto c'est des centaines de tutoriels autour du web
+              disponibles : programmation, design, SEO, frontend, backend... Le
+              tout sous forme d'images pour un apprentissage rapide, clair et
+              rapide.
               <br />
-              Rapidement.
-              <br />
-              <span>Efficacement.</span>
-            </h1>
+              Cherchez, filtrez, swipez !
+            </p>
+            <Link to="/search">
+              <CustomButton>Voir les cartes</CustomButton>
+            </Link>
           </div>
-          <div className="HomePage__home-header--right">
+          {/* <div className="HomePage__home-header--right">
             <HeaderLogo className="HomePage__home-header--right-logo" />
-          </div>
+          </div> */}
         </div>
       </div>
-      <div className="HomePage__grid">
+      <div className="HomePage__grid section">
         {!isLoaded ? (
           <Loading />
         ) : (
@@ -103,21 +110,17 @@ const HomePage = () => {
       </div>
       <CardFullPopup cardsArray={cardsArrayCut} />
 
-      <div className="About">
+      <div className="About section">
         <div className="about-section section-1">
           <div className="about-section__image">
             <QuestionIllustration />
           </div>
 
           <div className="about-section__text">
-            <h2 className="title title-2">
-              Le Web
-              <br />
-              pour les <span className="pink-text">débutants</span>
-            </h2>
+            <h2 className="title title-2">Tout public</h2>
             <p>
-              Lire des dizaines de pages ou regarder plusieurs vidéos ? Et si on
-              gagnait du temps en utilisant des images ?
+              Tutoriels pour tous les niveaux et tous les domaines en lien avec
+              le domaine du Web.
             </p>
           </div>
         </div>
@@ -127,14 +130,10 @@ const HomePage = () => {
             <GrilleIllustration />
           </div>
           <div className="about-section__text">
-            <h2 className="title title-2">
-              Des cartes mémo claires et{" "}
-              <span className="pink-text">simples</span>
-            </h2>
+            <h2 className="title title-2">Cartes</h2>
             <p>
               Un système de cartes d'une ou plusieurs images pour une recherche
-              rapide de l'information, avec plusieurs tailles possible pour
-              votre confort.
+              rapide de l'information.
             </p>
           </div>
         </div>
@@ -144,32 +143,23 @@ const HomePage = () => {
             <SuccessIllustration />
           </div>
           <div className="about-section__text">
-            <h2 className="title title-2">
-              Atteindre ses objectifs{" "}
-              <span className="pink-text">rapidement</span>
-            </h2>
+            <h2 className="title title-2">Efficacité</h2>
             <p>
-              Pour découvrir de nouvelles notions ou en réviser d'autres, soyez
-              efficaces dans votre parcours.
+              Likez, enregistrez et partagez les cartes que vous avez aimé pour
+              les retrouver à tout moment.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="About__cta">
-        <h1 className="title title-1">
-          Alors qu'attendez-vous ?<br />
-          On apprend ?{" "}
-          <span role="img" aria-label="emoji">
-            😄
-          </span>{" "}
-        </h1>
-        <Link to="/cards">
+      <div className="About__cta section">
+        <h1 className="title title-1">Alors qu'attendez-vous ?</h1>
+        <Link to="/search">
           <CustomButton color="pink">Voir les cartes</CustomButton>
         </Link>
       </div>
-
-      <div className="HomePage__section cta-section">
+      {/* 
+      <div className="cta-section section">
         <p className="HomePage__cta">
           Ou essayez une recherche par tag en cliquant dessus :
         </p>
@@ -178,9 +168,9 @@ const HomePage = () => {
           <button>#JAVASCRIPT</button>
           <button>#CSS</button>
         </div>
-      </div>
+      </div> */}
 
-      <div className="HomePage__infos infos__section">
+      <div className="HomePage__infos infos__section section">
         <h2 className="title title-2">Informations</h2>
         <p>
           Le site est encore en construction. Certaines fonctionnalités ne sont

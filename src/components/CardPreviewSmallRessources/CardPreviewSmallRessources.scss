@@ -16,7 +16,7 @@
     height: 100%;
     width: 100%;
     background-color: $white;
-    border: 1px solid $grey-medium;
+    border: 1px solid $grey;
     transition: all 0.2s ease;
 
     & h4 {
@@ -34,7 +34,7 @@
 
     &:hover {
       & h4 {
-        color: $yellow;
+        color: $secondary-dark;
       }
 
       & p {

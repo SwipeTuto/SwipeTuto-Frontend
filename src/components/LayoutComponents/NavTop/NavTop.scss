@@ -1,9 +1,7 @@
 @import "../../../variables.scss";
 
 .NavTop {
-  height: 6rem;
-  box-shadow: 0 3px 3px rgba($grey-dark, 0.5);
-  border: 0.5px solid $grey-medium;
+  height: $navtop-height;
   background-color: $white;
   position: fixed;
   top: 0;
@@ -11,13 +9,14 @@
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0rem 2rem;
+  padding: 1rem 2rem;
   z-index: 100000;
 
   &__left,
   &__center,
   &__right {
-    padding: 0.25rem 0;
+    padding: 0;
+    height: 100%;
   }
 
   &__left {
@@ -25,28 +24,16 @@
     display: flex;
     align-items: center;
     flex-grow: 0;
-    height: 60%;
   }
 
   &__link {
-    padding: 0 2rem;
-    display: inline-block;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: translateY(0.2rem);
-    // border-bottom: 0.4rem solid transparent;
-    // font-weight: bold;
-    border-radius: $button-radius;
-    transition: all 0.3s;
+    @include nav-style;
 
     &.active {
-      color: $white;
-      background-color: $primary-dark;
+      @include nav-active-style;
 
       & svg {
-        stroke: $white;
+        stroke: $primary-light;
       }
     }
 
@@ -56,27 +43,23 @@
     }
 
     &--logo {
-      width: 1.5rem;
-      height: 1.5rem;
+      @include logo-size;
       margin-left: 0.4rem;
       stroke: $black;
     }
 
-    &:hover {
-      color: $primary-light;
+    &:not(.active) &:hover {
+      @include nav-style;
     }
   }
 
   &__center {
-    height: 100%;
     flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: flex-end;
 
     .NavTop__search {
-      height: 100%;
-      width: 80%;
       display: flex;
       flex-direction: row-reverse;
       align-items: center;
@@ -93,15 +76,11 @@
       }
 
       .NavTop__input {
-        // @include input-style;
         width: 15rem;
-
-        // visibility: hidden;
         transition: all 0.3s ease;
 
         &:focus {
           width: 20rem;
-          // visibility: visible;
           &::placeholder {
             color: transparent;
           }
@@ -145,20 +124,29 @@
 
   &__right {
     flex-grow: 0;
-    height: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
 
     .NavTop__avatar {
-      height: 70%;
+      .user_avatar {
+        height: 3rem;
+        width: 3rem;
+      }
     }
 
-    // A remettre pour afficher btn connexion et inscription
-    // .custom-button {
-    //   visibility: hidden;
-    //   opacity: 0;
-    // }
+    .NavTop__linkConnexion {
+      height: 100%;
+    }
+  }
+
+  &__swipeTuto {
+    margin-right: 3rem;
+    height: 80%;
+
+    & > img {
+      height: 100%;
+    }
   }
 
   &__userMenu {
@@ -169,54 +157,48 @@
     flex-direction: column;
     background-color: $white;
     border-radius: 0 0 $box-radius $box-radius;
-    box-shadow: 0 3px 3px rgba($grey-dark, 0.5);
+    box-shadow: $card-shadow, $card-shadow-2;
+    border: 0.5px solid $grey;
     overflow: hidden;
 
     p {
       width: 100%;
       display: flex;
       justify-content: center;
-      padding: 1rem 2rem;
-      text-transform: capitalize;
 
       &:nth-of-type(1) {
-        padding-bottom: 0.1rem;
+        text-transform: capitalize;
+        font-size: 1.5rem;
       }
 
       &:nth-of-type(2) {
-        padding-bottom: 0.5rem;
-        padding-top: 0.1rem;
-      }
-
-      &:last-of-type {
-        padding-top: 0.1rem;
-        text-transform: none;
-        font-size: 1.2rem;
+        font-size: 1rem;
       }
     }
 
-    .horizontal-separation-primary-light {
-      width: 100%;
+    &--meta {
+      border-bottom: 1px solid $grey;
+    }
+
+    &--meta,
+    &--links {
+      padding: 2rem 3rem;
     }
 
     &--logo {
-      width: 1.8rem;
-      height: 1.8rem;
-      margin-right: 0.8rem;
+      @include logo-size;
+      margin-right: 1rem;
     }
 
     &--link {
-      padding: 0 2rem 1.8rem 2rem;
       width: 100%;
       display: flex;
+      align-items: center;
+      font-size: 1.5rem;
       transition: all 0.2s ease;
 
-      &:nth-of-type(1) {
-        padding-top: 2rem;
-      }
-
-      &:last-child {
-        padding-bottom: 2rem;
+      &:not(:last-of-type) {
+        margin-bottom: 1rem;
       }
 
       &:hover {
@@ -234,7 +216,7 @@
     width: 100%;
     background-color: $white;
     box-shadow: 0 3px 3px rgba($grey-dark, 0.5);
-    border-top: 0.5px solid $grey-medium;
+    border-top: 0.5px solid $grey;
     display: flex;
     justify-content: flex-start;
     align-items: center;

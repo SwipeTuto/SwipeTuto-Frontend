@@ -2,16 +2,10 @@
 
 .NavTopMobile {
   display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 6rem;
-  width: 100vw;
-  padding: 0.5rem 0;
   background-color: $white;
-  box-shadow: 0 3px 3px rgba($grey-dark, 0.5);
-  border: 0.5px solid $grey-medium;
-  font-size: 3rem;
+  width: 100%;
+  align-items: center;
+  padding: 1rem;
   z-index: 100000;
 
   &.active {
@@ -23,25 +17,23 @@
   &__top {
     display: flex;
     align-items: center;
-    height: 6rem;
-    position: fixed;
-    top: 0;
-    left: 0;
+    justify-content: space-between;
+    height: $navtop-mobile-height;
+    // position: fixed;
+    // top: 0;
+    // left: 0;
     background-color: $white;
     width: 100%;
-    padding: 0.6rem 1.5rem;
+    // padding: 0.6rem 1.5rem;
 
     h1.title.title-1 {
       margin: 0 auto;
     }
   }
 
-  &__toggle,
-  &__button--logo,
-  &__link--logo,
-  &__userMenu--logo {
-    width: 3rem;
-    height: 3rem;
+  &__toggle {
+    width: 3.5rem;
+    height: 3.5rem;
   }
 
   &__dropdown--logo {
@@ -51,8 +43,7 @@
   }
 
   &__avatar {
-    height: 6rem;
-    max-height: 6rem;
+    height: $navtop-mobile-height;
     display: flex;
     align-items: center;
 
@@ -71,14 +62,15 @@
     max-width: 100%;
     height: 0;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    display: none;
     visibility: hidden;
 
     &.active {
+      display: flex;
+      flex-direction: column;
       height: max-content;
       height: auto;
-      padding: 8rem 2rem 2rem 2rem;
+      padding: $navtop-mobile-height 2rem 2rem 2rem;
       overflow: auto;
       visibility: visible;
     }
@@ -101,16 +93,35 @@
     @include input-style;
   }
 
-  &__menu {
+  &__menu,
+  &__userMenu {
     display: flex;
     flex-direction: column;
   }
 
-  &__link {
-    padding: 1rem;
+  &__link,
+  &__userMenu--link {
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
   }
 
-  &__dropdown {
+  .custom-button {
+    & > svg {
+      @include logo-size;
+      margin-right: 1rem;
+    }
+  }
+
+  &__swipeTuto-menu {
+    width: 60%;
+    margin-bottom: 6rem;
+    & > img {
+      width: 100%;
+    }
+  }
+
+  &__search {
     margin-left: 3rem;
     margin-bottom: 1rem;
     font-size: 2.5rem;
@@ -127,80 +138,70 @@
     &--item {
       padding: 1rem 1rem;
     }
-
-    &--logo {
-      stroke: $black;
-    }
   }
 
-  &__user,
-  &__userMenu {
-    font-size: 2.5rem;
+  &__logo {
+    stroke: $black;
+    @include big-logo-size;
+    margin-right: 1rem;
+  }
+
+  &__user {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
-  }
 
-  &__userInfos {
-    display: flex;
-    margin-bottom: 2rem;
-
-    &--userAvatar {
-      height: 8rem;
-      border-radius: 50%;
-    }
-  }
-
-  &__userMenu {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-
-    &--link {
-      padding: 0.8rem 0;
+    &--infos {
       display: flex;
       align-items: center;
+      margin-bottom: 4rem;
+
+      .user_avatar {
+        margin-right: 1rem;
+        width: 6rem;
+        height: 6rem;
+      }
     }
 
-    &--logo {
-      margin-right: 0.6rem;
+    &--meta {
+      font-size: 2.5rem;
     }
-  }
 
-  &__userWelcome {
-    margin-left: 1rem;
-    font-size: 2.5rem;
-
-    &--text:last-of-type {
-      font-size: 1.6rem;
+    &--text:first-of-type {
+      color: $primary-light;
+      font-weight: bold;
+    }
+    &--text:nth-of-type(2) {
+      font-size: 1.7rem;
     }
   }
 }
 
-.mobileNavSeparation {
-  max-width: 600px;
-  height: 10px;
-  background-color: $primary-light;
-}
+// @media screen and (max-width: $bp-tablet) {
+//   .NavTopMobile {
+//     display: block;
+
+//     &__searchZone {
+//       grid-column: 1 / -1;
+//       margin-bottom: 4rem;
+//     }
+
+//     &__swipeTuto {
+//       margin-right: 0;
+//       height: 3.5rem;
+
+//       & > img {
+//         height: 100%;
+//       }
+//     }
+//   }
+//   .NavTopMobile__open.active {
+//     display: grid;
+//     grid-template-columns: 1fr 1fr;
+//     grid-auto-rows: max-content;
+//   }
+// }
 
 @media screen and (max-width: $bp-tablet) {
-  .NavTopMobile__open.active {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: max-content;
-  }
-
-  .NavTopMobile {
-    display: block;
-
-    &__searchZone {
-      grid-column: 1 / -1;
-      margin-bottom: 4rem;
-    }
-  }
-}
-
-@media screen and (max-width: $bp-phone) {
   .NavTopMobile__open.active {
     display: flex;
     flex-direction: column;
@@ -208,23 +209,49 @@
   }
 
   .NavTopMobile {
-    height: 4rem;
-
-    &__top {
-      height: 4rem;
+    display: block;
+    &__menu,
+    &__user {
+      width: 60%;
+      margin: 0 auto 4rem auto;
+      font-size: 3rem;
+      padding-bottom: 4rem;
     }
 
     &__menu {
-      width: 70%;
-      align-items: center;
-      padding-bottom: 4rem;
-      margin-bottom: 4rem;
-      border-bottom: 2px solid $primary-medium;
+      border-bottom: 2px solid $primary-dark;
+    }
+  }
+}
+@media screen and (max-width: $bp-phone) {
+  .NavTopMobile {
+    &__menu,
+    &__user {
+      width: 80%;
+    }
+  }
+}
+@media screen and (max-width: $bp-small-phone) {
+  .NavTopMobile {
+    &__menu,
+    &__user {
+      width: 100%;
+    }
+  }
+}
+@media screen and (max-width: $bp-smallest) {
+  .NavTopMobile {
+    &__menu,
+    &__user {
+      font-size: 2rem;
     }
 
-    &__userMenu {
-      // align-items: center;
-      margin-left: 8rem;
+    &__user {
+      &--infos {
+        .user_avatar {
+          display: none;
+        }
+      }
     }
   }
 }

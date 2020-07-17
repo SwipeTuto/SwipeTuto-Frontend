@@ -1,9 +1,11 @@
 @import "../../variables.scss";
 
 .HomePage {
+  padding: $inner-component-padding;
+
   .beta__alert {
     &--button {
-      background-color: $pink-dark;
+      background-color: $primary-dark;
       color: $white;
       margin: 2rem auto 0 auto;
       transition: all 0.2s ease;
@@ -12,7 +14,7 @@
       cursor: pointer;
 
       &:hover {
-        background-color: lighten($pink-dark, 10%);
+        background-color: lighten($primary-dark, 10%);
       }
     }
   }
@@ -20,31 +22,34 @@
   &__home-header {
     width: 100%;
     background-color: $white;
-    padding: $inner-component-padding;
+    position: relative;
+    overflow: hidden;
+
+    &.section {
+      padding-top: 8rem;
+    }
 
     &--wrapper {
       display: flex;
-      justify-content: center;
+      // justify-content: center;
       align-items: center;
-      max-width: 75rem;
-      margin: 0 auto;
+      // max-width: 75rem;
+      // margin: 0 auto;
     }
 
     &--left {
-      margin-right: 10%;
+      width: 60%;
 
       .title.title-1 {
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
         font-size: 4.5rem;
-        text-transform: uppercase;
-
-        span {
-          color: $pink-dark;
-        }
+        white-space: nowrap;
+        // text-transform: uppercase;
       }
 
-      &--subtitle {
-        margin-bottom: 1.5rem;
+      p {
+        line-height: 1.8;
+        margin-bottom: 2rem;
       }
     }
 
@@ -58,8 +63,11 @@
     }
   }
 
-  &__section {
-    padding: $inner-component-padding;
+  &__header-image {
+    position: absolute;
+    max-width: 60%;
+    bottom: 0;
+    right: 0;
   }
 
   &__section.cta-section {
@@ -86,20 +94,19 @@
     display: grid;
     grid-gap: 2.5rem;
     justify-content: center;
-    padding: $inner-component-padding;
   }
 
   &__tags {
     display: flex;
 
     button {
-      @include big-tag-style;
-      background-color: $pink-dark;
+      // @include big-tag-style;
+      background-color: $primary-dark;
       margin-right: 1.5rem;
       font-size: 2rem;
 
       &:hover {
-        @include tag-hover-style;
+        // @include tag-hover-style;
       }
     }
   }
@@ -112,7 +119,7 @@
     grid-template-rows: max-content;
     grid-column-gap: 10rem;
     align-items: start;
-    padding: $inner-component-padding;
+
     // padding: 5rem 8rem;
 
     & p {
@@ -120,14 +127,14 @@
     }
 
     &__cta {
-      padding: $inner-component-padding;
-      background-color: $grey-light;
+      // background-color: $grey;
       font-weight: bold;
       text-align: center;
 
       .custom-button {
         font-size: 3rem;
         padding: 1rem 3rem;
+        margin: 0 auto;
       }
 
       & h1.title.title-1 {
@@ -171,10 +178,11 @@
 
   &__infos,
   .beta__alert {
-    padding: $grid-component-padding;
+    // padding: $grid-component-padding;
+    // padding: 5rem;
     display: flex;
     flex-direction: column;
-    background-color: $grey-light;
+    // background-color: $grey;
     text-align: center;
 
     h2 {
@@ -185,51 +193,80 @@
     }
 
     &--link {
-      color: $primary-medium;
+      color: $primary-dark;
       font-weight: bold;
+    }
+  }
+
+  @media screen and (min-width: $bp-big) {
+    .HomePage {
+      &__home-header {
+        &.section {
+          padding-top: 12rem;
+        }
+      }
     }
   }
 
   @media screen and (max-width: $bp-tablet) {
     .HomePage {
-      &__section,
-      &__grid,
+      padding: $inner-component-padding-tablet;
+
       &__home-header {
-        padding: $inner-component-padding-tablet;
+        padding-top: 6rem;
+
+        &--left {
+          .title.title-1 {
+            white-space: normal;
+          }
+        }
       }
 
       &__grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
-    .About {
-      grid-column-gap: 5rem;
-      padding: $inner-component-padding-tablet;
 
-      &__cta {
-        padding: $inner-component-padding-tablet;
-      }
+    .About {
+      grid-column-gap: 7rem;
     }
   }
 
   @media screen and (max-width: $bp-phone) {
     .HomePage {
-      &__section,
-      &__grid,
-      &__home-header {
-        padding: $inner-component-padding-phone;
-      }
+      padding: $inner-component-padding-phone;
 
       &__home-header {
-        &--right {
-          display: none;
-        }
+        padding-top: 3rem;
 
         &--left {
           width: 100%;
           text-align: center;
           margin: 0;
+
+          .title.title-1 {
+            margin-bottom: 6rem;
+          }
+
+          p {
+            line-height: 1.4;
+            margin-bottom: 6rem;
+          }
+
+          .custom-button {
+            margin: 4rem auto 0 auto;
+          }
         }
+
+        &--wrapper {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+
+      &__header-image {
+        position: static;
+        margin-bottom: 6rem;
       }
 
       &__infos,
@@ -256,11 +293,11 @@
       grid-column-gap: 0rem;
       grid-row-gap: 2rem;
       grid-template-columns: 1fr;
-      padding: $inner-component-padding-phone;
 
       .about-section {
         display: grid;
         grid-template-columns: 1fr 1fr;
+        grid-column-gap: 2rem;
 
         &__text {
           grid-column: 2/3;
@@ -269,17 +306,22 @@
       }
 
       &__cta {
-        padding: $inner-component-padding-phone;
-
         & h1.title.title-1 {
           font-size: 3rem;
         }
       }
     }
   }
-  @media screen and (max-width: $bp-phone) {
+  @media screen and (max-width: $bp-small-phone) {
     .HomePage {
       &__home-header {
+        &--left {
+          .title.title-1 {
+            font-size: 3.5rem;
+          }
+        }
+      }
+      &__header-image {
         display: none;
       }
     }
@@ -289,7 +331,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        max-width: 60%;
+        max-width: 100%;
         margin: 0 auto;
         margin-bottom: 5rem;
 
@@ -300,10 +342,6 @@
         &__text {
           text-align: center;
         }
-      }
-
-      &__cta {
-        padding: $inner-component-padding-phone;
       }
     }
   }

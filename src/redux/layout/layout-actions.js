@@ -27,6 +27,12 @@ export const openMobileNav = () => ({
 export const closeMobileNav = () => ({
   type: LayoutActionTypes.CLOSE_MOBILE_NAV,
 })
+export const openFilterMobileMenu = () => ({
+  type: LayoutActionTypes.OPEN_FILTER_MOBILE_MENU,
+})
+export const closeFilterMobileMenu = () => ({
+  type: LayoutActionTypes.CLOSE_FILTER_MOBILE_MENU,
+})
 
 export const closeBetaAlert = () => ({
   type: LayoutActionTypes.CLOSE_BETA_ALERT,

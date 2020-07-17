@@ -1,13 +1,8 @@
 import { FilterActionTypes } from './filter-types'
+import { initialSearchState } from '../../helper/index'
 
 const INITIAL_STATE = {
-  currentSearch: {
-    searchWords: null,
-    searchTopic: null,
-    searchCategory: null,
-    searchOrder: '-created',
-    searchPage: 1,
-  },
+  currentSearch: initialSearchState,
   errors: '',
   cardsFetched: "",
   otherCardsByAuthor: "",
@@ -55,13 +50,7 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
         }
       } else {
         return {
-          ...state, currentSearch: {
-            searchWords: null,
-            searchTopic: null,
-            searchCategory: null,
-            searchOrder: '-created',
-            searchPage: 1,
-          }, cardsFetched: ""
+          ...state, currentSearch: initialSearchState, cardsFetched: ""
         }
       }
 

@@ -234,3 +234,35 @@ export const topicArray = [
     logo: SassLogo,
   },
 ];
+
+export const orderArray = [
+  {
+    queryName: "-created",
+    name: "Nouveau",
+  },
+  {
+    queryName: "-update",
+    name: "Modifié",
+  },
+  {
+    queryName: "-like",
+    name: "Populaire",
+  }
+]
+
+export const getNameFromQueryName = (array, queryName) => {
+  if (queryName === '' || undefined || null) {
+    return array.filter(item => item.queryName === null)[0].name
+  } else {
+    return array.filter(item => item.queryName === queryName)[0].name
+  }
+}
+
+export const initialSearchState = {
+  searchWords: null,
+  searchTopic: null,
+  searchCategory: null,
+  searchOrder: "-created",
+  searchPage: 1,
+}
+

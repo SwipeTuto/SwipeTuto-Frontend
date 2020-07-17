@@ -4,7 +4,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { useDispatch, useSelector } from 'react-redux';
 
 import HomePage from './pages/Homepage/HomePage';
-import Login from './pages/Login/Login';
+import LoginPage from './pages/LoginPage/LoginPage';
 import SearchPage from './pages/SearchPage/SearchPage'
 import RessourcesPage from './pages/RessourcesPage/RessourcesPage'
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
@@ -55,8 +55,8 @@ function App(props) {
       dispatch(setCurrentSearch("searchWords", search))
       dispatch(setCurrentSearch("searchTopic", topic))
       dispatch(setCurrentSearch("searchCategory", category))
-      dispatch(setCurrentSearch("searchOrder", ordering))
-      dispatch(setCurrentSearch("searchPage", page))
+      dispatch(setCurrentSearch("searchOrder", ordering || "-created"))
+      dispatch(setCurrentSearch("searchPage", parseInt(page)))
     } else {
       dispatch(getCardAfterfilterAction(currentSearch))
     }
@@ -74,7 +74,7 @@ function App(props) {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/search" component={SearchPage} />
-        <Route path="/login" component={Login} />
+        <Route path="/connexion" component={LoginPage} />
         <Route path="/ressources" component={RessourcesPage} />
         <Route path="/conditions" component={ConditionsOfUsagePage} />
         <Route path="/confidentiality" component={ConfidentialityPage} />

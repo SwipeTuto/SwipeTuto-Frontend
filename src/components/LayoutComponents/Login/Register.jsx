@@ -1,10 +1,14 @@
 // Présent dans App.js dans une Route ("/")
 
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
-import { registerAction } from "../../redux/user/user-actions";
-import { checkRegexInput, errorMessageToDisplay } from "../../helper/index";
+import CustomButton from "../CustomButton/CustomButton";
+import { registerAction } from "../../../redux/user/user-actions";
+import { loginGoogle, loginGit } from "../../../services/userService";
+import { checkRegexInput, errorMessageToDisplay } from "../../../helper/index";
+import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google.svg";
+import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
 
 import "./Login.scss";
 
@@ -17,30 +21,41 @@ const Register = (props) => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   // scroll reset
+  useEffect(() => {
+    if (window.scrollY) {
+      window.scroll(0, 0);
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    let inputIsOk = checkRegexInput(name, value); //test valeur avec regex, true or false
-    const currentInput = document.querySelector(`.signup input[name=${name}]`);
-    const errorMessage = document.querySelector(
-      `.signup .input__message[data-inputfor=${name}`
+
+    const currentInput = document.querySelector(
+      `.LoginPage input[name=${name}]`
     );
-    if (name === "password") {
-      setPassword(value);
+    const errorMessage = document.querySelector(
+      `.LoginPage .input__message[data-inputfor=${name}`
+    );
+
+    currentInput.classList.remove("valid-input");
+    currentInput.classList.add("invalid-input");
+
+    if (value) {
+      let inputIsOk = checkRegexInput(name, value); //test valeur avec regex, true or false
+
+      if (!inputIsOk) {
+        currentInput.classList.remove("valid-input");
+        currentInput.classList.add("invalid-input");
+
+        errorMessage.textContent = errorMessageToDisplay(name);
+      } else {
+        currentInput.classList.remove("invalid-input");
+        currentInput.classList.add("valid-input");
+        errorMessage.style.display = "none";
+      }
     }
-
-    if (!inputIsOk) {
-      currentInput.classList.remove("valid-input");
-      currentInput.classList.add("invalid-input");
-
-      errorMessage.textContent = errorMessageToDisplay(name);
-    } else {
-      currentInput.classList.remove("invalid-input");
-      currentInput.classList.add("valid-input");
-      errorMessage.textContent = "";
-    }
-
     setUser({ ...user, [name]: value });
+    console.log(value);
   };
 
   const handleClick = (e) => {
@@ -48,10 +63,14 @@ const Register = (props) => {
     dispatch(registerAction(user));
   };
 
+  const handleClickGoogle = (e) => {
+    loginGoogle();
+  };
+  const handleClickGit = (e) => {
+    loginGit();
+  };
+
   useEffect(() => {
-    if (window.scrollY) {
-      window.scroll(0, 0);
-    }
     const allInput = [...document.querySelectorAll(".signup__form--input")];
     const readyToSubmit = allInput.every((input) =>
       input.classList.contains("valid-input")
@@ -62,11 +81,21 @@ const Register = (props) => {
     } else {
       setSubmitOk(true);
     }
-  }, [user, handleChange]);
+  }, [user, handleChange, passwordConfirmation]);
 
   return (
     <div className="signup">
       <h1 className="title title-1">S'inscrire</h1>
+      <div className="login__google">
+        <CustomButton color="white" onClick={(e) => handleClickGoogle(e)}>
+          <GoogleLogo />
+          Google
+        </CustomButton>
+        <CustomButton color="white" onClick={(e) => handleClickGit(e)}>
+          <GithubLogo />
+          Git
+        </CustomButton>
+      </div>
       <form className="signup__form">
         <label htmlFor="nom" className="signup__form--label">
           Pseudo :
@@ -126,12 +155,16 @@ const Register = (props) => {
         <input
           name="password"
           value={user.password || ""}
-          onChange={(e) => handleChange(e)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            handleChange(e);
+          }}
           type="password"
           id="mdp_register"
           className="signup__form--input invalid-input"
           required
         />
+
         <p className="input__message" data-inputfor="password"></p>
         <label htmlFor="mdp2" className="signup__form--label">
           Confirmez le Mot de passe :
@@ -145,15 +178,18 @@ const Register = (props) => {
           type="password"
           id="mdp_register_confirm"
           className={`signup__form--input ${
-            passwordConfirmation !== password ? "invalid-input" : "valid-input"
+            passwordConfirmation !== password || passwordConfirmation === ""
+              ? "invalid-input"
+              : "valid-input"
           }`}
           required
         />
-        <p className="input__message" data-inputfor="passwordConfirm">
-          {passwordConfirmation !== password
-            ? "Ce mot de passe ne correspond pas à celui mentionné précédemment."
-            : ""}
-        </p>
+        {passwordConfirmation !== password && (
+          <p className="input__message" data-inputfor="passwordConfirm">
+            Ce mot de passe ne correspond pas à celui mentionné précédemment.
+          </p>
+        )}
+
         <CustomButton
           onClick={(e) => handleClick(e)}
           color="light"
@@ -163,6 +199,10 @@ const Register = (props) => {
           Inscription
         </CustomButton>
       </form>
+      <span className="horizontal-separation-primary-light"></span>
+      <Link to="/connexion/login" className="LoginPage__link">
+        Déjà un compte ?
+      </Link>
     </div>
   );
 };

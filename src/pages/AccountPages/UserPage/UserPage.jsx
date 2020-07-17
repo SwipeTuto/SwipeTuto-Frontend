@@ -34,9 +34,7 @@ const UserPage = () => {
   return (
     <div className="UserPage">
       <div className="UserPage__cards">
-        <h2 className="title title-2">
-          Cartes créées par {currentUser.username}
-        </h2>
+        <h1 className="title title-1">Vos cartes :</h1>
         <div className="UserPage__cards--grid">
           {!isLoaded ? (
             <Loading />

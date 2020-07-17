@@ -13,7 +13,9 @@ const SettingsPage = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const currentUser = useSelector(selectCurrentUser);
+  console.log('currentUser', currentUser)
   const [newUserInfos, setNewUserInfos] = useState(currentUser);
+  console.log('newUserInfos', newUserInfos)
   const [sendNewInfos, setSendNewInfos] = useState(false);
 
   useEffect(() => {

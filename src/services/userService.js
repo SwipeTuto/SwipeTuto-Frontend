@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { authHeader } from '../helper/auth-header';
 import { auth, provider, providerGit } from '../services/firebaseService';
 import { baseURL } from '../services/configService'
 import history from "../helper/history"
@@ -105,7 +105,29 @@ export const register = users => {
     });
 }
 
+
+
 // update des infos user qui vient du component SettingsPage, sous forme d'objet
 export const updateUserInfos = newUserInfos => {
-  console.log(newUserInfos)
+  
+  const data = {
+    username: newUserInfos.username,
+    first_name: newUserInfos.firstname,
+    last_name: newUserInfos.lastname,
+    profile: {
+      description: newUserInfos.firstname
+    },
+    email: newUserInfos.email,
+  }
+  const requestOptions = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': authHeader()
+    } 
+  }; 
+   axios.patch(`${baseURL}me/`, JSON.stringify(data), requestOptions)
+  .then(user => {
+    localStorage.setItem('user', JSON.stringify(user.data))
+  });   
+
 }

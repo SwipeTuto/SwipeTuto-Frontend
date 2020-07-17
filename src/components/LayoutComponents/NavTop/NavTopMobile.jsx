@@ -141,17 +141,16 @@ const NavTopMobile = (props) => {
               }}
             />
           )}
-          {/* <Link
+          <div
             className="NavTopMobile__swipeTuto"
             to="/"
             onClick={() => handleNavClose()}
           >
-
             <img src={SwipeTutoSmallLogo} alt="swipetuto" />
-          </Link> */}
+          </div>
           <CustomButton color="white" onClick={handleFiltersMobileOpen}>
             <SearchLogo />
-            Cartes
+            Recherche
           </CustomButton>
         </div>
         <div className={`NavTopMobile__open ${mobileNavOpen ? "active" : ""}`}>
@@ -206,7 +205,9 @@ const NavTopMobile = (props) => {
               <div className="NavTopMobile__user--infos">
                 <UserAvatar
                   userImage={
-                    currentUser.profile && currentUser.profile.avatar ? currentUser.profile.avatar : null
+                    currentUser.profile && currentUser.profile.avatar
+                      ? currentUser.profile.avatar
+                      : null
                   }
                   userFirstName={
                     currentUser.first_name && currentUser.first_name

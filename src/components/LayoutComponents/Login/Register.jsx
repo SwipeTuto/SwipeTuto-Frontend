@@ -55,7 +55,6 @@ const Register = (props) => {
       }
     }
     setUser({ ...user, [name]: value });
-    console.log(value);
   };
 
   const handleClick = (e) => {

@@ -6,22 +6,22 @@
   display: grid;
   grid-template-columns: 3fr 1fr;
   grid-auto-rows: max-content;
-  gap: 2rem;
+  // gap: 1rem;
   background-color: $grey;
 
   .title.title-1 {
     margin-bottom: 4rem;
   }
 
-  & > div {
-    padding: 2rem 4rem;
-    box-shadow: $card-shadow-2;
-    background-color: $white;
-  }
+  // & > div {
+  //   padding: 2rem 4rem;
+  //   box-shadow: $card-shadow-2;
+  // }
 
   &__header {
     display: flex;
     // align-items: center;
+    width: 100%;
     flex-direction: column;
     margin-bottom: 6rem;
     padding-bottom: 2rem;
@@ -44,6 +44,7 @@
       height: 100%;
       width: 100%;
       font-size: 2.8rem;
+      cursor: default;
     }
   }
 
@@ -64,7 +65,6 @@
   &__userWelcome:first-of-type {
     font-size: 3rem;
     font-weight: bold;
-    text-transform: capitalize;
   }
 
   &__social {
@@ -91,20 +91,36 @@
     }
   }
 
-  &__component {
-    background-color: red;
+  &__wrapper {
+    background-color: $white;
     width: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    padding: 4rem;
   }
 
   &__navigation {
+    background-color: $white;
+    padding: 4rem;
     width: 100%;
     height: min-content;
     display: flex;
     flex-direction: column;
+
+    & a {
+      display: flex;
+      align-items: center;
+
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+
+      & > svg {
+        @include logo-size;
+        margin-right: 1rem;
+      }
+    }
 
     & .active {
       color: $primary-dark;
@@ -141,12 +157,25 @@
     &__mobile {
       display: block;
     }
+
+    &__userWelcome:first-of-type {
+      font-size: 2rem;
+    }
+    &__userWelcome:last-of-type {
+      font-size: 1.4rem;
+    }
   }
 }
 @media screen and (max-width: $bp-phone) {
   .AccountPage {
     padding: 0;
     grid-template-columns: 1fr;
+
+    &__wrapper {
+      padding: $inner-component-padding-phone;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
 
     &__avatar {
       height: 4rem;

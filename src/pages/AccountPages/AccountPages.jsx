@@ -27,16 +27,28 @@ const AccountPage = ({ match }) => {
 
   return (
     <div className="AccountPage">
-      <div className="AccountPage__component">
+      <div className="AccountPage__wrapper">
         <div className="AccountPage__header">
           <div className="AccountPage__userInfos">
             <div className="AccountPage__avatar">
               <UserAvatar
                 userImage={
-                  currentUser.profile.avatar && currentUser.profile.avatar
+                  currentUser &&
+                  currentUser.profile &&
+                  currentUser.profile.avatar
+                    ? currentUser.profile.avatar
+                    : null
                 }
-                userFirstName={currentUser.first_name && currentUser.first_name}
-                userLastName={currentUser.last_name && currentUser.last_name}
+                userFirstName={
+                  currentUser && currentUser.first_name
+                    ? currentUser.first_name
+                    : null
+                }
+                userLastName={
+                  currentUser && currentUser.last_name
+                    ? currentUser.last_name
+                    : null
+                }
               />
             </div>
             <div className="AccountPage__text">
@@ -57,10 +69,11 @@ const AccountPage = ({ match }) => {
           </div>
           <div className="AccountPage__bio">
             <p className="AccountPage__bio--text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis
-              iste incidunt, perferendis laboriosam vel nihil aliquid, eos quia
-              magni harum quas cumque libero? Laboriosam vero numquam non, quia
-              quod deserunt!
+              {currentUser &&
+              currentUser.profile &&
+              currentUser.profile.description
+                ? currentUser.profile.description
+                : "Utilisateur SwipeTuto."}
             </p>
           </div>
           <div className="AccountPage__social">
@@ -92,8 +105,14 @@ const AccountPage = ({ match }) => {
         <h2 className="title title-2">Navigation</h2>
         {currentUser ? (
           <>
-            <NavLink to="/account/user">Compte</NavLink>
-            <NavLink to="/account/settings">Paramètres</NavLink>
+            <NavLink to="/account/user">
+              <AccountLogo />
+              Compte
+            </NavLink>
+            <NavLink to="/account/settings">
+              <SettingsLogo />
+              Paramètres
+            </NavLink>
           </>
         ) : (
           ""

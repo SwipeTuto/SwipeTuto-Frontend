@@ -16,7 +16,7 @@ import CardFullPopup from "../../../components/CardsComponents/CardFullPopup/Car
 
 import "./UserPage.scss";
 import { selectIsLoaded } from "../../../redux/cards/cards-selectors";
-import { getCardsByUserNameAction } from "../../../redux/filter/filter-actions";
+import { getCardsByUserEmailAction } from "../../../redux/filter/filter-actions";
 
 const UserPage = () => {
   // Voir comment faire requete pour récupérer les cartes du user dans cards
@@ -28,7 +28,7 @@ const UserPage = () => {
   // dispatch(closePopupCard(false));
 
   useEffect(() => {
-    dispatch(getCardsByUserNameAction(currentUser.username));
+    dispatch(getCardsByUserEmailAction(currentUser.email));
   }, []);
 
   return (
@@ -38,8 +38,10 @@ const UserPage = () => {
         <div className="UserPage__cards--grid">
           {!isLoaded ? (
             <Loading />
-          ) : (
+          ) : cards.length > 0 ? (
             cards.map((card) => <CardPreviewSmall card={card} key={card.id} />)
+          ) : (
+            <p className="UserPage__nocards">Aucune carte pour le moment.</p>
           )}
         </div>
         <CardFullPopup cardsArray={cards} />

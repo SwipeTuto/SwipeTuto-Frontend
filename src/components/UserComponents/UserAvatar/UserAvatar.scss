@@ -10,8 +10,9 @@
   align-items: center;
   box-shadow: $button-shadow;
   cursor: pointer;
-  color: $white;
-  background-color: $primary-dark;
+  color: $primary-dark;
+  background-color: $white;
+  border: 0.5px solid $grey;
 
   &--image {
     height: 100%;

@@ -144,7 +144,7 @@ const Login = ({ history }) => {
 
       <span className="horizontal-separation-primary-light"></span>
       <Link to="/connexion/signup" className="LoginPage__link">
-        Pas encore de compte ?
+        <CustomButton>Pas encore de compte ?</CustomButton>
       </Link>
     </div>
   );

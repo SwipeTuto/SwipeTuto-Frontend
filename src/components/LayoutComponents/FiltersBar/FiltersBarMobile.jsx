@@ -151,10 +151,6 @@ const FiltersBarMobile = ({ title, showResults }) => {
           <div className="FiltersBarMobile__menu">
             <div className="FiltersBarMobile__menu--top">
               <CloseLogo onClick={handleCloseFilterMobileMenuCloseClick} />
-
-              <CustomButton onClick={handleDeleteCurrentSearch}>
-                Réinitialiser
-              </CustomButton>
             </div>
             <div className="FiltersBarMobile__search">
               <h1 className="title title-1">Votre recherche :</h1>
@@ -315,9 +311,17 @@ const FiltersBarMobile = ({ title, showResults }) => {
                       : ""
                   }`}
                 ></Link>
-                <CustomButton type="submit" color="dark">
-                  Rechercher
-                </CustomButton>
+                <div className="FiltersBarMobile__form--buttons">
+                  <CustomButton
+                    color="white"
+                    onClick={handleDeleteCurrentSearch}
+                  >
+                    Réinitialiser
+                  </CustomButton>
+                  <CustomButton type="submit" color="dark">
+                    Rechercher
+                  </CustomButton>
+                </div>
               </form>
             </div>
           </div>

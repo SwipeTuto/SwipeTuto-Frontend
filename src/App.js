@@ -79,8 +79,8 @@ function App(props) {
         <Route path="/cookies" component={CookiesPage} />
         <Route path="/contact-us" component={ContactUsPage} />
         <Route path="/infos" component={InfosPage} />
+        <Route exact path="/help" component={HelpPage} />
         <ProtectedRoute path="/account" component={AccountPage} />
-        <ProtectedRoute exact path="/help" component={HelpPage} />
         <Route component={NotFoundPage} />
       </Switch>
       <Footer />

@@ -93,9 +93,6 @@ const HomePage = () => {
               <CustomButton>Voir les cartes</CustomButton>
             </Link>
           </div>
-          {/* <div className="HomePage__home-header--right">
-            <HeaderLogo className="HomePage__home-header--right-logo" />
-          </div> */}
         </div>
       </div>
       <div className="HomePage__grid section">

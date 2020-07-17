@@ -91,15 +91,15 @@ export const setCardsFetchedInStore = (cards) => ({
 
 
 // Fetch des cards à partir du nom de l'auteur
-export const getCardsByUserNameAction = username => {
+export const getCardsByUserEmailAction = userEmail => {
   return dispatch => {
-    return getCardsByUser(username)
+    return getCardsByUser(userEmail)
       .then(rep => {
-        dispatch(getCardsByUserNameSuccess(rep.data))
+        dispatch(getCardsByUserEmailSuccess(rep.data))
         return rep
       })
       .catch(err => {
-        dispatch(getCardsByUserNameFailure(err.response))
+        dispatch(getCardsByUserEmailFailure(err.response))
       })
   }
 }
@@ -119,11 +119,11 @@ export const getOtherCardsByAuthorNameAction = username => {
 }
 
 
-const getCardsByUserNameSuccess = cards => ({
+const getCardsByUserEmailSuccess = cards => ({
   type: FilterActionTypes.GET_CARDS_BY_USER_SUCCESS,
   payload: cards
 })
-const getCardsByUserNameFailure = err => ({
+const getCardsByUserEmailFailure = err => ({
   type: FilterActionTypes.GET_CARDS_BY_USER_FAILURE,
   payload: err
 })

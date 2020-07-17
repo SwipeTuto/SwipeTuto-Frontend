@@ -17,7 +17,7 @@
   &__top {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    // justify-content: space-between;
     height: $navtop-mobile-height;
     // position: fixed;
     // top: 0;
@@ -34,6 +34,17 @@
   &__toggle {
     width: 3.5rem;
     height: 3.5rem;
+  }
+
+  &__swipeTuto {
+    height: 100%;
+    margin-left: 1rem;
+    margin-right: auto;
+
+    img {
+      height: 100%;
+      witdh: auto;
+    }
   }
 
   &__dropdown--logo {

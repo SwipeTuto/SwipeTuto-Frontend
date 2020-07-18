@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink, Route, Switch, Link } from "react-router-dom";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
 import SettingsPage from "./SettingsPage/SettingsPage";
 import UserPage from "./UserPage/UserPage";
-import UserAvatar from "../../components/UserComponents/UserAvatar/UserAvatar";
+import UserHeader from "./UserHeader/UserHeader";
 
 import { ReactComponent as LogoFacebook } from "../../assets/images/logo-facebook.svg";
 import { ReactComponent as LogoTwitter } from "../../assets/images/logo-twitter.svg";
@@ -17,81 +17,22 @@ import newUserAvatar from "../../assets/images/avatar_new_user.png";
 
 import "./AccountPages.scss";
 
-const AccountPage = ({ match }) => {
+const AccountPage = (props) => {
   const currentUser = useSelector(selectCurrentUser);
+  console.log(props);
 
   // scroll reset
   if (window.scrollY) {
     window.scroll(0, 0);
   }
 
+  useEffect(() => {}, []);
+
   return (
     <div className="AccountPage">
       <div className="AccountPage__wrapper">
-        <div className="AccountPage__header">
-          <div className="AccountPage__userInfos">
-            <div className="AccountPage__avatar">
-              <UserAvatar
-                userImage={
-                  currentUser &&
-                  currentUser.profile &&
-                  currentUser.profile.avatar
-                    ? currentUser.profile.avatar
-                    : null
-                }
-                userFirstName={
-                  currentUser && currentUser.first_name
-                    ? currentUser.first_name
-                    : null
-                }
-                userLastName={
-                  currentUser && currentUser.last_name
-                    ? currentUser.last_name
-                    : null
-                }
-              />
-            </div>
-            <div className="AccountPage__text">
-              <p className="AccountPage__userWelcome">{currentUser.username}</p>
-              <p className="AccountPage__userWelcome">{currentUser.email}</p>
-            </div>
-            <div className="AccountPage__mobile">
-              <Link className="AccountPage__mobile--link" to="/account/user">
-                <AccountLogo />
-              </Link>
-              <Link
-                className="AccountPage__mobile--link"
-                to="/account/settings"
-              >
-                <SettingsLogo />
-              </Link>
-            </div>
-          </div>
-          <div className="AccountPage__bio">
-            <p className="AccountPage__bio--text">
-              {currentUser &&
-              currentUser.profile &&
-              currentUser.profile.description
-                ? currentUser.profile.description
-                : "Utilisateur SwipeTuto."}
-            </p>
-          </div>
-          <div className="AccountPage__social">
-            {/* <a href="#" target="_blank" className="AccountPage__social--link">
-              <LogoYoutube className="AccountPage__social--logo" />
-            </a>
-            <a href="#" target="_blank" className="AccountPage__social--link">
-              <LogoGithub className="AccountPage__social--logo" />
-            </a>
-            <a href="#" target="_blank" className="AccountPage__social--link">
-              <LogoFacebook className="AccountPage__social--logo" />
-            </a>
-            <a href="#" target="_blank" className="AccountPage__social--link">
-              <LogoTwitter className="AccountPage__social--logo" />
-            </a> */}
-          </div>
-        </div>
-
+        <UserHeader user="current" />
+        <div className="AccountPage__infos">// USER INFOS</div>
         <Switch>
           <ProtectedRoute exact path="/account/user" component={UserPage} />
           <ProtectedRoute

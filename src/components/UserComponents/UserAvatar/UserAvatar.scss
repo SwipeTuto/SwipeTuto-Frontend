@@ -8,11 +8,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: $button-shadow;
+  // box-shadow: $button-shadow;
   cursor: pointer;
   color: $primary-dark;
   background-color: $white;
-  border: 0.5px solid $grey;
+  border: 1px solid $grey;
 
   &--image {
     height: 100%;

@@ -42,6 +42,12 @@ const logoutSuccess = () => ({
   payload: ''
 })
 
+// Other user infos
+export const setOtherUser = (otherUser) => ({
+  type: UserActionTypes.SET_OTHER_USER,
+  payload: otherUser,
+});
+
 // REGISTER
 export const registerAction = users => {
   return dispatch => {

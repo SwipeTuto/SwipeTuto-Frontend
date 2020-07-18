@@ -9,6 +9,7 @@ import SearchPage from './pages/SearchPage/SearchPage'
 import RessourcesPage from './pages/RessourcesPage/RessourcesPage'
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
 import AccountPage from './pages/AccountPages/AccountPages'
+import ProfilePage from './pages/ProfilePage/ProfilePage'
 // import SettingsPage from './pages/SettingsPage/SettingsPage'
 import HelpPage from './pages/HelpPage/HelpPage'
 import ConditionsOfUsagePage from './pages/ConditionsOfUsagePage/ConditionsOfUsagePage'
@@ -79,7 +80,8 @@ function App(props) {
         <Route path="/cookies" component={CookiesPage} />
         <Route path="/contact-us" component={ContactUsPage} />
         <Route path="/infos" component={InfosPage} />
-        <Route exact path="/help" component={HelpPage} />
+        <Route path="/help" component={HelpPage} />
+        <Route path="/profile/user_id=:user_id" component={ProfilePage} />
         <ProtectedRoute path="/account" component={AccountPage} />
         <Route component={NotFoundPage} />
       </Switch>

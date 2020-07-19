@@ -65,13 +65,13 @@ const NavTop = (props) => {
   }, [searchWords, searchTopic, searchOrder, searchCategory]);
 
   const topicHandleClick = async (e) => {
-    // dispatch(getCardAfterfilterAction(e.target.name, searchCategory, search));
-    dispatch(setCurrentSearch("searchTopic", e.target.name));
+    const topicName = e.target.name ? e.target.name : null;
+    dispatch(setCurrentSearch("searchTopic", topicName));
     dispatch(setCurrentSearch("searchPage", 1));
     dispatch(
       getCardAfterfilterAction({
         ...currentSearch,
-        searchTopic: e.target.name,
+        searchTopic: topicName,
         searchPage: 1,
       })
     );

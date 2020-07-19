@@ -94,7 +94,6 @@ const NavTopMobile = (props) => {
   };
 
   const topicHandleClick = (e) => {
-    // dispatch(getCardAfterfilterAction(e.target.dataset.name, searchCategory));
     dispatch(setCurrentSearch("searchTopic", e.target.dataset.name));
     dispatch(setCurrentSearch("searchPage", 1));
     dispatch(

@@ -14,7 +14,11 @@ import {
   closePopupCard,
   closeBetaAlert,
 } from "../../redux/layout/layout-actions";
-import { getCardsAction } from "../../redux/filter/filter-actions";
+import {
+  getCardsAction,
+  setCurrentSearch,
+  getCardAfterfilterAction,
+} from "../../redux/filter/filter-actions";
 import HeaderImage from "../../assets/logos/header_image.png";
 
 import { ReactComponent as QuestionIllustration } from "../../assets/images/illustrations/illustration-question.svg";
@@ -28,6 +32,7 @@ import { deleteCurrentSearch } from "../../redux/filter/filter-actions";
 
 import "./HomePage.scss";
 import { selectIsLoaded } from "../../redux/layout/layout-selectors";
+import SearchLinkRedirect from "../../helper/SearchLinkRedirect";
 
 const HomePage = () => {
   const isLoaded = useSelector(selectIsLoaded);
@@ -52,6 +57,13 @@ const HomePage = () => {
   const handleCloseInfoClick = () => {
     dispatch(closeBetaAlert());
   };
+
+  const handleRedirectClick = () => {
+    dispatch(deleteCurrentSearch());
+    dispatch(getCardsAction());
+  };
+
+  const redirectLink = SearchLinkRedirect();
 
   return (
     <div className="HomePage">
@@ -89,8 +101,10 @@ const HomePage = () => {
               <br />
               Cherchez, filtrez, swipez !
             </p>
-            <Link to="/search">
-              <CustomButton>Voir les cartes</CustomButton>
+            <Link to={redirectLink}>
+              <CustomButton onClick={() => handleRedirectClick()}>
+                Voir les cartes
+              </CustomButton>
             </Link>
           </div>
         </div>

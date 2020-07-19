@@ -17,7 +17,7 @@ export const urlParams = url => {
 
   var topic = urlParams.get('topic')
   var category = urlParams.get('category')
-  var ordering = urlParams.get('ordering')
+  var ordering = urlParams.get('order')
   var search = urlParams.get('search')
   var page = urlParams.get('page')
   var card_id = urlParams.get('card_id');

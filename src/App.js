@@ -51,6 +51,7 @@ function App(props) {
   useEffect(() => {
     console.log(userId, cardId)
     if (!isLoaded && (topic || category || ordering || search || page)) {
+      console.log(topic, category, ordering, search, page)
       dispatch(getCardAfterfilterAction({
         searchWords: search,
         searchTopic: topic,

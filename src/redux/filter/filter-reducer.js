@@ -29,7 +29,8 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: action.payload };
 
     case FilterActionTypes.SET_CURRENT_SEARCH:
-      if (action.payload) {
+      if ("action payload: dans le reducer", action.payload) {
+        console.log(action.payload)
         return {
           ...state, currentSearch: {
             ...state.currentSearch,

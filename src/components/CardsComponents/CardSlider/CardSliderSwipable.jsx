@@ -2,7 +2,7 @@
 
 import React, { Fragment, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectClickedCardSlides } from "../../../redux/cards/cards-selectors";
+import { selectClickedCardSlides } from "../../../redux/filter/filter-selectors";
 import { selectFullscreen } from "../../../redux/layout/layout-selectors";
 import { closeFullscreen } from "../../../redux/layout/layout-actions";
 
@@ -143,21 +143,19 @@ const CardSliderSwipebale = () => {
                 />
               ))} */}
           {fakeArray.map((source, index) => (
-            <>
-              <img
-                className={
-                  index === activeIndex
-                    ? "CardSliderLarge__slide CardSliderLarge__slide--active"
-                    : "CardSliderLarge__slide"
-                }
-                key={index}
-                index={index}
-                src={source}
-                slide={source}
-                alt="slide element"
-                onContextMenu={(e) => e.preventDefault()}
-              />
-            </>
+            <img
+              className={
+                index === activeIndex
+                  ? "CardSliderLarge__slide CardSliderLarge__slide--active"
+                  : "CardSliderLarge__slide"
+              }
+              key={index}
+              index={index}
+              src={source}
+              slide={source}
+              alt="slide element"
+              onContextMenu={(e) => e.preventDefault()}
+            />
           ))}
         </div>
         {/* Chevron left */}

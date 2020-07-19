@@ -19,13 +19,13 @@ import NavTop from "./components/LayoutComponents/NavTop/NavTop";
 import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
-import { getCardsAction } from './redux/cards/cards-actions'
-import { selectIsLoaded } from "./redux/cards/cards-selectors"
+import { getCardsAction, getCardByIdAction } from './redux/filter/filter-actions'
+import { selectIsLoaded } from "./redux/layout/layout-selectors"
 import { getCardAfterfilterAction, setCurrentSearch } from "./redux/filter/filter-actions"
-import { getCardAfterfilter } from './services/cardsService'
+import { getCardAfterfilter, getCards } from './services/cardsService'
 
 
-import { urlParams } from "./helper/index"
+import { urlParams, getUrlId } from "./helper/index"
 
 
 import './index.scss'
@@ -34,6 +34,8 @@ import ConfidentialityPage from "./pages/ConfidentialityPage/ConfidentialityPage
 import CookiesPage from "./pages/CookiesPage/CookiesPage";
 import InfosPage from "./pages/InfosPage/InfosPage";
 import { selectCurrentSearch } from "./redux/filter/filter-selectors";
+import { showPopupCard } from "./redux/layout/layout-actions";
+import CardFullPopup from "./components/CardsComponents/CardFullPopup/CardFullPopup";
 
 
 
@@ -42,9 +44,12 @@ function App(props) {
   const currentSearch = useSelector(selectCurrentSearch)
   const dispatch = useDispatch();
   const [topic, category, ordering, search, page] = urlParams(props.location)
+  const userId = getUrlId(props.location.pathname, "user_id")
+  const cardId = getUrlId(props.location.pathname, "card_id")
   const isLoaded = useSelector(selectIsLoaded)
 
   useEffect(() => {
+    console.log(userId, cardId)
     if (!isLoaded && (topic || category || ordering || search || page)) {
       dispatch(getCardAfterfilterAction({
         searchWords: search,
@@ -58,7 +63,14 @@ function App(props) {
       dispatch(setCurrentSearch("searchCategory", category))
       dispatch(setCurrentSearch("searchOrder", ordering || "-created"))
       dispatch(setCurrentSearch("searchPage", parseInt(page)))
-    } else {
+    } else if (!isLoaded && cardId) {
+      // LANCER ACTION FETCH CARD BY ID dans clickedcard
+      dispatch(getCardsAction())
+      dispatch(getCardByIdAction(cardId))
+      dispatch(showPopupCard())
+
+    }
+    else {
       dispatch(getCardAfterfilterAction(currentSearch))
     }
   }, []);
@@ -81,6 +93,7 @@ function App(props) {
         <Route path="/contact-us" component={ContactUsPage} />
         <Route path="/infos" component={InfosPage} />
         <Route path="/help" component={HelpPage} />
+        <Route path="/card_id=:card_id" component={SearchPage} />
         <Route path="/profile/user_id=:user_id" component={ProfilePage} />
         <ProtectedRoute path="/account" component={AccountPage} />
         <Route component={NotFoundPage} />

@@ -10,14 +10,14 @@ import {
   selectSearchPage,
   selectTotalNumberOfResults,
 } from "../../../redux/filter/filter-selectors";
-import { getCardsLoading } from "../../../redux/cards/cards-actions";
+import { setLoading } from "../../../redux/cards/cards-actions";
 import {
   getOtherPageAction,
   getCardAfterfilterAction,
   setCurrentSearch,
 } from "../../../redux/filter/filter-actions";
 import { baseURL } from "../../../services/configService";
-import { selectIsLoaded } from "../../../redux/cards/cards-selectors";
+import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
 
 const Pagination = ({
   currentSearch,

@@ -11,7 +11,7 @@ import {
   selectTotalNumberOfResults,
 } from "../../../redux/filter/filter-selectors";
 
-import { selectIsLoaded } from "../../../redux/cards/cards-selectors";
+import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
 
 import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
 import CardFullPopup from "../../CardsComponents/CardFullPopup/CardFullPopup";
@@ -56,7 +56,7 @@ const CardGridList = ({ cardsSize }) => {
           cards.map((card) => <CardPreviewSmall card={card} key={card.id} />)
         )}
       </div>
-      <CardFullPopup cardsArray={cards} />
+      <CardFullPopup />
     </div>
   );
 };

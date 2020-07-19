@@ -20,10 +20,17 @@ export const urlParams = url => {
   var ordering = urlParams.get('ordering')
   var search = urlParams.get('search')
   var page = urlParams.get('page')
+  var card_id = urlParams.get('card_id');
+  var user_id = urlParams.get('user_id');
 
 
-  return [topic, category, ordering, search, page]
+  return [topic, category, ordering, search, page, card_id, user_id]
 }
+
+export const getUrlId = (url, query) => {
+  return url && parseInt(url.split(`${query}=`)[1]);
+}
+
 
 
 // Pour les mots / phrases trop longue, permet de couper. Params : phrase, nombre de caractères max, true/false pour couper les mots

@@ -14,7 +14,7 @@ import {
   closePopupCard,
   closeBetaAlert,
 } from "../../redux/layout/layout-actions";
-import { getCardsAction } from "../../redux/cards/cards-actions";
+import { getCardsAction } from "../../redux/filter/filter-actions";
 import HeaderImage from "../../assets/logos/header_image.png";
 
 import { ReactComponent as QuestionIllustration } from "../../assets/images/illustrations/illustration-question.svg";
@@ -27,7 +27,7 @@ import { selectBetaAlertOpen } from "../../redux/layout/layout-selectors";
 import { deleteCurrentSearch } from "../../redux/filter/filter-actions";
 
 import "./HomePage.scss";
-import { selectIsLoaded } from "../../redux/cards/cards-selectors";
+import { selectIsLoaded } from "../../redux/layout/layout-selectors";
 
 const HomePage = () => {
   const isLoaded = useSelector(selectIsLoaded);
@@ -105,7 +105,7 @@ const HomePage = () => {
             .map((card) => <CardPreviewSmall card={card} key={card.id} />)
         )}
       </div>
-      <CardFullPopup cardsArray={cardsArrayCut} />
+      <CardFullPopup />
 
       <div className="About section">
         <div className="about-section section-1">

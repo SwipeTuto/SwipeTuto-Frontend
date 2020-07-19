@@ -1,57 +1,12 @@
 import { FilterActionTypes } from "./filter-types"
+import { setLoading, setLoaded } from '../layout/layout-actions'
 
 import { searchBar } from '../../services/searchService'
-import { getCardAfterfilter, getCardsByUser, getOtherPageCard } from '../../services/cardsService'
-import { getCardsLoaded, getCardsLoading } from "../cards/cards-actions"
+import { getCards, CardsActionTypes, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
 
 
-// Recherche avec le back avec mots
-// export const searchAction = kword => {
-//   return dispatch => {
-//     return searchBar(kword)
-//       .then(search => {
-//         dispatch(SearchSuccess(search.data))
-//         // dispatch(setCurrentSearch("searchWords", kword))
 
-//         dispatch(getCardsLoaded())
 
-//       })
-//       .catch(err => {
-//         dispatch(SearchFailure(err.response))
-//         dispatch(setCurrentSearch("searchWords", "Une erreur est survenue."))
-//       })
-//   }
-// }
-// const SearchSuccess = kword => ({
-//   type: FilterActionTypes.SEARCH_SUCCESS,
-//   payload: kword
-// })
-// const SearchFailure = error => ({
-//   type: FilterActionTypes.SEARCH_FAILURE,
-//   payload: error
-// })
-
-export const getCardAfterfilterAction = (search) => {
-  return dispatch => {
-    // dispatch(getCardAfterfilteryRequest(search))
-    dispatch(getCardsLoading());
-    return getCardAfterfilter(search)
-      .then(rep => {
-        dispatch(getCardAfterfilterSuccess(rep.data))
-        dispatch(getCardsLoaded())
-        return rep
-      })
-      .catch(err => {
-        dispatch(getCardAfterfilterFailure(err.response))
-        dispatch(getCardsLoaded())
-      })
-  }
-}
-
-// const getCardAfterfilteryRequest = (search) => ({
-//   type: FilterActionTypes.GET_CARDS_FILTER_REQUEST,
-//   payload: search
-// })
 const getCardAfterfilterSuccess = cards => ({
   type: FilterActionTypes.GET_CARDS_FILTER_SUCCESS,
   payload: cards
@@ -60,6 +15,50 @@ const getCardAfterfilterFailure = err => ({
   type: FilterActionTypes.GET_CARDS_FILTER_FAILURE,
   payload: err
 })
+
+export const getCardAfterfilterAction = (search) => {
+  return dispatch => {
+    // dispatch(getCardAfterfilteryRequest(search))
+    dispatch(setLoading());
+    console.log(search)
+    return getCardAfterfilter(search)
+      .then(rep => {
+        dispatch(getCardAfterfilterSuccess(rep.data))
+        dispatch(setLoaded())
+        return rep
+      })
+      .catch(err => {
+        dispatch(getCardAfterfilterFailure(err.response))
+        dispatch(setLoaded())
+      })
+  }
+}
+
+const getCardByIdSuccess = card => ({
+  type: FilterActionTypes.GET_CARD_BY_ID_SUCCESS,
+  payload: card
+})
+const getCardByIdFailure = err => ({
+  type: FilterActionTypes.GET_CARD_BY_ID_FAILURE,
+  payload: err
+})
+
+export const getCardByIdAction = cardId => {
+  return dispatch => {
+    dispatch(setLoading());
+    return getCardById(cardId)
+      .then(rep => {
+        dispatch(getCardByIdSuccess(rep.data))
+        dispatch(setLoaded())
+        return rep
+      })
+      .catch(err => {
+        dispatch(getCardByIdFailure(err.response))
+        dispatch(setLoaded())
+      })
+
+  }
+}
 
 
 // Gestion de la currentSearch avec mots, catégorie, langage et ordre de recherche
@@ -145,7 +144,7 @@ export const getOtherPageAction = (navLink, newPageNumber) => {
       .then(rep => {
         dispatch(getOtherPageSuccess(rep.data))
         dispatch(setCurrentCardGridPage(newPageNumber))
-        dispatch(getCardsLoaded())
+        dispatch(setLoaded())
 
         return rep
       })
@@ -169,4 +168,37 @@ const getOtherPageFailure = err => ({
 export const setCurrentCardGridPage = newPageNumber => ({
   type: FilterActionTypes.SET_CARDS_GRID_PAGE,
   payload: newPageNumber
+})
+
+
+// Clicked Card 
+export const setClickedCard = (card) => ({
+  type: FilterActionTypes.SET_CLICKED_CARD,
+  payload: card,
+});
+
+export const setNoClickedCard = () => ({
+  type: FilterActionTypes.SET_NO_CLICKED_CARD,
+  payload: null,
+});
+
+
+// Récupérer toutes les cards
+export const getCardsAction = () => {
+  return dispatch => {
+    return getCards()
+      .then(card => {
+        dispatch(setCardsFetchedInStore(card)) // cards dans cardsFetched
+        dispatch(setLoaded()) // stop loader
+      })
+      .catch(err => {
+        dispatch(getCardsErrors(err.response))
+      })
+  }
+};
+
+
+const getCardsErrors = error => ({
+  type: FilterActionTypes.GET_ALL_CARDS_FAILURE,
+  payload: error
 })

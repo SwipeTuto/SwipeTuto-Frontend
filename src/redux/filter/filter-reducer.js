@@ -3,9 +3,10 @@ import { initialSearchState } from '../../helper/index'
 
 const INITIAL_STATE = {
   currentSearch: initialSearchState,
-  errors: '',
   cardsFetched: "",
   otherCardsByAuthor: "",
+  clickedCard: null,
+  errors: '',
 };
 
 const FilterReducer = (state = INITIAL_STATE, action) => {
@@ -78,6 +79,14 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
         ...state,
         otherCardsByAuthor: action.payload,
       };
+    case FilterActionTypes.GET_CARD_BY_ID_SUCCESS:
+      return {
+        ...state,
+        clickedCard: action.payload,
+      };
+    case FilterActionTypes.GET_CARD_BY_ID_FAILURE:
+      return { ...state, errors: action.payload, };
+
     case FilterActionTypes.GET_OTHER_CARDS_BY_USER_FAILURE:
       return { ...state, errors: action.payload, };
 
@@ -96,6 +105,23 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
     case FilterActionTypes.SET_CARDS_GRID_PAGE:
       return { ...state, currentSearch: { ...state.currentSearch, searchPage: action.payload } };
 
+    case FilterActionTypes.SET_CLICKED_CARD:
+      return {
+        ...state,
+        clickedCard: action.payload,
+      };
+    case FilterActionTypes.SET_NO_CLICKED_CARD:
+      return {
+        ...state,
+        clickedCard: null,
+      };
+
+    case FilterActionTypes.GET_ALL_CARDS_FAILURE:
+      return {
+        ...state,
+        errors: action.payload,
+
+      }
 
     default:
       return state;

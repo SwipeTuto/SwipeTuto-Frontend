@@ -2,7 +2,7 @@
 
 import React, { Fragment, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectClickedCardSlides } from "../../../redux/cards/cards-selectors";
+import { selectClickedCardSlides } from "../../../redux/filter/filter-selectors";
 import { selectFullscreen } from "../../../redux/layout/layout-selectors";
 import {
   closeFullscreen,

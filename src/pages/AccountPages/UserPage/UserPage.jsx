@@ -18,7 +18,7 @@ import CardPreviewSmall from "../../../components/CardsComponents/CardPreviewSma
 import CardFullPopup from "../../../components/CardsComponents/CardFullPopup/CardFullPopup";
 
 import "./UserPage.scss";
-import { selectIsLoaded } from "../../../redux/cards/cards-selectors";
+import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
 import { getCardsByUserEmailAction } from "../../../redux/filter/filter-actions";
 
 const UserPage = ({ user }) => {
@@ -65,7 +65,7 @@ const UserPage = ({ user }) => {
             <p className="UserPage__nocards">Aucune carte pour le moment.</p>
           )}
         </div>
-        <CardFullPopup cardsArray={cards} />
+        <CardFullPopup />
       </div>
     </div>
   );

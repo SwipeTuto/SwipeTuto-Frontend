@@ -22,10 +22,15 @@ const ProfilePage = ({ match }) => {
   const [userIsSame, setUserIsSame] = useState(false);
   const dispatch = useDispatch();
 
+  // scroll reset
+  if (window.scrollY) {
+    window.scroll(0, 0);
+  }
+
   useEffect(() => {
     if (match.params && match.params.user_id) {
       const urlUserId = parseInt(match.params.user_id);
-      if (urlUserId === currentUser.id) {
+      if (currentUser && urlUserId === currentUser.id) {
         console.log(urlUserId, currentUser.id);
         setUser("current");
         setUserIsSame(true);

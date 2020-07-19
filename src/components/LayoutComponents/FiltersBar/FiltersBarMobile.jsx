@@ -31,7 +31,7 @@ import {
   setCurrentSearch,
   deleteCurrentSearch,
 } from "../../../redux/filter/filter-actions";
-import { getCardsAction } from "../../../redux/cards/cards-actions";
+import { getCardsAction } from "../../../redux/filter/filter-actions";
 import { urlParams } from "../../../helper/index";
 
 import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";

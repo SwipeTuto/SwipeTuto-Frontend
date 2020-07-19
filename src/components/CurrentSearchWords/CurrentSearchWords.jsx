@@ -16,6 +16,7 @@ import {
   deleteCurrentSearch,
   getCardAfterfilterAction,
   setCurrentSearch,
+  getCardsAction,
 } from "../../redux/filter/filter-actions";
 import SearchLinkRedirect from "../../helper/SearchLinkRedirect";
 
@@ -54,7 +55,10 @@ const CurrentSearchWords = ({ history }) => {
 
   useEffect(() => {
     setRedirection(false);
-  }, []);
+    if (!searchWords && !searchTopic && !searchCategory) {
+      dispatch(getCardsAction());
+    }
+  }, [searchCategory, searchTopic, searchWords]);
 
   const getParamName = (param) => {
     switch (param.name) {

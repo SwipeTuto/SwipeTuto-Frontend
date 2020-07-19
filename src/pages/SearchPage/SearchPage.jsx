@@ -9,7 +9,7 @@ import FiltersBar from "../../components/LayoutComponents/FiltersBar/FiltersBar"
 import FiltersBarMobile from "../../components/LayoutComponents/FiltersBar/FiltersBarMobile";
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
 import CurrentSearchWords from "../../components/CurrentSearchWords/CurrentSearchWords";
-import { selectIsLoaded } from "../../redux/cards/cards-selectors";
+import { selectIsLoaded } from "../../redux/layout/layout-selectors";
 import {
   selectTotalNumberOfResults,
   selectSearchPage,
@@ -25,7 +25,7 @@ import {
   getCardAfterfilterAction,
   setCurrentSearch,
 } from "../../redux/filter/filter-actions";
-import { getCardsLoading } from "../../redux/cards/cards-actions";
+import { setLoading } from "../../redux/cards/cards-actions";
 import Pagination from "../../components/LayoutComponents/Pagination/Pagination";
 import { setCurrentCardGridPage } from "../../redux/filter/filter-actions";
 

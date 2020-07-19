@@ -18,7 +18,7 @@ import { topicArray } from "../../../helper/index";
 import CustomButton from "../CustomButton/CustomButton";
 import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 
-import { getCardsAction } from "../../../redux/cards/cards-actions";
+import { getCardsAction } from "../../../redux/filter/filter-actions";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import {
   selectSearchCategory,
@@ -100,14 +100,10 @@ const NavTop = (props) => {
           <NavLink className="NavTop__link" to="/ressources">
             Ressources
           </NavLink>
-          <NavLink
-            className="NavTop__link NavTop__link--category"
-            to="/search"
-            onClick={(e) => cardsClick(e)}
-          >
+          <p className="NavTop__link NavTop__link--category">
             Langages
             <DropDownLogo className="NavTop__link--logo" />
-          </NavLink>
+          </p>
           <div className=" NavTop__dropdown NavTop__dropdown--category">
             {topicArray &&
               topicArray.map((rubrique, index) => (

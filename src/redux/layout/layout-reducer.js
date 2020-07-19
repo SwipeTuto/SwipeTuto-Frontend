@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   mobileNavOpen: false,
   filterMobileMenuOpen: false,
   betaAlert: true,
+  isLoaded: false,
 };
 
 const layoutReducer = (state = INITIAL_STATE, action) => {
@@ -77,6 +78,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         betaAlert: false,
       };
+    case LayoutActionTypes.SET_LOADING:
+      return {
+        ...state,
+        isLoaded: false,
+      }
+    case LayoutActionTypes.SET_LOADED:
+      return {
+        ...state,
+        isLoaded: true,
+      }
     default:
       return state;
   }

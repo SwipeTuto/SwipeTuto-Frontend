@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 
-import UserNameAndAvatarSmall from "../../UserComponents/UserNameAndAvatarSmall/UserNameAndAvatarSmall";
 import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 
 import { selectClickedCard } from "../../../redux/filter/filter-selectors";
@@ -15,6 +14,8 @@ import { base } from "../../../services/configService";
 import { renameCategory, truncate } from "../../../helper/index";
 
 import "./CardPreviewSmall.scss";
+import { getUserByIdAction } from "../../../redux/user/user-actions";
+import { getUserById } from "../../../services/userService";
 
 const CardPreviewSmall = ({ card }) => {
   const { media_image, user, categorie, name } = card;
@@ -52,17 +53,24 @@ const CardPreviewSmall = ({ card }) => {
       {/* </Link> */}
       <div className="CardPreviewSmall__details">
         <Link to={`/profile/user_id=${user.id}`}>
-          <UserAvatar
-            userImage={
-              user.profile &&
-              user.profile[0] &&
-              user.profile[0].avatar &&
-              `${base}${user.profile[0].avatar}`
-            }
-            userFirstName={user.first_name && user.first_name}
-            userLastName={user.last_name && user.last_name}
-          />
-          <p>{user.username}</p>
+          <div
+            className="CardPreviewSmall__author"
+            onClick={() => {
+              getUserByIdAction(user.id);
+            }}
+          >
+            <UserAvatar
+              userImage={
+                user.profile &&
+                user.profile[0] &&
+                user.profile[0].avatar &&
+                `${base}${user.profile[0].avatar}`
+              }
+              userFirstName={user.first_name && user.first_name}
+              userLastName={user.last_name && user.last_name}
+            />
+            <p>{user.username}</p>
+          </div>
         </Link>
       </div>
     </div>

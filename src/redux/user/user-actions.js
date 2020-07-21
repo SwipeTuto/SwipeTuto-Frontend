@@ -1,6 +1,8 @@
 import { UserActionTypes } from './user-types'
-import { loginManuel, logout, register } from '../../services/userService'
+import { loginManuel, logout, register, getUserById } from '../../services/userService'
 import history from "../../helper/history"
+import { getCardById } from '../../services/cardsService';
+import { setLoading, setLoaded } from '../layout/layout-actions';
 
 export const setCurrentUser = (user) => ({
   type: UserActionTypes.SET_CURRENT_USER,
@@ -71,3 +73,35 @@ const registerErrors = error => ({
   type: UserActionTypes.REGISTER_FAILURE,
   payload: error
 })
+
+
+
+// Get user par son id
+const setClickedUser = user => ({
+  type: UserActionTypes.SET_CLICKED_USER,
+  payload: user,
+})
+
+const getClickedUserError = error => ({
+  type: UserActionTypes.GET_CLICKED_USER_ERROR,
+  payload: error,
+})
+
+
+export const getUserByIdAction = id => {
+  console.log('OK', id)
+  return dispatch => {
+    console.log("OK2")
+    dispatch(setLoading());
+    getUserById(id).then(rep => {
+      dispatch(setClickedUser(rep.data))
+      console.log(rep.data)
+      dispatch(setLoaded())
+      return rep.data
+    }).catch(err => {
+      dispatch(getClickedUserError(err.message))
+      dispatch(setLoaded())
+      return err
+    })
+  }
+}

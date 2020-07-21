@@ -5,7 +5,7 @@ export const selectCurrentUser = createSelector(
   [selectUser],
   user => user.currentUser
 );
-export const selectOtherUser = createSelector(
+export const selectClickedUser = createSelector(
   [selectUser],
-  user => user.otherUser && user.otherUser
+  user => user.clickedUser && user.clickedUser
 );

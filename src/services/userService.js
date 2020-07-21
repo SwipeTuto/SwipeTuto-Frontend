@@ -50,13 +50,16 @@ export const login = idToken => {
     .then(rep => {
       console.log('rep', rep)
       localStorage.setItem('user', JSON.stringify(rep.data))
+
       return rep
     })
     .catch(function (err) {
       localStorage.removeItem('user')
       localStorage.removeItem('token')
+
       return err
     })
+
 }
 
 
@@ -68,10 +71,12 @@ export const loginManuel = (email, password) => {
   return axios.post(`${baseURL}login/`, { email, password }, config)
     .then(user => {
       localStorage.setItem('user', JSON.stringify(user.data))
+
       return user;
     })
     .catch(function (err) {
       localStorage.removeItem('user')
+
       return err
 
     })
@@ -109,7 +114,7 @@ export const register = users => {
 
 // update des infos user qui vient du component SettingsPage, sous forme d'objet
 export const updateUserInfos = newUserInfos => {
-  
+
   const data = {
     username: newUserInfos.username,
     first_name: newUserInfos.firstname,
@@ -123,11 +128,26 @@ export const updateUserInfos = newUserInfos => {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': authHeader()
-    } 
-  }; 
-   axios.patch(`${baseURL}me/`, JSON.stringify(data), requestOptions)
-  .then(user => {
-    localStorage.setItem('user', JSON.stringify(user.data))
-  });   
+    }
+  };
+  axios.patch(`${baseURL}me/`, JSON.stringify(data), requestOptions)
+    .then(user => {
+      localStorage.setItem('user', JSON.stringify(user.data))
+    });
 
+}
+
+
+// Récupérer user par son id
+export const getUserById = id => {
+  var config = {
+    headers: { 'Content-Type': 'application/json' },
+  }
+
+  return new Promise((resolve, reject) => {
+    axios.get(`${baseURL}user/${id}/`, config).then(rep => {
+      resolve(rep)
+      return rep
+    }).catch((err) => { reject(err); return err })
+  })
 }

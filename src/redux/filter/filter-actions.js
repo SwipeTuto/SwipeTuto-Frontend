@@ -18,9 +18,7 @@ const getCardAfterfilterFailure = err => ({
 
 export const getCardAfterfilterAction = (search) => {
   return dispatch => {
-    // dispatch(getCardAfterfilteryRequest(search))
     dispatch(setLoading());
-    console.log(search)
     return getCardAfterfilter(search)
       .then(rep => {
         dispatch(getCardAfterfilterSuccess(rep.data))
@@ -48,11 +46,13 @@ export const getCardByIdAction = cardId => {
     dispatch(setLoading());
     return getCardById(cardId)
       .then(rep => {
+        console.log(rep)
         dispatch(getCardByIdSuccess(rep.data))
         dispatch(setLoaded())
         return rep
       })
       .catch(err => {
+        console.log(err)
         dispatch(getCardByIdFailure(err.response))
         dispatch(setLoaded())
       })
@@ -90,15 +90,15 @@ export const setCardsFetchedInStore = (cards) => ({
 
 
 // Fetch des cards à partir du nom de l'auteur
-export const getCardsByUserEmailAction = userEmail => {
+export const getCardsByUserIdAction = userId => {
   return dispatch => {
-    return getCardsByUser(userEmail)
+    return getCardsByUser(userId)
       .then(rep => {
-        dispatch(getCardsByUserEmailSuccess(rep.data))
+        dispatch(getCardsByUserIdSuccess(rep.data))
         return rep
       })
       .catch(err => {
-        dispatch(getCardsByUserEmailFailure(err.response))
+        dispatch(getCardsByUserIdFailure(err.response))
       })
   }
 }
@@ -118,11 +118,11 @@ export const getOtherCardsByAuthorNameAction = username => {
 }
 
 
-const getCardsByUserEmailSuccess = cards => ({
+const getCardsByUserIdSuccess = cards => ({
   type: FilterActionTypes.GET_CARDS_BY_USER_SUCCESS,
   payload: cards
 })
-const getCardsByUserEmailFailure = err => ({
+const getCardsByUserIdFailure = err => ({
   type: FilterActionTypes.GET_CARDS_BY_USER_FAILURE,
   payload: err
 })

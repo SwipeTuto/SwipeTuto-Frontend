@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectCurrentUser,
-  selectOtherUser,
+  selectClickedUser,
 } from "../../../redux/user/user-selectors";
 import { selectCardsFetchedCards } from "../../../redux/filter/filter-selectors";
 import { ReactComponent as LogoFacebook } from "../../../assets/images/logo-facebook.svg";
@@ -19,32 +19,32 @@ import CardFullPopup from "../../../components/CardsComponents/CardFullPopup/Car
 
 import "./UserPage.scss";
 import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
-import { getCardsByUserEmailAction } from "../../../redux/filter/filter-actions";
+import { getCardsByUserIdAction } from "../../../redux/filter/filter-actions";
 
-const UserPage = ({ user }) => {
+const UserPage = ({ user, userId }) => {
   // Voir comment faire requete pour récupérer les cartes du user dans cards
   // user = current pour user actuel
   // user = other pour la visite d'un autre profil
   const isLoaded = useSelector(selectIsLoaded);
   const cards = useSelector(selectCardsFetchedCards);
   const currentUser = useSelector(selectCurrentUser);
-  const otherUser = useSelector(selectOtherUser);
+  const clickedUser = useSelector(selectClickedUser);
   const [userDatas, setUserDatas] = useState();
   const dispatch = useDispatch();
   // dispatch(closeFullscreen());
   // dispatch(closePopupCard(false));
 
   useEffect(() => {
-    if (user === "current" && currentUser && currentUser.email) {
+    if (user === "current" && currentUser && currentUser.id) {
       setUserDatas(currentUser);
-      dispatch(getCardsByUserEmailAction(currentUser.email));
-    } else if (user === "other" && otherUser && otherUser.email) {
-      setUserDatas(otherUser);
-      dispatch(getCardsByUserEmailAction(otherUser.email));
+      dispatch(getCardsByUserIdAction(currentUser.id));
+    } else if (user === "other" && clickedUser && clickedUser.id) {
+      setUserDatas(clickedUser);
+      dispatch(getCardsByUserIdAction(clickedUser.id));
     } else {
       setUserDatas(null);
     }
-  }, []);
+  }, [userId, clickedUser, currentUser, user, dispatch]);
 
   return (
     <div className="UserPage">

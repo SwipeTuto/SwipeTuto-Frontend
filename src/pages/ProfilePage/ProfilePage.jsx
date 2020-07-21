@@ -3,24 +3,27 @@ import { useDispatch, useSelector } from "react-redux";
 
 import UserHeader from "../AccountPages/UserHeader/UserHeader";
 
-import { setOtherUser } from "../../redux/user/user-actions";
+import { getUserByIdAction } from "../../redux/user/user-actions";
 
 import "./ProfilePage.scss";
 import UserPage from "../AccountPages/UserPage/UserPage";
 import {
   selectCurrentUser,
-  selectOtherUser,
+  selectClickedUser,
 } from "../../redux/user/user-selectors";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { Link } from "react-router-dom";
 import { ReactComponent as AccountLogo } from "../../assets/images/person.svg";
+import { urlParams, getUrlId } from "../../helper";
 
-const ProfilePage = ({ match }) => {
+const ProfilePage = ({ match, location }) => {
   const [user, setUser] = useState();
   const currentUser = useSelector(selectCurrentUser);
-  const otherUser = useSelector(selectOtherUser);
+  const clickedUser = useSelector(selectClickedUser);
   const [userIsSame, setUserIsSame] = useState(false);
   const dispatch = useDispatch();
+  // const [userId, setUserId] = useState();
+  const userId = getUrlId(location.pathname, "user_id") || null;
 
   // scroll reset
   if (window.scrollY) {
@@ -28,20 +31,17 @@ const ProfilePage = ({ match }) => {
   }
 
   useEffect(() => {
-    if (match.params && match.params.user_id) {
-      const urlUserId = parseInt(match.params.user_id);
-      if (currentUser && urlUserId === currentUser.id) {
-        console.log(urlUserId, currentUser.id);
-        setUser("current");
+    // const urlUserId = match.params.user_id ? match.params.user_id : null;
+    if (userId) {
+      // setUserId(urlUserId);
+      getUserByIdAction(userId);
+      if (currentUser && userId === currentUser.id) {
         setUserIsSame(true);
       } else {
-        setUser("other");
-        dispatch(setOtherUser(urlUserId));
         setUserIsSame(false);
       }
-      // ACTION A FAIRE :
     }
-  }, [match.params]);
+  }, []);
 
   return (
     <div className="ProfilePage">
@@ -56,7 +56,7 @@ const ProfilePage = ({ match }) => {
             </Link>
           </div>
         )}
-        <UserHeader user={user} />
+        <UserHeader user={user} userId={userId} />
         <UserPage user={user} />
       </div>
     </div>

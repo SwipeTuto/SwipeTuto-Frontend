@@ -36,6 +36,7 @@ import InfosPage from "./pages/InfosPage/InfosPage";
 import { selectCurrentSearch } from "./redux/filter/filter-selectors";
 import { showPopupCard } from "./redux/layout/layout-actions";
 import CardFullPopup from "./components/CardsComponents/CardFullPopup/CardFullPopup";
+import { getUserByIdAction } from "./redux/user/user-actions";
 
 
 
@@ -49,9 +50,7 @@ function App(props) {
   const isLoaded = useSelector(selectIsLoaded)
 
   useEffect(() => {
-    console.log(userId, cardId)
     if (!isLoaded && (topic || category || ordering || search || page)) {
-      console.log(topic, category, ordering, search, page)
       dispatch(getCardAfterfilterAction({
         searchWords: search,
         searchTopic: topic,
@@ -70,6 +69,8 @@ function App(props) {
       dispatch(getCardByIdAction(cardId))
       dispatch(showPopupCard())
 
+    } else if (!isLoaded && userId) {
+      dispatch(getUserByIdAction(userId))
     }
     else {
       dispatch(getCardAfterfilterAction(currentSearch))

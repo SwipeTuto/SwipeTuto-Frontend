@@ -8,26 +8,28 @@ import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg
 import "./UserHeader.scss";
 import {
   selectCurrentUser,
-  selectOtherUser,
+  selectClickedUser,
 } from "../../../redux/user/user-selectors";
 
-const UserHeader = ({ user }) => {
+const UserHeader = ({ user, userId }) => {
   // user = current pour user actuel
   // user = other pour la visite d'un autre profil
   const currentUser = useSelector(selectCurrentUser);
-  const otherUser = useSelector(selectOtherUser);
+  const clickedUser = useSelector(selectClickedUser);
   const [userDatas, setUserDatas] = useState();
 
+  // useEffect(() => {
+  //   if (user === "current") {
+  //     setUserDatas(currentUser);
+  //   } else if (user === "other") {
+  //     setUserDatas(clickedUser);
+  //   } else {
+  //     setUserDatas(null);
+  //   }
+  // }, [user, clickedUser, currentUser, userId]);
   useEffect(() => {
-    if (user === "current") {
-      setUserDatas(currentUser);
-    } else if (user === "other") {
-      setUserDatas(otherUser);
-    } else {
-      setUserDatas(null);
-    }
-    console.log(userDatas);
-  }, [user]);
+    setUserDatas(clickedUser);
+  }, [clickedUser]);
 
   return (
     <div className="UserHeader">

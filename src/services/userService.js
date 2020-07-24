@@ -129,5 +129,4 @@ export const updateUserInfos = newUserInfos => {
   .then(user => {
     localStorage.setItem('user', JSON.stringify(user.data))
   });   
-
 }

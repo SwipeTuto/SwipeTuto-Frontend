@@ -16,6 +16,7 @@ import {
   deleteCurrentSearch,
   getCardAfterfilterAction,
   setCurrentSearch,
+  getCardsAction,
 } from "../../redux/filter/filter-actions";
 import SearchLinkRedirect from "../../helper/SearchLinkRedirect";
 

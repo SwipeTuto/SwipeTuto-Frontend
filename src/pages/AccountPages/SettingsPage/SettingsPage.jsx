@@ -13,21 +13,37 @@ const SettingsPage = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const currentUser = useSelector(selectCurrentUser);
-  console.log('currentUser', currentUser)
   const [newUserInfos, setNewUserInfos] = useState(currentUser);
-  console.log('newUserInfos', newUserInfos)
   const [sendNewInfos, setSendNewInfos] = useState(false);
+  const [inputValid, setInputValid] = useState({
+    username: false,
+    first_name: false,
+    last_name: false,
+    avatar: false,
+    description: false,
+  });
 
   useEffect(() => {
     if (sendNewInfos) {
       updateUserInfos(newUserInfos);
       setSendNewInfos(false);
     }
+    setInputValid({
+      username: false,
+      first_name: false,
+      last_name: false,
+      avatar: false,
+      description: false,
+    });
   }, [sendNewInfos]);
 
   const handleAvatarUpdate = (e) => {
+    const inputValidCopy = inputValid;
     const newAvatarInput = document.querySelector("#avatar");
     const newAvatarFile = newAvatarInput.files[0];
+    if (!newAvatarFile) {
+      setInputValid({ ...inputValidCopy, avatar: false });
+    }
     let avatarFormData = new FormData();
     avatarFormData.append("avatar", newAvatarFile);
 
@@ -35,6 +51,7 @@ const SettingsPage = () => {
       ...currentUser,
       profile: { ...currentUser.profile, avatar: avatarFormData },
     });
+    setInputValid({ ...inputValidCopy, avatar: true });
     // newAvatarInput.value = "";
   };
 
@@ -55,12 +72,16 @@ const SettingsPage = () => {
     if (!inputIsOk) {
       currentInput.classList.remove("valid-input");
       currentInput.classList.add("invalid-input");
-
       errorMessage.textContent = errorMessageToDisplay(name);
+      const inputValidCopy = inputValid;
+      setInputValid({ ...inputValidCopy, [name]: false });
     } else {
       currentInput.classList.remove("invalid-input");
       currentInput.classList.add("valid-input");
       errorMessage.textContent = "";
+
+      const inputValidCopy = inputValid;
+      setInputValid({ ...inputValidCopy, [name]: true });
 
       switch (name) {
         case "username":
@@ -75,7 +96,7 @@ const SettingsPage = () => {
           });
           break;
         default:
-          return
+          return;
       }
     }
   };
@@ -92,10 +113,10 @@ const SettingsPage = () => {
 
   return (
     <div className="SettingsPage">
-      <h2 className="title title-2">Changer les informations du compte</h2>
+      <h1 className="title title-1">Changer les informations du compte</h1>
       <div className="allForms">
         <form
-          className="form__avatar"
+          className="form__avatar form"
           name="avatar"
           onSubmit={(e) => handleSubmitInput(e)}
           onChange={handleAvatarUpdate}
@@ -104,84 +125,132 @@ const SettingsPage = () => {
             Changez votre avatar (veuillez choisir une image au format{" "}
             <em>.png</em> ou <em>.jpeg</em>) :
           </label>
-          <input
-            className="settings__form--input invalid-input"
-            onChange={(e) => handleChange(e)}
-            type="file"
-            id="avatar"
-            name="avatar"
-            accept="image/png, image/jpeg"
-            required
-          />
-          <p className="input__message" data-inputfor="avatar"></p>
-          <CustomButton color="dark">Valider</CustomButton>
+          <div className="form__bottom">
+            <div className="form__bottom--input">
+              <input
+                className="settings__form--input invalid-input"
+                onChange={(e) => handleChange(e)}
+                type="file"
+                id="avatar"
+                name="avatar"
+                accept="image/png, image/jpeg"
+                required
+              />
+              <p className="input__message" data-inputfor="avatar"></p>
+            </div>
+            <CustomButton
+              color="dark"
+              disabled={inputValid.avatar === false ? "disabled" : ""}
+            >
+              Valider
+            </CustomButton>
+          </div>
         </form>
         <form
-          className="form__pseudo"
+          className="form__pseudo form"
           name="username"
           onSubmit={(e) => handleSubmitInput(e)}
         >
           <label htmlFor="username">Changez votre Pseudo :</label>
-          <input
-            className="settings__form--input invalid-input"
-            type="text"
-            id="username"
-            name="username"
-            onChange={(e) => handleChange(e)}
-            required
-          />
-          <p className="input__message" data-inputfor="username"></p>
-          <CustomButton color="dark">Valider</CustomButton>
+          <div className="form__bottom">
+            <div className="form__bottom--input">
+              <input
+                className="settings__form--input invalid-input"
+                type="text"
+                id="username"
+                name="username"
+                onChange={(e) => handleChange(e)}
+                required
+              />
+              <p className="input__message" data-inputfor="username"></p>
+            </div>
+            <CustomButton
+              color="dark"
+              disabled={inputValid.username === false ? "disabled" : ""}
+            >
+              Valider
+            </CustomButton>
+          </div>
         </form>
         <form
-          className="form__first_name"
+          className="form__first_name form"
           name="first_name"
           onSubmit={(e) => handleSubmitInput(e)}
         >
           <label htmlFor="first_name">Changez votre Prénom :</label>
-          <input
-            className="settings__form--input invalid-input"
-            type="text"
-            id="first_name"
-            name="first_name"
-            onChange={(e) => handleChange(e)}
-            required
-          />
-          <p className="input__message" data-inputfor="first_name"></p>
-          <CustomButton color="dark">Valider</CustomButton>
+          <div className="form__bottom">
+            <div className="form__bottom--input">
+              <input
+                className="settings__form--input invalid-input"
+                type="text"
+                id="first_name"
+                name="first_name"
+                onChange={(e) => handleChange(e)}
+                required
+              />
+              <p className="input__message" data-inputfor="first_name"></p>
+            </div>
+            <CustomButton
+              color="dark"
+              disabled={inputValid.first_name === false ? "disabled" : ""}
+            >
+              Valider
+            </CustomButton>
+          </div>
         </form>
         <form
-          className="form__last_name"
+          className="form__last_name form"
           name="last_name"
           onSubmit={(e) => handleSubmitInput(e)}
         >
           <label htmlFor="username">Changez votre Nom :</label>
-          <input
-            className="settings__form--input invalid-input"
-            type="text"
-            id="last_name"
-            name="last_name"
-            onChange={(e) => handleChange(e)}
-            required
-          />
-          <p className="input__message" data-inputfor="last_name"></p>
-          <CustomButton color="dark">Valider</CustomButton>
+          <div className="form__bottom">
+            <div className="form__bottom--input">
+              <input
+                className="settings__form--input invalid-input"
+                type="text"
+                id="last_name"
+                name="last_name"
+                onChange={(e) => handleChange(e)}
+                required
+              />
+              <p className="input__message" data-inputfor="last_name"></p>
+            </div>
+            <CustomButton
+              color="dark"
+              disabled={inputValid.last_name === false ? "disabled" : ""}
+            >
+              Valider
+            </CustomButton>
+          </div>
         </form>
         <form
-          className="form__description"
+          className="form__description form"
+          name="description"
           onSubmit={(e) => handleSubmitInput(e)}
         >
           <label htmlFor="description">Changez votre description :</label>
-          <textarea
-            className="settings__form--input invalid-input"
-            type="text"
-            id="description"
-            name="description"
-            onChange={(e) => handleChange(e)}
-            required
-          />
-          <p className="input__message" data-inputfor="description"></p>
-          <CustomButton color="dark">Valider</CustomButton>
+          <div className="form__bottom">
+            <div className="form__bottom--input">
+              <textarea
+                className="settings__form--input invalid-input"
+                type="text"
+                id="description"
+                name="description"
+                onChange={(e) => handleChange(e)}
+                onFocus={() =>
+                  setInputValid({ ...inputValid, description: true })
+                }
+              />
+              <p className="input__message" data-inputfor="description"></p>
+            </div>
+            <CustomButton
+              color="dark"
+              disabled={inputValid.description === false ? "disabled" : ""}
+            >
+              Valider
+            </CustomButton>
+          </div>
         </form>
         {/* !!! à ajouter dans le back sous profile : les liens vers réseaux sociaux */}
         {/* <form className="form__youtube">

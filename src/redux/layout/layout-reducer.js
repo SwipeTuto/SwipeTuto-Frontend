@@ -5,21 +5,23 @@ const INITIAL_STATE = {
   fullscreen: false,
   showUserNav: false,
   mobileNavOpen: false,
+  filterMobileMenuOpen: false,
   betaAlert: true,
+  isLoaded: false,
 };
 
 const layoutReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LayoutActionTypes.SHOW_POPUP_CARD:
-      // document.getElementsByClassName("App")[0].style.position = "fixed";
-      // document.getElementsByClassName("App")[0].style.overflow = "hidden";
+      document.getElementsByClassName("App")[0].style.position = "fixed";
+      document.getElementsByClassName("App")[0].style.overflow = "hidden";
       return {
         ...state,
         popupShown: true,
       };
     case LayoutActionTypes.CLOSE_POPUP_CARD:
-      // document.getElementsByClassName("App")[0].style.position = "static";
-      // document.getElementsByClassName("App")[0].style.overflow = "visible";
+      document.getElementsByClassName("App")[0].style.position = "static";
+      document.getElementsByClassName("App")[0].style.overflow = "visible";
       return {
         ...state,
         popupShown: false,
@@ -31,11 +33,7 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         fullscreen: true,
       };
     case LayoutActionTypes.CLOSE_FULLSCREEN:
-      if (document.fullscreenElement ||
-        document.mozFullScreenElement ||
-        document.webkitFullscreenElement) {
-        document.exitFullscreen()
-      };
+
       return {
         ...state,
         fullscreen: false,
@@ -51,6 +49,7 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         mobileNavOpen: true,
+        filterMobileMenuOpen: false
       };
     case LayoutActionTypes.CLOSE_MOBILE_NAV:
       document.getElementsByClassName("App")[0].style.position = "static";
@@ -59,11 +58,36 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         mobileNavOpen: false,
       };
+    case LayoutActionTypes.OPEN_FILTER_MOBILE_MENU:
+      document.getElementsByClassName("App")[0].style.position = "fixed";
+      document.getElementsByClassName("App")[0].style.overflow = "hidden";
+      return {
+        ...state,
+        filterMobileMenuOpen: true,
+        mobileNavOpen: false
+      };
+    case LayoutActionTypes.CLOSE_FILTER_MOBILE_MENU:
+      document.getElementsByClassName("App")[0].style.position = "static";
+      document.getElementsByClassName("App")[0].style.overflow = "visible";
+      return {
+        ...state,
+        filterMobileMenuOpen: false,
+      };
     case LayoutActionTypes.CLOSE_BETA_ALERT:
       return {
         ...state,
         betaAlert: false,
       };
+    case LayoutActionTypes.SET_LOADING:
+      return {
+        ...state,
+        isLoaded: false,
+      }
+    case LayoutActionTypes.SET_LOADED:
+      return {
+        ...state,
+        isLoaded: true,
+      }
     default:
       return state;
   }

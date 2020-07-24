@@ -1,0 +1,36 @@
+@import "../../variables.scss";
+
+.ProfilePage {
+  padding: $grid-component-padding;
+  background-color: $grey;
+
+  &__wrapper {
+    background-color: $white;
+    padding: 4rem;
+  }
+
+  &__link {
+    text-align: right;
+
+    & a {
+      display: inline-block;
+
+      & svg {
+        fill: $white;
+        @include logo-size;
+        margin-right: 1rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .ProfilePage {
+    padding: $inner-component-padding-tablet;
+  }
+}
+@media screen and (max-width: $bp-phone) {
+  .ProfilePage {
+    padding: $inner-component-padding-phone;
+  }
+}

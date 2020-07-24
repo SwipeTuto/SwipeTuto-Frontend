@@ -12,7 +12,7 @@ import {
   selectSearchOrder,
   selectSearchPage,
 } from "../../../redux/filter/filter-selectors";
-import { categoryArray } from "../../../helper/index";
+import { categoryArray, orderArray } from "../../../helper/index";
 import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
 
 import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
@@ -23,7 +23,7 @@ import {
   setSearchOrder,
   setCurrentSearch,
 } from "../../../redux/filter/filter-actions";
-import { getCardsAction } from "../../../redux/cards/cards-actions";
+import { getCardsAction } from "../../../redux/filter/filter-actions";
 import { urlParams } from "../../../helper/index";
 
 import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
@@ -42,6 +42,7 @@ const FiltersBar = ({ handleClickSize }) => {
   const searchOrder = useSelector(selectSearchOrder);
   const currentSearchPageNumber = useSelector(selectSearchPage);
   const [redirection, setRedirection] = useState(false);
+  const linkBar = document.querySelector(".FiltersBar__options--links");
 
   useEffect(() => {
     setRedirection(false);
@@ -87,6 +88,13 @@ const FiltersBar = ({ handleClickSize }) => {
     setRedirection(true);
   };
 
+  const handleScollRight = () => {
+    linkBar.scrollBy(50, 0);
+  };
+  const handleScollLeft = () => {
+    linkBar.scrollBy(-50, 0);
+  };
+
   const redirectLink = SearchLinkRedirect();
 
   return (
@@ -100,14 +108,17 @@ const FiltersBar = ({ handleClickSize }) => {
               id="cards-filter"
               onChange={(e) => handleOrderChange(e)}
             >
-              <option value="-created">Nouveau</option>
-              <option value="-update">Modifié</option>
-              <option value="-like">Populaire</option>
+              {orderArray.map((order, index) => (
+                <option key={index} value={order.queryName}>
+                  {order.name}
+                </option>
+              ))}
             </select>
             <div className="FiltersBar__options">
-              <div className="scroll-logo">
+              <div className="scroll-logo" onClick={handleScollLeft}>
                 <ChevronLeft />
               </div>
+
               <div className="FiltersBar__options--links">
                 {categoryArray &&
                   categoryArray.map((category, index) => (
@@ -123,7 +134,8 @@ const FiltersBar = ({ handleClickSize }) => {
                     </div>
                   ))}
               </div>
-              <div className="scroll-logo">
+
+              <div className="scroll-logo" onClick={handleScollRight}>
                 <ChevronRight />
               </div>
             </div>

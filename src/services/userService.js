@@ -16,8 +16,8 @@ export const loginGoogle = () => {
       return user.getIdToken()
         .then(idToken => {
           login(idToken).then(rep => {
-            // history.push('/cards', history.location)
-            // history.go()
+            history.push('/', history.location)
+            history.go()
             return rep
           })
         })

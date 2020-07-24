@@ -6,7 +6,7 @@ import {
   selectUser,
 } from "../../../redux/user/user-selectors";
 import UserAvatar from "../UserAvatar/UserAvatar";
-import { selectClickedCard } from "../../../redux/cards/cards-selectors";
+import { selectClickedCard } from "../../../redux/filter/filter-selectors";
 import { base } from "../../../services/configService";
 
 // Faire vérif taille username : si trop grand (à définir) tronquer avec "..."

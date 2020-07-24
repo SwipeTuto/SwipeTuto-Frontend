@@ -7,13 +7,18 @@ import { Link } from "react-router-dom";
 import {
   getCardAfterfilterAction,
   setCurrentSearch,
+  deleteCurrentSearch,
 } from "../../../redux/filter/filter-actions";
-import { selectMobileNavOpen } from "../../../redux/layout/layout-selectors";
+import {
+  selectMobileNavOpen,
+  selectFilterMobileMenuOpen,
+} from "../../../redux/layout/layout-selectors";
 import {
   openMobileNav,
   closeMobileNav,
+  openFilterMobileMenu,
 } from "../../../redux/layout/layout-actions";
-import { topicArray } from "../../../helper/index";
+import { topicArray, initialSearchState } from "../../../helper/index";
 import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
 
 import { logoutAction } from "../../../redux/user/user-actions";
@@ -23,11 +28,16 @@ import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as MenuLogo } from "../../../assets/images/menu.svg";
 import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg";
 import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
+import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg";
 import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
 import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
+import FiltersBarMobile from "../FiltersBar/FiltersBarMobile";
 // import newUserAvatar from "../../../assets/images/avatar_new_user.png";
 import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 import SearchForm from "../SearchForm/SearchForm";
+
+import SwipeTutoSmallLogo from "../../../assets/logos/logo-small-reduced.png";
+import SwipeTutoSmallFull from "../../../assets/logos/logo-full-reduced.png";
 
 import "./NavTopMobile.scss";
 import {
@@ -41,6 +51,7 @@ import {
 const NavTopMobile = (props) => {
   const [redirection, setRedirection] = useState(false);
   const dispatch = useDispatch();
+  const filtersBarMobile = useSelector(selectFilterMobileMenuOpen);
   const [cardsDropdownOpen, setCardsDropdownOpen] = useState(false);
   const currentUser = useSelector(selectCurrentUser);
   const currentSearch = useSelector(selectCurrentSearch);
@@ -62,6 +73,12 @@ const NavTopMobile = (props) => {
     setCardsDropdownOpen(false);
   }, [mobileNavOpen, searchWords]);
 
+  // scroll reset
+  useEffect(() => {
+    const navMenu = document.querySelector(".NavTopMobile__open");
+    navMenu.scroll(0, 0);
+  }, [mobileNavOpen]);
+
   const handleNavClose = () => {
     dispatch(closeMobileNav());
     setCardsDropdownOpen(false);
@@ -77,7 +94,6 @@ const NavTopMobile = (props) => {
   };
 
   const topicHandleClick = (e) => {
-    // dispatch(getCardAfterfilterAction(e.target.dataset.name, searchCategory));
     dispatch(setCurrentSearch("searchTopic", e.target.dataset.name));
     dispatch(setCurrentSearch("searchPage", 1));
     dispatch(
@@ -92,12 +108,20 @@ const NavTopMobile = (props) => {
     dispatch(closeMobileNav());
   };
 
+  const handleFiltersMobileOpen = () => {
+    dispatch(openFilterMobileMenu());
+  };
+
   const redirectLink = SearchLinkRedirect();
 
   return (
     <>
       {redirection && <Redirect to={redirectLink} />}
       <div className={`NavTopMobile ${mobileNavOpen ? "active" : ""}`}>
+        {filtersBarMobile && (
+          <FiltersBarMobile title="Recherche" showResults={false} />
+        )}
+
         <div className="NavTopMobile__top">
           {mobileNavOpen ? (
             <CloseLogo
@@ -116,12 +140,25 @@ const NavTopMobile = (props) => {
               }}
             />
           )}
-
-          <h1 className="title title-1">SwipeTuto</h1>
+          <div
+            className="NavTopMobile__swipeTuto"
+            to="/"
+            onClick={() => handleNavClose()}
+          >
+            <img src={SwipeTutoSmallLogo} alt="swipetuto" />
+          </div>
+          <CustomButton color="white" onClick={handleFiltersMobileOpen}>
+            <SearchLogo />
+            Recherche
+          </CustomButton>
         </div>
         <div className={`NavTopMobile__open ${mobileNavOpen ? "active" : ""}`}>
-          <div className="NavTopMobile__searchZone">
-            <SearchForm />
+          {/* <div className="NavTopMobile__searchZone">
+            <SearchForm /> 
+            <FiltersBarMobile title="Recherche" showResults={false} />
+          </div> */}
+          <div className="NavTopMobile__swipeTuto-menu">
+            <img src={SwipeTutoSmallFull} alt="swipetuto" />
           </div>
           <div className="NavTopMobile__menu">
             <Link
@@ -144,66 +181,43 @@ const NavTopMobile = (props) => {
             >
               Ressources
             </Link>
-            <p
+            <Link
               className="NavTopMobile__link"
+              to="/search"
               onClick={() => {
-                const currentState = cardsDropdownOpen;
-                setCardsDropdownOpen(!currentState);
+                dispatch(deleteCurrentSearch());
+                dispatch(getCardAfterfilterAction(initialSearchState));
+                dispatch(closeMobileNav());
+                setCardsDropdownOpen(false);
               }}
             >
-              Langages
-              <DropDownLogo className="NavTopMobile__dropdown--logo" />
+              Cartes
+            </Link>
+
+            <p className="NavTopMobile__link" onClick={handleFiltersMobileOpen}>
+              <SearchLogo className="NavTopMobile__logo" />
+              Recherche
             </p>
-            <div
-              className={`NavTopMobile__dropdown ${
-                cardsDropdownOpen ? "active" : ""
-              }`}
-            >
-              {topicArray &&
-                topicArray.map((rubrique, index) => (
-                  <Link
-                    key={index}
-                    to={`/search?${
-                      searchWords ? `search=${searchWords}&` : ""
-                    }${
-                      rubrique.queryName ? `topic=${rubrique.queryName}&` : ""
-                    }${searchOrder ? `order=${searchOrder}&` : ""}${
-                      searchCategory ? `category=${searchCategory}&` : ""
-                    }${
-                      currentSearchPageNumber
-                        ? `page=${currentSearchPageNumber}`
-                        : ""
-                    }`}
-                  >
-                    <p
-                      onClick={(e) => topicHandleClick(e)}
-                      data-name={rubrique.queryName}
-                      className="NavTopMobile__dropdown--item"
-                    >
-                      {rubrique.name}
-                    </p>
-                  </Link>
-                ))}
-            </div>
           </div>
           {currentUser ? (
             <div className="NavTopMobile__user">
-              <div className="NavTopMobile__userInfos">
+              <div className="NavTopMobile__user--infos">
                 <UserAvatar
                   userImage={
-                    currentUser.profile && currentUser.profile.avatar ? currentUser.profile.avatar : null
+                    currentUser.profile && currentUser.profile.avatar
+                      ? currentUser.profile.avatar
+                      : null
                   }
                   userFirstName={
                     currentUser.first_name && currentUser.first_name
                   }
                   userLastName={currentUser.last_name && currentUser.last_name}
                 />
-                <div className="NavTopMobile__userWelcome">
-                  <p className="NavTopMobile__userWelcome--text">Bonjour</p>
-                  <p className="NavTopMobile__userWelcome--text">
+                <div className="NavTopMobile__user--meta">
+                  <p className="NavTopMobile__user--text">
                     {currentUser.username}
                   </p>
-                  <p className="NavTopMobile__userWelcome--text">
+                  <p className="NavTopMobile__user--text">
                     {currentUser.email}
                   </p>
                 </div>
@@ -214,7 +228,7 @@ const NavTopMobile = (props) => {
                   to="/account/user"
                   onClick={() => handleNavClose()}
                 >
-                  <AccountLogo className="NavTopMobile__userMenu--logo" />
+                  <AccountLogo className="NavTopMobile__logo" />
                   Compte
                 </Link>
                 <Link
@@ -222,7 +236,7 @@ const NavTopMobile = (props) => {
                   to="/account/settings"
                   onClick={() => handleNavClose()}
                 >
-                  <SettingsLogo className="NavTopMobile__userMenu--logo" />
+                  <SettingsLogo className="NavTopMobile__logo" />
                   Paramètres
                 </Link>
                 <Link
@@ -230,7 +244,7 @@ const NavTopMobile = (props) => {
                   to="/help"
                   onClick={() => handleNavClose()}
                 >
-                  <HelpLogo className="NavTopMobile__userMenu--logo" />
+                  <HelpLogo className="NavTopMobile__logo" />
                   Aide
                 </Link>
                 <Link
@@ -241,7 +255,7 @@ const NavTopMobile = (props) => {
                     dispatch(logoutAction());
                   }}
                 >
-                  <LogOutLogo className="NavTopMobile__userMenu--logo" />
+                  <LogOutLogo className="NavTopMobile__logo" />
                   Deconnexion
                 </Link>
               </div>
@@ -249,7 +263,7 @@ const NavTopMobile = (props) => {
           ) : (
             <Link
               className="NavTopMobile__linkConnexion"
-              to="/login"
+              to="/connexion/login"
               onClick={() => handleNavClose()}
             >
               <CustomButton color="dark">Connexion / Inscription</CustomButton>

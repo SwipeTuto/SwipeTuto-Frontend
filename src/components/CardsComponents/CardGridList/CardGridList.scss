@@ -3,8 +3,8 @@
 .CardGridList {
   width: 100%;
   padding: $grid-component-padding;
-  margin-top: 2rem;
-  position: relative;
+  // margin-top: 2rem;
+  // position: relative;
 
   &__wrapper {
     &--small {
@@ -12,7 +12,7 @@
       grid-auto-rows: max-content;
       margin: 0 auto;
       display: grid;
-      grid-gap: 2.5rem;
+      grid-gap: 1rem;
       justify-content: center;
     }
 
@@ -21,7 +21,7 @@
       grid-auto-rows: max-content;
       margin: 0 auto;
       display: grid;
-      grid-gap: 2.5rem;
+      grid-gap: 1rem;
       justify-content: center;
     }
   }
@@ -33,7 +33,7 @@
 }
 @media screen and (max-width: $bp-tablet) {
   .CardGridList {
-    padding: 0 3rem;
+    padding: 0 1rem;
 
     &__wrapper {
       &--small {
@@ -52,8 +52,6 @@
 
 @media screen and (max-width: $bp-smallest) {
   .CardGridList {
-    padding: 0 3rem;
-
     &__wrapper {
       &--small {
         grid-template-columns: repeat(2, 1fr);

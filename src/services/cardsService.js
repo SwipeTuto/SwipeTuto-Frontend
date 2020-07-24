@@ -12,9 +12,25 @@ export const getCards = () => {
     },
   }
 
-  return axios.get(`${baseURL}card/`, config)
+  return axios.get(`${baseURL}card/list`, config)
     .then(rep => {
+      return rep
+    })
+    .catch(function (err) {
+      return err
+    })
+}
 
+
+export const getCardById = cardId => {
+  var config = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  }
+
+  return axios.get(`${baseURL}card/list/${cardId}`, config)
+    .then(rep => {
       return rep
     })
     .catch(function (err) {
@@ -44,18 +60,26 @@ export const getCardAfterfilter = (search) => {
     })
 }
 
-export const getCardsByUser = username => {
+export const getCardsByUser = userid => {
   var config = {
     headers: {
       'Content-Type': 'application/json'
     }
   }
   return axios
-    .get(`${baseURL}card/user/${username}/`, config)
+    .get(`${baseURL}card/user/${userid}/`, config)
     .then(rep => {
       return rep
     })
 }
+
+
+
+
+
+
+
+
 
 export const getOtherPageCard = (linkToFetch) => {
   var config = {

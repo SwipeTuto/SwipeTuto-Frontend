@@ -1,6 +1,9 @@
 @import "../../../variables.scss";
 
 .UserPage {
+  width: 100%;
+  min-height: 20rem;
+
   & > div:not(:last-child) {
     margin-bottom: 2rem;
   }
@@ -12,5 +15,12 @@
       gap: 2rem;
       position: relative;
     }
+  }
+
+  &__nocards {
+    grid-column: 1/-1;
+    // text-align: center;
+    margin: 3rem auto;
+    font-size: 2rem;
   }
 }

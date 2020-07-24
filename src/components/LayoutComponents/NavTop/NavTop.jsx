@@ -3,19 +3,22 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink, Link, withRouter } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import { initialSearchState } from "../../../helper/index";
 import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg";
 import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
 import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
 import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
 import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
+import SwipeTutoSmallLogo from "../../../assets/logos/logo-small-reduced.png";
+import SwipeTutoSmallFull from "../../../assets/logos/logo-full-reduced.png";
 
 import { topicArray } from "../../../helper/index";
 
 import CustomButton from "../CustomButton/CustomButton";
 import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 
-import { getCardsAction } from "../../../redux/cards/cards-actions";
+import { getCardsAction } from "../../../redux/filter/filter-actions";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import {
   selectSearchCategory,
@@ -38,8 +41,8 @@ import SearchForm from "../SearchForm/SearchForm";
 
 import "./NavTop.scss";
 
-import { urlParams } from "../../../helper/index"
-import { test2 } from "../../../services/cardsService"
+import { urlParams } from "../../../helper/index";
+import { test2 } from "../../../services/cardsService";
 
 const NavTop = (props) => {
   const dispatch = useDispatch();
@@ -56,20 +59,19 @@ const NavTop = (props) => {
   const [redirection, setRedirection] = useState(false);
   const [newTopic, setNewTopic] = useState("");
 
-
   useEffect(() => {
     setRedirection(true);
     setRedirection(false);
   }, [searchWords, searchTopic, searchOrder, searchCategory]);
 
   const topicHandleClick = async (e) => {
-    // dispatch(getCardAfterfilterAction(e.target.name, searchCategory, search));
-    dispatch(setCurrentSearch("searchTopic", e.target.name));
+    const topicName = e.target.name ? e.target.name : null;
+    dispatch(setCurrentSearch("searchTopic", topicName));
     dispatch(setCurrentSearch("searchPage", 1));
     dispatch(
       getCardAfterfilterAction({
         ...currentSearch,
-        searchTopic: e.target.name,
+        searchTopic: topicName,
         searchPage: 1,
       })
     );
@@ -77,15 +79,7 @@ const NavTop = (props) => {
 
   const cardsClick = (e) => {
     dispatch(deleteCurrentSearch());
-    dispatch(
-      getCardAfterfilterAction({
-        searchWords: null,
-        searchTopic: null,
-        searchCategory: null,
-        searchOrder: "-created",
-        searchPage: 1,
-      })
-    );
+    dispatch(getCardAfterfilterAction(initialSearchState));
   };
 
   const redirectLink = SearchLinkRedirect();
@@ -95,6 +89,10 @@ const NavTop = (props) => {
       {redirection && <Redirect to={redirectLink} />}
       <div className="NavTop">
         <div className="NavTop__left">
+          <div className="NavTop__swipeTuto">
+            <img src={SwipeTutoSmallLogo} alt="" />
+            {/* <img src={SwipeTutoSmallFull} alt="" /> */}
+          </div>
           <NavLink exact className="NavTop__link" to="/">
             Accueil
           </NavLink>
@@ -102,14 +100,10 @@ const NavTop = (props) => {
           <NavLink className="NavTop__link" to="/ressources">
             Ressources
           </NavLink>
-          <NavLink
-            className="NavTop__link NavTop__link--category"
-            to="/search"
-            onClick={(e) => cardsClick(e)}
-          >
+          <p className="NavTop__link NavTop__link--category">
             Langages
             <DropDownLogo className="NavTop__link--logo" />
-          </NavLink>
+          </p>
           <div className=" NavTop__dropdown NavTop__dropdown--category">
             {topicArray &&
               topicArray.map((rubrique, index) => (
@@ -148,62 +142,72 @@ const NavTop = (props) => {
               >
                 <UserAvatar
                   userImage={
-                    currentUser.profile && currentUser.profile.avatar ? currentUser.profile.avatar : null
+                    currentUser.profile && currentUser.profile.avatar
+                      ? currentUser.profile.avatar
+                      : null
                   }
                   userFirstName={
-                    currentUser.first_name && currentUser.first_name
+                    currentUser &&
+                    currentUser.first_name &&
+                    currentUser.first_name
                   }
-                  userLastName={currentUser.last_name && currentUser.last_name}
+                  userLastName={
+                    currentUser &&
+                    currentUser.last_name &&
+                    currentUser.last_name
+                  }
                 />
               </div>
             </>
           ) : (
-            <Link className="NavTop__linkConnexion" to="/login">
+            <Link className="NavTop__linkConnexion" to="/connexion/login">
               <CustomButton color="dark">Connexion / Inscription</CustomButton>
             </Link>
           )}
         </div>
         {currentUserNav ? (
           <div className="NavTop__userMenu">
-            <p className="NavTop__userMenu--text">Bonjour</p>
-            <p className="NavTop__userMenu--text">{currentUser.username}</p>
-            <p className="NavTop__userMenu--text">{currentUser.email}</p>
-            <span className="horizontal-separation-primary-light"></span>
-            <Link
-              className="NavTop__userMenu--link"
-              to="/account/user"
-              onClick={() => dispatch(toggleUserNav())}
-            >
-              <AccountLogo className="NavTop__userMenu--logo" />
-              Compte
-            </Link>
-            <Link
-              className="NavTop__userMenu--link"
-              to="/account/settings"
-              onClick={() => dispatch(toggleUserNav())}
-            >
-              <SettingsLogo className="NavTop__userMenu--logo" />
-              Paramètres
-            </Link>
-            <Link
-              className="NavTop__userMenu--link"
-              to="/help"
-              onClick={() => dispatch(toggleUserNav())}
-            >
-              <HelpLogo className="NavTop__userMenu--logo" />
-              Aide
-            </Link>
-            <Link
-              onClick={() => {
-                dispatch(logoutAction());
-                dispatch(toggleUserNav());
-              }}
-              className="NavTop__userMenu--link"
-              to="/"
-            >
-              <LogOutLogo className="NavTop__userMenu--logo" />
-              Deconnexion
-            </Link>
+            <div className="NavTop__userMenu--meta">
+              <p className="NavTop__userMenu--text">{currentUser.username}</p>
+              <p className="NavTop__userMenu--text">{currentUser.email}</p>
+            </div>
+            <div className="NavTop__userMenu--links">
+              <Link
+                className="NavTop__userMenu--link"
+                to="/account/user"
+                onClick={() => dispatch(toggleUserNav())}
+              >
+                <AccountLogo className="NavTop__userMenu--logo" />
+                Compte
+              </Link>
+              <Link
+                className="NavTop__userMenu--link"
+                to="/account/settings"
+                onClick={() => dispatch(toggleUserNav())}
+              >
+                <SettingsLogo className="NavTop__userMenu--logo" />
+                Paramètres
+              </Link>
+              <Link
+                className="NavTop__userMenu--link"
+                to="/help"
+                onClick={() => dispatch(toggleUserNav())}
+              >
+                <HelpLogo className="NavTop__userMenu--logo" />
+                Aide
+              </Link>
+              <Link
+                onClick={() => {
+                  dispatch(logoutAction());
+                  dispatch(toggleUserNav());
+                }}
+                className="NavTop__userMenu--link"
+                to="/"
+              >
+                <LogOutLogo className="NavTop__userMenu--logo" />
+                Deconnexion
+              </Link>
+            </div>
           </div>
         ) : null}
       </div>

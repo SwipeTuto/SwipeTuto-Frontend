@@ -14,16 +14,23 @@ export const urlParams = url => {
 
   var queryString = url.search ? url.search.split('?')[1] : window.location.search;
   const urlParams = new URLSearchParams(queryString);
- 
+
   var topic = urlParams.get('topic')
   var category = urlParams.get('category')
-  var ordering = urlParams.get('ordering')
+  var ordering = urlParams.get('order')
   var search = urlParams.get('search')
   var page = urlParams.get('page')
+  var card_id = urlParams.get('card_id');
+  var user_id = urlParams.get('user_id');
 
 
-  return [topic, category, ordering, search, page]
+  return [topic, category, ordering, search, page, card_id, user_id]
 }
+
+export const getUrlId = (url, query) => {
+  return url && parseInt(url.split(`${query}=`)[1]);
+}
+
 
 
 // Pour les mots / phrases trop longue, permet de couper. Params : phrase, nombre de caractères max, true/false pour couper les mots
@@ -87,8 +94,9 @@ export const emailRegexErrorMessage = "Votre email n'est pas dans un format vali
 export const usernameRegex = RegExp(/^[a-zA-Z0-9_-]{3,16}$/); // lettres et chiffres et _ ou - entre 3 et 16 caractères
 export const usernameRegexErrorMessage = "Votre Pseudo doit faire entre 3 et 16 caractères. Il peut contenir des chiffres et des lettres mais aucun caractère spécial excepté '-' et '_'.";
 
-export const nameRegex = RegExp(/^[A-Za-zÀ-ÿ]{2,16}$/); // lettres et chiffres et _ ou - entre 3 et 16 caractères
-export const nameRegexErrorMessage = "Votre Nom et Prénom ne doivent contenir que des lettres.";
+export const nameRegex = RegExp(/^[A-Za-zÀ-ÿ]{2,16}$/); // lettres entre 3 et 16 caractères
+export const firstnameRegexErrorMessage = "Votre Prénom ne doivent contenir que des lettres.";
+export const lastnameRegexErrorMessage = "Votre Nom ne doivent contenir que des lettres.";
 
 export const urlRegex = RegExp(/[https:\/\/www.a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/);
 // export const urlRegex = RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/);
@@ -97,16 +105,18 @@ export const urlRegexErrorMessage = "L'URL n'est pas dans un format valide. Merc
 export const strongPasswordRegex = RegExp(/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/); //1 lowercase, 1 uppercase, 1 number, 8 caractères mini
 export const passwordRegexErrorMessage = "Le mot de passe doit contenir au moins 8 caratcères, dont une lettre minuscule, une lettre majuscule et un nombre.";
 const passwordConfirmMessage = "Le mot de passe ne correspond pas à celui ajouté précédemment."
-const descriptionErrorMessage = "Entrez une description valide."
+
+export const descriptionRegex = RegExp(/(.*?) {0,250}$/); // lettres entre 0 et 250 caractères
+const descriptionErrorMessage = "Entrez une description valide, entre 0 et 250 caractères."
 
 export const errorMessageToDisplay = (name) => {
   switch (name) {
     case "username":
       return usernameRegexErrorMessage;
-    case "firstname":
-      return nameRegexErrorMessage;
-    case "lastname":
-      return nameRegexErrorMessage;
+    case "first_name":
+      return firstnameRegexErrorMessage;
+    case "last_name":
+      return lastnameRegexErrorMessage;
     case "password":
       return passwordRegexErrorMessage;
     case "passwordConfirm":
@@ -232,3 +242,35 @@ export const topicArray = [
     logo: SassLogo,
   },
 ];
+
+export const orderArray = [
+  {
+    queryName: "-created",
+    name: "Nouveau",
+  },
+  {
+    queryName: "-update",
+    name: "Modifié",
+  },
+  {
+    queryName: "-like",
+    name: "Populaire",
+  }
+]
+
+export const getNameFromQueryName = (array, queryName) => {
+  if (queryName === '' || undefined || null) {
+    return array.filter(item => item.queryName === null)[0].name
+  } else {
+    return array.filter(item => item.queryName === queryName)[0].name
+  }
+}
+
+export const initialSearchState = {
+  searchWords: null,
+  searchTopic: null,
+  searchCategory: null,
+  searchOrder: "-created",
+  searchPage: 1,
+}
+

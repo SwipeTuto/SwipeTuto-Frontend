@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { initialSearchState } from "../../../helper/index";
 import {
   selectSearchCategory,
   selectSearchTopic,
@@ -64,15 +65,7 @@ const SearchForm = () => {
     setSearchInput("");
     // dispatch(deleteCurrentSearch("searchWords"));
     dispatch(deleteCurrentSearch());
-    dispatch(
-      getCardAfterfilterAction({
-        searchWords: null,
-        searchTopic: null,
-        searchCategory: null,
-        searchOrder: "-created",
-        searchPage: 1,
-      })
-    );
+    dispatch(getCardAfterfilterAction(initialSearchState));
     setRedirection(true);
   };
 
@@ -82,9 +75,6 @@ const SearchForm = () => {
     <>
       {redirection && <Redirect to={redirectLink} />}
       <form className="SearchForm" onSubmit={(e) => handleSubmit(e)}>
-        <button type="submit" className="SearchForm__button">
-          <SearchLogo className="SearchForm__button--logo" />
-        </button>
         <div className="SearchForm__search">
           <input
             className="SearchForm__search--input"
@@ -95,13 +85,20 @@ const SearchForm = () => {
             onChange={(e) => handleChange(e)}
             value={searchInput || ""}
           />
-          {searchInput && (
+          {searchWords ? (
             <div
-              className="SearchForm__search--delete"
+              className="SearchForm__button"
               onClick={() => handleSearchDelete()}
             >
-              <CloseLogo className="delete-logo" pointerEvents="none" />
+              <CloseLogo
+                className="SearchForm__button--logo"
+                pointerEvents="none"
+              />
             </div>
+          ) : (
+            <button type="submit" className="SearchForm__button">
+              <SearchLogo className="SearchForm__button--logo" />
+            </button>
           )}
         </div>
       </form>

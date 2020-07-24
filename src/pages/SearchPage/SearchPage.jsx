@@ -6,9 +6,10 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
 import FiltersBar from "../../components/LayoutComponents/FiltersBar/FiltersBar";
+import FiltersBarMobile from "../../components/LayoutComponents/FiltersBar/FiltersBarMobile";
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
 import CurrentSearchWords from "../../components/CurrentSearchWords/CurrentSearchWords";
-import { selectIsLoaded } from "../../redux/cards/cards-selectors";
+import { selectIsLoaded } from "../../redux/layout/layout-selectors";
 import {
   selectTotalNumberOfResults,
   selectSearchPage,
@@ -24,11 +25,12 @@ import {
   getCardAfterfilterAction,
   setCurrentSearch,
 } from "../../redux/filter/filter-actions";
-import { getCardsLoading } from "../../redux/cards/cards-actions";
+import { setLoading } from "../../redux/cards/cards-actions";
 import Pagination from "../../components/LayoutComponents/Pagination/Pagination";
 import { setCurrentCardGridPage } from "../../redux/filter/filter-actions";
 
 import "./SearchPage.scss";
+import { closeFilterMobileMenu } from "../../redux/layout/layout-actions";
 
 // Récupérer le handleClick sur les display large ou petit des grids et fixer à big ou small et passer ça dans CardGridList
 
@@ -42,9 +44,20 @@ const SearchPage = (props) => {
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(0);
   const totalNumberOfCards = useSelector(selectTotalNumberOfResults);
   const [topic, category, ordering, search, page] = urlParams(props.location);
+  const currentSearchPageNumber = useSelector(selectSearchPage);
+  const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
+  const getRealNumber = (results) => {
+    if (isNaN(results)) {
+      return 0;
+    } else {
+      return results;
+    }
+  };
+
+  const totalNumberOfCardsSearched = getRealNumber(totalNumberOfResults);
 
   // A CHANGER EN FONCTION DU BACK :
-  const numberOfItemByPage = 16;
+  const numberOfItemByPage = 24;
   const currentSearchPage = useSelector(selectSearchPage);
 
   const handleClickSize = (e) => {
@@ -87,7 +100,7 @@ const SearchPage = (props) => {
         searchPage: totalNumberOfPages,
       })
     );
-    dispatch(setCurrentSearch("searchPage", totalNumberOfPages));
+    dispatch(setCurrentSearch("searchPage", parseInt(totalNumberOfPages)));
     setRedirection(true);
   };
   const goToPreviousPage = () => {
@@ -97,7 +110,7 @@ const SearchPage = (props) => {
         searchPage: currentSearchPage - 1,
       })
     );
-    dispatch(setCurrentSearch("searchPage", currentSearchPage - 1));
+    dispatch(setCurrentSearch("searchPage", parseInt(currentSearchPage - 1)));
     setRedirection(true);
   };
   const goToNextPage = () => {
@@ -107,7 +120,7 @@ const SearchPage = (props) => {
         searchPage: currentSearchPage + 1,
       })
     );
-    dispatch(setCurrentSearch("searchPage", currentSearchPage + 1));
+    dispatch(setCurrentSearch("searchPage", parseInt(currentSearchPage + 1)));
     setRedirection(true);
   };
 
@@ -116,9 +129,10 @@ const SearchPage = (props) => {
     if (window.scrollY) {
       window.scroll(0, 0);
     }
+    dispatch(closeFilterMobileMenu());
 
     setTotalNumberOfPages(Math.ceil(totalNumberOfCards / numberOfItemByPage));
-  }, [totalNumberOfCards, currentSearchPage]);
+  }, [totalNumberOfCards, currentSearch]);
 
   const redirectLink = SearchLinkRedirect();
 
@@ -128,7 +142,14 @@ const SearchPage = (props) => {
       <div className="SearchPage">
         <div className="SearchPage__wrapper">
           <CurrentSearchWords />
+          <div className="SearchPage__filtersBarMobile">
+            <p className="SearchPage__searchResults">
+              {totalNumberOfCardsSearched} Résultats - Page{" "}
+              {currentSearchPageNumber}
+            </p>
+          </div>
           <FiltersBar handleClickSize={handleClickSize} />
+
           <CardGridList cardsSize={gridSize} />
           {isLoaded && totalNumberOfCards && totalNumberOfCards !== 0 ? (
             <Pagination

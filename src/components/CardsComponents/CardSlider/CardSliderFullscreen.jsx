@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectClickedCardSlides } from "../../../redux/cards/cards-selectors";
+import { selectClickedCardSlides } from "../../../redux/filter/filter-selectors";
 import { selectFullscreen } from "../../../redux/layout/layout-selectors";
 import { closeFullscreen } from "../../../redux/layout/layout-actions";
 
@@ -21,11 +21,17 @@ const CardSliderFullscreen = () => {
   const [imageWidth, setImageWidth] = useState(0);
 
   useEffect(() => {
-    document.querySelector(".CardSliderLargeFullscreen").requestFullscreen();
+    // document.querySelector(".CardSliderLargeFullscreen").requestFullscreen();
     setActiveIndex(0);
     const slideForWidth = window.screen.height;
     setImageWidth(slideForWidth);
   }, [isFullScreen]);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.keyCode && e.keyCode === 27) {
+      dispatch(closeFullscreen());
+    }
+  });
 
   const goToPrevSlide = (e) => {
     document

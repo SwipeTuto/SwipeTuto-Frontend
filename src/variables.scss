@@ -17,101 +17,141 @@
 // $black: #000000;
 
 // TESTS PALETTE
-$primary-dark: #270788ff;
-$primary-medium: #683af6ff;
-$primary-light: #9777f8;
-$blue: #8aebffff;
-$logo-blue: #3fc1c9;
-$blue-dark: #0099ff;
-$yellow: #ffc154ff;
-$yellow-dark: #f59b00;
-$pink: #e96f91ff;
-$pink-dark: #f64879;
-$grey-light: #f8f8f8;
-$grey-medium: #f1f1f1;
-$grey-dark: #bdbdbd;
+// $primary-dark: #270788ff;
+// $primary-medium: #683af6ff;
+// $primary-light: #9777f8;
+// $blue: #8aebffff;
+// $logo-blue: #3fc1c9;
+// $blue-dark: #0099ff;
+// $yellow: #ffc154ff;
+// $yellow-dark: #f59b00;
+// $pink: #e96f91ff;
+// $pink-dark: #f64879;
+// $grey-light: #f8f8f8;
+// $grey-medium: #f1f1f1;
+// $grey-dark: #bdbdbd;
+// $white: #ffffffff;
+// $black: #000000;
+
+// TESTS WEBDESIGN
+$blue-swipetuto: #00e7fd;
+$secondary-dark: #edb603ff;
+$secondary-light: #fed523ff;
+$primary-light: #ad0cc2;
+$primary-dark: #280849;
+$black: #000000ff;
 $white: #ffffffff;
-$black: #000000;
+$grey: #f1f1f1;
+$grey-dark: #bdbdbd;
 
 $box-radius: 5px;
+$box-padding: 0.8rem 1.2rem;
 $button-radius: 3rem;
 
-$button-shadow: 0 2px 3px $grey-dark;
-$card-shadow: 0 2px 3px $grey-dark;
-$card-shadow-2: 0 0px 8px rgba($grey-dark, 0.4);
+$navtop-height: 5rem;
+$navtop-mobile-height: 4rem;
 
-$inner-component-padding: 10rem 17vw;
-$grid-component-padding: 3rem 17vw;
-$inner-component-padding-tablet: 5rem 8vw;
-$grid-component-padding-tablet: 3rem 8vw;
-$inner-component-padding-phone: 4rem 2vw;
-$grid-component-padding-phone: 4rem 2vw;
+$button-shadow: 0 2px 3px $grey;
+$card-shadow: 0 2px 3px $grey;
+$card-shadow-2: 0 0px 8px rgba($grey, 0.4);
+
+$inner-component-padding: 0 14vw;
+$grid-component-padding: 0 14vw;
+$inner-component-padding-tablet: 0 8vw;
+$grid-component-padding-tablet: 0 8vw;
+$inner-component-padding-phone: 0 1rem;
+$grid-component-padding-phone: 0 1rem;
 
 // Breakpoints
+$bp-big: 1300px;
 $bp-tablet: 960px;
 $bp-phone: 680px;
 $bp-small-phone: 540px;
 $bp-smallest: 360px;
 
+// Fonts
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Nunito&display=swap");
+$text-font: "Nunito", sans-serif;
+$title-font: "Montserrat", sans-serif;
+
 @mixin input-style {
-  background: $grey-light;
-  border: 1px solid $grey-medium;
-  border-radius: $button-radius;
-}
-
-@mixin big-tag-style {
-  padding: 0.4rem 1.4rem;
-
-  transform: skew(-5deg);
-  color: white;
-  font-size: 1.2rem;
-  box-shadow: none;
-  cursor: pointer;
+  background: $grey;
+  border: 1px solid $grey;
+  font-size: inherit;
+  font-family: inherit;
+  padding: $box-padding;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: all 0.2s ease;
 }
 
-@mixin small-tag-style {
-  padding: 0.2rem 0.7rem;
-  background-image: linear-gradient(120deg, $grey-light 75%, $grey-medium 100%);
-  font-size: 0.8rem;
-  box-shadow: none;
+@mixin button-style {
+  padding: $box-padding;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: all 0.2s ease;
+  color: $white;
+  background-color: $secondary-dark;
+
+  &:hover {
+    background-color: $secondary-light;
+  }
 }
 
-@mixin tag-hover-style {
-  transform: translateY(-2px);
-  box-shadow: $button-shadow;
+@mixin section-padding {
+  padding-top: 15rem;
+  padding-bottom: 15rem;
+}
+@mixin section-big-padding {
+  padding-top: 25rem;
+  padding-bottom: 25rem;
+}
+@mixin section-small-padding {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
-@mixin light-underline {
-  background-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent 70%,
-    lighten($primary-light, 22%) 70%,
-    lighten($primary-light, 22%) 100%
-  );
+@mixin logo-size {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+@mixin big-logo-size {
+  height: 3rem;
+  width: 3rem;
 }
 
-@mixin yellow-underline {
-  background-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent 70%,
-    lighten($yellow, 22%) 70%,
-    lighten($yellow, 22%) 100%
-  );
+// @mixin button-active-style {
+//   padding: $box-padding;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   transition: all 0.2s ease;
+//   box-shadow: 0 2px 3px $grey;
+//   color: $white;
+//   background-color: $secondary-light;
+// }
+
+@mixin nav-style {
+  padding: $box-padding;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+  &:hover {
+    color: $primary-light;
+  }
 }
 
-@mixin medium-underline {
-  background-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent 70%,
-    $primary-medium 70%,
-    $primary-medium 100%
-  );
+@mixin nav-active-style {
+  padding: $box-padding;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+  color: $primary-light;
 }
 
 .horizontal-separation {
@@ -120,11 +160,7 @@ $bp-smallest: 360px;
     height: 1px;
     background-color: $primary-light;
   }
-  &-primary-medium {
-    width: 60%;
-    height: 1px;
-    background-color: $primary-medium;
-  }
+
   &-primary-dark {
     width: 60%;
     height: 1px;

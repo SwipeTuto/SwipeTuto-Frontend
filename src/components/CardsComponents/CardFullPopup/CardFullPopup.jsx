@@ -46,6 +46,7 @@ import {
   selectOtherCardsByAuthor,
 } from "../../../redux/filter/filter-selectors";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
+import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
 // handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
@@ -72,7 +73,7 @@ const CardFullPopup = (props) => {
 
   // scroll reset
   useEffect(() => {
-    if (clickedCard) {
+    if (clickedCard && clickedCard.user && clickedCard.user.id) {
       dispatch(getOtherCardsByAuthorNameAction(clickedCard.user.id));
     }
     if (popupShown && document.querySelector(".CardFullPopup.active")) {
@@ -158,7 +159,10 @@ const CardFullPopup = (props) => {
         >
           <div className="CardFullPopup__header">
             <div className="CardFullPopup__user">
-              <UserAvatar
+              <UserNameAndAvatar
+                user={clickedCard && clickedCard.user && clickedCard.user}
+              />
+              {/* <UserAvatar
                 userImage={
                   clickedCard &&
                   clickedCard.user &&
@@ -183,7 +187,7 @@ const CardFullPopup = (props) => {
                   clickedCard.user &&
                   clickedCard.user.username &&
                   clickedCard.user.username}
-              </p>
+              </p> */}
             </div>
 
             <div className="CardFullPopup__action-button">
@@ -236,7 +240,11 @@ const CardFullPopup = (props) => {
             <div className="CardFullPopup__meta--other-infos">
               <div className="CardFullPopup__meta--published-date">
                 <div className="CardFullPopup__meta--category-stamp">
-                  {clickedCard && renameCategory(clickedCard.categorie[0].name)}
+                  {clickedCard &&
+                    clickedCard.categorie &&
+                    clickedCard.categorie[0] &&
+                    clickedCard.categorie[0].name &&
+                    renameCategory(clickedCard.categorie[0].name)}
                 </div>
                 <p>Publié le :</p>
                 <p>{clickedCardDate}</p>

@@ -83,11 +83,15 @@
       align-items: center;
     }
 
-    .user_avatar {
-      width: 1.5rem;
-      height: 1.5rem;
-      font-size: 0.6rem;
-      margin-right: 0.6rem;
+    .UserNameAndAvatar {
+      display: flex;
+
+      &__avatar {
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 0.6rem;
+        margin-right: 0.6rem;
+      }
     }
   }
 }

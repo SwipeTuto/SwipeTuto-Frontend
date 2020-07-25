@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../CustomButton/CustomButton";
 import { registerAction } from "../../../redux/user/user-actions";
 import { loginGoogle, loginGit } from "../../../services/userService";
@@ -11,6 +11,7 @@ import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google
 import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
 
 import "./Login.scss";
+import { selectUserErrors } from "../../../redux/user/user-selectors";
 
 // Props history, location, match, depuis react router dom
 const Register = (props) => {
@@ -19,6 +20,7 @@ const Register = (props) => {
   const [submitOk, setSubmitOk] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const userErrors = useSelector(selectUserErrors);
 
   // scroll reset
   useEffect(() => {
@@ -95,6 +97,11 @@ const Register = (props) => {
           Git
         </CustomButton>
       </div>
+      <p className="login__errors">
+        {userErrors &&
+          userErrors !== 400 &&
+          "Une erreur est survenue. Si l'erreur persiste, merci de nous le signaler."}
+      </p>
       <form className="signup__form">
         <label htmlFor="nom" className="signup__form--label">
           Pseudo :

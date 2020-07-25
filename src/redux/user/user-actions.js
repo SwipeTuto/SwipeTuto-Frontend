@@ -1,8 +1,12 @@
 import { UserActionTypes } from './user-types'
-import { loginManuel, logout, register, getUserById } from '../../services/userService'
+import { loginManuel, logout, register, getUserById, updateUserInfos } from '../../services/userService'
 import history from "../../helper/history"
 import { getCardById } from '../../services/cardsService';
 import { setLoading, setLoaded } from '../layout/layout-actions';
+
+export const deleteUserErrors = () => ({
+  type: UserActionTypes.DELETE_USER_ERRORS,
+});
 
 export const setCurrentUser = (user) => ({
   type: UserActionTypes.SET_CURRENT_USER,
@@ -13,11 +17,13 @@ export const loginAction = (username, password) => {
   return dispatch => {
     return loginManuel(username, password)
       .then(user => {
+        dispatch(deleteUserErrors())
         history.push('/', history.location)
         history.go()
       })
       .catch(err => {
-        dispatch(loginErrors(err.response))
+        dispatch(loginErrors(err.response && err.response.status && err.response.status))
+        localStorage.removeItem('user')
       })
   }
 }
@@ -89,14 +95,15 @@ const getClickedUserError = error => ({
 
 
 export const getUserByIdAction = id => {
-  console.log('OK', id)
+
   return dispatch => {
-    console.log("OK2")
+
     dispatch(setLoading());
     getUserById(id).then(rep => {
       dispatch(setClickedUser(rep.data))
       console.log(rep.data)
       dispatch(setLoaded())
+      dispatch(deleteUserErrors())
       return rep.data
     }).catch(err => {
       dispatch(getClickedUserError(err.message))
@@ -105,3 +112,35 @@ export const getUserByIdAction = id => {
     })
   }
 }
+
+
+export const updateUserInfosAction = userInfos => {
+  // console.log(userInfos)
+  return dispatch => {
+    // dispatch(setLoading());
+    // console.log('update user action')
+    return (
+      updateUserInfos(userInfos)
+        .then(rep => {
+          console.log(rep)
+          updateUserInfosSuccess(rep)
+          dispatch(setLoaded())
+          return rep
+        }).catch(err => {
+          dispatch(updateUserInfosError(err.message))
+          dispatch(setLoaded())
+          return err
+        })
+    )
+
+  }
+}
+
+export const updateUserInfosError = error => ({
+  type: UserActionTypes.UPDATE_USER_INFOS_FAILURE,
+  payload: error
+})
+export const updateUserInfosSuccess = userInfos => ({
+  type: UserActionTypes.UPDATE_USER_INFOS_SUCCESS,
+  payload: userInfos
+})

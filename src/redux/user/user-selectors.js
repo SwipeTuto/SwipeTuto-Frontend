@@ -9,3 +9,7 @@ export const selectClickedUser = createSelector(
   [selectUser],
   user => user.clickedUser && user.clickedUser
 );
+export const selectUserErrors = createSelector(
+  [selectUser],
+  user => user.errors && user.errors
+);

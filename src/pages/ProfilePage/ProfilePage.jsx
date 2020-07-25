@@ -10,6 +10,7 @@ import UserPage from "../AccountPages/UserPage/UserPage";
 import {
   selectCurrentUser,
   selectClickedUser,
+  selectUserErrors,
 } from "../../redux/user/user-selectors";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { Link } from "react-router-dom";
@@ -20,6 +21,7 @@ const ProfilePage = ({ match, location }) => {
   const [user, setUser] = useState();
   const currentUser = useSelector(selectCurrentUser);
   const clickedUser = useSelector(selectClickedUser);
+  const userErrors = useSelector(selectUserErrors);
   const [userIsSame, setUserIsSame] = useState(false);
   const dispatch = useDispatch();
   // const [userId, setUserId] = useState();
@@ -46,18 +48,29 @@ const ProfilePage = ({ match, location }) => {
   return (
     <div className="ProfilePage">
       <div className="ProfilePage__wrapper">
-        {userIsSame && (
-          <div className="ProfilePage__link">
-            <Link to="/account/user">
-              <CustomButton color="dark">
-                <AccountLogo />
-                Gérer votre compte
-              </CustomButton>
+        {userErrors ? (
+          <div className="ProfilePage__error">
+            <h1>Le profil de cet utilisateur n'a pas été trouvé.</h1>
+            <Link to="/">
+              <CustomButton>Revenir à l'accueil</CustomButton>
             </Link>
           </div>
+        ) : (
+          <>
+            {userIsSame && (
+              <div className="ProfilePage__link">
+                <Link to="/account/user">
+                  <CustomButton color="dark">
+                    <AccountLogo />
+                    Gérer votre compte
+                  </CustomButton>
+                </Link>
+              </div>
+            )}
+            <UserHeader user={user} userId={userId} />
+            <UserPage user={user} />
+          </>
         )}
-        <UserHeader user={user} userId={userId} />
-        <UserPage user={user} />
       </div>
     </div>
   );

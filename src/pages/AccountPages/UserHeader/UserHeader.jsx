@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import UserAvatar from "../../../components/UserComponents/UserAvatar/UserAvatar";
 import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
@@ -11,7 +11,8 @@ import {
   selectClickedUser,
 } from "../../../redux/user/user-selectors";
 
-const UserHeader = ({ user, userId }) => {
+const UserHeader = ({ user, location }) => {
+  const locationPath = location && location.pathname;
   // user = current pour user actuel
   // user = other pour la visite d'un autre profil
   const currentUser = useSelector(selectCurrentUser);
@@ -28,8 +29,12 @@ const UserHeader = ({ user, userId }) => {
   //   }
   // }, [user, clickedUser, currentUser, userId]);
   useEffect(() => {
-    setUserDatas(clickedUser);
-  }, [clickedUser]);
+    if (locationPath && locationPath.includes("/account") && currentUser) {
+      setUserDatas(currentUser);
+    } else {
+      setUserDatas(clickedUser);
+    }
+  }, [clickedUser, locationPath]);
 
   return (
     <div className="UserHeader">
@@ -97,4 +102,4 @@ const UserHeader = ({ user, userId }) => {
   );
 };
 
-export default UserHeader;
+export default withRouter(UserHeader);

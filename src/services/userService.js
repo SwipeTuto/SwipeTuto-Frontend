@@ -3,6 +3,7 @@ import { authHeader } from '../helper/auth-header';
 import { auth, provider, providerGit } from '../services/firebaseService';
 import { baseURL } from '../services/configService'
 import history from "../helper/history"
+import { updateUserInfosSuccess } from "../redux/user/user-actions";
 
 
 
@@ -15,15 +16,16 @@ export const loginGoogle = () => {
       // getIdToken est une fonction de firebase qui renvoie le token pour identifier lae user dans les services firebase
       return user.getIdToken()
         .then(idToken => {
-          login(idToken).then(rep => {
-            history.push('/', history.location)
-            history.go()
-            return rep
-          })
+          login(idToken)
+            .then(rep => {
+              history.push('/', history.location)
+              history.go()
+              return rep
+            })
         })
-        .catch(function (error) {
-          console.log('errorGoogle', error)
-        });
+      // .catch(function (error) {
+      //   console.log('errorGoogle', error)
+      // });
     })
 }
 
@@ -74,12 +76,12 @@ export const loginManuel = (email, password) => {
 
       return user;
     })
-    .catch(function (err) {
-      localStorage.removeItem('user')
+  // .catch(function (err) {
+  //   localStorage.removeItem('user')
 
-      return err
+  //   return err
 
-    })
+  // })
 }
 
 export const logout = () => {
@@ -114,7 +116,8 @@ export const register = users => {
 
 // update des infos user qui vient du component SettingsPage, sous forme d'objet
 export const updateUserInfos = newUserInfos => {
-
+  console.log('UPDATE USER')
+  console.log(newUserInfos)
   const data = {
     username: newUserInfos.username,
     first_name: newUserInfos.firstname,
@@ -130,9 +133,10 @@ export const updateUserInfos = newUserInfos => {
       'Authorization': authHeader()
     }
   };
-  axios.patch(`${baseURL}me/`, JSON.stringify(data), requestOptions)
+  return axios.patch(`${baseURL}me/`, JSON.stringify(data), requestOptions)
     .then(user => {
       localStorage.setItem('user', JSON.stringify(user.data))
+      return user
     });
 
 }
@@ -144,10 +148,8 @@ export const getUserById = id => {
     headers: { 'Content-Type': 'application/json' },
   }
 
-  return new Promise((resolve, reject) => {
-    axios.get(`${baseURL}user/${id}/`, config).then(rep => {
-      resolve(rep)
-      return rep
-    }).catch((err) => { reject(err); return err })
+  return axios.get(`${baseURL}user/${id}/`, config).then(rep => {
+    return rep
   })
+
 }

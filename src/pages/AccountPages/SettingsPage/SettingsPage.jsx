@@ -6,6 +6,7 @@ import { updateUserInfos } from "../../../services/userService";
 
 import "./SettingsPage.scss";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
+import { updateUserInfosAction } from "../../../redux/user/user-actions";
 
 // créer formData() pour envoyer les infos
 
@@ -25,7 +26,8 @@ const SettingsPage = () => {
 
   useEffect(() => {
     if (sendNewInfos) {
-      updateUserInfos(newUserInfos);
+      console.log(newUserInfos);
+      updateUserInfosAction(newUserInfos);
       setSendNewInfos(false);
     }
     setInputValid({

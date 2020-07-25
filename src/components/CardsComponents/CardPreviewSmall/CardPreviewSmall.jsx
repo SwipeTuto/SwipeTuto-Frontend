@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 
 import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
+import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 
 import { selectClickedCard } from "../../../redux/filter/filter-selectors";
 import { setClickedCard } from "../../../redux/filter/filter-actions";
@@ -52,7 +53,7 @@ const CardPreviewSmall = ({ card }) => {
       </div>
       {/* </Link> */}
       <div className="CardPreviewSmall__details">
-        <Link to={`/profile/user_id=${user.id}`}>
+        {/* <Link to={`/profile/user_id=${user.id}`}>
           <div
             className="CardPreviewSmall__author"
             onClick={() => {
@@ -71,7 +72,8 @@ const CardPreviewSmall = ({ card }) => {
             />
             <p>{user.username}</p>
           </div>
-        </Link>
+        </Link> */}
+        <UserNameAndAvatar user={user} />
       </div>
     </div>
   );

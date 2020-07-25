@@ -6,7 +6,19 @@
 
   &__wrapper {
     background-color: $white;
+    min-height: 70vh;
     padding: 4rem;
+  }
+
+  &__error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+      margin-bottom: 3rem;
+    }
   }
 
   &__link {

@@ -10,8 +10,10 @@ import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.
 import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
 import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
 import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
-import SwipeTutoSmallLogo from "../../../assets/logos/logo-small-reduced.png";
-import SwipeTutoSmallFull from "../../../assets/logos/logo-full-reduced.png";
+// import SwipeTutoSmallLogo from "../../../assets/logos/logo-small-reduced.png";
+// import SwipeTutoSmallFull from "../../../assets/logos/logo-full-reduced.png";
+import SwipeTutoSmallSmall from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
+import SwipeTutoSmallFull from "../../../assets/logos/Logo full border black smaller_350px.png";
 
 import { topicArray } from "../../../helper/index";
 
@@ -90,7 +92,7 @@ const NavTop = (props) => {
       <div className="NavTop">
         <div className="NavTop__left">
           <div className="NavTop__swipeTuto">
-            <img src={SwipeTutoSmallLogo} alt="" />
+            <img src={SwipeTutoSmallSmall} alt="" />
             {/* <img src={SwipeTutoSmallFull} alt="" /> */}
           </div>
           <NavLink exact className="NavTop__link" to="/">

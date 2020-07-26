@@ -135,7 +135,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
     e.preventDefault();
     dispatch(setCurrentSearch("searchWords", newSearch.searchWords));
     dispatch(setCurrentSearch("searchTopic", newSearch.searchTopic));
-    console.log(newSearch.searchTopic);
+    // console.log(newSearch.searchTopic);
     dispatch(setCurrentSearch("searchOrder", newSearch.searchOrder));
     dispatch(setCurrentSearch("searchCategory", newSearch.searchCategory));
     dispatch(setCurrentSearch("searchPage", 1));

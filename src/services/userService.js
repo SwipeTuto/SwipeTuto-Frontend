@@ -3,6 +3,7 @@ import { authHeader } from '../helper/auth-header';
 import { auth, provider, providerGit } from '../services/firebaseService';
 import { baseURL } from '../services/configService'
 import history from "../helper/history"
+import { updateUserInfosSuccess } from "../redux/user/user-actions";
 
 
 
@@ -15,15 +16,14 @@ export const loginGoogle = () => {
       // getIdToken est une fonction de firebase qui renvoie le token pour identifier lae user dans les services firebase
       return user.getIdToken()
         .then(idToken => {
-          login(idToken).then(rep => {
-            history.push('/', history.location)
-            history.go()
-            return rep
-          })
+          login(idToken)
+            .then(rep => {
+              history.push('/', history.location)
+              history.go()
+              return rep
+            })
         })
-        .catch(function (error) {
-          console.log('errorGoogle', error)
-        });
+
     })
 }
 
@@ -48,15 +48,17 @@ export const login = idToken => {
 
   return axios.post(`${baseURL}google-login/`, JSON.stringify(data), config)
     .then(rep => {
-      console.log('rep', rep)
       localStorage.setItem('user', JSON.stringify(rep.data))
+
       return rep
     })
     .catch(function (err) {
       localStorage.removeItem('user')
       localStorage.removeItem('token')
+
       return err
     })
+
 }
 
 
@@ -68,13 +70,15 @@ export const loginManuel = (email, password) => {
   return axios.post(`${baseURL}login/`, { email, password }, config)
     .then(user => {
       localStorage.setItem('user', JSON.stringify(user.data))
+
       return user;
     })
-    .catch(function (err) {
-      localStorage.removeItem('user')
-      return err
+  // .catch(function (err) {
+  //   localStorage.removeItem('user')
 
-    })
+  //   return err
+
+  // })
 }
 
 export const logout = () => {
@@ -109,7 +113,6 @@ export const register = users => {
 
 // update des infos user qui vient du component SettingsPage, sous forme d'objet
 export const updateUserInfos = newUserInfos => {
-  
   const data = {
     username: newUserInfos.username,
     first_name: newUserInfos.firstname,
@@ -123,10 +126,33 @@ export const updateUserInfos = newUserInfos => {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': authHeader()
+<<<<<<< HEAD
     } 
   }; 
    axios.patch(`${baseURL}me/`, JSON.stringify(data), requestOptions)
   .then(user => {
     localStorage.setItem('user', JSON.stringify(user.data))
   });   
+=======
+    }
+  };
+  return axios.patch(`${baseURL}me/`, JSON.stringify(data), requestOptions)
+    .then(user => {
+      localStorage.setItem('user', JSON.stringify(user.data))
+      return user
+    });
+}
+
+
+// Récupérer user par son id
+export const getUserById = id => {
+  var config = {
+    headers: { 'Content-Type': 'application/json' },
+  }
+
+  return axios.get(`${baseURL}user/${id}/`, config).then(rep => {
+    return rep
+  })
+
+>>>>>>> 718e63a8bca8c5d94109438f441fcf7d065b6bc0
 }

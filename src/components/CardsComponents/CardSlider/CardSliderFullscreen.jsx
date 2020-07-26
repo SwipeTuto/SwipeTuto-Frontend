@@ -23,7 +23,9 @@ const CardSliderFullscreen = () => {
   useEffect(() => {
     // document.querySelector(".CardSliderLargeFullscreen").requestFullscreen();
     setActiveIndex(0);
-    const slideForWidth = window.screen.height;
+    const slideForWidth =
+      document.querySelector(".CardSliderLargeFullscreen__slide") &&
+      document.querySelector(".CardSliderLargeFullscreen__slide").width;
     setImageWidth(slideForWidth);
   }, [isFullScreen]);
 

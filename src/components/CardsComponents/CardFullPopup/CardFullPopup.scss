@@ -42,13 +42,18 @@
   &__user {
     display: flex;
     align-items: center;
-    .user_avatar {
-      height: 2.5rem;
-      width: 2.5rem;
-    }
-    &--name {
-      margin-left: 1rem;
-      font-size: 2rem;
+
+    .UserNameAndAvatar {
+      display: flex;
+      align-items: center;
+      &__avatar {
+        height: 3rem;
+        width: 3rem;
+      }
+      &__username {
+        margin-left: 1rem;
+        font-size: 2rem;
+      }
     }
   }
 
@@ -62,6 +67,7 @@
       margin-left: 0.6rem;
       // stroke: $black;
       cursor: pointer;
+      fill: none;
 
       &__liked {
         fill: $primary-light;
@@ -144,6 +150,14 @@
     }
   }
 
+  &__slider {
+    min-height: 500px;
+    min-width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .nav__chevron {
     display: block;
     position: fixed;
@@ -198,6 +212,17 @@
 
   @media screen and (max-width: $bp-phone) {
     .CardFullPopup {
+      &__autres-posts {
+        .autres-posts {
+          &--grid {
+            grid-template-columns: repeat(2, max-content);
+          }
+        }
+      }
+
+      &__title.title.title-1 {
+        font-size: 2.5rem;
+      }
     }
   }
 

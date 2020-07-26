@@ -6,8 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../CustomButton/CustomButton";
 
 import { loginGoogle, loginGit } from "../../../services/userService";
-import { loginAction, setCurrentUser } from "../../../redux/user/user-actions";
-import { selectCurrentUser } from "../../../redux/user/user-selectors";
+import {
+  loginAction,
+  setCurrentUser,
+  deleteUserErrors,
+} from "../../../redux/user/user-actions";
+import {
+  selectCurrentUser,
+  selectUserErrors,
+} from "../../../redux/user/user-selectors";
 import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google.svg";
 import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
 
@@ -21,12 +28,14 @@ const Login = ({ history }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({ username: "", password: "" });
   const [submitOk, setSubmitOk] = useState(false);
+  const userErrors = useSelector(selectUserErrors);
 
   // scroll reset
   useEffect(() => {
     if (window.scrollY) {
       window.scroll(0, 0);
     }
+    dispatch(deleteUserErrors());
   }, []);
 
   const handleClickGoogle = (e) => {
@@ -102,6 +111,13 @@ const Login = ({ history }) => {
           Git
         </CustomButton>
       </div>
+      <p className="login__errors">
+        {userErrors
+          ? userErrors === 400
+            ? "Le compte n'a pas pu être trouvé. Merci de vérifier votre email et votre mot de passe."
+            : "Une erreur est survenue. Si l'erreur persiste, merci de nous le signaler."
+          : ""}
+      </p>
       <form className="login__form">
         <label htmlFor="pseudo" className="login__form--label">
           {" "}

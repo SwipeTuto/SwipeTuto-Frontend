@@ -3,61 +3,76 @@ import { useDispatch, useSelector } from "react-redux";
 
 import UserHeader from "../AccountPages/UserHeader/UserHeader";
 
-import { setOtherUser } from "../../redux/user/user-actions";
+import { getUserByIdAction } from "../../redux/user/user-actions";
 
 import "./ProfilePage.scss";
 import UserPage from "../AccountPages/UserPage/UserPage";
 import {
   selectCurrentUser,
-  selectOtherUser,
+  selectClickedUser,
+  selectUserErrors,
 } from "../../redux/user/user-selectors";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { Link } from "react-router-dom";
 import { ReactComponent as AccountLogo } from "../../assets/images/person.svg";
+import { urlParams, getUrlId } from "../../helper";
 
-const ProfilePage = ({ match }) => {
+const ProfilePage = ({ match, location }) => {
   const [user, setUser] = useState();
   const currentUser = useSelector(selectCurrentUser);
-  const otherUser = useSelector(selectOtherUser);
+  const clickedUser = useSelector(selectClickedUser);
+  const userErrors = useSelector(selectUserErrors);
   const [userIsSame, setUserIsSame] = useState(false);
   const dispatch = useDispatch();
+  // const [userId, setUserId] = useState();
+  const userId = getUrlId(location.pathname, "user_id") || null;
 
   // scroll reset
-  if (window.scrollY) {
-    window.scroll(0, 0);
-  }
+  useEffect(() => {
+    if (window.scrollY) {
+      window.scroll(0, 0);
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
-    if (match.params && match.params.user_id) {
-      const urlUserId = parseInt(match.params.user_id);
-      if (currentUser && urlUserId === currentUser.id) {
-        console.log(urlUserId, currentUser.id);
-        setUser("current");
+    // const urlUserId = match.params.user_id ? match.params.user_id : null;
+    if (userId) {
+      // setUserId(urlUserId);
+      getUserByIdAction(userId);
+      if (currentUser && userId === currentUser.id) {
         setUserIsSame(true);
       } else {
-        setUser("other");
-        dispatch(setOtherUser(urlUserId));
         setUserIsSame(false);
       }
-      // ACTION A FAIRE :
     }
-  }, [match.params]);
+  }, [currentUser, userId]);
 
   return (
     <div className="ProfilePage">
       <div className="ProfilePage__wrapper">
-        {userIsSame && (
-          <div className="ProfilePage__link">
-            <Link to="/account/user">
-              <CustomButton color="dark">
-                <AccountLogo />
-                Gérer votre compte
-              </CustomButton>
+        {userErrors ? (
+          <div className="ProfilePage__error">
+            <h1>Le profil de cet utilisateur n'a pas été trouvé.</h1>
+            <Link to="/">
+              <CustomButton>Revenir à l'accueil</CustomButton>
             </Link>
           </div>
+        ) : (
+          <>
+            {userIsSame && (
+              <div className="ProfilePage__link">
+                <Link to="/account/user">
+                  <CustomButton color="dark">
+                    <AccountLogo />
+                    Gérer votre compte
+                  </CustomButton>
+                </Link>
+              </div>
+            )}
+            <UserHeader userIsSame={userIsSame} />
+            <UserPage userIsSame={userIsSame} />
+          </>
         )}
-        <UserHeader user={user} />
-        <UserPage user={user} />
       </div>
     </div>
   );

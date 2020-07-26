@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { withRouter } from "react-router-dom";
 import {
   selectCurrentUser,
-  selectOtherUser,
+  selectClickedUser,
 } from "../../../redux/user/user-selectors";
 import { selectCardsFetchedCards } from "../../../redux/filter/filter-selectors";
 import { ReactComponent as LogoFacebook } from "../../../assets/images/logo-facebook.svg";
@@ -19,32 +20,37 @@ import CardFullPopup from "../../../components/CardsComponents/CardFullPopup/Car
 
 import "./UserPage.scss";
 import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
-import { getCardsByUserEmailAction } from "../../../redux/filter/filter-actions";
+import { getCardsByUserIdAction } from "../../../redux/filter/filter-actions";
 
-const UserPage = ({ user }) => {
+const UserPage = ({ userIsSame, location }) => {
+  const locationPath = location && location.pathname;
+
   // Voir comment faire requete pour récupérer les cartes du user dans cards
   // user = current pour user actuel
   // user = other pour la visite d'un autre profil
   const isLoaded = useSelector(selectIsLoaded);
   const cards = useSelector(selectCardsFetchedCards);
   const currentUser = useSelector(selectCurrentUser);
-  const otherUser = useSelector(selectOtherUser);
+  const clickedUser = useSelector(selectClickedUser);
   const [userDatas, setUserDatas] = useState();
   const dispatch = useDispatch();
   // dispatch(closeFullscreen());
   // dispatch(closePopupCard(false));
 
   useEffect(() => {
-    if (user === "current" && currentUser && currentUser.email) {
+    if (
+      (userIsSame && currentUser && currentUser.id) ||
+      (locationPath && locationPath.includes("/account") && currentUser)
+    ) {
       setUserDatas(currentUser);
-      dispatch(getCardsByUserEmailAction(currentUser.email));
-    } else if (user === "other" && otherUser && otherUser.email) {
-      setUserDatas(otherUser);
-      dispatch(getCardsByUserEmailAction(otherUser.email));
+      dispatch(getCardsByUserIdAction(currentUser.id));
+    } else if (!userIsSame && clickedUser && clickedUser.id) {
+      setUserDatas(clickedUser);
+      dispatch(getCardsByUserIdAction(clickedUser.id));
     } else {
       setUserDatas(null);
     }
-  }, []);
+  }, [clickedUser, currentUser, dispatch, userIsSame]);
 
   return (
     <div className="UserPage">
@@ -71,4 +77,4 @@ const UserPage = ({ user }) => {
   );
 };
 
-export default UserPage;
+export default withRouter(UserPage);

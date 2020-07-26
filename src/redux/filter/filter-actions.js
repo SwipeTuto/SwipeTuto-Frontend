@@ -3,6 +3,7 @@ import { setLoading, setLoaded } from '../layout/layout-actions'
 
 import { searchBar } from '../../services/searchService'
 import { getCards, CardsActionTypes, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
+import { toggleLike } from "../../services/socialService"
 
 
 
@@ -18,9 +19,7 @@ const getCardAfterfilterFailure = err => ({
 
 export const getCardAfterfilterAction = (search) => {
   return dispatch => {
-    // dispatch(getCardAfterfilteryRequest(search))
     dispatch(setLoading());
-    console.log(search)
     return getCardAfterfilter(search)
       .then(rep => {
         dispatch(getCardAfterfilterSuccess(rep.data))
@@ -79,7 +78,9 @@ export const setSearchOrder = (order) => ({
 })
 
 
-
+export const deleteFilterErrorAction = () => ({
+  type: FilterActionTypes.DELETE_FILTER_ERROR,
+})
 
 
 // Mise des cartes récupérées du back dans le store
@@ -90,15 +91,15 @@ export const setCardsFetchedInStore = (cards) => ({
 
 
 // Fetch des cards à partir du nom de l'auteur
-export const getCardsByUserEmailAction = userEmail => {
+export const getCardsByUserIdAction = userId => {
   return dispatch => {
-    return getCardsByUser(userEmail)
+    return getCardsByUser(userId)
       .then(rep => {
-        dispatch(getCardsByUserEmailSuccess(rep.data))
+        dispatch(getCardsByUserIdSuccess(rep.data))
         return rep
       })
       .catch(err => {
-        dispatch(getCardsByUserEmailFailure(err.response))
+        dispatch(getCardsByUserIdFailure(err.response))
       })
   }
 }
@@ -118,11 +119,11 @@ export const getOtherCardsByAuthorNameAction = username => {
 }
 
 
-const getCardsByUserEmailSuccess = cards => ({
+const getCardsByUserIdSuccess = cards => ({
   type: FilterActionTypes.GET_CARDS_BY_USER_SUCCESS,
   payload: cards
 })
-const getCardsByUserEmailFailure = err => ({
+const getCardsByUserIdFailure = err => ({
   type: FilterActionTypes.GET_CARDS_BY_USER_FAILURE,
   payload: err
 })
@@ -150,7 +151,6 @@ export const getOtherPageAction = (navLink, newPageNumber) => {
       })
       .catch(err => {
         dispatch(getOtherPageFailure(err.response))
-        // console.log(err)
       })
   }
 }
@@ -201,4 +201,32 @@ export const getCardsAction = () => {
 const getCardsErrors = error => ({
   type: FilterActionTypes.GET_ALL_CARDS_FAILURE,
   payload: error
+})
+
+
+
+export const toggleLikeCardAction = (cardId) => {
+  return dispatch => {
+    return toggleLike(cardId)
+      .then(async rep => {
+        dispatch(likeCardActionSuccess())
+        const clickedCardRequest = await dispatch(getCardByIdAction(cardId));
+        const clickedCard = await clickedCardRequest.data
+        await dispatch(setClickedCard(clickedCard))
+        dispatch(setLoaded()) // stop loader
+      })
+      .catch(err => {
+        dispatch(likeCardActionErrors(err.response.status))
+        dispatch(setLoaded()) // stop loader
+      })
+  }
+};
+
+const likeCardActionErrors = error => ({
+  type: FilterActionTypes.TOGGLE_LIKE_CARD_ERROR,
+  payload: error
+})
+
+const likeCardActionSuccess = () => ({
+  type: FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS,
 })

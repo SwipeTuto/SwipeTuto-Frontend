@@ -57,7 +57,7 @@ const SearchPage = (props) => {
   const totalNumberOfCardsSearched = getRealNumber(totalNumberOfResults);
 
   // A CHANGER EN FONCTION DU BACK :
-  const numberOfItemByPage = 24;
+  const numberOfItemByPage = 16;
   const currentSearchPage = useSelector(selectSearchPage);
 
   const handleClickSize = (e) => {
@@ -125,14 +125,17 @@ const SearchPage = (props) => {
   };
 
   useEffect(() => {
-    // scroll reset
-    if (window.scrollY) {
-      window.scroll(0, 0);
-    }
     dispatch(closeFilterMobileMenu());
 
     setTotalNumberOfPages(Math.ceil(totalNumberOfCards / numberOfItemByPage));
   }, [totalNumberOfCards, currentSearch]);
+
+  useEffect(() => {
+    // scroll reset
+    if (window.scrollY) {
+      window.scroll(0, 0);
+    }
+  }, []);
 
   const redirectLink = SearchLinkRedirect();
 

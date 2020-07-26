@@ -26,6 +26,10 @@
   input:focus,
   textarea:focus {
     background-color: $white;
+
+    &::placeholder {
+      visibility: hidden;
+    }
   }
 
   .input__message {

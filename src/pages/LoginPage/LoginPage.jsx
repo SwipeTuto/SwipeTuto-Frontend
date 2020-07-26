@@ -11,8 +11,9 @@ import { selectCurrentUser } from "../../redux/user/user-selectors";
 import loginImage from "../../assets/images/login-image.jpg";
 import { ReactComponent as GoogleLogo } from "../../assets/images/logo-google.svg";
 import { ReactComponent as GithubLogo } from "../../assets/images/logo-github.svg";
-import SwipeTutoSmallFull from "../../assets/logos/logo-full-reduced.png";
-import SwipeTutoSmallLogo from "../../assets/logos/logo-small-reduced.png";
+// import SwipeTutoSmallFull from "../../assets/logos/logo-full-reduced.png";
+// import SwipeTutoSmallLogo from "../../assets/logos/logo-small-reduced.png";
+import SwipeTutoSmallLogo from "../../assets/logos/Logo_small_border_black_smaller_700px.png";
 
 import { checkRegexInput, errorMessageToDisplay } from "../../helper/index";
 import Login from "../../components/LayoutComponents/Login/Login";

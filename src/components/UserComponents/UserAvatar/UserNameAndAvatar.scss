@@ -1,0 +1,15 @@
+@import "../../../variables.scss";
+
+.UserNameAndAvatar {
+  &__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid $grey;
+
+    &--image {
+      height: 100%;
+    }
+  }
+}

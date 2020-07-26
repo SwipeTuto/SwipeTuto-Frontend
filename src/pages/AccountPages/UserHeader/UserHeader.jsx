@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import UserAvatar from "../../../components/UserComponents/UserAvatar/UserAvatar";
 import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
@@ -8,26 +8,33 @@ import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg
 import "./UserHeader.scss";
 import {
   selectCurrentUser,
-  selectOtherUser,
+  selectClickedUser,
 } from "../../../redux/user/user-selectors";
 
-const UserHeader = ({ user }) => {
+const UserHeader = ({ userIsSame, location }) => {
+  const locationPath = location && location.pathname;
   // user = current pour user actuel
   // user = other pour la visite d'un autre profil
   const currentUser = useSelector(selectCurrentUser);
-  const otherUser = useSelector(selectOtherUser);
+  const clickedUser = useSelector(selectClickedUser);
   const [userDatas, setUserDatas] = useState();
 
+  // useEffect(() => {
+  //   if (user === "current") {
+  //     setUserDatas(currentUser);
+  //   } else if (user === "other") {
+  //     setUserDatas(clickedUser);
+  //   } else {
+  //     setUserDatas(null);
+  //   }
+  // }, [user, clickedUser, currentUser, userId]);
   useEffect(() => {
-    if (user === "current") {
+    if (locationPath && locationPath.includes("/account") && currentUser) {
       setUserDatas(currentUser);
-    } else if (user === "other") {
-      setUserDatas(otherUser);
     } else {
-      setUserDatas(null);
+      setUserDatas(clickedUser);
     }
-    console.log(userDatas);
-  }, [user]);
+  }, [clickedUser, locationPath, currentUser]);
 
   return (
     <div className="UserHeader">
@@ -57,7 +64,7 @@ const UserHeader = ({ user }) => {
             {userDatas && userDatas.email && userDatas.email}
           </p>
         </div>
-        {user === "current" ? (
+        {userIsSame ? (
           <div className="UserHeader__mobile">
             <Link className="UserHeader__mobile--link" to="/account/user">
               <AccountLogo />
@@ -95,4 +102,4 @@ const UserHeader = ({ user }) => {
   );
 };
 
-export default UserHeader;
+export default withRouter(UserHeader);

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CustomButton from "../../../components/LayoutComponents/CustomButton/CustomButton";
 import { checkRegexInput, errorMessageToDisplay } from "../../../helper/index";
-import { updateUserInfos } from "../../../services/userService";
+// import { updateUserInfos } from "../../../services/userService";
 
 import "./SettingsPage.scss";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
+import { updateUserInfosAction } from "../../../redux/user/user-actions";
 
 // créer formData() pour envoyer les infos
 
 const SettingsPage = () => {
+  const dispatch = useDispatch();
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const currentUser = useSelector(selectCurrentUser);
@@ -25,7 +27,6 @@ const SettingsPage = () => {
 
   useEffect(() => {
     if (sendNewInfos) {
-      updateUserInfos(newUserInfos);
       setSendNewInfos(false);
     }
     setInputValid({
@@ -103,11 +104,10 @@ const SettingsPage = () => {
 
   const handleSubmitInput = (e) => {
     e.preventDefault();
+    dispatch(updateUserInfosAction(newUserInfos));
     setSendNewInfos(true);
     const { name } = e.target;
-    const currentInput = document.querySelector(
-      `.SettingsPage .settings__form--input[name=${name}]`
-    );
+    const currentInput = document.querySelector(`input[name=${name}]`);
     currentInput.value = "";
   };
 
@@ -117,8 +117,8 @@ const SettingsPage = () => {
       <div className="allForms">
         <form
           className="form__avatar form"
-          name="avatar"
-          onSubmit={(e) => handleSubmitInput(e)}
+          // name="avatar"
+          // onSubmit={(e) => handleSubmitInput(e)}
           onChange={handleAvatarUpdate}
         >
           <label htmlFor="avatar">
@@ -139,6 +139,8 @@ const SettingsPage = () => {
               <p className="input__message" data-inputfor="avatar"></p>
             </div>
             <CustomButton
+              name="avatar"
+              onClick={(e) => handleSubmitInput(e)}
               color="dark"
               disabled={inputValid.avatar === false ? "disabled" : ""}
             >
@@ -148,8 +150,8 @@ const SettingsPage = () => {
         </form>
         <form
           className="form__pseudo form"
-          name="username"
-          onSubmit={(e) => handleSubmitInput(e)}
+          // name="username"
+          // onSubmit={(e) => handleSubmitInput(e)}
         >
           <label htmlFor="username">Changez votre Pseudo :</label>
           <div className="form__bottom">
@@ -160,11 +162,14 @@ const SettingsPage = () => {
                 id="username"
                 name="username"
                 onChange={(e) => handleChange(e)}
+                placeholder={currentUser && currentUser.username}
                 required
               />
               <p className="input__message" data-inputfor="username"></p>
             </div>
             <CustomButton
+              name="username"
+              onClick={(e) => handleSubmitInput(e)}
               color="dark"
               disabled={inputValid.username === false ? "disabled" : ""}
             >
@@ -174,8 +179,8 @@ const SettingsPage = () => {
         </form>
         <form
           className="form__first_name form"
-          name="first_name"
-          onSubmit={(e) => handleSubmitInput(e)}
+          // name="first_name"
+          // onSubmit={(e) => handleSubmitInput(e)}
         >
           <label htmlFor="first_name">Changez votre Prénom :</label>
           <div className="form__bottom">
@@ -186,11 +191,14 @@ const SettingsPage = () => {
                 id="first_name"
                 name="first_name"
                 onChange={(e) => handleChange(e)}
+                placeholder={currentUser && currentUser.first_name}
                 required
               />
               <p className="input__message" data-inputfor="first_name"></p>
             </div>
             <CustomButton
+              name="first_name"
+              onClick={(e) => handleSubmitInput(e)}
               color="dark"
               disabled={inputValid.first_name === false ? "disabled" : ""}
             >
@@ -200,8 +208,8 @@ const SettingsPage = () => {
         </form>
         <form
           className="form__last_name form"
-          name="last_name"
-          onSubmit={(e) => handleSubmitInput(e)}
+          // name="last_name"
+          // onSubmit={(e) => handleSubmitInput(e)}
         >
           <label htmlFor="username">Changez votre Nom :</label>
           <div className="form__bottom">
@@ -212,11 +220,14 @@ const SettingsPage = () => {
                 id="last_name"
                 name="last_name"
                 onChange={(e) => handleChange(e)}
+                placeholder={currentUser && currentUser.last_name}
                 required
               />
               <p className="input__message" data-inputfor="last_name"></p>
             </div>
             <CustomButton
+              name="last_name"
+              onClick={(e) => handleSubmitInput(e)}
               color="dark"
               disabled={inputValid.last_name === false ? "disabled" : ""}
             >
@@ -226,18 +237,23 @@ const SettingsPage = () => {
         </form>
         <form
           className="form__description form"
-          name="description"
-          onSubmit={(e) => handleSubmitInput(e)}
+          // name="description"
+          // onSubmit={(e) => handleSubmitInput(e)}
         >
           <label htmlFor="description">Changez votre description :</label>
           <div className="form__bottom">
             <div className="form__bottom--input">
-              <textarea
+              <input
                 className="settings__form--input invalid-input"
                 type="text"
                 id="description"
                 name="description"
                 onChange={(e) => handleChange(e)}
+                placeholder={
+                  currentUser &&
+                  currentUser.profile &&
+                  currentUser.profile.description
+                }
                 onFocus={() =>
                   setInputValid({ ...inputValid, description: true })
                 }
@@ -245,6 +261,8 @@ const SettingsPage = () => {
               <p className="input__message" data-inputfor="description"></p>
             </div>
             <CustomButton
+              name="description"
+              onClick={(e) => handleSubmitInput(e)}
               color="dark"
               disabled={inputValid.description === false ? "disabled" : ""}
             >

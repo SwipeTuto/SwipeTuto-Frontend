@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { withRouter } from "react-router-dom";
 import {
   selectCurrentUser,
   selectClickedUser,
@@ -21,7 +22,9 @@ import "./UserPage.scss";
 import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
 import { getCardsByUserIdAction } from "../../../redux/filter/filter-actions";
 
-const UserPage = ({ user, userId }) => {
+const UserPage = ({ userIsSame, location }) => {
+  const locationPath = location && location.pathname;
+
   // Voir comment faire requete pour récupérer les cartes du user dans cards
   // user = current pour user actuel
   // user = other pour la visite d'un autre profil
@@ -35,16 +38,19 @@ const UserPage = ({ user, userId }) => {
   // dispatch(closePopupCard(false));
 
   useEffect(() => {
-    if (user === "current" && currentUser && currentUser.id) {
+    if (
+      (userIsSame && currentUser && currentUser.id) ||
+      (locationPath && locationPath.includes("/account") && currentUser)
+    ) {
       setUserDatas(currentUser);
       dispatch(getCardsByUserIdAction(currentUser.id));
-    } else if (user === "other" && clickedUser && clickedUser.id) {
+    } else if (!userIsSame && clickedUser && clickedUser.id) {
       setUserDatas(clickedUser);
       dispatch(getCardsByUserIdAction(clickedUser.id));
     } else {
       setUserDatas(null);
     }
-  }, [userId, clickedUser, currentUser, user, dispatch]);
+  }, [clickedUser, currentUser, dispatch, userIsSame]);
 
   return (
     <div className="UserPage">
@@ -71,4 +77,4 @@ const UserPage = ({ user, userId }) => {
   );
 };
 
-export default UserPage;
+export default withRouter(UserPage);

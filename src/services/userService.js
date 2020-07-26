@@ -23,9 +23,7 @@ export const loginGoogle = () => {
               return rep
             })
         })
-      // .catch(function (error) {
-      //   console.log('errorGoogle', error)
-      // });
+
     })
 }
 
@@ -50,7 +48,6 @@ export const login = idToken => {
 
   return axios.post(`${baseURL}google-login/`, JSON.stringify(data), config)
     .then(rep => {
-      console.log('rep', rep)
       localStorage.setItem('user', JSON.stringify(rep.data))
 
       return rep
@@ -116,8 +113,6 @@ export const register = users => {
 
 // update des infos user qui vient du component SettingsPage, sous forme d'objet
 export const updateUserInfos = newUserInfos => {
-  console.log('UPDATE USER')
-  console.log(newUserInfos)
   const data = {
     username: newUserInfos.username,
     first_name: newUserInfos.firstname,
@@ -138,7 +133,6 @@ export const updateUserInfos = newUserInfos => {
       localStorage.setItem('user', JSON.stringify(user.data))
       return user
     });
-
 }
 
 

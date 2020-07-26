@@ -3,6 +3,7 @@ import { setLoading, setLoaded } from '../layout/layout-actions'
 
 import { searchBar } from '../../services/searchService'
 import { getCards, CardsActionTypes, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
+import { toggleLike } from "../../services/socialService"
 
 
 
@@ -46,13 +47,11 @@ export const getCardByIdAction = cardId => {
     dispatch(setLoading());
     return getCardById(cardId)
       .then(rep => {
-        console.log(rep)
         dispatch(getCardByIdSuccess(rep.data))
         dispatch(setLoaded())
         return rep
       })
       .catch(err => {
-        console.log(err)
         dispatch(getCardByIdFailure(err.response))
         dispatch(setLoaded())
       })
@@ -79,7 +78,9 @@ export const setSearchOrder = (order) => ({
 })
 
 
-
+export const deleteFilterErrorAction = () => ({
+  type: FilterActionTypes.DELETE_FILTER_ERROR,
+})
 
 
 // Mise des cartes récupérées du back dans le store
@@ -150,7 +151,6 @@ export const getOtherPageAction = (navLink, newPageNumber) => {
       })
       .catch(err => {
         dispatch(getOtherPageFailure(err.response))
-        // console.log(err)
       })
   }
 }
@@ -201,4 +201,32 @@ export const getCardsAction = () => {
 const getCardsErrors = error => ({
   type: FilterActionTypes.GET_ALL_CARDS_FAILURE,
   payload: error
+})
+
+
+
+export const toggleLikeCardAction = (cardId) => {
+  return dispatch => {
+    return toggleLike(cardId)
+      .then(async rep => {
+        dispatch(likeCardActionSuccess())
+        const clickedCardRequest = await dispatch(getCardByIdAction(cardId));
+        const clickedCard = await clickedCardRequest.data
+        await dispatch(setClickedCard(clickedCard))
+        dispatch(setLoaded()) // stop loader
+      })
+      .catch(err => {
+        dispatch(likeCardActionErrors(err.response.status))
+        dispatch(setLoaded()) // stop loader
+      })
+  }
+};
+
+const likeCardActionErrors = error => ({
+  type: FilterActionTypes.TOGGLE_LIKE_CARD_ERROR,
+  payload: error
+})
+
+const likeCardActionSuccess = () => ({
+  type: FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS,
 })

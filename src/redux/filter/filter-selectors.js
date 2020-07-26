@@ -73,7 +73,7 @@ export const selectClickedCardSlides = createSelector(
   [selectClickedCardMediaImage],
   media_image => {
     let slidesArray = [];
-    media_image.map(image => slidesArray.push(base + image.image));
+    media_image && media_image.map(image => slidesArray.push(base + image.image));
     return slidesArray;
   }
 )
@@ -87,5 +87,13 @@ export const selectPaginationPrevious = createSelector(
 export const selectPaginationNext = createSelector(
   [selectFilter],
   filter => filter.cardsFetched && filter.cardsFetched.next ? filter.cardsFetched.next : null
+)
 
+export const selectCardLikers = createSelector(
+  [selectClickedCard],
+  card => card && card.likes
+)
+export const selectFilterError = createSelector(
+  [selectFilter],
+  filter => filter && filter.errors
 )

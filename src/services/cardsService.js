@@ -92,11 +92,9 @@ export const getOtherPageCard = (linkToFetch) => {
   return axios
     .get(linkToFetch, config)
     .then((rep) => {
-      console.log(rep);
       return rep;
     })
     .catch(function (err) {
-      console.log(err);
       return err;
     });
 };

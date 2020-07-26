@@ -28,9 +28,11 @@ const ProfilePage = ({ match, location }) => {
   const userId = getUrlId(location.pathname, "user_id") || null;
 
   // scroll reset
-  if (window.scrollY) {
-    window.scroll(0, 0);
-  }
+  useEffect(() => {
+    if (window.scrollY) {
+      window.scroll(0, 0);
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     // const urlUserId = match.params.user_id ? match.params.user_id : null;
@@ -43,7 +45,7 @@ const ProfilePage = ({ match, location }) => {
         setUserIsSame(false);
       }
     }
-  }, []);
+  }, [currentUser, userId]);
 
   return (
     <div className="ProfilePage">
@@ -67,8 +69,8 @@ const ProfilePage = ({ match, location }) => {
                 </Link>
               </div>
             )}
-            <UserHeader user={user} userId={userId} />
-            <UserPage user={user} />
+            <UserHeader userIsSame={userIsSame} />
+            <UserPage userIsSame={userIsSame} />
           </>
         )}
       </div>

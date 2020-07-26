@@ -19,7 +19,6 @@ import "./AccountPages.scss";
 
 const AccountPage = (props) => {
   const currentUser = useSelector(selectCurrentUser);
-  console.log(props);
 
   // scroll reset
   if (window.scrollY) {
@@ -32,7 +31,7 @@ const AccountPage = (props) => {
     <div className="AccountPage">
       <div className="AccountPage__wrapper">
         <UserHeader user="current" />
-        <div className="AccountPage__infos">// USER INFOS</div>
+        {/* <div className="AccountPage__infos">// USER INFOS</div> */}
         <Switch>
           <ProtectedRoute exact path="/account/user" component={UserPage} />
           <ProtectedRoute

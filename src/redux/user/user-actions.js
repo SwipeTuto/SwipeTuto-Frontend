@@ -101,7 +101,6 @@ export const getUserByIdAction = id => {
     dispatch(setLoading());
     getUserById(id).then(rep => {
       dispatch(setClickedUser(rep.data))
-      console.log(rep.data)
       dispatch(setLoaded())
       dispatch(deleteUserErrors())
       return rep.data
@@ -115,19 +114,15 @@ export const getUserByIdAction = id => {
 
 
 export const updateUserInfosAction = userInfos => {
-  // console.log(userInfos)
   return dispatch => {
-    // dispatch(setLoading());
-    // console.log('update user action')
     return (
       updateUserInfos(userInfos)
         .then(rep => {
-          console.log(rep)
-          updateUserInfosSuccess(rep)
+          dispatch(updateUserInfosSuccess(rep.data))
           dispatch(setLoaded())
           return rep
         }).catch(err => {
-          dispatch(updateUserInfosError(err.message))
+          dispatch(updateUserInfosError(err))
           dispatch(setLoaded())
           return err
         })

@@ -6,31 +6,21 @@ const INITIAL_STATE = {
   cardsFetched: "",
   otherCardsByAuthor: "",
   clickedCard: null,
-  errors: '',
+  errors: null,
 };
 
 const FilterReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    //RECHERCHE
-    // case FilterActionTypes.SEARCH_SUCCESS:
-    //   return { ...state, cardsFetched: action.payload, };
-    // case FilterActionTypes.SEARCH_FAILURE:
-    //   return { ...state, errors: action.payload };
 
-    // case FilterActionTypes.GET_CARDS_FILTER_REQUEST:
-    //   return {
-    //     ...state,
-    //     currentSearch: { ...action.payload }
-    //   };
+    case FilterActionTypes.DELETE_FILTER_ERROR:
+      return { ...state, errors: null };
     case FilterActionTypes.GET_CARDS_FILTER_SUCCESS:
-
       return { ...state, cardsFetched: action.payload, };
     case FilterActionTypes.GET_CARDS_FILTER_FAILURE:
       return { ...state, errors: action.payload };
 
     case FilterActionTypes.SET_CURRENT_SEARCH:
-      if ("action payload: dans le reducer", action.payload) {
-        console.log(action.payload)
+      if ("action payload: dans le reducer" && action.payload) {
         return {
           ...state, currentSearch: {
             ...state.currentSearch,
@@ -118,11 +108,11 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       };
 
     case FilterActionTypes.GET_ALL_CARDS_FAILURE:
-      return {
-        ...state,
-        errors: action.payload,
-
-      }
+      return { ...state, errors: action.payload }
+    case FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS:
+      return { ...state, errors: null }
+    case FilterActionTypes.TOGGLE_LIKE_CARD_ERROR:
+      return { ...state, errors: action.payload }
 
     default:
       return state;

@@ -67,6 +67,7 @@
       margin-left: 0.6rem;
       // stroke: $black;
       cursor: pointer;
+      fill: none;
 
       &__liked {
         fill: $primary-light;
@@ -149,6 +150,14 @@
     }
   }
 
+  &__slider {
+    min-height: 500px;
+    min-width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .nav__chevron {
     display: block;
     position: fixed;
@@ -203,6 +212,17 @@
 
   @media screen and (max-width: $bp-phone) {
     .CardFullPopup {
+      &__autres-posts {
+        .autres-posts {
+          &--grid {
+            grid-template-columns: repeat(2, max-content);
+          }
+        }
+      }
+
+      &__title.title.title-1 {
+        font-size: 2.5rem;
+      }
     }
   }
 

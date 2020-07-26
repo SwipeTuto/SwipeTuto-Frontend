@@ -21,6 +21,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentUser: action.payload,
+        errors: null
       };
     case UserActionTypes.UPDATE_USER_INFOS_FAILURE:
       return {
@@ -28,17 +29,17 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errors: action.payload,
       };
     case UserActionTypes.LOGIN_SUCCESS:
-      return { ...state, currentUser: action.payload, };
+      return { ...state, currentUser: action.payload, errors: null };
     case UserActionTypes.LOGIN_FAILURE:
       return { ...state, errors: action.payload, };
     case UserActionTypes.LOGOUT_SUCCESS:
-      return { ...state, currentUser: action.payload, };
+      return { ...state, currentUser: action.payload, errors: null };
     case UserActionTypes.DELETE_USER_ERRORS:
       return { ...state, errors: null, };
 
 
     case UserActionTypes.REGISTER_SUCCESS:
-      return { ...state, currentUser: action.payload };
+      return { ...state, currentUser: action.payload, erros: null };
     case UserActionTypes.REGISTER_FAILURE:
       return { ...state, error: action.payload };
 

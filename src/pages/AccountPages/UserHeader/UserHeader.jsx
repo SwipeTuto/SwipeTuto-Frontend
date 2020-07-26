@@ -11,7 +11,7 @@ import {
   selectClickedUser,
 } from "../../../redux/user/user-selectors";
 
-const UserHeader = ({ user, location }) => {
+const UserHeader = ({ userIsSame, location }) => {
   const locationPath = location && location.pathname;
   // user = current pour user actuel
   // user = other pour la visite d'un autre profil
@@ -34,7 +34,7 @@ const UserHeader = ({ user, location }) => {
     } else {
       setUserDatas(clickedUser);
     }
-  }, [clickedUser, locationPath]);
+  }, [clickedUser, locationPath, currentUser]);
 
   return (
     <div className="UserHeader">
@@ -64,7 +64,7 @@ const UserHeader = ({ user, location }) => {
             {userDatas && userDatas.email && userDatas.email}
           </p>
         </div>
-        {user === "current" ? (
+        {userIsSame ? (
           <div className="UserHeader__mobile">
             <Link className="UserHeader__mobile--link" to="/account/user">
               <AccountLogo />

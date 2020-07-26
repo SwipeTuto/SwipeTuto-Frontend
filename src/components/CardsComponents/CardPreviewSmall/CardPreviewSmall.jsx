@@ -7,7 +7,10 @@ import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 
 import { selectClickedCard } from "../../../redux/filter/filter-selectors";
-import { setClickedCard } from "../../../redux/filter/filter-actions";
+import {
+  setClickedCard,
+  getCardByIdAction,
+} from "../../../redux/filter/filter-actions";
 import { showPopupCard } from "../../../redux/layout/layout-actions";
 import { setType } from "../../../redux/filter/filter-actions";
 
@@ -23,16 +26,21 @@ const CardPreviewSmall = ({ card }) => {
   const dispatch = useDispatch();
   const cardId = card && card.id && card.id;
 
+  const handleClickedCardClick = async () => {
+    dispatch(showPopupCard());
+    const clickedCardRequest = await dispatch(getCardByIdAction(cardId));
+    const clickedCard = await clickedCardRequest.data;
+    await dispatch(setClickedCard(clickedCard));
+
+    await window.history.pushState("", "", `/card_id=${cardId && cardId}`);
+  };
+
   return (
     <div className="CardPreviewSmall" data-slideid="1">
       {/* <Link to={`/search?card_id=${card.id}`}> */}
       <div
         className="CardPreviewSmall__image"
-        onClick={() => {
-          dispatch(setClickedCard(card));
-          dispatch(showPopupCard());
-          window.history.pushState("", "", `/card_id=${cardId && cardId}`);
-        }}
+        onClick={() => handleClickedCardClick()}
       >
         {media_image[0] && media_image[0].image ? (
           <img

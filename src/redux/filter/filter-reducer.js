@@ -113,6 +113,10 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: null }
     case FilterActionTypes.TOGGLE_LIKE_CARD_ERROR:
       return { ...state, errors: action.payload }
+    case FilterActionTypes.ADD_COMMENT_ERROR:
+      return { ...state, errors: action.payload }
+    case FilterActionTypes.ADD_COMMENT_SUCCESS:
+      return { ...state, errors: null }
 
     default:
       return state;

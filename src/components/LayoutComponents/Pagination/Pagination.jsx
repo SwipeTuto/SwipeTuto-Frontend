@@ -10,7 +10,6 @@ import {
   selectSearchPage,
   selectTotalNumberOfResults,
 } from "../../../redux/filter/filter-selectors";
-import { setLoading } from "../../../redux/cards/cards-actions";
 import {
   getOtherPageAction,
   getCardAfterfilterAction,

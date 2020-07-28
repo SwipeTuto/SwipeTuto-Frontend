@@ -58,6 +58,7 @@ import {
 } from "../../../redux/filter/filter-selectors";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
+import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrapper";
 import { getCardById } from "../../../services/cardsService";
 import ConnexionRedirect from "../../LayoutComponents/ConnexionRedirect/ConnexionRedirect";
 
@@ -292,8 +293,7 @@ const CardFullPopup = ({ history }) => {
             </div>
 
             <div className="CardFullPopup__commentaires CardFullPopup__section">
-              <h1 className="title title-1">Commentaires</h1>
-              Liste des commentaires
+              <CommentsWrapper />
             </div>
 
             <div className="CardFullPopup__autres-posts">

@@ -97,3 +97,16 @@ export const selectFilterError = createSelector(
   [selectFilter],
   filter => filter && filter.errors
 )
+
+export const selectClickedCardComments = createSelector(
+  [selectClickedCard],
+  card => card && card.card_comments
+)
+export const selectClickedCardCommentsNumber = createSelector(
+  [selectClickedCard],
+  card => card && card.number_of_comments
+)
+export const selectClickedCardId = createSelector(
+  [selectClickedCard],
+  card => card && card.id
+)

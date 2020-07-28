@@ -4,7 +4,6 @@ import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { getInitials } from "../../../helper/index";
 
 import "./UserAvatar.scss";
-import { CardsActionTypes } from "../../../redux/cards/cards-types";
 
 const UserAvatar = ({ userImage, userFirstName, userLastName }) => {
   return (

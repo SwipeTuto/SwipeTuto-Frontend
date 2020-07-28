@@ -3,7 +3,7 @@ import { setLoading, setLoaded, setImageLoading, setImageLoaded } from '../layou
 
 import { searchBar } from '../../services/searchService'
 import { getCards, CardsActionTypes, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
-import { toggleLike } from "../../services/socialService"
+import { toggleLike, addComment } from "../../services/socialService"
 
 
 
@@ -210,9 +210,6 @@ export const toggleLikeCardAction = (cardId) => {
     return toggleLike(cardId)
       .then(rep => {
         dispatch(likeCardActionSuccess())
-        // const clickedCardRequest = await dispatch(getCardByIdAction(cardId));
-        // const clickedCard = await clickedCardRequest.data
-        // await dispatch(setClickedCard(clickedCard))
         dispatch(setLoaded()) // stop loader
       })
       .catch(err => {
@@ -228,5 +225,30 @@ const likeCardActionErrors = error => ({
 })
 
 const likeCardActionSuccess = () => ({
+  type: FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS,
+})
+
+
+
+export const addCommentAction = (cardId, comment) => {
+  return dispatch => {
+    return addComment(cardId, comment)
+      .then(rep => {
+        dispatch(addCommentSuccess())
+        dispatch(setLoaded()) // stop loader
+      })
+      .catch(err => {
+        dispatch(addCommentErrors(err))
+        dispatch(setLoaded()) // stop loader
+      })
+  }
+};
+
+const addCommentErrors = error => ({
+  type: FilterActionTypes.TOGGLE_LIKE_CARD_ERROR,
+  payload: error
+})
+
+const addCommentSuccess = () => ({
   type: FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS,
 })

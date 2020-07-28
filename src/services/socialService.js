@@ -25,3 +25,20 @@ export const getLikers = (cardId) => {
       return rep
     })
 }
+
+
+
+export const addComment = (cardId, comment) => {
+  var config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  return axios
+    .post(`${baseURL}card/add_comment/${cardId}/`,
+      { "text": comment }
+      , config)
+    .then(rep => {
+      return rep
+    })
+}

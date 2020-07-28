@@ -5,7 +5,6 @@ import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { getInitials } from "../../../helper/index";
 
 import "./UserNameAndAvatar.scss";
-import { CardsActionTypes } from "../../../redux/cards/cards-types";
 import { getUserByIdAction } from "../../../redux/user/user-actions";
 import { base } from "../../../services/configService";
 import { setNoClickedCard } from "../../../redux/filter/filter-actions";

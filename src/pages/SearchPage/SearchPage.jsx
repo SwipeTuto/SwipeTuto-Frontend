@@ -25,7 +25,6 @@ import {
   getCardAfterfilterAction,
   setCurrentSearch,
 } from "../../redux/filter/filter-actions";
-import { setLoading } from "../../redux/cards/cards-actions";
 import Pagination from "../../components/LayoutComponents/Pagination/Pagination";
 import { setCurrentCardGridPage } from "../../redux/filter/filter-actions";
 

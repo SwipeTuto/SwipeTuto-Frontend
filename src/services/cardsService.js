@@ -80,7 +80,6 @@ export const getCardsByUser = userid => {
 
 
 
-
 export const getOtherPageCard = (linkToFetch) => {
   var config = {
     headers: {

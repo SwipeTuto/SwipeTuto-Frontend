@@ -1,0 +1,56 @@
+@import "../../../variables.scss";
+
+.CommentsWrapper {
+  .comments-section {
+    margin: 3rem 0;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+
+    h1.title.title-1 {
+      margin-bottom: 0;
+      margin-right: auto;
+    }
+
+    &--commentsNumber {
+      font-size: 2rem;
+      margin-left: 0.3rem;
+    }
+
+    &--logo {
+      @include big-logo-size;
+    }
+  }
+
+  &__newComment {
+    &--input {
+      width: 100%;
+      resize: none;
+      @include input-style;
+      margin: 1rem 0;
+
+      &:focus {
+        background-color: $white;
+
+        &::placeholder {
+          visibility: hidden;
+        }
+      }
+    }
+
+    .custom-button {
+      margin-left: auto;
+    }
+  }
+
+  &__comment {
+    padding: 2rem 0;
+    border-bottom: 1px solid $grey;
+
+    &:first-child {
+      border-top: 1px solid $grey;
+    }
+  }
+}

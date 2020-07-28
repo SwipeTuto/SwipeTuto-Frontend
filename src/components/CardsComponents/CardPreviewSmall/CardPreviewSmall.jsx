@@ -21,8 +21,11 @@ import "./CardPreviewSmall.scss";
 import { getUserByIdAction } from "../../../redux/user/user-actions";
 import { getUserById } from "../../../services/userService";
 
+import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
+// import { ReactComponent as HeartFilled } from "../../../assets/images/heart.svg";
+
 const CardPreviewSmall = ({ card }) => {
-  const { media_image, user, categorie, name } = card;
+  const { media_image, user, categorie, name, number_of_likes } = card;
   const dispatch = useDispatch();
   const cardId = card && card.id && card.id;
 
@@ -82,6 +85,12 @@ const CardPreviewSmall = ({ card }) => {
           </div>
         </Link> */}
         <UserNameAndAvatar user={user} />
+        <div className="CardPreviewSmall__likes">
+          <HeartFull className="CardPreviewSmall__likes--logo" />
+          <p className="CardPreviewSmall__likes--number">
+            {number_of_likes ? number_of_likes : 0}
+          </p>
+        </div>
       </div>
     </div>
   );

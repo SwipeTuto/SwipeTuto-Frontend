@@ -8,20 +8,33 @@ const INITIAL_STATE = {
   filterMobileMenuOpen: false,
   betaAlert: true,
   isLoaded: false,
+  imageIsLoaded: false,
 };
 
 const layoutReducer = (state = INITIAL_STATE, action) => {
+  const app = document.getElementsByClassName("App")[0];
+  const cardPopupElement = document.getElementsByClassName("CardFullPopup")[0];
+
   switch (action.type) {
     case LayoutActionTypes.SHOW_POPUP_CARD:
-      document.getElementsByClassName("App")[0].style.position = "fixed";
-      document.getElementsByClassName("App")[0].style.overflow = "hidden";
+      cardPopupElement.addEventListener('wheel', (e) => {
+        e.stopPropagation();
+      })
+
+      const scrollYWindow = window.scrollY;
+      app.style.position = 'fixed';
+      app.style.top = `-${scrollYWindow}px`;
+
       return {
         ...state,
         popupShown: true,
       };
     case LayoutActionTypes.CLOSE_POPUP_CARD:
-      document.getElementsByClassName("App")[0].style.position = "static";
-      document.getElementsByClassName("App")[0].style.overflow = "visible";
+      const scrollY = app.style.top;
+      app.style.position = '';
+      app.style.top = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+
       return {
         ...state,
         popupShown: false,
@@ -44,31 +57,31 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         showUserNav: !state.showUserNav,
       };
     case LayoutActionTypes.OPEN_MOBILE_NAV:
-      document.getElementsByClassName("App")[0].style.position = "fixed";
-      document.getElementsByClassName("App")[0].style.overflow = "hidden";
+      app.style.position = "fixed";
+      app.style.overflow = "hidden";
       return {
         ...state,
         mobileNavOpen: true,
         filterMobileMenuOpen: false
       };
     case LayoutActionTypes.CLOSE_MOBILE_NAV:
-      document.getElementsByClassName("App")[0].style.position = "static";
-      document.getElementsByClassName("App")[0].style.overflow = "visible";
+      app.style.position = "static";
+      app.style.overflow = "visible";
       return {
         ...state,
         mobileNavOpen: false,
       };
     case LayoutActionTypes.OPEN_FILTER_MOBILE_MENU:
-      document.getElementsByClassName("App")[0].style.position = "fixed";
-      document.getElementsByClassName("App")[0].style.overflow = "hidden";
+      app.style.position = "fixed";
+      app.style.overflow = "hidden";
       return {
         ...state,
         filterMobileMenuOpen: true,
         mobileNavOpen: false
       };
     case LayoutActionTypes.CLOSE_FILTER_MOBILE_MENU:
-      document.getElementsByClassName("App")[0].style.position = "static";
-      document.getElementsByClassName("App")[0].style.overflow = "visible";
+      app.style.position = "static";
+      app.style.overflow = "visible";
       return {
         ...state,
         filterMobileMenuOpen: false,
@@ -87,6 +100,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoaded: true,
+      }
+    case LayoutActionTypes.SET_IMAGE_LOADING:
+      return {
+        ...state,
+        imageIsLoaded: false,
+      }
+    case LayoutActionTypes.SET_IMAGE_LOADED:
+      return {
+        ...state,
+        imageIsLoaded: true,
       }
     default:
       return state;

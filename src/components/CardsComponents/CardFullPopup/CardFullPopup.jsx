@@ -11,12 +11,13 @@ import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 
 import {
   selectShowPopupCard,
-  selectIsLoaded,
+  selectImageIsLoaded,
 } from "../../../redux/layout/layout-selectors";
 import {
   selectClickedCard,
   selectCardLikers,
   selectFilterError,
+  selectCurrentSearch,
 } from "../../../redux/filter/filter-selectors";
 import { selectFullscreen } from "../../../redux/layout/layout-selectors";
 import {
@@ -24,6 +25,7 @@ import {
   setNoClickedCard,
   toggleLikeCardAction,
   getCardByIdAction,
+  getCardAfterfilterAction,
 } from "../../../redux/filter/filter-actions";
 import {
   closePopupCard,
@@ -61,9 +63,10 @@ import ConnexionRedirect from "../../LayoutComponents/ConnexionRedirect/Connexio
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
 // handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
-const CardFullPopup = (props) => {
+const CardFullPopup = ({ history }) => {
   const isFullScreen = useSelector(selectFullscreen);
   const [redirection, setRedirection] = useState(false);
+  const currentSearch = useSelector(selectCurrentSearch);
   const currentUser = useSelector(selectCurrentUser);
   const clickedCard = useSelector(selectClickedCard);
   const clickedCardId = clickedCard && clickedCard.id;
@@ -75,7 +78,8 @@ const CardFullPopup = (props) => {
   const otherCardsByAuthor = useSelector(selectOtherCardsByAuthor);
   const cardLikers = useSelector(selectCardLikers);
   const [cardIsLiked, setCardIsLiked] = useState();
-  const isLoaded = useSelector(selectIsLoaded);
+  const [cardIsSaved, setCardIsSaved] = useState(false);
+  const imageIsLoaded = useSelector(selectImageIsLoaded);
   const filterError = useSelector(selectFilterError);
 
   useEffect(() => {
@@ -85,17 +89,16 @@ const CardFullPopup = (props) => {
     setIndexOfCurrentCard(cardsArray.indexOf(clickedCard));
   }, [clickedCard, cardsArray, cardsArrayLength, indexOfCurrentCard]);
 
+  const userHasLiked = () => {
+    if (currentUser && currentUser.id) {
+      return (
+        cardLikers && cardLikers.some((likers) => likers === currentUser.id)
+      );
+    } else {
+      return false;
+    }
+  };
   useEffect(() => {
-    const userHasLiked = () => {
-      if (currentUser && currentUser.id) {
-        return (
-          cardLikers && cardLikers.some((likers) => likers === currentUser.id)
-        );
-      } else {
-        return false;
-      }
-    };
-
     setCardIsLiked(userHasLiked());
   }, [cardLikers, currentUser]);
 
@@ -145,12 +148,17 @@ const CardFullPopup = (props) => {
   };
 
   const handlePopupClose = () => {
-    setRedirection(true);
-    window.history.pushState(
-      "",
-      "",
-      props.history.location.pathname + props.history.location.search
-    );
+    if (document.getElementsByClassName("HomePage")[0]) {
+      window.history.pushState("", "", "/");
+    } else {
+      setRedirection(true);
+      window.history.pushState(
+        "",
+        "",
+        history.location.pathname + history.location.search
+      );
+    }
+
     const currentClickedCard = clickedCard
       ? document.querySelector(".CardFullPopup.active")
       : null;
@@ -165,16 +173,22 @@ const CardFullPopup = (props) => {
     } else {
       return;
     }
+    if (cardIsLiked !== userHasLiked()) {
+      dispatch(getCardAfterfilterAction(currentSearch));
+    }
   };
 
   // LIKE
   const handleLikeClick = () => {
+    setCardIsLiked(!cardIsLiked);
     dispatch(toggleLikeCardAction(clickedCardId));
   };
 
   // SAVE
   const handleSaveClick = () => {
     console.log(clickedCardId);
+    setCardIsSaved(!cardIsSaved);
+    // dispatch(toggleSaveCardAction(clickedCardId));
     // Dispatch toggle d'un save à la carte comme pour les likes
   };
 
@@ -202,14 +216,18 @@ const CardFullPopup = (props) => {
               </div>
 
               <div className="CardFullPopup__action-button">
-                <BookmarkEmpty
-                  className="card-action-button"
-                  onClick={handleSaveClick}
-                />
-                {/* <BookmarkFull
-                  className="card-action-button card-action-button__saved"
-                  onClick={handleSaveClick}
-                /> */}
+                {cardIsSaved ? (
+                  <BookmarkFull
+                    className="card-action-button card-action-button__saved"
+                    onClick={handleSaveClick}
+                  />
+                ) : (
+                  <BookmarkEmpty
+                    className="card-action-button"
+                    onClick={handleSaveClick}
+                  />
+                )}
+
                 {/* FAIRE UN CHECK SI CARD DEJA LIKEE PAR USER EN VOYANT ID */}
                 {cardIsLiked ? (
                   <HeartFull
@@ -238,7 +256,7 @@ const CardFullPopup = (props) => {
               </div>
             </div>
             <div className="CardFullPopup__slider">
-              {!isLoaded ? (
+              {!imageIsLoaded ? (
                 <Loading />
               ) : clickedCard && isFullScreen ? (
                 <CardSliderFullscreen />

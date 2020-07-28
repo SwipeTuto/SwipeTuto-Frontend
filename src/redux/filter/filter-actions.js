@@ -1,5 +1,5 @@
 import { FilterActionTypes } from "./filter-types"
-import { setLoading, setLoaded } from '../layout/layout-actions'
+import { setLoading, setLoaded, setImageLoading, setImageLoaded } from '../layout/layout-actions'
 
 import { searchBar } from '../../services/searchService'
 import { getCards, CardsActionTypes, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
@@ -44,16 +44,16 @@ const getCardByIdFailure = err => ({
 
 export const getCardByIdAction = cardId => {
   return dispatch => {
-    dispatch(setLoading());
+    dispatch(setImageLoading());
     return getCardById(cardId)
       .then(rep => {
         dispatch(getCardByIdSuccess(rep.data))
-        dispatch(setLoaded())
+        dispatch(setImageLoaded())
         return rep
       })
       .catch(err => {
         dispatch(getCardByIdFailure(err.response))
-        dispatch(setLoaded())
+        dispatch(setImageLoaded())
       })
 
   }
@@ -208,11 +208,11 @@ const getCardsErrors = error => ({
 export const toggleLikeCardAction = (cardId) => {
   return dispatch => {
     return toggleLike(cardId)
-      .then(async rep => {
+      .then(rep => {
         dispatch(likeCardActionSuccess())
-        const clickedCardRequest = await dispatch(getCardByIdAction(cardId));
-        const clickedCard = await clickedCardRequest.data
-        await dispatch(setClickedCard(clickedCard))
+        // const clickedCardRequest = await dispatch(getCardByIdAction(cardId));
+        // const clickedCard = await clickedCardRequest.data
+        // await dispatch(setClickedCard(clickedCard))
         dispatch(setLoaded()) // stop loader
       })
       .catch(err => {

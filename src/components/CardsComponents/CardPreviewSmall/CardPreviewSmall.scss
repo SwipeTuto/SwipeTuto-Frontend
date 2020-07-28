@@ -94,6 +94,17 @@
       }
     }
   }
+  &__likes {
+    display: flex;
+    align-items: center;
+
+    &--logo {
+      @include logo-size;
+      fill: $red-like;
+      // fill: $primary-light;
+      margin-right: 0.3rem;
+    }
+  }
 }
 
 @media screen and (max-width: $bp-tablet) {

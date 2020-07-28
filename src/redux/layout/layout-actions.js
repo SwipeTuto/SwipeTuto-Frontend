@@ -45,3 +45,10 @@ export const setLoading = () => ({
 export const setLoaded = () => ({
   type: LayoutActionTypes.SET_LOADED,
 })
+export const setImageLoading = () => ({
+  type: LayoutActionTypes.SET_IMAGE_LOADING,
+})
+
+export const setImageLoaded = () => ({
+  type: LayoutActionTypes.SET_IMAGE_LOADED,
+})

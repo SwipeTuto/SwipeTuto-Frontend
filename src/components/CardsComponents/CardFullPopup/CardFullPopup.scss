@@ -7,7 +7,7 @@
   scroll-behavior: auto;
 
   &::-webkit-scrollbar {
-    display: none;
+    // display: none;
   }
 
   &.active {
@@ -67,14 +67,16 @@
       margin-left: 0.6rem;
       // stroke: $black;
       cursor: pointer;
-      fill: none;
+      // fill: none;
 
       &__liked {
-        fill: $primary-light;
+        fill: $red-like;
+        // fill: $primary-light;
       }
 
       &__saved {
-        fill: $primary-light;
+        fill: $green-saved;
+        // fill: $primary-light;
       }
     }
   }
@@ -203,6 +205,11 @@
 
       &__title {
         font-size: 4rem;
+      }
+
+      &__slider {
+        min-height: unset;
+        min-width: unset;
       }
     }
     .nav__chevron {

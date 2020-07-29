@@ -97,7 +97,6 @@ const getClickedUserError = error => ({
 export const getUserByIdAction = id => {
 
   return dispatch => {
-
     dispatch(setLoading());
     getUserById(id).then(rep => {
       dispatch(setClickedUser(rep.data))

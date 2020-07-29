@@ -126,14 +126,6 @@ export const updateUserInfos = newUserInfos => {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': authHeader()
-<<<<<<< HEAD
-    } 
-  }; 
-   axios.patch(`${baseURL}me/`, JSON.stringify(data), requestOptions)
-  .then(user => {
-    localStorage.setItem('user', JSON.stringify(user.data))
-  });   
-=======
     }
   };
   return axios.patch(`${baseURL}me/`, JSON.stringify(data), requestOptions)
@@ -154,5 +146,4 @@ export const getUserById = id => {
     return rep
   })
 
->>>>>>> 718e63a8bca8c5d94109438f441fcf7d065b6bc0
 }

@@ -24,7 +24,6 @@ import Register from "../../components/LayoutComponents/Login/Register";
 // Props history, location, match, depuis react router dom
 const LoginPage = ({ location }) => {
   const currentUser = useSelector(selectCurrentUser);
-  const dispatch = useDispatch();
 
   return (
     <>

@@ -115,10 +115,10 @@ export const register = users => {
 export const updateUserInfos = newUserInfos => {
   const data = {
     username: newUserInfos.username,
-    first_name: newUserInfos.firstname,
-    last_name: newUserInfos.lastname,
+    first_name: newUserInfos.first_name,
+    last_name: newUserInfos.last_name,
     profile: {
-      description: newUserInfos.firstname
+      description: newUserInfos.description
     },
     email: newUserInfos.email,
   }

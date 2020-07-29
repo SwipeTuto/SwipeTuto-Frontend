@@ -64,12 +64,13 @@ const Login = ({ history }) => {
       if (!inputIsOk) {
         currentInput.classList.remove("valid-input");
         currentInput.classList.add("invalid-input");
-
+        errorMessage.classList.add("error__message");
         errorMessage.textContent = errorMessageToDisplay(name);
       } else {
+        errorMessage.classList.remove("error__message");
         currentInput.classList.remove("invalid-input");
         currentInput.classList.add("valid-input");
-        errorMessage.style.display = "none";
+        // errorMessage.style.display = "none";
       }
     }
     setUser({ ...user, [name]: value });
@@ -111,7 +112,7 @@ const Login = ({ history }) => {
           Git
         </CustomButton>
       </div>
-      <p className="login__errors">
+      <p className="error__message">
         {userErrors
           ? userErrors === 400
             ? "Le compte n'a pas pu être trouvé. Merci de vérifier votre email et votre mot de passe."
@@ -127,7 +128,7 @@ const Login = ({ history }) => {
           onChange={(e) => handleChange(e)}
           type="email"
           name="email"
-          value={user.email}
+          value={user.email || ""}
           id="email_login"
           className="login__form--input invalid-input"
           required

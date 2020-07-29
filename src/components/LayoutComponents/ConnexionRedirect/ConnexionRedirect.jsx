@@ -7,14 +7,24 @@ import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import "./ConnexionRedirect.scss";
 import { deleteFilterErrorAction } from "../../../redux/filter/filter-actions";
 
-const ConnexionRedirect = () => {
+const ConnexionRedirect = ({ handleClose }) => {
   const dispatch = useDispatch();
+
+  const handleScrollReset = () => {
+    const app = document.getElementsByClassName("App")[0];
+    if (app) {
+      app.style.position = "";
+      app.style.top = "";
+    }
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div
       className="ConnexionRedirect"
       onClick={(e) => {
         e.stopPropagation();
-        dispatch(deleteFilterErrorAction());
+        handleClose();
       }}
     >
       <div className="ConnexionRedirect__wrapper">
@@ -22,18 +32,22 @@ const ConnexionRedirect = () => {
           className="ConnexionRedirect__close"
           onClick={(e) => {
             e.stopPropagation();
-            dispatch(deleteFilterErrorAction());
+            handleClose();
           }}
         />
         <h1 className="title title-1">
           Vous devez vous connecter pour réaliser cette action.
         </h1>
         <Link to="/connexion/login">
-          <CustomButton color="dark">Connexion</CustomButton>
+          <CustomButton color="dark" onClick={() => handleScrollReset()}>
+            Connexion
+          </CustomButton>
         </Link>
         <h3 className="title title-3">Pas encore de compte ?</h3>
         <Link to="/connexion/signup">
-          <CustomButton>Inscription</CustomButton>
+          <CustomButton onClick={() => handleScrollReset()}>
+            Inscription
+          </CustomButton>
         </Link>
       </div>
     </div>

@@ -61,7 +61,8 @@ export const registerAction = users => {
   return dispatch => {
     register(users)
       .then(user => {
-        dispatch(registerSuccess(user));
+        console.log(user)
+        dispatch(registerSuccess(user.data.user));
         // history.push('/cards', history.location)
         // history.go()
       })
@@ -95,7 +96,6 @@ const getClickedUserError = error => ({
 
 
 export const getUserByIdAction = id => {
-
   return dispatch => {
     dispatch(setLoading());
     getUserById(id).then(rep => {
@@ -113,11 +113,13 @@ export const getUserByIdAction = id => {
 
 
 export const updateUserInfosAction = userInfos => {
+  console.log(userInfos)
   return dispatch => {
     return (
+
       updateUserInfos(userInfos)
         .then(rep => {
-          dispatch(updateUserInfosSuccess(rep.data))
+          dispatch(updateUserInfosSuccess(rep.data.user))
           dispatch(setLoaded())
           return rep
         }).catch(err => {

@@ -7,7 +7,7 @@ export const selectCurrentUser = createSelector(
 );
 export const selectClickedUser = createSelector(
   [selectUser],
-  user => user.clickedUser && user.clickedUser
+  user => user && user.clickedUser && user.clickedUser.user
 );
 export const selectUserErrors = createSelector(
   [selectUser],

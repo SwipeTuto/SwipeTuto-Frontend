@@ -1,0 +1,43 @@
+@import "../../../../variables.scss";
+
+.FirstLevelComment {
+  display: flex;
+
+  &__author {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  &__center {
+    flex-grow: 1;
+    margin: 0 1rem;
+
+    .UserUsername__username {
+      color: $primary-light;
+      font-weight: bold;
+      margin-bottom: 0.6rem;
+    }
+  }
+
+  &__aside {
+    // background-color: red;
+    border-left: 1px solid $grey-dark;
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &--likes,
+    &--comments {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    &--logo {
+      @include logo-size;
+      margin-right: 0.6rem;
+      justify-self: flex-start;
+    }
+  }
+}

@@ -14,14 +14,16 @@ const INITIAL_STATE = {
 const layoutReducer = (state = INITIAL_STATE, action) => {
   const app = document.getElementsByClassName("App")[0];
   const cardPopupElement = document.getElementsByClassName("CardFullPopup")[0];
+  const scrollYWindow = window.scrollY;
+  const scrollY = app && app.style.top;
 
   switch (action.type) {
     case LayoutActionTypes.SHOW_POPUP_CARD:
+      console.log(scrollYWindow)
       cardPopupElement.addEventListener('wheel', (e) => {
         e.stopPropagation();
       })
 
-      const scrollYWindow = window.scrollY;
       app.style.position = 'fixed';
       app.style.top = `-${scrollYWindow}px`;
 
@@ -30,7 +32,6 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         popupShown: true,
       };
     case LayoutActionTypes.CLOSE_POPUP_CARD:
-      const scrollY = app.style.top;
       app.style.position = '';
       app.style.top = '';
       window.scrollTo(0, parseInt(scrollY || '0') * -1);
@@ -40,6 +41,7 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         popupShown: false,
       };
     case LayoutActionTypes.SHOW_FULLSCREEN:
+      cardPopupElement.style.overflow = "hidden";
 
       return {
         ...state,

@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import UserAvatar from "../../../components/UserComponents/UserAvatar/UserAvatar";
+import UserUsername from "../../../components/UserComponents/UserAvatar/UserUsername";
 import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
 import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg";
 
-import "./UserHeader.scss";
 import {
   selectCurrentUser,
   selectClickedUser,
 } from "../../../redux/user/user-selectors";
+
+import "./UserHeader.scss";
 
 const UserHeader = ({ userIsSame, location }) => {
   const locationPath = location && location.pathname;
@@ -34,31 +36,18 @@ const UserHeader = ({ userIsSame, location }) => {
     } else {
       setUserDatas(clickedUser);
     }
+    console.log(currentUser);
   }, [clickedUser, locationPath, currentUser]);
 
   return (
     <div className="UserHeader">
       <div className="UserHeader__userInfos">
         <div className="UserHeader__avatar">
-          <UserAvatar
-            userImage={
-              userDatas && userDatas.profile && userDatas.profile.avatar
-                ? userDatas.profile.avatar
-                : null
-            }
-            userFirstName={
-              userDatas && userDatas.first_name ? userDatas.first_name : null
-            }
-            userLastName={
-              userDatas && userDatas.last_name ? userDatas.last_name : null
-            }
-          />
+          <UserAvatar user={currentUser} link={true} />
         </div>
         <div className="UserHeader__text">
           <h1 className="UserHeader__username title title-1">
-            {userDatas && userDatas.username
-              ? userDatas.username
-              : "Utilisateur SwipeTuto"}
+            <UserUsername user={userDatas} link={true} />
           </h1>
           <p className="UserHeader__user-email">
             {userDatas && userDatas.email && userDatas.email}

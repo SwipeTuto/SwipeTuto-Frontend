@@ -5,11 +5,8 @@ import { Redirect } from "react-router-dom";
 
 import {
   selectCurrentSearch,
-  selectSearchTopic,
   selectTotalNumberOfResults,
   selectSearchCategory,
-  selectSearchWords,
-  selectSearchOrder,
   selectSearchPage,
 } from "../../../redux/filter/filter-selectors";
 import { categoryArray, orderArray } from "../../../helper/index";
@@ -20,11 +17,8 @@ import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg
 
 import {
   getCardAfterfilterAction,
-  setSearchOrder,
   setCurrentSearch,
 } from "../../../redux/filter/filter-actions";
-import { getCardsAction } from "../../../redux/filter/filter-actions";
-import { urlParams } from "../../../helper/index";
 
 import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
 import { ReactComponent as ChevronRight } from "../../../assets/images/chevrons/chevron-forward.svg";
@@ -36,11 +30,7 @@ const FiltersBar = ({ handleClickSize }) => {
   // paramètres de recherche :
   const currentSearch = useSelector(selectCurrentSearch);
   const currentPage = useSelector(selectSearchPage);
-  const searchTopic = useSelector(selectSearchTopic);
   const searchCategory = useSelector(selectSearchCategory);
-  const searchWords = useSelector(selectSearchWords);
-  const searchOrder = useSelector(selectSearchOrder);
-  const currentSearchPageNumber = useSelector(selectSearchPage);
   const [redirection, setRedirection] = useState(false);
   const linkBar = document.querySelector(".FiltersBar__options--links");
 

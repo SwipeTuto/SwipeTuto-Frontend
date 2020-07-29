@@ -38,12 +38,12 @@
         margin-bottom: 1rem;
 
         &:focus.valid-input {
-          border: 0.5px solid #00b109;
+          border: 0.5px solid $green-success;
         }
 
         &:focus.invalid-input,
         &:not([value=""]).invalid-input {
-          border: 0.5px solid #f76300;
+          border: 0.5px solid $red-error;
         }
 
         &:focus {
@@ -71,6 +71,10 @@
         margin-bottom: 0;
       }
     }
+  }
+
+  p.error__message {
+    margin-bottom: 1rem;
   }
 
   .custom-button {

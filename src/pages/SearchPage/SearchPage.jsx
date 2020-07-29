@@ -131,9 +131,9 @@ const SearchPage = (props) => {
 
   useEffect(() => {
     // scroll reset
-    if (window.scrollY) {
-      window.scroll(0, 0);
-    }
+    // if (window.scrollY) {
+    //   window.scroll(0, 0);
+    // }
   }, []);
 
   const redirectLink = SearchLinkRedirect();

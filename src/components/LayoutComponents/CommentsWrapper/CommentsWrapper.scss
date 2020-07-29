@@ -52,5 +52,19 @@
     &:first-child {
       border-top: 1px solid $grey;
     }
+
+    &--error {
+      color: $red-error;
+    }
+  }
+
+  &__error-delete {
+    text-align: right;
+    cursor: pointer;
+    color: $primary-dark;
+
+    &:hover {
+      font-weight: bold;
+    }
   }
 }

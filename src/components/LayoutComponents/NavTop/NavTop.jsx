@@ -45,6 +45,7 @@ import "./NavTop.scss";
 
 import { urlParams } from "../../../helper/index";
 import { test2 } from "../../../services/cardsService";
+import UserUsername from "../../UserComponents/UserAvatar/UserUsername";
 
 const NavTop = (props) => {
   const dispatch = useDispatch();
@@ -142,23 +143,7 @@ const NavTop = (props) => {
                 onClick={() => dispatch(toggleUserNav())}
                 className="NavTop__avatar"
               >
-                <UserAvatar
-                  userImage={
-                    currentUser.profile && currentUser.profile.avatar
-                      ? currentUser.profile.avatar
-                      : null
-                  }
-                  userFirstName={
-                    currentUser &&
-                    currentUser.first_name &&
-                    currentUser.first_name
-                  }
-                  userLastName={
-                    currentUser &&
-                    currentUser.last_name &&
-                    currentUser.last_name
-                  }
-                />
+                <UserAvatar user={currentUser} link={false} />
               </div>
             </>
           ) : (
@@ -170,7 +155,7 @@ const NavTop = (props) => {
         {currentUserNav ? (
           <div className="NavTop__userMenu">
             <div className="NavTop__userMenu--meta">
-              <p className="NavTop__userMenu--text">{currentUser.username}</p>
+              <UserUsername user={currentUser} link={true} />
               <p className="NavTop__userMenu--text">{currentUser.email}</p>
             </div>
             <div className="NavTop__userMenu--links">

@@ -210,11 +210,11 @@ export const toggleLikeCardAction = (cardId) => {
     return toggleLike(cardId)
       .then(rep => {
         dispatch(likeCardActionSuccess())
-        dispatch(setLoaded()) // stop loader
+        // dispatch(setLoaded())  stop loader
       })
       .catch(err => {
         dispatch(likeCardActionErrors(err.response.status))
-        dispatch(setLoaded()) // stop loader
+        // dispatch(setLoaded())  stop loader
       })
   }
 };

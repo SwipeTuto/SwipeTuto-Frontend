@@ -1,5 +1,5 @@
 // Component qui présente en résumé dans la grille un slide avec image de preview, auteur etc ...
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 
@@ -10,6 +10,7 @@ import { selectClickedCard } from "../../../redux/filter/filter-selectors";
 import {
   setClickedCard,
   getCardByIdAction,
+  toggleLikeCardAction,
 } from "../../../redux/filter/filter-actions";
 import { showPopupCard } from "../../../redux/layout/layout-actions";
 import { setType } from "../../../redux/filter/filter-actions";
@@ -22,12 +23,22 @@ import { getUserByIdAction } from "../../../redux/user/user-actions";
 import { getUserById } from "../../../services/userService";
 
 import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
+import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outline.svg";
+import { selectCurrentUser } from "../../../redux/user/user-selectors";
+import ConnexionRedirect from "../../LayoutComponents/ConnexionRedirect/ConnexionRedirect";
 // import { ReactComponent as HeartFilled } from "../../../assets/images/heart.svg";
 
 const CardPreviewSmall = ({ card }) => {
-  const { media_image, user, categorie, name, number_of_likes } = card;
+  const { media_image, user, categorie, name, number_of_likes, likes } = card;
   const dispatch = useDispatch();
-  const cardId = card && card.id && card.id;
+  const cardId = card && card.id;
+  const currentUser = useSelector(selectCurrentUser);
+  const [connectRedirect, setConnectRedirect] = useState(false);
+  const [cardIsLiked, setCardIsLiked] = useState();
+
+  useEffect(() => {
+    setCardIsLiked(userHasLiked());
+  }, [currentUser]);
 
   const handleClickedCardClick = async () => {
     dispatch(showPopupCard());
@@ -38,61 +49,81 @@ const CardPreviewSmall = ({ card }) => {
     await window.history.pushState("", "", `/card_id=${cardId && cardId}`);
   };
 
-  return (
-    <div className="CardPreviewSmall" data-slideid="1">
-      {/* <Link to={`/search?card_id=${card.id}`}> */}
-      <div
-        className="CardPreviewSmall__image"
-        onClick={() => handleClickedCardClick()}
-      >
-        {media_image[0] && media_image[0].image ? (
-          <img
-            src={base + media_image[0].image}
-            alt="slides presentation"
-            onContextMenu={(e) => e.preventDefault()}
-          />
-        ) : (
-          <img src="https://fakeimg.pl/500x500/" />
-        )}
+  const userHasLiked = () => {
+    if (currentUser && currentUser.id) {
+      return likes && likes.some((likers) => likers === currentUser.id);
+    } else {
+      return false;
+    }
+  };
 
-        <div className="CardPreviewSmall__hover">
-          <p>{truncate(name, 60, false)}</p>
-          <div className="CardPreviewSmall__category--stamp">
-            {renameCategory(categorie && categorie[0].name)}
-          </div>
-        </div>
-      </div>
-      {/* </Link> */}
-      <div className="CardPreviewSmall__details">
-        {/* <Link to={`/profile/user_id=${user.id}`}>
-          <div
-            className="CardPreviewSmall__author"
-            onClick={() => {
-              getUserByIdAction(user.id);
-            }}
-          >
-            <UserAvatar
-              userImage={
-                user.profile &&
-                user.profile[0] &&
-                user.profile[0].avatar &&
-                `${base}${user.profile[0].avatar}`
-              }
-              userFirstName={user.first_name && user.first_name}
-              userLastName={user.last_name && user.last_name}
+  const handleLikeClick = () => {
+    if (!currentUser) {
+      setConnectRedirect(true);
+    } else {
+      dispatch(toggleLikeCardAction(cardId));
+      const likedCardText = document.getElementById(`likesNumber${cardId}`);
+      if (cardIsLiked) {
+        likedCardText.textContent = parseInt(likedCardText.textContent) - 1;
+      } else {
+        likedCardText.textContent = parseInt(likedCardText.textContent) + 1;
+      }
+      setCardIsLiked(!cardIsLiked);
+    }
+  };
+
+  const handleClose = () => {
+    setConnectRedirect(false);
+  };
+
+  return (
+    <>
+      {connectRedirect && <ConnexionRedirect handleClose={handleClose} />}
+      <div className="CardPreviewSmall" data-slideid="1">
+        {/* <Link to={`/search?card_id=${card.id}`}> */}
+        <div
+          className="CardPreviewSmall__image"
+          onClick={() => handleClickedCardClick()}
+        >
+          {media_image[0] && media_image[0].image ? (
+            <img
+              src={base + media_image[0].image}
+              alt="slides presentation"
+              onContextMenu={(e) => e.preventDefault()}
             />
-            <p>{user.username}</p>
+          ) : (
+            <img src="https://fakeimg.pl/500x500/" />
+          )}
+
+          <div className="CardPreviewSmall__hover">
+            <p>{truncate(name, 60, false)}</p>
+            <div className="CardPreviewSmall__category--stamp">
+              {renameCategory(categorie && categorie[0].name)}
+            </div>
           </div>
-        </Link> */}
-        <UserNameAndAvatar user={user} />
-        <div className="CardPreviewSmall__likes">
-          <HeartFull className="CardPreviewSmall__likes--logo" />
-          <p className="CardPreviewSmall__likes--number">
-            {number_of_likes ? number_of_likes : 0}
-          </p>
+        </div>
+        {/* </Link> */}
+        <div className="CardPreviewSmall__details">
+          <UserNameAndAvatar user={user} link={true} />
+          <div
+            className="CardPreviewSmall__likes"
+            onClick={() => handleLikeClick()}
+          >
+            {cardIsLiked ? (
+              <HeartFull className="CardPreviewSmall__likes--logo" />
+            ) : (
+              <HeartEmpty className="CardPreviewSmall__likes--logo" />
+            )}
+            <p
+              className="CardPreviewSmall__likes--number"
+              id={`likesNumber${cardId}`}
+            >
+              {number_of_likes ? number_of_likes : 0}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 export default CardPreviewSmall;

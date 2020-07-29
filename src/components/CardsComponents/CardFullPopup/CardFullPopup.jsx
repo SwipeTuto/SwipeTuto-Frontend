@@ -80,8 +80,8 @@ const CardFullPopup = ({ history }) => {
   const cardLikers = useSelector(selectCardLikers);
   const [cardIsLiked, setCardIsLiked] = useState();
   const [cardIsSaved, setCardIsSaved] = useState(false);
+  const [connectRedirect, setConnectRedirect] = useState(false);
   const imageIsLoaded = useSelector(selectImageIsLoaded);
-  const filterError = useSelector(selectFilterError);
 
   useEffect(() => {
     // setRedirection(false);
@@ -110,10 +110,10 @@ const CardFullPopup = ({ history }) => {
     if (clickedCard && clickedCard.user && clickedCard.user.id) {
       dispatch(getOtherCardsByAuthorNameAction(clickedCard.user.id));
     }
-    if (popupShown && document.querySelector(".CardFullPopup.active")) {
-      document.querySelector(".CardFullPopup.active").scroll(0, 0);
-    }
-  }, [popupShown, clickedCard, dispatch]);
+    // if (popupShown && document.querySelector(".CardFullPopup.active")) {
+    //   document.querySelector(".CardFullPopup.active").scroll(0, 0);
+    // }
+  }, [clickedCard, dispatch]);
 
   // useEffect(() => dispatch(getCardByIdAction(clickedCardId)), [
   //   clickedCardId,
@@ -179,10 +179,18 @@ const CardFullPopup = ({ history }) => {
     }
   };
 
+  const handleClose = () => {
+    setConnectRedirect(false);
+  };
+
   // LIKE
   const handleLikeClick = () => {
-    setCardIsLiked(!cardIsLiked);
-    dispatch(toggleLikeCardAction(clickedCardId));
+    if (!currentUser) {
+      setConnectRedirect(true);
+    } else {
+      dispatch(toggleLikeCardAction(clickedCardId));
+      setCardIsLiked(!cardIsLiked);
+    }
   };
 
   // SAVE
@@ -198,8 +206,8 @@ const CardFullPopup = ({ history }) => {
   return (
     <>
       {redirection && <Redirect to={redirectLink} />}
-      {filterError && filterError === 401 ? (
-        <ConnexionRedirect />
+      {connectRedirect ? (
+        <ConnexionRedirect handleClose={handleClose} />
       ) : (
         <div
           className={`CardFullPopup ${popupShown ? "active" : ""}`}
@@ -213,6 +221,7 @@ const CardFullPopup = ({ history }) => {
               <div className="CardFullPopup__user">
                 <UserNameAndAvatar
                   user={clickedCard && clickedCard.user && clickedCard.user}
+                  link={true}
                 />
               </div>
 

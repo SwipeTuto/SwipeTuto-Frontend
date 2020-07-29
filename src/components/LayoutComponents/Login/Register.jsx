@@ -48,11 +48,12 @@ const Register = (props) => {
       if (!inputIsOk) {
         currentInput.classList.remove("valid-input");
         currentInput.classList.add("invalid-input");
-
+        errorMessage.classList.add("error__message");
         errorMessage.textContent = errorMessageToDisplay(name);
       } else {
         currentInput.classList.remove("invalid-input");
         currentInput.classList.add("valid-input");
+        errorMessage.classList.remove("error__message");
         errorMessage.style.display = "none";
       }
     }

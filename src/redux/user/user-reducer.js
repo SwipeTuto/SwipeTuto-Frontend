@@ -16,6 +16,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentUser: action.payload,
+        errors: null
       };
     case UserActionTypes.UPDATE_USER_INFOS_SUCCESS:
       return {
@@ -39,12 +40,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
 
 
     case UserActionTypes.REGISTER_SUCCESS:
-      return { ...state, currentUser: action.payload, erros: null };
+      return { ...state, currentUser: action.payload, errors: null };
     case UserActionTypes.REGISTER_FAILURE:
       return { ...state, error: action.payload };
 
     case UserActionTypes.SET_CLICKED_USER:
-      return { ...state, clickedUser: action.payload };
+      return { ...state, clickedUser: action.payload, errors: null };
     case UserActionTypes.GET_CLICKED_USER_ERROR:
       return { ...state, errors: action.payload };
 

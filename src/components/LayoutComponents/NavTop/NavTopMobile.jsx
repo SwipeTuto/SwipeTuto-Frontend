@@ -47,6 +47,7 @@ import {
   selectSearchPage,
   selectCurrentSearch,
 } from "../../../redux/filter/filter-selectors";
+import UserUsername from "../../UserComponents/UserAvatar/UserUsername";
 
 const NavTopMobile = (props) => {
   const [redirection, setRedirection] = useState(false);
@@ -203,20 +204,11 @@ const NavTopMobile = (props) => {
             <div className="NavTopMobile__user">
               <div className="NavTopMobile__user--infos">
                 <UserAvatar
-                  userImage={
-                    currentUser.profile && currentUser.profile.avatar
-                      ? currentUser.profile.avatar
-                      : null
-                  }
-                  userFirstName={
-                    currentUser.first_name && currentUser.first_name
-                  }
-                  userLastName={currentUser.last_name && currentUser.last_name}
+                user={currentUser}
+                link={false}
                 />
                 <div className="NavTopMobile__user--meta">
-                  <p className="NavTopMobile__user--text">
-                    {currentUser.username}
-                  </p>
+                  <UserUsername user={currentUser} link={true} />
                   <p className="NavTopMobile__user--text">
                     {currentUser.email}
                   </p>

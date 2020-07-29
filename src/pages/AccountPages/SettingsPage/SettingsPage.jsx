@@ -50,7 +50,7 @@ const SettingsPage = () => {
 
     setNewUserInfos({
       ...currentUser,
-      profile: { ...currentUser.profile, avatar: avatarFormData },
+      avatar: [avatarFormData],
     });
     setInputValid({ ...inputValidCopy, avatar: true });
     // newAvatarInput.value = "";
@@ -73,12 +73,14 @@ const SettingsPage = () => {
     if (!inputIsOk) {
       currentInput.classList.remove("valid-input");
       currentInput.classList.add("invalid-input");
+      errorMessage.classList.add("error__message");
       errorMessage.textContent = errorMessageToDisplay(name);
       const inputValidCopy = inputValid;
       setInputValid({ ...inputValidCopy, [name]: false });
     } else {
       currentInput.classList.remove("invalid-input");
       currentInput.classList.add("valid-input");
+      errorMessage.classList.remove("error__message");
       errorMessage.textContent = "";
 
       const inputValidCopy = inputValid;
@@ -104,6 +106,7 @@ const SettingsPage = () => {
 
   const handleSubmitInput = (e) => {
     e.preventDefault();
+    console.log(newUserInfos);
     dispatch(updateUserInfosAction(newUserInfos));
     setSendNewInfos(true);
     const { name } = e.target;
@@ -211,7 +214,7 @@ const SettingsPage = () => {
           // name="last_name"
           // onSubmit={(e) => handleSubmitInput(e)}
         >
-          <label htmlFor="username">Changez votre Nom :</label>
+          <label htmlFor="last_name">Changez votre Nom :</label>
           <div className="form__bottom">
             <div className="form__bottom--input">
               <input
@@ -243,7 +246,7 @@ const SettingsPage = () => {
           <label htmlFor="description">Changez votre description :</label>
           <div className="form__bottom">
             <div className="form__bottom--input">
-              <input
+              <textarea
                 className="settings__form--input invalid-input"
                 type="text"
                 id="description"

@@ -16,11 +16,11 @@
 
   .valid-input:focus,
   textarea:focus:valid {
-    border: 0.5px solid #00b109;
+    border: 0.5px solid $green-success;
   }
 
   .invalid-input:focus {
-    border: 0.5px solid #f76300;
+    border: 0.5px solid $red-error;
   }
 
   input:focus,
@@ -30,6 +30,11 @@
     &::placeholder {
       visibility: hidden;
     }
+  }
+
+  textarea {
+    resize: none;
+    min-height: 10rem;
   }
 
   .input__message {

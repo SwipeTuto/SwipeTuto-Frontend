@@ -261,6 +261,8 @@ export const addCommentAction = (cardId, comment) => {
     return addComment(cardId, comment)
       .then(rep => {
         dispatch(addCommentSuccess())
+        dispatch(getCardCommentsAction(cardId))
+
         dispatch(setLoaded()) // stop loader
       })
       .catch(err => {

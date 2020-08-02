@@ -70,6 +70,39 @@ export const getCardComments = (cardId) => {
       return rep
     })
 }
+
+export const deleteComment = (commentId) => {
+  var config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': authHeader()
+    }
+  }
+  return axios
+    .delete(`${baseURL}card/get_comment/${commentId}/`
+      , config)
+    .then(rep => {
+      return rep
+    })
+}
+
+export const modifyComment = (commentId, newComment) => {
+  var config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': authHeader()
+    }
+  }
+  return axios
+    .patch(`${baseURL}card/get_comment/${commentId}/`,
+      { "text": newComment },
+      config)
+    .then(rep => {
+      return rep
+    })
+}
+
+
 export const getCardCommentsOtherPage = (url) => {
   var config = {
     headers: {

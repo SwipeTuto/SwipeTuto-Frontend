@@ -53,11 +53,8 @@ const CommentsWrapper = () => {
     //   dispatch(getCardCommentsAction(clickedCardId));
     //   setNewCommentSubmit(false);
     // }
+    setNewCommentsLocalArray([]);
   }, [clickedCardId, newCommentSubmit]);
-
-  useEffect(() => {
-    console.log(newCommentsLocalArray);
-  }, [newCommentsLocalArray]);
 
   // useEffect(() => {
   //   console.log(commentsArray, newCommentsLocalArray);
@@ -143,12 +140,12 @@ const CommentsWrapper = () => {
                 Une erreur est survenue lors de la publication du commentaire.
                 Merci de réessayer plus tard. Si le problème persiste, veuillez
                 nous contacter.
-                <p
-                  className="CommentsWrapper__error-delete"
-                  onClick={() => dispatch(deleteFilterErrorAction())}
-                >
-                  J'ai compris.
-                </p>
+              </p>
+              <p
+                className="CommentsWrapper__error-delete"
+                onClick={() => dispatch(deleteFilterErrorAction())}
+              >
+                J'ai compris.
               </p>
             </>
           ) : (
@@ -159,17 +156,20 @@ const CommentsWrapper = () => {
             newCommentsLocalArray.length !== 0 &&
             newCommentsLocalArray &&
             newCommentsLocalArray.map((comment) => (
-              <FirstLevelComment comment={comment} />
+              <FirstLevelComment comment={comment} key={comment.id} />
             ))}
 
-          {commentsArray && commentsArray.length === 0 ? (
+          {commentsArray &&
+          commentsArray.length === 0 &&
+          newCommentsLocalArray &&
+          newCommentsLocalArray.length === 0 ? (
             <p className="CommentsWrapper__comment">
               Aucun commentaire pour le moment.
             </p>
           ) : (
             commentsArray &&
             commentsArray.map((comment) => (
-              <FirstLevelComment comment={comment} />
+              <FirstLevelComment comment={comment} key={comment.id} />
             ))
           )}
 

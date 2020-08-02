@@ -110,6 +110,7 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
 
     case FilterActionTypes.GET_ALL_CARDS_FAILURE:
       return { ...state, errors: action.payload }
+
     case FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS:
       return { ...state, errors: null }
     case FilterActionTypes.TOGGLE_LIKE_CARD_ERROR:
@@ -118,10 +119,21 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: null }
     case FilterActionTypes.TOGGLE_LIKE_COMMENT_ERROR:
       return { ...state, errors: action.payload }
+
     case FilterActionTypes.ADD_COMMENT_ERROR:
       return { ...state, errors: action.payload }
     case FilterActionTypes.ADD_COMMENT_SUCCESS:
       return { ...state, errors: null }
+    case FilterActionTypes.DELETE_COMMENT_ERROR:
+      return { ...state, errors: action.payload }
+    case FilterActionTypes.DELETE_COMMENT_SUCCESS:
+      return { ...state, errors: null }
+    case FilterActionTypes.MODIFY_COMMENT_ERROR:
+      return { ...state, errors: action.payload }
+    case FilterActionTypes.MODIFY_COMMENT_SUCCESS:
+      return { ...state, errors: null }
+
+
     case FilterActionTypes.GET_CARD_COMMENTS_SUCCESS:
       return { ...state, clickedCardComments: action.payload, errors: null }
     case FilterActionTypes.GET_CARD_COMMENTS_ERROR:

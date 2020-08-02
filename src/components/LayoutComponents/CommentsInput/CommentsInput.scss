@@ -1,6 +1,8 @@
 @import "../../../variables.scss";
 
 .CommentsInput {
+  margin: 2rem 0;
+
   &__newComment {
     &--input {
       width: 100%;

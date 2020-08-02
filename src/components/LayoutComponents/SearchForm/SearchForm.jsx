@@ -1,23 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { initialSearchState } from "../../../helper/index";
+
+// redux
 import {
-  selectSearchCategory,
-  selectSearchTopic,
   selectSearchWords,
   selectCurrentSearch,
 } from "../../../redux/filter/filter-selectors";
 import {
-  searchAction,
   getCardAfterfilterAction,
   setCurrentSearch,
   deleteCurrentSearch,
 } from "../../../redux/filter/filter-actions";
 import { closeMobileNav } from "../../../redux/layout/layout-actions";
+
+// helper
+import { initialSearchState } from "../../../helper/index";
+
+// components
+import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
+
+// assets
 import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close-circle.svg";
-import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
 
 import "./SearchForm.scss";
 
@@ -27,9 +32,6 @@ const SearchForm = () => {
   const [redirection, setRedirection] = useState(false);
   const currentSearch = useSelector(selectCurrentSearch);
   const searchWords = useSelector(selectSearchWords);
-  const searchTopic = useSelector(selectSearchTopic);
-  const searchCategory = useSelector(selectSearchCategory);
-
 
   useEffect(() => {
     if (searchWords === null) {
@@ -50,13 +52,13 @@ const SearchForm = () => {
     dispatch(setCurrentSearch("searchWords", searchInput));
     dispatch(setCurrentSearch("searchPage", 1));
     // dispatch(searchAction(searchInput));
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        searchWords: searchInput,
-        searchPage: 1,
-      })
-    );
+    // dispatch(
+    //   getCardAfterfilterAction({
+    //     ...currentSearch,
+    //     searchWords: searchInput,
+    //     searchPage: 1,
+    //   })
+    // );
     dispatch(closeMobileNav());
     setRedirection(true);
   };
@@ -65,7 +67,7 @@ const SearchForm = () => {
     setSearchInput("");
     // dispatch(deleteCurrentSearch("searchWords"));
     dispatch(deleteCurrentSearch());
-    dispatch(getCardAfterfilterAction(initialSearchState));
+    // dispatch(getCardAfterfilterAction(initialSearchState));
     setRedirection(true);
   };
 

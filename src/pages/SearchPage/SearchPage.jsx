@@ -72,69 +72,66 @@ const SearchPage = (props) => {
   const handlePaginationNavigation = (e) => {
     const navPageNumber = e.target.dataset.page;
 
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        searchPage: navPageNumber,
-      })
-    );
+    // dispatch(
+    //   getCardAfterfilterAction({
+    //     ...currentSearch,
+    //     searchPage: navPageNumber,
+    //   })
+    // );
     dispatch(setCurrentSearch("searchPage", navPageNumber));
     setRedirection(true);
   };
 
   const goToFirstPage = () => {
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        searchPage: 1,
-      })
-    );
+    // dispatch(
+    //   getCardAfterfilterAction({
+    //     ...currentSearch,
+    //     searchPage: 1,
+    //   })
+    // );
     dispatch(setCurrentSearch("searchPage", 1));
     setRedirection(true);
   };
   const goToLastPage = () => {
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        searchPage: totalNumberOfPages,
-      })
-    );
+    // dispatch(
+    //   getCardAfterfilterAction({
+    //     ...currentSearch,
+    //     searchPage: totalNumberOfPages,
+    //   })
+    // );
     dispatch(setCurrentSearch("searchPage", parseInt(totalNumberOfPages)));
     setRedirection(true);
   };
   const goToPreviousPage = () => {
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        searchPage: currentSearchPage - 1,
-      })
-    );
+    // dispatch(
+    //   getCardAfterfilterAction({
+    //     ...currentSearch,
+    //     searchPage: currentSearchPage - 1,
+    //   })
+    // );
     dispatch(setCurrentSearch("searchPage", parseInt(currentSearchPage - 1)));
     setRedirection(true);
   };
   const goToNextPage = () => {
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        searchPage: currentSearchPage + 1,
-      })
-    );
+    // dispatch(
+    //   getCardAfterfilterAction({
+    //     ...currentSearch,
+    //     searchPage: currentSearchPage + 1,
+    //   })
+    // );
     dispatch(setCurrentSearch("searchPage", parseInt(currentSearchPage + 1)));
     setRedirection(true);
   };
 
   useEffect(() => {
-    dispatch(closeFilterMobileMenu());
+    // dispatch(closeFilterMobileMenu());
 
     setTotalNumberOfPages(Math.ceil(totalNumberOfCards / numberOfItemByPage));
   }, [totalNumberOfCards, currentSearch]);
 
   useEffect(() => {
-    // scroll reset
-    // if (window.scrollY) {
-    //   window.scroll(0, 0);
-    // }
-  }, []);
+    dispatch(getCardAfterfilterAction(currentSearch));
+  }, [currentSearch, dispatch]);
 
   const redirectLink = SearchLinkRedirect();
 

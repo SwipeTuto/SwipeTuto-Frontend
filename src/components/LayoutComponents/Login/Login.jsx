@@ -1,29 +1,27 @@
 // Présent dans App.js dans une Route ("/")
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { withRouter, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import CustomButton from "../CustomButton/CustomButton";
 
-import { loginGoogle, loginGit } from "../../../services/userService";
+// redux
 import {
   loginAction,
-  setCurrentUser,
   deleteUserErrors,
 } from "../../../redux/user/user-actions";
-import {
-  selectCurrentUser,
-  selectUserErrors,
-} from "../../../redux/user/user-selectors";
+import { selectUserErrors } from "../../../redux/user/user-selectors";
+
+// helper
+import { loginGoogle, loginGit } from "../../../services/userService";
+import { checkRegexInput, errorMessageToDisplay } from "../../../helper/index";
+
+// components
+import CustomButton from "../CustomButton/CustomButton";
+
+// assets
 import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google.svg";
 import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
 
-import { checkRegexInput, errorMessageToDisplay } from "../../../helper/index";
-
-import "./Login.scss";
-import Register from "./Register";
-
-// Props history, location, match, depuis react router dom
 const Login = ({ history }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({ username: "", password: "" });
@@ -45,36 +43,38 @@ const Login = ({ history }) => {
     loginGit();
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
 
-    const currentInput = document.querySelector(
-      `.LoginPage input[name=${name}]`
-    );
-    const errorMessage = document.querySelector(
-      `.LoginPage .input__message[data-inputfor=${name}`
-    );
+      const currentInput = document.querySelector(
+        `.LoginPage input[name=${name}]`
+      );
+      const errorMessage = document.querySelector(
+        `.LoginPage .input__message[data-inputfor=${name}`
+      );
 
-    currentInput.classList.remove("valid-input");
-    currentInput.classList.add("invalid-input");
+      currentInput.classList.remove("valid-input");
+      currentInput.classList.add("invalid-input");
 
-    if (value) {
-      let inputIsOk = checkRegexInput(name, value); //test valeur avec regex, true or false
+      if (value) {
+        let inputIsOk = checkRegexInput(name, value); //test valeur avec regex, true or false
 
-      if (!inputIsOk) {
-        currentInput.classList.remove("valid-input");
-        currentInput.classList.add("invalid-input");
-        errorMessage.classList.add("error__message");
-        errorMessage.textContent = errorMessageToDisplay(name);
-      } else {
-        errorMessage.classList.remove("error__message");
-        currentInput.classList.remove("invalid-input");
-        currentInput.classList.add("valid-input");
-        // errorMessage.style.display = "none";
+        if (!inputIsOk) {
+          currentInput.classList.remove("valid-input");
+          currentInput.classList.add("invalid-input");
+          errorMessage.classList.add("error__message");
+          errorMessage.textContent = errorMessageToDisplay(name);
+        } else {
+          errorMessage.classList.remove("error__message");
+          currentInput.classList.remove("invalid-input");
+          currentInput.classList.add("valid-input");
+        }
       }
-    }
-    setUser({ ...user, [name]: value });
-  };
+      setUser({ ...user, [name]: value });
+    },
+    [user]
+  );
 
   const handleClick = (e) => {
     const { email, password } = user;

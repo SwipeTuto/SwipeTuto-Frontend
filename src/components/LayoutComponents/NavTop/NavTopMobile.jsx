@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { withRouter, Redirect } from "react-router-dom";
-import CustomButton from "../CustomButton/CustomButton";
-import { selectCurrentUser } from "../../../redux/user/user-selectors";
+import { withRouter, Redirect, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+
+// redux
+import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import {
   getCardAfterfilterAction,
   setCurrentSearch,
@@ -18,28 +18,7 @@ import {
   closeMobileNav,
   openFilterMobileMenu,
 } from "../../../redux/layout/layout-actions";
-import { topicArray, initialSearchState } from "../../../helper/index";
-import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
-
 import { logoutAction } from "../../../redux/user/user-actions";
-
-import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
-import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
-import { ReactComponent as MenuLogo } from "../../../assets/images/menu.svg";
-import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg";
-import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
-import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg";
-import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
-import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
-import FiltersBarMobile from "../FiltersBar/FiltersBarMobile";
-// import newUserAvatar from "../../../assets/images/avatar_new_user.png";
-import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
-import SearchForm from "../SearchForm/SearchForm";
-
-import SwipeTutoSmallLogo from "../../../assets/logos/logo-small-reduced.png";
-import SwipeTutoSmallFull from "../../../assets/logos/logo-full-reduced.png";
-
-import "./NavTopMobile.scss";
 import {
   selectSearchCategory,
   selectSearchWords,
@@ -47,22 +26,38 @@ import {
   selectSearchPage,
   selectCurrentSearch,
 } from "../../../redux/filter/filter-selectors";
+
+// helper
+import { topicArray, initialSearchState } from "../../../helper/index";
+
+// components
+import CustomButton from "../CustomButton/CustomButton";
+import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
+import FiltersBarMobile from "../FiltersBar/FiltersBarMobile";
+import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 import UserUsername from "../../UserComponents/UserAvatar/UserUsername";
+
+// assets
+import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
+import { ReactComponent as MenuLogo } from "../../../assets/images/menu.svg";
+import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg";
+import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
+import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg";
+import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
+import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
+import SwipeTutoSmallLogo from "../../../assets/logos/logo-small-reduced.png";
+import SwipeTutoSmallFull from "../../../assets/logos/logo-full-reduced.png";
+
+import "./NavTopMobile.scss";
 
 const NavTopMobile = (props) => {
   const [redirection, setRedirection] = useState(false);
   const dispatch = useDispatch();
   const filtersBarMobile = useSelector(selectFilterMobileMenuOpen);
-  const [cardsDropdownOpen, setCardsDropdownOpen] = useState(false);
   const currentUser = useSelector(selectCurrentUser);
-  const currentSearch = useSelector(selectCurrentSearch);
   const mobileNavOpen = useSelector(selectMobileNavOpen);
-  const searchCategory = useSelector(selectSearchCategory);
   const searchWords = useSelector(selectSearchWords);
-  const searchOrder = useSelector(selectSearchOrder);
-  const currentSearchPageNumber = useSelector(selectSearchPage);
 
-  // Reset du scroll
   useEffect(() => {
     const NavTopMobileMenu = document.querySelector(".NavTopMobile");
 
@@ -71,7 +66,6 @@ const NavTopMobile = (props) => {
     }
     setRedirection(true);
     setRedirection(false);
-    setCardsDropdownOpen(false);
   }, [mobileNavOpen, searchWords]);
 
   // scroll reset
@@ -82,31 +76,9 @@ const NavTopMobile = (props) => {
 
   const handleNavClose = () => {
     dispatch(closeMobileNav());
-    setCardsDropdownOpen(false);
   };
   const handleNavOpen = () => {
     dispatch(openMobileNav());
-  };
-
-  const handleClick = (e) => {
-    setCardsDropdownOpen(false);
-    dispatch(closeMobileNav());
-    setRedirection(true);
-  };
-
-  const topicHandleClick = (e) => {
-    dispatch(setCurrentSearch("searchTopic", e.target.dataset.name));
-    dispatch(setCurrentSearch("searchPage", 1));
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        searchTopic: e.target.dataset.name,
-        searchPage: 1,
-      })
-    );
-
-    setCardsDropdownOpen(false);
-    dispatch(closeMobileNav());
   };
 
   const handleFiltersMobileOpen = () => {
@@ -154,10 +126,6 @@ const NavTopMobile = (props) => {
           </CustomButton>
         </div>
         <div className={`NavTopMobile__open ${mobileNavOpen ? "active" : ""}`}>
-          {/* <div className="NavTopMobile__searchZone">
-            <SearchForm /> 
-            <FiltersBarMobile title="Recherche" showResults={false} />
-          </div> */}
           <div className="NavTopMobile__swipeTuto-menu">
             <img src={SwipeTutoSmallFull} alt="swipetuto" />
           </div>
@@ -166,7 +134,6 @@ const NavTopMobile = (props) => {
               className="NavTopMobile__link"
               onClick={() => {
                 dispatch(closeMobileNav());
-                setCardsDropdownOpen(false);
               }}
               to="/"
             >
@@ -177,7 +144,6 @@ const NavTopMobile = (props) => {
               to="/ressources"
               onClick={() => {
                 dispatch(closeMobileNav());
-                setCardsDropdownOpen(false);
               }}
             >
               Ressources
@@ -187,9 +153,8 @@ const NavTopMobile = (props) => {
               to="/search"
               onClick={() => {
                 dispatch(deleteCurrentSearch());
-                dispatch(getCardAfterfilterAction(initialSearchState));
+                // dispatch(getCardAfterfilterAction(initialSearchState));
                 dispatch(closeMobileNav());
-                setCardsDropdownOpen(false);
               }}
             >
               Cartes
@@ -203,10 +168,7 @@ const NavTopMobile = (props) => {
           {currentUser ? (
             <div className="NavTopMobile__user">
               <div className="NavTopMobile__user--infos">
-                <UserAvatar
-                user={currentUser}
-                link={false}
-                />
+                <UserAvatar user={currentUser} link={false} />
                 <div className="NavTopMobile__user--meta">
                   <UserUsername user={currentUser} link={true} />
                   <p className="NavTopMobile__user--text">

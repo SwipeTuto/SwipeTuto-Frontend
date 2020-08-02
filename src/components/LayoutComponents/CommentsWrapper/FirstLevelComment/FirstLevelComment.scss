@@ -1,7 +1,13 @@
 @import "../../../../variables.scss";
 
 .FirstLevelComment {
+  margin-bottom: 2.5rem;
   display: flex;
+
+  &__wrapper {
+    flex-grow: 1;
+    margin: 0 1rem;
+  }
 
   &__author {
     width: 4rem;
@@ -9,20 +15,42 @@
   }
 
   &__center {
-    flex-grow: 1;
-    margin: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: $grey-light;
+    border-radius: $box-radius;
+    border: 1px solid $grey;
 
     .UserUsername__username {
-      color: $primary-light;
+      // color: $primary-light;
       font-weight: bold;
       margin-bottom: 0.6rem;
     }
   }
+  &__actions {
+    margin-top: 0.2rem;
+    display: flex;
+    // justify-content: flex-end;
+    font-size: 1rem;
+  }
+
+  &__action {
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: $primary-light;
+    }
+
+    margin-left: 1.5rem;
+  }
 
   &__aside {
     // background-color: red;
-    border-left: 1px solid $grey-dark;
-    padding-left: 1rem;
+    // border-left: 1px solid $grey-dark;
+
     display: flex;
     flex-direction: column;
     align-items: center;

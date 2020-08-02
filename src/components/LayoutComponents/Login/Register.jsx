@@ -1,17 +1,23 @@
 // Présent dans App.js dans une Route ("/")
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import CustomButton from "../CustomButton/CustomButton";
+
+// redux
 import { registerAction } from "../../../redux/user/user-actions";
+import { selectUserErrors } from "../../../redux/user/user-selectors";
+
+// helper
 import { loginGoogle, loginGit } from "../../../services/userService";
 import { checkRegexInput, errorMessageToDisplay } from "../../../helper/index";
+
+// components
+import CustomButton from "../CustomButton/CustomButton";
+
+// assets
 import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google.svg";
 import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
-
-import "./Login.scss";
-import { selectUserErrors } from "../../../redux/user/user-selectors";
 
 // Props history, location, match, depuis react router dom
 const Register = (props) => {
@@ -29,36 +35,39 @@ const Register = (props) => {
     }
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
 
-    const currentInput = document.querySelector(
-      `.LoginPage input[name=${name}]`
-    );
-    const errorMessage = document.querySelector(
-      `.LoginPage .input__message[data-inputfor=${name}`
-    );
+      const currentInput = document.querySelector(
+        `.LoginPage input[name=${name}]`
+      );
+      const errorMessage = document.querySelector(
+        `.LoginPage .input__message[data-inputfor=${name}`
+      );
 
-    currentInput.classList.remove("valid-input");
-    currentInput.classList.add("invalid-input");
+      currentInput.classList.remove("valid-input");
+      currentInput.classList.add("invalid-input");
 
-    if (value) {
-      let inputIsOk = checkRegexInput(name, value); //test valeur avec regex, true or false
+      if (value) {
+        let inputIsOk = checkRegexInput(name, value); //test valeur avec regex, true or false
 
-      if (!inputIsOk) {
-        currentInput.classList.remove("valid-input");
-        currentInput.classList.add("invalid-input");
-        errorMessage.classList.add("error__message");
-        errorMessage.textContent = errorMessageToDisplay(name);
-      } else {
-        currentInput.classList.remove("invalid-input");
-        currentInput.classList.add("valid-input");
-        errorMessage.classList.remove("error__message");
-        errorMessage.style.display = "none";
+        if (!inputIsOk) {
+          currentInput.classList.remove("valid-input");
+          currentInput.classList.add("invalid-input");
+          errorMessage.classList.add("error__message");
+          errorMessage.textContent = errorMessageToDisplay(name);
+        } else {
+          currentInput.classList.remove("invalid-input");
+          currentInput.classList.add("valid-input");
+          errorMessage.classList.remove("error__message");
+          errorMessage.style.display = "none";
+        }
       }
-    }
-    setUser({ ...user, [name]: value });
-  };
+      setUser({ ...user, [name]: value });
+    },
+    [user]
+  );
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -117,32 +126,6 @@ const Register = (props) => {
           required
         />
         <p className="input__message" data-inputfor="username"></p>
-        {/* <label htmlFor="nom" className="signup__form--label">
-          Nom :
-        </label>
-        <input
-          onChange={(e) => handleChange(e)}
-          name="firstname"
-          value={user.firstname || ""}
-          type="text"
-          id="nom"
-          className="signup__form--input invalid-input"
-          required
-        />
-        <p className="input__message" data-inputfor="firstname"></p>
-        <label htmlFor="prenom" className="signup__form--label">
-          Prénom :
-        </label>
-        <input
-          name="lastname"
-          value={user.lastname || ""}
-          onChange={(e) => handleChange(e)}
-          type="text"
-          id="prenom"
-          className="signup__form--input invalid-input"
-          required
-        />
-        <p className="input__message" data-inputfor="lastname"></p> */}
         <label htmlFor="email" className="signup__form--label">
           Email :
         </label>

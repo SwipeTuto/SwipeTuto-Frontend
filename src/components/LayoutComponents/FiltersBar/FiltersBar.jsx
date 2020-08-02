@@ -3,23 +3,27 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 
+// redux
 import {
   selectCurrentSearch,
   selectTotalNumberOfResults,
   selectSearchCategory,
   selectSearchPage,
 } from "../../../redux/filter/filter-selectors";
-import { categoryArray, orderArray } from "../../../helper/index";
-import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
-
-import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
-import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";
-
 import {
   getCardAfterfilterAction,
   setCurrentSearch,
 } from "../../../redux/filter/filter-actions";
 
+// helper
+import { categoryArray, orderArray } from "../../../helper/index";
+
+// component
+import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
+
+// assets
+import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
+import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";
 import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
 import { ReactComponent as ChevronRight } from "../../../assets/images/chevrons/chevron-forward.svg";
 
@@ -54,26 +58,26 @@ const FiltersBar = ({ handleClickSize }) => {
     // lancer nouvelle requete cards
     dispatch(setCurrentSearch("searchOrder", newOrder));
     dispatch(setCurrentSearch("searchPage", 1));
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        searchOrder: newOrder,
-        searchPage: 1,
-      })
-    );
+    // dispatch(
+    //   getCardAfterfilterAction({
+    //     ...currentSearch,
+    //     searchOrder: newOrder,
+    //     searchPage: 1,
+    //   })
+    // );
     setRedirection(true);
   };
 
   const handleCategoryChange = (e) => {
     const newCategory = e.target.dataset.filter;
     dispatch(setCurrentSearch("searchCategory", newCategory));
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        searchCategory: newCategory,
-        searchPage: 1,
-      })
-    );
+    // dispatch(
+    //   getCardAfterfilterAction({
+    //     ...currentSearch,
+    //     searchCategory: newCategory,
+    //     searchPage: 1,
+    //   })
+    // );
     dispatch(setCurrentSearch("searchPage", 1));
     setRedirection(true);
   };

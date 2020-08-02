@@ -3,7 +3,8 @@ import { setLoading, setLoaded, setImageLoading, setImageLoaded } from '../layou
 
 import { searchBar } from '../../services/searchService'
 import { getCards, CardsActionTypes, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
-import { toggleLike, addComment } from "../../services/socialService"
+import { toggleLike, toggleCommentLike, addComment, getCardComments, getCardCommentsOtherPage } from "../../services/socialService"
+
 
 
 
@@ -229,6 +230,31 @@ const likeCardActionSuccess = () => ({
 })
 
 
+export const toggleCommentLikeAction = (commentId) => {
+  return dispatch => {
+    return toggleCommentLike(commentId)
+      .then(rep => {
+        dispatch(toggleCommentLikeSuccess())
+        // dispatch(setLoaded())  stop loader
+      })
+      .catch(err => {
+        dispatch(toggleCommentLikeError(err.response.status))
+        // dispatch(setLoaded())  stop loader
+      })
+  }
+};
+
+const toggleCommentLikeError = error => ({
+  type: FilterActionTypes.TOGGLE_LIKE_COMMENT_ERROR,
+  payload: error
+})
+
+const toggleCommentLikeSuccess = () => ({
+  type: FilterActionTypes.TOGGLE_LIKE_COMMENT_SUCCESS,
+})
+
+
+
 
 export const addCommentAction = (cardId, comment) => {
   return dispatch => {
@@ -252,3 +278,43 @@ const addCommentErrors = error => ({
 const addCommentSuccess = () => ({
   type: FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS,
 })
+
+export const getCardCommentsAction = (cardId) => {
+  return dispatch => {
+    dispatch(setLoading())
+    return getCardComments(cardId)
+      .then(rep => {
+        dispatch(getCardCommentsSuccess(rep.data))
+        dispatch(setLoaded()) // stop loader
+      })
+      .catch(err => {
+        dispatch(getCardCommentsError(err))
+        dispatch(setLoaded()) // stop loader
+      })
+  }
+};
+
+const getCardCommentsError = error => ({
+  type: FilterActionTypes.GET_CARD_COMMENTS_ERROR,
+  payload: error
+})
+
+const getCardCommentsSuccess = (comments) => ({
+  type: FilterActionTypes.GET_CARD_COMMENTS_SUCCESS,
+  payload: comments
+})
+
+export const getCardCommentsNextPageAction = (url) => {
+  return dispatch => {
+    dispatch(setLoading())
+    return getCardCommentsOtherPage(url)
+      .then(rep => {
+        dispatch(getCardCommentsSuccess(rep.data))
+        dispatch(setLoaded()) // stop loader
+      })
+      .catch(err => {
+        dispatch(getCardCommentsError(err))
+        dispatch(setLoaded()) // stop loader
+      })
+  }
+};

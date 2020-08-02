@@ -1,19 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getInitials } from "../../../helper/index";
 
-import "./UserNameAndAvatar.scss";
-import { getUserByIdAction } from "../../../redux/user/user-actions";
+import { getInitials } from "../../../helper/index";
 import { base } from "../../../services/configService";
+
+import { getUserByIdAction } from "../../../redux/user/user-actions";
 import { setNoClickedCard } from "../../../redux/filter/filter-actions";
 import { closePopupCard } from "../../../redux/layout/layout-actions";
+
+import "./UserNameAndAvatar.scss";
 
 const UserNameAndAvatar = ({ user, link }) => {
   const dispatch = useDispatch();
   const userImage =
-    user && user.profile && user.profile[0] && user.profile[0].avatar
-      ? `${base}${user.profile[0].avatar}`
+    user && user.avatar && user.avatar[0] && user.avatar[0].avatar
+      ? `${base}${user.avatar[0].avatar}`
       : null;
   return (
     <>

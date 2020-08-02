@@ -1,22 +1,21 @@
-// Component qui renvoie la liste des card sous forme d'une grille
-// Présent sur la Homepage "/" et la "/search" et par défaut sera en affichage "small" pour les cardPreview
-// import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 
+// redux
 import {
   selectCardsFetchedCards,
   selectSearchType,
   selectTotalNumberOfResults,
 } from "../../../redux/filter/filter-selectors";
-
 import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
 
+// components
 import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
 import CardFullPopup from "../../CardsComponents/CardFullPopup/CardFullPopup";
 import Loading from "../../Loading/Loading";
 
+// scss
 import "./CardGridList.scss";
 
 const CardGridList = ({ cardsSize }) => {

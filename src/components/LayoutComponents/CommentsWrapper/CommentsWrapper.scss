@@ -3,6 +3,10 @@
 .CommentsWrapper {
   .comments-section {
     margin: 3rem 0;
+
+    .custom-button {
+      margin: 0 auto 4rem auto;
+    }
   }
 
   &__title {
@@ -16,7 +20,7 @@
 
     &--commentsNumber {
       font-size: 2rem;
-      margin-left: 0.3rem;
+      margin: 0 1rem 0 0.3rem;
     }
 
     &--logo {
@@ -24,35 +28,7 @@
     }
   }
 
-  &__newComment {
-    &--input {
-      width: 100%;
-      resize: none;
-      @include input-style;
-      margin: 1rem 0;
-
-      &:focus {
-        background-color: $white;
-
-        &::placeholder {
-          visibility: hidden;
-        }
-      }
-    }
-
-    .custom-button {
-      margin-left: auto;
-    }
-  }
-
   &__comment {
-    padding: 2rem 0;
-    border-bottom: 1px solid $grey;
-
-    &:first-child {
-      border-top: 1px solid $grey;
-    }
-
     &--error {
       color: $red-error;
     }

@@ -51,13 +51,13 @@ function App(props) {
 
   useEffect(() => {
     if (!isLoaded && (topic || category || ordering || search || page)) {
-      dispatch(getCardAfterfilterAction({
-        searchWords: search,
-        searchTopic: topic,
-        searchCategory: category,
-        searchOrder: ordering,
-        searchPage: page,
-      }));
+      // dispatch(getCardAfterfilterAction({
+      //   searchWords: search,
+      //   searchTopic: topic,
+      //   searchCategory: category,
+      //   searchOrder: ordering,
+      //   searchPage: page,
+      // }));
       dispatch(setCurrentSearch("searchWords", search))
       dispatch(setCurrentSearch("searchTopic", topic))
       dispatch(setCurrentSearch("searchCategory", category))
@@ -73,7 +73,7 @@ function App(props) {
       dispatch(getUserByIdAction(userId))
     }
     else {
-      dispatch(getCardAfterfilterAction(currentSearch))
+      // dispatch(getCardAfterfilterAction(currentSearch))
     }
   }, []);
 

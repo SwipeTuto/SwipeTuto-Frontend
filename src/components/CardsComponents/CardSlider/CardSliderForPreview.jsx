@@ -67,16 +67,10 @@ const CardSliderForPreview = ({ cardSlides }) => {
       <ul className="cardSliderPreview__indicators--preview">
         {cardSlides &&
           cardSlides.map((slide, index) => (
-            <li
-              key={index}
-              index={index}
-              // activeIndex={activeIndex}
-              // isactive={activeIndex === index}
-              onClick={(e) => goToSlide(index)}
-            >
-              <a
+            <li key={index} index={index} onClick={(e) => goToSlide(index)}>
+              <div
                 className={
-                  index == activeIndex
+                  index === activeIndex
                     ? "cardSliderPreview__indicator--preview cardSliderPreview__indicator--preview--active"
                     : "cardSliderPreview__indicator--preview"
                 }

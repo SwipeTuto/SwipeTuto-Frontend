@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-import { initialSearchState } from "../../../helper/index";
+
+// redux
 import {
   selectCurrentSearch,
   selectSearchTopic,
@@ -13,52 +14,43 @@ import {
   selectSearchPage,
 } from "../../../redux/filter/filter-selectors";
 import {
-  categoryArray,
-  topicArray,
-  getNameFromQueryName,
-  orderArray,
-} from "../../../helper/index";
-import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
-
-import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
-import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
-import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";
-import { ReactComponent as FilterLogo } from "../../../assets/images/filter.svg";
-import CustomButton from "../CustomButton/CustomButton";
-import {
   getCardAfterfilterAction,
-  setSearchOrder,
   setCurrentSearch,
   deleteCurrentSearch,
 } from "../../../redux/filter/filter-actions";
-import { getCardsAction } from "../../../redux/filter/filter-actions";
-import { urlParams } from "../../../helper/index";
-
-import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
-import { ReactComponent as ChevronRight } from "../../../assets/images/chevrons/chevron-forward.svg";
-import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
-import { ReactComponent as CloseCircleLogo } from "../../../assets/images/close-circle.svg";
-
-import "./FiltersBarMobile.scss";
 import { selectFilterMobileMenuOpen } from "../../../redux/layout/layout-selectors";
 import {
   openFilterMobileMenu,
   closeFilterMobileMenu,
 } from "../../../redux/layout/layout-actions";
 
+// helper
+import { initialSearchState } from "../../../helper/index";
+import {
+  categoryArray,
+  topicArray,
+  getNameFromQueryName,
+  orderArray,
+} from "../../../helper/index";
+
+// components
+import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
+import CustomButton from "../CustomButton/CustomButton";
+
+// assets
+import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
+import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
+import { ReactComponent as CloseCircleLogo } from "../../../assets/images/close-circle.svg";
+
+import "./FiltersBarMobile.scss";
+
 const FiltersBarMobile = ({ title, showResults }) => {
   const dispatch = useDispatch();
   // paramètres de recherche :
   const filterMobileMenuOpen = useSelector(selectFilterMobileMenuOpen);
   const currentSearch = useSelector(selectCurrentSearch);
-  const currentPage = useSelector(selectSearchPage);
-  const searchTopic = useSelector(selectSearchTopic);
-  const searchCategory = useSelector(selectSearchCategory);
-  const searchWords = useSelector(selectSearchWords);
-  const searchOrder = useSelector(selectSearchOrder);
   const currentSearchPageNumber = useSelector(selectSearchPage);
   const [redirection, setRedirection] = useState(false);
-  const linkBar = document.querySelector(".FiltersBar__options--links");
   const [newSearch, setNewSearch] = useState({});
 
   const [inputShowed, setInputShowed] = useState({
@@ -72,10 +64,6 @@ const FiltersBarMobile = ({ title, showResults }) => {
     setNewSearch(currentSearch);
   }, []);
 
-  // useEffect(() => {
-  //   setRedirection(true);
-  // }, [currentSearch]);
-
   // pages de requêtes :
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
   const getRealNumber = (results) => {
@@ -85,7 +73,6 @@ const FiltersBarMobile = ({ title, showResults }) => {
       return results;
     }
   };
-  const totalNumberOfCardsSearched = getRealNumber(totalNumberOfResults);
 
   const handleSearchChange = (e) => {
     const type = e.target.name;
@@ -97,9 +84,6 @@ const FiltersBarMobile = ({ title, showResults }) => {
     });
   };
 
-  const handleFilterBarMobileOpenClick = () => {
-    dispatch(openFilterMobileMenu());
-  };
   const handleCloseFilterMobileMenuCloseClick = () => {
     dispatch(closeFilterMobileMenu());
   };
@@ -112,12 +96,11 @@ const FiltersBarMobile = ({ title, showResults }) => {
   const handleDeleteCurrentSearch = () => {
     dispatch(deleteCurrentSearch());
     dispatch(closeFilterMobileMenu());
-    dispatch(getCardAfterfilterAction(initialSearchState));
+    // dispatch(getCardAfterfilterAction(initialSearchState));
     setRedirection(true);
   };
 
   const toggleShowInput = (item) => {
-    // console.log(item);
     const inputShowedCopy = inputShowed;
     setInputShowed({
       ...inputShowedCopy,
@@ -135,11 +118,10 @@ const FiltersBarMobile = ({ title, showResults }) => {
     e.preventDefault();
     dispatch(setCurrentSearch("searchWords", newSearch.searchWords));
     dispatch(setCurrentSearch("searchTopic", newSearch.searchTopic));
-    // console.log(newSearch.searchTopic);
     dispatch(setCurrentSearch("searchOrder", newSearch.searchOrder));
     dispatch(setCurrentSearch("searchCategory", newSearch.searchCategory));
     dispatch(setCurrentSearch("searchPage", 1));
-    dispatch(getCardAfterfilterAction(newSearch));
+    // dispatch(getCardAfterfilterAction(newSearch));
   };
 
   const redirectLink = SearchLinkRedirect();
@@ -151,7 +133,9 @@ const FiltersBarMobile = ({ title, showResults }) => {
         {filterMobileMenuOpen && (
           <div className="FiltersBarMobile__menu">
             <div className="FiltersBarMobile__menu--top">
-              <CloseLogo onClick={handleCloseFilterMobileMenuCloseClick} />
+              <CloseLogo
+                onClick={() => handleCloseFilterMobileMenuCloseClick()}
+              />
             </div>
             <div className="FiltersBarMobile__search">
               <h1 className="title title-1">Votre recherche :</h1>

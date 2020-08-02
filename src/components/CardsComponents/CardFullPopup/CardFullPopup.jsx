@@ -4,36 +4,47 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect, withRouter } from "react-router-dom";
 
-// import CardSliderPopup from "../CardSlider/CardSliderPopup";
-import CardSliderSwipable from "../CardSlider/CardSliderSwipable";
-import CardSliderFullscreen from "../CardSlider/CardSliderFullscreen";
-import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
-
-import {
-  selectShowPopupCard,
-  selectImageIsLoaded,
-} from "../../../redux/layout/layout-selectors";
+// redux
+import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import {
   selectClickedCard,
   selectCardLikers,
-  selectFilterError,
   selectCurrentSearch,
+  selectCardsFetchedCards,
+  selectOtherCardsByAuthor,
 } from "../../../redux/filter/filter-selectors";
-import { selectFullscreen } from "../../../redux/layout/layout-selectors";
 import {
   setClickedCard,
   setNoClickedCard,
   toggleLikeCardAction,
-  getCardByIdAction,
   getCardAfterfilterAction,
+  getOtherCardsByAuthorNameAction,
+  getCardCommentsAction,
 } from "../../../redux/filter/filter-actions";
 import {
   closePopupCard,
   showFullscreen,
 } from "../../../redux/layout/layout-actions";
-import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
-import { getOtherCardsByAuthorNameAction } from "../../../redux/filter/filter-actions";
+import {
+  selectFullscreen,
+  selectImageIsLoaded,
+  selectShowPopupCard,
+} from "../../../redux/layout/layout-selectors";
 
+// components
+import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
+import CardSliderSwipable from "../CardSlider/CardSliderSwipable";
+import CardSliderFullscreen from "../CardSlider/CardSliderFullscreen";
+import Loading from "../../Loading/Loading";
+import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
+import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrapper";
+import ConnexionRedirect from "../../LayoutComponents/ConnexionRedirect/ConnexionRedirect";
+
+// Services & helpers
+import { formattedDate, renameCategory } from "../../../helper/index";
+import { base } from "../../../services/configService";
+
+// Assets
 import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevrons/chevron-back-circle.svg";
 import { ReactComponent as ChevronCircleRight } from "../../../assets/images/chevrons/chevron-forward-circle.svg";
 import { ReactComponent as LogoFacebook } from "../../../assets/images/logo-facebook.svg";
@@ -42,25 +53,13 @@ import { ReactComponent as LogoYoutube } from "../../../assets/images/logo-youtu
 import { ReactComponent as LogoGithub } from "../../../assets/images/logo-github.svg";
 import { ReactComponent as BookmarkEmpty } from "../../../assets/images/bookmark-outline.svg";
 import { ReactComponent as BookmarkFull } from "../../../assets/images/bookmark.svg";
-// import { ReactComponent as BookmarkFilled } from "../../../assets/images/bookmark.svg";
 import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outline.svg";
 import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
-// import { ReactComponent as HeartFilled } from "../../../assets/images/heart.svg";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as FullscreenLogo } from "../../../assets/images/expand.svg";
-import Loading from "../../Loading/Loading";
-import { formattedDate, renameCategory } from "../../../helper/index";
-import { base } from "../../../services/configService";
+
+// SCSS
 import "./CardFullPopup.scss";
-import {
-  selectCardsFetchedCards,
-  selectOtherCardsByAuthor,
-} from "../../../redux/filter/filter-selectors";
-import { selectCurrentUser } from "../../../redux/user/user-selectors";
-import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
-import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrapper";
-import { getCardById } from "../../../services/cardsService";
-import ConnexionRedirect from "../../LayoutComponents/ConnexionRedirect/ConnexionRedirect";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
 // handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
@@ -84,7 +83,6 @@ const CardFullPopup = ({ history }) => {
   const imageIsLoaded = useSelector(selectImageIsLoaded);
 
   useEffect(() => {
-    // setRedirection(false);
     if (!clickedCard || !cardsArray) return;
     setCardsArrayLength(cardsArray.length);
     setIndexOfCurrentCard(cardsArray.indexOf(clickedCard));
@@ -99,6 +97,7 @@ const CardFullPopup = ({ history }) => {
       return false;
     }
   };
+
   useEffect(() => {
     setCardIsLiked(userHasLiked());
   }, [cardLikers, currentUser]);
@@ -110,15 +109,7 @@ const CardFullPopup = ({ history }) => {
     if (clickedCard && clickedCard.user && clickedCard.user.id) {
       dispatch(getOtherCardsByAuthorNameAction(clickedCard.user.id));
     }
-    // if (popupShown && document.querySelector(".CardFullPopup.active")) {
-    //   document.querySelector(".CardFullPopup.active").scroll(0, 0);
-    // }
   }, [clickedCard, dispatch]);
-
-  // useEffect(() => dispatch(getCardByIdAction(clickedCardId)), [
-  //   clickedCardId,
-  //   dispatch,
-  // ]);
 
   const clickedCardDate =
     clickedCard && formattedDate(new Date(clickedCard.modified));

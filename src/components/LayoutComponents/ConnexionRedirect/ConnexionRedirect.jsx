@@ -1,15 +1,11 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CustomButton from "../CustomButton/CustomButton";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 
 import "./ConnexionRedirect.scss";
-import { deleteFilterErrorAction } from "../../../redux/filter/filter-actions";
 
 const ConnexionRedirect = ({ handleClose }) => {
-  const dispatch = useDispatch();
-
   const handleScrollReset = () => {
     const app = document.getElementsByClassName("App")[0];
     if (app) {

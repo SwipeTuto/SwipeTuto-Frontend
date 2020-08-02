@@ -99,14 +99,30 @@ export const selectFilterError = createSelector(
 )
 
 export const selectClickedCardComments = createSelector(
-  [selectClickedCard],
-  card => card && card.card_comments
+  [selectFilter],
+  filter => filter && filter.clickedCardComments
+)
+
+export const selectCommentLikers = (commentId) => createSelector(
+  [selectClickedCardComments],
+  comments => comments && comments[commentId] && comments[commentId].likes
+)
+
+
+export const selectClickedCardCommentsArray = createSelector(
+  [selectFilter],
+  filter => filter && filter.clickedCardComments && filter.clickedCardComments.results
 )
 export const selectClickedCardCommentsNumber = createSelector(
-  [selectClickedCard],
-  card => card && card.number_of_comments
+  [selectFilter],
+  filter => filter && filter.clickedCardComments && filter.clickedCardComments.count
 )
 export const selectClickedCardId = createSelector(
   [selectClickedCard],
   card => card && card.id
+)
+
+export const selectClickedCardCommentsNextLink = createSelector(
+  [selectFilter],
+  filter => filter && filter.clickedCardComments && filter.clickedCardComments.next
 )

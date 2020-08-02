@@ -1,0 +1,23 @@
+@import "../../../variables.scss";
+
+.CommentsInput {
+  &__newComment {
+    &--input {
+      width: 100%;
+      resize: none;
+      @include input-style;
+      margin: 1rem 0;
+
+      &:focus {
+        background-color: $white;
+
+        &::placeholder {
+          visibility: hidden;
+        }
+      }
+    }
+  }
+  .custom-button {
+    margin-left: auto;
+  }
+}

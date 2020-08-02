@@ -1,26 +1,10 @@
 // Présent dans App.js
 
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink, Link } from "react-router-dom";
-import { initialSearchState } from "../../../helper/index";
-import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg";
-import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
-import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
-import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
-import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
-// import SwipeTutoSmallLogo from "../../../assets/logos/logo-small-reduced.png";
-// import SwipeTutoSmallFull from "../../../assets/logos/logo-full-reduced.png";
-import SwipeTutoSmallSmall from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
-import SwipeTutoSmallFull from "../../../assets/logos/Logo full border black smaller_350px.png";
+import { Redirect, NavLink, Link } from "react-router-dom";
 
-import { topicArray } from "../../../helper/index";
-
-import CustomButton from "../CustomButton/CustomButton";
-import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
-
-import { getCardsAction } from "../../../redux/filter/filter-actions";
+// redux
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import {
   selectSearchCategory,
@@ -38,14 +22,27 @@ import {
   setCurrentSearch,
   deleteCurrentSearch,
 } from "../../../redux/filter/filter-actions";
+
+// helper
+import { initialSearchState } from "../../../helper/index";
+import { topicArray } from "../../../helper/index";
+
+// components
+import CustomButton from "../CustomButton/CustomButton";
+import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
 import SearchForm from "../SearchForm/SearchForm";
+import UserUsername from "../../UserComponents/UserAvatar/UserUsername";
+
+// assets
+import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg";
+import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
+import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
+import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
+import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
+import SwipeTutoSmallSmall from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
 
 import "./NavTop.scss";
-
-import { urlParams } from "../../../helper/index";
-import { test2 } from "../../../services/cardsService";
-import UserUsername from "../../UserComponents/UserAvatar/UserUsername";
 
 const NavTop = (props) => {
   const dispatch = useDispatch();
@@ -60,7 +57,6 @@ const NavTop = (props) => {
   const currentSearchPageNumber = useSelector(selectSearchPage);
 
   const [redirection, setRedirection] = useState(false);
-  const [newTopic, setNewTopic] = useState("");
 
   useEffect(() => {
     setRedirection(true);
@@ -71,18 +67,13 @@ const NavTop = (props) => {
     const topicName = e.target.name ? e.target.name : null;
     dispatch(setCurrentSearch("searchTopic", topicName));
     dispatch(setCurrentSearch("searchPage", 1));
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        searchTopic: topicName,
-        searchPage: 1,
-      })
-    );
-  };
-
-  const cardsClick = (e) => {
-    dispatch(deleteCurrentSearch());
-    dispatch(getCardAfterfilterAction(initialSearchState));
+    // dispatch(
+    //   getCardAfterfilterAction({
+    //     ...currentSearch,
+    //     searchTopic: topicName,
+    //     searchPage: 1,
+    //   })
+    // );
   };
 
   const redirectLink = SearchLinkRedirect();
@@ -94,7 +85,6 @@ const NavTop = (props) => {
         <div className="NavTop__left">
           <div className="NavTop__swipeTuto">
             <img src={SwipeTutoSmallSmall} alt="" />
-            {/* <img src={SwipeTutoSmallFull} alt="" /> */}
           </div>
           <NavLink exact className="NavTop__link" to="/">
             Accueil

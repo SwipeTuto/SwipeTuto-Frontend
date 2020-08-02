@@ -1,32 +1,29 @@
-// Component qui présente en résumé dans la grille un slide avec image de preview, auteur etc ...
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
 
-import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
-import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
-
-import { selectClickedCard } from "../../../redux/filter/filter-selectors";
+// redux
 import {
   setClickedCard,
   getCardByIdAction,
   toggleLikeCardAction,
 } from "../../../redux/filter/filter-actions";
 import { showPopupCard } from "../../../redux/layout/layout-actions";
-import { setType } from "../../../redux/filter/filter-actions";
+import { selectCurrentUser } from "../../../redux/user/user-selectors";
+import { getUserByIdAction } from "../../../redux/user/user-actions";
 
+// service & helper
 import { base } from "../../../services/configService";
 import { renameCategory, truncate } from "../../../helper/index";
 
-import "./CardPreviewSmall.scss";
-import { getUserByIdAction } from "../../../redux/user/user-actions";
-import { getUserById } from "../../../services/userService";
-
+// assets
 import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
 import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outline.svg";
-import { selectCurrentUser } from "../../../redux/user/user-selectors";
+
+// components
 import ConnexionRedirect from "../../LayoutComponents/ConnexionRedirect/ConnexionRedirect";
-// import { ReactComponent as HeartFilled } from "../../../assets/images/heart.svg";
+import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
+
+import "./CardPreviewSmall.scss";
 
 const CardPreviewSmall = ({ card }) => {
   const { media_image, user, categorie, name, number_of_likes, likes } = card;
@@ -80,7 +77,6 @@ const CardPreviewSmall = ({ card }) => {
     <>
       {connectRedirect && <ConnexionRedirect handleClose={handleClose} />}
       <div className="CardPreviewSmall" data-slideid="1">
-        {/* <Link to={`/search?card_id=${card.id}`}> */}
         <div
           className="CardPreviewSmall__image"
           onClick={() => handleClickedCardClick()}

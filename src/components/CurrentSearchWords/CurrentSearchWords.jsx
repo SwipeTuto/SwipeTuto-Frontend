@@ -36,13 +36,13 @@ const CurrentSearchWords = ({ history }) => {
     const itemToDelete = () =>
       e.target.dataset.searchitem ? e.target.dataset.searchitem : null;
     dispatch(deleteCurrentSearch(itemToDelete()));
-    dispatch(
-      getCardAfterfilterAction({
-        ...currentSearch,
-        [e.target.dataset.searchitem]: null,
-        searchPage: 1,
-      })
-    );
+    // dispatch(
+    //   getCardAfterfilterAction({
+    //     ...currentSearch,
+    //     [e.target.dataset.searchitem]: null,
+    //     searchPage: 1,
+    //   })
+    // );
     dispatch(setCurrentSearch("searchPage", 1));
     setRedirection(true);
   };

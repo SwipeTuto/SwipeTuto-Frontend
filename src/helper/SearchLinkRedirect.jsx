@@ -7,7 +7,6 @@ import {
   selectSearchWords,
   selectSearchOrder,
   selectSearchPage,
-  selectClickedCard,
 } from "../redux/filter/filter-selectors";
 
 const SearchLinkRedirect = () => {

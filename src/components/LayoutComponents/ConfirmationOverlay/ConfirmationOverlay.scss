@@ -1,6 +1,6 @@
 @import "../../../variables.scss";
 
-.ConnexionRedirect {
+.ConfirmationOverlay {
   z-index: 10000000;
   position: fixed;
   top: 0;
@@ -12,10 +12,9 @@
   align-items: center;
   justify-content: center;
 
-  h1,
-  h3,
+  h2,
   .custom-button {
-    margin: 0.5rem 2rem;
+    margin: 2rem;
     text-align: center;
   }
 
@@ -31,23 +30,15 @@
     margin: 2rem auto;
   }
 
-  &__close {
-    @include big-logo-size;
-    align-self: flex-end;
-    margin-bottom: 3rem;
-    cursor: pointer;
+  &__buttons {
+    display: flex;
 
-    &:hover {
-      fill: $primary-light;
+    button.custom-button {
+      margin: 0 !important;
     }
-  }
 
-  .custom-button:last-child {
-    margin-bottom: 1.5rem;
-    font-size: 2rem;
-  }
-
-  h3.title.title-3 {
-    margin-top: 1.5rem;
+    .custom-button:last-child {
+      margin-left: 1rem !important;
+    }
   }
 }

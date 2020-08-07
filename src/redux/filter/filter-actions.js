@@ -3,7 +3,7 @@ import { setLoading, setLoaded, setImageLoading, setImageLoaded } from '../layou
 
 import { searchBar } from '../../services/searchService'
 import { getCards, CardsActionTypes, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
-import { toggleLike, toggleCommentLike, addComment, getCardComments, getCardCommentsOtherPage } from "../../services/socialService"
+import { toggleLike, toggleCommentLike, addComment, getCardComments, getCardCommentsOtherPage, deleteComment, modifyComment } from "../../services/socialService"
 
 
 
@@ -261,6 +261,8 @@ export const addCommentAction = (cardId, comment) => {
     return addComment(cardId, comment)
       .then(rep => {
         dispatch(addCommentSuccess())
+        dispatch(getCardCommentsAction(cardId))
+
         dispatch(setLoaded()) // stop loader
       })
       .catch(err => {
@@ -318,3 +320,55 @@ export const getCardCommentsNextPageAction = (url) => {
       })
   }
 };
+
+export const deleteCommentAction = (commentId, clickedCardId) => {
+  return dispatch => {
+    return deleteComment(commentId)
+      .then(rep => {
+        console.log("delete comments rep : ", rep)
+        dispatch(getCardCommentsAction(clickedCardId))
+        dispatch(deleteCommentSuccess())
+        dispatch(setLoaded()) // stop loader
+      })
+      .catch(err => {
+        console.log("delete comments rep : ", err)
+        dispatch(deleteCommentErrors(err))
+        dispatch(setLoaded()) // stop loader
+      })
+  }
+};
+
+const deleteCommentErrors = error => ({
+  type: FilterActionTypes.DELETE_COMMENT_ERROR,
+  payload: error
+})
+
+const deleteCommentSuccess = () => ({
+  type: FilterActionTypes.DELETE_COMMENT_SUCCESS,
+})
+
+
+// export const modifyCommentAction = (commentId, newComment) => {
+//   return dispatch => {
+//     return modifyComment(commentId, newComment)
+//       .then(rep => {
+//         console.log("modify comments rep : ", rep)
+//         dispatch(modifyCommentSuccess())
+//         dispatch(setLoaded()) // stop loader
+//       })
+//       .catch(err => {
+//         console.log("modify comments rep : ", err)
+//         dispatch(modifyCommentErrors(err))
+//         dispatch(setLoaded()) // stop loader
+//       })
+//   }
+// };
+
+// const modifyCommentErrors = error => ({
+//   type: FilterActionTypes.MODIFY_COMMENT_ERROR,
+//   payload: error
+// })
+
+// const modifyCommentSuccess = () => ({
+//   type: FilterActionTypes.MODIFY_COMMENT_SUCCESS,
+// })

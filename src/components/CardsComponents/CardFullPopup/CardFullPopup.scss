@@ -200,7 +200,7 @@
       }
 
       &__section {
-        width: 90%;
+        width: 100%;
       }
 
       &__title {
@@ -219,10 +219,28 @@
 
   @media screen and (max-width: $bp-phone) {
     .CardFullPopup {
+      &__wrapper {
+        padding: $inner-component-padding-phone;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+      }
+
+      &__commentaires {
+        margin: 0;
+      }
+
       &__autres-posts {
         .autres-posts {
+          width: 100%;
+
           &--grid {
-            grid-template-columns: repeat(2, max-content);
+            grid-template-columns: repeat(2, 1fr);
+            width: 100%;
+          }
+
+          &--preview {
+            width: 100%;
+            height: auto;
           }
         }
       }

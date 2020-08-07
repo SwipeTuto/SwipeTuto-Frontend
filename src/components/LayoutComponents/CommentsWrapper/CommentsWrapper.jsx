@@ -42,32 +42,10 @@ const CommentsWrapper = () => {
   const nextLink = useSelector(selectClickedCardCommentsNextLink);
   const [newComment, setNewComment] = useState("");
   const [newCommentSubmit, setNewCommentSubmit] = useState(false);
-  // const [commentError, setCommentError] = useState(false);
-  // const [newCommentObject, setNewCommentObject] = useState();
-  const [newCommentsLocalArray, setNewCommentsLocalArray] = useState([]);
 
   useEffect(() => {
-    // console.log(typeof clickedCardId);
     if (clickedCardId) dispatch(getCardCommentsAction(clickedCardId));
-    // if (newCommentSubmit) {
-    //   dispatch(getCardCommentsAction(clickedCardId));
-    //   setNewCommentSubmit(false);
-    // }
   }, [clickedCardId, newCommentSubmit]);
-
-  useEffect(() => {
-    console.log(newCommentsLocalArray);
-  }, [newCommentsLocalArray]);
-
-  // useEffect(() => {
-  //   console.log(commentsArray, newCommentsLocalArray);
-  // }, [commentsArray, newCommentsLocalArray]);
-  // useEffect(() => {
-  //   if (newCommentSubmit) {
-  //     dispatch(getCardCommentsAction(clickedCardId));
-  //     setNewCommentSubmit(false);
-  //   }
-  // }, [newCommentSubmit, clickedCardId]);
 
   const handleAddCommentClick = async (e) => {
     e.preventDefault();
@@ -76,35 +54,8 @@ const CommentsWrapper = () => {
     } else {
       dispatch(addCommentAction(clickedCardId, newComment));
 
-      // setNewCommentSubmit(false);
-
       if (currentUser) {
-        const now = new Date();
-
-        const newCommentObject = {
-          author: {
-            id: currentUser.id,
-            username: currentUser.username,
-            first_name: currentUser.first_name,
-            last_name: currentUser.last_name,
-            email: currentUser.email,
-            profile: currentUser.profile,
-            avatar: currentUser.avatar,
-          },
-          text: newComment,
-          posted_on: now,
-        };
-
         setNewComment("");
-        setNewCommentsLocalArray([newCommentObject, ...newCommentsLocalArray]);
-        // setNewCommentSubmit(true);
-
-        const commentsNumberElement = document.getElementsByClassName(
-          "CommentsWrapper__title--commentsNumber"
-        )[0];
-        commentsNumberElement.textContent = `${
-          parseInt(commentsNumberElement.textContent) + 1
-        }`;
       }
     }
   };
@@ -118,10 +69,7 @@ const CommentsWrapper = () => {
   };
 
   const handleNextCommentsLoad = () => {
-    setNewCommentsLocalArray([...newCommentsLocalArray, ...commentsArray]);
-    // const newCommentsLocalArrayCopy = newCommentsLocalArray;
     dispatch(getCardCommentsNextPageAction(nextLink));
-    // setNewCommentsLocalArray([...newCommentsLocalArrayCopy, commentsArray]);
   };
 
   return (
@@ -143,25 +91,17 @@ const CommentsWrapper = () => {
                 Une erreur est survenue lors de la publication du commentaire.
                 Merci de réessayer plus tard. Si le problème persiste, veuillez
                 nous contacter.
-                <p
-                  className="CommentsWrapper__error-delete"
-                  onClick={() => dispatch(deleteFilterErrorAction())}
-                >
-                  J'ai compris.
-                </p>
+              </p>
+              <p
+                className="CommentsWrapper__error-delete"
+                onClick={() => dispatch(deleteFilterErrorAction())}
+              >
+                J'ai compris.
               </p>
             </>
           ) : (
             ""
           )}
-
-          {newCommentsLocalArray &&
-            newCommentsLocalArray.length !== 0 &&
-            newCommentsLocalArray &&
-            newCommentsLocalArray.map((comment) => (
-              <FirstLevelComment comment={comment} />
-            ))}
-
           {commentsArray && commentsArray.length === 0 ? (
             <p className="CommentsWrapper__comment">
               Aucun commentaire pour le moment.
@@ -169,7 +109,7 @@ const CommentsWrapper = () => {
           ) : (
             commentsArray &&
             commentsArray.map((comment) => (
-              <FirstLevelComment comment={comment} />
+              <FirstLevelComment comment={comment} key={comment.id} />
             ))
           )}
 
@@ -179,22 +119,6 @@ const CommentsWrapper = () => {
             </CustomButton>
           )}
         </div>
-        {/* <form className="CommentsWrapper__newComment">
-          <textarea
-            placeholder="Ajouter un commentaire..."
-            className="CommentsWrapper__newComment--input"
-            type="text"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          />
-          <CustomButton
-            color="dark"
-            disabled={newComment === "" ? "disabled" : ""}
-            onClick={(e) => handleAddCommentClick(e)}
-          >
-            Envoyer
-          </CustomButton>
-        </form> */}
         <CommentsInput
           newComment={newComment}
           handleAddCommentClick={handleAddCommentClick}

@@ -1,6 +1,8 @@
 @import "../../../variables.scss";
 
 .CommentsWrapper {
+  margin: 0 auto;
+
   .comments-section {
     margin: 3rem 0;
 
@@ -42,5 +44,24 @@
     &:hover {
       font-weight: bold;
     }
+  }
+}
+@media screen and (max-width: $bp-tablet) {
+  .CommentsWrapper {
+    max-width: 45rem;
+  }
+}
+
+@media screen and (max-width: $bp-phone) {
+  .CommentsWrapper {
+    .CommentsInput {
+      margin-bottom: 6rem;
+    }
+  }
+}
+
+@media screen and (max-width: $bp-small-phone) {
+  .CommentsWrapper {
+    max-width: 100%;
   }
 }

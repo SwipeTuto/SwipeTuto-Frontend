@@ -4,7 +4,7 @@
   display: none;
   visibility: hidden;
   z-index: 10000000;
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
 
   &::-webkit-scrollbar {
     // display: none;

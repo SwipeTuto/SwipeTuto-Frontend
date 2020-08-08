@@ -104,8 +104,11 @@ export const selectClickedCardComments = createSelector(
 )
 
 export const selectCommentLikers = (commentId) => createSelector(
-  [selectClickedCardComments],
-  comments => comments && comments[commentId] && comments[commentId].likes
+  [selectClickedCardCommentsArray],
+  comments => {
+    const selectedComment = comments.filter(comment => comment.id === commentId);
+    return selectedComment && selectedComment[0] && selectedComment[0].likes
+  }
 )
 
 
@@ -126,3 +129,4 @@ export const selectClickedCardCommentsNextLink = createSelector(
   [selectFilter],
   filter => filter && filter.clickedCardComments && filter.clickedCardComments.next
 )
+

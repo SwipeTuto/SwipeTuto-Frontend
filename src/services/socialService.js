@@ -24,10 +24,10 @@ export const toggleCommentLike = (commentId) => {
     }
   };
 
-  // return axios.get(`${baseURL}likes/toggle/${cardId}`, requestOptions)
-  //   .then(rep => {
-  //     return rep
-  //   })
+  return axios.get(`${baseURL}likes/toggle-comment/${commentId}`, requestOptions)
+    .then(rep => {
+      return rep
+    })
 }
 
 export const getLikers = (cardId) => {
@@ -56,6 +56,48 @@ export const addComment = (cardId, comment) => {
       return rep
     })
 }
+export const addReply = (commentId, comment) => {
+  var config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': authHeader()
+    }
+  }
+  return axios
+    .post(`${baseURL}card/add_reply_comment/${commentId}/`,
+      { "text": comment }
+      , config)
+    .then(rep => {
+      return rep
+    })
+}
+
+export const getReplies = (commentId) => {
+  var config = {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }
+  return axios
+    .get(`${baseURL}card/list_reply_comment/${commentId}/`, config)
+    .then(rep => {
+      return rep
+    })
+}
+export const getNextReplies = (url) => {
+  var config = {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }
+  return axios
+    .get(url, config)
+    .then(rep => {
+      return rep
+    })
+}
+
+
 
 export const getCardComments = (cardId) => {
   var config = {
@@ -70,6 +112,21 @@ export const getCardComments = (cardId) => {
       return rep
     })
 }
+export const getCardCommentsNext = (url) => {
+  var config = {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }
+  return axios
+    .get(url
+      , config)
+    .then(rep => {
+      return rep
+    })
+}
+
+
 
 export const deleteComment = (commentId) => {
   var config = {
@@ -79,7 +136,7 @@ export const deleteComment = (commentId) => {
     }
   }
   return axios
-    .delete(`${baseURL}card/get_comment/${commentId}/`
+    .delete(`${baseURL}card/manage_comment/${commentId}/`
       , config)
     .then(rep => {
       return rep
@@ -94,7 +151,7 @@ export const modifyComment = (commentId, newComment) => {
     }
   }
   return axios
-    .patch(`${baseURL}card/get_comment/${commentId}/`,
+    .patch(`${baseURL}card/manage_comment/${commentId}/`,
       { "text": newComment },
       config)
     .then(rep => {

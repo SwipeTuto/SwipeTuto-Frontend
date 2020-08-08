@@ -13,11 +13,11 @@ import {
   addCommentAction,
   deleteFilterErrorAction,
   getCardCommentsAction,
-  getCardCommentsNextPageAction,
 } from "../../../redux/filter/filter-actions";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 
 // services & helper
+import { getCardCommentsNext } from "../../../services/socialService";
 
 // components
 import FirstLevelComment from "./FirstLevelComment/FirstLevelComment";
@@ -36,16 +36,23 @@ const CommentsWrapper = () => {
   const [connectRedirect, setConnectRedirect] = useState(false);
   const commentsNumber = useSelector(selectClickedCardCommentsNumber);
   const commentsArray = useSelector(selectClickedCardCommentsArray);
+  const [localCommentsArray, setLocalCommentsArray] = useState();
   const clickedCardId = useSelector(selectClickedCardId);
   const currentUser = useSelector(selectCurrentUser);
   const commentError = useSelector(selectFilterError);
   const nextLink = useSelector(selectClickedCardCommentsNextLink);
+  const [localNextLink, setLocalNextLink] = useState();
   const [newComment, setNewComment] = useState("");
   const [newCommentSubmit, setNewCommentSubmit] = useState(false);
 
   useEffect(() => {
     if (clickedCardId) dispatch(getCardCommentsAction(clickedCardId));
   }, [clickedCardId, newCommentSubmit]);
+
+  useEffect(() => {
+    setLocalCommentsArray(commentsArray);
+    setLocalNextLink(nextLink);
+  }, [commentsArray, nextLink]);
 
   const handleAddCommentClick = async (e) => {
     e.preventDefault();
@@ -68,8 +75,17 @@ const CommentsWrapper = () => {
     setConnectRedirect(false);
   };
 
-  const handleNextCommentsLoad = () => {
-    dispatch(getCardCommentsNextPageAction(nextLink));
+  const handleNextCommentsLoad = async () => {
+    const nextComments = getCardCommentsNext(nextLink);
+    await nextComments.then((rep) => {
+      rep &&
+        rep.data &&
+        rep.data.results &&
+        setLocalCommentsArray([...localCommentsArray, ...rep.data.results]);
+      rep && rep.data && rep.data.next
+        ? setLocalNextLink(rep.data.next)
+        : setLocalNextLink(null);
+    });
   };
 
   return (
@@ -102,18 +118,18 @@ const CommentsWrapper = () => {
           ) : (
             ""
           )}
-          {commentsArray && commentsArray.length === 0 ? (
+          {localCommentsArray && localCommentsArray.length === 0 ? (
             <p className="CommentsWrapper__comment">
               Aucun commentaire pour le moment.
             </p>
           ) : (
-            commentsArray &&
-            commentsArray.map((comment) => (
+            localCommentsArray &&
+            localCommentsArray.map((comment) => (
               <FirstLevelComment comment={comment} key={comment.id} />
             ))
           )}
 
-          {nextLink && (
+          {localNextLink && (
             <CustomButton color="white" onClick={handleNextCommentsLoad}>
               Charger plus.
             </CustomButton>

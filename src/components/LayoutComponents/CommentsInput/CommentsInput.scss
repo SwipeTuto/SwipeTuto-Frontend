@@ -1,6 +1,7 @@
 @import "../../../variables.scss";
 
-.CommentsInput {
+.CommentsInput,
+.CommentsInputReply {
   margin: 2rem 0;
 
   &__newComment {

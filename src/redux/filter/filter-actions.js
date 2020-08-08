@@ -3,7 +3,7 @@ import { setLoading, setLoaded, setImageLoading, setImageLoaded } from '../layou
 
 import { searchBar } from '../../services/searchService'
 import { getCards, CardsActionTypes, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
-import { toggleLike, toggleCommentLike, addComment, getCardComments, getCardCommentsOtherPage, deleteComment, modifyComment } from "../../services/socialService"
+import { toggleLike, toggleCommentLike, addComment, getCardComments, getCardCommentsOtherPage, deleteComment, modifyComment, addReply } from "../../services/socialService"
 
 
 
@@ -281,6 +281,21 @@ const addCommentSuccess = () => ({
   type: FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS,
 })
 
+export const addReplyAction = (cardId, commentId, comment) => {
+  return dispatch => {
+    return addReply(commentId, comment)
+      .then(rep => {
+        dispatch(addCommentSuccess())
+        dispatch(getCardCommentsAction(cardId))
+        dispatch(setLoaded()) // stop loader
+      })
+      .catch(err => {
+        dispatch(addCommentErrors(err))
+        dispatch(setLoaded()) // stop loader
+      })
+  }
+};
+
 export const getCardCommentsAction = (cardId) => {
   return dispatch => {
     dispatch(setLoading())
@@ -306,32 +321,30 @@ const getCardCommentsSuccess = (comments) => ({
   payload: comments
 })
 
-export const getCardCommentsNextPageAction = (url) => {
-  return dispatch => {
-    dispatch(setLoading())
-    return getCardCommentsOtherPage(url)
-      .then(rep => {
-        dispatch(getCardCommentsSuccess(rep.data))
-        dispatch(setLoaded()) // stop loader
-      })
-      .catch(err => {
-        dispatch(getCardCommentsError(err))
-        dispatch(setLoaded()) // stop loader
-      })
-  }
-};
+// export const getCardCommentsNextPageAction = (url) => {
+//   return dispatch => {
+//     dispatch(setLoading())
+//     return getCardCommentsOtherPage(url)
+//       .then(rep => {
+//         dispatch(getCardCommentsSuccess(rep.data))
+//         dispatch(setLoaded()) // stop loader
+//       })
+//       .catch(err => {
+//         dispatch(getCardCommentsError(err))
+//         dispatch(setLoaded()) // stop loader
+//       })
+//   }
+// };
 
 export const deleteCommentAction = (commentId, clickedCardId) => {
   return dispatch => {
     return deleteComment(commentId)
       .then(rep => {
-        console.log("delete comments rep : ", rep)
         dispatch(getCardCommentsAction(clickedCardId))
         dispatch(deleteCommentSuccess())
         dispatch(setLoaded()) // stop loader
       })
       .catch(err => {
-        console.log("delete comments rep : ", err)
         dispatch(deleteCommentErrors(err))
         dispatch(setLoaded()) // stop loader
       })

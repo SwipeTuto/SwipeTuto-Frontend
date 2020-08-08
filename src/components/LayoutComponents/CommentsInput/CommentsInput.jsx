@@ -4,12 +4,14 @@ import CustomButton from "../CustomButton/CustomButton";
 import "./CommentsInput.scss";
 
 const CommentsInput = ({
+  className,
   newComment,
   handleInputValueChange,
   handleAddCommentClick,
+  placeholderText,
 }) => {
   return (
-    <form className="CommentsInput">
+    <form className={className ? className : "CommentsInput"}>
       <textarea
         placeholder="Ajouter un commentaire..."
         className="CommentsInput__newComment--input"

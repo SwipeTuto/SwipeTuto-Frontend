@@ -1,0 +1,231 @@
+@import "../../../../variables.scss";
+
+.SecondLevelComment {
+  margin-bottom: 1rem;
+  margin-left: 5rem;
+  display: flex;
+
+  &__wrapper {
+    flex-grow: 1;
+    margin: 0 1rem;
+  }
+
+  &__author {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  &__center {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: $grey-light;
+    border-radius: $box-radius;
+    border: 1px solid $grey;
+
+    .UserUsername {
+      display: inline-block;
+      align-self: flex-start;
+    }
+
+    .UserUsername__username {
+      // color: $primary-light;
+      font-weight: bold;
+      margin-bottom: 0.6rem;
+      display: inline-block;
+    }
+  }
+  &__actions {
+    margin-top: 0.2rem;
+    display: flex;
+    // justify-content: flex-end;
+    font-size: 1rem;
+  }
+
+  &__action {
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: $primary-light;
+    }
+    &:not(:first-of-type) {
+      margin-left: 1.5rem;
+    }
+    &:nth-of-type(2) {
+      margin-left: auto;
+    }
+  }
+
+  &__mobile-menu {
+    display: none;
+  }
+
+  &__aside {
+    // background-color: red;
+    // border-left: 1px solid $grey-dark;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &--likes,
+    &--comments {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    &--logo {
+      @include logo-size;
+      margin-right: 0.6rem;
+      justify-self: flex-start;
+
+      &.comment-logo__liked {
+        fill: $red-like;
+      }
+    }
+  }
+
+  &__replies {
+    &--message {
+      // text-align: center;
+      margin-bottom: 3rem;
+      margin-left: 5rem;
+      cursor: pointer;
+      font-weight: bold;
+      color: $primary-dark;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: $primary-light;
+      }
+    }
+    .CommentsInput {
+      margin: 0 5rem;
+
+      button.custom-button {
+        margin-left: auto;
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__mobile {
+    &-stats {
+      display: none;
+    }
+
+    &--logo {
+      &.comment-logo__liked {
+        fill: $red-like;
+      }
+    }
+  }
+
+  @media screen and (max-width: $bp-tablet) {
+    .SecondLevelComment {
+      &__wrapper {
+        margin: 0 0.5rem;
+        font-size: 1.6rem;
+      }
+
+      &__center {
+        .UserUsername__username {
+          // margin-bottom: 0.3rem;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $bp-phone) {
+    .SecondLevelComment {
+      &__center {
+        position: relative;
+      }
+      &__mobile-menu {
+        z-index: 1000000;
+        display: block;
+        position: absolute;
+        top: 0.5rem;
+        right: 0rem;
+
+        &--logo {
+          @include logo-size;
+        }
+
+        &--panel {
+          position: absolute;
+          top: 0.2rem;
+          right: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          background-color: $white;
+          box-shadow: $card-shadow $card-shadow-2;
+          border: 1px solid $grey;
+        }
+      }
+
+      &__mobile-action {
+        margin: 1rem;
+      }
+
+      &__author {
+        display: flex;
+        flex-direction: column;
+        height: max-content;
+
+        .user_avatar {
+          height: 3.5rem;
+          width: 3.5rem;
+          margin: 0 auto;
+        }
+      }
+
+      &__mobile {
+        &-stats {
+          margin-left: auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          font-size: 1rem;
+          margin-top: 0.6rem;
+        }
+        &--likes,
+        &--comments {
+          display: flex;
+        }
+        &--likes {
+          margin-right: 0.6rem;
+        }
+
+        &--logo {
+          @include logo-size;
+          margin-left: 0.2rem;
+        }
+      }
+
+      &__action {
+        &:first-of-type {
+          margin-right: auto;
+        }
+      }
+
+      &__action:last-of-type {
+        display: none;
+      }
+
+      // &__action:not(:first-of-type) {
+      //   margin-left: 1rem;
+      // }
+
+      &__aside {
+        display: none;
+      }
+    }
+  }
+
+  @media screen and (max-width: $bp-small-phone) {
+  }
+}

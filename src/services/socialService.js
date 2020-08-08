@@ -79,7 +79,7 @@ export const deleteComment = (commentId) => {
     }
   }
   return axios
-    .delete(`${baseURL}card/get_comment/${commentId}/`
+    .delete(`${baseURL}card/manage_comment/${commentId}/`
       , config)
     .then(rep => {
       return rep

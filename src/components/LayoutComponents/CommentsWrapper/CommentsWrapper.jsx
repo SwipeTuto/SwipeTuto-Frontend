@@ -8,11 +8,13 @@ import {
   selectClickedCardId,
   selectFilterError,
   selectClickedCardCommentsNextLink,
+  selectLastPublishedComment,
 } from "../../../redux/filter/filter-selectors";
 import {
   addCommentAction,
   deleteFilterErrorAction,
   getCardCommentsAction,
+  deleteCommentAction,
 } from "../../../redux/filter/filter-actions";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 
@@ -44,10 +46,29 @@ const CommentsWrapper = () => {
   const [localNextLink, setLocalNextLink] = useState();
   const [newComment, setNewComment] = useState("");
   const [newCommentSubmit, setNewCommentSubmit] = useState(false);
+  const [showComments, setShowComments] = useState(true);
+  const lastPublishedComment = useSelector(selectLastPublishedComment);
+  const [localLastPublishedComments, setLocalLastPublishedComments] = useState(
+    []
+  );
+
+  useEffect(() => {
+    if (
+      newCommentSubmit === true &&
+      lastPublishedComment !== null &&
+      lastPublishedComment !==
+        localLastPublishedComments[localLastPublishedComments.length - 1]
+    ) {
+      const arrayCopy = localLastPublishedComments;
+      arrayCopy.push(lastPublishedComment);
+      setLocalLastPublishedComments(arrayCopy);
+      setNewCommentSubmit(false);
+    }
+  }, [newCommentSubmit]);
 
   useEffect(() => {
     if (clickedCardId) dispatch(getCardCommentsAction(clickedCardId));
-  }, [clickedCardId, newCommentSubmit]);
+  }, [clickedCardId]);
 
   useEffect(() => {
     setLocalCommentsArray(commentsArray);
@@ -60,6 +81,11 @@ const CommentsWrapper = () => {
       setConnectRedirect(true);
     } else {
       dispatch(addCommentAction(clickedCardId, newComment));
+      setNewCommentSubmit(true);
+      const commentsNumberEl = document.querySelector(
+        "p.CommentsWrapper__title--commentsNumber"
+      );
+      commentsNumberEl.textContent = parseInt(commentsNumberEl.textContent) + 1;
 
       if (currentUser) {
         setNewComment("");
@@ -88,6 +114,70 @@ const CommentsWrapper = () => {
     });
   };
 
+  // useEffect(() => {
+  //   localLastPublishedComments.forEach((localComment) => {
+  //     const commentFull = localCommentsArray.filter((comment) => {
+  //       return comment.id === localComment.id;
+  //     });
+  //     console.log(commentFull);
+  //     if (commentFull.length > 0) {
+  //       const index = localLastPublishedComments.indexOf(localComment);
+  //       console.log(index);
+  //       const arrayCopy = localLastPublishedComments;
+  //       if (index > -1) {
+  //         arrayCopy.splice(index, 1);
+  //         setLocalLastPublishedComments(arrayCopy);
+  //       }
+  //     }
+  //   });
+  // }, [localCommentsArray]);
+
+  const confirmCommentDelete = (commentId) => {
+    dispatch(deleteCommentAction(parseInt(commentId)));
+    const fullCommentLocalArray = localCommentsArray.filter(
+      (comment) => comment.id === parseInt(commentId)
+    );
+    const fullCommentLastLocal = localLastPublishedComments.filter(
+      (comment) => comment.id === parseInt(commentId)
+    );
+    console.log(fullCommentLocalArray, fullCommentLastLocal);
+    if (fullCommentLocalArray.length > 0) {
+      const index = localCommentsArray.indexOf(fullCommentLocalArray[0]);
+      console.log(index);
+      if (index > -1) {
+        const arrayCopy = localCommentsArray;
+        arrayCopy.splice(index, 1);
+        setLocalCommentsArray(arrayCopy);
+        const commentsNumberEl = document.querySelector(
+          "p.CommentsWrapper__title--commentsNumber"
+        );
+        commentsNumberEl.textContent =
+          parseInt(commentsNumberEl.textContent) - 1;
+        console.log(localCommentsArray);
+      }
+    } else if (fullCommentLastLocal.length > 0) {
+      const index = localLastPublishedComments.indexOf(fullCommentLastLocal[0]);
+      console.log(index);
+      if (index > -1) {
+        const arrayCopy = localLastPublishedComments;
+        arrayCopy.splice(index, 1);
+        setLocalLastPublishedComments(arrayCopy);
+        const commentsNumberEl = document.querySelector(
+          "p.CommentsWrapper__title--commentsNumber"
+        );
+        commentsNumberEl.textContent =
+          parseInt(commentsNumberEl.textContent) - 1;
+        console.log(localLastPublishedComments);
+      }
+    }
+  };
+
+  useEffect(() => {
+    console.table(localCommentsArray);
+    console.log("------------------");
+    console.table(localLastPublishedComments);
+  }, [localCommentsArray, localLastPublishedComments]);
+
   return (
     <>
       {connectRedirect && <ConnexionRedirect handleClose={handleClose} />}
@@ -99,8 +189,24 @@ const CommentsWrapper = () => {
           </p>
           <h1 className="title title-1">Commentaires</h1>
         </div>
-
+        <CommentsInput
+          newComment={newComment}
+          handleAddCommentClick={handleAddCommentClick}
+          handleInputValueChange={handleInputValueChange}
+        />
         <div className="CommentsWrapper__comments comments-section">
+          {localLastPublishedComments &&
+            localLastPublishedComments.length !== 0 &&
+            localLastPublishedComments.map((comment) => (
+              <>
+                {console.log("LAST RENDER")}
+                <FirstLevelComment
+                  comment={comment}
+                  key={comment.id}
+                  confirmCommentDelete={confirmCommentDelete}
+                />
+              </>
+            ))}
           {commentError ? (
             <>
               <p className="CommentsWrapper__comment--error">
@@ -125,7 +231,14 @@ const CommentsWrapper = () => {
           ) : (
             localCommentsArray &&
             localCommentsArray.map((comment) => (
-              <FirstLevelComment comment={comment} key={comment.id} />
+              <>
+                {console.log("LOCAL RENDER")}
+                <FirstLevelComment
+                  comment={comment}
+                  key={comment.id}
+                  confirmCommentDelete={confirmCommentDelete}
+                />
+              </>
             ))
           )}
 
@@ -135,11 +248,6 @@ const CommentsWrapper = () => {
             </CustomButton>
           )}
         </div>
-        <CommentsInput
-          newComment={newComment}
-          handleAddCommentClick={handleAddCommentClick}
-          handleInputValueChange={handleInputValueChange}
-        />
       </div>
     </>
   );

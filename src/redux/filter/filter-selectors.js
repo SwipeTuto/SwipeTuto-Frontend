@@ -118,7 +118,7 @@ export const selectClickedCardCommentsArray = createSelector(
 )
 export const selectClickedCardCommentsNumber = createSelector(
   [selectFilter],
-  filter => filter && filter.clickedCardComments && filter.clickedCardComments.count
+  filter => filter && filter.clickedCard && filter.clickedCard.total_count
 )
 export const selectClickedCardId = createSelector(
   [selectClickedCard],
@@ -128,5 +128,9 @@ export const selectClickedCardId = createSelector(
 export const selectClickedCardCommentsNextLink = createSelector(
   [selectFilter],
   filter => filter && filter.clickedCardComments && filter.clickedCardComments.next
+)
+export const selectLastPublishedComment = createSelector(
+  [selectFilter],
+  filter => filter && filter.lastPublishedComment
 )
 

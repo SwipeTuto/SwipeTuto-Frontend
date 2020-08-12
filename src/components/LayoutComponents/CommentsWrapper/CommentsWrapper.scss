@@ -6,9 +6,9 @@
   .comments-section {
     margin: 3rem 0;
 
-    .custom-button {
-      margin: 0 auto 4rem auto;
-    }
+    // .custom-button {
+    //   margin: 0 auto 4rem auto;
+    // }
   }
 
   &__title {
@@ -46,10 +46,8 @@
     }
   }
 
-  .CommentsInput {
-    padding-top: 2rem;
-    margin-top: 2rem;
-    border-top: 1px solid $grey;
+  .FirstLevelComment__replies + .custom-button {
+    margin: 2rem auto;
   }
 }
 @media screen and (max-width: $bp-tablet) {

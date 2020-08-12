@@ -3,16 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 // redux
 import { selectCurrentUser } from "../../../../redux/user/user-selectors";
-import {
-  selectClickedCardComments,
-  selectCommentLikers,
-  selectClickedCardId,
-} from "../../../../redux/filter/filter-selectors";
-import {
-  toggleCommentLikeAction,
-  deleteCommentAction,
-  getCardCommentsAction,
-} from "../../../../redux/filter/filter-actions";
+import { selectClickedCardId } from "../../../../redux/filter/filter-selectors";
+import { toggleCommentLikeAction } from "../../../../redux/filter/filter-actions";
 
 // helper
 import { commentsFormattedDate } from "../../../../helper/index";
@@ -21,10 +13,8 @@ import { commentsFormattedDate } from "../../../../helper/index";
 import UserAvatar from "../../../UserComponents/UserAvatar/UserAvatar";
 import UserUsername from "../../../UserComponents/UserAvatar/UserUsername";
 import ConnexionRedirect from "../../ConnexionRedirect/ConnexionRedirect";
-import { CommentsInput } from "../../CommentsInput/CommentsInput";
 
 // assets
-import { ReactComponent as ChatLogo } from "../../../../assets/images/chatbubbles-outline.svg";
 import { ReactComponent as HeartEmpty } from "../../../../assets/images/heart-outline.svg";
 import { ReactComponent as HeartFull } from "../../../../assets/images/heart.svg";
 import { ReactComponent as MobileMenu } from "../../../../assets/images/ellipsis-vertical.svg";
@@ -39,7 +29,6 @@ const SecondLevelComment = ({
 }) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
-  const clickedCardId = useSelector(selectClickedCardId);
   const commentAuthor = reply.author;
   const commentId = reply.id;
   const [commentIsLiked, setCommentIsLiked] = useState();
@@ -72,16 +61,12 @@ const SecondLevelComment = ({
       setConnectRedirect(true);
     } else {
       dispatch(toggleCommentLikeAction(commentId));
-      const likeElMobile = [
-        ...document.getElementsByClassName(
-          "SecondLevelComment__mobile--likes-number"
-        ),
-      ][0];
-      const likeEl = [
-        ...document.getElementsByClassName(
-          "SecondLevelComment__aside--likes-number"
-        ),
-      ][0];
+      const likeElMobile = document.querySelector(
+        `.SecondLevelComment__mobile--likes-number[data-likes="${commentId}"]`
+      );
+      const likeEl = document.querySelector(
+        `.SecondLevelComment__aside--likes-number[data-likes="${commentId}"]`
+      );
 
       if (commentIsLiked) {
         likeElMobile.textContent = parseInt(likeElMobile.textContent) - 1;
@@ -110,10 +95,8 @@ const SecondLevelComment = ({
   };
 
   const handleConfirmClick = () => {
-    // dispatch(deleteCommentAction(confirmPopupOpen.id, clickedCardId));
     handleReplyDelete(confirmPopupOpen.id);
     setConfirmPopupOpen({ ...confirmPopupOpen, open: false });
-    // dispatch(getCardCommentsAction(clickedCardId));
   };
 
   const handleRejectClick = () => {

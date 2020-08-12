@@ -7,12 +7,11 @@ import {
   selectClickedCardComments,
   selectCommentLikers,
   selectClickedCardId,
+  selectLastPublishedComment,
 } from "../../../../redux/filter/filter-selectors";
 import {
   toggleCommentLikeAction,
   deleteCommentAction,
-  getCardCommentsAction,
-  addCommentAction,
   addReplyAction,
 } from "../../../../redux/filter/filter-actions";
 import { getReplies, getNextReplies } from "../../../../services/socialService";
@@ -37,11 +36,12 @@ import { ReactComponent as CloseLogo } from "../../../../assets/images/close.svg
 
 import "./FirstLevelComment.scss";
 
-const FirstLevelComment = ({ comment }) => {
+const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const cardComments = useSelector(selectClickedCardComments);
   const clickedCardId = useSelector(selectClickedCardId);
+  const lastPublishedComment = useSelector(selectLastPublishedComment);
   const commentAuthor = comment.author;
   const commentId = comment.id;
   const commentLikers = useSelector(selectCommentLikers(commentId));
@@ -50,17 +50,57 @@ const FirstLevelComment = ({ comment }) => {
   const replyLinkToFetch = comment.reply_comments;
   const [commentIsLiked, setCommentIsLiked] = useState();
   const [connectRedirect, setConnectRedirect] = useState(false);
+  const [localRepliesArray, setLocalRepliesArray] = useState([]);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [repliesBlockVisible, setRepliesBlockVisible] = useState(false);
-  const [repliesArray, setRepliesArray] = useState();
+  const [repliesArray, setRepliesArray] = useState([]);
   const [replyInputShow, setReplyInputShow] = useState(false);
   const [newComment, setNewComment] = useState("");
+  const [newCommentSubmit, setNewCommentSubmit] = useState(false);
   const [nextRepliesLink, setNextRepliesLink] = useState();
+  const [localLastPublishedComments, setLocalLastPublishedComments] = useState(
+    []
+  );
   const [confirmPopupOpen, setConfirmPopupOpen] = useState({
     open: false,
     message: "",
     id: null,
   });
+
+  useEffect(() => {
+    if (
+      newCommentSubmit === true &&
+      lastPublishedComment !== null &&
+      lastPublishedComment !==
+        localLastPublishedComments[localLastPublishedComments.length - 1]
+    ) {
+      const arrayCopy = localLastPublishedComments;
+      arrayCopy.push(lastPublishedComment);
+      setLocalLastPublishedComments(arrayCopy);
+      setNewCommentSubmit(false);
+      // console.table(localLastPublishedComments);
+    }
+  }, [newCommentSubmit, lastPublishedComment]);
+
+  // useEffect(() => {
+  //   console.table(localLastPublishedComments);
+  // }, [localLastPublishedComments]);
+
+  useEffect(() => {
+    localLastPublishedComments.forEach((localComment) => {
+      const commentAlreadyExists = localRepliesArray.filter((comment) => {
+        return comment.id === localComment.id;
+      });
+      if (commentAlreadyExists.length > 0) {
+        const index = localLastPublishedComments.indexOf(localComment);
+        const arrayCopy = localLastPublishedComments;
+        if (index > -1) {
+          arrayCopy.splice(index, 1);
+          setLocalLastPublishedComments(arrayCopy);
+        }
+      }
+    });
+  }, [localRepliesArray]);
 
   useEffect(() => {
     setCommentIsLiked(userHasLiked());
@@ -77,22 +117,17 @@ const FirstLevelComment = ({ comment }) => {
     }
   };
 
-  const handleCommentLike = () => {
+  const handleCommentLike = (commentId) => {
     if (!currentUser) {
       setConnectRedirect(true);
     } else {
       dispatch(toggleCommentLikeAction(commentId));
-      const likeElMobile = [
-        ...document.getElementsByClassName(
-          "FirstLevelComment__mobile--likes-number"
-        ),
-      ][0];
-      const likeEl = [
-        ...document.getElementsByClassName(
-          "FirstLevelComment__aside--likes-number"
-        ),
-      ][0];
-
+      const likeElMobile = document.querySelector(
+        `.FirstLevelComment__mobile--likes-number[data-likes="${commentId}"]`
+      );
+      const likeEl = document.querySelector(
+        `.FirstLevelComment__aside--likes-number[data-likes="${commentId}"]`
+      );
       if (commentIsLiked) {
         likeElMobile.textContent = parseInt(likeElMobile.textContent) - 1;
         likeEl.textContent = parseInt(likeEl.textContent) - 1;
@@ -120,8 +155,7 @@ const FirstLevelComment = ({ comment }) => {
       const cardFullPopupEl = [
         ...document.getElementsByClassName("CardFullPopup active"),
       ][0];
-      console.log(inputToScrollTo.offsetTop, cardFullPopupEl);
-      cardFullPopupEl.scrollTo(0, inputToScrollTo.offsetTop);
+      cardFullPopupEl.scrollTo(0, inputToScrollTo.offsetTop - 100);
     }
   }, [replyInputShow]);
 
@@ -137,19 +171,10 @@ const FirstLevelComment = ({ comment }) => {
       setConnectRedirect(true);
     } else {
       await dispatch(addReplyAction(clickedCardId, commentId, newComment));
-
-      await handleRepliesFetch();
-      const allReplies = [
-        ...document.getElementsByClassName("SecondLevelComment"),
-      ];
-      const lastReply = allReplies[allReplies.length - 1];
-      const cardFullPopupEl = [
-        ...document.getElementsByClassName("CardFullPopup active"),
-      ][0];
-      await cardFullPopupEl.scrollTo(0, lastReply.offsetTop);
-      if (currentUser) {
-        setNewComment("");
-      }
+      // await handleRepliesFetch();
+      setNewComment("");
+      setReplyInputShow(false);
+      setNewCommentSubmit(true);
     }
   };
 
@@ -173,14 +198,38 @@ const FirstLevelComment = ({ comment }) => {
   };
 
   const handleConfirmClick = () => {
-    dispatch(deleteCommentAction(confirmPopupOpen.id, clickedCardId));
+    confirmCommentDelete(confirmPopupOpen.id);
     setConfirmPopupOpen({ ...confirmPopupOpen, open: false });
-    // dispatch(getCardCommentsAction(clickedCardId));
   };
 
   const handleReplyDelete = async (replyId) => {
-    await dispatch(deleteCommentAction(replyId, clickedCardId));
-    await handleRepliesFetch();
+    await dispatch(deleteCommentAction(replyId));
+    const fullReplyLocalArray = localRepliesArray.filter(
+      (reply) => reply.id === parseInt(replyId)
+    );
+    const fullReplyLastLocal = localLastPublishedComments.filter(
+      (reply) => reply.id === parseInt(replyId)
+    );
+    if (fullReplyLocalArray.length > 0) {
+      const index = localRepliesArray.indexOf(fullReplyLocalArray[0]);
+      if (index > -1) {
+        const arrayCopy = localRepliesArray;
+        arrayCopy.splice(index, 1);
+        setLocalRepliesArray(arrayCopy);
+        setRepliesBlockVisible(false);
+        setRepliesBlockVisible(true);
+      }
+    } else if (fullReplyLastLocal.length > 0) {
+      const index = localLastPublishedComments.indexOf(fullReplyLastLocal[0]);
+      if (index > -1) {
+        const arrayCopy = localLastPublishedComments;
+        arrayCopy.splice(index, 1);
+        setLocalLastPublishedComments(arrayCopy);
+        setRepliesBlockVisible(false);
+        setRepliesBlockVisible(true);
+      }
+    }
+    // await handleRepliesFetch();
     // setConfirmPopupOpen({ ...confirmPopupOpen, open: false });
   };
 
@@ -197,7 +246,7 @@ const FirstLevelComment = ({ comment }) => {
       rep &&
         rep.data &&
         rep.data.results &&
-        setRepliesArray([...rep.data.results]);
+        setLocalRepliesArray([...localRepliesArray, ...rep.data.results]);
       rep && rep.data && rep.data.next
         ? setNextRepliesLink(rep.data.next)
         : setNextRepliesLink(null);
@@ -212,17 +261,13 @@ const FirstLevelComment = ({ comment }) => {
       rep &&
         rep.data &&
         rep.data.results &&
-        setRepliesArray([...repliesArray, ...rep.data.results]);
+        setLocalRepliesArray([...localRepliesArray, ...rep.data.results]);
       rep && rep.data && rep.data.next
         ? setNextRepliesLink(rep.data.next)
         : setNextRepliesLink(null);
     });
     setRepliesBlockVisible(true);
   };
-
-  useEffect(() => {
-    console.log(nextRepliesLink);
-  }, [nextRepliesLink]);
 
   return (
     <>
@@ -242,7 +287,10 @@ const FirstLevelComment = ({ comment }) => {
           <UserAvatar user={commentAuthor} link={true} />
           <div className="FirstLevelComment__mobile-stats">
             <div className="FirstLevelComment__mobile--likes">
-              <p className="FirstLevelComment__mobile--likes-number">
+              <p
+                className="FirstLevelComment__mobile--likes-number"
+                data-likes={commentId}
+              >
                 {likesCount ? likesCount : 0}
               </p>
               {commentIsLiked ? (
@@ -296,7 +344,7 @@ const FirstLevelComment = ({ comment }) => {
             </p>
             <p
               className="FirstLevelComment__action"
-              onClick={() => handleCommentLike()}
+              onClick={() => handleCommentLike(commentId)}
             >
               {commentIsLiked ? "Je n'aime plus" : "J'aime"}
             </p>
@@ -328,7 +376,10 @@ const FirstLevelComment = ({ comment }) => {
             ) : (
               <HeartEmpty className=" FirstLevelComment__aside--logo" />
             )}
-            <p className="FirstLevelComment__aside--likes-number">
+            <p
+              className="FirstLevelComment__aside--likes-number"
+              data-likes={commentId}
+            >
               {likesCount ? likesCount : 0}
             </p>
           </div>
@@ -343,15 +394,17 @@ const FirstLevelComment = ({ comment }) => {
       <div className="FirstLevelComment__replies">
         {repliesBlockVisible ? (
           <>
-            {repliesArray &&
-              repliesArray.map((reply, index) => (
-                <SecondLevelComment
-                  key={index}
-                  reply={reply}
-                  handleCommentRespond={handleCommentRespond}
-                  handleReplyDelete={handleReplyDelete}
-                />
-              ))}
+            {localRepliesArray &&
+              localRepliesArray.map((reply, index) => {
+                return (
+                  <SecondLevelComment
+                    key={index}
+                    reply={reply}
+                    handleCommentRespond={handleCommentRespond}
+                    handleReplyDelete={handleReplyDelete}
+                  />
+                );
+              })}
             {nextRepliesLink ? (
               <p
                 className="FirstLevelComment__replies--message"
@@ -369,6 +422,16 @@ const FirstLevelComment = ({ comment }) => {
             Voir les {replyCount ? replyCount : ""} réponses...
           </p>
         ) : null}
+        {localLastPublishedComments &&
+          localLastPublishedComments.length !== 0 &&
+          localLastPublishedComments.map((reply, index) => (
+            <SecondLevelComment
+              key={index}
+              reply={reply}
+              handleCommentRespond={handleCommentRespond}
+              handleReplyDelete={handleReplyDelete}
+            />
+          ))}
         {replyInputShow && (
           <div className="FirstLevelComment__replies--input">
             <CommentsInput

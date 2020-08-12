@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   otherCardsByAuthor: "",
   clickedCard: null,
   clickedCardComments: null,
+  lastPublishedComment: null,
   errors: null,
 };
 
@@ -123,7 +124,7 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
     case FilterActionTypes.ADD_COMMENT_ERROR:
       return { ...state, errors: action.payload }
     case FilterActionTypes.ADD_COMMENT_SUCCESS:
-      return { ...state, errors: null }
+      return { ...state, lastPublishedComment: action.payload, errors: null }
     case FilterActionTypes.DELETE_COMMENT_ERROR:
       return { ...state, errors: action.payload }
     case FilterActionTypes.DELETE_COMMENT_SUCCESS:
@@ -135,7 +136,7 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
 
 
     case FilterActionTypes.GET_CARD_COMMENTS_SUCCESS:
-      return { ...state, clickedCardComments: action.payload, errors: null }
+      return { ...state, clickedCardComments: action.payload, lastPublishedComment: null, errors: null }
     case FilterActionTypes.GET_CARD_COMMENTS_ERROR:
       return { ...state, errors: action.payload }
 

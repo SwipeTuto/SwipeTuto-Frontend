@@ -13,10 +13,11 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    height: max-content;
-    width: 3.5rem;
+    // height: max-content;
+    // width: 3.5rem;
     // stroke: $primary-dark;
     opacity: 1;
+    @include big-logo-size;
     cursor: pointer;
     transition: all 0.2s ease;
 
@@ -62,8 +63,7 @@
     position: absolute;
     top: -0.8rem;
     left: calc(100% + 0.8rem);
-    width: 3rem;
-    height: 3rem;
+    @include big-logo-size;
     cursor: pointer;
     transition: all 0.2s ease;
 
@@ -103,8 +103,7 @@
   }
 
   &__fullscreen-close {
-    width: 3rem;
-    height: 3rem;
+    @include big-logo-size;
     position: absolute;
     top: 1rem;
     right: 1rem;

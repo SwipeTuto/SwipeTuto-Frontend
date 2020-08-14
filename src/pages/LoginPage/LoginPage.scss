@@ -1,0 +1,182 @@
+@import "../../variables.scss";
+
+.LoginPage {
+  overflow: hidden;
+  // height: max-content;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  background-image: url("../../assets/images/login-image.jpg");
+  background-size: cover;
+
+  &--wrapper {
+    padding-top: 3rem;
+    background-color: $white;
+    z-index: 100;
+    width: 35%;
+    height: 100%;
+    min-height: 100vh;
+  }
+
+  .login,
+  .signup {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 4rem;
+
+    .title.title-1 {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    &__form {
+      display: flex;
+      flex-direction: column;
+
+      &--input {
+        @include input-style;
+        margin-bottom: 1rem;
+
+        &:focus.valid-input {
+          border: 0.5px solid $green-success;
+        }
+
+        &:focus.invalid-input,
+        &:not([value=""]).invalid-input {
+          border: 0.5px solid $red-error;
+        }
+
+        &:focus {
+          background-color: $white;
+        }
+
+        &[value=""] + .input__message {
+          display: none;
+        }
+      }
+    }
+
+    .horizontal-separation-primary-light {
+      margin: 3rem auto;
+      width: 80%;
+    }
+
+    &__google {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+
+      .title.title-1 {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  p.error__message {
+    margin-bottom: 1rem;
+  }
+
+  .custom-button {
+    display: flex;
+    align-items: center;
+    &:not(:last-of-type) {
+      margin-right: 1rem;
+    }
+
+    &[type="submit"] {
+      margin-top: 2rem;
+    }
+
+    & > svg {
+      height: 1.5rem;
+      width: 1.5rem;
+      margin-right: 1rem;
+    }
+  }
+
+  .input__message {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  &__message {
+    width: 65%;
+    color: $white;
+    background-color: rgba($black, 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &--logo {
+      width: 8rem;
+      margin-bottom: 2rem;
+
+      & > img {
+        width: 100%;
+      }
+    }
+
+    .title.title-1 {
+      font-size: 4rem;
+    }
+  }
+
+  &__link {
+    text-align: center;
+    margin: 0 auto;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: $secondary-dark;
+    }
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .LoginPage {
+    &--wrapper {
+      width: 55%;
+    }
+    &__message {
+      width: 45%;
+
+      &--logo {
+        width: 6rem;
+      }
+
+      .title.title-1 {
+        font-size: 2rem;
+      }
+    }
+    .login,
+    .signup {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: $bp-phone) {
+  .LoginPage {
+    background-image: none;
+    &--wrapper {
+      width: 100%;
+    }
+    &__message {
+      display: none;
+    }
+
+    .login,
+    .signup {
+      .title.title-1 {
+        font-size: 3rem;
+      }
+    }
+  }
+}
+@media screen and (max-width: $bp-small-phone) {
+  .LoginPage {
+  }
+}

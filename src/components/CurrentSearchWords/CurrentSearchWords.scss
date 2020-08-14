@@ -2,14 +2,16 @@
 
 .currentSearch {
   margin: 2rem auto 0 auto;
-  width: max-content;
-  max-width: calc(100vw - 2 * 17vw);
+  // width: max-content;
+  // max-width: calc(100vw - 2 * 17vw);
+  padding: 0 3rem;
 
   display: flex;
+  justify-content: center;
 
   &__button {
     text-align: center;
-    background-color: $grey-medium;
+    background-color: $grey;
     padding: 0.7rem 1.5rem;
     border-radius: $button-radius;
     display: flex;
@@ -32,5 +34,11 @@
         fill: $primary-light;
       }
     }
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .currentSearch {
+    flex-wrap: wrap;
   }
 }

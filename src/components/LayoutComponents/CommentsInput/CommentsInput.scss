@@ -1,0 +1,31 @@
+@import "../../../variables.scss";
+
+.CommentsInput,
+.CommentsInputReply {
+  margin: 2rem 0;
+  padding: 2rem 0;
+  display: flex;
+  align-items: flex-end;
+  border-top: 1px solid $grey;
+  border-bottom: 1px solid $grey;
+
+  &__newComment {
+    &--input {
+      width: 100%;
+      resize: none;
+      @include input-style;
+      margin: 1rem 0;
+
+      &:focus {
+        background-color: $white;
+
+        &::placeholder {
+          visibility: hidden;
+        }
+      }
+    }
+  }
+  .custom-button {
+    margin: 0 0 1rem 1rem;
+  }
+}

@@ -1,39 +1,28 @@
 import { FilterActionTypes } from './filter-types'
+import { initialSearchState } from '../../helper/index'
 
 const INITIAL_STATE = {
-  currentSearch: {
-    searchWords: null,
-    searchLangage: null,
-    searchCategory: null,
-    searchOrder: '-created'
-  },
-  errors: '',
+  currentSearch: initialSearchState,
   cardsFetched: "",
   otherCardsByAuthor: "",
-  currentCardsGridPage: 1,
+  clickedCard: null,
+  clickedCardComments: null,
+  lastPublishedComment: null,
+  errors: null,
 };
 
 const FilterReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    //RECHERCHE
-    case FilterActionTypes.SEARCH_SUCCESS:
-      return { ...state, cardsFetched: action.payload, };
-    case FilterActionTypes.SEARCH_FAILURE:
-      return { ...state, errors: action.payload };
 
-    case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_REQUEST:
-
-      return {
-        ...state,
-        currentSearch: { ...state.currentSearch, searchLangage: action.payload.langage, searchCategory: action.payload.category }
-      };
-    case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_SUCCESS:
+    case FilterActionTypes.DELETE_FILTER_ERROR:
+      return { ...state, errors: null };
+    case FilterActionTypes.GET_CARDS_FILTER_SUCCESS:
       return { ...state, cardsFetched: action.payload, };
-    case FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_FAILURE:
+    case FilterActionTypes.GET_CARDS_FILTER_FAILURE:
       return { ...state, errors: action.payload };
 
     case FilterActionTypes.SET_CURRENT_SEARCH:
-      if (action.payload) {
+      if ("action payload: dans le reducer" && action.payload) {
         return {
           ...state, currentSearch: {
             ...state.currentSearch,
@@ -55,12 +44,7 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
         }
       } else {
         return {
-          ...state, currentSearch: {
-            searchWords: null,
-            searchLangage: null,
-            searchCategory: null,
-            searchOrder: '-created'
-          }, cardsFetched: ""
+          ...state, currentSearch: initialSearchState, cardsFetched: ""
         }
       }
 
@@ -88,6 +72,14 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
         ...state,
         otherCardsByAuthor: action.payload,
       };
+    case FilterActionTypes.GET_CARD_BY_ID_SUCCESS:
+      return {
+        ...state,
+        clickedCard: action.payload,
+      };
+    case FilterActionTypes.GET_CARD_BY_ID_FAILURE:
+      return { ...state, errors: action.payload, };
+
     case FilterActionTypes.GET_OTHER_CARDS_BY_USER_FAILURE:
       return { ...state, errors: action.payload, };
 
@@ -104,8 +96,49 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: action.payload };
 
     case FilterActionTypes.SET_CARDS_GRID_PAGE:
-      return { ...state, currentCardsGridPage: action.payload };
+      return { ...state, currentSearch: { ...state.currentSearch, searchPage: action.payload } };
 
+    case FilterActionTypes.SET_CLICKED_CARD:
+      return {
+        ...state,
+        clickedCard: action.payload,
+      };
+    case FilterActionTypes.SET_NO_CLICKED_CARD:
+      return {
+        ...state,
+        clickedCard: null,
+      };
+
+    case FilterActionTypes.GET_ALL_CARDS_FAILURE:
+      return { ...state, errors: action.payload }
+
+    case FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS:
+      return { ...state, errors: null }
+    case FilterActionTypes.TOGGLE_LIKE_CARD_ERROR:
+      return { ...state, errors: action.payload }
+    case FilterActionTypes.TOGGLE_LIKE_COMMENT_SUCCESS:
+      return { ...state, errors: null }
+    case FilterActionTypes.TOGGLE_LIKE_COMMENT_ERROR:
+      return { ...state, errors: action.payload }
+
+    case FilterActionTypes.ADD_COMMENT_ERROR:
+      return { ...state, errors: action.payload }
+    case FilterActionTypes.ADD_COMMENT_SUCCESS:
+      return { ...state, lastPublishedComment: action.payload, errors: null }
+    case FilterActionTypes.DELETE_COMMENT_ERROR:
+      return { ...state, errors: action.payload }
+    case FilterActionTypes.DELETE_COMMENT_SUCCESS:
+      return { ...state, errors: null }
+    case FilterActionTypes.MODIFY_COMMENT_ERROR:
+      return { ...state, errors: action.payload }
+    case FilterActionTypes.MODIFY_COMMENT_SUCCESS:
+      return { ...state, errors: null }
+
+
+    case FilterActionTypes.GET_CARD_COMMENTS_SUCCESS:
+      return { ...state, clickedCardComments: action.payload, lastPublishedComment: null, errors: null }
+    case FilterActionTypes.GET_CARD_COMMENTS_ERROR:
+      return { ...state, errors: action.payload }
 
     default:
       return state;

@@ -1,68 +1,68 @@
 import { FilterActionTypes } from "./filter-types"
+import { setLoading, setLoaded, setImageLoading, setImageLoaded } from '../layout/layout-actions'
 
 import { searchBar } from '../../services/searchService'
-import { getCardAfterfilter, getCardsByUser, getOtherPageCard } from '../../services/cardsService'
-import { getCardsLoaded } from "../cards/cards-actions"
+import { getCards, CardsActionTypes, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
+import { toggleLike, toggleCommentLike, addComment, getCardComments, getCardCommentsOtherPage, deleteComment, modifyComment, addReply } from "../../services/socialService"
 
-// Recherche avec le back avec mots
-export const searchAction = kword => {
-  return dispatch => {
-    return searchBar(kword)
-      .then(search => {
-        dispatch(SearchSuccess(search.data))
-        dispatch(setCurrentSearch("searchWords", kword))
 
-        dispatch(getCardsLoaded())
 
-      })
-      .catch(err => {
-        dispatch(SearchFailure(err.response))
-        dispatch(setCurrentSearch("searchWords", "Une erreur est survenue."))
-      })
-  }
-}
-const SearchSuccess = kword => ({
-  type: FilterActionTypes.SEARCH_SUCCESS,
-  payload: kword
+
+
+const getCardAfterfilterSuccess = cards => ({
+  type: FilterActionTypes.GET_CARDS_FILTER_SUCCESS,
+  payload: cards
 })
-const SearchFailure = error => ({
-  type: FilterActionTypes.SEARCH_FAILURE,
-  payload: error
+const getCardAfterfilterFailure = err => ({
+  type: FilterActionTypes.GET_CARDS_FILTER_FAILURE,
+  payload: err
 })
 
-
-// recherche vers le back avec langage et catégorie
-export const getCardAfterfilterAction = (langage, category, currentUser) => {
+export const getCardAfterfilterAction = (search) => {
   return dispatch => {
-    dispatch(getCardAfterfilteryRequest(langage, category))
-    return getCardAfterfilter(currentUser)
+    dispatch(setLoading());
+    return getCardAfterfilter(search)
       .then(rep => {
-
         dispatch(getCardAfterfilterSuccess(rep.data))
-        dispatch(getCardsLoaded())
+        dispatch(setLoaded())
         return rep
       })
       .catch(err => {
         dispatch(getCardAfterfilterFailure(err.response))
+        dispatch(setLoaded())
       })
   }
 }
-const getCardAfterfilteryRequest = (langage, category) => ({
-  type: FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_REQUEST,
-  payload: { langage, category }
+
+const getCardByIdSuccess = card => ({
+  type: FilterActionTypes.GET_CARD_BY_ID_SUCCESS,
+  payload: card
 })
-const getCardAfterfilterSuccess = cards => ({
-  type: FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_SUCCESS,
-  payload: cards
-})
-const getCardAfterfilterFailure = err => ({
-  type: FilterActionTypes.GET_CARDS_LANGAGE_CATEGORY_FAILURE,
+const getCardByIdFailure = err => ({
+  type: FilterActionTypes.GET_CARD_BY_ID_FAILURE,
   payload: err
 })
 
+export const getCardByIdAction = cardId => {
+  return dispatch => {
+    dispatch(setImageLoading());
+    return getCardById(cardId)
+      .then(rep => {
+        dispatch(getCardByIdSuccess(rep.data))
+        dispatch(setImageLoaded())
+        return rep
+      })
+      .catch(err => {
+        dispatch(getCardByIdFailure(err.response))
+        dispatch(setImageLoaded())
+      })
+
+  }
+}
+
 
 // Gestion de la currentSearch avec mots, catégorie, langage et ordre de recherche
-export const setCurrentSearch = (item, value) => ({
+export const setCurrentSearch = (item, value = null) => ({
   type: FilterActionTypes.SET_CURRENT_SEARCH,
   payload: { item, value }
 })
@@ -79,7 +79,9 @@ export const setSearchOrder = (order) => ({
 })
 
 
-
+export const deleteFilterErrorAction = () => ({
+  type: FilterActionTypes.DELETE_FILTER_ERROR,
+})
 
 
 // Mise des cartes récupérées du back dans le store
@@ -90,15 +92,15 @@ export const setCardsFetchedInStore = (cards) => ({
 
 
 // Fetch des cards à partir du nom de l'auteur
-export const getCardsByUserNameAction = username => {
+export const getCardsByUserIdAction = userId => {
   return dispatch => {
-    return getCardsByUser(username)
+    return getCardsByUser(userId)
       .then(rep => {
-        dispatch(getCardsByUserNameSuccess(rep.data))
+        dispatch(getCardsByUserIdSuccess(rep.data))
         return rep
       })
       .catch(err => {
-        dispatch(getCardsByUserNameFailure(err.response))
+        dispatch(getCardsByUserIdFailure(err.response))
       })
   }
 }
@@ -118,11 +120,11 @@ export const getOtherCardsByAuthorNameAction = username => {
 }
 
 
-const getCardsByUserNameSuccess = cards => ({
+const getCardsByUserIdSuccess = cards => ({
   type: FilterActionTypes.GET_CARDS_BY_USER_SUCCESS,
   payload: cards
 })
-const getCardsByUserNameFailure = err => ({
+const getCardsByUserIdFailure = err => ({
   type: FilterActionTypes.GET_CARDS_BY_USER_FAILURE,
   payload: err
 })
@@ -142,16 +144,14 @@ export const getOtherPageAction = (navLink, newPageNumber) => {
   return dispatch => {
     return getOtherPageCard(navLink)
       .then(rep => {
-        console.log(newPageNumber)
         dispatch(getOtherPageSuccess(rep.data))
         dispatch(setCurrentCardGridPage(newPageNumber))
-        dispatch(getCardsLoaded())
+        dispatch(setLoaded())
 
         return rep
       })
       .catch(err => {
         dispatch(getOtherPageFailure(err.response))
-        console.log(err)
       })
   }
 }
@@ -170,3 +170,219 @@ export const setCurrentCardGridPage = newPageNumber => ({
   type: FilterActionTypes.SET_CARDS_GRID_PAGE,
   payload: newPageNumber
 })
+
+
+// Clicked Card 
+export const setClickedCard = (card) => ({
+  type: FilterActionTypes.SET_CLICKED_CARD,
+  payload: card,
+});
+
+export const setNoClickedCard = () => ({
+  type: FilterActionTypes.SET_NO_CLICKED_CARD,
+  payload: null,
+});
+
+
+// Récupérer toutes les cards
+export const getCardsAction = () => {
+  return dispatch => {
+    return getCards()
+      .then(card => {
+        dispatch(setCardsFetchedInStore(card)) // cards dans cardsFetched
+        dispatch(setLoaded()) // stop loader
+      })
+      .catch(err => {
+        dispatch(getCardsErrors(err.response))
+      })
+  }
+};
+
+
+const getCardsErrors = error => ({
+  type: FilterActionTypes.GET_ALL_CARDS_FAILURE,
+  payload: error
+})
+
+
+
+export const toggleLikeCardAction = (cardId) => {
+  return dispatch => {
+    return toggleLike(cardId)
+      .then(rep => {
+        dispatch(likeCardActionSuccess())
+        // dispatch(setLoaded())  stop loader
+      })
+      .catch(err => {
+        dispatch(likeCardActionErrors(err.response.status))
+        // dispatch(setLoaded())  stop loader
+      })
+  }
+};
+
+const likeCardActionErrors = error => ({
+  type: FilterActionTypes.TOGGLE_LIKE_CARD_ERROR,
+  payload: error
+})
+
+const likeCardActionSuccess = () => ({
+  type: FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS,
+})
+
+
+export const toggleCommentLikeAction = (commentId) => {
+  return dispatch => {
+    return toggleCommentLike(commentId)
+      .then(rep => {
+        dispatch(toggleCommentLikeSuccess())
+        // dispatch(setLoaded())  stop loader
+      })
+      .catch(err => {
+        dispatch(toggleCommentLikeError(err.response.status))
+        // dispatch(setLoaded())  stop loader
+      })
+  }
+};
+
+const toggleCommentLikeError = error => ({
+  type: FilterActionTypes.TOGGLE_LIKE_COMMENT_ERROR,
+  payload: error
+})
+
+const toggleCommentLikeSuccess = () => ({
+  type: FilterActionTypes.TOGGLE_LIKE_COMMENT_SUCCESS,
+})
+
+
+
+
+export const addCommentAction = (cardId, comment) => {
+  return dispatch => {
+    return addComment(cardId, comment)
+      .then(rep => {
+        dispatch(addCommentSuccess(rep.data))
+        // dispatch(getCardCommentsAction(cardId))
+
+        dispatch(setLoaded()) // stop loader
+      })
+      .catch(err => {
+        dispatch(addCommentErrors(err))
+        dispatch(setLoaded()) // stop loader
+      })
+  }
+};
+
+const addCommentErrors = error => ({
+  type: FilterActionTypes.ADD_COMMENT_SUCCESS,
+  payload: error
+})
+
+const addCommentSuccess = (commentData) => ({
+  type: FilterActionTypes.ADD_COMMENT_SUCCESS,
+  payload: commentData
+})
+
+export const addReplyAction = (cardId, commentId, comment) => {
+  return dispatch => {
+    return addReply(commentId, comment)
+      .then(rep => {
+        dispatch(addCommentSuccess(rep.data))
+        // dispatch(getCardCommentsAction(cardId))
+        dispatch(setLoaded()) // stop loader
+      })
+      .catch(err => {
+        dispatch(addCommentErrors(err))
+        dispatch(setLoaded()) // stop loader
+      })
+  }
+};
+
+export const getCardCommentsAction = (cardId) => {
+  return dispatch => {
+    dispatch(setLoading())
+    return getCardComments(cardId)
+      .then(rep => {
+        dispatch(getCardCommentsSuccess(rep.data))
+        dispatch(setLoaded()) // stop loader
+      })
+      .catch(err => {
+        dispatch(getCardCommentsError(err))
+        dispatch(setLoaded()) // stop loader
+      })
+  }
+};
+
+const getCardCommentsError = error => ({
+  type: FilterActionTypes.GET_CARD_COMMENTS_ERROR,
+  payload: error
+})
+
+const getCardCommentsSuccess = (comments) => ({
+  type: FilterActionTypes.GET_CARD_COMMENTS_SUCCESS,
+  payload: comments
+})
+
+// export const getCardCommentsNextPageAction = (url) => {
+//   return dispatch => {
+//     dispatch(setLoading())
+//     return getCardCommentsOtherPage(url)
+//       .then(rep => {
+//         dispatch(getCardCommentsSuccess(rep.data))
+//         dispatch(setLoaded()) // stop loader
+//       })
+//       .catch(err => {
+//         dispatch(getCardCommentsError(err))
+//         dispatch(setLoaded()) // stop loader
+//       })
+//   }
+// };
+
+export const deleteCommentAction = (commentId) => {
+  return dispatch => {
+    return deleteComment(commentId)
+      .then(rep => {
+        // dispatch(getCardCommentsAction(clickedCardId))
+        dispatch(deleteCommentSuccess())
+        dispatch(setLoaded()) // stop loader
+      })
+      .catch(err => {
+        dispatch(deleteCommentErrors(err))
+        dispatch(setLoaded()) // stop loader
+      })
+  }
+};
+
+const deleteCommentErrors = error => ({
+  type: FilterActionTypes.DELETE_COMMENT_ERROR,
+  payload: error
+})
+
+const deleteCommentSuccess = () => ({
+  type: FilterActionTypes.DELETE_COMMENT_SUCCESS,
+})
+
+
+// export const modifyCommentAction = (commentId, newComment) => {
+//   return dispatch => {
+//     return modifyComment(commentId, newComment)
+//       .then(rep => {
+//         console.log("modify comments rep : ", rep)
+//         dispatch(modifyCommentSuccess())
+//         dispatch(setLoaded()) // stop loader
+//       })
+//       .catch(err => {
+//         console.log("modify comments rep : ", err)
+//         dispatch(modifyCommentErrors(err))
+//         dispatch(setLoaded()) // stop loader
+//       })
+//   }
+// };
+
+// const modifyCommentErrors = error => ({
+//   type: FilterActionTypes.MODIFY_COMMENT_ERROR,
+//   payload: error
+// })
+
+// const modifyCommentSuccess = () => ({
+//   type: FilterActionTypes.MODIFY_COMMENT_SUCCESS,
+// })

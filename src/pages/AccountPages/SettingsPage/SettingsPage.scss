@@ -4,16 +4,10 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  // align-items: center;
-  background-color: $grey-light;
 
   input:not([type="file"]),
   textarea {
     @include input-style;
-  }
-
-  textarea {
-    border-radius: 10px;
   }
 
   input[name="mdp1"] {
@@ -22,17 +16,25 @@
 
   .valid-input:focus,
   textarea:focus:valid {
-    border: 0.5px solid #00b109;
+    border: 0.5px solid $green-success;
   }
 
-  .invalid-input:focus,
-  textarea:focus:invalid {
-    border: 0.5px solid #f76300;
+  .invalid-input:focus {
+    border: 0.5px solid $red-error;
   }
 
   input:focus,
   textarea:focus {
     background-color: $white;
+
+    &::placeholder {
+      visibility: hidden;
+    }
+  }
+
+  textarea {
+    resize: none;
+    min-height: 10rem;
   }
 
   .input__message {
@@ -44,57 +46,51 @@
   }
 
   .allForms {
-    // display: grid;
-    // grid-template-columns: 1fr;
-    // grid-auto-rows: max-content;
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
-
-    background-color: $white;
   }
 
-  form {
-    // display: grid;
-    // grid-template-columns: 1fr 20rem min-content;
-    // grid-column-gap: 2rem;
-    // grid-auto-rows: max-content;
+  .form {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding-bottom: 2rem;
-  }
-
-  form {
+    padding: 2rem;
     border-bottom: 1px solid $grey-dark;
-  }
 
-  form:last-of-type,
-  form.form__youtube,
-  form.form__github,
-  form.form__facebook {
-    border-bottom: none;
-  }
-
-  form:first-of-type {
-    grid-template-rows: repeat(2, min-content);
+    &:first-of-type {
+      border-top: 1px solid $grey-dark;
+    }
 
     label {
-      grid-column: span 3;
+      margin-bottom: 2rem;
     }
 
-    input {
-      grid-column: span 2;
+    &__bottom {
+      display: flex;
+      justify-content: space-between;
+
+      &--input {
+        width: 70%;
+
+        input,
+        textarea {
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+      }
     }
   }
+}
 
-  label {
-    grid-column: 1/2;
-    text-align: right;
-  }
+@media screen and (max-width: $bp-phone) {
+  .SettingsPage {
+    .form {
+      &__bottom {
+        flex-direction: column;
 
-  input,
-  textarea {
-    grid-column: 2/3;
+        &--input {
+          width: 100%;
+        }
+      }
+    }
   }
 }

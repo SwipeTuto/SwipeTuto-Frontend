@@ -27,7 +27,28 @@ export const openMobileNav = () => ({
 export const closeMobileNav = () => ({
   type: LayoutActionTypes.CLOSE_MOBILE_NAV,
 })
+export const openFilterMobileMenu = () => ({
+  type: LayoutActionTypes.OPEN_FILTER_MOBILE_MENU,
+})
+export const closeFilterMobileMenu = () => ({
+  type: LayoutActionTypes.CLOSE_FILTER_MOBILE_MENU,
+})
 
 export const closeBetaAlert = () => ({
   type: LayoutActionTypes.CLOSE_BETA_ALERT,
+})
+
+export const setLoading = () => ({
+  type: LayoutActionTypes.SET_LOADING,
+})
+
+export const setLoaded = () => ({
+  type: LayoutActionTypes.SET_LOADED,
+})
+export const setImageLoading = () => ({
+  type: LayoutActionTypes.SET_IMAGE_LOADING,
+})
+
+export const setImageLoaded = () => ({
+  type: LayoutActionTypes.SET_IMAGE_LOADED,
 })

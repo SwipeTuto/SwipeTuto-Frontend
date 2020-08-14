@@ -1,12 +1,8 @@
 @import "../../../variables.scss";
 
 .custom-button {
-  display: inline-block;
-  padding: 0.8rem 1.4rem;
-  color: $white;
-  border-radius: $box-radius;
-  margin: 0 0.5rem;
-  transition: background-color 0.2s;
+  @include button-style;
+  height: 100%;
 
   &.dark {
     background-color: $primary-dark;
@@ -28,45 +24,58 @@
     }
   }
 
-  &.medium {
-    background-color: $primary-medium;
+  &.white {
+    color: inherit;
+    border: 1px solid $grey;
+    background-color: $white;
     &.disabled-button {
-      background-color: lighten($primary-medium, 20%);
+      background-color: $grey-dark, 20%;
     }
     &:hover {
-      background-color: lighten($primary-medium, 10%);
+      // background-color: lighten($primary-light, 10%);
+      color: $primary-light;
     }
   }
 
-  &.blue {
-    background-color: $blue-dark;
-    &.disabled-button {
-      background-color: lighten($blue-dark, 20%);
-    }
-    &:hover {
-      background-color: lighten($blue-dark, 10%);
-    }
-  }
+  // &.medium {
+  //   background-color: $primary-medium;
+  //   &.disabled-button {
+  //     background-color: lighten($primary-medium, 20%);
+  //   }
+  //   &:hover {
+  //     background-color: lighten($primary-medium, 10%);
+  //   }
+  // }
 
-  &.pink {
-    background-color: $pink-dark;
-    &.disabled-button {
-      background-color: lighten($pink-dark, 20%);
-    }
-    &:hover {
-      background-color: lighten($pink-dark, 10%);
-    }
-  }
+  // &.blue {
+  //   background-color: $blue-dark;
+  //   &.disabled-button {
+  //     background-color: lighten($blue-dark, 20%);
+  //   }
+  //   &:hover {
+  //     background-color: lighten($blue-dark, 10%);
+  //   }
+  // }
 
-  &.yellow {
-    background-color: $yellow-dark;
-    &.disabled-button {
-      background-color: lighten($yellow-dark, 20%);
-    }
-    &:hover {
-      background-color: lighten($yellow-dark, 10%);
-    }
-  }
+  // &.pink {
+  //   background-color: $primary-dark;
+  //   &.disabled-button {
+  //     background-color: lighten($primary-dark, 20%);
+  //   }
+  //   &:hover {
+  //     background-color: lighten($primary-dark, 10%);
+  //   }
+  // }
+
+  // &.yellow {
+  //   background-color: $yellow-dark;
+  //   &.disabled-button {
+  //     background-color: lighten($yellow-dark, 20%);
+  //   }
+  //   &:hover {
+  //     background-color: lighten($yellow-dark, 10%);
+  //   }
+  // }
 
   &:disabled {
     background-color: $grey-dark;

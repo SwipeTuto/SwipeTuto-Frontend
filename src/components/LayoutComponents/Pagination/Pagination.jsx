@@ -1,17 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+// redux
+import {
+  selectCardsFetched,
+  selectTotalNumberOfResults,
+} from "../../../redux/filter/filter-selectors";
+import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
 
 import "./Pagination.scss";
 
 const Pagination = ({
-  currentPageClicked,
+  currentSearch,
   totalPages,
-  goToLastPage,
   goToFirstPage,
+  goToLastPage,
   goToPreviousPage,
   goToNextPage,
   handlePaginationNavigation,
+  location,
 }) => {
-  const currentPage = parseInt(currentPageClicked);
+  const [startIndex, setStartIndex] = useState();
+  const [endIndex, setEndIndex] = useState();
+  const [allLinks, setAllLinks] = useState();
+  const currentPage = currentSearch.searchPage;
+
+  useEffect(() => {
+    const start = startPage(parseInt(currentPage), totalPages);
+    const end = endPage(parseInt(currentPage), totalPages);
+    const links = getAllLinksArray(start, end);
+    setStartIndex(start);
+    setEndIndex(end);
+    setAllLinks(links);
+    if (window.scrollY) {
+      window.scroll(0, 0);
+    }
+  }, [totalPages, currentPage]);
 
   const startPage = (currentPage, totalPages) => {
     if (totalPages < 6) {
@@ -42,15 +66,17 @@ const Pagination = ({
       return 5;
     } else if (currentPage + 2 < totalPages) {
       return currentPage + 2;
+    } else {
+      console.log("erreur endPage");
     }
   };
 
   const getAllLinksArray = (start, end) => {
     let array = [];
+
     for (let i = start; i <= end; i++) {
       let object = {};
       object["data-page"] = i;
-      object["data-link"] = `http://localhost:8000/api/v1/card/?page=${i}`;
       object["key"] = i;
       object["content"] = i;
       array.push(object);
@@ -58,55 +84,53 @@ const Pagination = ({
     return array;
   };
 
-  const startIndex = startPage(currentPage, totalPages);
-  const endIndex = endPage(currentPage, totalPages);
-  const allLinks = getAllLinksArray(startIndex, endIndex);
-  // console.log(currentPage, startIndex, endIndex, totalPages);
-
   return (
-    <div className="Pagination">
-      {currentPage === 1 ? (
-        ""
-      ) : (
-        <>
-          <div className="Pagination__button" onClick={() => goToFirstPage()}>
-            &#171;
-          </div>
-          <div
-            className="Pagination__button"
-            onClick={() => goToPreviousPage()}
-          >
-            &#8249;
-          </div>
-        </>
-      )}
-      {allLinks &&
-        allLinks.map((link) => (
-          <div
-            className={`Pagination__indicator ${
-              link["data-page"] === currentPage ? "active" : ""
-            }`}
-            data-link={link["data-link"]}
-            data-page={link["data-page"]}
-            key={link.key}
-            onClick={(e) => handlePaginationNavigation(e)}
-          >
-            {link.content}
-          </div>
-        ))}
-      {currentPage === totalPages || totalPages === 0 ? (
-        ""
-      ) : (
-        <>
-          <div className="Pagination__button" onClick={() => goToNextPage()}>
-            &#8250;
-          </div>
-          <div className="Pagination__button" onClick={() => goToLastPage()}>
-            &#187;
-          </div>
-        </>
-      )}
-    </div>
+    <>
+      <div className="Pagination">
+        {currentPage === 1 ? (
+          ""
+        ) : (
+          <>
+            <div className="Pagination__button" onClick={() => goToFirstPage()}>
+              &#171;
+            </div>
+            <div
+              className="Pagination__button"
+              onClick={() => goToPreviousPage()}
+            >
+              &#8249;
+            </div>
+          </>
+        )}
+
+        {allLinks &&
+          allLinks.map((link) => (
+            <div
+              className={`Pagination__indicator ${
+                link["data-page"] === parseInt(currentPage) ? "active" : ""
+              }`}
+              data-page={link["data-page"]}
+              key={link.key}
+              onClick={(e) => handlePaginationNavigation(e)}
+            >
+              {link.content}
+            </div>
+          ))}
+
+        {currentPage === totalPages || totalPages === 0 ? (
+          ""
+        ) : (
+          <>
+            <div className="Pagination__button" onClick={() => goToNextPage()}>
+              &#8250;
+            </div>
+            <div className="Pagination__button" onClick={() => goToLastPage()}>
+              &#187;
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

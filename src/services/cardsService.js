@@ -1,6 +1,8 @@
 import axios from "axios"
 import { baseURL } from '../services/configService'
-import store from '../redux/store'
+
+
+
 
 
 export const getCards = () => {
@@ -10,9 +12,8 @@ export const getCards = () => {
     },
   }
 
-  return axios.get(`${baseURL}card/`, config)
+  return axios.get(`${baseURL}card/list`, config)
     .then(rep => {
-
       return rep
     })
     .catch(function (err) {
@@ -20,35 +21,64 @@ export const getCards = () => {
     })
 }
 
-export const getCardAfterfilter = (lan) => {
-  console.log('langage', lan)
-  
-  // const state = store.getState();
 
+export const getCardById = cardId => {
+  var config = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  }
+
+  return axios.get(`${baseURL}card/list/${cardId}`, config)
+    .then(rep => {
+      return rep
+    })
+    .catch(function (err) {
+      return err
+    })
+}
+
+export const getCardAfterfilter = (search) => {
   var config = {
     headers: {
       'Content-Type': 'application/json'
     }
   }
   return axios
-    // .get(`${baseURL}card/filter/?langage=${langage}&category=${langage}`, config)
-    .get(`${baseURL}card/filter/`, {params: lan}, config)
+    .get(`${baseURL}card/filter/`, {
+      params: {
+        'topic': search.searchTopic,
+        'category': search.searchCategory,
+        'search': search.searchWords,
+        'order': search.searchOrder,
+        'page': search.searchPage
+      }
+    },
+      config)
     .then(rep => {
       return rep
     })
 }
-export const getCardsByUser = username => {
+
+export const getCardsByUser = userid => {
   var config = {
     headers: {
       'Content-Type': 'application/json'
     }
   }
   return axios
-    .get(`${baseURL}card/user/${username}/`, config)
+    .get(`${baseURL}card/user/${userid}/`, config)
     .then(rep => {
       return rep
     })
 }
+
+
+
+
+
+
+
 
 export const getOtherPageCard = (linkToFetch) => {
   var config = {
@@ -60,11 +90,9 @@ export const getOtherPageCard = (linkToFetch) => {
   return axios
     .get(linkToFetch, config)
     .then((rep) => {
-      console.log(rep);
       return rep;
     })
     .catch(function (err) {
-      console.log(err);
       return err;
     });
 };

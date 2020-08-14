@@ -1,0 +1,99 @@
+@import "../../../variables.scss";
+
+.SearchForm {
+  height: 100%;
+  // max-height: 3rem;
+
+  display: flex;
+  align-items: center;
+  margin-right: 1.2rem;
+
+  &__search--input {
+    padding: none;
+  }
+
+  &__button {
+    height: 100%;
+    max-height: 100%;
+    fill: $primary-dark;
+    padding: 0;
+    transition: fill 0.2s ease;
+
+    &:hover {
+      fill: $primary-light;
+      cursor: pointer;
+    }
+
+    &--logo {
+      display: block;
+      @include logo-size;
+      max-height: 100%;
+    }
+  }
+
+  &__search {
+    display: flex;
+    overflow: hidden;
+    height: 100%;
+
+    @include input-style;
+    // padding: 0.3rem;
+    border: none;
+
+    &--input {
+      width: 12rem;
+      transition: all 0.3s ease;
+
+      &:focus {
+        width: 15rem;
+
+        &::placeholder {
+          color: transparent;
+        }
+      }
+    }
+
+    &--delete {
+      height: 100%;
+      // width: min-content;
+      display: block;
+      cursor: pointer;
+
+      .delete-logo {
+        height: 100%;
+        width: 100%;
+
+        &:hover {
+          fill: $primary-light;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $bp-phone) {
+    .SearchForm {
+      margin-right: 0;
+
+      &__search {
+        height: auto;
+        max-width: 100%;
+
+        &--input {
+          max-width: 100%;
+          width: 70%;
+          // font-size: 2rem;
+
+          &:focus {
+            width: 100%;
+          }
+        }
+      }
+
+      &__button {
+        &--logo {
+          max-height: 3rem;
+        }
+      }
+    }
+  }
+}

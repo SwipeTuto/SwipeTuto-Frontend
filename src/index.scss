@@ -5,7 +5,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  scroll-behavior: smooth;
+  // scroll-behavior: smooth;
 }
 
 button,
@@ -33,7 +33,7 @@ select {
 
 select {
   background-color: $white;
-  border: 1px solid $grey-medium;
+  border: 1px solid $grey;
   border-radius: $box-radius;
 }
 
@@ -53,24 +53,44 @@ html {
 
 body {
   margin: 0;
-  font-size: 1.4rem;
-  font-family: sans-serif;
-  padding: 6rem 0 0 0;
+  font-size: 1.3rem;
+  // font-family: sans-serif;
+  font-family: $text-font;
+  padding: $navtop-height 0 0 0;
   max-width: 100%;
   margin: 0 auto;
   color: $black;
 }
 
+.section {
+  @include section-padding;
+}
+
+@media screen and (max-width: $bp-tablet) {
+  body {
+    padding: 0;
+  }
+}
 @media screen and (max-width: $bp-phone) {
   body {
-    padding: 4rem 0 0 0;
+    font-size: 2rem;
+  }
+
+  .section {
+    @include section-small-padding;
+  }
+}
+
+@media screen and (min-width: $bp-big) {
+  .section {
+    @include section-big-padding;
   }
 }
 
 // Components spécifiques
-.primary-medium-text {
-  color: $primary-medium;
-}
+// .primary-medium-text {
+//   color: $primary-medium;
+// }
 
 .primary-lighter-text {
   color: $primary-light;
@@ -80,18 +100,23 @@ body {
   color: $primary-dark;
 }
 
-.blue-text {
-  color: $blue-dark;
+.error__message {
+  color: $red-error;
 }
 
-.yellow-text {
-  color: $yellow-dark;
-}
-.pink-text {
-  color: $pink-dark;
-}
+// .blue-text {
+//   color: $blue-dark;
+// }
+
+// .yellow-text {
+//   color: $yellow-dark;
+// }
+// .pink-text {
+//   color: $pink-dark;
+// }
 
 .title {
+  font-family: $title-font;
   &-1 {
     margin-bottom: 1.4rem;
     font-size: 2.2rem;

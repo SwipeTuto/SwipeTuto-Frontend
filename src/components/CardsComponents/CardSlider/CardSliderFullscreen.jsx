@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectClickedCardSlides } from "../../../redux/cards/cards-selectors";
+import { selectClickedCardSlides } from "../../../redux/filter/filter-selectors";
 import { selectFullscreen } from "../../../redux/layout/layout-selectors";
 import { closeFullscreen } from "../../../redux/layout/layout-actions";
 
@@ -21,12 +21,19 @@ const CardSliderFullscreen = () => {
   const [imageWidth, setImageWidth] = useState(0);
 
   useEffect(() => {
-    document.querySelector(".CardSliderLargeFullscreen").requestFullscreen();
+    // document.querySelector(".CardSliderLargeFullscreen").requestFullscreen();
     setActiveIndex(0);
-    const slideForWidth = window.screen.height;
+    const slideForWidth =
+      document.querySelector(".CardSliderLargeFullscreen__slide") &&
+      document.querySelector(".CardSliderLargeFullscreen__slide").width;
     setImageWidth(slideForWidth);
-    console.log("fullscreen slidewidth useeffect : ", slideForWidth);
   }, [isFullScreen]);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.keyCode && e.keyCode === 27) {
+      dispatch(closeFullscreen());
+    }
+  });
 
   const goToPrevSlide = (e) => {
     document
@@ -45,7 +52,6 @@ const CardSliderFullscreen = () => {
       ".CardSliderLargeFullscreen__slides-container"
     ).scrollLeft;
     setActiveIndex(Math.floor(currentScrollLevel / (imageWidth - 10)));
-    console.log(activeIndex);
   };
 
   return (

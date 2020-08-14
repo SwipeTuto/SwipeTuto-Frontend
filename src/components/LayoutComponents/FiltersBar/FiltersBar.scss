@@ -1,8 +1,9 @@
 @import "../../../variables.scss";
 
 .FiltersBar {
-  width: 80%;
-  margin: 2rem auto -2rem auto;
+  width: 100%;
+  margin: 2rem auto;
+  padding: $grid-component-padding;
 
   .scroll-logo {
     display: none;
@@ -18,7 +19,7 @@
   &__up {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid $blue-dark;
+    border-bottom: 1px solid $primary-dark;
   }
 
   &__down {
@@ -33,7 +34,7 @@
     width: 2rem;
     margin: 1rem 1rem 0 0;
     cursor: pointer;
-    fill: $blue-dark;
+    fill: $primary-dark;
     transition: all 0.2s ease;
 
     &:first-of-type {
@@ -46,7 +47,7 @@
     }
 
     &.active {
-      fill: $blue;
+      fill: $primary-light;
     }
 
     &:not(.active):hover {
@@ -58,9 +59,15 @@
     display: flex;
 
     &--item {
+      cursor: pointer;
       display: inline-block;
       height: 100%;
       padding: 0.6rem;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: $primary-light;
+      }
 
       &:not(:first-of-type) {
         margin-left: 0.6rem;
@@ -68,7 +75,7 @@
     }
 
     &--item.active {
-      background-color: $blue-dark;
+      background-color: $primary-dark;
       color: $white;
       border-radius: $box-radius $box-radius 0 0;
     }
@@ -76,8 +83,10 @@
 }
 @media screen and (max-width: $bp-tablet) {
   .FiltersBar {
-    width: 90%;
-    margin: 1rem auto 0 auto;
+    width: 100%;
+    padding: 0 2rem;
+    margin-bottom: 2rem;
+    // margin: 1rem auto 0 auto;
 
     &__options {
       margin-left: 3rem;

@@ -19,7 +19,6 @@ import {
   toggleLikeCardAction,
   getCardAfterfilterAction,
   getOtherCardsByAuthorNameAction,
-  getCardCommentsAction,
 } from "../../../redux/filter/filter-actions";
 import {
   closePopupCard,

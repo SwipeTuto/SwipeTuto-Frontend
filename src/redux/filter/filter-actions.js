@@ -260,8 +260,8 @@ export const addCommentAction = (cardId, comment) => {
   return dispatch => {
     return addComment(cardId, comment)
       .then(rep => {
-        dispatch(addCommentSuccess())
-        dispatch(getCardCommentsAction(cardId))
+        dispatch(addCommentSuccess(rep.data))
+        // dispatch(getCardCommentsAction(cardId))
 
         dispatch(setLoaded()) // stop loader
       })
@@ -273,20 +273,21 @@ export const addCommentAction = (cardId, comment) => {
 };
 
 const addCommentErrors = error => ({
-  type: FilterActionTypes.TOGGLE_LIKE_CARD_ERROR,
+  type: FilterActionTypes.ADD_COMMENT_SUCCESS,
   payload: error
 })
 
-const addCommentSuccess = () => ({
-  type: FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS,
+const addCommentSuccess = (commentData) => ({
+  type: FilterActionTypes.ADD_COMMENT_SUCCESS,
+  payload: commentData
 })
 
 export const addReplyAction = (cardId, commentId, comment) => {
   return dispatch => {
     return addReply(commentId, comment)
       .then(rep => {
-        dispatch(addCommentSuccess())
-        dispatch(getCardCommentsAction(cardId))
+        dispatch(addCommentSuccess(rep.data))
+        // dispatch(getCardCommentsAction(cardId))
         dispatch(setLoaded()) // stop loader
       })
       .catch(err => {
@@ -336,11 +337,11 @@ const getCardCommentsSuccess = (comments) => ({
 //   }
 // };
 
-export const deleteCommentAction = (commentId, clickedCardId) => {
+export const deleteCommentAction = (commentId) => {
   return dispatch => {
     return deleteComment(commentId)
       .then(rep => {
-        dispatch(getCardCommentsAction(clickedCardId))
+        // dispatch(getCardCommentsAction(clickedCardId))
         dispatch(deleteCommentSuccess())
         dispatch(setLoaded()) // stop loader
       })

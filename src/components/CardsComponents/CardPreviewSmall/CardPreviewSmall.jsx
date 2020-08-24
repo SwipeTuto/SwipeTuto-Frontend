@@ -91,12 +91,12 @@ const CardPreviewSmall = ({ card }) => {
             <img src="https://fakeimg.pl/500x500/" />
           )}
 
-          <div className="CardPreviewSmall__hover">
-            <p>{truncate(name, 60, false)}</p>
+          {/* <div className="CardPreviewSmall__hover">
+            <p>{truncate( name, 60, false)}</p>
             <div className="CardPreviewSmall__category--stamp">
               {renameCategory(categorie && categorie[0].name)}
             </div>
-          </div>
+          </div> */}
         </div>
         {/* </Link> */}
         <div className="CardPreviewSmall__details">

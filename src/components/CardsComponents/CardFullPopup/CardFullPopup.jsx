@@ -315,6 +315,7 @@ const CardFullPopup = ({ history }) => {
                             .scroll(0, 0);
                         }}
                       >
+  
                         <img
                           style={{ width: "100%", height: "100%" }}
                           src={coudinaryBase + card.media_image["0"].image}

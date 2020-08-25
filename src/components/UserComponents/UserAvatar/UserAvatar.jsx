@@ -15,7 +15,7 @@ const UserAvatar = ({ user, link }) => {
   const dispatch = useDispatch();
   const userImage =
     user && user.avatar && user.avatar[0] && user.avatar[0].avatar
-      ? `${coudinaryBase}${user.avatar[0].avatar}`
+      ? `${user.avatar[0].avatar}`
       // ? `${base}${user.avatar[0].avatar}`
       : null;
   return (

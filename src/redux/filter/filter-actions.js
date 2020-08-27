@@ -1,5 +1,5 @@
 import { FilterActionTypes } from "./filter-types"
-import { setLoading, setLoaded, setImageLoading, setImageLoaded } from '../layout/layout-actions'
+import { setLoading, setLoaded, setImageLoading, setImageLoaded, setClickedCardLoading, setClickedCardLoaded } from '../layout/layout-actions'
 
 import { searchBar } from '../../services/searchService'
 import { getCards, CardsActionTypes, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
@@ -45,16 +45,16 @@ const getCardByIdFailure = err => ({
 
 export const getCardByIdAction = cardId => {
   return dispatch => {
-    dispatch(setImageLoading());
+    dispatch(setClickedCardLoading());
     return getCardById(cardId)
       .then(rep => {
         dispatch(getCardByIdSuccess(rep.data))
-        dispatch(setImageLoaded())
+        dispatch(setClickedCardLoaded())
         return rep
       })
       .catch(err => {
         dispatch(getCardByIdFailure(err.response))
-        dispatch(setImageLoaded())
+        dispatch(setClickedCardLoaded())
       })
 
   }
@@ -266,11 +266,9 @@ export const addCommentAction = (cardId, comment) => {
         dispatch(addCommentSuccess(rep.data))
         // dispatch(getCardCommentsAction(cardId))
 
-        dispatch(setLoaded()) // stop loader
       })
       .catch(err => {
         dispatch(addCommentErrors(err))
-        dispatch(setLoaded()) // stop loader
       })
   }
 };
@@ -291,26 +289,24 @@ export const addReplyAction = (cardId, commentId, comment) => {
       .then(rep => {
         dispatch(addCommentSuccess(rep.data))
         // dispatch(getCardCommentsAction(cardId))
-        dispatch(setLoaded()) // stop loader
       })
       .catch(err => {
         dispatch(addCommentErrors(err))
-        dispatch(setLoaded()) // stop loader
       })
   }
 };
 
 export const getCardCommentsAction = (cardId) => {
   return dispatch => {
-    dispatch(setLoading())
+    // dispatch(setClickedCardLoading())
     return getCardComments(cardId)
       .then(rep => {
         dispatch(getCardCommentsSuccess(rep.data))
-        dispatch(setLoaded()) // stop loader
+        // dispatch(setClickedCardLoaded()) // stop loader
       })
       .catch(err => {
         dispatch(getCardCommentsError(err))
-        dispatch(setLoaded()) // stop loader
+        // dispatch(setClickedCardLoaded()) // stop loader
       })
   }
 };
@@ -346,11 +342,9 @@ export const deleteCommentAction = (commentId) => {
       .then(rep => {
         // dispatch(getCardCommentsAction(clickedCardId))
         dispatch(deleteCommentSuccess())
-        dispatch(setLoaded()) // stop loader
       })
       .catch(err => {
         dispatch(deleteCommentErrors(err))
-        dispatch(setLoaded()) // stop loader
       })
   }
 };

@@ -21,7 +21,8 @@
     padding: 1rem;
     background-color: $grey-light;
     border-radius: $box-radius;
-    border: 1px solid $grey;
+    border: 0.5px solid $grey;
+    color: $black;
 
     .UserUsername {
       display: inline-block;
@@ -82,6 +83,9 @@
       @include logo-size;
       margin-right: 0.6rem;
       justify-self: flex-start;
+      & * {
+        stroke: currentColor !important;
+      }
 
       &.comment-logo__liked {
         fill: $red-like;
@@ -164,7 +168,7 @@
           flex-direction: column;
           // background-color: $white;
           box-shadow: $card-shadow;
-          border: 1px solid $grey;
+          border: 0.5px solid $grey;
         }
       }
 

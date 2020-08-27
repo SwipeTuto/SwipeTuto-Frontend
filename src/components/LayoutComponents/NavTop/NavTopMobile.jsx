@@ -51,6 +51,8 @@ import SwipeTutoSmallLogo from "../../../assets/logos/Logo_small_border_black_sm
 import SwipeTutoSmallFull from "../../../assets/logos/Logo full border black smaller_350px.png";
 
 import "./NavTopMobile.scss";
+import { useDarkMode } from "../../../hooks/useDarkMode";
+import ToggleButton from "../ToggleTheme/ToggleTheme";
 
 const NavTopMobile = (props) => {
   const [redirection, setRedirection] = useState(false);
@@ -89,6 +91,15 @@ const NavTopMobile = (props) => {
   };
 
   const redirectLink = SearchLinkRedirect();
+
+  const [theme, setTheme] = useDarkMode();
+  const toggleTheme = () => {
+    if (theme === "light") {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
 
   return (
     <>
@@ -238,6 +249,7 @@ const NavTopMobile = (props) => {
               <CustomButton color="dark">Connexion / Inscription</CustomButton>
             </Link>
           )}
+          <ToggleButton toggleTheme={toggleTheme} theme={theme} />
         </div>
       </div>
     </>

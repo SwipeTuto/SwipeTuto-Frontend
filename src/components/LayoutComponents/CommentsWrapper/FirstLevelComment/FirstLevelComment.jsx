@@ -151,11 +151,17 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
     if (replyInputShow) {
       const inputToScrollTo = [
         ...document.getElementsByClassName("CommentsInput__newComment--input"),
-      ][0];
+      ][1];
       const cardFullPopupEl = [
         ...document.getElementsByClassName("CardFullPopup active"),
       ][0];
       cardFullPopupEl.scrollTo(0, inputToScrollTo.offsetTop - 100);
+      console.log(inputToScrollTo);
+      inputToScrollTo.focus();
+      inputToScrollTo.setSelectionRange(
+        inputToScrollTo.value.length,
+        inputToScrollTo.value.length
+      );
     }
   }, [replyInputShow]);
 

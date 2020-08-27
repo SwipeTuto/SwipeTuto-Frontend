@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   filterMobileMenuOpen: false,
   betaAlert: true,
   isLoaded: false,
+  clickedCardIsLoaded: false,
   imageIsLoaded: false,
   theme: "light"
 };
@@ -102,6 +103,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoaded: true,
+      }
+    case LayoutActionTypes.SET_CLICKED_CARD_LOADING:
+      return {
+        ...state,
+        clickedCardIsLoaded: false,
+      }
+    case LayoutActionTypes.SET_CLICKED_CARD_LOADED:
+      return {
+        ...state,
+        clickedCardIsLoaded: true,
       }
     case LayoutActionTypes.SET_IMAGE_LOADING:
       return {

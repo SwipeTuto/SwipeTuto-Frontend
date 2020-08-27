@@ -29,6 +29,7 @@ import {
   selectImageIsLoaded,
   selectShowPopupCard,
   selectTheme,
+  selectClickedCardIsLoaded,
 } from "../../../redux/layout/layout-selectors";
 
 // components
@@ -81,7 +82,7 @@ const CardFullPopup = ({ history }) => {
   const [cardIsLiked, setCardIsLiked] = useState();
   const [cardIsSaved, setCardIsSaved] = useState(false);
   const [connectRedirect, setConnectRedirect] = useState(false);
-  const imageIsLoaded = useSelector(selectImageIsLoaded);
+  const clickedCardIsLoaded = useSelector(selectClickedCardIsLoaded);
 
   useEffect(() => {
     if (!clickedCard || !cardsArray) return;
@@ -198,9 +199,8 @@ const CardFullPopup = ({ history }) => {
   return (
     <>
       {redirection && <Redirect to={redirectLink} />}
-      {connectRedirect ? (
-        <ConnexionRedirect handleClose={handleClose} />
-      ) : (
+      {connectRedirect ? <ConnexionRedirect handleClose={handleClose} /> : null}
+      {clickedCardIsLoaded ? (
         <div
           className={`CardFullPopup ${popupShown ? "active" : ""}`}
           onClick={() => handlePopupClose()}
@@ -258,9 +258,7 @@ const CardFullPopup = ({ history }) => {
               </div>
             </div>
             <div className="CardFullPopup__slider">
-              {!imageIsLoaded ? (
-                <Loading />
-              ) : clickedCard && isFullScreen ? (
+              {clickedCard && isFullScreen ? (
                 <CardSliderFullscreen />
               ) : clickedCard ? (
                 <CardSliderSwipable />
@@ -365,6 +363,18 @@ const CardFullPopup = ({ history }) => {
               />
             </>
           )}
+        </div>
+      ) : (
+        <div
+          className={`CardFullPopup ${popupShown ? "active" : ""}`}
+          onClick={() => handlePopupClose()}
+        >
+          <div
+            className={`CardFullPopup__wrapper ${currentTheme}-theme`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Loading />
+          </div>
         </div>
       )}
     </>

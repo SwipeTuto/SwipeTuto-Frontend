@@ -45,6 +45,13 @@ export const setLoading = () => ({
 export const setLoaded = () => ({
   type: LayoutActionTypes.SET_LOADED,
 })
+export const setClickedCardLoading = () => ({
+  type: LayoutActionTypes.SET_CLICKED_CARD_LOADING,
+})
+
+export const setClickedCardLoaded = () => ({
+  type: LayoutActionTypes.SET_CLICKED_CARD_LOADED,
+})
 export const setImageLoading = () => ({
   type: LayoutActionTypes.SET_IMAGE_LOADING,
 })

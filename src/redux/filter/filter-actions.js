@@ -94,13 +94,16 @@ export const setCardsFetchedInStore = (cards) => ({
 // Fetch des cards à partir du nom de l'auteur
 export const getCardsByUserIdAction = userId => {
   return dispatch => {
+    dispatch(setLoading())
     return getCardsByUser(userId)
       .then(rep => {
         dispatch(getCardsByUserIdSuccess(rep.data))
+        dispatch(setLoaded())
         return rep
       })
       .catch(err => {
         dispatch(getCardsByUserIdFailure(err.response))
+        dispatch(setLoaded())
       })
   }
 }

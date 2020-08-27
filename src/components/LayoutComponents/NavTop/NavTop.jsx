@@ -40,6 +40,7 @@ import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.
 import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
 import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
 import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
+import { ReactComponent as BookmarkLogo } from "../../../assets/images/bookmark.svg";
 import SwipeTutoSmallSmall from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
 
 import "./NavTop.scss";
@@ -164,6 +165,14 @@ const NavTop = (props) => {
               >
                 <SettingsLogo className="NavTop__userMenu--logo" />
                 Paramètres
+              </Link>
+              <Link
+                className="NavTop__userMenu--link"
+                to="/account/saved"
+                onClick={() => dispatch(toggleUserNav())}
+              >
+                <BookmarkLogo className="NavTop__userMenu--logo" />
+                Sauvegardés
               </Link>
               <Link
                 className="NavTop__userMenu--link"

@@ -3,7 +3,7 @@
 .CardPreviewSmall {
   height: 100%;
   width: 100%;
-  background-color: $white;
+  // background-color: $white;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -16,7 +16,7 @@
   &__image {
     height: 100%;
     width: auto;
-    background-color: $white;
+    // background-color: $white;
     position: relative;
     display: flex;
     justify-content: center;

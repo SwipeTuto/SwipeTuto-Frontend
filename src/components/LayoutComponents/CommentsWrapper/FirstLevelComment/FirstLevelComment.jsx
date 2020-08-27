@@ -150,7 +150,7 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
   useEffect(() => {
     if (replyInputShow) {
       const inputToScrollTo = [
-        ...document.getElementsByClassName("CommentsInputReply"),
+        ...document.getElementsByClassName("CommentsInput__newComment--input"),
       ][0];
       const cardFullPopupEl = [
         ...document.getElementsByClassName("CardFullPopup active"),

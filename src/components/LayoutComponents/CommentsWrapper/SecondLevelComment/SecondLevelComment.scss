@@ -67,6 +67,7 @@
     // border-left: 1px solid $grey-dark;
 
     display: flex;
+    width: 6rem;
     flex-direction: column;
     align-items: center;
 
@@ -161,7 +162,7 @@
           right: 1.5rem;
           display: flex;
           flex-direction: column;
-          background-color: $white;
+          // background-color: $white;
           box-shadow: $card-shadow $card-shadow-2;
           border: 1px solid $grey;
         }

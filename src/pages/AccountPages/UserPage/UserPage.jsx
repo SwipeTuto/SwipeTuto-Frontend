@@ -33,35 +33,56 @@ const UserPage = ({ userIsSame, location }) => {
   const currentUser = useSelector(selectCurrentUser);
   const clickedUser = useSelector(selectClickedUser);
   const [userDatas, setUserDatas] = useState();
+  const [pageType, setPageType] = useState();
   const dispatch = useDispatch();
   // dispatch(closeFullscreen());
   // dispatch(closePopupCard(false));
 
   useEffect(() => {
+    if (locationPath) {
+      if (locationPath === "/account/saved") {
+        setPageType("saved");
+      } else if (locationPath === "/account/user") {
+        setPageType("user");
+      }
+    }
+
     if (
       (userIsSame && currentUser && currentUser.id) ||
-      (locationPath && locationPath.includes("/account") && currentUser)
+      (locationPath && locationPath.includes("/account/user") && currentUser)
     ) {
       setUserDatas(currentUser);
       dispatch(getCardsByUserIdAction(currentUser.id));
+    } else if (
+      locationPath &&
+      locationPath.includes("/account/saved") &&
+      currentUser
+    ) {
+      setUserDatas(clickedUser);
+      // action pour fetch les cartes sauvegardées du user
+      // dispatch(getCardsByUserIdAction(clickedUser.id));
     } else if (!userIsSame && clickedUser && clickedUser.id) {
       setUserDatas(clickedUser);
       dispatch(getCardsByUserIdAction(clickedUser.id));
     } else {
       setUserDatas(null);
     }
-  }, [clickedUser, currentUser, dispatch, userIsSame]);
+  }, [clickedUser, currentUser, dispatch, userIsSame, locationPath]);
 
   return (
     <div className="UserPage">
       <div className="UserPage__cards">
-        <h1 className="title title-1">
-          Tutoriels de{" "}
-          {userDatas && userDatas.username
-            ? userDatas.username
-            : "l'utilisateur "}
-          :
-        </h1>
+        {pageType && pageType === "user" ? (
+          <h1 className="title title-1">
+            Tutoriels de{" "}
+            {userDatas && userDatas.username
+              ? userDatas.username
+              : "l'utilisateur "}
+          </h1>
+        ) : pageType && pageType === "saved" ? (
+          <h1 className="title title-1">Tutoriels Sauvegardés</h1>
+        ) : null}
+
         <div className="UserPage__cards--grid">
           {!isLoaded ? (
             <Loading />

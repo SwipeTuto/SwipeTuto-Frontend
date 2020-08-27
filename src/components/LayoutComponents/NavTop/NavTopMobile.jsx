@@ -45,8 +45,9 @@ import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.
 import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg";
 import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
 import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
-import SwipeTutoSmallLogo from "../../../assets/logos/logo-small-reduced.png";
-import SwipeTutoSmallFull from "../../../assets/logos/logo-full-reduced.png";
+import { ReactComponent as BookmarkLogo } from "../../../assets/images/bookmark.svg";
+import SwipeTutoSmallLogo from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
+import SwipeTutoSmallFull from "../../../assets/logos/Logo full border black smaller_350px.png";
 
 import "./NavTopMobile.scss";
 
@@ -200,6 +201,14 @@ const NavTopMobile = (props) => {
                 >
                   <HelpLogo className="NavTopMobile__logo" />
                   Aide
+                </Link>
+                <Link
+                  className="NavTopMobile__userMenu--link"
+                  to="/account/saved"
+                  onClick={() => handleNavClose()}
+                >
+                  <BookmarkLogo className="NavTopMobile__logo" />
+                  Sauvegardés
                 </Link>
                 <Link
                   className="NavTopMobile__userMenu--link"

@@ -36,7 +36,6 @@ const UserHeader = ({ userIsSame, location }) => {
     } else {
       setUserDatas(clickedUser);
     }
-    console.log(currentUser);
   }, [clickedUser, locationPath, currentUser]);
 
   return (

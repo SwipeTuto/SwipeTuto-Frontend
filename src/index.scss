@@ -32,7 +32,7 @@ select {
 }
 
 select {
-  background-color: $white;
+  // background-color: $white;
   border: 1px solid $grey;
   border-radius: $box-radius;
 }
@@ -54,12 +54,17 @@ html {
 body {
   margin: 0;
   font-size: 1.3rem;
+  background-color: $white;
   // font-family: sans-serif;
   font-family: $text-font;
   padding: $navtop-height 0 0 0;
   max-width: 100%;
   margin: 0 auto;
   color: $black;
+
+  &.dark-mode {
+    background-color: $black-themeblack;
+  }
 }
 
 .section {

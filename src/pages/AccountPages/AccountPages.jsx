@@ -13,12 +13,15 @@ import { ReactComponent as LogoYoutube } from "../../assets/images/logo-youtube.
 import { ReactComponent as LogoGithub } from "../../assets/images/logo-github.svg";
 import { ReactComponent as SettingsLogo } from "../../assets/images/settings.svg";
 import { ReactComponent as AccountLogo } from "../../assets/images/person.svg";
+import { ReactComponent as BookmarkLogo } from "../../assets/images/bookmark.svg";
 import newUserAvatar from "../../assets/images/avatar_new_user.png";
 
 import "./AccountPages.scss";
+import { selectTheme } from "../../redux/layout/layout-selectors";
 
 const AccountPage = (props) => {
   const currentUser = useSelector(selectCurrentUser);
+  const currentTheme = useSelector(selectTheme);
 
   // scroll reset
   if (window.scrollY) {
@@ -28,7 +31,7 @@ const AccountPage = (props) => {
   useEffect(() => {}, []);
 
   return (
-    <div className="AccountPage">
+    <div className={`AccountPage ${currentTheme}-theme`}>
       <div className="AccountPage__wrapper">
         <UserHeader user="current" />
         {/* <div className="AccountPage__infos">// USER INFOS</div> */}
@@ -39,6 +42,7 @@ const AccountPage = (props) => {
             path="/account/settings"
             component={SettingsPage}
           />
+          <ProtectedRoute exact path="/account/saved" component={UserPage} />
         </Switch>
       </div>
       <div className="AccountPage__navigation">
@@ -48,6 +52,10 @@ const AccountPage = (props) => {
             <NavLink to="/account/user">
               <AccountLogo />
               Compte
+            </NavLink>
+            <NavLink to="/account/saved">
+              <BookmarkLogo />
+              Sauvegardés
             </NavLink>
             <NavLink to="/account/settings">
               <SettingsLogo />

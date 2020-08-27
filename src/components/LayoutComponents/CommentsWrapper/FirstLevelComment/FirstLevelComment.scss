@@ -19,8 +19,9 @@
     flex-direction: column;
     padding: 1rem;
     background-color: $grey-light;
+    color: $black;
     border-radius: $box-radius;
-    border: 1px solid $grey;
+    border: 0.5px solid $grey;
 
     .UserUsername {
       display: inline-block;
@@ -66,6 +67,7 @@
     // border-left: 1px solid $grey-dark;
 
     display: flex;
+    width: 6rem;
     flex-direction: column;
     align-items: center;
 
@@ -80,6 +82,9 @@
       @include logo-size;
       margin-right: 0.6rem;
       justify-self: flex-start;
+      & * {
+        stroke: currentColor !important;
+      }
 
       &.comment-logo__liked {
         fill: $red-like;
@@ -94,12 +99,12 @@
       margin-left: 5rem;
       cursor: pointer;
       font-weight: bold;
-      color: $primary-dark;
+      color: $primary-light;
       transition: all 0.2s ease;
 
-      &:hover {
-        color: $primary-light;
-      }
+      // &:hover {
+      //   color: $primary-light;
+      // }
     }
 
     &--input {
@@ -133,6 +138,7 @@
     width: 5rem;
     cursor: pointer;
     transition: all 0.2s ease;
+    fill: currentColor !important;
 
     &:hover {
       fill: $primary-light;
@@ -176,9 +182,9 @@
           right: 1.5rem;
           display: flex;
           flex-direction: column;
-          background-color: $white;
-          box-shadow: $card-shadow $card-shadow-2;
-          border: 1px solid $grey;
+          // background-color: $white;
+          box-shadow: $card-shadow;
+          border: 0.5px solid $grey;
         }
       }
 

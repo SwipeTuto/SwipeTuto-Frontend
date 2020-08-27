@@ -2,7 +2,8 @@
 
 .NavTop {
   height: $navtop-height;
-  background-color: $white;
+  // background-color: $white;
+  // background-color: currentColor;
   position: fixed;
   top: 0;
   left: 0;
@@ -11,7 +12,8 @@
   align-items: center;
   padding: 1rem 2rem;
   z-index: 100000;
-  border-bottom: 0.5px solid $grey;
+  // border-bottom: 0.5px solid $grey;
+  @include theme-colors($themelight: true);
 
   &__left,
   &__center,
@@ -46,7 +48,7 @@
     &--logo {
       @include logo-size;
       margin-left: 0.4rem;
-      stroke: $black;
+      stroke: currentColor;
     }
 
     &:not(.active) &:hover {
@@ -96,6 +98,7 @@
         &--logo {
           height: 100%;
           width: 100%;
+          fill: currentColor;
 
           &:hover {
             fill: $primary-light;
@@ -156,10 +159,10 @@
     right: 2rem;
     display: flex;
     flex-direction: column;
-    background-color: $white;
+    // background-color: $white;
     border-radius: 0 0 $box-radius $box-radius;
-    box-shadow: $card-shadow, $card-shadow-2;
-    border: 0.5px solid $grey;
+    box-shadow: $card-shadow;
+    border: 0.5px solid $grey-light;
     overflow: hidden;
 
     p {
@@ -177,7 +180,7 @@
     }
 
     &--meta {
-      border-bottom: 1px solid $grey;
+      border-bottom: 1px solid $grey-light;
     }
 
     &--meta,
@@ -188,6 +191,7 @@
     &--logo {
       @include logo-size;
       margin-right: 1rem;
+      fill: currentColor;
     }
 
     &--link {
@@ -214,8 +218,8 @@
     top: 100%;
     left: 0;
     width: 100%;
-    background-color: $white;
-    box-shadow: 0 3px 3px rgba($grey-dark, 0.5);
+    // background-color: $white;
+    border-bottom: 0.5px solid $grey;
     border-top: 0.5px solid $grey;
     display: flex;
     justify-content: flex-start;
@@ -241,7 +245,8 @@
 
       &:hover {
         box-shadow: inset $button-shadow;
-        background-color: $white;
+        // background-color: $white;
+        background-color: inherit;
       }
     }
   }

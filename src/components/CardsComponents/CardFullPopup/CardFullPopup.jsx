@@ -28,6 +28,8 @@ import {
   selectFullscreen,
   selectImageIsLoaded,
   selectShowPopupCard,
+  selectTheme,
+  selectClickedCardIsLoaded,
 } from "../../../redux/layout/layout-selectors";
 
 // components
@@ -64,6 +66,7 @@ import "./CardFullPopup.scss";
 // handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
 const CardFullPopup = ({ history }) => {
   const isFullScreen = useSelector(selectFullscreen);
+  const currentTheme = useSelector(selectTheme);
   const [redirection, setRedirection] = useState(false);
   const currentSearch = useSelector(selectCurrentSearch);
   const currentUser = useSelector(selectCurrentUser);
@@ -79,7 +82,7 @@ const CardFullPopup = ({ history }) => {
   const [cardIsLiked, setCardIsLiked] = useState();
   const [cardIsSaved, setCardIsSaved] = useState(false);
   const [connectRedirect, setConnectRedirect] = useState(false);
-  const imageIsLoaded = useSelector(selectImageIsLoaded);
+  const clickedCardIsLoaded = useSelector(selectClickedCardIsLoaded);
 
   useEffect(() => {
     if (!clickedCard || !cardsArray) return;
@@ -196,15 +199,14 @@ const CardFullPopup = ({ history }) => {
   return (
     <>
       {redirection && <Redirect to={redirectLink} />}
-      {connectRedirect ? (
-        <ConnexionRedirect handleClose={handleClose} />
-      ) : (
+      {connectRedirect ? <ConnexionRedirect handleClose={handleClose} /> : null}
+      {clickedCardIsLoaded ? (
         <div
           className={`CardFullPopup ${popupShown ? "active" : ""}`}
           onClick={() => handlePopupClose()}
         >
           <div
-            className="CardFullPopup__wrapper"
+            className={`CardFullPopup__wrapper ${currentTheme}-theme`}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="CardFullPopup__header">
@@ -256,9 +258,7 @@ const CardFullPopup = ({ history }) => {
               </div>
             </div>
             <div className="CardFullPopup__slider">
-              {!imageIsLoaded ? (
-                <Loading />
-              ) : clickedCard && isFullScreen ? (
+              {clickedCard && isFullScreen ? (
                 <CardSliderFullscreen />
               ) : clickedCard ? (
                 <CardSliderSwipable />
@@ -315,7 +315,6 @@ const CardFullPopup = ({ history }) => {
                             .scroll(0, 0);
                         }}
                       >
-  
                         <img
                           style={{ width: "100%", height: "100%" }}
                           src={coudinaryBase + card.media_image["0"].image}
@@ -364,6 +363,18 @@ const CardFullPopup = ({ history }) => {
               />
             </>
           )}
+        </div>
+      ) : (
+        <div
+          className={`CardFullPopup ${popupShown ? "active" : ""}`}
+          onClick={() => handlePopupClose()}
+        >
+          <div
+            className={`CardFullPopup__wrapper ${currentTheme}-theme`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Loading />
+          </div>
         </div>
       )}
     </>

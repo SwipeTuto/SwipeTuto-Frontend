@@ -16,10 +16,12 @@ import CustomButton from "../../components/LayoutComponents/CustomButton/CustomB
 import { Link } from "react-router-dom";
 import { ReactComponent as AccountLogo } from "../../assets/images/person.svg";
 import { urlParams, getUrlId } from "../../helper";
+import { selectTheme } from "../../redux/layout/layout-selectors";
 
 const ProfilePage = ({ match, location }) => {
   const [user, setUser] = useState();
   const currentUser = useSelector(selectCurrentUser);
+  const currentTheme = useSelector(selectTheme);
   const clickedUser = useSelector(selectClickedUser);
   const userErrors = useSelector(selectUserErrors);
   const [userIsSame, setUserIsSame] = useState(false);
@@ -48,7 +50,7 @@ const ProfilePage = ({ match, location }) => {
   }, [currentUser, userId]);
 
   return (
-    <div className="ProfilePage">
+    <div className={`ProfilePage ${currentTheme}-theme`}>
       <div className="ProfilePage__wrapper">
         {userErrors ? (
           <div className="ProfilePage__error">

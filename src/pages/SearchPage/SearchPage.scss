@@ -2,7 +2,7 @@
 
 .SearchPage {
   min-height: 100vh;
-  background-color: $white;
+  // background-color: $white;
 
   .FiltersBar {
     display: block;
@@ -19,7 +19,7 @@
   @media screen and (max-width: $bp-tablet) {
     .SearchPage {
       min-height: 100vh;
-      background-color: $white;
+      // background-color: $white;
 
       &__filtersBarMobile {
         display: block;

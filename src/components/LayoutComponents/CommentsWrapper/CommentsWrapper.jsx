@@ -140,10 +140,8 @@ const CommentsWrapper = () => {
     const fullCommentLastLocal = localLastPublishedComments.filter(
       (comment) => comment.id === parseInt(commentId)
     );
-    console.log(fullCommentLocalArray, fullCommentLastLocal);
     if (fullCommentLocalArray.length > 0) {
       const index = localCommentsArray.indexOf(fullCommentLocalArray[0]);
-      console.log(index);
       if (index > -1) {
         const arrayCopy = localCommentsArray;
         arrayCopy.splice(index, 1);
@@ -153,11 +151,9 @@ const CommentsWrapper = () => {
         );
         commentsNumberEl.textContent =
           parseInt(commentsNumberEl.textContent) - 1;
-        console.log(localCommentsArray);
       }
     } else if (fullCommentLastLocal.length > 0) {
       const index = localLastPublishedComments.indexOf(fullCommentLastLocal[0]);
-      console.log(index);
       if (index > -1) {
         const arrayCopy = localLastPublishedComments;
         arrayCopy.splice(index, 1);
@@ -167,16 +163,11 @@ const CommentsWrapper = () => {
         );
         commentsNumberEl.textContent =
           parseInt(commentsNumberEl.textContent) - 1;
-        console.log(localLastPublishedComments);
       }
     }
   };
 
-  useEffect(() => {
-    console.table(localCommentsArray);
-    console.log("------------------");
-    console.table(localLastPublishedComments);
-  }, [localCommentsArray, localLastPublishedComments]);
+  useEffect(() => {}, [localCommentsArray, localLastPublishedComments]);
 
   return (
     <>
@@ -199,7 +190,6 @@ const CommentsWrapper = () => {
             localLastPublishedComments.length !== 0 &&
             localLastPublishedComments.map((comment) => (
               <>
-                {console.log("LAST RENDER")}
                 <FirstLevelComment
                   comment={comment}
                   key={comment.id}
@@ -232,7 +222,6 @@ const CommentsWrapper = () => {
             localCommentsArray &&
             localCommentsArray.map((comment) => (
               <>
-                {console.log("LOCAL RENDER")}
                 <FirstLevelComment
                   comment={comment}
                   key={comment.id}

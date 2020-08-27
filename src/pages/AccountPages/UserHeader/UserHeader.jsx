@@ -12,11 +12,13 @@ import {
 } from "../../../redux/user/user-selectors";
 
 import "./UserHeader.scss";
+import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 const UserHeader = ({ userIsSame, location }) => {
   const locationPath = location && location.pathname;
   // user = current pour user actuel
   // user = other pour la visite d'un autre profil
+  const currentTheme = useSelector(selectTheme);
   const currentUser = useSelector(selectCurrentUser);
   const clickedUser = useSelector(selectClickedUser);
   const [userDatas, setUserDatas] = useState();
@@ -36,11 +38,10 @@ const UserHeader = ({ userIsSame, location }) => {
     } else {
       setUserDatas(clickedUser);
     }
-    console.log(currentUser);
   }, [clickedUser, locationPath, currentUser]);
 
   return (
-    <div className="UserHeader">
+    <div className={`UserHeader ${currentTheme}-theme`}>
       <div className="UserHeader__userInfos">
         <div className="UserHeader__avatar">
           <UserAvatar user={currentUser} link={true} />

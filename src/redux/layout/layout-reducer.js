@@ -8,7 +8,9 @@ const INITIAL_STATE = {
   filterMobileMenuOpen: false,
   betaAlert: true,
   isLoaded: false,
+  clickedCardIsLoaded: false,
   imageIsLoaded: false,
+  theme: "light"
 };
 
 const layoutReducer = (state = INITIAL_STATE, action) => {
@@ -102,6 +104,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoaded: true,
       }
+    case LayoutActionTypes.SET_CLICKED_CARD_LOADING:
+      return {
+        ...state,
+        clickedCardIsLoaded: false,
+      }
+    case LayoutActionTypes.SET_CLICKED_CARD_LOADED:
+      return {
+        ...state,
+        clickedCardIsLoaded: true,
+      }
     case LayoutActionTypes.SET_IMAGE_LOADING:
       return {
         ...state,
@@ -111,6 +123,12 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         imageIsLoaded: true,
+      }
+    case LayoutActionTypes.TOGGLE_THEME:
+      // const localTheme = window.localStorage.getItem('theme');
+      return {
+        ...state,
+        theme: action.payload,
       }
     default:
       return state;

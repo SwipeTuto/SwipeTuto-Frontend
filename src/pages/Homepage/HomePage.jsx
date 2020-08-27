@@ -27,7 +27,10 @@ import { ReactComponent as SuccessIllustration } from "../../assets/images/illus
 import { ReactComponent as HeaderLogo } from "../../assets/images/illustrations/header_illustration.svg";
 
 import { selectCardsFetchedCards } from "../../redux/filter/filter-selectors";
-import { selectBetaAlertOpen } from "../../redux/layout/layout-selectors";
+import {
+  selectBetaAlertOpen,
+  selectTheme,
+} from "../../redux/layout/layout-selectors";
 import { deleteCurrentSearch } from "../../redux/filter/filter-actions";
 
 import "./HomePage.scss";
@@ -36,6 +39,7 @@ import SearchLinkRedirect from "../../helper/SearchLinkRedirect";
 
 const HomePage = () => {
   const isLoaded = useSelector(selectIsLoaded);
+  const currentTheme = useSelector(selectTheme);
   const cards = useSelector(selectCardsFetchedCards);
   const betaAlertOpen = useSelector(selectBetaAlertOpen);
   const [cardsArrayCut, setCardsArrayCut] = useState([]);
@@ -66,7 +70,7 @@ const HomePage = () => {
   const redirectLink = SearchLinkRedirect();
 
   return (
-    <div className="HomePage">
+    <div className={`HomePage ${currentTheme}-theme`}>
       {/* {betaAlertOpen && (
         <div className="HomePage__infos beta__alert">
           <h2 className="title title-2">Informations</h2>

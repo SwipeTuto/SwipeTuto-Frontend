@@ -3,11 +3,11 @@
 .CardPreviewSmall {
   height: 100%;
   width: 100%;
-  background-color: $white;
+  // background-color: $white;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  box-shadow: $card-shadow, $card-shadow-2;
+  box-shadow: $card-shadow;
   border-radius: $box-radius;
   display: flex;
   flex-direction: column;
@@ -16,7 +16,7 @@
   &__image {
     height: 100%;
     width: auto;
-    background-color: $white;
+    // background-color: $white;
     position: relative;
     display: flex;
     justify-content: center;
@@ -103,6 +103,9 @@
       fill: $red-like;
       // fill: $primary-light;
       margin-right: 0.3rem;
+      & * {
+        stroke: currentColor !important;
+      }
     }
   }
 }

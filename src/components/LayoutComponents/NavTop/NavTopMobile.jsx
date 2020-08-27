@@ -12,6 +12,7 @@ import {
 import {
   selectMobileNavOpen,
   selectFilterMobileMenuOpen,
+  selectTheme,
 } from "../../../redux/layout/layout-selectors";
 import {
   openMobileNav,
@@ -45,15 +46,19 @@ import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.
 import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg";
 import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
 import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
-import SwipeTutoSmallLogo from "../../../assets/logos/logo-small-reduced.png";
-import SwipeTutoSmallFull from "../../../assets/logos/logo-full-reduced.png";
+import { ReactComponent as BookmarkLogo } from "../../../assets/images/bookmark.svg";
+import SwipeTutoSmallLogo from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
+import SwipeTutoSmallFull from "../../../assets/logos/Logo full border black smaller_350px.png";
 
 import "./NavTopMobile.scss";
+import { useDarkMode } from "../../../hooks/useDarkMode";
+import ToggleButton from "../ToggleTheme/ToggleTheme";
 
 const NavTopMobile = (props) => {
   const [redirection, setRedirection] = useState(false);
   const dispatch = useDispatch();
   const filtersBarMobile = useSelector(selectFilterMobileMenuOpen);
+  const currentTheme = useSelector(selectTheme);
   const currentUser = useSelector(selectCurrentUser);
   const mobileNavOpen = useSelector(selectMobileNavOpen);
   const searchWords = useSelector(selectSearchWords);
@@ -87,10 +92,23 @@ const NavTopMobile = (props) => {
 
   const redirectLink = SearchLinkRedirect();
 
+  const [theme, setTheme] = useDarkMode();
+  const toggleTheme = () => {
+    if (theme === "light") {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
+
   return (
     <>
       {redirection && <Redirect to={redirectLink} />}
-      <div className={`NavTopMobile ${mobileNavOpen ? "active" : ""}`}>
+      <div
+        className={`NavTopMobile ${
+          mobileNavOpen ? "active" : ""
+        } ${currentTheme}-theme`}
+      >
         {filtersBarMobile && (
           <FiltersBarMobile title="Recherche" showResults={false} />
         )}
@@ -203,6 +221,14 @@ const NavTopMobile = (props) => {
                 </Link>
                 <Link
                   className="NavTopMobile__userMenu--link"
+                  to="/account/saved"
+                  onClick={() => handleNavClose()}
+                >
+                  <BookmarkLogo className="NavTopMobile__logo" />
+                  Sauvegardés
+                </Link>
+                <Link
+                  className="NavTopMobile__userMenu--link"
                   to="/"
                   onClick={() => {
                     handleNavClose();
@@ -223,6 +249,7 @@ const NavTopMobile = (props) => {
               <CustomButton color="dark">Connexion / Inscription</CustomButton>
             </Link>
           )}
+          <ToggleButton toggleTheme={toggleTheme} theme={theme} />
         </div>
       </div>
     </>

@@ -16,7 +16,10 @@ import {
 } from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
-import { selectUserNav } from "../../../redux/layout/layout-selectors";
+import {
+  selectUserNav,
+  selectTheme,
+} from "../../../redux/layout/layout-selectors";
 import {
   getCardAfterfilterAction,
   setCurrentSearch,
@@ -40,6 +43,7 @@ import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.
 import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
 import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
 import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
+import { ReactComponent as BookmarkLogo } from "../../../assets/images/bookmark.svg";
 import SwipeTutoSmallSmall from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
 
 import "./NavTop.scss";
@@ -47,6 +51,7 @@ import "./NavTop.scss";
 const NavTop = (props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
+  const currentTheme = useSelector(selectTheme);
   const currentUserNav = useSelector(selectUserNav);
   const currentSearch = useSelector(selectCurrentSearch);
 
@@ -81,7 +86,7 @@ const NavTop = (props) => {
   return (
     <>
       {redirection && <Redirect to={redirectLink} />}
-      <div className="NavTop">
+      <div className={`NavTop ${currentTheme}-theme`}>
         <div className="NavTop__left">
           <div className="NavTop__swipeTuto">
             <img src={SwipeTutoSmallSmall} alt="" />
@@ -97,7 +102,9 @@ const NavTop = (props) => {
             Langages
             <DropDownLogo className="NavTop__link--logo" />
           </p>
-          <div className=" NavTop__dropdown NavTop__dropdown--category">
+          <div
+            className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme`}
+          >
             {topicArray &&
               topicArray.map((rubrique, index) => (
                 <Link
@@ -143,7 +150,7 @@ const NavTop = (props) => {
           )}
         </div>
         {currentUserNav ? (
-          <div className="NavTop__userMenu">
+          <div className={`NavTop__userMenu ${currentTheme}-theme`}>
             <div className="NavTop__userMenu--meta">
               <UserUsername user={currentUser} link={true} />
               <p className="NavTop__userMenu--text">{currentUser.email}</p>
@@ -164,6 +171,14 @@ const NavTop = (props) => {
               >
                 <SettingsLogo className="NavTop__userMenu--logo" />
                 Paramètres
+              </Link>
+              <Link
+                className="NavTop__userMenu--link"
+                to="/account/saved"
+                onClick={() => dispatch(toggleUserNav())}
+              >
+                <BookmarkLogo className="NavTop__userMenu--logo" />
+                Sauvegardés
               </Link>
               <Link
                 className="NavTop__userMenu--link"

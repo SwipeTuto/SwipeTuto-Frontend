@@ -34,7 +34,15 @@ export const selectIsLoaded = createSelector(
   [selectLayout],
   layout => layout.isLoaded
 );
+export const selectClickedCardIsLoaded = createSelector(
+  [selectLayout],
+  layout => layout.clickedCardIsLoaded
+);
 export const selectImageIsLoaded = createSelector(
   [selectLayout],
   layout => layout.imageIsLoaded
+);
+export const selectTheme = createSelector(
+  [selectLayout],
+  layout => layout.theme
 );

@@ -18,7 +18,10 @@ import {
   setCurrentSearch,
   deleteCurrentSearch,
 } from "../../../redux/filter/filter-actions";
-import { selectFilterMobileMenuOpen } from "../../../redux/layout/layout-selectors";
+import {
+  selectFilterMobileMenuOpen,
+  selectTheme,
+} from "../../../redux/layout/layout-selectors";
 import {
   openFilterMobileMenu,
   closeFilterMobileMenu,
@@ -49,6 +52,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
   // paramètres de recherche :
   const filterMobileMenuOpen = useSelector(selectFilterMobileMenuOpen);
   const currentSearch = useSelector(selectCurrentSearch);
+  const currentTheme = useSelector(selectTheme);
   const currentSearchPageNumber = useSelector(selectSearchPage);
   const [redirection, setRedirection] = useState(false);
   const [newSearch, setNewSearch] = useState({});
@@ -131,7 +135,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
       {redirection && <Redirect to={redirectLink} />}
       <div className="FiltersBarMobile">
         {filterMobileMenuOpen && (
-          <div className="FiltersBarMobile__menu">
+          <div className={`FiltersBarMobile__menu ${currentTheme}-theme`}>
             <div className="FiltersBarMobile__menu--top">
               <CloseLogo
                 onClick={() => handleCloseFilterMobileMenuCloseClick()}

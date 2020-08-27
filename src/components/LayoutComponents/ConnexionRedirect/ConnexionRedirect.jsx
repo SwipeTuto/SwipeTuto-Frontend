@@ -4,8 +4,11 @@ import CustomButton from "../CustomButton/CustomButton";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 
 import "./ConnexionRedirect.scss";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 const ConnexionRedirect = ({ handleClose }) => {
+  const currentTheme = useSelector(selectTheme);
   const handleScrollReset = () => {
     const app = document.getElementsByClassName("App")[0];
     if (app) {
@@ -23,7 +26,7 @@ const ConnexionRedirect = ({ handleClose }) => {
         handleClose();
       }}
     >
-      <div className="ConnexionRedirect__wrapper">
+      <div className={`ConnexionRedirect__wrapper ${currentTheme}-theme`}>
         <CloseLogo
           className="ConnexionRedirect__close"
           onClick={(e) => {

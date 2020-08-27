@@ -19,7 +19,10 @@ import CardPreviewSmall from "../../../components/CardsComponents/CardPreviewSma
 import CardFullPopup from "../../../components/CardsComponents/CardFullPopup/CardFullPopup";
 
 import "./UserPage.scss";
-import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
+import {
+  selectIsLoaded,
+  selectTheme,
+} from "../../../redux/layout/layout-selectors";
 import { getCardsByUserIdAction } from "../../../redux/filter/filter-actions";
 
 const UserPage = ({ userIsSame, location }) => {
@@ -32,36 +35,58 @@ const UserPage = ({ userIsSame, location }) => {
   const cards = useSelector(selectCardsFetchedCards);
   const currentUser = useSelector(selectCurrentUser);
   const clickedUser = useSelector(selectClickedUser);
+  const currentTheme = useSelector(selectTheme);
   const [userDatas, setUserDatas] = useState();
+  const [pageType, setPageType] = useState();
   const dispatch = useDispatch();
   // dispatch(closeFullscreen());
   // dispatch(closePopupCard(false));
 
   useEffect(() => {
+    if (locationPath) {
+      if (locationPath === "/account/saved") {
+        setPageType("saved");
+      } else if (locationPath === "/account/user") {
+        setPageType("user");
+      }
+    }
+
     if (
       (userIsSame && currentUser && currentUser.id) ||
-      (locationPath && locationPath.includes("/account") && currentUser)
+      (locationPath && locationPath.includes("/account/user") && currentUser)
     ) {
       setUserDatas(currentUser);
       dispatch(getCardsByUserIdAction(currentUser.id));
+    } else if (
+      locationPath &&
+      locationPath.includes("/account/saved") &&
+      currentUser
+    ) {
+      setUserDatas(clickedUser);
+      // action pour fetch les cartes sauvegardées du user
+      // dispatch(getCardsByUserIdAction(clickedUser.id));
     } else if (!userIsSame && clickedUser && clickedUser.id) {
       setUserDatas(clickedUser);
       dispatch(getCardsByUserIdAction(clickedUser.id));
     } else {
       setUserDatas(null);
     }
-  }, [clickedUser, currentUser, dispatch, userIsSame]);
+  }, [clickedUser, currentUser, dispatch, userIsSame, locationPath]);
 
   return (
-    <div className="UserPage">
+    <div className={`UserPage ${currentTheme}-theme`}>
       <div className="UserPage__cards">
-        <h1 className="title title-1">
-          Tutoriels de{" "}
-          {userDatas && userDatas.username
-            ? userDatas.username
-            : "l'utilisateur "}
-          :
-        </h1>
+        {pageType && pageType === "user" ? (
+          <h1 className="title title-1">
+            Tutoriels de{" "}
+            {userDatas && userDatas.username
+              ? userDatas.username
+              : "l'utilisateur "}
+          </h1>
+        ) : pageType && pageType === "saved" ? (
+          <h1 className="title title-1">Tutoriels Sauvegardés</h1>
+        ) : null}
+
         <div className="UserPage__cards--grid">
           {!isLoaded ? (
             <Loading />

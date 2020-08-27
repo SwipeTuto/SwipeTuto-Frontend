@@ -33,7 +33,7 @@ export const toggleCommentLike = (commentId) => {
 export const getLikers = (cardId) => {
   var config = { headers: { 'Content-Type': 'application/json' }, }
 
-  return axios.get(`${baseURL}likes/get-likers/${cardId}`, config)
+  return axios.get(`${baseURL}likes/get-likers/${cardId}/`, config)
     .then(rep => {
       return rep
     })

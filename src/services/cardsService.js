@@ -52,7 +52,6 @@ export const getCardAfterfilter = (search) => {
         'search': search.searchWords,
         'order': search.searchOrder,
         'page': search.searchPage
-
       }
     },
       config)

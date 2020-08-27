@@ -11,39 +11,65 @@ export const loginGoogle = () => {
 
   return auth().signInWithPopup(provider)
     .then(result => {
-
       var user = result.user;
-      // getIdToken est une fonction de firebase qui renvoie le token pour identifier lae user dans les services firebase
       return user.getIdToken()
         .then(idToken => {
+          console.log('idToken', idToken)
           login(idToken)
             .then(rep => {
-              history.push('/', history.location)
-              history.go()
+              // history.push('/', history.location)
+              // history.go()
               return rep
             })
         })
-
     })
 }
 
 
 export const loginGit = () => {
-  auth().signInWithPopup(providerGit).then(function (result) {
-    var token = result.credential.accessToken;
+  auth().signInWithPopup(providerGit)
+  .then(result => {
     var user = result.user;
-  }).catch(function (error) {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    var email = error.email;
-    var credential = error.credential;
-  });
+    const emailConst = result.additionalUserInfo.profile.email
+    return user.getIdToken()
+      .then(idToken => {
+   
+        Gitlogin(idToken,emailConst)
+          .then(rep => {
+            // history.push('/', history.location)
+            // history.go()
+            return rep
+          })
+      })
+  })
 }
 
 
 
 export const login = idToken => {
   var data = { 'token_id': idToken }
+  var config = { headers: { 'Content-Type': 'application/json' }, }
+
+  return axios.post(`${baseURL}google-login/`, JSON.stringify(data), config)
+    .then(rep => {
+      localStorage.setItem('user', JSON.stringify(rep.data))
+
+      return rep
+    })
+    .catch(function (err) {
+      localStorage.removeItem('user')
+      localStorage.removeItem('token')
+
+      return err
+    })
+
+}
+export const Gitlogin = (idToken,emailConst) => {
+
+  var data = { 
+    'token_id': idToken,
+    'emailConst': emailConst,
+  }
   var config = { headers: { 'Content-Type': 'application/json' }, }
 
   return axios.post(`${baseURL}google-login/`, JSON.stringify(data), config)

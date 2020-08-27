@@ -41,7 +41,7 @@ import ConnexionRedirect from "../../LayoutComponents/ConnexionRedirect/Connexio
 
 // Services & helpers
 import { formattedDate, renameCategory } from "../../../helper/index";
-import { base } from "../../../services/configService";
+import { base, coudinaryBase } from "../../../services/configService";
 
 // Assets
 import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevrons/chevron-back-circle.svg";
@@ -315,9 +315,11 @@ const CardFullPopup = ({ history }) => {
                             .scroll(0, 0);
                         }}
                       >
+  
                         <img
                           style={{ width: "100%", height: "100%" }}
-                          src={base + card.media_image["0"].image}
+                          src={coudinaryBase + card.media_image["0"].image}
+                          // src={base + card.media_image["0"].image}
                           alt="autre"
                         />
                       </div>

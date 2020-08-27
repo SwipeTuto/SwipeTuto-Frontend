@@ -28,11 +28,13 @@ import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/c
 import { ReactComponent as ChevronRight } from "../../../assets/images/chevrons/chevron-forward.svg";
 
 import "./FiltersBar.scss";
+import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 const FiltersBar = ({ handleClickSize }) => {
   const dispatch = useDispatch();
   // paramètres de recherche :
   const currentSearch = useSelector(selectCurrentSearch);
+  const currentTheme = useSelector(selectTheme);
   const currentPage = useSelector(selectSearchPage);
   const searchCategory = useSelector(selectSearchCategory);
   const [redirection, setRedirection] = useState(false);
@@ -98,6 +100,7 @@ const FiltersBar = ({ handleClickSize }) => {
         <div className="FiltersBar__wrapper">
           <div className="FiltersBar__up">
             <select
+              className={`${currentTheme}-theme`}
               name="cards-filter"
               id="cards-filter"
               onChange={(e) => handleOrderChange(e)}

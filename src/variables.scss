@@ -9,17 +9,19 @@ $secondary-dark: #edb603ff;
 $secondary-light: #fed523ff;
 $primary-light: #ad0cc2;
 $primary-dark: #280849;
-$black: #000000ff;
-$white: #ffffffff;
-$grey: #f1f1f1;
-$grey-light: #f6f6f6;
-$grey-dark: #bdbdbd;
+$black: #202020;
+$white: #f6f6f6;
+// $black: #000000ff;
+// $white: #ffffffff;
+$grey: #585858;
+$grey-light: #e0e0e0;
+$grey-dark: #353535;
 
-$black-themeblack: #363636;
-$white-themeblack: #ffffffff;
-$grey-themeblack: #6b6b6b;
-$grey-light-themeblack: #bebebe;
-$grey-dark-themeblack: #535353;
+// $black-themedark: #202020;
+// $white-themedark: #ececec;
+// $grey-themedark: #494949;
+// $grey-light-themedark: #bebebe;
+// $grey-dark-themedark: #2c2c2c;
 
 $box-radius: 5px;
 $box-padding: 0.8rem 1.2rem;
@@ -28,9 +30,12 @@ $button-radius: 3rem;
 $navtop-height: 5rem;
 $navtop-mobile-height: 4rem;
 
-$button-shadow: 0 2px 3px $grey;
-$card-shadow: 0 2px 3px $grey;
-$card-shadow-2: 0 0px 8px rgba($grey, 0.4);
+$button-shadow: 0 2px 3px rgba($grey, 0.4);
+$card-shadow: 0 2px 3px rgba($grey, 0.4);
+// $card-shadow-2: 0 0px 3px rgba($grey, 0.2);
+// $button-shadow-dark: 0 2px 3px $grey-themedark;
+// $card-shadow-dark: 0 2px 3px $grey-themedark;
+// $card-shadow-2-dark: 0 0px 8px rgba($grey-themedark, 0.4);
 
 $inner-component-padding: 0 14vw;
 $grid-component-padding: 0 14vw;
@@ -52,8 +57,8 @@ $text-font: "Nunito", sans-serif;
 $title-font: "Montserrat", sans-serif;
 
 @mixin input-style {
-  background: $grey;
-  border: 1px solid $grey;
+  background: $grey-light;
+  border: 0.5px solid $grey;
   font-size: inherit;
   font-family: inherit;
   padding: $box-padding;
@@ -98,6 +103,16 @@ $title-font: "Montserrat", sans-serif;
 @mixin big-logo-size {
   height: 3rem;
   width: 3rem;
+}
+
+@mixin theme-colors($themelight: true) {
+  @if $themelight {
+    background-color: $white;
+    color: $black;
+  } @else {
+    background-color: $black;
+    color: $white;
+  }
 }
 
 // @mixin button-active-style {

@@ -9,7 +9,10 @@ import FiltersBar from "../../components/LayoutComponents/FiltersBar/FiltersBar"
 import FiltersBarMobile from "../../components/LayoutComponents/FiltersBar/FiltersBarMobile";
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
 import CurrentSearchWords from "../../components/CurrentSearchWords/CurrentSearchWords";
-import { selectIsLoaded } from "../../redux/layout/layout-selectors";
+import {
+  selectIsLoaded,
+  selectTheme,
+} from "../../redux/layout/layout-selectors";
 import {
   selectTotalNumberOfResults,
   selectSearchPage,
@@ -37,6 +40,7 @@ const SearchPage = (props) => {
   const isLoaded = useSelector(selectIsLoaded);
   const [redirection, setRedirection] = useState(false);
   const currentSearch = useSelector(selectCurrentSearch);
+  const currentTheme = useSelector(selectTheme);
   const currentPage = currentSearch.searchPage;
   const dispatch = useDispatch();
   const [gridSize, setGridSize] = useState("small");
@@ -138,7 +142,7 @@ const SearchPage = (props) => {
   return (
     <>
       {redirection && <Redirect to={redirectLink} />}
-      <div className="SearchPage">
+      <div className={`SearchPage ${currentTheme}-theme`}>
         <div className="SearchPage__wrapper">
           <CurrentSearchWords />
           <div className="SearchPage__filtersBarMobile">

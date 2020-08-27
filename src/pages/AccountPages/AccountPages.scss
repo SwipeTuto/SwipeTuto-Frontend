@@ -46,11 +46,15 @@
       & > svg {
         @include logo-size;
         margin-right: 1rem;
+
+        & * {
+          fill: currentColor !important;
+        }
       }
     }
 
     & .active {
-      color: $primary-dark;
+      color: $primary-light;
     }
   }
 

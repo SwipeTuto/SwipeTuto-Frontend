@@ -17,9 +17,11 @@ import { ReactComponent as BookmarkLogo } from "../../assets/images/bookmark.svg
 import newUserAvatar from "../../assets/images/avatar_new_user.png";
 
 import "./AccountPages.scss";
+import { selectTheme } from "../../redux/layout/layout-selectors";
 
 const AccountPage = (props) => {
   const currentUser = useSelector(selectCurrentUser);
+  const currentTheme = useSelector(selectTheme);
 
   // scroll reset
   if (window.scrollY) {
@@ -29,7 +31,7 @@ const AccountPage = (props) => {
   useEffect(() => {}, []);
 
   return (
-    <div className="AccountPage">
+    <div className={`AccountPage ${currentTheme}-theme`}>
       <div className="AccountPage__wrapper">
         <UserHeader user="current" />
         {/* <div className="AccountPage__infos">// USER INFOS</div> */}

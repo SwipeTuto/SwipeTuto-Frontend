@@ -9,6 +9,7 @@ const INITIAL_STATE = {
   betaAlert: true,
   isLoaded: false,
   imageIsLoaded: false,
+  theme: "light"
 };
 
 const layoutReducer = (state = INITIAL_STATE, action) => {
@@ -111,6 +112,12 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         imageIsLoaded: true,
+      }
+    case LayoutActionTypes.TOGGLE_THEME:
+      // const localTheme = window.localStorage.getItem('theme');
+      return {
+        ...state,
+        theme: action.payload,
       }
     default:
       return state;

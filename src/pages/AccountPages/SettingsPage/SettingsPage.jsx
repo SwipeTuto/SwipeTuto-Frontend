@@ -7,6 +7,7 @@ import { checkRegexInput, errorMessageToDisplay } from "../../../helper/index";
 import "./SettingsPage.scss";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { updateUserInfosAction } from "../../../redux/user/user-actions";
+import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 // créer formData() pour envoyer les infos
 
@@ -15,6 +16,7 @@ const SettingsPage = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const currentUser = useSelector(selectCurrentUser);
+  const currentTheme = useSelector(selectTheme);
   const [newUserInfos, setNewUserInfos] = useState(currentUser);
   const [sendNewInfos, setSendNewInfos] = useState(false);
   const [inputValid, setInputValid] = useState({
@@ -115,7 +117,7 @@ const SettingsPage = () => {
   };
 
   return (
-    <div className="SettingsPage">
+    <div className={`SettingsPage ${currentTheme}-theme`}>
       <h1 className="title title-1">Changer les informations du compte</h1>
       <div className="allForms">
         <form

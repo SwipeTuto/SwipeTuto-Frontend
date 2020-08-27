@@ -38,3 +38,7 @@ export const selectImageIsLoaded = createSelector(
   [selectLayout],
   layout => layout.imageIsLoaded
 );
+export const selectTheme = createSelector(
+  [selectLayout],
+  layout => layout.theme
+);

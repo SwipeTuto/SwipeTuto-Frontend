@@ -19,7 +19,10 @@ import CardPreviewSmall from "../../../components/CardsComponents/CardPreviewSma
 import CardFullPopup from "../../../components/CardsComponents/CardFullPopup/CardFullPopup";
 
 import "./UserPage.scss";
-import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
+import {
+  selectIsLoaded,
+  selectTheme,
+} from "../../../redux/layout/layout-selectors";
 import { getCardsByUserIdAction } from "../../../redux/filter/filter-actions";
 
 const UserPage = ({ userIsSame, location }) => {
@@ -32,6 +35,7 @@ const UserPage = ({ userIsSame, location }) => {
   const cards = useSelector(selectCardsFetchedCards);
   const currentUser = useSelector(selectCurrentUser);
   const clickedUser = useSelector(selectClickedUser);
+  const currentTheme = useSelector(selectTheme);
   const [userDatas, setUserDatas] = useState();
   const [pageType, setPageType] = useState();
   const dispatch = useDispatch();
@@ -70,7 +74,7 @@ const UserPage = ({ userIsSame, location }) => {
   }, [clickedUser, currentUser, dispatch, userIsSame, locationPath]);
 
   return (
-    <div className="UserPage">
+    <div className={`UserPage ${currentTheme}-theme`}>
       <div className="UserPage__cards">
         {pageType && pageType === "user" ? (
           <h1 className="title title-1">

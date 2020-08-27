@@ -52,3 +52,7 @@ export const setImageLoading = () => ({
 export const setImageLoaded = () => ({
   type: LayoutActionTypes.SET_IMAGE_LOADED,
 })
+export const toggleThemeAction = (theme) => ({
+  type: LayoutActionTypes.TOGGLE_THEME,
+  payload: theme
+})

@@ -20,15 +20,17 @@ import Login from "../../components/LayoutComponents/Login/Login";
 
 import "./LoginPage.scss";
 import Register from "../../components/LayoutComponents/Login/Register";
+import { selectTheme } from "../../redux/layout/layout-selectors";
 
 // Props history, location, match, depuis react router dom
 const LoginPage = ({ location }) => {
   const currentUser = useSelector(selectCurrentUser);
+  const currentTheme = useSelector(selectTheme);
 
   return (
     <>
       {currentUser && <Redirect to={"/"} />}
-      <div className="LoginPage">
+      <div className={`LoginPage ${currentTheme}-theme`}>
         <div className="LoginPage__message">
           <div className="LoginPage__message--logo">
             <img src={SwipeTutoSmallLogo} alt="swipetuto" />
@@ -41,7 +43,7 @@ const LoginPage = ({ location }) => {
             ""
           )}
         </div>
-        <div className="LoginPage--wrapper">
+        <div className={`LoginPage--wrapper ${currentTheme}-theme`}>
           <Switch>
             <Route path="/connexion/login" component={Login} />
             <Route path="/connexion/signup" component={Register} />

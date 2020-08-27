@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDarkMode } from "../../../hooks/useDarkMode";
 
 import { ReactComponent as LogoFacebook } from "../../../assets/images/logo-facebook.svg";
 import { ReactComponent as LogoTwitter } from "../../../assets/images/logo-twitter.svg";
@@ -7,10 +8,27 @@ import { ReactComponent as LogoGithub } from "../../../assets/images/logo-github
 import { ReactComponent as LogoInstagram } from "../../../assets/images/logo-instagram.svg";
 
 import "./Footer.scss";
+import ToggleButton from "../ToggleTheme/ToggleTheme";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 const Footer = () => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
+  const dispatch = useDispatch();
+  const [theme, setTheme] = useDarkMode();
+  const toggleTheme = () => {
+    if (theme === "light") {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
+
+  // useEffect(() => {
+  //   dispatch(toggleTheme());
+  // }, []);
+
   return (
     <div className="Footer">
       <h2 className="title title-2">SwipeTuto</h2>
@@ -47,6 +65,7 @@ const Footer = () => {
       </div>
       <div className="Footer__credits">
         SwipeTuto - &copy; SwipeTuto {currentYear}
+        <ToggleButton toggleTheme={toggleTheme} theme={theme} />
       </div>
     </div>
   );

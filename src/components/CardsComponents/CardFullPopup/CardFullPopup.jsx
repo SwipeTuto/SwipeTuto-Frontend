@@ -28,6 +28,7 @@ import {
   selectFullscreen,
   selectImageIsLoaded,
   selectShowPopupCard,
+  selectTheme,
 } from "../../../redux/layout/layout-selectors";
 
 // components
@@ -64,6 +65,7 @@ import "./CardFullPopup.scss";
 // handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
 const CardFullPopup = ({ history }) => {
   const isFullScreen = useSelector(selectFullscreen);
+  const currentTheme = useSelector(selectTheme);
   const [redirection, setRedirection] = useState(false);
   const currentSearch = useSelector(selectCurrentSearch);
   const currentUser = useSelector(selectCurrentUser);
@@ -204,7 +206,7 @@ const CardFullPopup = ({ history }) => {
           onClick={() => handlePopupClose()}
         >
           <div
-            className="CardFullPopup__wrapper"
+            className={`CardFullPopup__wrapper ${currentTheme}-theme`}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="CardFullPopup__header">
@@ -315,7 +317,6 @@ const CardFullPopup = ({ history }) => {
                             .scroll(0, 0);
                         }}
                       >
-  
                         <img
                           style={{ width: "100%", height: "100%" }}
                           src={coudinaryBase + card.media_image["0"].image}

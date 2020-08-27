@@ -12,6 +12,7 @@ import {
 import {
   selectMobileNavOpen,
   selectFilterMobileMenuOpen,
+  selectTheme,
 } from "../../../redux/layout/layout-selectors";
 import {
   openMobileNav,
@@ -55,6 +56,7 @@ const NavTopMobile = (props) => {
   const [redirection, setRedirection] = useState(false);
   const dispatch = useDispatch();
   const filtersBarMobile = useSelector(selectFilterMobileMenuOpen);
+  const currentTheme = useSelector(selectTheme);
   const currentUser = useSelector(selectCurrentUser);
   const mobileNavOpen = useSelector(selectMobileNavOpen);
   const searchWords = useSelector(selectSearchWords);
@@ -91,7 +93,11 @@ const NavTopMobile = (props) => {
   return (
     <>
       {redirection && <Redirect to={redirectLink} />}
-      <div className={`NavTopMobile ${mobileNavOpen ? "active" : ""}`}>
+      <div
+        className={`NavTopMobile ${
+          mobileNavOpen ? "active" : ""
+        } ${currentTheme}-theme`}
+      >
         {filtersBarMobile && (
           <FiltersBarMobile title="Recherche" showResults={false} />
         )}

@@ -34,6 +34,11 @@
   &__toggle {
     width: 3.5rem;
     height: 3.5rem;
+
+    & * {
+      stroke: currentColor !important;
+      fill: currentColor !important;
+    }
   }
 
   &__swipeTuto {
@@ -155,6 +160,10 @@
     stroke: $black;
     @include big-logo-size;
     margin-right: 1rem;
+
+    & * {
+      fill: currentColor !important;
+    }
   }
 
   &__user {
@@ -230,7 +239,7 @@
     }
 
     &__menu {
-      border-bottom: 2px solid $primary-dark;
+      border-bottom: 2px solid $primary-light;
     }
   }
 }

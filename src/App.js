@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Switch, Route, withRouter } from 'react-router-dom';
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,7 +20,7 @@ import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
 import { getCardsAction, getCardByIdAction } from './redux/filter/filter-actions'
-import { selectIsLoaded } from "./redux/layout/layout-selectors"
+import { selectIsLoaded, selectTheme } from "./redux/layout/layout-selectors"
 import { getCardAfterfilterAction, setCurrentSearch } from "./redux/filter/filter-actions"
 import { getCardAfterfilter, getCards } from './services/cardsService'
 
@@ -43,11 +43,13 @@ import { getUserByIdAction } from "./redux/user/user-actions";
 function App(props) {
 
   const currentSearch = useSelector(selectCurrentSearch)
+  const currentTheme = useSelector(selectTheme)
   const dispatch = useDispatch();
   const [topic, category, ordering, search, page] = urlParams(props.location)
   const userId = getUrlId(props.location.pathname, "user_id")
   const cardId = getUrlId(props.location.pathname, "card_id")
   const isLoaded = useSelector(selectIsLoaded)
+  const [theme, setTheme] = useState()
 
   useEffect(() => {
     if (!isLoaded && (topic || category || ordering || search || page)) {
@@ -77,11 +79,18 @@ function App(props) {
     }
   }, []);
 
+  useEffect(() => {
+    const bodyEl = document.querySelector('body');
+    bodyEl.classList.remove('light-theme');
+    bodyEl.classList.remove('dark-theme');
+    bodyEl.classList.add(`${currentTheme}-theme`);
+  }, [currentTheme])
+
 
 
 
   return (
-    <div className="App">
+    <div className={`App ${currentTheme}-theme`}>
       <NavTop />
       <NavTopMobile />
       <Switch>

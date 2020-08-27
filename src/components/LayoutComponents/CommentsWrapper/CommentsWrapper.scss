@@ -27,6 +27,9 @@
 
     &--logo {
       @include big-logo-size;
+      & * {
+        stroke: currentColor !important;
+      }
     }
   }
 

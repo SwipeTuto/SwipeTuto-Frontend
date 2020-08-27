@@ -1,15 +1,18 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import "./InfosPage.scss";
+import { selectTheme } from "../../redux/layout/layout-selectors";
 
 const InfosPage = () => {
+  const currentTheme = useSelector(selectTheme);
   // scroll reset
   if (window.scrollY) {
     window.scroll(0, 0);
   }
 
   return (
-    <div className="InfosPage">
+    <div className={`InfosPage ${currentTheme}-theme`}>
       <h1 className="title title-1">Informations</h1>
       <h2 className="title title-2">Général</h2>
       <p>

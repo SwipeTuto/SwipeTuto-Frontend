@@ -7,9 +7,12 @@ import CardPreviewSmallRessources from "../../components/CardPreviewSmallRessour
 
 import "./RessourcesPage.scss";
 import { RESSOURCES_WEB } from "./RESSOURCES_WEB";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../redux/layout/layout-selectors";
 
 const RessourcesPage = () => {
   const linkBar = document.querySelector(".ressource-navigation-scroll");
+  const currentTheme = useSelector(selectTheme);
 
   // scroll reset
   if (window.scrollY) {
@@ -46,7 +49,7 @@ const RessourcesPage = () => {
   };
 
   return (
-    <div className="RessourcesPage">
+    <div className={`RessourcesPage ${currentTheme}-theme`}>
       <h1 className="title title-1">
         Ressources utiles pour le développeur Web
       </h1>

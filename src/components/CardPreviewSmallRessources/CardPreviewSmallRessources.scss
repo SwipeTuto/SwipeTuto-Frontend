@@ -4,6 +4,22 @@
   border-radius: $box-radius;
   transition: all 0.2s ease;
 
+  &__image {
+    margin-bottom: 1rem;
+    // height: 8rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    // width: 100%;
+    // height: max-content;
+    // background-color: red;
+
+    &--image {
+      width: 100%;
+      // height: 100%;
+    }
+  }
+
   &:hover {
     box-shadow: $card-shadow;
     transform: translateY(-2px);
@@ -22,22 +38,19 @@
     & h4 {
       padding: 0.5rem;
       text-align: center;
-      color: $primary-dark;
+      color: $secondary-dark;
       transition: all 0.2s ease;
     }
 
     & p {
-      font-size: 1.2rem;
+      // font-size: 1.2rem;
       text-align: center;
       transition: all 0.2s ease;
     }
 
     &:hover {
       & h4 {
-        color: $secondary-dark;
-      }
-
-      & p {
+        color: $secondary-light;
       }
     }
   }

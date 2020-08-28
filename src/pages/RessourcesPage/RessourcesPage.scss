@@ -3,15 +3,17 @@
 .RessourcesPage {
   min-height: 100vh;
   position: relative;
-  // background-color: $white;
+  background-color: $black;
+  color: $white;
+
+  &__header {
+    background-color: $black;
+    color: $white;
+  }
 
   .title.title-1 {
     font-size: 3rem;
     text-align: center;
-
-    // background-color: $white;
-
-    color: $primary-dark;
     padding: $navtop-height;
     margin: 0;
   }
@@ -51,8 +53,13 @@
       padding-top: 9rem;
       padding-bottom: 15rem;
 
+      &:nth-child(even) {
+        background-color: $white;
+        color: $black;
+      }
       &:nth-child(odd) {
-        background-color: $grey-light;
+        background-color: $black;
+        color: $white;
       }
 
       .title.title-2 {
@@ -113,6 +120,10 @@
           & > svg {
             height: 3rem;
             width: 3rem;
+
+            & * {
+              stroke: $white !important;
+            }
           }
         }
       }

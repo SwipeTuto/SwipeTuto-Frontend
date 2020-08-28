@@ -6,7 +6,9 @@
   display: flex;
 
   &__wrapper {
-    flex-shrink: 1;
+    // flex-shrink: 1;
+    // justify-self: stretch;
+    flex-grow: 1;
     margin: 0 1rem;
   }
 
@@ -73,6 +75,7 @@
     max-width: 6rem;
     flex-direction: column;
     align-items: center;
+    // justify-self: flex-end;
 
     &--likes,
     &--comments {

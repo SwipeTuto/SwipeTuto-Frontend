@@ -315,12 +315,22 @@ const CardFullPopup = ({ history }) => {
                             .scroll(0, 0);
                         }}
                       >
-                        <img
-                          style={{ width: "100%", height: "100%" }}
-                          src={coudinaryBase + card.media_image["0"].image}
-                          // src={base + card.media_image["0"].image}
-                          alt="autre"
-                        />
+                        {clickedCardIsLoaded &&
+                        card &&
+                        card.media_image &&
+                        card.media_image["0"] &&
+                        card.media_image["0"].image ? (
+                          <img
+                            style={{ width: "100%", height: "100%" }}
+                            src={coudinaryBase + card.media_image["0"].image}
+                            // src={base + card.media_image["0"].image}
+                            alt="autre"
+                          />
+                        ) : (
+                          <div className="CardFullPopup__empty-image">
+                            Image(s) Indisponible(s)
+                          </div>
+                        )}
                       </div>
                     ))}
               </div>

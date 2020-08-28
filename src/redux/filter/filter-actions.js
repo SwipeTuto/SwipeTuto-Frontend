@@ -263,6 +263,9 @@ export const addCommentAction = (cardId, comment) => {
   return dispatch => {
     return addComment(cardId, comment)
       .then(rep => {
+        console.log(rep)
+        console.log(rep.data)
+
         dispatch(addCommentSuccess(rep.data))
         // dispatch(getCardCommentsAction(cardId))
 

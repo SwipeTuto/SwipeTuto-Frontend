@@ -64,7 +64,7 @@ const CommentsWrapper = () => {
       setLocalLastPublishedComments(arrayCopy);
       setNewCommentSubmit(false);
     }
-  }, [newCommentSubmit]);
+  }, [newCommentSubmit, lastPublishedComment]);
 
   useEffect(() => {
     if (clickedCardId) dispatch(getCardCommentsAction(clickedCardId));
@@ -189,13 +189,11 @@ const CommentsWrapper = () => {
           {localLastPublishedComments &&
             localLastPublishedComments.length !== 0 &&
             localLastPublishedComments.map((comment) => (
-              <>
-                <FirstLevelComment
-                  comment={comment}
-                  key={comment.id}
-                  confirmCommentDelete={confirmCommentDelete}
-                />
-              </>
+              <FirstLevelComment
+                comment={comment}
+                key={comment.id}
+                confirmCommentDelete={confirmCommentDelete}
+              />
             ))}
           {commentError ? (
             <>
@@ -221,13 +219,11 @@ const CommentsWrapper = () => {
           ) : (
             localCommentsArray &&
             localCommentsArray.map((comment) => (
-              <>
-                <FirstLevelComment
-                  comment={comment}
-                  key={comment.id}
-                  confirmCommentDelete={confirmCommentDelete}
-                />
-              </>
+              <FirstLevelComment
+                comment={comment}
+                key={comment.id}
+                confirmCommentDelete={confirmCommentDelete}
+              />
             ))
           )}
 

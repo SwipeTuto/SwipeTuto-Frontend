@@ -58,6 +58,7 @@ $title-font: "Montserrat", sans-serif;
 
 @mixin input-style {
   background: $grey-light;
+  color: $black;
   border: 0.5px solid $grey;
   font-size: inherit;
   font-family: inherit;

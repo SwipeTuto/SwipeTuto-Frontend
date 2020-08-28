@@ -69,11 +69,13 @@ const SecondLevelComment = ({
       );
 
       if (commentIsLiked) {
-        likeElMobile.textContent = parseInt(likeElMobile.textContent) - 1;
-        likeEl.textContent = parseInt(likeEl.textContent) - 1;
+        if (likeElMobile)
+          likeElMobile.textContent = parseInt(likeElMobile.textContent) - 1;
+        if (likeEl) likeEl.textContent = parseInt(likeEl.textContent) - 1;
       } else {
-        likeElMobile.textContent = parseInt(likeElMobile.textContent) + 1;
-        likeEl.textContent = parseInt(likeEl.textContent) + 1;
+        if (likeElMobile)
+          likeElMobile.textContent = parseInt(likeElMobile.textContent) + 1;
+        if (likeEl) likeEl.textContent = parseInt(likeEl.textContent) + 1;
       }
       setCommentIsLiked(!commentIsLiked);
     }

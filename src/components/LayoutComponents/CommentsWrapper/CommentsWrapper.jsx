@@ -22,6 +22,7 @@ import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { getCardCommentsNext } from "../../../services/socialService";
 
 // components
+import Loading from "../../Loading/Loading";
 import FirstLevelComment from "./FirstLevelComment/FirstLevelComment";
 import SecondLevelComment from "./SecondLevelComment/SecondLevelComment";
 import ConnexionRedirect from "../ConnexionRedirect/ConnexionRedirect";
@@ -32,6 +33,7 @@ import CommentsInput from "../CommentsInput/CommentsInput";
 import { ReactComponent as ChatLogo } from "../../../assets/images/chatbubbles-outline.svg";
 
 import "./CommentsWrapper.scss";
+import { selectCommentsLoaded } from "../../../redux/layout/layout-selectors";
 
 const CommentsWrapper = () => {
   const dispatch = useDispatch();
@@ -48,6 +50,7 @@ const CommentsWrapper = () => {
   const [newCommentSubmit, setNewCommentSubmit] = useState(false);
   const [showComments, setShowComments] = useState(true);
   const lastPublishedComment = useSelector(selectLastPublishedComment);
+  const commentsAreLoaded = useSelector(selectCommentsLoaded);
   const [localLastPublishedComments, setLocalLastPublishedComments] = useState(
     []
   );
@@ -186,51 +189,57 @@ const CommentsWrapper = () => {
           handleInputValueChange={handleInputValueChange}
         />
         <div className="CommentsWrapper__comments comments-section">
-          {localLastPublishedComments &&
-            localLastPublishedComments.length !== 0 &&
-            localLastPublishedComments.map((comment) => (
-              <FirstLevelComment
-                comment={comment}
-                key={comment.id}
-                confirmCommentDelete={confirmCommentDelete}
-              />
-            ))}
-          {commentError ? (
+          {commentsAreLoaded ? (
             <>
-              <p className="CommentsWrapper__comment--error">
-                Une erreur est survenue lors de la publication du commentaire.
-                Merci de réessayer plus tard. Si le problème persiste, veuillez
-                nous contacter.
-              </p>
-              <p
-                className="CommentsWrapper__error-delete"
-                onClick={() => dispatch(deleteFilterErrorAction())}
-              >
-                J'ai compris.
-              </p>
+              {localLastPublishedComments &&
+                localLastPublishedComments.length !== 0 &&
+                localLastPublishedComments.map((comment) => (
+                  <FirstLevelComment
+                    comment={comment}
+                    key={comment.id}
+                    confirmCommentDelete={confirmCommentDelete}
+                  />
+                ))}
+              {commentError ? (
+                <>
+                  <p className="CommentsWrapper__comment--error">
+                    Une erreur est survenue lors de la publication du
+                    commentaire. Merci de réessayer plus tard. Si le problème
+                    persiste, veuillez nous contacter.
+                  </p>
+                  <p
+                    className="CommentsWrapper__error-delete"
+                    onClick={() => dispatch(deleteFilterErrorAction())}
+                  >
+                    J'ai compris.
+                  </p>
+                </>
+              ) : (
+                ""
+              )}
+              {localCommentsArray && localCommentsArray.length === 0 ? (
+                <p className="CommentsWrapper__comment">
+                  Aucun commentaire pour le moment.
+                </p>
+              ) : (
+                localCommentsArray &&
+                localCommentsArray.map((comment) => (
+                  <FirstLevelComment
+                    comment={comment}
+                    key={comment.id}
+                    confirmCommentDelete={confirmCommentDelete}
+                  />
+                ))
+              )}
+
+              {localNextLink && (
+                <CustomButton color="white" onClick={handleNextCommentsLoad}>
+                  Charger plus.
+                </CustomButton>
+              )}
             </>
           ) : (
-            ""
-          )}
-          {localCommentsArray && localCommentsArray.length === 0 ? (
-            <p className="CommentsWrapper__comment">
-              Aucun commentaire pour le moment.
-            </p>
-          ) : (
-            localCommentsArray &&
-            localCommentsArray.map((comment) => (
-              <FirstLevelComment
-                comment={comment}
-                key={comment.id}
-                confirmCommentDelete={confirmCommentDelete}
-              />
-            ))
-          )}
-
-          {localNextLink && (
-            <CustomButton color="white" onClick={handleNextCommentsLoad}>
-              Charger plus.
-            </CustomButton>
+            <Loading />
           )}
         </div>
       </div>

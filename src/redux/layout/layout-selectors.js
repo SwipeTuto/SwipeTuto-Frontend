@@ -38,6 +38,10 @@ export const selectClickedCardIsLoaded = createSelector(
   [selectLayout],
   layout => layout.clickedCardIsLoaded
 );
+export const selectCommentsLoaded = createSelector(
+  [selectLayout],
+  layout => layout.commentsAreLoaded
+);
 export const selectImageIsLoaded = createSelector(
   [selectLayout],
   layout => layout.imageIsLoaded

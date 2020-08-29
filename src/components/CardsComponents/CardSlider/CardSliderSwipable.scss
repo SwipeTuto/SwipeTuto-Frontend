@@ -21,9 +21,12 @@
     cursor: pointer;
     transition: all 0.2s ease;
 
+    & * {
+      stroke: $primary-light !important;
+    }
+
     &:hover {
       transform: translateY(-3px);
-      stroke: $primary-light;
     }
   }
 

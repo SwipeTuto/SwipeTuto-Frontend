@@ -156,7 +156,6 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
         ...document.getElementsByClassName("CardFullPopup active"),
       ][0];
       cardFullPopupEl.scrollTo(0, inputToScrollTo.offsetTop - 100);
-      console.log(inputToScrollTo);
       inputToScrollTo.focus();
       inputToScrollTo.setSelectionRange(
         inputToScrollTo.value.length,
@@ -306,12 +305,12 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
               )}
             </div>
 
-            <div className="FirstLevelComment__mobile--comments">
+            {/* <div className="FirstLevelComment__mobile--comments">
               <p className="FirstLevelComment__mobile--comments-number">
                 {replyCount && replyCount}
               </p>
               <ChatLogo className=" FirstLevelComment__mobile--logo" />
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="FirstLevelComment__wrapper">

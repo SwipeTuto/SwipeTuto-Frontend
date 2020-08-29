@@ -169,7 +169,7 @@ const HomePage = () => {
 
       <div className="About__cta section">
         <h1 className="title title-1">Alors qu'attendez-vous ?</h1>
-        <Link to="/search">
+        <Link to={redirectLink}>
           <CustomButton color="pink">Voir les cartes</CustomButton>
         </Link>
       </div>

@@ -234,7 +234,7 @@ const CommentsWrapper = () => {
 
               {localNextLink && (
                 <CustomButton color="white" onClick={handleNextCommentsLoad}>
-                  Charger plus.
+                  Charger plus ...
                 </CustomButton>
               )}
             </>

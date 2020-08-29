@@ -61,7 +61,6 @@ export const registerAction = users => {
   return dispatch => {
     register(users)
       .then(user => {
-        console.log(user)
         dispatch(registerSuccess(user.data.user));
         // history.push('/cards', history.location)
         // history.go()
@@ -113,7 +112,6 @@ export const getUserByIdAction = id => {
 
 
 export const updateUserInfosAction = userInfos => {
-  console.log(userInfos)
   return dispatch => {
     return (
 

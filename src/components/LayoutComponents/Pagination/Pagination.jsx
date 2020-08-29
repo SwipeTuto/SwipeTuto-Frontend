@@ -67,7 +67,7 @@ const Pagination = ({
     } else if (currentPage + 2 < totalPages) {
       return currentPage + 2;
     } else {
-      console.log("erreur endPage");
+     return
     }
   };
 

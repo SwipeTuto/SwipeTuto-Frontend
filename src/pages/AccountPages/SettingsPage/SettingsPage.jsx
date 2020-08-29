@@ -109,7 +109,6 @@ const SettingsPage = () => {
 
   const handleSubmitInput = (e) => {
     e.preventDefault();
-    console.log(newUserInfos);
     dispatch(updateUserInfosAction(newUserInfos));
     setSendNewInfos(true);
     const { name } = e.target;

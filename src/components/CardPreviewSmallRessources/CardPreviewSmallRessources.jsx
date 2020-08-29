@@ -5,7 +5,6 @@ import "./CardPreviewSmallRessources.scss";
 const CardPreviewSmallRessources = ({
   ressource: { nom, description, lien, image },
 }) => {
-  console.log(image);
   return (
     <div className="CardPreviewSmallRessources">
       <a href={lien} target="_blank" rel="noopener noreferrer">

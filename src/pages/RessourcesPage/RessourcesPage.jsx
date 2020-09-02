@@ -50,29 +50,31 @@ const RessourcesPage = () => {
 
   return (
     <div className={`RessourcesPage ${currentTheme}-theme`}>
-      <h1 className="title title-1">
-        Ressources utiles pour le développeur Web
-      </h1>
-      <div className="ressource-navigation">
-        <div className="scroll-logo" onClick={handleScollLeft}>
-          <ChevronLeft />
-        </div>
-        <div className="ressource-navigation-scroll">
-          {RESSOURCES_WEB.map((category) => {
-            return (
-              <a
-                key={category.id}
-                href={`#${category.id}`}
-                className="ressource-navigation__item"
-              >
-                {category.title}
-              </a>
-            );
-          })}
-        </div>
+      <div className="RessourcesPage__header">
+        <h1 className="title title-1">
+          Ressources utiles pour le développeur Web
+        </h1>
+        <div className="ressource-navigation">
+          <div className="scroll-logo" onClick={handleScollLeft}>
+            <ChevronLeft />
+          </div>
+          <div className="ressource-navigation-scroll">
+            {RESSOURCES_WEB.map((category) => {
+              return (
+                <a
+                  key={category.id}
+                  href={`#${category.id}`}
+                  className="ressource-navigation__item"
+                >
+                  {category.title}
+                </a>
+              );
+            })}
+          </div>
 
-        <div className="scroll-logo" onClick={handleScollRight}>
-          <ChevronRight />
+          <div className="scroll-logo" onClick={handleScollRight}>
+            <ChevronRight />
+          </div>
         </div>
       </div>
 

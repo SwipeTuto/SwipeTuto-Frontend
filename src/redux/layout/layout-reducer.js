@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   isLoaded: false,
   clickedCardIsLoaded: false,
   imageIsLoaded: false,
+  commentsAreLoaded: false,
   theme: "light"
 };
 
@@ -113,6 +114,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         clickedCardIsLoaded: true,
+      }
+    case LayoutActionTypes.SET_COMMENTS_LOADING:
+      return {
+        ...state,
+        commentsAreLoaded: false,
+      }
+    case LayoutActionTypes.SET_COMMENTS_LOADED:
+      return {
+        ...state,
+        commentsAreLoaded: true,
       }
     case LayoutActionTypes.SET_IMAGE_LOADING:
       return {

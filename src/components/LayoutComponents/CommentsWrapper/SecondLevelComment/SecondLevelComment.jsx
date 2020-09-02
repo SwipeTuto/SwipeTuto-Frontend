@@ -67,13 +67,14 @@ const SecondLevelComment = ({
       const likeEl = document.querySelector(
         `.SecondLevelComment__aside--likes-number[data-likes="${commentId}"]`
       );
-
       if (commentIsLiked) {
-        likeElMobile.textContent = parseInt(likeElMobile.textContent) - 1;
-        likeEl.textContent = parseInt(likeEl.textContent) - 1;
+        if (likeElMobile)
+          likeElMobile.textContent = parseInt(likeElMobile.textContent) - 1;
+        if (likeEl) likeEl.textContent = parseInt(likeEl.textContent) - 1;
       } else {
-        likeElMobile.textContent = parseInt(likeElMobile.textContent) + 1;
-        likeEl.textContent = parseInt(likeEl.textContent) + 1;
+        if (likeElMobile)
+          likeElMobile.textContent = parseInt(likeElMobile.textContent) + 1;
+        if (likeEl) likeEl.textContent = parseInt(likeEl.textContent) + 1;
       }
       setCommentIsLiked(!commentIsLiked);
     }
@@ -200,7 +201,10 @@ const SecondLevelComment = ({
             ) : (
               <HeartEmpty className=" SecondLevelComment__aside--logo" />
             )}
-            <p className="SecondLevelComment__aside--likes-number">
+            <p
+              className="SecondLevelComment__aside--likes-number"
+              data-likes={commentId}
+            >
               {reply && reply.likes && reply.likes.length}
             </p>
           </div>

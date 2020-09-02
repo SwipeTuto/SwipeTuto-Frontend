@@ -14,7 +14,6 @@ export const loginGoogle = () => {
       var user = result.user;
       return user.getIdToken()
         .then(idToken => {
-          console.log('idToken', idToken)
           login(idToken)
             .then(rep => {
               // history.push('/', history.location)

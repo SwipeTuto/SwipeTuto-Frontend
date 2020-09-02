@@ -1,5 +1,5 @@
 import { FilterActionTypes } from "./filter-types"
-import { setLoading, setLoaded, setImageLoading, setImageLoaded, setClickedCardLoading, setClickedCardLoaded } from '../layout/layout-actions'
+import { setLoading, setLoaded, setImageLoading, setImageLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded } from '../layout/layout-actions'
 
 import { searchBar } from '../../services/searchService'
 import { getCards, CardsActionTypes, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
@@ -298,18 +298,19 @@ export const addReplyAction = (cardId, commentId, comment) => {
 
 export const getCardCommentsAction = (cardId) => {
   return dispatch => {
-    // dispatch(setClickedCardLoading())
+    dispatch(setCommentsLoading())
     return getCardComments(cardId)
       .then(rep => {
         dispatch(getCardCommentsSuccess(rep.data))
-        // dispatch(setClickedCardLoaded()) // stop loader
+        dispatch(setCommentsLoaded()) // stop loader
       })
       .catch(err => {
         dispatch(getCardCommentsError(err))
-        // dispatch(setClickedCardLoaded()) // stop loader
+        dispatch(setCommentsLoaded()) // stop loader
       })
   }
 };
+
 
 const getCardCommentsError = error => ({
   type: FilterActionTypes.GET_CARD_COMMENTS_ERROR,

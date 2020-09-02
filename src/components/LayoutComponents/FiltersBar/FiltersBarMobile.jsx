@@ -125,6 +125,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
     dispatch(setCurrentSearch("searchOrder", newSearch.searchOrder));
     dispatch(setCurrentSearch("searchCategory", newSearch.searchCategory));
     dispatch(setCurrentSearch("searchPage", 1));
+    dispatch(closeFilterMobileMenu());
     // dispatch(getCardAfterfilterAction(newSearch));
   };
 

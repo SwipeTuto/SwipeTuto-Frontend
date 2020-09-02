@@ -1,3 +1,14 @@
+import mdn from "../../assets/images/screens/mdn.png";
+import w3schools from "../../assets/images/screens/w3schools.png";
+import opc from "../../assets/images/screens/opc.png";
+import fcc from "../../assets/images/screens/fcc.png";
+import alsa from "../../assets/images/screens/alsa.png";
+import csstricks from "../../assets/images/screens/csstricks.jpg";
+import fcclogo from "../../assets/images/screens/fcclogo.jpg";
+import flexboxfroggy from "../../assets/images/screens/flexboxfroggy.png";
+
+
+
 export const RESSOURCES_WEB = [
   {
     title: "Apprendre",
@@ -7,41 +18,49 @@ export const RESSOURCES_WEB = [
       {
         nom: "MDN Mozilla",
         lien: "https://developer.mozilla.org/fr/",
+        image: mdn,
         description: "Ressources en Français sur de nombreuses propriétés HTML, CSS & Javascript."
       },
       {
         nom: "w3schools",
         lien: "https://www.w3schools.com/",
+        image: w3schools,
         description: "Ressources en Anglais sur de nombreuses propriétés HTML, CSS & Javascript, avec des exemples de codes, d'exercices et de tutoriels."
       },
       {
         nom: "Openclassrooms",
         lien: "https://openclassrooms.com/fr/",
+        image: opc,
         description: "Plusieurs cours gratuits en Français, assez complet pour commencer à apprendre de nouvelles notions."
       },
       {
         nom: "FreeCodeCamp",
         lien: "https://www.freecodecamp.org/",
-        description: "Site en Anglais basé sur la pratique avec une (très longue) liste d'exercice pour aborder chaque notion. Un contenu extrêment riche et complet !"
+        image: fcc,
+        description: "Site en Anglais basé sur la pratique avec une (très longue) liste d'exercices pour aborder chaque notion. Un contenu extrêment riche et complet !"
       },
       {
         nom: "AlsaCréations",
         lien: "https://www.alsacreations.com/",
+        image: alsa,
         description: "Ressources en Français sur de nombreuses propriétés HTML, CSS & Javascript avec des tutoriels et une grande communeauté."
       },
       {
         nom: "CSS-Tricks",
         lien: "https://css-tricks.com/",
+        image: csstricks,
         description: "Ressources en Anglais qui présente d'innombrables tutoriels pour créer des éléments en CSS."
       },
       {
         nom: "Collection de cours gratuits",
         lien: "https://www.freecodecamp.org/news/tag/online-courses/",
+        image: fcclogo,
         description: "FreeCodeCamp rassemble souvent des tonnes de cours disponibles gratuitement un peu partout sur internet."
       },
       {
         nom: "Flexbox Froggy",
         lien: "https://flexboxfroggy.com/#fr",
+        image: flexboxfroggy,
         description: "Il s'agit d'un jeu pour apprendre à utiliser Flexbox en CSS. Vous y trouverez également un lien vers le jeu Grid Garden qui permet d'apprendre CSS grid."
       },
       {

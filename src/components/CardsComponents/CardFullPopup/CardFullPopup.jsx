@@ -321,6 +321,7 @@ const CardFullPopup = ({ history }) => {
                               .scroll(0, 0);
                           }}
                         >
+                          {console.log('card',card) , console.log('coudinaryBase', coudinaryBase)}
                           {clickedCardIsLoaded &&
                           card &&
                           card.media_image &&
@@ -328,10 +329,12 @@ const CardFullPopup = ({ history }) => {
                           card.media_image["0"].image ? (
                             <img
                               style={{ width: "100%", height: "100%" }}
-                              src={coudinaryBase + card.media_image["0"].image}
+                              src={card.media_image["0"].image}
                               // src={base + card.media_image["0"].image}
                               alt="autre"
                             />
+                            // https://res.cloudinary.com/hiimurmrd/image/upload/v1599134795/media/2020/9/118_2020-09-03_120634.4531500000_lexique_ajax_20200520_tjwmqa.jpg
+                            // https://swipetuto-back-dev.herokuapp.https://res.cloudinary.com/hiimurmrd/image/upload/v1/media/2020/9/119_2020-09-03_120804.0307000000_lexique_backend_20200523_z0c01u
                           ) : (
                             <div className="CardFullPopup__empty-image">
                               Image(s) Indisponible(s)

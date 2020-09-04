@@ -83,7 +83,8 @@ const CardPreviewSmall = ({ card }) => {
         >
           {media_image[0] && media_image[0].image ? (
             <img
-              src={base + media_image[0].image}
+              src={media_image[0].image}
+              // src={base + media_image[0].image}
               alt="slides presentation"
               onContextMenu={(e) => e.preventDefault()}
             />

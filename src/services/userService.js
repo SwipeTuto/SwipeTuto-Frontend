@@ -16,8 +16,8 @@ export const loginGoogle = () => {
         .then(idToken => {
           login(idToken)
             .then(rep => {
-              // history.push('/', history.location)
-              // history.go()
+              history.push('/', history.location)
+              history.go()
               return rep
             })
         })
@@ -27,20 +27,20 @@ export const loginGoogle = () => {
 
 export const loginGit = () => {
   auth().signInWithPopup(providerGit)
-  .then(result => {
-    var user = result.user;
-    const emailConst = result.additionalUserInfo.profile.email
-    return user.getIdToken()
-      .then(idToken => {
-   
-        Gitlogin(idToken,emailConst)
-          .then(rep => {
-            // history.push('/', history.location)
-            // history.go()
-            return rep
-          })
-      })
-  })
+    .then(result => {
+      var user = result.user;
+      const emailConst = result.additionalUserInfo.profile.email
+      return user.getIdToken()
+        .then(idToken => {
+
+          Gitlogin(idToken, emailConst)
+            .then(rep => {
+              // history.push('/', history.location)
+              // history.go()
+              return rep
+            })
+        })
+    })
 }
 
 
@@ -63,9 +63,9 @@ export const login = idToken => {
     })
 
 }
-export const Gitlogin = (idToken,emailConst) => {
+export const Gitlogin = (idToken, emailConst) => {
 
-  var data = { 
+  var data = {
     'token_id': idToken,
     'emailConst': emailConst,
   }

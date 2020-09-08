@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { getInitials } from "../../../helper/index";
-import { base, coudinaryBase } from "../../../services/configService";
+// import { base, coudinaryBase } from "../../../services/configService";
 
 import { getUserByIdAction } from "../../../redux/user/user-actions";
 import { setNoClickedCard } from "../../../redux/filter/filter-actions";
@@ -16,8 +16,8 @@ const UserNameAndAvatar = ({ user, link }) => {
   const userImage =
     user && user.avatar && user.avatar[0] && user.avatar[0].avatar
       ? `${user.avatar[0].avatar}`
-      // ? `${base}${user.avatar[0].avatar}`
-      : null;
+      : // ? `${base}${user.avatar[0].avatar}`
+        null;
   return (
     <>
       {link ? (

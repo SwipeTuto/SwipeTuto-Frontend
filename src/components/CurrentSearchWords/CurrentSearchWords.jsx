@@ -9,7 +9,6 @@ import {
   selectSearchWords,
   selectSearchTopic,
   selectSearchCategory,
-  selectCurrentSearch,
 } from "../../redux/filter/filter-selectors";
 import { topicArray, categoryArray } from "../../helper/index";
 import {

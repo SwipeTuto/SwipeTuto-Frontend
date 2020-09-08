@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // redux
 import { selectCurrentUser } from "../../../../redux/user/user-selectors";
 import {
-  selectClickedCardComments,
   selectCommentLikers,
   selectClickedCardId,
   selectLastPublishedComment,
@@ -76,7 +75,7 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
       setLocalLastPublishedComments(arrayCopy);
       setNewCommentSubmit(false);
     }
-  }, [newCommentSubmit, lastPublishedComment]);
+  }, [newCommentSubmit, lastPublishedComment, localLastPublishedComments]);
 
   useEffect(() => {
     localLastPublishedComments.forEach((localComment) => {
@@ -92,13 +91,9 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
         }
       }
     });
-  }, [localRepliesArray]);
+  }, [localRepliesArray, localLastPublishedComments]);
 
-  useEffect(() => {
-    setCommentIsLiked(userHasLiked());
-  }, [commentLikers, currentUser]);
-
-  const userHasLiked = () => {
+  const userHasLiked = useCallback(() => {
     if (currentUser && currentUser.id) {
       return (
         commentLikers &&
@@ -107,7 +102,11 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
     } else {
       return false;
     }
-  };
+  }, [commentLikers, currentUser]);
+
+  useEffect(() => {
+    setCommentIsLiked(userHasLiked());
+  }, [commentLikers, currentUser, userHasLiked]);
 
   const handleCommentLike = (commentId) => {
     if (!currentUser) {

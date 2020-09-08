@@ -65,11 +65,11 @@ const CommentsWrapper = () => {
       setLocalLastPublishedComments(arrayCopy);
       setNewCommentSubmit(false);
     }
-  }, [newCommentSubmit, lastPublishedComment]);
+  }, [newCommentSubmit, lastPublishedComment, localLastPublishedComments]);
 
   useEffect(() => {
     if (clickedCardId) dispatch(getCardCommentsAction(clickedCardId));
-  }, [clickedCardId]);
+  }, [clickedCardId, dispatch]);
 
   useEffect(() => {
     setLocalCommentsArray(commentsArray);

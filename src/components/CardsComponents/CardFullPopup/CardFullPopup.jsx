@@ -1,6 +1,6 @@
 // Popup qui s'ouvre au clic sur une card. Contient CardSliderFull et aussi toutes les infos de la card cliquée
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect, withRouter } from "react-router-dom";
 
@@ -26,7 +26,6 @@ import {
 } from "../../../redux/layout/layout-actions";
 import {
   selectFullscreen,
-  selectImageIsLoaded,
   selectShowPopupCard,
   selectTheme,
   selectClickedCardIsLoaded,
@@ -43,15 +42,12 @@ import ConnexionRedirect from "../../LayoutComponents/ConnexionRedirect/Connexio
 
 // Services & helpers
 import { formattedDate, renameCategory } from "../../../helper/index";
-import { base, coudinaryBase } from "../../../services/configService";
+import { coudinaryBase } from "../../../services/configService";
+// import { base, coudinaryBase } from "../../../services/configService";
 
 // Assets
 import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevrons/chevron-back-circle.svg";
 import { ReactComponent as ChevronCircleRight } from "../../../assets/images/chevrons/chevron-forward-circle.svg";
-import { ReactComponent as LogoFacebook } from "../../../assets/images/logo-facebook.svg";
-import { ReactComponent as LogoTwitter } from "../../../assets/images/logo-twitter.svg";
-import { ReactComponent as LogoYoutube } from "../../../assets/images/logo-youtube.svg";
-import { ReactComponent as LogoGithub } from "../../../assets/images/logo-github.svg";
 import { ReactComponent as BookmarkEmpty } from "../../../assets/images/bookmark-outline.svg";
 import { ReactComponent as BookmarkFull } from "../../../assets/images/bookmark.svg";
 import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outline.svg";
@@ -90,7 +86,7 @@ const CardFullPopup = ({ history }) => {
     setIndexOfCurrentCard(cardsArray.indexOf(clickedCard));
   }, [clickedCard, cardsArray, cardsArrayLength, indexOfCurrentCard]);
 
-  const userHasLiked = () => {
+  const userHasLiked = useCallback(() => {
     if (currentUser && currentUser.id) {
       return (
         cardLikers && cardLikers.some((likers) => likers === currentUser.id)
@@ -98,11 +94,11 @@ const CardFullPopup = ({ history }) => {
     } else {
       return false;
     }
-  };
+  }, [cardLikers, currentUser]);
 
   useEffect(() => {
     setCardIsLiked(userHasLiked());
-  }, [cardLikers, currentUser]);
+  }, [cardLikers, currentUser, userHasLiked]);
 
   useEffect(() => setRedirection(false), [popupShown]);
 
@@ -321,7 +317,10 @@ const CardFullPopup = ({ history }) => {
                               .scroll(0, 0);
                           }}
                         >
-                          {console.log('card',card) , console.log('coudinaryBase', coudinaryBase)}
+                          {
+                            (console.log("card", card),
+                            console.log("coudinaryBase", coudinaryBase))
+                          }
                           {clickedCardIsLoaded &&
                           card &&
                           card.media_image &&
@@ -333,9 +332,9 @@ const CardFullPopup = ({ history }) => {
                               // src={base + card.media_image["0"].image}
                               alt="autre"
                             />
+                          ) : (
                             // https://res.cloudinary.com/hiimurmrd/image/upload/v1599134795/media/2020/9/118_2020-09-03_120634.4531500000_lexique_ajax_20200520_tjwmqa.jpg
                             // https://swipetuto-back-dev.herokuapp.https://res.cloudinary.com/hiimurmrd/image/upload/v1/media/2020/9/119_2020-09-03_120804.0307000000_lexique_backend_20200523_z0c01u
-                          ) : (
                             <div className="CardFullPopup__empty-image">
                               Image(s) Indisponible(s)
                             </div>

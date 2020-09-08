@@ -3,10 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
 
 // redux
-import {
-  selectSearchWords,
-  selectCurrentSearch,
-} from "../../../redux/filter/filter-selectors";
+import { selectSearchWords } from "../../../redux/filter/filter-selectors";
 import {
   setCurrentSearch,
   deleteCurrentSearch,

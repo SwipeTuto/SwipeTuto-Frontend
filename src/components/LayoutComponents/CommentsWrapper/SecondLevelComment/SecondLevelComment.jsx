@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // redux
@@ -40,11 +40,7 @@ const SecondLevelComment = ({
   });
   const commentLikers = reply && reply.likes;
 
-  useEffect(() => {
-    setCommentIsLiked(userHasLiked());
-  }, [commentLikers, currentUser]);
-
-  const userHasLiked = () => {
+  const userHasLiked = useCallback(() => {
     if (currentUser && currentUser.id) {
       return (
         commentLikers &&
@@ -53,7 +49,11 @@ const SecondLevelComment = ({
     } else {
       return false;
     }
-  };
+  }, [commentLikers, currentUser]);
+
+  useEffect(() => {
+    setCommentIsLiked(userHasLiked());
+  }, [commentLikers, currentUser, userHasLiked]);
 
   const handleCommentLike = () => {
     if (!currentUser) {

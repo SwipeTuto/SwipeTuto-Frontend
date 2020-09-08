@@ -34,7 +34,7 @@ const Login = ({ history }) => {
       window.scroll(0, 0);
     }
     dispatch(deleteUserErrors());
-  }, []);
+  }, [dispatch]);
 
   const handleClickGoogle = (e) => {
     loginGoogle();

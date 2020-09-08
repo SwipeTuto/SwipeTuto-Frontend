@@ -1,7 +1,7 @@
 // Présent dans App.js dans une Route ("/")
 
 import React from "react";
-import { Redirect, Switch, Route, Link } from "react-router-dom";
+import { Redirect, Switch, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
 import SwipeTutoSmallLogo from "../../assets/logos/Logo_small_border_black_smaller_700px.png";

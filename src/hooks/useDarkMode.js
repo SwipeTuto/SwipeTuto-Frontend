@@ -21,7 +21,7 @@ export const useDarkMode = () => {
     const localTheme = window.localStorage.getItem('theme');
     localTheme && setTheme(localTheme);
     dispatch(toggleThemeAction(localTheme))
-  }, []);
+  }, [dispatch]);
 
   return [theme, toggleTheme]
 };

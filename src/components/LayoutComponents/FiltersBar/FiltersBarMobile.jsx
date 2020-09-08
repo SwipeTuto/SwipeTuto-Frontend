@@ -6,7 +6,6 @@ import { Redirect, Link } from "react-router-dom";
 // redux
 import {
   selectCurrentSearch,
-  selectTotalNumberOfResults,
   selectSearchPage,
 } from "../../../redux/filter/filter-selectors";
 import {
@@ -57,7 +56,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
   useEffect(() => {
     setRedirection(false);
     setNewSearch(currentSearch);
-  }, []);
+  }, [currentSearch]);
 
   const handleSearchChange = (e) => {
     const type = e.target.name;

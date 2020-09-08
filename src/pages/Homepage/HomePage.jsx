@@ -30,7 +30,7 @@ const HomePage = () => {
 
   useEffect(() => {
     dispatch(getCardsAction());
-  }, []);
+  }, [dispatch]);
 
   // scroll reset
   if (window.scrollY) {

@@ -11,7 +11,6 @@ import {
   selectSearchWords,
   selectSearchOrder,
   selectSearchPage,
-  selectCurrentSearch,
   selectSearchTopic,
 } from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";

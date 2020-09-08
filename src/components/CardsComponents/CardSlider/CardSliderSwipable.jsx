@@ -63,14 +63,14 @@ const CardSliderSwipebale = () => {
     }
   };
 
-  const fakeArray = [
-    "https://fakeimg.pl/500x500/?text=Hello",
-    "https://fakeimg.pl/500x500/?text=Card2",
-    "https://fakeimg.pl/500x500/?text=HEyyyy",
-    "https://fakeimg.pl/500x500/?text=Salut!",
-    "https://fakeimg.pl/500x500/?text=Aurevoir!",
-    "https://fakeimg.pl/500x500/?text=Youhouu",
-  ];
+  // const fakeArray = [
+  //   "https://fakeimg.pl/500x500/?text=Hello",
+  //   "https://fakeimg.pl/500x500/?text=Card2",
+  //   "https://fakeimg.pl/500x500/?text=HEyyyy",
+  //   "https://fakeimg.pl/500x500/?text=Salut!",
+  //   "https://fakeimg.pl/500x500/?text=Aurevoir!",
+  //   "https://fakeimg.pl/500x500/?text=Youhouu",
+  // ];
 
   return (
     <div className="CardSliderLarge">

@@ -5,7 +5,6 @@ import { Redirect } from "react-router-dom";
 
 // redux
 import {
-  selectCurrentSearch,
   selectTotalNumberOfResults,
   selectSearchCategory,
   selectSearchPage,

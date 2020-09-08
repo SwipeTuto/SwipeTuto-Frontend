@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 // redux
 import { selectCurrentUser } from "../../../../redux/user/user-selectors";
-import { selectClickedCardId } from "../../../../redux/filter/filter-selectors";
 import { toggleCommentLikeAction } from "../../../../redux/filter/filter-actions";
 
 // helper

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import UserAvatar from "../../../components/UserComponents/UserAvatar/UserAvatar";
 import UserUsername from "../../../components/UserComponents/UserAvatar/UserUsername";
 import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
@@ -23,15 +23,6 @@ const UserHeader = ({ userIsSame, location }) => {
   const clickedUser = useSelector(selectClickedUser);
   const [userDatas, setUserDatas] = useState();
 
-  // useEffect(() => {
-  //   if (user === "current") {
-  //     setUserDatas(currentUser);
-  //   } else if (user === "other") {
-  //     setUserDatas(clickedUser);
-  //   } else {
-  //     setUserDatas(null);
-  //   }
-  // }, [user, clickedUser, currentUser, userId]);
   useEffect(() => {
     if (locationPath && locationPath.includes("/account") && currentUser) {
       setUserDatas(currentUser);
@@ -73,20 +64,6 @@ const UserHeader = ({ userIsSame, location }) => {
             ? userDatas.profile.description
             : ""}
         </p>
-      </div>
-      <div className="UserHeader__social">
-        {/* <a href="#" target="_blank" className="UserHeader__social--link">
-      <LogoYoutube className="UserHeader__social--logo" />
-    </a>
-    <a href="#" target="_blank" className="UserHeader__social--link">
-      <LogoGithub className="UserHeader__social--logo" />
-    </a>
-    <a href="#" target="_blank" className="UserHeader__social--link">
-      <LogoFacebook className="UserHeader__social--logo" />
-    </a>
-    <a href="#" target="_blank" className="UserHeader__social--link">
-      <LogoTwitter className="UserHeader__social--logo" />
-    </a> */}
       </div>
     </div>
   );

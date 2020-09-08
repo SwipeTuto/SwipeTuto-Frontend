@@ -4,11 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 // redux
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
-import {
-  getCardAfterfilterAction,
-  setCurrentSearch,
-  deleteCurrentSearch,
-} from "../../../redux/filter/filter-actions";
+import { deleteCurrentSearch } from "../../../redux/filter/filter-actions";
 import {
   selectMobileNavOpen,
   selectFilterMobileMenuOpen,
@@ -20,16 +16,7 @@ import {
   openFilterMobileMenu,
 } from "../../../redux/layout/layout-actions";
 import { logoutAction } from "../../../redux/user/user-actions";
-import {
-  selectSearchCategory,
-  selectSearchWords,
-  selectSearchOrder,
-  selectSearchPage,
-  selectCurrentSearch,
-} from "../../../redux/filter/filter-selectors";
-
-// helper
-import { topicArray, initialSearchState } from "../../../helper/index";
+import { selectSearchWords } from "../../../redux/filter/filter-selectors";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
@@ -171,7 +158,6 @@ const NavTopMobile = (props) => {
               to="/search"
               onClick={() => {
                 dispatch(deleteCurrentSearch());
-                // dispatch(getCardAfterfilterAction(initialSearchState));
                 dispatch(closeMobileNav());
               }}
             >

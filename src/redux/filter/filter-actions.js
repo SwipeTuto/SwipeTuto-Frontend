@@ -1,13 +1,7 @@
 import { FilterActionTypes } from "./filter-types"
-import { setLoading, setLoaded, setImageLoading, setImageLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded } from '../layout/layout-actions'
-
-import { searchBar } from '../../services/searchService'
-import { getCards, CardsActionTypes, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
-import { toggleLike, toggleCommentLike, addComment, getCardComments, getCardCommentsOtherPage, deleteComment, modifyComment, addReply } from "../../services/socialService"
-
-
-
-
+import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded } from '../layout/layout-actions'
+import { getCards, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
+import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply } from "../../services/socialService"
 
 const getCardAfterfilterSuccess = cards => ({
   type: FilterActionTypes.GET_CARDS_FILTER_SUCCESS,
@@ -192,8 +186,8 @@ export const getCardsAction = () => {
   return dispatch => {
     return getCards()
       .then(card => {
-        dispatch(setCardsFetchedInStore(card)) // cards dans cardsFetched
-        dispatch(setLoaded()) // stop loader
+        dispatch(setCardsFetchedInStore(card))
+        dispatch(setLoaded())
       })
       .catch(err => {
         dispatch(getCardsErrors(err.response))
@@ -214,11 +208,9 @@ export const toggleLikeCardAction = (cardId) => {
     return toggleLike(cardId)
       .then(rep => {
         dispatch(likeCardActionSuccess())
-        // dispatch(setLoaded())  stop loader
       })
       .catch(err => {
         dispatch(likeCardActionErrors(err.response.status))
-        // dispatch(setLoaded())  stop loader
       })
   }
 };
@@ -238,11 +230,9 @@ export const toggleCommentLikeAction = (commentId) => {
     return toggleCommentLike(commentId)
       .then(rep => {
         dispatch(toggleCommentLikeSuccess())
-        // dispatch(setLoaded())  stop loader
       })
       .catch(err => {
         dispatch(toggleCommentLikeError(err.response.status))
-        // dispatch(setLoaded())  stop loader
       })
   }
 };
@@ -264,8 +254,6 @@ export const addCommentAction = (cardId, comment) => {
     return addComment(cardId, comment)
       .then(rep => {
         dispatch(addCommentSuccess(rep.data))
-        // dispatch(getCardCommentsAction(cardId))
-
       })
       .catch(err => {
         dispatch(addCommentErrors(err))
@@ -288,7 +276,6 @@ export const addReplyAction = (cardId, commentId, comment) => {
     return addReply(commentId, comment)
       .then(rep => {
         dispatch(addCommentSuccess(rep.data))
-        // dispatch(getCardCommentsAction(cardId))
       })
       .catch(err => {
         dispatch(addCommentErrors(err))
@@ -322,26 +309,11 @@ const getCardCommentsSuccess = (comments) => ({
   payload: comments
 })
 
-// export const getCardCommentsNextPageAction = (url) => {
-//   return dispatch => {
-//     dispatch(setLoading())
-//     return getCardCommentsOtherPage(url)
-//       .then(rep => {
-//         dispatch(getCardCommentsSuccess(rep.data))
-//         dispatch(setLoaded()) // stop loader
-//       })
-//       .catch(err => {
-//         dispatch(getCardCommentsError(err))
-//         dispatch(setLoaded()) // stop loader
-//       })
-//   }
-// };
 
 export const deleteCommentAction = (commentId) => {
   return dispatch => {
     return deleteComment(commentId)
       .then(rep => {
-        // dispatch(getCardCommentsAction(clickedCardId))
         dispatch(deleteCommentSuccess())
       })
       .catch(err => {
@@ -358,29 +330,3 @@ const deleteCommentErrors = error => ({
 const deleteCommentSuccess = () => ({
   type: FilterActionTypes.DELETE_COMMENT_SUCCESS,
 })
-
-
-// export const modifyCommentAction = (commentId, newComment) => {
-//   return dispatch => {
-//     return modifyComment(commentId, newComment)
-//       .then(rep => {
-//         console.log("modify comments rep : ", rep)
-//         dispatch(modifyCommentSuccess())
-//         dispatch(setLoaded()) // stop loader
-//       })
-//       .catch(err => {
-//         console.log("modify comments rep : ", err)
-//         dispatch(modifyCommentErrors(err))
-//         dispatch(setLoaded()) // stop loader
-//       })
-//   }
-// };
-
-// const modifyCommentErrors = error => ({
-//   type: FilterActionTypes.MODIFY_COMMENT_ERROR,
-//   payload: error
-// })
-
-// const modifyCommentSuccess = () => ({
-//   type: FilterActionTypes.MODIFY_COMMENT_SUCCESS,
-// })

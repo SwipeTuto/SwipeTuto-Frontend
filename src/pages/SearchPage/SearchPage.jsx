@@ -1,12 +1,9 @@
 // Présent dans App.js dans une Route ("/search")
-
 import React, { useState, useEffect } from "react";
 import { Redirect, withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 
 import FiltersBar from "../../components/LayoutComponents/FiltersBar/FiltersBar";
-import FiltersBarMobile from "../../components/LayoutComponents/FiltersBar/FiltersBarMobile";
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
 import CurrentSearchWords from "../../components/CurrentSearchWords/CurrentSearchWords";
 import {
@@ -18,21 +15,15 @@ import {
   selectSearchPage,
   selectCurrentSearch,
 } from "../../redux/filter/filter-selectors";
-import { baseURL } from "../../services/configService";
-import { urlParams } from "../../helper/index";
 import SearchLinkRedirect from "../../helper/SearchLinkRedirect";
 
 import {
-  getOtherPageAction,
-  deleteCurrentSearch,
   getCardAfterfilterAction,
   setCurrentSearch,
 } from "../../redux/filter/filter-actions";
 import Pagination from "../../components/LayoutComponents/Pagination/Pagination";
-import { setCurrentCardGridPage } from "../../redux/filter/filter-actions";
 
 import "./SearchPage.scss";
-import { closeFilterMobileMenu } from "../../redux/layout/layout-actions";
 
 // Récupérer le handleClick sur les display large ou petit des grids et fixer à big ou small et passer ça dans CardGridList
 
@@ -41,12 +32,10 @@ const SearchPage = (props) => {
   const [redirection, setRedirection] = useState(false);
   const currentSearch = useSelector(selectCurrentSearch);
   const currentTheme = useSelector(selectTheme);
-  const currentPage = currentSearch.searchPage;
   const dispatch = useDispatch();
   const [gridSize, setGridSize] = useState("small");
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(0);
   const totalNumberOfCards = useSelector(selectTotalNumberOfResults);
-  const [topic, category, ordering, search, page] = urlParams(props.location);
   const currentSearchPageNumber = useSelector(selectSearchPage);
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
   const getRealNumber = (results) => {
@@ -75,61 +64,28 @@ const SearchPage = (props) => {
 
   const handlePaginationNavigation = (e) => {
     const navPageNumber = e.target.dataset.page;
-
-    // dispatch(
-    //   getCardAfterfilterAction({
-    //     ...currentSearch,
-    //     searchPage: navPageNumber,
-    //   })
-    // );
     dispatch(setCurrentSearch("searchPage", navPageNumber));
     setRedirection(true);
   };
 
   const goToFirstPage = () => {
-    // dispatch(
-    //   getCardAfterfilterAction({
-    //     ...currentSearch,
-    //     searchPage: 1,
-    //   })
-    // );
     dispatch(setCurrentSearch("searchPage", 1));
     setRedirection(true);
   };
   const goToLastPage = () => {
-    // dispatch(
-    //   getCardAfterfilterAction({
-    //     ...currentSearch,
-    //     searchPage: totalNumberOfPages,
-    //   })
-    // );
     dispatch(setCurrentSearch("searchPage", parseInt(totalNumberOfPages)));
     setRedirection(true);
   };
   const goToPreviousPage = () => {
-    // dispatch(
-    //   getCardAfterfilterAction({
-    //     ...currentSearch,
-    //     searchPage: currentSearchPage - 1,
-    //   })
-    // );
     dispatch(setCurrentSearch("searchPage", parseInt(currentSearchPage - 1)));
     setRedirection(true);
   };
   const goToNextPage = () => {
-    // dispatch(
-    //   getCardAfterfilterAction({
-    //     ...currentSearch,
-    //     searchPage: currentSearchPage + 1,
-    //   })
-    // );
     dispatch(setCurrentSearch("searchPage", parseInt(currentSearchPage + 1)));
     setRedirection(true);
   };
 
   useEffect(() => {
-    // dispatch(closeFilterMobileMenu());
-
     setTotalNumberOfPages(Math.ceil(totalNumberOfCards / numberOfItemByPage));
   }, [totalNumberOfCards, currentSearch]);
 

@@ -1,12 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
-// redux
-import {
-  selectCardsFetched,
-  selectTotalNumberOfResults,
-} from "../../../redux/filter/filter-selectors";
-import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
 
 import "./Pagination.scss";
 
@@ -20,8 +12,6 @@ const Pagination = ({
   handlePaginationNavigation,
   location,
 }) => {
-  const [startIndex, setStartIndex] = useState();
-  const [endIndex, setEndIndex] = useState();
   const [allLinks, setAllLinks] = useState();
   const currentPage = currentSearch.searchPage;
 
@@ -29,8 +19,6 @@ const Pagination = ({
     const start = startPage(parseInt(currentPage), totalPages);
     const end = endPage(parseInt(currentPage), totalPages);
     const links = getAllLinksArray(start, end);
-    setStartIndex(start);
-    setEndIndex(end);
     setAllLinks(links);
     if (window.scrollY) {
       window.scroll(0, 0);
@@ -67,7 +55,7 @@ const Pagination = ({
     } else if (currentPage + 2 < totalPages) {
       return currentPage + 2;
     } else {
-     return
+      return;
     }
   };
 

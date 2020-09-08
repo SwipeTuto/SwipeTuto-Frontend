@@ -168,7 +168,6 @@ export const errorMessageToDisplay = (name) => {
       return;
   }
 };
-// cas avatar ?
 
 export const checkRegexInput = (name, value) => {
   switch (name) {
@@ -190,11 +189,9 @@ export const checkRegexInput = (name, value) => {
       return;
   }
 };
-// cas avatar ?
 
 
 // liste des catégories 
-
 export const categoryArray = [
   {
     queryName: null,

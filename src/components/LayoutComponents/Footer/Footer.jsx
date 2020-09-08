@@ -9,13 +9,10 @@ import { ReactComponent as LogoInstagram } from "../../../assets/images/logo-ins
 
 import "./Footer.scss";
 import ToggleButton from "../ToggleTheme/ToggleTheme";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 
 const Footer = () => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
-  const dispatch = useDispatch();
   const [theme, setTheme] = useDarkMode();
   const toggleTheme = () => {
     if (theme === "light") {
@@ -24,10 +21,6 @@ const Footer = () => {
       setTheme("light");
     }
   };
-
-  // useEffect(() => {
-  //   dispatch(toggleTheme());
-  // }, []);
 
   return (
     <div className="Footer">

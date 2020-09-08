@@ -25,11 +25,6 @@ export const selectFilterMobileMenuOpen = createSelector(
   layout => layout.filterMobileMenuOpen
 )
 
-export const selectBetaAlertOpen = createSelector(
-  [selectLayout],
-  layout => layout.betaAlert
-)
-
 export const selectIsLoaded = createSelector(
   [selectLayout],
   layout => layout.isLoaded

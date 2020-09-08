@@ -8,14 +8,10 @@ import {
   selectCurrentSearch,
 } from "../../../redux/filter/filter-selectors";
 import {
-  getCardAfterfilterAction,
   setCurrentSearch,
   deleteCurrentSearch,
 } from "../../../redux/filter/filter-actions";
 import { closeMobileNav } from "../../../redux/layout/layout-actions";
-
-// helper
-import { initialSearchState } from "../../../helper/index";
 
 // components
 import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
@@ -30,7 +26,6 @@ const SearchForm = () => {
   const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState("");
   const [redirection, setRedirection] = useState(false);
-  const currentSearch = useSelector(selectCurrentSearch);
   const searchWords = useSelector(selectSearchWords);
 
   useEffect(() => {
@@ -51,23 +46,13 @@ const SearchForm = () => {
     e.preventDefault();
     dispatch(setCurrentSearch("searchWords", searchInput));
     dispatch(setCurrentSearch("searchPage", 1));
-    // dispatch(searchAction(searchInput));
-    // dispatch(
-    //   getCardAfterfilterAction({
-    //     ...currentSearch,
-    //     searchWords: searchInput,
-    //     searchPage: 1,
-    //   })
-    // );
     dispatch(closeMobileNav());
     setRedirection(true);
   };
 
   const handleSearchDelete = () => {
     setSearchInput("");
-    // dispatch(deleteCurrentSearch("searchWords"));
     dispatch(deleteCurrentSearch());
-    // dispatch(getCardAfterfilterAction(initialSearchState));
     setRedirection(true);
   };
 

@@ -24,7 +24,6 @@ import { getCardCommentsNext } from "../../../services/socialService";
 // components
 import Loading from "../../Loading/Loading";
 import FirstLevelComment from "./FirstLevelComment/FirstLevelComment";
-import SecondLevelComment from "./SecondLevelComment/SecondLevelComment";
 import ConnexionRedirect from "../ConnexionRedirect/ConnexionRedirect";
 import CustomButton from "../CustomButton/CustomButton";
 import CommentsInput from "../CommentsInput/CommentsInput";
@@ -48,7 +47,6 @@ const CommentsWrapper = () => {
   const [localNextLink, setLocalNextLink] = useState();
   const [newComment, setNewComment] = useState("");
   const [newCommentSubmit, setNewCommentSubmit] = useState(false);
-  const [showComments, setShowComments] = useState(true);
   const lastPublishedComment = useSelector(selectLastPublishedComment);
   const commentsAreLoaded = useSelector(selectCommentsLoaded);
   const [localLastPublishedComments, setLocalLastPublishedComments] = useState(
@@ -116,24 +114,6 @@ const CommentsWrapper = () => {
         : setLocalNextLink(null);
     });
   };
-
-  // useEffect(() => {
-  //   localLastPublishedComments.forEach((localComment) => {
-  //     const commentFull = localCommentsArray.filter((comment) => {
-  //       return comment.id === localComment.id;
-  //     });
-  //     console.log(commentFull);
-  //     if (commentFull.length > 0) {
-  //       const index = localLastPublishedComments.indexOf(localComment);
-  //       console.log(index);
-  //       const arrayCopy = localLastPublishedComments;
-  //       if (index > -1) {
-  //         arrayCopy.splice(index, 1);
-  //         setLocalLastPublishedComments(arrayCopy);
-  //       }
-  //     }
-  //   });
-  // }, [localCommentsArray]);
 
   const confirmCommentDelete = (commentId) => {
     dispatch(deleteCommentAction(parseInt(commentId)));

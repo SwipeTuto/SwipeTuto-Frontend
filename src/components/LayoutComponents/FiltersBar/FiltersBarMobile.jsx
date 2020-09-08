@@ -6,15 +6,10 @@ import { Redirect, Link } from "react-router-dom";
 // redux
 import {
   selectCurrentSearch,
-  selectSearchTopic,
   selectTotalNumberOfResults,
-  selectSearchCategory,
-  selectSearchWords,
-  selectSearchOrder,
   selectSearchPage,
 } from "../../../redux/filter/filter-selectors";
 import {
-  getCardAfterfilterAction,
   setCurrentSearch,
   deleteCurrentSearch,
 } from "../../../redux/filter/filter-actions";
@@ -22,13 +17,9 @@ import {
   selectFilterMobileMenuOpen,
   selectTheme,
 } from "../../../redux/layout/layout-selectors";
-import {
-  openFilterMobileMenu,
-  closeFilterMobileMenu,
-} from "../../../redux/layout/layout-actions";
+import { closeFilterMobileMenu } from "../../../redux/layout/layout-actions";
 
 // helper
-import { initialSearchState } from "../../../helper/index";
 import {
   categoryArray,
   topicArray,
@@ -68,16 +59,6 @@ const FiltersBarMobile = ({ title, showResults }) => {
     setNewSearch(currentSearch);
   }, []);
 
-  // pages de requêtes :
-  const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
-  const getRealNumber = (results) => {
-    if (isNaN(results)) {
-      return 0;
-    } else {
-      return results;
-    }
-  };
-
   const handleSearchChange = (e) => {
     const type = e.target.name;
     const newValue = e.target.value || null;
@@ -100,7 +81,6 @@ const FiltersBarMobile = ({ title, showResults }) => {
   const handleDeleteCurrentSearch = () => {
     dispatch(deleteCurrentSearch());
     dispatch(closeFilterMobileMenu());
-    // dispatch(getCardAfterfilterAction(initialSearchState));
     setRedirection(true);
   };
 
@@ -126,7 +106,6 @@ const FiltersBarMobile = ({ title, showResults }) => {
     dispatch(setCurrentSearch("searchCategory", newSearch.searchCategory));
     dispatch(setCurrentSearch("searchPage", 1));
     dispatch(closeFilterMobileMenu());
-    // dispatch(getCardAfterfilterAction(newSearch));
   };
 
   const redirectLink = SearchLinkRedirect();

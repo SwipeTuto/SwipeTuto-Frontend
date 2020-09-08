@@ -3,7 +3,6 @@ import { authHeader } from '../helper/auth-header';
 import { auth, provider, providerGit } from '../services/firebaseService';
 import { baseURL } from '../services/configService'
 import history from "../helper/history"
-import { updateUserInfosSuccess } from "../redux/user/user-actions";
 
 
 
@@ -35,8 +34,8 @@ export const loginGit = () => {
 
           Gitlogin(idToken, emailConst)
             .then(rep => {
-              // history.push('/', history.location)
-              // history.go()
+              history.push('/', history.location)
+              history.go()
               return rep
             })
         })
@@ -98,12 +97,12 @@ export const loginManuel = (email, password) => {
 
       return user;
     })
-  // .catch(function (err) {
-  //   localStorage.removeItem('user')
+    .catch(function (err) {
+      localStorage.removeItem('user')
 
-  //   return err
+      return err
 
-  // })
+    })
 }
 
 export const logout = () => {

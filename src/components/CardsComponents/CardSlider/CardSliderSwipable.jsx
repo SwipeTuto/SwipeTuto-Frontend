@@ -111,38 +111,36 @@ const CardSliderSwipebale = () => {
           }`}
           onScroll={(e) => handleScrollLevel(e)}
         >
-          {/* {clickedCardSlides !== ["http://localhost:8000null"]
-            ? clickedCardSlides.map((slide, index) => (
-                <img
-                  className={
-                    index === activeIndex
-                      ? "CardSliderLarge__slide CardSliderLarge__slide--active"
-                      : "CardSliderLarge__slide"
-                  }
-                  key={index}
-                  index={index}
-                  src={slide}
-                  slide={slide}
-                  alt="slide element"
-                  onContextMenu={(e) => e.preventDefault()}
-                />
-              ))
-            : fakeArray.map((source, index) => (
-                <img
-                  className={
-                    index === activeIndex
-                      ? "CardSliderLarge__slide CardSliderLarge__slide--active"
-                      : "CardSliderLarge__slide"
-                  }
-                  key={index}
-                  index={index}
-                  src={source}
-                  slide={source}
-                  alt="slide element"
-                  onContextMenu={(e) => e.preventDefault()}
-                />
-              ))} */}
-          {fakeArray.map((source, index) => (
+          {clickedCardSlides !== ["http://localhost:8000null"] ? (
+            clickedCardSlides.map((slide, index) => (
+              <img
+                className={
+                  index === activeIndex
+                    ? "CardSliderLarge__slide CardSliderLarge__slide--active"
+                    : "CardSliderLarge__slide"
+                }
+                key={index}
+                index={index}
+                src={slide}
+                slide={slide}
+                alt="slide element"
+                onContextMenu={(e) => e.preventDefault()}
+              />
+            ))
+          ) : (
+            <div
+              className="CardSliderLarge__slide CardSliderLarge__slide--active"
+              key={1}
+              index={1}
+              slide={1}
+              alt="slide element"
+              onContextMenu={(e) => e.preventDefault()}
+            >
+              Erreur de chargement des images.
+            </div>
+          )}
+          {/* POUR LES TESTS : */}
+          {/* {fakeArray.map((source, index) => (
             <img
               className={
                 index === activeIndex
@@ -156,9 +154,10 @@ const CardSliderSwipebale = () => {
               alt="slide element"
               onContextMenu={(e) => e.preventDefault()}
             />
-          ))}
+          ))} */}
         </div>
-        {/* Chevron left */}
+
+        {/* Chevron right */}
         {isFullScreen ? (
           <Fragment>
             <ChevronRightWhite
@@ -183,6 +182,8 @@ const CardSliderSwipebale = () => {
           />
         )}
       </div>
+
+      {/* bullet Indicators navigation */}
       {isFullScreen ? null : (
         <ul className="CardSliderLarge__indicators">
           {clickedCardSlides &&

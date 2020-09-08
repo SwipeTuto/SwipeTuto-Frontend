@@ -1,21 +1,10 @@
 // Présent dans App.js dans une Route ("/")
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Redirect, Switch, Route, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
-
-import { loginGoogle, loginGit } from "../../services/userService";
-import { loginAction, setCurrentUser } from "../../redux/user/user-actions";
+import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
-import loginImage from "../../assets/images/login-image.jpg";
-import { ReactComponent as GoogleLogo } from "../../assets/images/logo-google.svg";
-import { ReactComponent as GithubLogo } from "../../assets/images/logo-github.svg";
-// import SwipeTutoSmallFull from "../../assets/logos/logo-full-reduced.png";
-// import SwipeTutoSmallLogo from "../../assets/logos/logo-small-reduced.png";
 import SwipeTutoSmallLogo from "../../assets/logos/Logo_small_border_black_smaller_700px.png";
-
-import { checkRegexInput, errorMessageToDisplay } from "../../helper/index";
 import Login from "../../components/LayoutComponents/Login/Login";
 
 import "./LoginPage.scss";

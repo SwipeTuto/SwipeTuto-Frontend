@@ -101,7 +101,6 @@ const CardPreviewSmall = ({ card }) => {
             </div>
           </div>
         </div>
-        {/* </Link> */}
         <div className="CardPreviewSmall__details">
           <UserNameAndAvatar user={user} link={true} />
           <div

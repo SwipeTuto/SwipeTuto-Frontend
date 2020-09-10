@@ -12,6 +12,7 @@ export const loginGoogle = () => {
   return auth().signInWithPopup(provider)
     .then(result => {
       var user = result.user;
+      console.log(resultit)
       return user.getIdToken()
         .then(idToken => {
           login(idToken)
@@ -29,7 +30,8 @@ export const loginGit = () => {
   auth().signInWithPopup(providerGit)
   .then(result => {
     var user = result.user;
-    const emailConst = result.additionalUserInfo.profile.email
+    const emailConst = result.additionalUserInfo
+    console.log(emailConst)
     return user.getIdToken()
       .then(idToken => {
    
@@ -64,7 +66,6 @@ export const login = idToken => {
 
 }
 export const Gitlogin = (idToken,emailConst) => {
-
   var data = { 
     'token_id': idToken,
     'emailConst': emailConst,

@@ -36,20 +36,18 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       app.style.position = '';
       app.style.top = '';
       window.scrollTo(0, parseInt(scrollY || '0') * -1);
-
       return {
         ...state,
         popupShown: false,
       };
     case LayoutActionTypes.SHOW_FULLSCREEN:
       cardPopupElement.style.overflow = "hidden";
-
       return {
         ...state,
         fullscreen: true,
       };
     case LayoutActionTypes.CLOSE_FULLSCREEN:
-
+      cardPopupElement.style.overflowY = "scroll";
       return {
         ...state,
         fullscreen: false,

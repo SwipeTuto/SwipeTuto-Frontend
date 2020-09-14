@@ -312,6 +312,11 @@ const CardFullPopup = ({ history }) => {
                           card={card}
                           onClick={() => {
                             dispatch(setClickedCard(card));
+                            window.history.pushState(
+                              "",
+                              "",
+                              `/card_id=${card.id && card.id}`
+                            );
                             document
                               .querySelector(".CardFullPopup.active")
                               .scroll(0, 0);

@@ -171,8 +171,11 @@
     .autres-posts--preview {
       width: 8rem;
       height: 8rem;
-      background-color: lightblue;
       cursor: pointer;
+
+      & > img {
+        object-fit: contain;
+      }
     }
   }
 

@@ -3,54 +3,31 @@ import { authHeader } from '../helper/auth-header';
 import { auth, provider, providerGit } from '../services/firebaseService';
 import { baseURL } from '../services/configService'
 import history from "../helper/history"
+import { loginErrors } from "../redux/user/user-actions";
 
 
 
 export const loginGoogle = () => {
-
+  // return auth().signInWithPopup(provider)
+  //   .then(result => {
+  //     var user = result.user;
+  //     return user.getIdToken()
+  //       .then(idToken => {
+  //         login(idToken)
+  //           .then(rep => {
+  //             // history.push('/', history.location)
+  //             // history.go()
+  //             console.log(rep)
+  //             return rep
+  //           })
+  //       })
+  //   })
   return auth().signInWithPopup(provider)
     .then(result => {
       var user = result.user;
       return user.getIdToken()
-        .then(idToken => {
-          login(idToken)
-            .then(rep => {
-              history.push('/', history.location)
-              history.go()
-              return rep
-            })
-        })
     })
 }
-
-
-// TESTS :
-// export const loginGoogle = () => {
-
-//   return auth().signInWithPopup(provider)
-//     .then(result => {
-//       var user = result.user;
-//       const tokenID = result.credential.idToken ? result.credential.idToken : null;
-//       const accessToken = result.credential.accessToken ? result.credential.accessToken : null;
-
-//       if (user.emailVerified === false) {
-//         console.log(result)
-//         axios.get(`https://gmail.googleapis.com/gmail/v1/users/{userId}/profile=${tokenID}
-//         `)
-//           .then(rep => console.log(rep))
-//       } else {
-//         return user.getIdToken()
-//           .then(idToken => {
-//             login(idToken)
-//               .then(rep => {
-//                 // history.push('/', history.location)
-//                 // history.go()
-//                 return rep
-//               })
-//           })
-//       }
-//     })
-// }
 
 
 export const loginGit = () => {
@@ -79,7 +56,6 @@ export const login = idToken => {
 
   return axios.post(`${baseURL}google-login/`, JSON.stringify(data), config)
     .then(rep => {
-      console.log(rep)
       localStorage.setItem('user', JSON.stringify(rep.data))
       return rep
     })
@@ -123,12 +99,12 @@ export const loginManuel = (email, password) => {
   return axios.post(`${baseURL}login/`, { email, password }, config)
     .then(user => {
       localStorage.setItem('user', JSON.stringify(user.data))
-
+      console.log(user)
       return user;
     })
     .catch(function (err) {
       localStorage.removeItem('user')
-
+      console.log(err)
       return err
 
     })

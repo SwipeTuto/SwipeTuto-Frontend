@@ -2,7 +2,10 @@
 
 import React, { Fragment, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectClickedCardSlides } from "../../../redux/filter/filter-selectors";
+import {
+  selectClickedCardSlides,
+  selectClickedCard,
+} from "../../../redux/filter/filter-selectors";
 import { selectFullscreen } from "../../../redux/layout/layout-selectors";
 import { closeFullscreen } from "../../../redux/layout/layout-actions";
 
@@ -16,17 +19,33 @@ import "./CardSliderSwipable.scss";
 
 const CardSliderSwipebale = () => {
   const clickedCardSlides = useSelector(selectClickedCardSlides); //array
+  const [localSlides, setLocalSlides] = useState();
+  const clickedCard = useSelector(selectClickedCard);
   const isFullScreen = useSelector(selectFullscreen);
   const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState(0);
   const [imageWidth, setImageWidth] = useState(0);
+  const firstSlideEl = document.querySelector(".CardSliderLarge__slide");
+
+  useEffect(() => {
+    const slideForWidth =
+      document.querySelector(".CardSliderLarge__slide") &&
+      document.querySelector(".CardSliderLarge__slide").clientWidth;
+    setImageWidth(slideForWidth);
+  }, [firstSlideEl]);
 
   useEffect(() => {
     setActiveIndex(0);
-    const slideForWidth = document.querySelector(".CardSliderLarge__slide")
-      .clientWidth;
-    setImageWidth(slideForWidth);
-  }, [clickedCardSlides]);
+    setLocalSlides(clickedCardSlides);
+    document.querySelector(".CardSliderLarge__slides-container").scrollTo(0, 0);
+  }, [clickedCard, clickedCardSlides]);
+
+  // useEffect(() => {
+  //   setActiveIndex(0);
+  //   const slideForWidth = document.querySelector(".CardSliderLarge__slide")
+  //     .clientWidth;
+  //   setImageWidth(slideForWidth);
+  // }, [clickedCardSlides]);
 
   const goToPrevSlide = (e) => {
     document
@@ -111,8 +130,9 @@ const CardSliderSwipebale = () => {
           }`}
           onScroll={(e) => handleScrollLevel(e)}
         >
-          {clickedCardSlides !== ["http://localhost:8000null"] ? (
-            clickedCardSlides.map((slide, index) => (
+          {localSlides !== ["http://localhost:8000null"] ? (
+            localSlides &&
+            localSlides.map((slide, index) => (
               <img
                 className={
                   index === activeIndex

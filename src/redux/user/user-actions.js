@@ -1,5 +1,5 @@
 import { UserActionTypes } from './user-types'
-import { loginManuel, logout, register, getUserById, updateUserInfos } from '../../services/userService'
+import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, getUserIDToken } from '../../services/userService'
 import history from "../../helper/history"
 import { setLoading, setLoaded } from '../layout/layout-actions';
 
@@ -17,17 +17,40 @@ export const loginAction = (username, password) => {
     return loginManuel(username, password)
       .then(user => {
         dispatch(deleteUserErrors())
-        history.push('/', history.location)
-        history.go()
+        if (!user.data) {
+          dispatch(loginErrors("Erreur avec votre compte. Merci d'en essayer un autre."))
+          localStorage.removeItem('user')
+        } else {
+          history.push('/', history.location)
+          history.go()
+        }
       })
-      .catch(err => {
-        dispatch(loginErrors(err.response && err.response.status && err.response.status))
-        localStorage.removeItem('user')
+
+  }
+}
+export const loginGoogleAction = () => {
+  return dispatch => {
+    return loginGoogle()
+      .then(rep => {
+        login(rep)
+          .then(rep => {
+            console.log(rep, typeof rep)
+            dispatch(deleteUserErrors())
+            if (!rep.data) {
+              dispatch(loginErrors("Erreur avec votre compte. Merci d'en essayer un autre."))
+            } else {
+              history.push('/', history.location)
+              history.go()
+            }
+          })
       })
+
   }
 }
 
-const loginErrors = error => ({
+
+
+export const loginErrors = error => ({
   type: UserActionTypes.LOGIN_FAILURE,
   payload: error
 })

@@ -15,7 +15,6 @@ import { selectTheme } from "../../redux/layout/layout-selectors";
 const LoginPage = ({ location }) => {
   const currentUser = useSelector(selectCurrentUser);
   const currentTheme = useSelector(selectTheme);
-
   return (
     <>
       {currentUser && <Redirect to={"/"} />}

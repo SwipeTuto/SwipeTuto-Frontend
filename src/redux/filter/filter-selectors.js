@@ -73,7 +73,7 @@ export const selectClickedCardSlides = createSelector(
   [selectClickedCardMediaImage],
   media_image => {
     let slidesArray = [];
-    media_image && media_image.map(image => slidesArray.push(base + image.image));
+    media_image && media_image.map(image => slidesArray.push(image.image));
     return slidesArray;
   }
 )

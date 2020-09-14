@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import "./InfosPage.scss";
@@ -16,29 +17,30 @@ const InfosPage = () => {
       <h1 className="title title-1">Informations</h1>
       <h2 className="title title-2">Général</h2>
       <p>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illum, sint
-        cum hic ad sequi molestiae molestias voluptatem repellendus magni
-        explicabo fuga nam asperiores tenetur dolores sapiente modi magnam
-        expedita assumenda voluptatibus? Nesciunt, quibusdam ea culpa error eos
-        sed sit laudantium quaerat aliquam. Illum, consequatur nesciunt rem
-        fugiat iusto quisquam temporibus.
+        Swipetuto est une plateforme de partage de tutoriels. Créée en 2020 par
+        deux développeurs auto-didactes, la plateforme va encore évoluer et
+        grandir, avec l'ajout de nombreuses fonctionnalités dans un futur
+        proche.
       </p>
-      <h2 className="title title-2">Le Site</h2>
+      <h2 className="title title-2">Le concept</h2>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente
-        nostrum quae ut sequi blanditiis fugit, quis in, ipsum harum expedita
-        velit! Expedita repellat, nostrum numquam accusamus dolor facilis iste
-        sint, sed totam dolorum temporibus voluptatibus, natus deleniti
-        laboriosam unde molestias reiciendis voluptates animi recusandae
-        mollitia magni. Cupiditate est blanditiis, consectetur tenetur quam hic
-        unde ut vitae sed autem neque? Atque similique laboriosam perspiciatis
-        maxime asperiores suscipit architecto, nobis id dolore?
+        Les utilisateurs sont libres de s'inscrire et de publier leur propres
+        tutoriels dans le format swipetuto. Ce format est basé sur l'utilisation
+        d'images pour présenter les informations de façon claire, rapide à
+        comprendre, et optimale pour l'apprentissage. Ensemble, ces images
+        donnent un carousel qu'il est possible de faire défiler sur tout
+        appareil doté d'un écran tactile. En plus de ces images, il est possible
+        d'ajouter un texte descriptif. Toutes ces informations constituent
+        ensemble une "carte" de tutoriel. Il est alors possible d'aimer (like),
+        d'enregistrer et de commenter ces cartes pour intéragir avec la
+        communauté et favoriser l'apprentissage commun.
       </p>
       <h2 className="title title-2">Nous rejoindre</h2>
       <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere libero
-        earum nisi dicta non fugit tempore pariatur ducimus? Ab, corporis alias?
-        Porro eligendi ab laboriosam?
+        En pleine phase de développement, Swipetuto peut être amené à solliciter
+        des aides tierces. Vous pensez avec quelque chose à nous apporter ?
+        Proposez-nous vos idées dans la rurbique{" "}
+        <Link to="/contact">Contact.</Link>
       </p>
     </div>
   );

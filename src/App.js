@@ -86,7 +86,7 @@ function App(props) {
         <Route path="/conditions" component={ConditionsOfUsagePage} />
         <Route path="/confidentiality" component={ConfidentialityPage} />
         <Route path="/cookies" component={CookiesPage} />
-        <Route path="/contact-us" component={ContactUsPage} />
+        <Route path="/contact" component={ContactUsPage} />
         <Route path="/infos" component={InfosPage} />
         <Route path="/help" component={HelpPage} />
         <Route path="/card_id=:card_id" component={SearchPage} />

@@ -42,7 +42,7 @@ import ConnexionRedirect from "../../LayoutComponents/ConnexionRedirect/Connexio
 
 // Services & helpers
 import { formattedDate, renameCategory } from "../../../helper/index";
-import { coudinaryBase } from "../../../services/configService";
+// import { coudinaryBase } from "../../../services/configService";
 // import { base, coudinaryBase } from "../../../services/configService";
 
 // Assets
@@ -317,10 +317,6 @@ const CardFullPopup = ({ history }) => {
                               .scroll(0, 0);
                           }}
                         >
-                          {
-                            (console.log("card", card),
-                            console.log("coudinaryBase", coudinaryBase))
-                          }
                           {clickedCardIsLoaded &&
                           card &&
                           card.media_image &&

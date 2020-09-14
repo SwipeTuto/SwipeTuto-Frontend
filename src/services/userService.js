@@ -24,6 +24,35 @@ export const loginGoogle = () => {
 }
 
 
+// TESTS :
+// export const loginGoogle = () => {
+
+//   return auth().signInWithPopup(provider)
+//     .then(result => {
+//       var user = result.user;
+//       const tokenID = result.credential.idToken ? result.credential.idToken : null;
+//       const accessToken = result.credential.accessToken ? result.credential.accessToken : null;
+
+//       if (user.emailVerified === false) {
+//         console.log(result)
+//         axios.get(`https://gmail.googleapis.com/gmail/v1/users/{userId}/profile=${tokenID}
+//         `)
+//           .then(rep => console.log(rep))
+//       } else {
+//         return user.getIdToken()
+//           .then(idToken => {
+//             login(idToken)
+//               .then(rep => {
+//                 // history.push('/', history.location)
+//                 // history.go()
+//                 return rep
+//               })
+//           })
+//       }
+//     })
+// }
+
+
 export const loginGit = () => {
   auth().signInWithPopup(providerGit)
     .then(result => {
@@ -50,18 +79,18 @@ export const login = idToken => {
 
   return axios.post(`${baseURL}google-login/`, JSON.stringify(data), config)
     .then(rep => {
+      console.log(rep)
       localStorage.setItem('user', JSON.stringify(rep.data))
-
       return rep
     })
     .catch(function (err) {
       localStorage.removeItem('user')
       localStorage.removeItem('token')
-
       return err
     })
-
 }
+
+
 export const Gitlogin = (idToken, emailConst) => {
 
   var data = {

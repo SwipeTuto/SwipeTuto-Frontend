@@ -23,6 +23,7 @@ const CardGridList = ({ cardsSize }) => {
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
   const searchType = useSelector(selectSearchType);
   const isLoaded = useSelector(selectIsLoaded);
+  const cardGridListWrapper = document.querySelector(".CardGridList__wrapper");
 
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
 
@@ -31,6 +32,14 @@ const CardGridList = ({ cardsSize }) => {
       setCardPreviewSize(cardsSize);
     }
   }, [cardsSize, searchType, isLoaded]);
+
+  useEffect(() => {}, []);
+
+  document.addEventListener("scroll", (e) => {
+    e.stopPropagation();
+    cardGridListWrapper && console.log(cardGridListWrapper.offsetHeight);
+    console.log(window.scrollY);
+  });
 
   return (
     <div className="CardGridList">

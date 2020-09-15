@@ -110,7 +110,7 @@ const SearchPage = (props) => {
           <FiltersBar handleClickSize={handleClickSize} />
 
           <CardGridList cardsSize={gridSize} />
-          {isLoaded && totalNumberOfCards && totalNumberOfCards !== 0 ? (
+          {/* {isLoaded && totalNumberOfCards && totalNumberOfCards !== 0 ? (
             <Pagination
               currentSearch={currentSearch}
               totalPages={totalNumberOfPages}
@@ -122,7 +122,7 @@ const SearchPage = (props) => {
             />
           ) : (
             ""
-          )}
+          )} */}
         </div>
       </div>
     </>

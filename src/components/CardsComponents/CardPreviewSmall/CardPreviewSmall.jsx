@@ -80,7 +80,7 @@ const CardPreviewSmall = ({ card }) => {
           className="CardPreviewSmall__image"
           onClick={() => handleClickedCardClick()}
         >
-          {media_image[0] && media_image[0].image ? (
+          {media_image && media_image[0] && media_image[0].image ? (
             <img
               src={media_image[0].image}
               // src={base + media_image[0].image}
@@ -92,7 +92,7 @@ const CardPreviewSmall = ({ card }) => {
           )}
 
           <div className="CardPreviewSmall__hover">
-            <p>{truncate(name, 60, false)}</p>
+            <p>{name && truncate(name, 60, false)}</p>
             <div className="CardPreviewSmall__category--stamp">
               {renameCategory(categorie && categorie[0] && categorie[0].name)
                 ? renameCategory(categorie && categorie[0].name)

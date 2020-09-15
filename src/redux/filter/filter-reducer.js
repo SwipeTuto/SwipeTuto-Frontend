@@ -90,7 +90,16 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, cardsFetched: action.payload.data };
 
     case FilterActionTypes.GET_OTHER_PAGE_ACTION_SUCCESS:
-      return { ...state, cardsFetched: action.payload };
+      const flattenArray = state.cardsFetched.results.concat(action.payload.results)
+      return {
+        ...state,
+        cardsFetched: {
+          count: action.payload.count,
+          next: action.payload.next ? action.payload.next : null,
+          previous: action.payload.previous ? action.payload.previous : null,
+          results: flattenArray
+        }
+      };
 
     case FilterActionTypes.GET_OTHER_PAGE_ACTION_FAILURE:
       return { ...state, errors: action.payload };

@@ -137,25 +137,27 @@ const getOtherCardsByAuthorNameFailure = err => ({
 
 
 // Fetch des données d'une autre page
-export const getOtherPageAction = (navLink, newPageNumber) => {
+export const getOtherPageAction = (navLink) => {
   return dispatch => {
     return getOtherPageCard(navLink)
       .then(rep => {
+        console.log(rep.data)
         dispatch(getOtherPageSuccess(rep.data))
-        dispatch(setCurrentCardGridPage(newPageNumber))
-        dispatch(setLoaded())
+        // dispatch(setCurrentCardGridPage(newPageNumber))
+        // dispatch(setLoaded())
 
         return rep
       })
       .catch(err => {
+        console.log(err)
         dispatch(getOtherPageFailure(err.response))
       })
   }
 }
 
-const getOtherPageSuccess = cards => ({
+const getOtherPageSuccess = datas => ({
   type: FilterActionTypes.GET_OTHER_PAGE_ACTION_SUCCESS,
-  payload: cards
+  payload: datas
 })
 const getOtherPageFailure = err => ({
   type: FilterActionTypes.GET_OTHER_PAGE_ACTION_FAILURE,

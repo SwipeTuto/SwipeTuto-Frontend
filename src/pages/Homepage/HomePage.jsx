@@ -67,15 +67,18 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <div className="HomePage__grid section">
-        {!isLoaded ? (
-          <Loading />
-        ) : (
-          cards &&
-          cards
-            .slice(0, 6)
-            .map((card) => <CardPreviewSmall card={card} key={card.id} />)
-        )}
+      <div className="HomePage__lastCards section">
+        <h1 className="title title-1">Nos dernières cartes</h1>
+        <div className="HomePage__grid ">
+          {!isLoaded ? (
+            <Loading />
+          ) : (
+            cards &&
+            cards
+              .slice(0, 8)
+              .map((card) => <CardPreviewSmall card={card} key={card.id} />)
+          )}
+        </div>
       </div>
       <CardFullPopup />
 

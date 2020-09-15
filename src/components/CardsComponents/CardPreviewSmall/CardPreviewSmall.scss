@@ -78,6 +78,7 @@
   }
 
   &__details {
+    max-width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -91,6 +92,7 @@
 
     .UserNameAndAvatar {
       display: flex;
+      text-overflow: ellipsis;
 
       &__avatar {
         width: 1.5rem;

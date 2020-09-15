@@ -37,8 +37,8 @@ const CardGridList = ({ cardsSize }) => {
 
   document.addEventListener("scroll", (e) => {
     e.stopPropagation();
-    cardGridListWrapper && console.log(cardGridListWrapper.offsetHeight);
-    console.log(window.scrollY);
+    // cardGridListWrapper && console.log(cardGridListWrapper.offsetHeight);
+    // console.log(window.scrollY);
   });
 
   return (

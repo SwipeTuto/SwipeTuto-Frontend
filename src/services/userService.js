@@ -9,13 +9,29 @@ import { updateUserInfosSuccess } from "../redux/user/user-actions";
 
 export const loginGoogle = () => {
 
+  // var user = auth().currentUser;
+
+
+  // auth().onAuthStateChanged(function(user) {
+  //   if (user) {
+  //    console.log(user)
+  //    user.emailVerified  = true
+  //   } else {
+  //     // No user is signed in.
+  //   }
+  // });
+
   return auth().signInWithPopup(provider)
     .then(result => {
+      
+
       var user = result.user;
-      console.log(resultit)
-      return user.getIdToken()
+      user.reload();
+      console.log(user)
+      return user.getIdToken(true)
         .then(idToken => {
           login(idToken)
+      
             .then(rep => {
               // history.push('/', history.location)
               // history.go()

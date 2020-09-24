@@ -4,7 +4,6 @@ import { initialSearchState } from '../../helper/index'
 const INITIAL_STATE = {
   currentSearch: initialSearchState,
   cardsFetched: "",
-  latestFetch: "",
   otherCardsByAuthor: "",
   clickedCard: null,
   clickedCardComments: null,
@@ -94,7 +93,6 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       const flattenArray = state.cardsFetched.results.concat(action.payload.results)
       return {
         ...state,
-        latestFetch: action.payload,
         cardsFetched: {
           count: action.payload.count,
           next: action.payload.next ? action.payload.next : null,

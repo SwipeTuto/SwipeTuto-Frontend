@@ -41,10 +41,10 @@ const RessourcesPage = () => {
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   };
 
-  const handleScollRight = () => {
+  const handleScrollRight = () => {
     linkBar.scrollBy(50, 0);
   };
-  const handleScollLeft = () => {
+  const handleScrollLeft = () => {
     linkBar.scrollBy(-50, 0);
   };
 
@@ -55,7 +55,7 @@ const RessourcesPage = () => {
           Ressources utiles pour le développeur Web
         </h1>
         <div className="ressource-navigation">
-          <div className="scroll-logo" onClick={handleScollLeft}>
+          <div className="scroll-logo" onClick={handleScrollLeft}>
             <ChevronLeft />
           </div>
           <div className="ressource-navigation-scroll">
@@ -72,7 +72,7 @@ const RessourcesPage = () => {
             })}
           </div>
 
-          <div className="scroll-logo" onClick={handleScollRight}>
+          <div className="scroll-logo" onClick={handleScrollRight}>
             <ChevronRight />
           </div>
         </div>

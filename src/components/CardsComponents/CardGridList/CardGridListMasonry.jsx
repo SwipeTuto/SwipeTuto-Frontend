@@ -9,14 +9,9 @@ import {
   selectCardsFetchedCards,
   selectSearchType,
   selectTotalNumberOfResults,
-  selectNewPageCards,
   selectPaginationNext,
-  selectLatestFetchCards,
 } from "../../../redux/filter/filter-selectors";
-import {
-  selectIsLoaded,
-  selectOtherPageLoading,
-} from "../../../redux/layout/layout-selectors";
+import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
 
 // components
 import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
@@ -24,20 +19,15 @@ import CardFullPopup from "../CardFullPopup/CardFullPopup";
 import Loading from "../../Loading/Loading";
 
 // scss
+import { ReactComponent as GoTopLogo } from "../../../assets/images/chevrons/arrow-up-circle.svg";
 import "./CardGridListMasonry.scss";
 import { getOtherPageAction } from "../../../redux/filter/filter-actions";
-import CustomButton from "../../LayoutComponents/CustomButton/CustomButton";
 import { useCallback } from "react";
-import { createElement } from "react";
 
 const CardGridList = ({ cardsSize }) => {
   const dispatch = useDispatch();
   const nextPageLink = useSelector(selectPaginationNext);
   const cards = useSelector(selectCardsFetchedCards);
-
-  const latestCards = useSelector(selectLatestFetchCards);
-  // const otherPageLoaded = useSelector(selectOtherPageLoading);
-  const [prevCards, setPrevCards] = useState([]);
 
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
   const searchType = useSelector(selectSearchType);
@@ -45,9 +35,14 @@ const CardGridList = ({ cardsSize }) => {
 
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
 
+  const [gridItems, setGridItems] = useState();
+
   useEffect(() => {
     if (isLoaded) {
       setCardPreviewSize(cardsSize);
+      const allGridItems = [...document.getElementsByClassName("grid-item")];
+      setGridItems(allGridItems);
+      console.log(allGridItems);
     }
   }, [cardsSize, searchType, isLoaded]);
 
@@ -58,7 +53,6 @@ const CardGridList = ({ cardsSize }) => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && nextPageLink) {
-          console.log("VISIBLE");
           dispatch(getOtherPageAction(nextPageLink));
         }
       });
@@ -80,6 +74,28 @@ const CardGridList = ({ cardsSize }) => {
   imagesLoaded(elem).on("progress", function () {
     msnry.layout();
   });
+
+  window.onscroll = function () {
+    scrollFunction();
+  };
+
+  const scrollFunction = () => {
+    let goTopButton = document.querySelector(".goTop__button");
+
+    if (
+      goTopButton &&
+      (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20)
+    ) {
+      goTopButton.style.display = "block";
+    } else if (goTopButton) {
+      goTopButton.style.display = "none";
+    }
+  };
+
+  const handleGoTopButton = () => {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  };
 
   return (
     <div className="CardGridList">
@@ -113,7 +129,11 @@ const CardGridList = ({ cardsSize }) => {
 
       <CardFullPopup />
       {!isLoaded && <Loading />}
-      <div className="bottom-grid" ref={bottomGrid}></div>
+      {cards && gridItems && cards.length === gridItems.length && (
+        <div className="bottom-grid" ref={bottomGrid}></div>
+      )}
+
+      <GoTopLogo className="goTop__button" onClick={handleGoTopButton} />
     </div>
   );
 };

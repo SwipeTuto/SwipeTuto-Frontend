@@ -1,5 +1,5 @@
 import { FilterActionTypes } from "./filter-types"
-import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded } from '../layout/layout-actions'
+import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded, otherPageLoading, otherPageLoaded } from '../layout/layout-actions'
 import { getCards, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
 import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply } from "../../services/socialService"
 
@@ -14,6 +14,7 @@ const getCardAfterfilterFailure = err => ({
 
 export const getCardAfterfilterAction = (search) => {
   return dispatch => {
+
     dispatch(setLoading());
     return getCardAfterfilter(search)
       .then(rep => {
@@ -139,21 +140,29 @@ const getOtherCardsByAuthorNameFailure = err => ({
 // Fetch des données d'une autre page
 export const getOtherPageAction = (navLink) => {
   return dispatch => {
+    // dispatch(otherPageLoading())
+    dispatch(setLoading())
     return getOtherPageCard(navLink)
       .then(rep => {
-        console.log(rep.data)
+        // console.log(rep.data)
         dispatch(getOtherPageSuccess(rep.data))
         // dispatch(setCurrentCardGridPage(newPageNumber))
-        // dispatch(setLoaded())
+        // dispatch(otherPageLoaded())
+        dispatch(setLoaded())
 
         return rep
       })
       .catch(err => {
         console.log(err)
         dispatch(getOtherPageFailure(err.response))
+        // dispatch(otherPageLoaded())
+        dispatch(setLoaded())
       })
   }
 }
+
+
+
 
 const getOtherPageSuccess = datas => ({
   type: FilterActionTypes.GET_OTHER_PAGE_ACTION_SUCCESS,

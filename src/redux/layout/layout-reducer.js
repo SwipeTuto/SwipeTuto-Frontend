@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   mobileNavOpen: false,
   filterMobileMenuOpen: false,
   isLoaded: false,
+  otherPageCardsLoaded: true,
   clickedCardIsLoaded: false,
   imageIsLoaded: false,
   commentsAreLoaded: false,
@@ -126,6 +127,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         imageIsLoaded: true,
+      }
+    case LayoutActionTypes.OTHER_PAGE_CARDS_LOADING:
+      return {
+        ...state,
+        otherPageCardsLoaded: false,
+      }
+    case LayoutActionTypes.OTHER_PAGE_CARDS_LOADED:
+      return {
+        ...state,
+        otherPageCardsLoaded: true,
       }
     case LayoutActionTypes.TOGGLE_THEME:
       // const localTheme = window.localStorage.getItem('theme');

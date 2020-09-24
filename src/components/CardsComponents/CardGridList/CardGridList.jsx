@@ -21,17 +21,20 @@ import Loading from "../../Loading/Loading";
 import "./CardGridList.scss";
 import { getOtherPageAction } from "../../../redux/filter/filter-actions";
 import CustomButton from "../../LayoutComponents/CustomButton/CustomButton";
+import { useCallback } from "react";
 
 const CardGridList = ({ cardsSize }) => {
   const dispatch = useDispatch();
   const nextPageLink = useSelector(selectPaginationNext);
+  let nextPageLinkCopy = nextPageLink;
   const cards = useSelector(selectCardsFetchedCards);
   const [shouldLoadNext, setShouldLoadNext] = useState(false);
   const [scrollLevelReached, setScrollLevelReached] = useState(false);
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
   const searchType = useSelector(selectSearchType);
   const isLoaded = useSelector(selectIsLoaded);
-  const cardGridListWrapper = document.querySelector(".CardGridList__wrapper");
+  // const cardGridListWrapper = document.querySelector(".CardGridList__wrapper");
+  const loadMoreBtn = document.querySelector("#loadMoreBtn");
 
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
 
@@ -41,41 +44,37 @@ const CardGridList = ({ cardsSize }) => {
     }
   }, [cardsSize, searchType, isLoaded]);
 
-  window.addEventListener("scroll", (e) => {
-    e.stopPropagation();
-    const scrollPos = cardGridListWrapper?.scrollTop;
-    console.log(scrollPos);
-  });
-
-  // document.addEventListener("scroll", (e) => {
-  //   e.stopPropagation();
-  //   if (
-  //     cardGridListWrapper &&
-  //     window.scrollY + 300 > cardGridListWrapper.offsetHeight
-  //   ) {
-  //     if (scrollLevelReached === true) return;
-  //     setScrollLevelReached(true);
-  //   } else {
-  //     setScrollLevelReached(false);
-  //   }
-  // });
-
-  // Empêcher multiple appel event scroll
   // useEffect(() => {
-  //   if (scrollLevelReached) {
-  //     setShouldLoadNext(true);
-  //   } else {
+  //   if (shouldLoadNext) {
+  //     loadNextPage();
+  //   }
+  // }, [shouldLoadNext]);
+
+  // const loadNextPage = () => {
+  //   if (nextPageLinkCopy && shouldLoadNext) {
+  //     console.log("ACTION CALL");
+  //     // console.log(nextPageLinkCopy);
+  //     // dispatch(getOtherPageAction(nextPageLinkCopy));
   //     setShouldLoadNext(false);
   //   }
-  // }, [scrollLevelReached]);
+  // };
 
   // useEffect(() => {
-  //   console.log(shouldLoadNext, nextPageLink);
-  //   if (shouldLoadNext && nextPageLink) {
-  //     dispatch(getOtherPageAction(nextPageLink));
-  //     setShouldLoadNext(false);
-  //   }
-  // }, [shouldLoadNext, dispatch]);
+  //   window.addEventListener("scroll", (e) => {
+  //     e.stopPropagation();
+  //     const windowHeight = window.innerHeight;
+  //     const loadMoreBtnLevel = loadMoreBtn?.getBoundingClientRect().top;
+  //     if (scrollLevelReached === true) {
+  //       return;
+  //     } else {
+  //       if (loadMoreBtnLevel < windowHeight) {
+  //         setShouldLoadNext(true);
+  //       } else {
+  //         setShouldLoadNext(false);
+  //       }
+  //     }
+  //   });
+  // }, [loadMoreBtn, scrollLevelReached]);
 
   return (
     <div className="CardGridList">
@@ -105,6 +104,7 @@ const CardGridList = ({ cardsSize }) => {
           onClick={() => {
             setShouldLoadNext(true);
           }}
+          id="loadMoreBtn"
         >
           Charger plus
         </CustomButton>

@@ -42,7 +42,6 @@ const CardGridList = ({ cardsSize }) => {
       setCardPreviewSize(cardsSize);
       const allGridItems = [...document.getElementsByClassName("grid-item")];
       setGridItems(allGridItems);
-      console.log(allGridItems);
     }
   }, [cardsSize, searchType, isLoaded]);
 

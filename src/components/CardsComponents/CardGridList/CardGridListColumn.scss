@@ -1,0 +1,79 @@
+@import "../../../variables.scss";
+
+.CardGridList {
+  width: 100%;
+  min-height: 100vh;
+  padding: 1rem 3rem;
+
+  .masonry-root {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  .masonry-cell {
+    flex: 1;
+  }
+
+  .bottom-grid {
+    height: 1px;
+  }
+
+  &__wrapper {
+    position: relative;
+    min-height: 10rem;
+    margin: 0 auto;
+    padding-bottom: 3rem;
+    column-gap: 1rem;
+
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .nocards-message {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  & .custom-button {
+    margin: 2rem auto;
+  }
+}
+@media screen and (max-width: $bp-tablet) {
+  .CardGridList {
+    padding: 0 1rem;
+
+    .grid-sizer,
+    .grid-item {
+      width: 30%;
+    }
+
+    &__wrapper {
+      column-count: 3;
+    }
+  }
+}
+
+@media screen and (max-width: $bp-phone) {
+  .CardGridList {
+    .grid-sizer,
+    .grid-item {
+      width: 100%;
+    }
+    &__wrapper {
+      column-count: 2;
+    }
+  }
+}
+@media screen and (max-width: $bp-smallest) {
+  .CardGridList {
+    &__wrapper {
+      column-count: 1;
+    }
+  }
+}

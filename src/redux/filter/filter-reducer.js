@@ -21,6 +21,11 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
     case FilterActionTypes.GET_CARDS_FILTER_FAILURE:
       return { ...state, errors: action.payload };
 
+    case FilterActionTypes.RESET_CURRENT_SEARCH:
+      return {
+        ...state, currentSearch: action.payload
+
+      }
     case FilterActionTypes.SET_CURRENT_SEARCH:
       if ("action payload: dans le reducer" && action.payload) {
         return {
@@ -79,6 +84,13 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       };
     case FilterActionTypes.GET_CARD_BY_ID_FAILURE:
       return { ...state, errors: action.payload, };
+    case FilterActionTypes.GET_FAVORIES_CARDS_SUCCESS:
+      return {
+        ...state,
+        cardsFetched: action.payload,
+      };
+    case FilterActionTypes.GET_FAVORIES_CARDS_FAILURE:
+      return { ...state, errors: action.payload, };
 
     case FilterActionTypes.GET_OTHER_CARDS_BY_USER_FAILURE:
       return { ...state, errors: action.payload, };
@@ -90,7 +102,16 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, cardsFetched: action.payload.data };
 
     case FilterActionTypes.GET_OTHER_PAGE_ACTION_SUCCESS:
-      return { ...state, cardsFetched: action.payload };
+      const flattenArray = state.cardsFetched.results.concat(action.payload.results)
+      return {
+        ...state,
+        cardsFetched: {
+          count: action.payload.count,
+          next: action.payload.next ? action.payload.next : null,
+          previous: action.payload.previous ? action.payload.previous : null,
+          results: flattenArray
+        }
+      };
 
     case FilterActionTypes.GET_OTHER_PAGE_ACTION_FAILURE:
       return { ...state, errors: action.payload };
@@ -115,6 +136,10 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
     case FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS:
       return { ...state, errors: null }
     case FilterActionTypes.TOGGLE_LIKE_CARD_ERROR:
+      return { ...state, errors: action.payload }
+    case FilterActionTypes.TOGGLE_SAVE_CARD_SUCCESS:
+      return { ...state, errors: null }
+    case FilterActionTypes.TOGGLE_SAVE_CARD_ERROR:
       return { ...state, errors: action.payload }
     case FilterActionTypes.TOGGLE_LIKE_COMMENT_SUCCESS:
       return { ...state, errors: null }

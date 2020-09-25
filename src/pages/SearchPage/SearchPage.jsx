@@ -1,10 +1,10 @@
 // Présent dans App.js dans une Route ("/search")
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Redirect, withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import FiltersBar from "../../components/LayoutComponents/FiltersBar/FiltersBar";
-import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
+import CardGridList from "../../components/CardsComponents/CardGridList/CardGridListMasonry";
 import CurrentSearchWords from "../../components/CurrentSearchWords/CurrentSearchWords";
 import {
   selectIsLoaded,
@@ -14,7 +14,9 @@ import {
   selectTotalNumberOfResults,
   selectSearchPage,
   selectCurrentSearch,
+  selectPaginationNext,
 } from "../../redux/filter/filter-selectors";
+import { getOtherPageAction } from "../../redux/filter/filter-actions";
 import SearchLinkRedirect from "../../helper/SearchLinkRedirect";
 
 import {
@@ -24,6 +26,7 @@ import {
 import Pagination from "../../components/LayoutComponents/Pagination/Pagination";
 
 import "./SearchPage.scss";
+import { useCallback } from "react";
 
 // Récupérer le handleClick sur les display large ou petit des grids et fixer à big ou small et passer ça dans CardGridList
 
@@ -34,10 +37,17 @@ const SearchPage = (props) => {
   const currentTheme = useSelector(selectTheme);
   const dispatch = useDispatch();
   const [gridSize, setGridSize] = useState("small");
+  const nextPageLink = useSelector(selectPaginationNext);
+  const [shouldLoadMore, setShouldLoadMore] = useState(false);
+  const [screenHeight, setScreenHeight] = useState(0);
+  const [bottomGridLevel, setBottomGridLevel] = useState(0);
+  const [scrollLevel, setScrollLevel] = useState(0);
+
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(0);
   const totalNumberOfCards = useSelector(selectTotalNumberOfResults);
   const currentSearchPageNumber = useSelector(selectSearchPage);
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
+
   const getRealNumber = (results) => {
     if (isNaN(results)) {
       return 0;
@@ -49,7 +59,7 @@ const SearchPage = (props) => {
   const totalNumberOfCardsSearched = getRealNumber(totalNumberOfResults);
 
   // A CHANGER EN FONCTION DU BACK :
-  const numberOfItemByPage = 16;
+  const numberOfItemByPage = 20;
   const currentSearchPage = useSelector(selectSearchPage);
 
   const handleClickSize = (e) => {
@@ -110,7 +120,7 @@ const SearchPage = (props) => {
           <FiltersBar handleClickSize={handleClickSize} />
 
           <CardGridList cardsSize={gridSize} />
-          {isLoaded && totalNumberOfCards && totalNumberOfCards !== 0 ? (
+          {/* {isLoaded && totalNumberOfCards && totalNumberOfCards !== 0 ? (
             <Pagination
               currentSearch={currentSearch}
               totalPages={totalNumberOfPages}
@@ -122,7 +132,7 @@ const SearchPage = (props) => {
             />
           ) : (
             ""
-          )}
+          )} */}
         </div>
       </div>
     </>

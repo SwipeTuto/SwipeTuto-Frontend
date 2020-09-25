@@ -52,15 +52,23 @@ function App(props) {
       dispatch(setCurrentSearch("searchCategory", category))
       dispatch(setCurrentSearch("searchOrder", ordering || "-created"))
       dispatch(setCurrentSearch("searchPage", parseInt(page)))
-    } else if (!isLoaded && cardId) {
+    } else if (cardId) {
       // LANCER ACTION FETCH CARD BY ID dans clickedcard
-      dispatch(getCardsAction())
+      // dispatch(getCardsAction())
       dispatch(getCardByIdAction(cardId))
       dispatch(showPopupCard())
 
     } else if (!isLoaded && userId) {
       dispatch(getUserByIdAction(userId))
+    } else {
+      // LANCER ACTION FETCH CARD BY ID dans clickedcard
+      // dispatch(getCardsAction())
+      // dispatch(getCardByIdAction(cardId))
+      // dispatch(showPopupCard())
+      return
     }
+
+
 
   }, []);
 

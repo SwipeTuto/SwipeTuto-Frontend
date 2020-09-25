@@ -66,3 +66,10 @@ export const toggleThemeAction = (theme) => ({
   type: LayoutActionTypes.TOGGLE_THEME,
   payload: theme
 })
+
+export const otherPageLoading = () => ({
+  type: LayoutActionTypes.OTHER_PAGE_CARDS_LOADING,
+})
+export const otherPageLoaded = () => ({
+  type: LayoutActionTypes.OTHER_PAGE_CARDS_LOADED,
+})

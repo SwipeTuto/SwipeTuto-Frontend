@@ -5,7 +5,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect, withRouter } from "react-router-dom";
 
 // redux
-import { selectCurrentUser } from "../../../redux/user/user-selectors";
+import {
+  selectCurrentUser,
+  selectUserFavories,
+  selectCurrentUserId,
+} from "../../../redux/user/user-selectors";
 import {
   selectClickedCard,
   selectCardLikers,
@@ -19,6 +23,7 @@ import {
   toggleLikeCardAction,
   getCardAfterfilterAction,
   getOtherCardsByAuthorNameAction,
+  toggleSaveCardAction,
 } from "../../../redux/filter/filter-actions";
 import {
   closePopupCard,
@@ -57,6 +62,10 @@ import { ReactComponent as FullscreenLogo } from "../../../assets/images/expand.
 
 // SCSS
 import "./CardFullPopup.scss";
+import {
+  getUserByIdAction,
+  getCurrentUserAction,
+} from "../../../redux/user/user-actions";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
 // handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
@@ -66,6 +75,7 @@ const CardFullPopup = ({ history }) => {
   const [redirection, setRedirection] = useState(false);
   const currentSearch = useSelector(selectCurrentSearch);
   const currentUser = useSelector(selectCurrentUser);
+  const currentUserId = useSelector(selectCurrentUserId);
   const clickedCard = useSelector(selectClickedCard);
   const clickedCardId = clickedCard && clickedCard.id;
   const popupShown = useSelector(selectShowPopupCard);
@@ -79,6 +89,7 @@ const CardFullPopup = ({ history }) => {
   const [cardIsSaved, setCardIsSaved] = useState(false);
   const [connectRedirect, setConnectRedirect] = useState(false);
   const clickedCardIsLoaded = useSelector(selectClickedCardIsLoaded);
+  const currentUserSavedCards = useSelector(selectUserFavories);
 
   useEffect(() => {
     if (!clickedCard || !cardsArray) return;
@@ -96,9 +107,24 @@ const CardFullPopup = ({ history }) => {
     }
   }, [cardLikers, currentUser]);
 
+  const userHasSaved = useCallback(() => {
+    if (currentUser && currentUser.id) {
+      return (
+        currentUserSavedCards &&
+        currentUserSavedCards.some((cardsId) => cardsId === clickedCardId)
+      );
+    } else {
+      return false;
+    }
+  }, [clickedCardId, currentUser, currentUserSavedCards]);
+
   useEffect(() => {
     setCardIsLiked(userHasLiked());
   }, [cardLikers, currentUser, userHasLiked]);
+
+  useEffect(() => {
+    setCardIsSaved(userHasSaved());
+  }, [currentUser, userHasSaved]);
 
   useEffect(() => setRedirection(false), [popupShown]);
 
@@ -140,6 +166,8 @@ const CardFullPopup = ({ history }) => {
   const handlePopupClose = () => {
     if (document.getElementsByClassName("HomePage")[0]) {
       window.history.pushState("", "", "/");
+    } else if (document.getElementsByClassName("SavedPage")[0]) {
+      window.history.pushState("", "", "/account/saved");
     } else {
       setRedirection(true);
       window.history.pushState(
@@ -166,6 +194,8 @@ const CardFullPopup = ({ history }) => {
     if (cardIsLiked !== userHasLiked()) {
       dispatch(getCardAfterfilterAction(currentSearch));
     }
+
+    dispatch(getCurrentUserAction(currentUserId));
   };
 
   const handleClose = () => {
@@ -184,9 +214,12 @@ const CardFullPopup = ({ history }) => {
 
   // SAVE
   const handleSaveClick = () => {
-    setCardIsSaved(!cardIsSaved);
-    // dispatch(toggleSaveCardAction(clickedCardId));
-    // Dispatch toggle d'un save à la carte comme pour les likes
+    if (!currentUser) {
+      setConnectRedirect(true);
+    } else {
+      dispatch(toggleSaveCardAction(clickedCardId));
+      setCardIsSaved(!cardIsSaved);
+    }
   };
 
   const redirectLink = SearchLinkRedirect();

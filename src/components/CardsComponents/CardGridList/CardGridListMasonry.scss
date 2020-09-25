@@ -1,0 +1,122 @@
+@import "../../../variables.scss";
+
+.CardGridList {
+  width: 100%;
+  padding: 1rem 3rem;
+
+  .grid {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .grid-sizer,
+  .grid-item {
+    margin-bottom: 10px;
+
+    &--small {
+      width: 200px;
+    }
+    &--big {
+      width: 300px;
+    }
+  }
+
+  .bottom-grid {
+    height: 1px;
+  }
+
+  &__wrapper {
+    position: relative;
+    min-height: 10rem;
+    margin: 0 auto;
+    padding-bottom: 3rem;
+    column-gap: 1rem;
+
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .nocards-message {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  & .custom-button {
+    margin: 2rem auto;
+  }
+
+  .goTop__button {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    height: 4rem;
+    width: 4rem;
+    cursor: pointer;
+    fill: $grey-dark;
+    transition: all 0.2s ease;
+
+    &:hover {
+      fill: $primary-light;
+      transform: translateY(-2px);
+    }
+  }
+}
+@media screen and (max-width: $bp-tablet) {
+  .CardGridList {
+    padding: 0 1rem;
+
+    .grid-sizer,
+    .grid-item {
+      &--small {
+        width: 180px;
+      }
+      &--big {
+        width: 260px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $bp-phone) {
+  .CardGridList {
+    .grid-sizer,
+    .grid-item {
+      &--small {
+        width: 540px;
+      }
+      &--big {
+        width: 540px;
+      }
+    }
+  }
+}
+@media screen and (max-width: $bp-small-phone) {
+  .CardGridList {
+    .grid-sizer,
+    .grid-item {
+      &--small {
+        width: 360px;
+      }
+      &--big {
+        width: 360px;
+      }
+    }
+  }
+}
+@media screen and (max-width: $bp-smallest) {
+  .CardGridList {
+    .grid-sizer,
+    .grid-item {
+      &--small {
+        width: 250px;
+      }
+      &--big {
+        width: 250px;
+      }
+    }
+  }
+}

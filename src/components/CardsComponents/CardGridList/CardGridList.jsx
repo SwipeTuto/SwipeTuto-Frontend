@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 // redux
@@ -7,6 +7,8 @@ import {
   selectCardsFetchedCards,
   selectSearchType,
   selectTotalNumberOfResults,
+  selectNewPageCards,
+  selectPaginationNext,
 } from "../../../redux/filter/filter-selectors";
 import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
 
@@ -17,13 +19,22 @@ import Loading from "../../Loading/Loading";
 
 // scss
 import "./CardGridList.scss";
+import { getOtherPageAction } from "../../../redux/filter/filter-actions";
+import CustomButton from "../../LayoutComponents/CustomButton/CustomButton";
+import { useCallback } from "react";
 
 const CardGridList = ({ cardsSize }) => {
+  const dispatch = useDispatch();
+  const nextPageLink = useSelector(selectPaginationNext);
+  let nextPageLinkCopy = nextPageLink;
   const cards = useSelector(selectCardsFetchedCards);
+  const [shouldLoadNext, setShouldLoadNext] = useState(false);
+  const [scrollLevelReached, setScrollLevelReached] = useState(false);
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
   const searchType = useSelector(selectSearchType);
   const isLoaded = useSelector(selectIsLoaded);
-  const cardGridListWrapper = document.querySelector(".CardGridList__wrapper");
+  // const cardGridListWrapper = document.querySelector(".CardGridList__wrapper");
+  const loadMoreBtn = document.querySelector("#loadMoreBtn");
 
   const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
 
@@ -33,13 +44,37 @@ const CardGridList = ({ cardsSize }) => {
     }
   }, [cardsSize, searchType, isLoaded]);
 
-  useEffect(() => {}, []);
+  // useEffect(() => {
+  //   if (shouldLoadNext) {
+  //     loadNextPage();
+  //   }
+  // }, [shouldLoadNext]);
 
-  document.addEventListener("scroll", (e) => {
-    e.stopPropagation();
-    // cardGridListWrapper && console.log(cardGridListWrapper.offsetHeight);
-    // console.log(window.scrollY);
-  });
+  // const loadNextPage = () => {
+  //   if (nextPageLinkCopy && shouldLoadNext) {
+  //     console.log("ACTION CALL");
+  //     // console.log(nextPageLinkCopy);
+  //     // dispatch(getOtherPageAction(nextPageLinkCopy));
+  //     setShouldLoadNext(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   window.addEventListener("scroll", (e) => {
+  //     e.stopPropagation();
+  //     const windowHeight = window.innerHeight;
+  //     const loadMoreBtnLevel = loadMoreBtn?.getBoundingClientRect().top;
+  //     if (scrollLevelReached === true) {
+  //       return;
+  //     } else {
+  //       if (loadMoreBtnLevel < windowHeight) {
+  //         setShouldLoadNext(true);
+  //       } else {
+  //         setShouldLoadNext(false);
+  //       }
+  //     }
+  //   });
+  // }, [loadMoreBtn, scrollLevelReached]);
 
   return (
     <div className="CardGridList">
@@ -64,6 +99,17 @@ const CardGridList = ({ cardsSize }) => {
           cards.map((card) => <CardPreviewSmall card={card} key={card.id} />)
         )}
       </div>
+      {nextPageLink && (
+        <CustomButton
+          onClick={() => {
+            setShouldLoadNext(true);
+          }}
+          id="loadMoreBtn"
+        >
+          Charger plus
+        </CustomButton>
+      )}
+
       <CardFullPopup />
     </div>
   );

@@ -38,7 +38,7 @@ const Login = ({ history }) => {
   }, [dispatch]);
 
   const handleClickGoogle = (e) => {
-    // loginGoogle();
+    e.stopPropagation();
     dispatch(loginGoogleAction());
   };
   const handleClickGit = (e) => {
@@ -118,7 +118,7 @@ const Login = ({ history }) => {
         {userErrors
           ? userErrors === 400
             ? "Le compte n'a pas pu être trouvé. Merci de vérifier votre email et votre mot de passe."
-            : "Une erreur est survenue avec ce compte. Si l'erreur persiste, merci de nous le signaler."
+            : "Une erreur est survenue avec ce compte. Avez-vous les bons identifiants ? Si l'erreur persiste, merci de nous le signaler."
           : ""}
       </p>
       <form className="login__form">

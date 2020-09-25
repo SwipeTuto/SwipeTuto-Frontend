@@ -45,3 +45,7 @@ export const selectTheme = createSelector(
   [selectLayout],
   layout => layout.theme
 );
+export const selectOtherPageLoading = createSelector(
+  [selectLayout],
+  layout => layout.otherPageCardsLoaded
+);

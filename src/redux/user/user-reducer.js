@@ -17,6 +17,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         currentUser: action.payload,
         errors: null
       };
+
     case UserActionTypes.UPDATE_USER_INFOS_SUCCESS:
       return {
         ...state,
@@ -28,6 +29,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         errors: action.payload,
       };
+
+
     case UserActionTypes.LOGIN_SUCCESS:
       return { ...state, currentUser: action.payload, errors: null };
     case UserActionTypes.LOGIN_FAILURE:

@@ -30,6 +30,20 @@ export const toggleCommentLike = (commentId) => {
     })
 }
 
+export const toggleSave = (cardId) => {
+  const requestOptions = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': authHeader()
+    }
+  };
+
+  return axios.get(`${baseURL}toggle-favorie/${cardId}`, requestOptions)
+    .then(rep => {
+      return rep
+    })
+}
+
 export const getLikers = (cardId) => {
   var config = { headers: { 'Content-Type': 'application/json' }, }
 

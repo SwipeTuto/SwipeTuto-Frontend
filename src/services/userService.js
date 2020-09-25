@@ -99,12 +99,10 @@ export const loginManuel = (email, password) => {
   return axios.post(`${baseURL}login/`, { email, password }, config)
     .then(user => {
       localStorage.setItem('user', JSON.stringify(user.data))
-      console.log(user)
       return user;
     })
     .catch(function (err) {
       localStorage.removeItem('user')
-      console.log(err)
       return err
 
     })
@@ -172,6 +170,19 @@ export const getUserById = id => {
   }
 
   return axios.get(`${baseURL}user/${id}/`, config).then(rep => {
+    return rep
+  })
+
+}
+
+
+export const getUserFavoriesById = userId => {
+  var config = {
+    headers: { 'Content-Type': 'application/json' },
+    'Authorization': authHeader()
+  }
+
+  return axios.get(`${baseURL}get-favorie/${userId}/`, config).then(rep => {
     return rep
   })
 

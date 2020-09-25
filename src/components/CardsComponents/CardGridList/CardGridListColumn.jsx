@@ -56,7 +56,6 @@ const CardGridList = ({ cardsSize }) => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && nextPageLink) {
-          console.log("VISIBLE");
           dispatch(getOtherPageAction(nextPageLink));
         }
       });
@@ -101,7 +100,6 @@ const CardGridList = ({ cardsSize }) => {
   }, [cellElements, rootElements]);
 
   const onResize = (roots) => {
-    console.log(cardsElements);
     cardsElements.map((card) => (card.style.width = minColWidth + "px"));
     roots.forEach((root) => {
       // only layout when the number of columns has changed
@@ -159,7 +157,6 @@ const CardGridList = ({ cardsSize }) => {
         // re-rendering of all cells over columns
         // one pixel more than the tallest column
         root.element.style.maxHeight = masonryHeight + 1 + "px";
-        console.log(root.element.style.maxHeight);
       }
     });
   };

@@ -1,7 +1,10 @@
 import { FilterActionTypes } from "./filter-types"
 import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded, otherPageLoading, otherPageLoaded } from '../layout/layout-actions'
 import { getCards, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
-import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply } from "../../services/socialService"
+import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply, toggleSave } from "../../services/socialService"
+import { getUserByIdAction, toggleStoreSavedCardAction } from "../user/user-actions"
+import { getUserFavoriesById } from "../../services/userService"
+import { initialSearchState } from "../../helper"
 
 const getCardAfterfilterSuccess = cards => ({
   type: FilterActionTypes.GET_CARDS_FILTER_SUCCESS,
@@ -57,6 +60,11 @@ export const getCardByIdAction = cardId => {
 
 
 // Gestion de la currentSearch avec mots, catégorie, langage et ordre de recherche
+export const resetCurrentSearch = (item, value = null) => ({
+  type: FilterActionTypes.RESET_CURRENT_SEARCH,
+  payload: initialSearchState
+})
+
 export const setCurrentSearch = (item, value = null) => ({
   type: FilterActionTypes.SET_CURRENT_SEARCH,
   payload: { item, value }
@@ -144,18 +152,13 @@ export const getOtherPageAction = (navLink) => {
     dispatch(setLoading())
     return getOtherPageCard(navLink)
       .then(rep => {
-        // console.log(rep.data)
         dispatch(getOtherPageSuccess(rep.data))
-        // dispatch(setCurrentCardGridPage(newPageNumber))
-        // dispatch(otherPageLoaded())
         dispatch(setLoaded())
 
         return rep
       })
       .catch(err => {
-        console.log(err)
         dispatch(getOtherPageFailure(err.response))
-        // dispatch(otherPageLoaded())
         dispatch(setLoaded())
       })
   }
@@ -234,6 +237,30 @@ const likeCardActionErrors = error => ({
 const likeCardActionSuccess = () => ({
   type: FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS,
 })
+
+export const toggleSaveCardAction = (cardId) => {
+  return dispatch => {
+    return toggleSave(cardId)
+      .then(rep => {
+        dispatch(saveCardActionSuccess())
+      })
+      .catch(err => {
+        dispatch(saveCardActionErrors(err))
+      })
+  }
+};
+
+const saveCardActionErrors = error => ({
+  type: FilterActionTypes.TOGGLE_SAVE_CARD_ERROR,
+  payload: error
+})
+
+const saveCardActionSuccess = () => ({
+  type: FilterActionTypes.TOGGLE_SAVE_CARD_SUCCESS,
+})
+
+
+
 
 
 export const toggleCommentLikeAction = (commentId) => {
@@ -340,4 +367,28 @@ const deleteCommentErrors = error => ({
 
 const deleteCommentSuccess = () => ({
   type: FilterActionTypes.DELETE_COMMENT_SUCCESS,
+})
+
+export const getUserFavoriesAction = userId => {
+  return dispatch => {
+    dispatch(setLoading());
+    getUserFavoriesById(userId).then(rep => {
+      dispatch(getUserFavoriesSuccess(rep.data))
+      dispatch(setLoaded())
+      return rep.data
+    }).catch(err => {
+      dispatch(getUserFavoriesError(err))
+      dispatch(setLoaded())
+      return err
+    })
+  }
+}
+
+export const getUserFavoriesError = error => ({
+  type: FilterActionTypes.GET_FAVORIES_CARDS_FAILURE,
+  payload: error
+})
+export const getUserFavoriesSuccess = favories => ({
+  type: FilterActionTypes.GET_FAVORIES_CARDS_SUCCESS,
+  payload: favories
 })

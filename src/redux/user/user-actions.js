@@ -1,5 +1,5 @@
 import { UserActionTypes } from './user-types'
-import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, getUserIDToken } from '../../services/userService'
+import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, getUserIDToken, getUserFavoriesById } from '../../services/userService'
 import history from "../../helper/history"
 import { setLoading, setLoaded } from '../layout/layout-actions';
 
@@ -34,7 +34,6 @@ export const loginGoogleAction = () => {
       .then(rep => {
         login(rep)
           .then(rep => {
-            console.log(rep, typeof rep)
             dispatch(deleteUserErrors())
             if (!rep.data) {
               dispatch(loginErrors("Erreur avec votre compte. Merci d'en essayer un autre."))
@@ -99,6 +98,16 @@ const registerErrors = error => ({
 })
 
 
+// upload virtuellement le store
+export const toggleStoreSavedCardAction = cardId => ({
+  type: UserActionTypes.TOGGLE_STORE_SAVED_CARD,
+  payload: cardId
+})
+
+
+
+
+
 
 // Get user par son id
 const setClickedUser = user => ({
@@ -110,6 +119,7 @@ const getClickedUserError = error => ({
   type: UserActionTypes.GET_CLICKED_USER_ERROR,
   payload: error,
 })
+
 
 
 export const getUserByIdAction = id => {
@@ -127,6 +137,24 @@ export const getUserByIdAction = id => {
     })
   }
 }
+
+export const getCurrentUserAction = id => {
+  return dispatch => {
+    dispatch(setLoading());
+    getUserById(id).then(rep => {
+      dispatch(setCurrentUser(rep.data.user))
+      dispatch(setLoaded())
+      dispatch(deleteUserErrors())
+      return rep.data
+    }).catch(err => {
+      dispatch(getClickedUserError(err.message))
+      dispatch(setLoaded())
+      return err
+    })
+  }
+}
+
+
 
 
 export const updateUserInfosAction = userInfos => {

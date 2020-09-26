@@ -56,11 +56,14 @@ const SearchPage = (props) => {
     }
   };
 
-  useEffect(() => {
-    if (window.scrollY) {
-      window.scroll(0, 0);
-    }
-  }, []);
+  window.addEventListener("load", () => {
+    window.scroll(0, 0);
+  });
+  // useEffect(() => {
+  //   if (window.scrollY) {
+  //     window.scroll(0, 0);
+  //   }
+  // }, []);
 
   const totalNumberOfCardsSearched = getRealNumber(totalNumberOfResults);
 

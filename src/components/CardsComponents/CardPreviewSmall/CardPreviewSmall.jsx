@@ -25,10 +25,12 @@ import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar
 
 import "./CardPreviewSmall.scss";
 import Loading from "../../Loading/Loading";
+import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 const CardPreviewSmall = ({ card, size }) => {
   const { media_image, user, categorie, name, number_of_likes, likes } = card;
   const dispatch = useDispatch();
+  const currentTheme = useSelector(selectTheme);
   const cardId = card && card.id;
   const currentUser = useSelector(selectCurrentUser);
   const [connectRedirect, setConnectRedirect] = useState(false);
@@ -86,7 +88,10 @@ const CardPreviewSmall = ({ card, size }) => {
   return (
     <>
       {connectRedirect && <ConnexionRedirect handleClose={handleClose} />}
-      <div className="CardPreviewSmall" data-slideid="1">
+      <div
+        className={`CardPreviewSmall ${currentTheme}-theme`}
+        data-slideid="1"
+      >
         <div
           className={`CardPreviewSmall__image  ${
             cardIsReady ? "active" : "hide"

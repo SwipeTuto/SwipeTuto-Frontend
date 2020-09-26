@@ -20,10 +20,9 @@ import Loading from "../../Loading/Loading";
 
 // scss
 import { ReactComponent as GoTopLogo } from "../../../assets/images/chevrons/arrow-up-circle.svg";
-import "./CardGridListMasonry.scss";
+import "./CardGridListColcade.scss";
 import { getOtherPageAction } from "../../../redux/filter/filter-actions";
 import { useCallback } from "react";
-import { useScroll } from "../../../hooks/useScroll";
 
 const CardGridList = ({ cardsSize }) => {
   const dispatch = useDispatch();

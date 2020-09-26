@@ -118,13 +118,13 @@ const NavTopMobile = (props) => {
               }}
             />
           )}
-          <div
+          <Link
             className="NavTopMobile__swipeTuto"
             to="/"
             onClick={() => handleNavClose()}
           >
-            <img src={SwipeTutoSmallLogo} alt="swipetuto" />
-          </div>
+            <img src={SwipeTutoSmallLogo} alt="" />
+          </Link>
           <CustomButton color="white" onClick={handleFiltersMobileOpen}>
             <SearchLogo />
             Recherche

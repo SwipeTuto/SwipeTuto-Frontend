@@ -9,18 +9,18 @@ import {
   selectTotalNumberOfResults,
   selectNewPageCards,
   selectPaginationNext,
-} from "../../../redux/filter/filter-selectors";
-import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
+} from "../../../../redux/filter/filter-selectors";
+import { selectIsLoaded } from "../../../../redux/layout/layout-selectors";
 
 // components
-import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
-import CardFullPopup from "../../CardsComponents/CardFullPopup/CardFullPopup";
-import Loading from "../../Loading/Loading";
+import CardPreviewSmall from "../../CardPreviewSmall/CardPreviewSmall";
+import CardFullPopup from "../../CardFullPopup/CardFullPopup";
+import Loading from "../../../Loading/Loading";
 
 // scss
 import "./CardGridList.scss";
-import { getOtherPageAction } from "../../../redux/filter/filter-actions";
-import CustomButton from "../../LayoutComponents/CustomButton/CustomButton";
+import { getOtherPageAction } from "../../../../redux/filter/filter-actions";
+import CustomButton from "../../../LayoutComponents/CustomButton/CustomButton";
 import { useCallback } from "react";
 
 const CardGridList = ({ cardsSize }) => {

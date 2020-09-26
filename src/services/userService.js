@@ -140,15 +140,18 @@ export const register = users => {
 
 // update des infos user qui vient du component SettingsPage, sous forme d'objet
 export const updateUserInfos = newUserInfos => {
+  console.log(newUserInfos)
   const data = {
     username: newUserInfos.username,
     first_name: newUserInfos.first_name,
     last_name: newUserInfos.last_name,
     profile: {
-      description: newUserInfos.description
+      description: newUserInfos.profile && newUserInfos.profile.description
     },
     email: newUserInfos.email,
   }
+
+  console.log(data)
   const requestOptions = {
     headers: {
       'Content-Type': 'application/json',

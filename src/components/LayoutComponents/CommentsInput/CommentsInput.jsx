@@ -1,5 +1,6 @@
 import React from "react";
 import CustomButton from "../CustomButton/CustomButton";
+import { ReactComponent as SendLogo } from "../../../assets/images/send.svg";
 
 import "./CommentsInput.scss";
 
@@ -23,8 +24,17 @@ const CommentsInput = ({
         color="dark"
         disabled={newComment === "" ? "disabled" : ""}
         onClick={(e) => handleAddCommentClick(e)}
+        className="custom-button CommentsInput__newComment--sendPC"
       >
         Envoyer
+      </CustomButton>
+      <CustomButton
+        color="dark"
+        disabled={newComment === "" ? "disabled" : ""}
+        onClick={(e) => handleAddCommentClick(e)}
+        className="custom-button CommentsInput__newComment--sendMobile"
+      >
+        <SendLogo />
       </CustomButton>
     </form>
   );

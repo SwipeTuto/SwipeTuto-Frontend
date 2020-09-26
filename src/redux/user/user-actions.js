@@ -158,6 +158,7 @@ export const getCurrentUserAction = id => {
 
 
 export const updateUserInfosAction = userInfos => {
+  // console.log(userInfos)
   return dispatch => {
     return (
 

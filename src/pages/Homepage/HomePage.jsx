@@ -40,6 +40,9 @@ const HomePage = () => {
   const handleRedirectClick = () => {
     dispatch(deleteCurrentSearch());
     dispatch(getCardsAction());
+    if (window.scrollY) {
+      window.scroll(0, 0);
+    }
   };
 
   const redirectLink = SearchLinkRedirect();
@@ -127,7 +130,9 @@ const HomePage = () => {
       <div className="About__cta section">
         <h1 className="title title-1">Alors qu'attendez-vous ?</h1>
         <Link to={redirectLink}>
-          <CustomButton color="pink">Voir les cartes</CustomButton>
+          <CustomButton onClick={() => handleRedirectClick()}>
+            Voir les cartes
+          </CustomButton>
         </Link>
       </div>
 

@@ -56,6 +56,12 @@ const SearchPage = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (window.scrollY) {
+      window.scroll(0, 0);
+    }
+  }, []);
+
   const totalNumberOfCardsSearched = getRealNumber(totalNumberOfResults);
 
   // A CHANGER EN FONCTION DU BACK :

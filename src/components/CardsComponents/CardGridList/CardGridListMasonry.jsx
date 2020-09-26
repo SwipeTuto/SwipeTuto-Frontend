@@ -45,21 +45,6 @@ const CardGridList = ({ cardsSize }) => {
     }
   }, [cardsSize, searchType, isLoaded]);
 
-  const observer = useRef();
-  const bottomGrid = useCallback(
-    (node) => {
-      if (!isLoaded) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && nextPageLink) {
-          dispatch(getOtherPageAction(nextPageLink));
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [isLoaded, dispatch, nextPageLink]
-  );
-
   var elem = document.querySelector(".grid");
   var msnry = new Masonry(elem, {
     itemSelector: ".grid-item",
@@ -68,11 +53,30 @@ const CardGridList = ({ cardsSize }) => {
     gutter: 10,
     horizontalOrder: true,
     fitWidth: true,
+    stagger: 30,
   });
+
+  const observer = useRef();
+  const bottomGrid = useCallback(
+    (node) => {
+      if (!isLoaded) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && nextPageLink) {
+          dispatch(getOtherPageAction(nextPageLink));
+          msnry.layout();
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoaded, dispatch, nextPageLink, msnry]
+  );
 
   imagesLoaded(elem).on("progress", function () {
     msnry.layout();
   });
+
+  msnry.on("layoutComplete", () => console.log("layoutcomplete"));
 
   window.onscroll = function () {
     scrollFunction();

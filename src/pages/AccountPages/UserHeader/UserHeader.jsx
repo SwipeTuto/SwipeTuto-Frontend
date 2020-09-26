@@ -35,15 +35,12 @@ const UserHeader = ({ userIsSame, location }) => {
     <div className={`UserHeader ${currentTheme}-theme`}>
       <div className="UserHeader__userInfos">
         <div className="UserHeader__avatar">
-          <UserAvatar user={currentUser} link={true} />
+          <UserAvatar user={userDatas} link={true} />
         </div>
         <div className="UserHeader__text">
           <h1 className="UserHeader__username title title-1">
             <UserUsername user={userDatas} link={true} />
           </h1>
-          <p className="UserHeader__user-email">
-            {userDatas && userDatas.email && userDatas.email}
-          </p>
         </div>
         {userIsSame ? (
           <div className="UserHeader__mobile">

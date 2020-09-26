@@ -90,6 +90,7 @@ const SettingsPage = () => {
             ...currentUser,
             profile: { ...currentUser.profile, [name]: value },
           });
+          console.log(newUserInfos);
           break;
         default:
           return;
@@ -102,8 +103,11 @@ const SettingsPage = () => {
     dispatch(updateUserInfosAction(newUserInfos));
     setSendNewInfos(true);
     const { name } = e.target;
-    const currentInput = document.querySelector(`input[name=${name}]`);
-    currentInput.value = "";
+    const currentInput = document.querySelector(
+      `.SettingsPage .settings__form--input[name=${name}]`
+    );
+    // console.log(currentInput);
+    // currentInput.value = "";
   };
 
   return (

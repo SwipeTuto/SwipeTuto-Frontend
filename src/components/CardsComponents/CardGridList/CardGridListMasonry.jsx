@@ -33,13 +33,10 @@ const CardGridList = ({ cardsSize }) => {
   const searchType = useSelector(selectSearchType);
   const isLoaded = useSelector(selectIsLoaded);
 
-  const [cardPreviewSize, setCardPreviewSize] = useState(cardsSize);
-
   const [gridItems, setGridItems] = useState();
 
   useEffect(() => {
     if (isLoaded) {
-      setCardPreviewSize(cardsSize);
       const allGridItems = [...document.getElementsByClassName("grid-item")];
       setGridItems(allGridItems);
     }
@@ -54,6 +51,7 @@ const CardGridList = ({ cardsSize }) => {
     horizontalOrder: true,
     fitWidth: true,
     stagger: 30,
+    // initLayout: false,
   });
 
   const observer = useRef();
@@ -72,11 +70,27 @@ const CardGridList = ({ cardsSize }) => {
     [isLoaded, dispatch, nextPageLink, msnry]
   );
 
+  // imagesLoaded(elem).on("done", function (instance) {
+  //   // console.log("call");
+  //   msnry.layout();
+  // });
   imagesLoaded(elem).on("progress", function () {
+    // console.log("call");
     msnry.layout();
   });
 
-  msnry.on("layoutComplete", () => console.log("layoutcomplete"));
+  // useEffect(() => {
+  //   if (cards) {
+  //     msnry.layout();
+  //   }
+  // }, [cards, msnry]);
+
+  // msnry.on("layoutComplete", () => console.log("layoutcomplete"));
+
+  // imagesLoaded(elem).on("progress", function (instance, image) {
+  //   var result = image.isLoaded ? "loaded" : "broken";
+  //   console.log("image is " + result + " for " + image.img.src);
+  // });
 
   window.onscroll = function () {
     scrollFunction();
@@ -114,7 +128,7 @@ const CardGridList = ({ cardsSize }) => {
       ) : (
         <>
           <div className="grid">
-            <div class={`grid-sizer grid-sizer--${cardsSize}`}></div>
+            <div className={`grid-sizer grid-sizer--${cardsSize}`}></div>
             {cards &&
               cards.map((card) => {
                 return (
@@ -122,7 +136,7 @@ const CardGridList = ({ cardsSize }) => {
                     className={`grid-item grid-item--${cardsSize}`}
                     key={card.id}
                   >
-                    <CardPreviewSmall card={card} />
+                    <CardPreviewSmall size={cardsSize} card={card} />
                   </div>
                 );
               })}

@@ -15,9 +15,13 @@ const getCardAfterfilterFailure = err => ({
   payload: err
 })
 
+
+// export const deleteCardsInStore = () => ({
+//   type: FilterActionTypes.DELETE_CARDS_IN_STORE,
+// })
+
 export const getCardAfterfilterAction = (search) => {
   return dispatch => {
-
     dispatch(setLoading());
     return getCardAfterfilter(search)
       .then(rep => {
@@ -196,24 +200,24 @@ export const setNoClickedCard = () => ({
 
 
 // Récupérer toutes les cards
-export const getCardsAction = () => {
-  return dispatch => {
-    return getCards()
-      .then(card => {
-        dispatch(setCardsFetchedInStore(card))
-        dispatch(setLoaded())
-      })
-      .catch(err => {
-        dispatch(getCardsErrors(err.response))
-      })
-  }
-};
+// export const getCardsAction = () => {
+//   return dispatch => {
+//     return getCards()
+//       .then(card => {
+//         dispatch(setCardsFetchedInStore(card))
+//         dispatch(setLoaded())
+//       })
+//       .catch(err => {
+//         dispatch(getCardsErrors(err.response))
+//       })
+//   }
+// };
 
 
-const getCardsErrors = error => ({
-  type: FilterActionTypes.GET_ALL_CARDS_FAILURE,
-  payload: error
-})
+// const getCardsErrors = error => ({
+//   type: FilterActionTypes.GET_ALL_CARDS_FAILURE,
+//   payload: error
+// })
 
 
 

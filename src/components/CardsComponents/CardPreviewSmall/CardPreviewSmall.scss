@@ -26,6 +26,16 @@
     justify-content: center;
     overflow: hidden;
 
+    &.active {
+      visibility: visible;
+      display: block;
+    }
+
+    &.hide {
+      visibility: hidden;
+      display: none;
+    }
+
     & > img {
       // height: auto;
       width: 100%;
@@ -40,6 +50,21 @@
 
       & p {
         visibility: visible;
+      }
+    }
+
+    &--loading {
+      background-color: $grey-light;
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &-small {
+        width: 200px;
+      }
+      &-big {
+        width: 300px;
       }
     }
   }

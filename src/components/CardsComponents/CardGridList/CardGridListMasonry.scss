@@ -6,7 +6,8 @@
   padding: 1rem 3rem;
   display: flex;
   flex-direction: column;
-  margin-bottom: 8rem;
+  max-width: 120rem;
+  margin: 0 auto 30rem auto;
 
   .grid {
     margin: 0 auto;
@@ -70,6 +71,23 @@
     }
   }
 }
+
+@media screen and (min-width: $bp-big) {
+  .CardGridList {
+    padding: 0 1rem;
+
+    .grid-sizer,
+    .grid-item {
+      &--small {
+        width: 250px;
+      }
+      &--big {
+        width: 350px;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: $bp-tablet) {
   .CardGridList {
     padding: 0 1rem;

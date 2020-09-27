@@ -54,7 +54,9 @@ const CardGridList = ({ cardsSize }) => {
     // stagger: 30,
     // initLayout: false,
   });
-
+  const options = {
+    rootMargin: "500px",
+  };
   const observer = useRef();
   const bottomGrid = useCallback(
     (node) => {
@@ -63,12 +65,14 @@ const CardGridList = ({ cardsSize }) => {
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && nextPageLink) {
           dispatch(getOtherPageAction(nextPageLink));
+          // cards && msnry.addItems(cards);
+          msnry.reloadItems();
           msnry.layout();
         }
-      });
+      }, options);
       if (node) observer.current.observe(node);
     },
-    [isLoaded, dispatch, nextPageLink, msnry]
+    [isLoaded, dispatch, nextPageLink, msnry, options]
   );
 
   window.onscroll = function () {
@@ -103,9 +107,28 @@ const CardGridList = ({ cardsSize }) => {
   // });
 
   imagesLoaded(elem).on("progress", function () {
-    console.log("progress");
+    // console.log("progress");
+    // cards && msnry.addItems(cards);
+    // msnry.layout();
+    msnry.reloadItems();
     msnry.layout();
   });
+
+  useEffect(() => {
+    if (msnry && gridItems) {
+      msnry.reloadItems();
+      msnry.layout();
+    }
+  }, [gridItems, msnry]);
+
+  const CardGridListElement = document.querySelector(".CardGridList");
+  useEffect(() => {
+    if (!nextPageLink && CardGridListElement) {
+      CardGridListElement.style.margin = "0px auto";
+    } else if (nextPageLink && CardGridListElement) {
+      CardGridListElement.style.margin = "0px auto 30rem auto";
+    }
+  }, [nextPageLink, CardGridListElement]);
 
   return (
     <div className="CardGridList">
@@ -139,7 +162,7 @@ const CardGridList = ({ cardsSize }) => {
 
       <CardFullPopup />
       {!isLoaded && <Loading />}
-      {cards && gridItems && cards.length === gridItems.length && (
+      {cards && gridItems && nextPageLink && (
         <div className="bottom-grid" ref={bottomGrid}></div>
       )}
 

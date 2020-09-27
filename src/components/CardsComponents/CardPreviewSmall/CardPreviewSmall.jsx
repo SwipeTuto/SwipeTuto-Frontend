@@ -78,12 +78,17 @@ const CardPreviewSmall = ({ card, size }) => {
   };
 
   const elem = document.querySelector(".CardPreviewSmall__image");
-  imagesLoaded(elem).on("done", function (instance) {
-    setCardIsReady(true);
-  });
-  imagesLoaded(elem).on("fail", function (instance) {
-    setCardIsReady(false);
-  });
+
+  useEffect(() => {
+    if (elem) {
+      imagesLoaded(elem).on("done", function (instance) {
+        setCardIsReady(true);
+      });
+      imagesLoaded(elem).on("fail", function (instance) {
+        setCardIsReady(false);
+      });
+    }
+  }, [elem]);
 
   return (
     <>

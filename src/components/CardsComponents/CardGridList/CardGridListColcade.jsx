@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Masonry from "masonry-layout";
-import imagesLoaded from "imagesloaded";
+import Colcade from "colcade";
 
 // redux
 import {
@@ -42,17 +41,14 @@ const CardGridList = ({ cardsSize }) => {
     }
   }, [cardsSize, searchType, isLoaded]);
 
-  var elem = document.querySelector(".grid");
-  var msnry = new Masonry(elem, {
-    itemSelector: ".grid-item",
-    columnWidth: ".grid-sizer",
-    percentPosition: true,
-    gutter: 10,
-    horizontalOrder: true,
-    fitWidth: true,
-    stagger: 30,
-    // initLayout: false,
-  });
+  // element as first argument
+  // var grid = document.querySelector(".grid");
+  // var colc = new Colcade(".grid", {
+  //   columns: ".grid-col",
+  //   items: ".grid-item",
+  // });
+
+  useEffect(() => {});
 
   const observer = useRef();
   const bottomGrid = useCallback(
@@ -62,29 +58,13 @@ const CardGridList = ({ cardsSize }) => {
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && nextPageLink) {
           dispatch(getOtherPageAction(nextPageLink));
-          msnry.layout();
+          // msnry.layout();
         }
       });
       if (node) observer.current.observe(node);
     },
-    [isLoaded, dispatch, nextPageLink, msnry]
+    [isLoaded, dispatch, nextPageLink]
   );
-
-  const repopulateGrid = useCallback(() => {
-    msnry.layout();
-  }, [msnry]);
-
-  imagesLoaded(elem).on("done", repopulateGrid);
-
-  // imagesLoaded(elem).on("progress", repopulateGrid);
-
-  useEffect(() => {
-    if (gridItems) {
-      repopulateGrid();
-    }
-  }, [gridItems, repopulateGrid]);
-
-  // window.addEventListener("load", repopulateGrid);
 
   window.onscroll = function () {
     scrollFunction();
@@ -110,19 +90,28 @@ const CardGridList = ({ cardsSize }) => {
 
   return (
     <div className="CardGridList">
-      {isNaN(totalNumberOfResults) ? (
-        <h2 className="title title-2 nocards-message">
-          Désolé, une erreur est survenue. Si le problème persiste, merci de
-          nous le signaler.
-        </h2>
-      ) : totalNumberOfResults === 0 ? (
-        <h2 className="title title-2 nocards-message">
-          Désolé, aucune carte trouvée. Essayez une autre recherche.
-        </h2>
-      ) : (
-        <>
-          <div className="grid">
-            <div className={`grid-sizer grid-sizer--${cardsSize}`}></div>
+      <div
+        className="grid"
+        data-colcade="columns: .grid-col, items: .grid-item"
+      >
+        <div className="grid-col grid-col--1"></div>
+        <div className="grid-col grid-col--2"></div>
+        <div className="grid-col grid-col--3"></div>
+        {cardsSize === "small" ? (
+          <div className="grid-col grid-col--4"></div>
+        ) : null}
+        {isNaN(totalNumberOfResults) ? (
+          <h2 className="title title-2 nocards-message">
+            Désolé, une erreur est survenue. Si le problème persiste, merci de
+            nous le signaler.
+          </h2>
+        ) : totalNumberOfResults === 0 ? (
+          <h2 className="title title-2 nocards-message">
+            Désolé, aucune carte trouvée. Essayez une autre recherche.
+          </h2>
+        ) : (
+          <>
+            {/* <div className={`grid-sizer grid-sizer--${cardsSize}`}></div> */}
             {cards &&
               cards.map((card) => {
                 return (
@@ -134,9 +123,9 @@ const CardGridList = ({ cardsSize }) => {
                   </div>
                 );
               })}
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
 
       <CardFullPopup />
       {!isLoaded && <Loading />}

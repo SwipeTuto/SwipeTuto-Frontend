@@ -29,7 +29,7 @@ const CardGridList = ({ cardsSize }) => {
   const dispatch = useDispatch();
   const nextPageLink = useSelector(selectPaginationNext);
   const cards = useSelector(selectCardsFetchedCards);
-
+  const bottomGridEl = document.querySelector(".bottom-grid");
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
   const searchType = useSelector(selectSearchType);
   const isLoaded = useSelector(selectIsLoaded);
@@ -51,7 +51,7 @@ const CardGridList = ({ cardsSize }) => {
     gutter: 10,
     horizontalOrder: true,
     fitWidth: true,
-    stagger: 30,
+    // stagger: 30,
     // initLayout: false,
   });
 
@@ -70,22 +70,6 @@ const CardGridList = ({ cardsSize }) => {
     },
     [isLoaded, dispatch, nextPageLink, msnry]
   );
-
-  const repopulateGrid = useCallback(() => {
-    msnry.layout();
-  }, [msnry]);
-
-  imagesLoaded(elem).on("done", repopulateGrid);
-
-  // imagesLoaded(elem).on("progress", repopulateGrid);
-
-  useEffect(() => {
-    if (gridItems) {
-      repopulateGrid();
-    }
-  }, [gridItems, repopulateGrid]);
-
-  // window.addEventListener("load", repopulateGrid);
 
   window.onscroll = function () {
     scrollFunction();
@@ -109,21 +93,35 @@ const CardGridList = ({ cardsSize }) => {
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   };
 
+  window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+  };
+
+  // imagesLoaded(elem).on("done", function (instance) {
+  //   console.log("done");
+  //   msnry.layout();
+  // });
+
+  imagesLoaded(elem).on("progress", function () {
+    console.log("progress");
+    msnry.layout();
+  });
+
   return (
     <div className="CardGridList">
-      {isNaN(totalNumberOfResults) ? (
-        <h2 className="title title-2 nocards-message">
-          Désolé, une erreur est survenue. Si le problème persiste, merci de
-          nous le signaler.
-        </h2>
-      ) : totalNumberOfResults === 0 ? (
-        <h2 className="title title-2 nocards-message">
-          Désolé, aucune carte trouvée. Essayez une autre recherche.
-        </h2>
-      ) : (
-        <>
-          <div className="grid">
-            <div className={`grid-sizer grid-sizer--${cardsSize}`}></div>
+      <div className="grid">
+        <div className={`grid-sizer grid-sizer--${cardsSize}`}></div>
+        {isNaN(totalNumberOfResults) ? (
+          <h2 className="title title-2 nocards-message">
+            Désolé, une erreur est survenue. Si le problème persiste, merci de
+            nous le signaler.
+          </h2>
+        ) : totalNumberOfResults === 0 ? (
+          <h2 className="title title-2 nocards-message">
+            Désolé, aucune carte trouvée. Essayez une autre recherche.
+          </h2>
+        ) : (
+          <>
             {cards &&
               cards.map((card) => {
                 return (
@@ -135,9 +133,9 @@ const CardGridList = ({ cardsSize }) => {
                   </div>
                 );
               })}
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
 
       <CardFullPopup />
       {!isLoaded && <Loading />}

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Masonry from "masonry-layout";
 import imagesLoaded from "imagesloaded";
+import { usePrevious } from "../../../hooks/usePrevious";
 
 // redux
 import {
@@ -28,13 +29,14 @@ import { useScroll } from "../../../hooks/useScroll";
 const CardGridList = ({ cardsSize }) => {
   const dispatch = useDispatch();
   const nextPageLink = useSelector(selectPaginationNext);
+
   const cards = useSelector(selectCardsFetchedCards);
   const bottomGridEl = document.querySelector(".bottom-grid");
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
   const searchType = useSelector(selectSearchType);
   const isLoaded = useSelector(selectIsLoaded);
-
   const [gridItems, setGridItems] = useState();
+  const [gridItemsArray, setGridItemsArray] = useState([]);
 
   useEffect(() => {
     if (isLoaded) {
@@ -114,12 +116,31 @@ const CardGridList = ({ cardsSize }) => {
     msnry.layout();
   });
 
+  // useEffect(() => {
+  //   if (msnry && gridItems) {
+  //     msnry.reloadItems();
+  //     msnry.layout();
+  //   }
+  // }, [gridItems, msnry]);
+
   useEffect(() => {
-    if (msnry && gridItems) {
-      msnry.reloadItems();
-      msnry.layout();
+    if (cards && gridItemsArray) {
+      // const newArray = setGridItemsArray(cards);
+      const arrayCopy = gridItemsArray;
+      cards.forEach((card) => {
+        const isAlreadyHere = gridItemsArray.some(
+          (item) => item.id === card.id
+        );
+        if (isAlreadyHere) {
+          return;
+        } else {
+          arrayCopy.push(card);
+        }
+      });
+      setGridItemsArray(arrayCopy);
     }
-  }, [gridItems, msnry]);
+    console.log(gridItemsArray);
+  }, [cards, gridItemsArray]);
 
   const CardGridListElement = document.querySelector(".CardGridList");
   useEffect(() => {
@@ -145,12 +166,13 @@ const CardGridList = ({ cardsSize }) => {
           </h2>
         ) : (
           <>
-            {cards &&
-              cards.map((card) => {
+            {gridItemsArray &&
+              gridItemsArray.map((card) => {
                 return (
                   <div
                     className={`grid-item grid-item--${cardsSize}`}
                     key={card.id}
+                    data-key={card.id}
                   >
                     <CardPreviewSmall size={cardsSize} card={card} />
                   </div>
@@ -162,7 +184,7 @@ const CardGridList = ({ cardsSize }) => {
 
       <CardFullPopup />
       {!isLoaded && <Loading />}
-      {cards && gridItems && nextPageLink && (
+      {gridItemsArray && gridItems && nextPageLink && (
         <div className="bottom-grid" ref={bottomGrid}></div>
       )}
 

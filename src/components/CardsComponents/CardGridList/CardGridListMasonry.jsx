@@ -57,7 +57,7 @@ const CardGridList = ({ cardsSize }) => {
     // initLayout: false,
   });
   const options = {
-    rootMargin: "500px",
+    rootMargin: "300px",
   };
   const observer = useRef();
   const bottomGrid = useCallback(
@@ -66,6 +66,7 @@ const CardGridList = ({ cardsSize }) => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && nextPageLink) {
+          console.log("call : " + nextPageLink);
           dispatch(getOtherPageAction(nextPageLink));
           // cards && msnry.addItems(cards);
           msnry.reloadItems();
@@ -123,31 +124,12 @@ const CardGridList = ({ cardsSize }) => {
   //   }
   // }, [gridItems, msnry]);
 
-  useEffect(() => {
-    if (cards && gridItemsArray) {
-      // const newArray = setGridItemsArray(cards);
-      const arrayCopy = gridItemsArray;
-      cards.forEach((card) => {
-        const isAlreadyHere = gridItemsArray.some(
-          (item) => item.id === card.id
-        );
-        if (isAlreadyHere) {
-          return;
-        } else {
-          arrayCopy.push(card);
-        }
-      });
-      setGridItemsArray(arrayCopy);
-    }
-    console.log(gridItemsArray);
-  }, [cards, gridItemsArray]);
-
   const CardGridListElement = document.querySelector(".CardGridList");
   useEffect(() => {
     if (!nextPageLink && CardGridListElement) {
       CardGridListElement.style.margin = "0px auto";
     } else if (nextPageLink && CardGridListElement) {
-      CardGridListElement.style.margin = "0px auto 30rem auto";
+      CardGridListElement.style.margin = "0px auto 300px auto";
     }
   }, [nextPageLink, CardGridListElement]);
 
@@ -166,8 +148,8 @@ const CardGridList = ({ cardsSize }) => {
           </h2>
         ) : (
           <>
-            {gridItemsArray &&
-              gridItemsArray.map((card) => {
+            {cards &&
+              cards.map((card) => {
                 return (
                   <div
                     className={`grid-item grid-item--${cardsSize}`}
@@ -184,7 +166,7 @@ const CardGridList = ({ cardsSize }) => {
 
       <CardFullPopup />
       {!isLoaded && <Loading />}
-      {gridItemsArray && gridItems && nextPageLink && (
+      {cards && gridItems && nextPageLink && (
         <div className="bottom-grid" ref={bottomGrid}></div>
       )}
 

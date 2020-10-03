@@ -30,7 +30,7 @@ import { useCallback } from "react";
 
 // Récupérer le handleClick sur les display large ou petit des grids et fixer à big ou small et passer ça dans CardGridList
 
-const SearchPage = (props) => {
+const SearchPage = ({ location }) => {
   const isLoaded = useSelector(selectIsLoaded);
   const [redirection, setRedirection] = useState(false);
   const currentSearch = useSelector(selectCurrentSearch);
@@ -109,8 +109,16 @@ const SearchPage = (props) => {
   }, [totalNumberOfCards, currentSearch]);
 
   useEffect(() => {
-    dispatch(getCardAfterfilterAction(currentSearch));
-  }, [currentSearch, dispatch]);
+    if (
+      location &&
+      location.pathname &&
+      location.pathname.includes("/card_id=")
+    ) {
+      return;
+    } else {
+      dispatch(getCardAfterfilterAction(currentSearch));
+    }
+  }, [currentSearch, dispatch, location]);
 
   const redirectLink = SearchLinkRedirect();
 

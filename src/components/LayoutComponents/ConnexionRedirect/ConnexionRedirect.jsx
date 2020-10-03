@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import CustomButton from "../CustomButton/CustomButton";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
@@ -6,8 +6,10 @@ import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import "./ConnexionRedirect.scss";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
+import Login from "../../LayoutComponents/Login/Login";
 
 const ConnexionRedirect = ({ handleClose }) => {
+  const ConnexionRedirectEl = document.querySelector(".ConnexionRedirect");
   const currentTheme = useSelector(selectTheme);
   const handleScrollReset = () => {
     const app = document.getElementsByClassName("App")[0];
@@ -17,6 +19,19 @@ const ConnexionRedirect = ({ handleClose }) => {
     }
     window.scrollTo(0, 0);
   };
+
+  window.scrollTo(0, 0);
+
+  // useEffect(() => {
+  //   return () => {
+  //     if (ConnexionRedirectEl) {
+  //       ConnexionRedirectEl.onbeforeunload = function () {
+  //         console.log("before unload");
+  //         window.scrollTo(0, 0);
+  //       };
+  //     }
+  //   };
+  // }, [ConnexionRedirectEl]);
 
   return (
     <div
@@ -37,17 +52,19 @@ const ConnexionRedirect = ({ handleClose }) => {
         <h1 className="title title-1">
           Vous devez vous connecter pour réaliser cette action.
         </h1>
-        <Link to="/connexion/login">
+        <div className="ConnexionRedirect__grid"></div>
+        {/* <Link to="/connexion/login">
           <CustomButton color="dark" onClick={() => handleScrollReset()}>
             Connexion
           </CustomButton>
-        </Link>
-        <h3 className="title title-3">Pas encore de compte ?</h3>
+        </Link> */}
+        <Login />
+        {/* <h3 className="title title-3">Pas encore de compte ?</h3>
         <Link to="/connexion/signup">
           <CustomButton onClick={() => handleScrollReset()}>
             Inscription
           </CustomButton>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

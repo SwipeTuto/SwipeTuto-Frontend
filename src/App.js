@@ -90,6 +90,7 @@ function App(props) {
         <Route exact path="/" component={HomePage} />
         <Route path="/search" component={SearchPage} />
         <Route path="/connexion" component={LoginPage} />
+
         <Route path="/ressources" component={RessourcesPage} />
         <Route path="/conditions" component={ConditionsOfUsagePage} />
         <Route path="/confidentiality" component={ConfidentialityPage} />

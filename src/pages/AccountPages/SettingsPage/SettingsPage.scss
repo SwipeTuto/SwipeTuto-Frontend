@@ -14,35 +14,9 @@
     margin-bottom: 2rem;
   }
 
-  .valid-input:focus,
-  textarea:focus:valid {
-    border: 0.5px solid $green-success;
-  }
-
-  .invalid-input:focus {
-    border: 0.5px solid $red-error;
-  }
-
-  input:focus,
-  textarea:focus {
-    background-color: $white;
-
-    &::placeholder {
-      visibility: hidden;
-    }
-  }
-
   textarea {
     resize: none;
     min-height: 10rem;
-  }
-
-  .input__message {
-    display: none;
-  }
-
-  .invalid-input:focus + .input__message {
-    display: block;
   }
 
   .allForms {

@@ -23,6 +23,8 @@ import CustomButton from "../CustomButton/CustomButton";
 import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google.svg";
 import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
 
+import "./LoginAndRegister.scss";
+
 const Login = ({ history }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({ username: "", password: "" });
@@ -49,15 +51,13 @@ const Login = ({ history }) => {
     (e) => {
       const { name, value } = e.target;
 
-      const currentInput = document.querySelector(
-        `.LoginPage input[name=${name}]`
-      );
+      const currentInput = document.querySelector(`input[name=${name}]`);
       const errorMessage = document.querySelector(
-        `.LoginPage .input__message[data-inputfor=${name}`
+        `.input__message[data-inputfor=${name}`
       );
 
-      currentInput.classList.remove("valid-input");
-      currentInput.classList.add("invalid-input");
+      currentInput && currentInput.classList.remove("valid-input");
+      currentInput && currentInput.classList.add("invalid-input");
 
       if (value) {
         let inputIsOk = checkRegexInput(name, value); //test valeur avec regex, true or false
@@ -87,9 +87,7 @@ const Login = ({ history }) => {
   };
 
   useEffect(() => {
-    const allInput = [
-      ...document.querySelectorAll(".LoginPage .login__form--input"),
-    ];
+    const allInput = [...document.querySelectorAll(".login__form--input")];
     const readyToSubmit = allInput.every((input) =>
       input.classList.contains("valid-input")
     );
@@ -99,12 +97,12 @@ const Login = ({ history }) => {
     } else {
       setSubmitOk(true);
     }
-  }, [user, handleChange]);
+  }, [user]);
 
   return (
-    <div className="login">
+    <div className="Login">
       <h1 className="title title-1">Se connecter</h1>
-      <div className="login__google">
+      <div className="Login__google">
         <CustomButton color="white" onClick={(e) => handleClickGoogle(e)}>
           <GoogleLogo />
           Google
@@ -121,8 +119,8 @@ const Login = ({ history }) => {
             : "Une erreur est survenue avec ce compte. Avez-vous les bons identifiants ? Si l'erreur persiste, merci de nous le signaler."
           : ""}
       </p>
-      <form className="login__form">
-        <label htmlFor="pseudo" className="login__form--label">
+      <form className="Login__form">
+        <label htmlFor="pseudo" className="Login__form--label">
           {" "}
           Email :{" "}
         </label>
@@ -132,11 +130,11 @@ const Login = ({ history }) => {
           name="email"
           value={user.email || ""}
           id="email_login"
-          className="login__form--input invalid-input"
+          className="Login__form--input invalid-input"
           required
         />
         <p className="input__message" data-inputfor="email"></p>
-        <label htmlFor="mdp" className="login__form--label">
+        <label htmlFor="mdp" className="Login__form--label">
           {" "}
           Mot de passe :{" "}
         </label>
@@ -146,7 +144,7 @@ const Login = ({ history }) => {
           type="password"
           name="password"
           id="mdp_login"
-          className="login__form--input invalid-input"
+          className="Login__form--input invalid-input"
           required
         />
         <p className="input__message" data-inputfor="password"></p>

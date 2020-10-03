@@ -1,7 +1,8 @@
 import { UserActionTypes } from './user-types'
-import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, getUserIDToken, getUserFavoriesById } from '../../services/userService'
+import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, getUserIDToken, getUserFavoriesById, loginGit } from '../../services/userService'
 import history from "../../helper/history"
 import { setLoading, setLoaded } from '../layout/layout-actions';
+import { baseURL } from '../../services/configService';
 
 export const deleteUserErrors = () => ({
   type: UserActionTypes.DELETE_USER_ERRORS,
@@ -13,6 +14,7 @@ export const setCurrentUser = (user) => ({
 });
 
 export const loginAction = (username, password) => {
+  const currentUrl = window.location.href;
   return dispatch => {
     return loginManuel(username, password)
       .then(user => {
@@ -21,14 +23,18 @@ export const loginAction = (username, password) => {
           dispatch(loginErrors("Erreur avec votre compte. Merci d'en essayer un autre."))
           localStorage.removeItem('user')
         } else {
-          history.push('/', history.location)
-          history.go()
+          if (currentUrl) {
+            window.location.href = currentUrl;
+          } else {
+            window.location.href = baseURL;
+          }
         }
       })
 
   }
 }
 export const loginGoogleAction = () => {
+  const currentUrl = window.location.href;
   return dispatch => {
     return loginGoogle()
       .then(rep => {
@@ -38,8 +44,33 @@ export const loginGoogleAction = () => {
             if (!rep.data) {
               dispatch(loginErrors("Erreur avec votre compte. Merci d'en essayer un autre."))
             } else {
-              history.push('/', history.location)
-              history.go()
+              if (currentUrl) {
+                window.location.href = currentUrl;
+              } else {
+                window.location.href = baseURL;
+              }
+            }
+          })
+      })
+
+  }
+}
+export const loginGitAction = () => {
+  const currentUrl = window.location.href;
+  return dispatch => {
+    return loginGit()
+      .then(rep => {
+        login(rep)
+          .then(rep => {
+            dispatch(deleteUserErrors())
+            if (!rep.data) {
+              dispatch(loginErrors("Erreur avec votre compte. Merci d'en essayer un autre."))
+            } else {
+              if (currentUrl) {
+                window.location.href = currentUrl;
+              } else {
+                window.location.href = baseURL;
+              }
             }
           })
       })

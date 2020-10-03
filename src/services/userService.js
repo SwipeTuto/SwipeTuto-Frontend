@@ -40,8 +40,8 @@ export const loginGit = () => {
 
           Gitlogin(idToken, emailConst)
             .then(rep => {
-              history.push('/', history.location)
-              history.go()
+              // history.push('/', history.location)
+              // history.go()
               return rep
             })
         })
@@ -75,7 +75,7 @@ export const Gitlogin = (idToken, emailConst) => {
   }
   var config = { headers: { 'Content-Type': 'application/json' }, }
 
-  return axios.post(`${baseURL}google-login/`, JSON.stringify(data), config)
+  return axios.post(`${baseURL}github-login/`, JSON.stringify(data), config)
     .then(rep => {
       localStorage.setItem('user', JSON.stringify(rep.data))
 
@@ -151,7 +151,6 @@ export const updateUserInfos = newUserInfos => {
     email: newUserInfos.email,
   }
 
-  console.log(data)
   const requestOptions = {
     headers: {
       'Content-Type': 'application/json',

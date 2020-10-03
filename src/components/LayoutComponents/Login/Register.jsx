@@ -18,6 +18,7 @@ import CustomButton from "../CustomButton/CustomButton";
 // assets
 import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google.svg";
 import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
+import "./LoginAndRegister.scss";
 
 // Props history, location, match, depuis react router dom
 const Register = (props) => {
@@ -46,6 +47,9 @@ const Register = (props) => {
         `.LoginPage .input__message[data-inputfor=${name}`
       );
 
+      console.log(currentInput);
+      console.log(errorMessage);
+
       currentInput.classList.remove("valid-input");
       currentInput.classList.add("invalid-input");
 
@@ -61,7 +65,6 @@ const Register = (props) => {
           currentInput.classList.remove("invalid-input");
           currentInput.classList.add("valid-input");
           errorMessage.classList.remove("error__message");
-          errorMessage.style.display = "none";
         }
       }
       setUser({ ...user, [name]: value });
@@ -82,7 +85,7 @@ const Register = (props) => {
   };
 
   useEffect(() => {
-    const allInput = [...document.querySelectorAll(".signup__form--input")];
+    const allInput = [...document.querySelectorAll(".Register__form--input")];
     const readyToSubmit = allInput.every((input) =>
       input.classList.contains("valid-input")
     );
@@ -95,9 +98,9 @@ const Register = (props) => {
   }, [user, handleChange, passwordConfirmation]);
 
   return (
-    <div className="signup">
+    <div className="Register">
       <h1 className="title title-1">S'inscrire</h1>
-      <div className="login__google">
+      <div className="Login__google">
         <CustomButton color="white" onClick={(e) => handleClickGoogle(e)}>
           <GoogleLogo />
           Google
@@ -107,13 +110,13 @@ const Register = (props) => {
           Git
         </CustomButton>
       </div>
-      <p className="login__errors">
+      <p className="Login__errors">
         {userErrors &&
           userErrors !== 400 &&
           "Une erreur est survenue. Si l'erreur persiste, merci de nous le signaler."}
       </p>
-      <form className="signup__form">
-        <label htmlFor="nom" className="signup__form--label">
+      <form className="Register__form">
+        <label htmlFor="nom" className="Register__form--label">
           Pseudo :
         </label>
         <input
@@ -122,11 +125,11 @@ const Register = (props) => {
           value={user.username || ""}
           type="text"
           id="nom"
-          className="signup__form--input invalid-input"
+          className="Register__form--input invalid-input"
           required
         />
         <p className="input__message" data-inputfor="username"></p>
-        <label htmlFor="email" className="signup__form--label">
+        <label htmlFor="email" className="Register__form--label">
           Email :
         </label>
         <input
@@ -135,11 +138,11 @@ const Register = (props) => {
           onChange={(e) => handleChange(e)}
           type="email"
           id="email_register"
-          className="signup__form--input invalid-input"
+          className="Register__form--input invalid-input"
           required
         />
         <p className="input__message" data-inputfor="email"></p>
-        <label htmlFor="mdp" className="signup__form--label">
+        <label htmlFor="mdp" className="Register__form--label">
           Mot de passe :
         </label>
         <input
@@ -151,12 +154,12 @@ const Register = (props) => {
           }}
           type="password"
           id="mdp_register"
-          className="signup__form--input invalid-input"
+          className="Register__form--input invalid-input"
           required
         />
 
         <p className="input__message" data-inputfor="password"></p>
-        <label htmlFor="mdp2" className="signup__form--label">
+        <label htmlFor="mdp2" className="Register__form--label">
           Confirmez le Mot de passe :
         </label>
         <input
@@ -167,18 +170,25 @@ const Register = (props) => {
           }}
           type="password"
           id="mdp_register_confirm"
-          className={`signup__form--input ${
+          className={`Register__form--input ${
             passwordConfirmation !== password || passwordConfirmation === ""
               ? "invalid-input"
               : "valid-input"
           }`}
           required
         />
-        {passwordConfirmation !== password && (
-          <p className="input__message" data-inputfor="passwordConfirm">
+        {
+          <p
+            className={`${
+              passwordConfirmation !== password
+                ? "input__message error__message"
+                : "input__message-hide"
+            }`}
+            data-inputfor="passwordConfirm"
+          >
             Ce mot de passe ne correspond pas à celui mentionné précédemment.
           </p>
-        )}
+        }
 
         <CustomButton
           onClick={(e) => handleClick(e)}

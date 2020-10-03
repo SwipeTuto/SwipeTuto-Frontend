@@ -9,7 +9,7 @@ export const getCards = () => {
   }
   console.log("call")
 
-  return axios.get(`${baseURL}card/list/`, config)
+  return axios.get(`${baseURL}card/list`, config)
     .then(rep => {
       return rep
     })
@@ -25,7 +25,7 @@ export const getCardById = cardId => {
       'Content-Type': 'application/json'
     },
   }
-  console.log("call")
+  // console.log("call")
 
   return axios.get(`${baseURL}card/list/${cardId}/`, config)
     .then(rep => {

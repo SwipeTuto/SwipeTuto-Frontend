@@ -150,8 +150,6 @@ const CommentsWrapper = () => {
     }
   };
 
-  useEffect(() => {}, [localCommentsArray, localLastPublishedComments]);
-
   return (
     <>
       {connectRedirect && <ConnexionRedirect handleClose={handleClose} />}

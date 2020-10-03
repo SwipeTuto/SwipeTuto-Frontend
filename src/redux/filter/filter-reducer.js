@@ -14,6 +14,8 @@ const INITIAL_STATE = {
 const FilterReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
 
+    // case FilterActionTypes.DELETE_CARDS_IN_STORE:
+    //   return { ...state, cardsFetched: "" };
     case FilterActionTypes.DELETE_FILTER_ERROR:
       return { ...state, errors: null };
     case FilterActionTypes.GET_CARDS_FILTER_SUCCESS:

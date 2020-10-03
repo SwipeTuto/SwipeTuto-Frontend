@@ -32,17 +32,9 @@ const UserNameAndAvatar = ({ user, link }) => {
         >
           <div className="UserNameAndAvatar__avatar">
             {userImage ? (
-              <img
-                className="UserNameAndAvatar__avatar--image"
-                src={userImage}
-                alt="user"
-              />
-            ) : user && user.first_name && user && user.last_name ? (
-              getInitials(user.first_name, user.last_name)
-            ) : user && user.first_name ? (
-              user.first_name.slice(0, 1).toUpperCase()
+              <img className="user_avatar--image" src={userImage} alt="user" />
             ) : (
-              "S"
+              user && user.username && user.username.slice(0, 1)
             )}
           </div>
           <p className="UserNameAndAvatar__username">
@@ -58,12 +50,8 @@ const UserNameAndAvatar = ({ user, link }) => {
                 src={userImage}
                 alt="user"
               />
-            ) : user && user.first_name && user && user.last_name ? (
-              getInitials(user.first_name, user.last_name)
-            ) : user && user.first_name ? (
-              user.first_name.slice(0, 1).toUpperCase()
             ) : (
-              "S"
+              user && user.username && user.username.slice(0, 1)
             )}
           </div>
           <p className="UserNameAndAvatar__username">

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import imagesLoaded from "imagesloaded";
 
 // redux
 import {
@@ -23,14 +24,18 @@ import ConnexionRedirect from "../../LayoutComponents/ConnexionRedirect/Connexio
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 
 import "./CardPreviewSmall.scss";
+import Loading from "../../Loading/Loading";
+import { selectTheme } from "../../../redux/layout/layout-selectors";
 
-const CardPreviewSmall = ({ card }) => {
+const CardPreviewSmall = ({ card, size }) => {
   const { media_image, user, categorie, name, number_of_likes, likes } = card;
   const dispatch = useDispatch();
+  const currentTheme = useSelector(selectTheme);
   const cardId = card && card.id;
   const currentUser = useSelector(selectCurrentUser);
   const [connectRedirect, setConnectRedirect] = useState(false);
   const [cardIsLiked, setCardIsLiked] = useState();
+  const [cardIsReady, setCardIsReady] = useState(false);
 
   const userHasLiked = useCallback(() => {
     if (currentUser && currentUser.id) {
@@ -72,12 +77,30 @@ const CardPreviewSmall = ({ card }) => {
     setConnectRedirect(false);
   };
 
+  const elem = document.querySelector(".CardPreviewSmall__image");
+
+  useEffect(() => {
+    if (elem) {
+      imagesLoaded(elem).on("done", function (instance) {
+        setCardIsReady(true);
+      });
+      imagesLoaded(elem).on("fail", function (instance) {
+        setCardIsReady(false);
+      });
+    }
+  }, [elem]);
+
   return (
     <>
       {connectRedirect && <ConnexionRedirect handleClose={handleClose} />}
-      <div className="CardPreviewSmall" data-slideid="1">
+      <div
+        className={`CardPreviewSmall ${currentTheme}-theme`}
+        data-slideid="1"
+      >
         <div
-          className="CardPreviewSmall__image"
+          className={`CardPreviewSmall__image  ${
+            cardIsReady ? "active" : "hide"
+          }`}
           onClick={() => handleClickedCardClick()}
         >
           {media_image && media_image[0] && media_image[0].image ? (
@@ -88,7 +111,7 @@ const CardPreviewSmall = ({ card }) => {
               onContextMenu={(e) => e.preventDefault()}
             />
           ) : (
-            <img src="https://fakeimg.pl/500x500/" alt="slide" />
+            <p>Erreur</p>
           )}
 
           <div className="CardPreviewSmall__hover">
@@ -100,6 +123,15 @@ const CardPreviewSmall = ({ card }) => {
             </div>
           </div>
         </div>
+
+        <div
+          className={`CardPreviewSmall__image ${
+            !cardIsReady ? "active" : "hide"
+          } CardPreviewSmall__image--loading CardPreviewSmall__image--loading-${size}`}
+        >
+          <Loading />
+        </div>
+
         <div className="CardPreviewSmall__details">
           <UserNameAndAvatar user={user} link={true} />
           <div

@@ -2,7 +2,12 @@
 
 .CardGridList {
   width: 100%;
+  min-height: 100vh;
   padding: 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 120rem;
+  margin: 0 auto 300px auto;
 
   .grid {
     margin: 0 auto;
@@ -23,6 +28,7 @@
 
   .bottom-grid {
     height: 1px;
+    margin-top: auto;
   }
 
   &__wrapper {
@@ -33,10 +39,10 @@
     column-gap: 1rem;
 
     .loading {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      // position: absolute;
+      // top: 50%;
+      // left: 50%;
+      // transform: translate(-50%, -50%);
     }
   }
 
@@ -45,7 +51,7 @@
     text-align: center;
   }
 
-  & .custom-button {
+  .custom-button {
     margin: 2rem auto;
   }
 
@@ -65,6 +71,23 @@
     }
   }
 }
+
+@media screen and (min-width: $bp-big) {
+  .CardGridList {
+    padding: 0 1rem;
+
+    .grid-sizer,
+    .grid-item {
+      &--small {
+        width: 250px;
+      }
+      &--big {
+        width: 350px;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: $bp-tablet) {
   .CardGridList {
     padding: 0 1rem;

@@ -74,9 +74,10 @@ const NavTop = (props) => {
       {redirection && <Redirect to={redirectLink} />}
       <div className={`NavTop ${currentTheme}-theme`}>
         <div className="NavTop__left">
-          <div className="NavTop__swipeTuto">
+          <Link className="NavTop__swipeTuto" to="/">
             <img src={SwipeTutoSmallSmall} alt="" />
-          </div>
+          </Link>
+
           <NavLink exact className="NavTop__link" to="/">
             Accueil
           </NavLink>

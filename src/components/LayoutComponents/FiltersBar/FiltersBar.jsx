@@ -120,7 +120,7 @@ const FiltersBar = ({ handleClickSize }) => {
           </div>
           <div className="FiltersBar__down">
             <p className="FiltersBar__numberOfResults">
-              {`${totalNumberOfCardsSearched} résultats trouvés - Page ${currentPage}`}
+              {`${totalNumberOfCardsSearched} résultats trouvés`}
             </p>
             <div
               className="FiltersBar__size-logo active"

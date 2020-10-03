@@ -40,8 +40,8 @@ export const loginGit = () => {
 
           Gitlogin(idToken, emailConst)
             .then(rep => {
-              history.push('/', history.location)
-              history.go()
+              // history.push('/', history.location)
+              // history.go()
               return rep
             })
         })
@@ -75,7 +75,7 @@ export const Gitlogin = (idToken, emailConst) => {
   }
   var config = { headers: { 'Content-Type': 'application/json' }, }
 
-  return axios.post(`${baseURL}google-login/`, JSON.stringify(data), config)
+  return axios.post(`${baseURL}github-login/`, JSON.stringify(data), config)
     .then(rep => {
       localStorage.setItem('user', JSON.stringify(rep.data))
 
@@ -140,15 +140,17 @@ export const register = users => {
 
 // update des infos user qui vient du component SettingsPage, sous forme d'objet
 export const updateUserInfos = newUserInfos => {
+  console.log(newUserInfos)
   const data = {
     username: newUserInfos.username,
     first_name: newUserInfos.first_name,
     last_name: newUserInfos.last_name,
     profile: {
-      description: newUserInfos.description
+      description: newUserInfos.profile && newUserInfos.profile.description
     },
     email: newUserInfos.email,
   }
+
   const requestOptions = {
     headers: {
       'Content-Type': 'application/json',

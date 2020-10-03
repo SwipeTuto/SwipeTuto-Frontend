@@ -27,6 +27,10 @@ export const selectCardsFetched = createSelector(
   [selectFilter],
   filter => filter.cardsFetched && filter.cardsFetched
 )
+export const selectLastCardsFetched = createSelector(
+  [selectFilter],
+  filter => filter.lastCardsFetched && filter.lastCardsFetched
+)
 export const selectNewPageCards = createSelector(
   [selectFilter],
   filter => filter.newPageCards && filter.newPageCards

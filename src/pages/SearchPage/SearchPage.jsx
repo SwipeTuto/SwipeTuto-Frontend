@@ -4,7 +4,7 @@ import { Redirect, withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import FiltersBar from "../../components/LayoutComponents/FiltersBar/FiltersBar";
-import CardGridList from "../../components/CardsComponents/CardGridList/CardGridListColumns";
+import CardGridList from "../../components/CardsComponents/CardGridList/CardGridListColumnsNew";
 import CurrentSearchWords from "../../components/CurrentSearchWords/CurrentSearchWords";
 import {
   selectIsLoaded,

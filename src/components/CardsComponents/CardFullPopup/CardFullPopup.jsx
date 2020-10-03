@@ -191,9 +191,9 @@ const CardFullPopup = ({ history }) => {
     } else {
       return;
     }
-    if (cardIsLiked !== userHasLiked()) {
-      dispatch(getCardAfterfilterAction(currentSearch));
-    }
+    // if (cardIsLiked !== userHasLiked()) {
+    //   dispatch(getCardAfterfilterAction(currentSearch));
+    // }
 
     dispatch(getCurrentUserAction(currentUserId));
   };

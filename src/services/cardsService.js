@@ -27,7 +27,7 @@ export const getCardById = cardId => {
   }
   // console.log("call")
 
-  return axios.get(`${baseURL}card/list/${cardId}`, config)
+  return axios.get(`${baseURL}card/list/${cardId}/`, config)
     .then(rep => {
       return rep
     })

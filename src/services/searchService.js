@@ -39,7 +39,7 @@ export const topicList = () => {
 
 export const searchBar = kkord => {
   var config = { headers: { 'Content-Type': 'application/json' }, }
-  return axios.get(`${baseURL}card/?search=${kkord}`, config)
+  return axios.get(`${baseURL}card/?search=${kkord}/`, config)
     .then(rep => {
       return rep
     })

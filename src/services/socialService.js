@@ -10,7 +10,7 @@ export const toggleLike = (cardId) => {
     }
   };
 
-  return axios.get(`${baseURL}likes/toggle/${cardId}`, requestOptions)
+  return axios.get(`${baseURL}likes/toggle/${cardId}/`, requestOptions)
     .then(rep => {
       return rep
     })
@@ -24,7 +24,7 @@ export const toggleCommentLike = (commentId) => {
     }
   };
 
-  return axios.get(`${baseURL}likes/toggle-comment/${commentId}`, requestOptions)
+  return axios.get(`${baseURL}likes/toggle-comment/${commentId}/`, requestOptions)
     .then(rep => {
       return rep
     })
@@ -38,7 +38,7 @@ export const toggleSave = (cardId) => {
     }
   };
 
-  return axios.get(`${baseURL}toggle-favorie/${cardId}`, requestOptions)
+  return axios.get(`${baseURL}toggle-favorie/${cardId}/`, requestOptions)
     .then(rep => {
       return rep
     })

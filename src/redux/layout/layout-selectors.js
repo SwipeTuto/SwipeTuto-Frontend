@@ -25,6 +25,10 @@ export const selectFilterMobileMenuOpen = createSelector(
   layout => layout.filterMobileMenuOpen
 )
 
+export const selectCardsSize = createSelector(
+  [selectLayout],
+  layout => layout.cardsSize
+);
 export const selectIsLoaded = createSelector(
   [selectLayout],
   layout => layout.isLoaded

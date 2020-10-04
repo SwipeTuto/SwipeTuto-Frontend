@@ -4,7 +4,7 @@ import { Redirect, withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import FiltersBar from "../../components/LayoutComponents/FiltersBar/FiltersBar";
-import CardGridList from "../../components/CardsComponents/CardGridList/CardGridListMasonry";
+import CardGridList from "../../components/CardsComponents/CardGridList/CardGridListColumnsNew";
 import CurrentSearchWords from "../../components/CurrentSearchWords/CurrentSearchWords";
 import {
   selectIsLoaded,
@@ -27,6 +27,7 @@ import Pagination from "../../components/LayoutComponents/Pagination/Pagination"
 
 import "./SearchPage.scss";
 import { useCallback } from "react";
+import { setCardsSize } from "../../redux/layout/layout-actions";
 
 // Récupérer le handleClick sur les display large ou petit des grids et fixer à big ou small et passer ça dans CardGridList
 
@@ -76,7 +77,8 @@ const SearchPage = ({ location }) => {
       ...document.querySelectorAll(".FiltersBar__size-logo"),
     ];
     const newSize = e.target.dataset.gridsize;
-    setGridSize(newSize);
+    // setGridSize(newSize);
+    dispatch(setCardsSize(newSize));
     allGridSizeItems.map((item) => item.classList.remove("active"));
     e.target.classList.add("active");
   };
@@ -118,7 +120,7 @@ const SearchPage = ({ location }) => {
     } else {
       dispatch(getCardAfterfilterAction(currentSearch));
     }
-  }, [currentSearch, dispatch, location]);
+  }, [currentSearch, dispatch]);
 
   const redirectLink = SearchLinkRedirect();
 
@@ -136,7 +138,7 @@ const SearchPage = ({ location }) => {
           </div>
           <FiltersBar handleClickSize={handleClickSize} />
 
-          <CardGridList cardsSize={gridSize} />
+          <CardGridList />
           {/* {isLoaded && totalNumberOfCards && totalNumberOfCards !== 0 ? (
             <Pagination
               currentSearch={currentSearch}

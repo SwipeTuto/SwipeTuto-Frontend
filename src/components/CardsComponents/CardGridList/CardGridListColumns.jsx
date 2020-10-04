@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Colcade from "../../../colcade";
+import Masonry from "masonry-layout";
+import imagesLoaded from "imagesloaded";
+import { usePrevious } from "../../../hooks/usePrevious";
 
 // redux
 import {
@@ -10,46 +12,66 @@ import {
   selectTotalNumberOfResults,
   selectPaginationNext,
 } from "../../../redux/filter/filter-selectors";
-import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
+import {
+  selectCardsSize,
+  selectIsLoaded,
+} from "../../../redux/layout/layout-selectors";
 
 // components
 import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
 import CardFullPopup from "../CardFullPopup/CardFullPopup";
 import Loading from "../../Loading/Loading";
+import ScrollButton from "../../LayoutComponents/ScrollButton/ScrollButton";
 
 // scss
 import { ReactComponent as GoTopLogo } from "../../../assets/images/chevrons/arrow-up-circle.svg";
-import "./CardGridListColcade.scss";
+import "./CardGridListColumns.scss";
 import { getOtherPageAction } from "../../../redux/filter/filter-actions";
 import { useCallback } from "react";
+import { useScroll } from "../../../hooks/useScroll";
+import { useWinWidth } from "../../../hooks/useWinWidth";
+import { useColumnsNumber } from "../../../hooks/useColumnsNumber";
 
-const CardGridList = ({ cardsSize }) => {
+const CardGridList = () => {
   const dispatch = useDispatch();
   const nextPageLink = useSelector(selectPaginationNext);
+
   const cards = useSelector(selectCardsFetchedCards);
-
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
-  const searchType = useSelector(selectSearchType);
   const isLoaded = useSelector(selectIsLoaded);
-
   const [gridItems, setGridItems] = useState();
+  const cardsSize = useSelector(selectCardsSize);
+  const numberOfColumns = useColumnsNumber();
 
-  useEffect(() => {
-    if (isLoaded) {
-      const allGridItems = [...document.getElementsByClassName("grid-item")];
-      setGridItems(allGridItems);
+  console.log(numberOfColumns);
+
+  // gestion de l'ordre des cartes par colonne
+  const reorderCards = useCallback((cardsArray, numberOfColumns) => {
+    const columns = numberOfColumns; // nb de colonnes
+    const orderedArray = []; // array de cartes réordonnées
+    let currentColumn = 0; // numéro de la colonne en cours
+    while (currentColumn < columns) {
+      // tant que le numéro de la colonne en cours est inf aux colonnes max
+      for (let i = 0; i < cardsArray.length; i += columns) {
+        let currentCard = cardsArray[i + currentColumn];
+        if (currentCard !== undefined) orderedArray.push(currentCard);
+      }
+      currentColumn++;
     }
-  }, [cardsSize, searchType, isLoaded]);
+    return orderedArray;
+  }, []);
 
-  // element as first argument
-  var grid = document.querySelector(".grid");
-  var colc = new Colcade(".grid", {
-    columns: ".grid-col",
-    items: ".grid-item",
-  });
+  // update du array local de cartes si + de fetch
+  useEffect(() => {
+    const newArray = reorderCards(cards, numberOfColumns);
+    console.log(newArray);
+    setGridItems(newArray);
+  }, [cards, numberOfColumns, reorderCards, cardsSize]);
 
-  useEffect(() => {});
-
+  // gestion du infinite scroll : call automatique au back à un certain niveau de scroll
+  const options = {
+    rootMargin: "300px",
+  };
   const observer = useRef();
   const bottomGrid = useCallback(
     (node) => {
@@ -57,49 +79,26 @@ const CardGridList = ({ cardsSize }) => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && nextPageLink) {
+          console.log("call : " + nextPageLink);
           dispatch(getOtherPageAction(nextPageLink));
-          // msnry.layout();
+          // call refaire layout ?
         }
-      });
+      }, options);
       if (node) observer.current.observe(node);
     },
-    [isLoaded, dispatch, nextPageLink]
+    [isLoaded, dispatch, nextPageLink, options]
   );
 
-  window.onscroll = function () {
-    scrollFunction();
-  };
-
-  const scrollFunction = () => {
-    let goTopButton = document.querySelector(".goTop__button");
-
-    if (
-      goTopButton &&
-      (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20)
-    ) {
-      goTopButton.style.display = "block";
-    } else if (goTopButton) {
-      goTopButton.style.display = "none";
-    }
-  };
-
-  const handleGoTopButton = () => {
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  // reset du scroll avant de quitter la page
+  window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
   };
 
   return (
     <div className="CardGridList">
       <div
-        className="grid"
-        data-colcade="columns: .grid-col, items: .grid-item"
+        className={`CardGridList__wrapper CardGridList__wrapper--${cardsSize}`}
       >
-        <div className="grid-col grid-col--1"></div>
-        <div className="grid-col grid-col--2"></div>
-        <div className="grid-col grid-col--3"></div>
-        {cardsSize === "small" ? (
-          <div className="grid-col grid-col--4"></div>
-        ) : null}
         {isNaN(totalNumberOfResults) ? (
           <h2 className="title title-2 nocards-message">
             Désolé, une erreur est survenue. Si le problème persiste, merci de
@@ -111,13 +110,13 @@ const CardGridList = ({ cardsSize }) => {
           </h2>
         ) : (
           <>
-            {/* <div className={`grid-sizer grid-sizer--${cardsSize}`}></div> */}
-            {cards &&
-              cards.map((card) => {
+            {gridItems &&
+              gridItems.map((card) => {
                 return (
                   <div
                     className={`grid-item grid-item--${cardsSize}`}
                     key={card.id}
+                    data-key={card.id}
                   >
                     <CardPreviewSmall size={cardsSize} card={card} />
                   </div>
@@ -129,11 +128,12 @@ const CardGridList = ({ cardsSize }) => {
 
       <CardFullPopup />
       {!isLoaded && <Loading />}
-      {cards && gridItems && cards.length === gridItems.length && (
+      {cards && nextPageLink && (
         <div className="bottom-grid" ref={bottomGrid}></div>
       )}
 
-      <GoTopLogo className="goTop__button" onClick={handleGoTopButton} />
+      {/* <GoTopLogo className="goTop__button" onClick={handleGoTopButton} /> */}
+      <ScrollButton />
     </div>
   );
 };

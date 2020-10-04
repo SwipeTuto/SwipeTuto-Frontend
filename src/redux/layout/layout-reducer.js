@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   mobileNavOpen: false,
   filterMobileMenuOpen: false,
   isLoaded: false,
+  cardsSize: 'small',
   otherPageCardsLoaded: true,
   clickedCardIsLoaded: false,
   imageIsLoaded: false,
@@ -52,6 +53,11 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         fullscreen: false,
+      };
+    case LayoutActionTypes.SET_CARDS_SIZE:
+      return {
+        ...state,
+        cardsSize: action.payload,
       };
     case LayoutActionTypes.TOGGLE_USER_NAV:
       return {

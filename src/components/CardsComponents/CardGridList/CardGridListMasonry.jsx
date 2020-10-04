@@ -12,7 +12,10 @@ import {
   selectTotalNumberOfResults,
   selectPaginationNext,
 } from "../../../redux/filter/filter-selectors";
-import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
+import {
+  selectCardsSize,
+  selectIsLoaded,
+} from "../../../redux/layout/layout-selectors";
 
 // components
 import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
@@ -26,9 +29,10 @@ import { getOtherPageAction } from "../../../redux/filter/filter-actions";
 import { useCallback } from "react";
 import { useScroll } from "../../../hooks/useScroll";
 
-const CardGridList = ({ cardsSize }) => {
+const CardGridList = () => {
   const dispatch = useDispatch();
   const nextPageLink = useSelector(selectPaginationNext);
+  const cardsSize = useSelector(selectCardsSize);
 
   const cards = useSelector(selectCardsFetchedCards);
   const bottomGridEl = document.querySelector(".bottom-grid");

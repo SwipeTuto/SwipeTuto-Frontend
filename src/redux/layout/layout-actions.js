@@ -37,6 +37,10 @@ export const closeFilterMobileMenu = () => ({
 export const setLoading = () => ({
   type: LayoutActionTypes.SET_LOADING,
 })
+export const setCardsSize = (size) => ({
+  type: LayoutActionTypes.SET_CARDS_SIZE,
+  payload: size
+})
 
 export const setLoaded = () => ({
   type: LayoutActionTypes.SET_LOADED,

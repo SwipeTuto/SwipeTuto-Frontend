@@ -14,7 +14,7 @@ const SavedPage = () => {
 
   return (
     <div className="SavedPage">
-      <CardGridListMasonry cardsSize="small" />
+      <CardGridListMasonry  />
     </div>
   );
 };

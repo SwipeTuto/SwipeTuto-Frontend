@@ -1,145 +1,129 @@
-@import "../../../variables.scss";
+// @import "../../../variables.scss";
 
-.CardGridList {
-  width: 100%;
-  min-height: 100vh;
-  padding: 1rem 3rem;
-  display: flex;
-  flex-direction: column;
-  max-width: 120rem;
-  margin: 0 auto 300px auto;
+// .CardGridList {
+//   width: 100%;
+//   min-height: 100vh;
+//   padding: 1rem 3rem;
+//   display: flex;
+//   flex-direction: column;
+//   max-width: 120rem;
+//   margin: 0 auto 300px auto;
 
-  .grid {
-    margin: 0 auto;
-    width: 100%;
-  }
+//   .grid {
+//     margin: 0 auto;
+//     width: 100%;
+//   }
 
-  .grid-sizer,
-  .grid-item {
-    margin-bottom: 10px;
+//   .grid-sizer,
+//   .grid-item {
+//     margin-bottom: 10px;
 
-    &--small {
-      width: 200px;
-    }
-    &--big {
-      width: 300px;
-    }
-  }
+//     &--small {
+//       width: 200px;
+//     }
+//     &--big {
+//       width: 300px;
+//     }
+//   }
 
-  .bottom-grid {
-    height: 1px;
-    margin-top: auto;
-  }
+//   .bottom-grid {
+//     height: 1px;
+//     margin-top: auto;
+//   }
 
-  &__wrapper {
-    position: relative;
-    min-height: 10rem;
-    margin: 0 auto;
-    padding-bottom: 3rem;
-    column-gap: 1rem;
+//   // &__wrapper {
+//   //   position: relative;
+//   //   min-height: 10rem;
+//   //   margin: 0 auto;
+//   //   padding-bottom: 3rem;
+//   //   column-gap: 1rem;
 
-    .loading {
-      // position: absolute;
-      // top: 50%;
-      // left: 50%;
-      // transform: translate(-50%, -50%);
-    }
-  }
+//   //   .loading {
+//   //     // position: absolute;
+//   //     // top: 50%;
+//   //     // left: 50%;
+//   //     // transform: translate(-50%, -50%);
+//   //   }
+//   // }
 
-  .nocards-message {
-    grid-column: 1 / -1;
-    text-align: center;
-  }
+//   .nocards-message {
+//     grid-column: 1 / -1;
+//     text-align: center;
+//   }
 
-  .custom-button {
-    margin: 2rem auto;
-  }
+//   .custom-button {
+//     margin: 2rem auto;
+//   }
+// }
 
-  .goTop__button {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    height: 4rem;
-    width: 4rem;
-    cursor: pointer;
-    fill: $grey-dark;
-    transition: all 0.2s ease;
+// @media screen and (min-width: $bp-big) {
+//   .CardGridList {
+//     padding: 0 1rem;
 
-    &:hover {
-      fill: $primary-light;
-      transform: translateY(-2px);
-    }
-  }
-}
+//     .grid-sizer,
+//     .grid-item {
+//       &--small {
+//         width: 250px;
+//       }
+//       &--big {
+//         width: 350px;
+//       }
+//     }
+//   }
+// }
 
-@media screen and (min-width: $bp-big) {
-  .CardGridList {
-    padding: 0 1rem;
+// @media screen and (max-width: $bp-tablet) {
+//   .CardGridList {
+//     padding: 0 1rem;
 
-    .grid-sizer,
-    .grid-item {
-      &--small {
-        width: 250px;
-      }
-      &--big {
-        width: 350px;
-      }
-    }
-  }
-}
+//     .grid-sizer,
+//     .grid-item {
+//       &--small {
+//         width: 180px;
+//       }
+//       &--big {
+//         width: 260px;
+//       }
+//     }
+//   }
+// }
 
-@media screen and (max-width: $bp-tablet) {
-  .CardGridList {
-    padding: 0 1rem;
-
-    .grid-sizer,
-    .grid-item {
-      &--small {
-        width: 180px;
-      }
-      &--big {
-        width: 260px;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: $bp-phone) {
-  .CardGridList {
-    .grid-sizer,
-    .grid-item {
-      &--small {
-        width: 540px;
-      }
-      &--big {
-        width: 540px;
-      }
-    }
-  }
-}
-@media screen and (max-width: $bp-small-phone) {
-  .CardGridList {
-    .grid-sizer,
-    .grid-item {
-      &--small {
-        width: 360px;
-      }
-      &--big {
-        width: 360px;
-      }
-    }
-  }
-}
-@media screen and (max-width: $bp-smallest) {
-  .CardGridList {
-    .grid-sizer,
-    .grid-item {
-      &--small {
-        width: 250px;
-      }
-      &--big {
-        width: 250px;
-      }
-    }
-  }
-}
+// @media screen and (max-width: $bp-phone) {
+//   .CardGridList {
+//     .grid-sizer,
+//     .grid-item {
+//       &--small {
+//         width: 540px;
+//       }
+//       &--big {
+//         width: 540px;
+//       }
+//     }
+//   }
+// }
+// @media screen and (max-width: $bp-small-phone) {
+//   .CardGridList {
+//     .grid-sizer,
+//     .grid-item {
+//       &--small {
+//         width: 360px;
+//       }
+//       &--big {
+//         width: 360px;
+//       }
+//     }
+//   }
+// }
+// @media screen and (max-width: $bp-smallest) {
+//   .CardGridList {
+//     .grid-sizer,
+//     .grid-item {
+//       &--small {
+//         width: 250px;
+//       }
+//       &--big {
+//         width: 250px;
+//       }
+//     }
+//   }
+// }

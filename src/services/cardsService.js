@@ -1,22 +1,22 @@
 import axios from "axios"
 import { baseURL } from '../services/configService'
 
-export const getCards = () => {
-  var config = {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-  }
-  console.log("call")
+// export const getCards = () => {
+//   var config = {
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//   }
+//   console.log("call")
 
-  return axios.get(`${baseURL}card/list`, config)
-    .then(rep => {
-      return rep
-    })
-    .catch(function (err) {
-      return err
-    })
-}
+//   return axios.get(`${baseURL}card/list`, config)
+//     .then(rep => {
+//       return rep
+//     })
+//     .catch(function (err) {
+//       return err
+//     })
+// }
 
 
 export const getCardById = cardId => {
@@ -29,6 +29,7 @@ export const getCardById = cardId => {
 
   return axios.get(`${baseURL}card/list/${cardId}/`, config)
     .then(rep => {
+      
       return rep
     })
     .catch(function (err) {
@@ -54,6 +55,7 @@ export const getCardAfterfilter = (search) => {
     },
       config)
     .then(rep => {
+      console.log(rep)
       return rep
     })
 }

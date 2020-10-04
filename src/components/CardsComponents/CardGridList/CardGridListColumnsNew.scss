@@ -19,16 +19,6 @@
     }
   }
 
-  .grid-column {
-    // &--big{
-
-    // }
-
-    // &--small{
-    //   width:
-    // }
-  }
-
   .grid-item {
     padding-bottom: 1rem;
     // -webkit-column-break-inside: avoid;
@@ -51,23 +41,35 @@
 
       &__wrapper {
         &--big {
-          column-count: 4;
+          grid-template-columns: repeat(4, 1fr);
         }
         &--small {
-          column-count: 6;
+          grid-template-columns: repeat(6, 1fr);
         }
       }
     }
   }
 
+  @media screen and (max-width: $bp-tablet) {
+    .CardGridList {
+      &__wrapper {
+        &--big {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        &--small {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+    }
+  }
   @media screen and (max-width: $bp-phone) {
     .CardGridList {
       &__wrapper {
         &--big {
-          column-count: 2;
+          grid-template-columns: repeat(2, 1fr);
         }
         &--small {
-          column-count: 2;
+          grid-template-columns: repeat(2, 1fr);
         }
       }
     }
@@ -76,10 +78,10 @@
     .CardGridList {
       &__wrapper {
         &--big {
-          column-count: 1;
+          grid-template-columns: repeat(1, 1fr);
         }
         &--small {
-          column-count: 1;
+          grid-template-columns: repeat(1, 1fr);
         }
       }
     }

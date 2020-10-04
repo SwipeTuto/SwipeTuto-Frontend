@@ -53,29 +53,35 @@ const CardGridList = () => {
   // gestion de l'ordre des cartes par colonne
   const reorderCards = useCallback(
     (cardsArray, numberOfColumns) => {
-      // console.log(prevLastCards);
-      // console.log(lastCardsFetched);
-      if (prevLastCards === lastCardsFetched) return;
+      // console.log(numberOfColumns);
+
+      // if (prevLastCards === lastCardsFetched) return;
 
       // console.log(cardsArray, numberOfColumns);
       // si le nb de colonne change, on refait les colonnes
+      console.log(gridItems && gridItems.length);
+      console.log(numberOfColumns);
       let newArray = gridItems;
       if (gridItems && gridItems.length !== numberOfColumns) {
+        newArray = [];
         for (let i = 0; i < numberOfColumns; i++) {
+          console.log("call");
           newArray.push([]);
         }
       }
+      console.log(newArray);
 
-      const getStartIndex = () => {
-        if (lastColumnIndex + 1 < numberOfColumns) {
-          return lastColumnIndex + 1;
-        } else {
-          return 0;
-        }
-      };
+      // const getStartIndex = () => {
+      //   if (lastColumnIndex + 1 < numberOfColumns) {
+      //     return lastColumnIndex + 1;
+      //   } else {
+      //     return 0;
+      //   }
+      // };
 
       // console.log(startIndex);
 
+      // Vérifier les cartes : si elles ne sont pas déjà présentes dans le state cardsArrayCopyState alors on les y ajoute. On laissse aussi un array appelé à chaque call de la fonction qui va récup juste les dernières nouvelles cartes à chaque call
       let cardsArrayCopy = cardsArrayCopyState;
       let newCardsToAdd = [];
 
@@ -98,15 +104,17 @@ const CardGridList = () => {
 
       // console.log(newCardsToAdd);
 
+      // On commence à mettre des cartes dans la colonne qui suit la dernière qui a été remplie
       let startIndex = lastColumnIndex + 1;
       if (startIndex >= numberOfColumns - 1) {
         startIndex = 0;
       }
+      console.log(lastColumnIndex);
 
       newCardsToAdd &&
         newCardsToAdd.length !== 0 &&
         newCardsToAdd.forEach((card) => {
-          // console.log(startIndex);
+          console.log(startIndex);
           // console.log(newArray);
           // console.log(newArray[startIndex]);
           newArray && newArray[startIndex] && newArray[startIndex].push(card);
@@ -177,6 +185,7 @@ const CardGridList = () => {
       <div
         className={`CardGridList__wrapper CardGridList__wrapper--${cardsSize}`}
       >
+        {/* <div className="CardGridList__wrapper"> */}
         {isNaN(totalNumberOfResults) ? (
           <h2 className="title title-2 nocards-message">
             Désolé, une erreur est survenue. Si le problème persiste, merci de
@@ -191,7 +200,7 @@ const CardGridList = () => {
             {gridItems &&
               gridItems.map((column) => {
                 return (
-                  <div className="grid-column">
+                  <div className={`grid-column grid-column--${cardsSize}`}>
                     {column &&
                       column.map((card) => {
                         return (
@@ -200,6 +209,7 @@ const CardGridList = () => {
                             key={card.id}
                             data-key={card.id}
                           >
+                            {card.id}
                             <CardPreviewSmall size={cardsSize} card={card} />
                           </div>
                         );

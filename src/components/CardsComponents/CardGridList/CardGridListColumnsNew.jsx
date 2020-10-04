@@ -48,38 +48,20 @@ const CardGridList = () => {
   const prevLastCards = usePrevious(lastCardsFetched);
   const [cardsArrayCopyState, setCardsArrayCopyState] = useState([]);
   const [lastColumnIndex, setLastColumnIndex] = useState(-1);
-  // console.log(lastCardsFetched);
 
   // gestion de l'ordre des cartes par colonne
   const reorderCards = useCallback(
     (cardsArray, numberOfColumns) => {
-      // console.log(numberOfColumns);
+      if (prevLastCards === lastCardsFetched) return;
 
-      // if (prevLastCards === lastCardsFetched) return;
-
-      // console.log(cardsArray, numberOfColumns);
       // si le nb de colonne change, on refait les colonnes
-      console.log(gridItems && gridItems.length);
-      console.log(numberOfColumns);
       let newArray = gridItems;
       if (gridItems && gridItems.length !== numberOfColumns) {
         newArray = [];
         for (let i = 0; i < numberOfColumns; i++) {
-          console.log("call");
           newArray.push([]);
         }
       }
-      console.log(newArray);
-
-      // const getStartIndex = () => {
-      //   if (lastColumnIndex + 1 < numberOfColumns) {
-      //     return lastColumnIndex + 1;
-      //   } else {
-      //     return 0;
-      //   }
-      // };
-
-      // console.log(startIndex);
 
       // Vérifier les cartes : si elles ne sont pas déjà présentes dans le state cardsArrayCopyState alors on les y ajoute. On laissse aussi un array appelé à chaque call de la fonction qui va récup juste les dernières nouvelles cartes à chaque call
       let cardsArrayCopy = cardsArrayCopyState;
@@ -92,7 +74,6 @@ const CardGridList = () => {
             cardsArrayCopy.filter((cardCopy) => cardCopy.id === card.id)
               .length !== 0
           ) {
-            // console.log(card.id);
             return;
           } else {
             cardsArrayCopy.push(card);
@@ -100,23 +81,16 @@ const CardGridList = () => {
           }
         });
       setCardsArrayCopyState(cardsArrayCopy);
-      // console.log(cardsArrayCopy);
-
-      // console.log(newCardsToAdd);
 
       // On commence à mettre des cartes dans la colonne qui suit la dernière qui a été remplie
       let startIndex = lastColumnIndex + 1;
       if (startIndex >= numberOfColumns - 1) {
         startIndex = 0;
       }
-      console.log(lastColumnIndex);
 
       newCardsToAdd &&
         newCardsToAdd.length !== 0 &&
         newCardsToAdd.forEach((card) => {
-          console.log(startIndex);
-          // console.log(newArray);
-          // console.log(newArray[startIndex]);
           newArray && newArray[startIndex] && newArray[startIndex].push(card);
           setLastColumnIndex(startIndex);
           if (startIndex >= numberOfColumns - 1) {
@@ -145,15 +119,7 @@ const CardGridList = () => {
   // update du array local de cartes si + de fetch
   useEffect(() => {
     reorderCards(cards, numberOfColumns);
-    console.log(gridItems);
-  }, [
-    lastCardsFetched,
-    numberOfColumns,
-    reorderCards,
-    cardsSize,
-    cards,
-    gridItems,
-  ]);
+  }, [numberOfColumns, reorderCards, cards]);
 
   // gestion du infinite scroll : call automatique au back à un certain niveau de scroll
   const options = {

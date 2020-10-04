@@ -39,11 +39,13 @@ const CardGridList = () => {
   const nextPageLink = useSelector(selectPaginationNext);
 
   const cards = useSelector(selectCardsFetchedCards);
+  const prevCards = usePrevious(cards);
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
   const isLoaded = useSelector(selectIsLoaded);
   const [gridItems, setGridItems] = useState([]);
   const cardsSize = useSelector(selectCardsSize);
   const numberOfColumns = useColumnsNumber();
+  const prevNumberOfColumns = usePrevious(numberOfColumns);
   const lastCardsFetched = useSelector(selectLastCardsFetched);
   const prevLastCards = usePrevious(lastCardsFetched);
   const [cardsArrayCopyState, setCardsArrayCopyState] = useState([]);
@@ -51,75 +53,75 @@ const CardGridList = () => {
 
   // gestion de l'ordre des cartes par colonne
   const reorderCards = useCallback(
-    (cardsArray, numberOfColumns) => {
-      if (prevLastCards === lastCardsFetched) return;
+    (cardsArray, columnsNumber, resize) => {
+      // console.log("call : " + columnsNumber);
+      // prevent de relancer la fonction si on fetch 2 fois les même cartes
+      if (prevCards === cards && !resize) return;
+      console.log("call");
 
       // si le nb de colonne change, on refait les colonnes
-      let newArray = gridItems;
-      if (gridItems && gridItems.length !== numberOfColumns) {
-        newArray = [];
-        for (let i = 0; i < numberOfColumns; i++) {
-          newArray.push([]);
-        }
+      let newArray = [];
+      for (let i = 0; i < columnsNumber; i++) {
+        newArray.push([]);
       }
 
       // Vérifier les cartes : si elles ne sont pas déjà présentes dans le state cardsArrayCopyState alors on les y ajoute. On laissse aussi un array appelé à chaque call de la fonction qui va récup juste les dernières nouvelles cartes à chaque call
-      let cardsArrayCopy = cardsArrayCopyState;
-      let newCardsToAdd = [];
+      // let cardsArrayCopy = cardsArrayCopyState;
+      // let newCardsToAdd = [];
+
+      // cardsArray &&
+      //   cardsArray.forEach((card) => {
+      //     if (
+      //       cardsArrayCopy &&
+      //       cardsArrayCopy.filter((cardCopy) => cardCopy.id === card.id)
+      //         .length !== 0
+      //     ) {
+      //       return;
+      //     } else {
+      //       cardsArrayCopy.push(card);
+      //       newCardsToAdd.push(card);
+      //     }
+      //   });
+      // setCardsArrayCopyState(cardsArrayCopy);
+
+      // // On commence à mettre des cartes dans la colonne qui suit la dernière qui a été remplie
+      // let startIndex = lastColumnIndex + 1;
+      // if (startIndex >= numberOfColumns - 1) {
+      //   startIndex = 0;
+      // }
+
+      let startIndex = 0;
 
       cardsArray &&
+        cardsArray.length !== 0 &&
         cardsArray.forEach((card) => {
-          if (
-            cardsArrayCopy &&
-            cardsArrayCopy.filter((cardCopy) => cardCopy.id === card.id)
-              .length !== 0
-          ) {
-            return;
-          } else {
-            cardsArrayCopy.push(card);
-            newCardsToAdd.push(card);
-          }
-        });
-      setCardsArrayCopyState(cardsArrayCopy);
-
-      // On commence à mettre des cartes dans la colonne qui suit la dernière qui a été remplie
-      let startIndex = lastColumnIndex + 1;
-      if (startIndex >= numberOfColumns - 1) {
-        startIndex = 0;
-      }
-
-      newCardsToAdd &&
-        newCardsToAdd.length !== 0 &&
-        newCardsToAdd.forEach((card) => {
           newArray && newArray[startIndex] && newArray[startIndex].push(card);
-          setLastColumnIndex(startIndex);
+          // setLastColumnIndex(startIndex);
           if (startIndex >= numberOfColumns - 1) {
             startIndex = 0;
           } else {
             startIndex++;
           }
-
-          setGridItems(newArray);
           return newArray;
         });
 
-      newCardsToAdd = [];
+      setGridItems(newArray);
 
-      return newArray;
+      // newCardsToAdd = [];
+
+      // return newArray;
     },
-    [
-      lastCardsFetched,
-      gridItems,
-      prevLastCards,
-      cardsArrayCopyState,
-      lastColumnIndex,
-    ]
+    [prevCards, cards, numberOfColumns]
   );
 
   // update du array local de cartes si + de fetch
   useEffect(() => {
-    reorderCards(cards, numberOfColumns);
-  }, [numberOfColumns, reorderCards, cards]);
+    if (prevNumberOfColumns !== numberOfColumns) {
+      reorderCards(cards, numberOfColumns, true);
+    } else {
+      reorderCards(cards, numberOfColumns, false);
+    }
+  }, [numberOfColumns, reorderCards, cards, prevNumberOfColumns]);
 
   // gestion du infinite scroll : call automatique au back à un certain niveau de scroll
   const options = {

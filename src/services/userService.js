@@ -34,14 +34,14 @@ export const loginGit = () => {
   auth().signInWithPopup(providerGit)
     .then(result => {
       var user = result.user;
-      const emailConst = result.additionalUserInfo.profile.email
+      const profile = result.additionalUserInfo.profile
       return user.getIdToken()
         .then(idToken => {
 
-          Gitlogin(idToken, emailConst)
+          Gitlogin(idToken, profile)
             .then(rep => {
-              // history.push('/', history.location)
-              // history.go()
+              history.push('/', history.location)
+              history.go()
               return rep
             })
         })
@@ -67,11 +67,11 @@ export const login = idToken => {
 }
 
 
-export const Gitlogin = (idToken, emailConst) => {
+export const Gitlogin = (idToken, profile) => {
 
   var data = {
     'token_id': idToken,
-    'emailConst': emailConst,
+    'profile': profile,
   }
   var config = { headers: { 'Content-Type': 'application/json' }, }
 

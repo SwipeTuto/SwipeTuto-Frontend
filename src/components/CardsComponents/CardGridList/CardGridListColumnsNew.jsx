@@ -136,9 +136,12 @@ const CardGridList = () => {
         ) : (
           <>
             {gridItems &&
-              gridItems.map((column) => {
+              gridItems.map((column, index) => {
                 return (
-                  <div className={`grid-column grid-column--${cardsSize}`}>
+                  <div
+                    className={`grid-column grid-column--${cardsSize}`}
+                    key={index}
+                  >
                     {column &&
                       column.map((card) => {
                         return (

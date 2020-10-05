@@ -22,6 +22,7 @@ import {
 import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
 import CardFullPopup from "../CardFullPopup/CardFullPopup";
 import Loading from "../../Loading/Loading";
+import PageLoading from "../../Loading/PageLoading";
 import ScrollButton from "../../LayoutComponents/ScrollButton/ScrollButton";
 
 // scss
@@ -54,41 +55,14 @@ const CardGridList = () => {
   // gestion de l'ordre des cartes par colonne
   const reorderCards = useCallback(
     (cardsArray, columnsNumber, resize) => {
-      // console.log("call : " + columnsNumber);
       // prevent de relancer la fonction si on fetch 2 fois les même cartes
       if (prevCards === cards && !resize) return;
-      console.log("call");
 
       // si le nb de colonne change, on refait les colonnes
       let newArray = [];
       for (let i = 0; i < columnsNumber; i++) {
         newArray.push([]);
       }
-
-      // Vérifier les cartes : si elles ne sont pas déjà présentes dans le state cardsArrayCopyState alors on les y ajoute. On laissse aussi un array appelé à chaque call de la fonction qui va récup juste les dernières nouvelles cartes à chaque call
-      // let cardsArrayCopy = cardsArrayCopyState;
-      // let newCardsToAdd = [];
-
-      // cardsArray &&
-      //   cardsArray.forEach((card) => {
-      //     if (
-      //       cardsArrayCopy &&
-      //       cardsArrayCopy.filter((cardCopy) => cardCopy.id === card.id)
-      //         .length !== 0
-      //     ) {
-      //       return;
-      //     } else {
-      //       cardsArrayCopy.push(card);
-      //       newCardsToAdd.push(card);
-      //     }
-      //   });
-      // setCardsArrayCopyState(cardsArrayCopy);
-
-      // // On commence à mettre des cartes dans la colonne qui suit la dernière qui a été remplie
-      // let startIndex = lastColumnIndex + 1;
-      // if (startIndex >= numberOfColumns - 1) {
-      //   startIndex = 0;
-      // }
 
       let startIndex = 0;
 
@@ -106,10 +80,6 @@ const CardGridList = () => {
         });
 
       setGridItems(newArray);
-
-      // newCardsToAdd = [];
-
-      // return newArray;
     },
     [prevCards, cards, numberOfColumns]
   );
@@ -125,7 +95,7 @@ const CardGridList = () => {
 
   // gestion du infinite scroll : call automatique au back à un certain niveau de scroll
   const options = {
-    rootMargin: "300px",
+    rootMargin: "800px",
   };
   const observer = useRef();
   const bottomGrid = useCallback(
@@ -177,7 +147,7 @@ const CardGridList = () => {
                             key={card.id}
                             data-key={card.id}
                           >
-                            {card.id}
+                            {/* {card.id} */}
                             <CardPreviewSmall size={cardsSize} card={card} />
                           </div>
                         );
@@ -190,7 +160,7 @@ const CardGridList = () => {
       </div>
 
       <CardFullPopup />
-      {!isLoaded && <Loading />}
+      {!isLoaded && <PageLoading />}
       {cards && nextPageLink && (
         <div className="bottom-grid" ref={bottomGrid}></div>
       )}

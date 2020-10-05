@@ -8,6 +8,7 @@ import {
   selectTotalNumberOfResults,
   selectSearchCategory,
   selectSearchPage,
+  selectSearchOrder,
 } from "../../../redux/filter/filter-selectors";
 import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 
@@ -30,8 +31,9 @@ const FiltersBar = ({ handleClickSize }) => {
   const dispatch = useDispatch();
   // paramètres de recherche :
   const currentTheme = useSelector(selectTheme);
-  const currentPage = useSelector(selectSearchPage);
+  // const currentPage = useSelector(selectSearchPage);
   const searchCategory = useSelector(selectSearchCategory);
+  const searchOrder = useSelector(selectSearchOrder);
   const [redirection, setRedirection] = useState(false);
   const linkBar = document.querySelector(".FiltersBar__options--links");
 
@@ -87,7 +89,11 @@ const FiltersBar = ({ handleClickSize }) => {
               onChange={(e) => handleOrderChange(e)}
             >
               {orderArray.map((order, index) => (
-                <option key={index} value={order.queryName}>
+                <option
+                  key={index}
+                  value={order.queryName}
+                  selected={order.queryName === searchOrder}
+                >
                   {order.name}
                 </option>
               ))}

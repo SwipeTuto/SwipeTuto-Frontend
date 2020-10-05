@@ -28,6 +28,7 @@ import Pagination from "../../components/LayoutComponents/Pagination/Pagination"
 import "./SearchPage.scss";
 import { useCallback } from "react";
 import { setCardsSize } from "../../redux/layout/layout-actions";
+import { urlParams } from "../../helper";
 
 // Récupérer le handleClick sur les display large ou petit des grids et fixer à big ou small et passer ça dans CardGridList
 
@@ -43,10 +44,25 @@ const SearchPage = ({ location }) => {
   const [screenHeight, setScreenHeight] = useState(0);
   const [bottomGridLevel, setBottomGridLevel] = useState(0);
   const [scrollLevel, setScrollLevel] = useState(0);
+  const [topic, category, ordering, search, page] = urlParams(location);
+  const {
+    searchWords,
+    searchTopic,
+    searchCategory,
+    searchOrder,
+    searchPage,
+  } = currentSearch;
+  // const urlCurrentSearch = {
+  //   searchWords: search,
+  //   searchTopic: topic,
+  //   searchCategory: category,
+  //   searchOrder: ordering,
+  //   searchPage: parseInt(page),
+  // };
 
-  const [totalNumberOfPages, setTotalNumberOfPages] = useState(0);
-  const totalNumberOfCards = useSelector(selectTotalNumberOfResults);
-  const currentSearchPageNumber = useSelector(selectSearchPage);
+  // const [totalNumberOfPages, setTotalNumberOfPages] = useState(0);
+  // const currentSearchPageNumber = useSelector(selectSearchPage);
+  // const totalNumberOfCards = useSelector(selectTotalNumberOfResults);
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
 
   const getRealNumber = (results) => {
@@ -60,17 +76,12 @@ const SearchPage = ({ location }) => {
   window.addEventListener("load", () => {
     window.scroll(0, 0);
   });
-  // useEffect(() => {
-  //   if (window.scrollY) {
-  //     window.scroll(0, 0);
-  //   }
-  // }, []);
 
   const totalNumberOfCardsSearched = getRealNumber(totalNumberOfResults);
 
   // A CHANGER EN FONCTION DU BACK :
-  const numberOfItemByPage = 20;
-  const currentSearchPage = useSelector(selectSearchPage);
+  // const numberOfItemByPage = 20;
+  // const currentSearchPage = useSelector(selectSearchPage);
 
   const handleClickSize = (e) => {
     const allGridSizeItems = [
@@ -83,32 +94,32 @@ const SearchPage = ({ location }) => {
     e.target.classList.add("active");
   };
 
-  const handlePaginationNavigation = (e) => {
-    const navPageNumber = e.target.dataset.page;
-    dispatch(setCurrentSearch("searchPage", navPageNumber));
-    setRedirection(true);
-  };
+  // const handlePaginationNavigation = (e) => {
+  //   const navPageNumber = e.target.dataset.page;
+  //   dispatch(setCurrentSearch("searchPage", navPageNumber));
+  //   setRedirection(true);
+  // };
 
-  const goToFirstPage = () => {
-    dispatch(setCurrentSearch("searchPage", 1));
-    setRedirection(true);
-  };
-  const goToLastPage = () => {
-    dispatch(setCurrentSearch("searchPage", parseInt(totalNumberOfPages)));
-    setRedirection(true);
-  };
-  const goToPreviousPage = () => {
-    dispatch(setCurrentSearch("searchPage", parseInt(currentSearchPage - 1)));
-    setRedirection(true);
-  };
-  const goToNextPage = () => {
-    dispatch(setCurrentSearch("searchPage", parseInt(currentSearchPage + 1)));
-    setRedirection(true);
-  };
+  // const goToFirstPage = () => {
+  //   dispatch(setCurrentSearch("searchPage", 1));
+  //   setRedirection(true);
+  // };
+  // const goToLastPage = () => {
+  //   dispatch(setCurrentSearch("searchPage", parseInt(totalNumberOfPages)));
+  //   setRedirection(true);
+  // };
+  // const goToPreviousPage = () => {
+  //   dispatch(setCurrentSearch("searchPage", parseInt(currentSearchPage - 1)));
+  //   setRedirection(true);
+  // };
+  // const goToNextPage = () => {
+  //   dispatch(setCurrentSearch("searchPage", parseInt(currentSearchPage + 1)));
+  //   setRedirection(true);
+  // };
 
-  useEffect(() => {
-    setTotalNumberOfPages(Math.ceil(totalNumberOfCards / numberOfItemByPage));
-  }, [totalNumberOfCards, currentSearch]);
+  // useEffect(() => {
+  //   setTotalNumberOfPages(Math.ceil(totalNumberOfCards / numberOfItemByPage));
+  // }, [totalNumberOfCards, currentSearch]);
 
   useEffect(() => {
     if (
@@ -118,9 +129,34 @@ const SearchPage = ({ location }) => {
     ) {
       return;
     } else {
+      console.log(currentSearch);
+
+      if (
+        searchWords !== search ||
+        searchTopic !== topic ||
+        searchCategory !== category ||
+        searchOrder !== ordering ||
+        searchPage !== parseInt(page)
+      )
+        return;
+      console.log("currentSearch");
       dispatch(getCardAfterfilterAction(currentSearch));
     }
-  }, [currentSearch, dispatch]);
+  }, [
+    category,
+    currentSearch,
+    dispatch,
+    location,
+    ordering,
+    page,
+    search,
+    searchCategory,
+    searchOrder,
+    searchPage,
+    searchTopic,
+    searchWords,
+    topic,
+  ]);
 
   const redirectLink = SearchLinkRedirect();
 
@@ -132,8 +168,7 @@ const SearchPage = ({ location }) => {
           <CurrentSearchWords />
           <div className="SearchPage__filtersBarMobile">
             <p className="SearchPage__searchResults">
-              {totalNumberOfCardsSearched} Résultats - Page{" "}
-              {currentSearchPageNumber}
+              {totalNumberOfCardsSearched} Résultats
             </p>
           </div>
           <FiltersBar handleClickSize={handleClickSize} />

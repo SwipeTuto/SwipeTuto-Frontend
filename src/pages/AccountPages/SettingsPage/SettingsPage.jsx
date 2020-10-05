@@ -46,6 +46,7 @@ const SettingsPage = () => {
     let avatarFormData = new FormData();
     avatarFormData.append("avatar", newAvatarFile, newAvatarFile.name);
     upDateAvatar(avatarFormData).then(rep =>{
+      console.log('rep', rep)
       setInputValid({ ...inputValidCopy, avatar: true });
     })
     setNewUserInfos({

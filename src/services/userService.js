@@ -91,7 +91,6 @@ export const Gitlogin = (idToken, emailConst) => {
 }
 
 
-
 export const loginManuel = (email, password) => {
   var config = {
     headers: { 'Content-Type': 'application/json' },
@@ -108,6 +107,7 @@ export const loginManuel = (email, password) => {
     })
 }
 
+
 export const logout = () => {
   if (localStorage.getItem('user')) {
     localStorage.removeItem('user')
@@ -117,6 +117,7 @@ export const logout = () => {
   }
   return true
 }
+
 
 export const register = users => {
   const data = {
@@ -137,10 +138,9 @@ export const register = users => {
 }
 
 
-
 // update des infos user qui vient du component SettingsPage, sous forme d'objet
 export const updateUserInfos = newUserInfos => {
-  console.log(newUserInfos)
+
   const data = {
     username: newUserInfos.username,
     first_name: newUserInfos.first_name,
@@ -175,6 +175,20 @@ export const getUserById = id => {
     return rep
   })
 
+}
+
+export const upDateAvatar = avatar => {
+  console.log(avatar)
+  const requestOptions = {
+    headers: {
+      'Content-Type': "multipart/form-data",
+      'Authorization': authHeader()
+    }
+  };
+
+  return axios.put(`${baseURL}avatar/`,avatar, requestOptions).then(rep => {
+    return rep
+  })
 }
 
 

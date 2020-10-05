@@ -29,6 +29,7 @@ export const getCardById = cardId => {
 
   return axios.get(`${baseURL}card/list/${cardId}/`, config)
     .then(rep => {
+      
       return rep
     })
     .catch(function (err) {
@@ -54,6 +55,7 @@ export const getCardAfterfilter = (search) => {
     },
       config)
     .then(rep => {
+      console.log(rep)
       return rep
     })
 }

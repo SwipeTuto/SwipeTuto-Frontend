@@ -7,6 +7,7 @@ import "./SettingsPage.scss";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { updateUserInfosAction } from "../../../redux/user/user-actions";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
+import { upDateAvatar } from "../../../services/userService";
 
 const SettingsPage = () => {
   const dispatch = useDispatch();
@@ -43,13 +44,15 @@ const SettingsPage = () => {
       setInputValid({ ...inputValidCopy, avatar: false });
     }
     let avatarFormData = new FormData();
-    avatarFormData.append("avatar", newAvatarFile);
-
+    avatarFormData.append("avatar", newAvatarFile, newAvatarFile.name);
+    upDateAvatar(avatarFormData).then(rep =>{
+      setInputValid({ ...inputValidCopy, avatar: true });
+    })
     setNewUserInfos({
       ...currentUser,
       avatar: [avatarFormData],
     });
-    setInputValid({ ...inputValidCopy, avatar: true });
+    // setInputValid({ ...inputValidCopy, avatar: true });
   };
 
   const handleChange = (e) => {

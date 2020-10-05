@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "colcade": "^0.2.0",
-    "firebase": "^7.14.5",
+    "firebase": "^7.22.0",
     "heroku": "^7.42.13",
     "imagesloaded": "^4.1.4",
     "masonry-layout": "^4.2.2",

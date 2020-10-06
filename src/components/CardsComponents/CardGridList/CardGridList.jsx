@@ -149,7 +149,6 @@ const CardGridList = () => {
                             key={card.id}
                             data-key={card.id}
                           >
-                            {card.id}
                             {card && (
                               <CardPreviewSmall size={cardsSize} card={card} />
                             )}

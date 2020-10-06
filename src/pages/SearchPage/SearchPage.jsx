@@ -121,42 +121,41 @@ const SearchPage = ({ location }) => {
   //   setTotalNumberOfPages(Math.ceil(totalNumberOfCards / numberOfItemByPage));
   // }, [totalNumberOfCards, currentSearch]);
 
-  useEffect(() => {
-    if (
-      location &&
-      location.pathname &&
-      location.pathname.includes("/card_id=")
-    ) {
-      return;
-    } else {
-      console.log(currentSearch);
+  // useEffect(() => {
+  //   if (
+  //     location &&
+  //     location.pathname &&
+  //     location.pathname.includes("/card_id=")
+  //   ) {
+  //     return;
+  //   } else {
 
-      if (
-        searchWords !== search ||
-        searchTopic !== topic ||
-        searchCategory !== category ||
-        searchOrder !== ordering ||
-        searchPage !== parseInt(page)
-      )
-        return;
-      console.log("currentSearch");
-      dispatch(getCardAfterfilterAction(currentSearch));
-    }
-  }, [
-    category,
-    currentSearch,
-    dispatch,
-    location,
-    ordering,
-    page,
-    search,
-    searchCategory,
-    searchOrder,
-    searchPage,
-    searchTopic,
-    searchWords,
-    topic,
-  ]);
+  //     if (
+  //       searchWords !== search ||
+  //       searchTopic !== topic ||
+  //       searchCategory !== category ||
+  //       searchOrder !== ordering
+  //     )
+  //       return;
+  //     dispatch(getCardAfterfilterAction(currentSearch));
+  //   }
+  // }, [
+  //   category,
+  //   currentSearch,
+  //   dispatch,
+  //   location,
+  //   ordering,
+  //   page,
+  //   search,
+  //   searchCategory,
+  //   searchOrder,
+  //   searchPage,
+  //   searchTopic,
+  //   searchWords,
+  //   topic,
+  // ]);
+
+  useEffect(() => {});
 
   const redirectLink = SearchLinkRedirect();
 

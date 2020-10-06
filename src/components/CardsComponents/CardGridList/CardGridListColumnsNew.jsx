@@ -12,6 +12,7 @@ import {
   selectTotalNumberOfResults,
   selectPaginationNext,
   selectLastCardsFetched,
+  selectCurrentSearch,
 } from "../../../redux/filter/filter-selectors";
 import {
   selectCardsSize,
@@ -28,7 +29,10 @@ import ScrollButton from "../../LayoutComponents/ScrollButton/ScrollButton";
 // scss
 import { ReactComponent as GoTopLogo } from "../../../assets/images/chevrons/arrow-up-circle.svg";
 import "./CardGridListColumnsNew.scss";
-import { getOtherPageAction } from "../../../redux/filter/filter-actions";
+import {
+  getCardAfterfilterAction,
+  getOtherPageAction,
+} from "../../../redux/filter/filter-actions";
 import { useCallback } from "react";
 import { useScroll } from "../../../hooks/useScroll";
 import { useWinWidth } from "../../../hooks/useWinWidth";
@@ -48,9 +52,15 @@ const CardGridList = () => {
   const numberOfColumns = useColumnsNumber();
   const prevNumberOfColumns = usePrevious(numberOfColumns);
   const lastCardsFetched = useSelector(selectLastCardsFetched);
-  const prevLastCards = usePrevious(lastCardsFetched);
-  const [cardsArrayCopyState, setCardsArrayCopyState] = useState([]);
-  const [lastColumnIndex, setLastColumnIndex] = useState(-1);
+  const currentSearch = useSelector(selectCurrentSearch);
+  const prevCurrentSearch = usePrevious(currentSearch);
+
+  useEffect(() => {
+    if (prevCurrentSearch && prevCurrentSearch !== currentSearch) {
+      dispatch(getCardAfterfilterAction(currentSearch));
+      console.log("call");
+    }
+  }, [currentSearch, prevCurrentSearch, dispatch]);
 
   // gestion de l'ordre des cartes par colonne
   const reorderCards = useCallback(
@@ -118,6 +128,9 @@ const CardGridList = () => {
     window.scrollTo(0, 0);
   };
 
+  // const gridItemsArray = document.querySelectorAll(".grid-item");
+  // if (gridItemsArray) console.log(gridItemsArray.length);
+
   return (
     <div className="CardGridList">
       <div
@@ -150,8 +163,10 @@ const CardGridList = () => {
                             key={card.id}
                             data-key={card.id}
                           >
-                            {/* {card.id} */}
-                            <CardPreviewSmall size={cardsSize} card={card} />
+                            {card.id}
+                            {card && (
+                              <CardPreviewSmall size={cardsSize} card={card} />
+                            )}
                           </div>
                         );
                       })}

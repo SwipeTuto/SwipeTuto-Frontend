@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 // redux
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
-import { deleteCurrentSearch } from "../../../redux/filter/filter-actions";
+import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 import {
   selectMobileNavOpen,
   selectFilterMobileMenuOpen,
@@ -14,9 +14,10 @@ import {
   openMobileNav,
   closeMobileNav,
   openFilterMobileMenu,
+  setLoaded,
 } from "../../../redux/layout/layout-actions";
 import { logoutAction } from "../../../redux/user/user-actions";
-import { selectSearchWords } from "../../../redux/filter/filter-selectors";
+import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
@@ -40,6 +41,7 @@ import SwipeTutoSmallFull from "../../../assets/logos/Logo full border black sma
 import "./NavTopMobile.scss";
 import { useDarkMode } from "../../../hooks/useDarkMode";
 import ToggleButton from "../ToggleTheme/ToggleTheme";
+import { initialSearchState } from "../../../helper";
 
 const NavTopMobile = (props) => {
   const [redirection, setRedirection] = useState(false);
@@ -48,17 +50,25 @@ const NavTopMobile = (props) => {
   const currentTheme = useSelector(selectTheme);
   const currentUser = useSelector(selectCurrentUser);
   const mobileNavOpen = useSelector(selectMobileNavOpen);
-  const searchWords = useSelector(selectSearchWords);
+  // const searchWords = useSelector(selectSearchWords);
+  const currentSearch = useSelector(selectCurrentSearch);
+  const {
+    searchWords,
+    searchTopic,
+    searchCategory,
+    searchOrder,
+  } = currentSearch;
 
   useEffect(() => {
     const NavTopMobileMenu = document.querySelector(".NavTopMobile");
 
     if (NavTopMobileMenu && NavTopMobileMenu.scroll) {
       NavTopMobileMenu.scroll(0, 0);
+      dispatch(setLoaded());
     }
     setRedirection(true);
     setRedirection(false);
-  }, [mobileNavOpen, searchWords]);
+  }, [mobileNavOpen, searchWords, dispatch]);
 
   // scroll reset
   useEffect(() => {
@@ -155,9 +165,14 @@ const NavTopMobile = (props) => {
             </Link>
             <Link
               className="NavTopMobile__link"
-              to="/search"
+              to={`/search?${searchWords ? `search=${searchWords}` : ""}${
+                searchTopic ? `&topic=${searchTopic}` : ""
+              }${searchOrder ? `&order=${searchOrder}` : ""}${
+                searchCategory ? `&category=${searchCategory}` : ""
+              }`}
               onClick={() => {
-                dispatch(deleteCurrentSearch());
+                // dispatch(deleteCurrentSearch());
+                dispatch(setCurrentSearch(initialSearchState));
                 dispatch(closeMobileNav());
               }}
             >

@@ -18,7 +18,7 @@ import NavTop from "./components/LayoutComponents/NavTop/NavTop";
 import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
-import { getCardsAction, getCardByIdAction } from './redux/filter/filter-actions'
+import { getCardByIdAction } from './redux/filter/filter-actions'
 import { selectIsLoaded, selectTheme } from "./redux/layout/layout-selectors"
 import { setCurrentSearch } from "./redux/filter/filter-actions"
 
@@ -40,36 +40,25 @@ function App(props) {
 
   const currentTheme = useSelector(selectTheme)
   const dispatch = useDispatch();
-  const [topic, category, ordering, search, page] = urlParams(props.location)
+  const [topic, category, ordering, search] = urlParams(props.location)
   const userId = getUrlId(props.location.pathname, "user_id")
   const cardId = getUrlId(props.location.pathname, "card_id")
   const isLoaded = useSelector(selectIsLoaded)
 
   useEffect(() => {
-    if (!isLoaded && (topic || category || ordering || search || page)) {
+    if (!isLoaded && (topic || category || ordering || search)) {
       dispatch(setCurrentSearch("searchWords", search))
       dispatch(setCurrentSearch("searchTopic", topic))
       dispatch(setCurrentSearch("searchCategory", category))
       dispatch(setCurrentSearch("searchOrder", ordering || "-created"))
-      dispatch(setCurrentSearch("searchPage", parseInt(page)))
     } else if (cardId) {
-      // LANCER ACTION FETCH CARD BY ID dans clickedcard
-      // dispatch(getCardsAction())
       dispatch(getCardByIdAction(cardId))
       dispatch(showPopupCard())
-
     } else if (!isLoaded && userId) {
       dispatch(getUserByIdAction(userId))
     } else {
-      // LANCER ACTION FETCH CARD BY ID dans clickedcard
-      // dispatch(getCardsAction())
-      // dispatch(getCardByIdAction(cardId))
-      // dispatch(showPopupCard())
       return
     }
-
-
-
   }, []);
 
   useEffect(() => {

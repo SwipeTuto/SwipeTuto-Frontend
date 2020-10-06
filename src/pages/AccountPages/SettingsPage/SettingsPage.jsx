@@ -7,7 +7,6 @@ import "./SettingsPage.scss";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { updateUserInfosAction } from "../../../redux/user/user-actions";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
-import { upDateAvatar } from "../../../services/userService";
 
 const SettingsPage = () => {
   const dispatch = useDispatch();
@@ -44,16 +43,13 @@ const SettingsPage = () => {
       setInputValid({ ...inputValidCopy, avatar: false });
     }
     let avatarFormData = new FormData();
-    avatarFormData.append("avatar", newAvatarFile, newAvatarFile.name);
-    upDateAvatar(avatarFormData).then(rep =>{
-      console.log('rep', rep)
-      setInputValid({ ...inputValidCopy, avatar: true });
-    })
+    avatarFormData.append("avatar", newAvatarFile);
+
     setNewUserInfos({
       ...currentUser,
       avatar: [avatarFormData],
     });
-    // setInputValid({ ...inputValidCopy, avatar: true });
+    setInputValid({ ...inputValidCopy, avatar: true });
   };
 
   const handleChange = (e) => {
@@ -106,10 +102,10 @@ const SettingsPage = () => {
     e.preventDefault();
     dispatch(updateUserInfosAction(newUserInfos));
     setSendNewInfos(true);
-    const { name } = e.target;
-    const currentInput = document.querySelector(
-      `.SettingsPage .settings__form--input[name=${name}]`
-    );
+    // const { name } = e.target;
+    // const currentInput = document.querySelector(
+    //   `.SettingsPage .settings__form--input[name=${name}]`
+    // );
     // console.log(currentInput);
     // currentInput.value = "";
   };

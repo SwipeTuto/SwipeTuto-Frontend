@@ -3,9 +3,9 @@ import { initialSearchState } from '../../helper/index'
 
 const INITIAL_STATE = {
   currentSearch: initialSearchState,
-  cardsFetched: "",
-  lastCardsFetched: "",
-  otherCardsByAuthor: "",
+  cardsFetched: null,
+  lastCardsFetched: null,
+  otherCardsByAuthor: null,
   clickedCard: null,
   clickedCardComments: null,
   lastPublishedComment: null,
@@ -120,8 +120,8 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
     case FilterActionTypes.GET_OTHER_PAGE_ACTION_FAILURE:
       return { ...state, errors: action.payload };
 
-    case FilterActionTypes.SET_CARDS_GRID_PAGE:
-      return { ...state, currentSearch: { ...state.currentSearch, searchPage: action.payload } };
+    // case FilterActionTypes.SET_CARDS_GRID_PAGE:
+    //   return { ...state, currentSearch: { ...state.currentSearch, searchPage: action.payload } };
 
     case FilterActionTypes.SET_CLICKED_CARD:
       return {

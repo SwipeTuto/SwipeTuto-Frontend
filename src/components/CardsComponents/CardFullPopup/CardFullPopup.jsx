@@ -16,6 +16,7 @@ import {
   selectCurrentSearch,
   selectCardsFetchedCards,
   selectOtherCardsByAuthor,
+  selectCardsFetched,
 } from "../../../redux/filter/filter-selectors";
 import {
   setClickedCard,
@@ -47,8 +48,6 @@ import ConnexionRedirect from "../../LayoutComponents/ConnexionRedirect/Connexio
 
 // Services & helpers
 import { formattedDate, renameCategory } from "../../../helper/index";
-// import { coudinaryBase } from "../../../services/configService";
-// import { base, coudinaryBase } from "../../../services/configService";
 
 // Assets
 import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevrons/chevron-back-circle.svg";
@@ -62,10 +61,7 @@ import { ReactComponent as FullscreenLogo } from "../../../assets/images/expand.
 
 // SCSS
 import "./CardFullPopup.scss";
-import {
-  getUserByIdAction,
-  getCurrentUserAction,
-} from "../../../redux/user/user-actions";
+import { getCurrentUserAction } from "../../../redux/user/user-actions";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
 // handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
@@ -74,6 +70,7 @@ const CardFullPopup = ({ history }) => {
   const currentTheme = useSelector(selectTheme);
   const [redirection, setRedirection] = useState(false);
   const currentSearch = useSelector(selectCurrentSearch);
+  const cardsFetched = useSelector(selectCardsFetched);
   const currentUser = useSelector(selectCurrentUser);
   const currentUserId = useSelector(selectCurrentUserId);
   const clickedCard = useSelector(selectClickedCard);
@@ -175,6 +172,9 @@ const CardFullPopup = ({ history }) => {
         "",
         history.location.pathname + history.location.search
       );
+      if (!cardsFetched) {
+        dispatch(getCardAfterfilterAction(currentSearch));
+      }
     }
 
     const currentClickedCard = clickedCard
@@ -191,9 +191,6 @@ const CardFullPopup = ({ history }) => {
     } else {
       return;
     }
-    // if (cardIsLiked !== userHasLiked()) {
-    //   dispatch(getCardAfterfilterAction(currentSearch));
-    // }
 
     dispatch(getCurrentUserAction(currentUserId));
   };
@@ -258,9 +255,6 @@ const CardFullPopup = ({ history }) => {
                       onClick={handleSaveClick}
                     />
                   )}
-
-                  {/* FAIRE UN CHECK SI CARD DEJA LIKEE PAR USER EN VOYANT ID */}
-
                   {cardIsLiked ? (
                     <HeartFull
                       className="card-action-button card-action-button__liked"
@@ -363,12 +357,9 @@ const CardFullPopup = ({ history }) => {
                             <img
                               style={{ width: "100%", height: "100%" }}
                               src={card.media_image["0"].image}
-                              // src={base + card.media_image["0"].image}
                               alt="autre"
                             />
                           ) : (
-                            // https://res.cloudinary.com/hiimurmrd/image/upload/v1599134795/media/2020/9/118_2020-09-03_120634.4531500000_lexique_ajax_20200520_tjwmqa.jpg
-                            // https://swipetuto-back-dev.herokuapp.https://res.cloudinary.com/hiimurmrd/image/upload/v1/media/2020/9/119_2020-09-03_120804.0307000000_lexique_backend_20200523_z0c01u
                             <div className="CardFullPopup__empty-image">
                               Image(s) Indisponible(s)
                             </div>
@@ -386,7 +377,6 @@ const CardFullPopup = ({ history }) => {
         {indexOfCurrentCard === 0 ? (
           <ChevronCircleRight
             className="nav__chevron nav__chevron--right"
-            // onClick={() => goNextCard()}
             onClick={(event) => {
               event.stopPropagation();
               goNextCard();
@@ -404,7 +394,6 @@ const CardFullPopup = ({ history }) => {
           <>
             <ChevronCircleRight
               className="nav__chevron nav__chevron--right"
-              // onClick={() => goNextCard()}
               onClick={(event) => {
                 event.stopPropagation();
                 goNextCard();

@@ -2,8 +2,7 @@ import axios from "axios";
 import { authHeader } from '../helper/auth-header';
 import { auth, provider, providerGit } from '../services/firebaseService';
 import { baseURL } from '../services/configService'
-import history from "../helper/history"
-import { loginErrors } from "../redux/user/user-actions";
+
 
 export const login = idToken => {
   var data = { 'token_id': idToken }
@@ -64,8 +63,6 @@ export const loginGit = () => {
 
           Gitlogin(idToken, profile)
             .then(rep => {
-              history.push('/', history.location)
-              history.go()
               return rep
             })
         })
@@ -94,7 +91,6 @@ export const loginManuel = (email, password) => {
     })
 }
 
-
 export const logout = () => {
   if (localStorage.getItem('user')) {
     localStorage.removeItem('user')
@@ -104,7 +100,6 @@ export const logout = () => {
   }
   return true
 }
-
 
 export const register = users => {
   const data = {
@@ -125,9 +120,10 @@ export const register = users => {
 }
 
 
+
 // update des infos user qui vient du component SettingsPage, sous forme d'objet
 export const updateUserInfos = newUserInfos => {
-
+  console.log(newUserInfos)
   const data = {
     username: newUserInfos.username,
     first_name: newUserInfos.first_name,

@@ -1,35 +1,34 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Masonry from "masonry-layout";
-import imagesLoaded from "imagesloaded";
 import { usePrevious } from "../../../hooks/usePrevious";
 
 // redux
 import {
   selectCardsFetchedCards,
-  selectSearchType,
   selectTotalNumberOfResults,
   selectPaginationNext,
+  selectCurrentSearch,
 } from "../../../redux/filter/filter-selectors";
 import {
   selectCardsSize,
   selectIsLoaded,
+  selectShowPopupCard,
 } from "../../../redux/layout/layout-selectors";
 
 // components
 import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
 import CardFullPopup from "../CardFullPopup/CardFullPopup";
-import Loading from "../../Loading/Loading";
+import PageLoading from "../../Loading/PageLoading";
 import ScrollButton from "../../LayoutComponents/ScrollButton/ScrollButton";
 
 // scss
-import { ReactComponent as GoTopLogo } from "../../../assets/images/chevrons/arrow-up-circle.svg";
-import "./CardGridListColumns.scss";
-import { getOtherPageAction } from "../../../redux/filter/filter-actions";
+import "./CardGridList.scss";
+import {
+  getCardAfterfilterAction,
+  getOtherPageAction,
+} from "../../../redux/filter/filter-actions";
 import { useCallback } from "react";
-import { useScroll } from "../../../hooks/useScroll";
-import { useWinWidth } from "../../../hooks/useWinWidth";
 import { useColumnsNumber } from "../../../hooks/useColumnsNumber";
 
 const CardGridList = () => {
@@ -37,40 +36,67 @@ const CardGridList = () => {
   const nextPageLink = useSelector(selectPaginationNext);
 
   const cards = useSelector(selectCardsFetchedCards);
+  const prevCards = usePrevious(cards);
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
   const isLoaded = useSelector(selectIsLoaded);
-  const [gridItems, setGridItems] = useState();
+  const [gridItems, setGridItems] = useState([]);
   const cardsSize = useSelector(selectCardsSize);
   const numberOfColumns = useColumnsNumber();
+  const prevNumberOfColumns = usePrevious(numberOfColumns);
+  const currentSearch = useSelector(selectCurrentSearch);
+  const prevCurrentSearch = usePrevious(currentSearch);
+  const isPopupShown = useSelector(selectShowPopupCard);
 
-  console.log(numberOfColumns);
+  useEffect(() => {
+    if (prevCurrentSearch && prevCurrentSearch !== currentSearch) {
+      dispatch(getCardAfterfilterAction(currentSearch));
+    }
+  }, [currentSearch, prevCurrentSearch, dispatch, isPopupShown]);
 
   // gestion de l'ordre des cartes par colonne
-  const reorderCards = useCallback((cardsArray, numberOfColumns) => {
-    const columns = numberOfColumns; // nb de colonnes
-    const orderedArray = []; // array de cartes réordonnées
-    let currentColumn = 0; // numéro de la colonne en cours
-    while (currentColumn < columns) {
-      // tant que le numéro de la colonne en cours est inf aux colonnes max
-      for (let i = 0; i < cardsArray.length; i += columns) {
-        let currentCard = cardsArray[i + currentColumn];
-        if (currentCard !== undefined) orderedArray.push(currentCard);
+  const reorderCards = useCallback(
+    (cardsArray, columnsNumber, resize) => {
+      // prevent de relancer la fonction si on fetch 2 fois les même cartes
+      if (prevCards === cards && !resize) return;
+
+      // si le nb de colonne change, on refait les colonnes
+      let newArray = [];
+      for (let i = 0; i < columnsNumber; i++) {
+        newArray.push([]);
       }
-      currentColumn++;
-    }
-    return orderedArray;
-  }, []);
+
+      let startIndex = 0;
+
+      cardsArray &&
+        cardsArray.length !== 0 &&
+        cardsArray.forEach((card) => {
+          newArray && newArray[startIndex] && newArray[startIndex].push(card);
+          // setLastColumnIndex(startIndex);
+          if (startIndex >= numberOfColumns - 1) {
+            startIndex = 0;
+          } else {
+            startIndex++;
+          }
+          return newArray;
+        });
+
+      setGridItems(newArray);
+    },
+    [prevCards, cards, numberOfColumns]
+  );
 
   // update du array local de cartes si + de fetch
   useEffect(() => {
-    const newArray = reorderCards(cards, numberOfColumns);
-    console.log(newArray);
-    setGridItems(newArray);
-  }, [cards, numberOfColumns, reorderCards, cardsSize]);
+    if (prevNumberOfColumns !== numberOfColumns) {
+      reorderCards(cards, numberOfColumns, true);
+    } else {
+      reorderCards(cards, numberOfColumns, false);
+    }
+  }, [numberOfColumns, reorderCards, cards, prevNumberOfColumns]);
 
   // gestion du infinite scroll : call automatique au back à un certain niveau de scroll
   const options = {
-    rootMargin: "300px",
+    rootMargin: "800px",
   };
   const observer = useRef();
   const bottomGrid = useCallback(
@@ -79,9 +105,7 @@ const CardGridList = () => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && nextPageLink) {
-          console.log("call : " + nextPageLink);
           dispatch(getOtherPageAction(nextPageLink));
-          // call refaire layout ?
         }
       }, options);
       if (node) observer.current.observe(node);
@@ -111,14 +135,27 @@ const CardGridList = () => {
         ) : (
           <>
             {gridItems &&
-              gridItems.map((card) => {
+              gridItems.map((column, index) => {
                 return (
                   <div
-                    className={`grid-item grid-item--${cardsSize}`}
-                    key={card.id}
-                    data-key={card.id}
+                    className={`grid-column grid-column--${cardsSize}`}
+                    key={index}
                   >
-                    <CardPreviewSmall size={cardsSize} card={card} />
+                    {column &&
+                      column.map((card) => {
+                        return (
+                          <div
+                            className={`grid-item grid-item--${cardsSize}`}
+                            key={card.id}
+                            data-key={card.id}
+                          >
+                            {card.id}
+                            {card && (
+                              <CardPreviewSmall size={cardsSize} card={card} />
+                            )}
+                          </div>
+                        );
+                      })}
                   </div>
                 );
               })}
@@ -127,12 +164,10 @@ const CardGridList = () => {
       </div>
 
       <CardFullPopup />
-      {!isLoaded && <Loading />}
+      {!isLoaded && <PageLoading />}
       {cards && nextPageLink && (
         <div className="bottom-grid" ref={bottomGrid}></div>
       )}
-
-      {/* <GoTopLogo className="goTop__button" onClick={handleGoTopButton} /> */}
       <ScrollButton />
     </div>
   );

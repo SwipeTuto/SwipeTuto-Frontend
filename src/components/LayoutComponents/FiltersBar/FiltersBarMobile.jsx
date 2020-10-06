@@ -4,10 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 
 // redux
-import {
-  selectCurrentSearch,
-  selectSearchPage,
-} from "../../../redux/filter/filter-selectors";
+import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
 import {
   setCurrentSearch,
   deleteCurrentSearch,
@@ -39,11 +36,9 @@ import "./FiltersBarMobile.scss";
 
 const FiltersBarMobile = ({ title, showResults }) => {
   const dispatch = useDispatch();
-  // paramètres de recherche :
   const filterMobileMenuOpen = useSelector(selectFilterMobileMenuOpen);
   const currentSearch = useSelector(selectCurrentSearch);
   const currentTheme = useSelector(selectTheme);
-  const currentSearchPageNumber = useSelector(selectSearchPage);
   const [redirection, setRedirection] = useState(false);
   const [newSearch, setNewSearch] = useState({});
 
@@ -103,7 +98,6 @@ const FiltersBarMobile = ({ title, showResults }) => {
     dispatch(setCurrentSearch("searchTopic", newSearch.searchTopic));
     dispatch(setCurrentSearch("searchOrder", newSearch.searchOrder));
     dispatch(setCurrentSearch("searchCategory", newSearch.searchCategory));
-    dispatch(setCurrentSearch("searchPage", 1));
     dispatch(closeFilterMobileMenu());
   };
 
@@ -122,10 +116,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
             </div>
             <div className="FiltersBarMobile__search">
               <h1 className="title title-1">Votre recherche :</h1>
-              <form
-                className="FiltersBarMobile__form"
-                onSubmit={(e) => handleFormSubmit(e)}
-              >
+              <form className="FiltersBarMobile__form">
                 <div className="FiltersBarMobile__form--group">
                   <h2 className="title title-2">
                     <label htmlFor="wordsFilter">Termes de recherche :</label>
@@ -256,29 +247,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
                     </p>
                   )}
                 </div>
-                <Link
-                  to={`/search?${
-                    newSearch.searchWords
-                      ? `search=${newSearch.searchWords}&`
-                      : ""
-                  }${
-                    newSearch.searchTopic
-                      ? `topic=${newSearch.searchTopic}&`
-                      : ""
-                  }${
-                    newSearch.searchOrder
-                      ? `order=${newSearch.searchOrder}&`
-                      : ""
-                  }${
-                    newSearch.searchCategory
-                      ? `category=${newSearch.searchCategory}&`
-                      : ""
-                  }${
-                    currentSearchPageNumber
-                      ? `page=${currentSearchPageNumber}`
-                      : ""
-                  }`}
-                ></Link>
+
                 <div className="FiltersBarMobile__form--buttons">
                   <CustomButton
                     color="white"
@@ -286,9 +255,34 @@ const FiltersBarMobile = ({ title, showResults }) => {
                   >
                     Réinitialiser
                   </CustomButton>
-                  <CustomButton type="submit" color="dark">
-                    Rechercher
-                  </CustomButton>
+                  <Link
+                    to={`/search?${
+                      newSearch.searchWords
+                        ? `search=${newSearch.searchWords}`
+                        : ""
+                    }${
+                      newSearch.searchTopic
+                        ? `&topic=${newSearch.searchTopic}`
+                        : ""
+                    }${
+                      newSearch.searchOrder
+                        ? `&order=${newSearch.searchOrder}`
+                        : ""
+                    }${
+                      newSearch.searchCategory
+                        ? `&category=${newSearch.searchCategory}`
+                        : ""
+                    }`}
+                  >
+                    {" "}
+                    <CustomButton
+                      type="submit"
+                      color="dark"
+                      onClick={(e) => handleFormSubmit(e)}
+                    >
+                      Rechercher
+                    </CustomButton>
+                  </Link>
                 </div>
               </form>
             </div>

@@ -1,6 +1,4 @@
 import React from "react";
-
-import { ReactComponent as GoTopLogo } from "../../assets/images/chevrons/arrow-up-circle.svg";
 import { ReactComponent as ChevronLeft } from "../../assets/images/chevrons/chevron-back.svg";
 import { ReactComponent as ChevronRight } from "../../assets/images/chevrons/chevron-forward.svg";
 import CardPreviewSmallRessources from "../../components/CardPreviewSmallRessources/CardPreviewSmallRessources";

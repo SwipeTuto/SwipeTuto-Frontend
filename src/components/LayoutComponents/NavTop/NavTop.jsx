@@ -10,7 +10,6 @@ import {
   selectSearchCategory,
   selectSearchWords,
   selectSearchOrder,
-  selectSearchPage,
   selectSearchTopic,
 } from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
@@ -47,13 +46,10 @@ const NavTop = (props) => {
   const currentUser = useSelector(selectCurrentUser);
   const currentTheme = useSelector(selectTheme);
   const currentUserNav = useSelector(selectUserNav);
-
   const searchCategory = useSelector(selectSearchCategory);
   const searchTopic = useSelector(selectSearchTopic);
   const searchWords = useSelector(selectSearchWords);
   const searchOrder = useSelector(selectSearchOrder);
-  const currentSearchPageNumber = useSelector(selectSearchPage);
-
   const [redirection, setRedirection] = useState(false);
 
   useEffect(() => {
@@ -64,7 +60,6 @@ const NavTop = (props) => {
   const topicHandleClick = async (e) => {
     const topicName = e.target.name ? e.target.name : null;
     dispatch(setCurrentSearch("searchTopic", topicName));
-    dispatch(setCurrentSearch("searchPage", 1));
   };
 
   const redirectLink = SearchLinkRedirect();
@@ -96,14 +91,10 @@ const NavTop = (props) => {
               topicArray.map((rubrique, index) => (
                 <Link
                   key={index}
-                  to={`/search?${searchWords ? `search=${searchWords}&` : ""}${
-                    rubrique.queryName ? `topic=${rubrique.queryName}&` : ""
-                  }${searchOrder ? `order=${searchOrder}&` : ""}${
-                    searchCategory ? `category=${searchCategory}&` : ""
-                  }${
-                    currentSearchPageNumber
-                      ? `page=${currentSearchPageNumber}`
-                      : ""
+                  to={`/search?${searchWords ? `search=${searchWords}` : ""}${
+                    rubrique.queryName ? `&topic=${rubrique.queryName}` : ""
+                  }${searchOrder ? `&order=${searchOrder}` : ""}${
+                    searchCategory ? `&category=${searchCategory}` : ""
                   }`}
                 >
                   <img

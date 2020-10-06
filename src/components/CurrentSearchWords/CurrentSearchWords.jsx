@@ -11,10 +11,7 @@ import {
   selectSearchCategory,
 } from "../../redux/filter/filter-selectors";
 import { topicArray, categoryArray } from "../../helper/index";
-import {
-  deleteCurrentSearch,
-  setCurrentSearch,
-} from "../../redux/filter/filter-actions";
+import { deleteCurrentSearch } from "../../redux/filter/filter-actions";
 import SearchLinkRedirect from "../../helper/SearchLinkRedirect";
 
 import "./CurrentSearchWords.scss";
@@ -32,7 +29,6 @@ const CurrentSearchWords = ({ history }) => {
     const itemToDelete = () =>
       e.target.dataset.searchitem ? e.target.dataset.searchitem : null;
     dispatch(deleteCurrentSearch(itemToDelete()));
-    dispatch(setCurrentSearch("searchPage", 1));
     setRedirection(true);
   };
 

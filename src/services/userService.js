@@ -5,51 +5,6 @@ import { baseURL } from '../services/configService'
 import history from "../helper/history"
 import { loginErrors } from "../redux/user/user-actions";
 
-
-
-export const loginGoogle = () => {
-  // return auth().signInWithPopup(provider)
-  //   .then(result => {
-  //     var user = result.user;
-  //     return user.getIdToken()
-  //       .then(idToken => {
-  //         login(idToken)
-  //           .then(rep => {
-  //             // history.push('/', history.location)
-  //             // history.go()
-  //             console.log(rep)
-  //             return rep
-  //           })
-  //       })
-  //   })
-  return auth().signInWithPopup(provider)
-    .then(result => {
-      var user = result.user;
-      return user.getIdToken()
-    })
-}
-
-
-export const loginGit = () => {
-  auth().signInWithPopup(providerGit)
-    .then(result => {
-      var user = result.user;
-      const profile = result.additionalUserInfo.profile
-      return user.getIdToken()
-        .then(idToken => {
-
-          Gitlogin(idToken, profile)
-            .then(rep => {
-              history.push('/', history.location)
-              history.go()
-              return rep
-            })
-        })
-    })
-}
-
-
-
 export const login = idToken => {
   var data = { 'token_id': idToken }
   var config = { headers: { 'Content-Type': 'application/json' }, }
@@ -66,6 +21,14 @@ export const login = idToken => {
     })
 }
 
+
+export const loginGoogle = () => {
+  return auth().signInWithPopup(provider)
+    .then(result => {
+      var user = result.user;
+      return user.getIdToken()
+    })
+}
 
 export const Gitlogin = (idToken, profile) => {
 
@@ -89,6 +52,30 @@ export const Gitlogin = (idToken, profile) => {
     })
 
 }
+
+
+export const loginGit = () => {
+  auth().signInWithPopup(providerGit)
+    .then(result => {
+      var user = result.user;
+      const profile = result.additionalUserInfo.profile
+      return user.getIdToken()
+        .then(idToken => {
+
+          Gitlogin(idToken, profile)
+            .then(rep => {
+              history.push('/', history.location)
+              history.go()
+              return rep
+            })
+        })
+    })
+}
+
+
+
+
+
 
 
 export const loginManuel = (email, password) => {

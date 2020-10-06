@@ -47,7 +47,8 @@ const SearchPage = ({ location }) => {
           <CurrentSearchWords />
           <div className="SearchPage__filtersBarMobile">
             <p className="SearchPage__searchResults">
-              {totalNumberOfCardsSearched} Résultats
+              {totalNumberOfCardsSearched ? totalNumberOfCardsSearched : 0}{" "}
+              Résultats
             </p>
           </div>
           <FiltersBar handleClickSize={handleClickSize} />

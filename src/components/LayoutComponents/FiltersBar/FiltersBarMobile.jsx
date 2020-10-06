@@ -116,10 +116,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
             </div>
             <div className="FiltersBarMobile__search">
               <h1 className="title title-1">Votre recherche :</h1>
-              <form
-                className="FiltersBarMobile__form"
-                onSubmit={(e) => handleFormSubmit(e)}
-              >
+              <form className="FiltersBarMobile__form">
                 <div className="FiltersBarMobile__form--group">
                   <h2 className="title title-2">
                     <label htmlFor="wordsFilter">Termes de recherche :</label>
@@ -250,25 +247,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
                     </p>
                   )}
                 </div>
-                <Link
-                  to={`/search?${
-                    newSearch.searchWords
-                      ? `search=${newSearch.searchWords}`
-                      : ""
-                  }${
-                    newSearch.searchTopic
-                      ? `&topic=${newSearch.searchTopic}`
-                      : ""
-                  }${
-                    newSearch.searchOrder
-                      ? `&order=${newSearch.searchOrder}`
-                      : ""
-                  }${
-                    newSearch.searchCategory
-                      ? `&category=${newSearch.searchCategory}`
-                      : ""
-                  }`}
-                ></Link>
+
                 <div className="FiltersBarMobile__form--buttons">
                   <CustomButton
                     color="white"
@@ -276,9 +255,34 @@ const FiltersBarMobile = ({ title, showResults }) => {
                   >
                     Réinitialiser
                   </CustomButton>
-                  <CustomButton type="submit" color="dark">
-                    Rechercher
-                  </CustomButton>
+                  <Link
+                    to={`/search?${
+                      newSearch.searchWords
+                        ? `search=${newSearch.searchWords}`
+                        : ""
+                    }${
+                      newSearch.searchTopic
+                        ? `&topic=${newSearch.searchTopic}`
+                        : ""
+                    }${
+                      newSearch.searchOrder
+                        ? `&order=${newSearch.searchOrder}`
+                        : ""
+                    }${
+                      newSearch.searchCategory
+                        ? `&category=${newSearch.searchCategory}`
+                        : ""
+                    }`}
+                  >
+                    {" "}
+                    <CustomButton
+                      type="submit"
+                      color="dark"
+                      onClick={(e) => handleFormSubmit(e)}
+                    >
+                      Rechercher
+                    </CustomButton>
+                  </Link>
                 </div>
               </form>
             </div>

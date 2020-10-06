@@ -161,6 +161,7 @@ export const getUserById = id => {
 }
 
 export const upDateAvatar = avatar => {
+  console.log('AHH')
   const requestOptions = {
     headers: {
       'Content-Type': "multipart/form-data",
@@ -168,7 +169,7 @@ export const upDateAvatar = avatar => {
     }
   };
 
-  return axios.put(`${baseURL}avatar/`,avatar, requestOptions).then(rep => {
+  return axios.put(`${baseURL}avatar/`, avatar, requestOptions).then(rep => {
     return rep
   })
 }

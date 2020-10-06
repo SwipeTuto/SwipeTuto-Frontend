@@ -161,7 +161,6 @@ export const getUserById = id => {
 }
 
 export const upDateAvatar = avatar => {
-  console.log('AHH')
   const requestOptions = {
     headers: {
       'Content-Type': "multipart/form-data",

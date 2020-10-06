@@ -49,7 +49,7 @@ export const getCardAfterfilter = (search) => {
         'category': search.searchCategory,
         'search': search.searchWords,
         'order': search.searchOrder,
-        'page': search.searchPage
+        'page': 1
       }
     },
       config)

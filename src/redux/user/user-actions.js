@@ -1,5 +1,5 @@
 import { UserActionTypes } from './user-types'
-import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, getUserIDToken, getUserFavoriesById, loginGit } from '../../services/userService'
+import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, loginGit } from '../../services/userService'
 import history from "../../helper/history"
 import { setLoading, setLoaded } from '../layout/layout-actions';
 import { baseURL } from '../../services/configService';
@@ -189,7 +189,6 @@ export const getCurrentUserAction = id => {
 
 
 export const updateUserInfosAction = userInfos => {
-  // console.log(userInfos)
   return dispatch => {
     return (
 

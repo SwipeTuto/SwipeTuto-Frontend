@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect'
-import { base } from "../../services/configService";
 
 export const selectFilter = state => state.filter;
 

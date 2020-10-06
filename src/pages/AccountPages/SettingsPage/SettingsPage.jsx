@@ -102,10 +102,10 @@ const SettingsPage = () => {
     e.preventDefault();
     dispatch(updateUserInfosAction(newUserInfos));
     setSendNewInfos(true);
-    const { name } = e.target;
-    const currentInput = document.querySelector(
-      `.SettingsPage .settings__form--input[name=${name}]`
-    );
+    // const { name } = e.target;
+    // const currentInput = document.querySelector(
+    //   `.SettingsPage .settings__form--input[name=${name}]`
+    // );
     // console.log(currentInput);
     // currentInput.value = "";
   };

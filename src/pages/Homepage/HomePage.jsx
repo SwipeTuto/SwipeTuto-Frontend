@@ -7,10 +7,7 @@ import CardPreviewSmall from "../../components/CardsComponents/CardPreviewSmall/
 import CardFullPopup from "../../components/CardsComponents/CardFullPopup/CardFullPopup";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import Loading from "../../components/Loading/Loading";
-import {
-  getCardsAction,
-  getCardAfterfilterAction,
-} from "../../redux/filter/filter-actions";
+import { getCardAfterfilterAction } from "../../redux/filter/filter-actions";
 import HeaderImage from "../../assets/logos/header_image.png";
 
 import { ReactComponent as QuestionIllustration } from "../../assets/images/illustrations/illustration-question.svg";
@@ -19,10 +16,7 @@ import { ReactComponent as SuccessIllustration } from "../../assets/images/illus
 
 import { selectCardsFetchedCards } from "../../redux/filter/filter-selectors";
 import { selectTheme } from "../../redux/layout/layout-selectors";
-import {
-  deleteCurrentSearch,
-  deleteCardsInStore,
-} from "../../redux/filter/filter-actions";
+import { deleteCurrentSearch } from "../../redux/filter/filter-actions";
 
 import "./HomePage.scss";
 import { selectIsLoaded } from "../../redux/layout/layout-selectors";
@@ -39,15 +33,6 @@ const HomePage = () => {
     dispatch(getCardAfterfilterAction(initialSearchState));
   }, [dispatch]);
 
-  // deleteCardsInStore
-  // useEffect(
-  //   () => () => {
-  //     dispatch(deleteCardsInStore());
-  //     console.log("call");
-  //   },
-  //   [dispatch]
-  // );
-
   // scroll reset
   if (window.scrollY) {
     window.scroll(0, 0);
@@ -55,7 +40,6 @@ const HomePage = () => {
 
   const handleRedirectClick = () => {
     dispatch(deleteCurrentSearch());
-    // dispatch(getCardAfterfilterAction(initialSearchState));
     if (window.scrollY) {
       window.scroll(0, 0);
     }
@@ -95,7 +79,9 @@ const HomePage = () => {
             cards &&
             cards
               .slice(0, 8)
-              .map((card) => <CardPreviewSmall card={card} key={card.id} />)
+              .map(
+                (card) => card && <CardPreviewSmall card={card} key={card.id} />
+              )
           )}
         </div>
       </div>

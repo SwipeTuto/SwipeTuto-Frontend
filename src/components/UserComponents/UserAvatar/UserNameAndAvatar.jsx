@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { getInitials, truncate } from "../../../helper/index";
 // import { base, coudinaryBase } from "../../../services/configService";
 
 import { getUserByIdAction } from "../../../redux/user/user-actions";

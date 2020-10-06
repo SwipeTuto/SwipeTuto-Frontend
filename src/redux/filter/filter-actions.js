@@ -1,8 +1,7 @@
 import { FilterActionTypes } from "./filter-types"
-import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded, otherPageLoading, otherPageLoaded } from '../layout/layout-actions'
-import { getCards, getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
+import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded } from '../layout/layout-actions'
+import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
 import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply, toggleSave } from "../../services/socialService"
-import { getUserByIdAction, toggleStoreSavedCardAction } from "../user/user-actions"
 import { getUserFavoriesById } from "../../services/userService"
 import { initialSearchState } from "../../helper"
 
@@ -14,11 +13,6 @@ const getCardAfterfilterFailure = err => ({
   type: FilterActionTypes.GET_CARDS_FILTER_FAILURE,
   payload: err
 })
-
-
-// export const deleteCardsInStore = () => ({
-//   type: FilterActionTypes.DELETE_CARDS_IN_STORE,
-// })
 
 export const getCardAfterfilterAction = (search) => {
   return dispatch => {
@@ -181,12 +175,6 @@ const getOtherPageFailure = err => ({
 })
 
 
-export const setCurrentCardGridPage = newPageNumber => ({
-  type: FilterActionTypes.SET_CARDS_GRID_PAGE,
-  payload: newPageNumber
-})
-
-
 // Clicked Card 
 export const setClickedCard = (card) => ({
   type: FilterActionTypes.SET_CLICKED_CARD,
@@ -197,29 +185,6 @@ export const setNoClickedCard = () => ({
   type: FilterActionTypes.SET_NO_CLICKED_CARD,
   payload: null,
 });
-
-
-// Récupérer toutes les cards
-// export const getCardsAction = () => {
-//   return dispatch => {
-//     return getCards()
-//       .then(card => {
-//         dispatch(setCardsFetchedInStore(card))
-//         dispatch(setLoaded())
-//       })
-//       .catch(err => {
-//         dispatch(getCardsErrors(err.response))
-//       })
-//   }
-// };
-
-
-// const getCardsErrors = error => ({
-//   type: FilterActionTypes.GET_ALL_CARDS_FAILURE,
-//   payload: error
-// })
-
-
 
 export const toggleLikeCardAction = (cardId) => {
   return dispatch => {

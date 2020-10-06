@@ -7,7 +7,6 @@ import { Redirect } from "react-router-dom";
 import {
   selectTotalNumberOfResults,
   selectSearchCategory,
-  selectSearchPage,
   selectSearchOrder,
 } from "../../../redux/filter/filter-selectors";
 import { setCurrentSearch } from "../../../redux/filter/filter-actions";
@@ -29,9 +28,7 @@ import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 const FiltersBar = ({ handleClickSize }) => {
   const dispatch = useDispatch();
-  // paramètres de recherche :
   const currentTheme = useSelector(selectTheme);
-  // const currentPage = useSelector(selectSearchPage);
   const searchCategory = useSelector(selectSearchCategory);
   const searchOrder = useSelector(selectSearchOrder);
   const [redirection, setRedirection] = useState(false);
@@ -44,7 +41,7 @@ const FiltersBar = ({ handleClickSize }) => {
   // pages de requêtes :
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
   const getRealNumber = (results) => {
-    if (isNaN(results)) {
+    if (isNaN(results) || results === null) {
       return 0;
     } else {
       return results;
@@ -54,16 +51,13 @@ const FiltersBar = ({ handleClickSize }) => {
 
   const handleOrderChange = (e) => {
     const newOrder = e.target.options[e.target.selectedIndex].value;
-    // lancer nouvelle requete cards
     dispatch(setCurrentSearch("searchOrder", newOrder));
-    dispatch(setCurrentSearch("searchPage", 1));
     setRedirection(true);
   };
 
   const handleCategoryChange = (e) => {
     const newCategory = e.target.dataset.filter;
     dispatch(setCurrentSearch("searchCategory", newCategory));
-    dispatch(setCurrentSearch("searchPage", 1));
     setRedirection(true);
   };
 
@@ -87,13 +81,10 @@ const FiltersBar = ({ handleClickSize }) => {
               name="cards-filter"
               id="cards-filter"
               onChange={(e) => handleOrderChange(e)}
+              value={searchOrder}
             >
               {orderArray.map((order, index) => (
-                <option
-                  key={index}
-                  value={order.queryName}
-                  selected={order.queryName === searchOrder}
-                >
+                <option key={index} value={order.queryName}>
                   {order.name}
                 </option>
               ))}

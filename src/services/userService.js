@@ -2,26 +2,11 @@ import axios from "axios";
 import { authHeader } from '../helper/auth-header';
 import { auth, provider, providerGit } from '../services/firebaseService';
 import { baseURL } from '../services/configService'
-import history from "../helper/history"
-import { loginErrors } from "../redux/user/user-actions";
+
 
 
 
 export const loginGoogle = () => {
-  // return auth().signInWithPopup(provider)
-  //   .then(result => {
-  //     var user = result.user;
-  //     return user.getIdToken()
-  //       .then(idToken => {
-  //         login(idToken)
-  //           .then(rep => {
-  //             // history.push('/', history.location)
-  //             // history.go()
-  //             console.log(rep)
-  //             return rep
-  //           })
-  //       })
-  //   })
   return auth().signInWithPopup(provider)
     .then(result => {
       var user = result.user;

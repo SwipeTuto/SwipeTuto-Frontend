@@ -42,7 +42,7 @@ const SearchForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(setCurrentSearch("searchWords", searchInput));
-    dispatch(setCurrentSearch("searchPage", 1));
+    // dispatch(setCurrentSearch("searchPage", 1));
     dispatch(closeMobileNav());
     setRedirection(true);
   };

@@ -7,6 +7,7 @@ import "./SettingsPage.scss";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { updateUserInfosAction } from "../../../redux/user/user-actions";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
+import FormInput from "../../../components/FormInput/FormInput";
 
 const SettingsPage = () => {
   const dispatch = useDispatch();
@@ -52,49 +53,25 @@ const SettingsPage = () => {
     setInputValid({ ...inputValidCopy, avatar: true });
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    let inputIsOk = checkRegexInput(name, value); //test valeur avec regex, true or false
-    const currentInput = document.querySelector(
-      `.SettingsPage .settings__form--input[name=${name}]`
-    );
-
-    const errorMessage = document.querySelector(
-      `.SettingsPage .input__message[data-inputfor=${name}]`
-    );
-
-    if (!inputIsOk) {
-      currentInput.classList.remove("valid-input");
-      currentInput.classList.add("invalid-input");
-      errorMessage.classList.add("error__message");
-      errorMessage.textContent = errorMessageToDisplay(name);
-      const inputValidCopy = inputValid;
-      setInputValid({ ...inputValidCopy, [name]: false });
-    } else {
-      currentInput.classList.remove("invalid-input");
-      currentInput.classList.add("valid-input");
-      errorMessage.classList.remove("error__message");
-      errorMessage.textContent = "";
-
-      const inputValidCopy = inputValid;
-      setInputValid({ ...inputValidCopy, [name]: true });
-
-      switch (name) {
-        case "username":
-        case "first_name":
-        case "last_name":
-          setNewUserInfos({ ...currentUser, [name]: value });
-          break;
-        case "description":
-          setNewUserInfos({
-            ...currentUser,
-            profile: { ...currentUser.profile, [name]: value },
-          });
-          console.log(newUserInfos);
-          break;
-        default:
-          return;
-      }
+  const handleChange = (name, value) => {
+    const inputValidCopy = inputValid;
+    switch (name) {
+      case "username":
+      case "first_name":
+      case "last_name":
+        setNewUserInfos({ ...currentUser, [name]: value });
+        setInputValid({ ...inputValidCopy, [name]: true });
+        break;
+      case "description":
+        setNewUserInfos({
+          ...currentUser,
+          profile: { ...currentUser.profile, [name]: value },
+        });
+        setInputValid({ ...inputValidCopy, description: true });
+        // console.log(newUserInfos);
+        break;
+      default:
+        return;
     }
   };
 
@@ -102,12 +79,10 @@ const SettingsPage = () => {
     e.preventDefault();
     dispatch(updateUserInfosAction(newUserInfos));
     setSendNewInfos(true);
-    // const { name } = e.target;
-    // const currentInput = document.querySelector(
-    //   `.SettingsPage .settings__form--input[name=${name}]`
-    // );
-    // console.log(currentInput);
-    // currentInput.value = "";
+  };
+
+  const getValue = (name, value) => {
+    handleChange(name, value);
   };
 
   return (
@@ -146,7 +121,16 @@ const SettingsPage = () => {
           <label htmlFor="username">Changez votre Pseudo :</label>
           <div className="form__bottom">
             <div className="form__bottom--input">
-              <input
+              <FormInput
+                idFor="username"
+                // label="Votre nom d'utilisateur :"
+                type="text"
+                name="username"
+                getValue={getValue}
+                required={true}
+                firstValue={currentUser && currentUser.username}
+              />
+              {/* <input
                 className="settings__form--input invalid-input"
                 type="text"
                 id="username"
@@ -155,7 +139,7 @@ const SettingsPage = () => {
                 placeholder={currentUser && currentUser.username}
                 required
               />
-              <p className="input__message" data-inputfor="username"></p>
+              <p className="input__message" data-inputfor="username"></p> */}
             </div>
             <CustomButton
               name="username"
@@ -171,7 +155,16 @@ const SettingsPage = () => {
           <label htmlFor="first_name">Changez votre Prénom :</label>
           <div className="form__bottom">
             <div className="form__bottom--input">
-              <input
+              <FormInput
+                idFor="first_name"
+                // label="Votre nom d'utilisateur :"
+                type="text"
+                name="first_name"
+                getValue={getValue}
+                required={true}
+                firstValue={currentUser && currentUser.first_name}
+              />
+              {/* <input
                 className="settings__form--input invalid-input"
                 type="text"
                 id="first_name"
@@ -180,7 +173,7 @@ const SettingsPage = () => {
                 placeholder={currentUser && currentUser.first_name}
                 required
               />
-              <p className="input__message" data-inputfor="first_name"></p>
+              <p className="input__message" data-inputfor="first_name"></p> */}
             </div>
             <CustomButton
               name="first_name"
@@ -196,7 +189,16 @@ const SettingsPage = () => {
           <label htmlFor="last_name">Changez votre Nom :</label>
           <div className="form__bottom">
             <div className="form__bottom--input">
-              <input
+              <FormInput
+                idFor="last_name"
+                // label="Votre nom d'utilisateur :"
+                type="text"
+                name="last_name"
+                getValue={getValue}
+                required={true}
+                firstValue={currentUser && currentUser.last_name}
+              />
+              {/* <input
                 className="settings__form--input invalid-input"
                 type="text"
                 id="last_name"
@@ -205,7 +207,7 @@ const SettingsPage = () => {
                 placeholder={currentUser && currentUser.last_name}
                 required
               />
-              <p className="input__message" data-inputfor="last_name"></p>
+              <p className="input__message" data-inputfor="last_name"></p> */}
             </div>
             <CustomButton
               name="last_name"

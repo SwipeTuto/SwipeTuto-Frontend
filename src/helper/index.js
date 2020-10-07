@@ -178,6 +178,8 @@ export const checkRegexInput = (name, value) => {
       return nameRegex.test(value);
     case "password":
       return strongPasswordRegex.test(value);
+    case "passwordConfirm":
+      return strongPasswordRegex.test(value);
     case "email":
       return emailRegex.test(value);
     case "url":

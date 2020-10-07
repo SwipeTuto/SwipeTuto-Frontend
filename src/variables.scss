@@ -67,15 +67,16 @@ $title-font: "Montserrat", sans-serif;
   align-items: center;
   transition: all 0.2s ease;
   margin-bottom: 1rem;
-  border-bottom: 2px solid $grey;
+  border-left: 3px solid $grey;
 
   &:focus.valid-input {
-    border-bottom: 2px solid $green-success;
+    border-left: 3px solid $green-success;
   }
 
+  &.invalid-input,
   &:focus.invalid-input {
     // border: 0.5px solid $red-error;
-    border-bottom: 2px solid $red-error;
+    border-left: 3px solid $red-error;
   }
 
   &:focus {
@@ -84,10 +85,6 @@ $title-font: "Montserrat", sans-serif;
 
   .input__message {
     display: block;
-  }
-
-  &[value=""] + .input__message {
-    display: none;
   }
 
   & + .input__message-hide {

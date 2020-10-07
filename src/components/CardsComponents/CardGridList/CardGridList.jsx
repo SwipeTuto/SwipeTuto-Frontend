@@ -30,11 +30,12 @@ import {
 } from "../../../redux/filter/filter-actions";
 import { useCallback } from "react";
 import { useColumnsNumber } from "../../../hooks/useColumnsNumber";
+import { closePopupCard } from "../../../redux/layout/layout-actions";
 
-const CardGridList = () => {
+const CardGridList = ({ loadFilter }) => {
   const dispatch = useDispatch();
   const nextPageLink = useSelector(selectPaginationNext);
-
+  const fetchWithFilter = loadFilter !== undefined ? loadFilter : true;
   const cards = useSelector(selectCardsFetchedCards);
   const prevCards = usePrevious(cards);
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
@@ -48,10 +49,16 @@ const CardGridList = () => {
   const isPopupShown = useSelector(selectShowPopupCard);
 
   useEffect(() => {
-    if (prevCurrentSearch && prevCurrentSearch !== currentSearch) {
+    // console.log(fetchWithFilter);
+    // console.log(prevCurrentSearch, currentSearch);
+    if (
+      (prevCurrentSearch && prevCurrentSearch !== currentSearch) ||
+      fetchWithFilter === true
+    ) {
+      // console.log("call");
       dispatch(getCardAfterfilterAction(currentSearch));
     }
-  }, [currentSearch, prevCurrentSearch, dispatch, isPopupShown]);
+  }, [currentSearch, dispatch, fetchWithFilter, prevCurrentSearch]);
 
   // gestion de l'ordre des cartes par colonne
   const reorderCards = useCallback(
@@ -117,6 +124,8 @@ const CardGridList = () => {
   window.onbeforeunload = function () {
     window.scrollTo(0, 0);
   };
+
+  // console.log(gridItems);
 
   return (
     <div className="CardGridList">

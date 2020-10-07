@@ -105,6 +105,7 @@ export const getCardsByUserIdAction = userId => {
       .catch(err => {
         dispatch(getCardsByUserIdFailure(err.response))
         dispatch(setLoaded())
+        console.log(err)
       })
   }
 }

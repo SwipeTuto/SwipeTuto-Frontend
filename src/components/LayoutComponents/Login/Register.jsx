@@ -1,6 +1,6 @@
 // Présent dans App.js dans une Route ("/")
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,7 +10,6 @@ import { selectUserErrors } from "../../../redux/user/user-selectors";
 
 // helper
 import { loginGoogle, loginGit } from "../../../services/userService";
-import { checkRegexInput, errorMessageToDisplay } from "../../../helper/index";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";

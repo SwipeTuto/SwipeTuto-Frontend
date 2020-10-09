@@ -7,8 +7,6 @@ import {
 } from "../../../redux/user/user-selectors";
 import { selectCardsFetchedCards } from "../../../redux/filter/filter-selectors";
 import Loading from "../../../components/Loading/Loading";
-import CardPreviewSmall from "../../../components/CardsComponents/CardPreviewSmall/CardPreviewSmall";
-import CardFullPopup from "../../../components/CardsComponents/CardFullPopup/CardFullPopup";
 
 import "./UserPage.scss";
 import {
@@ -30,7 +28,6 @@ const UserPage = ({ userIsSame, location }) => {
   const clickedUser = useSelector(selectClickedUser);
   const currentTheme = useSelector(selectTheme);
   const [userDatas, setUserDatas] = useState();
-  // const [pageType, setPageType] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -68,7 +65,6 @@ const UserPage = ({ userIsSame, location }) => {
         ) : (
           <p className="UserPage__nocards">Aucune carte pour le moment.</p>
         )}
-        <CardFullPopup />
       </div>
     </div>
   );

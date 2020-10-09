@@ -1,13 +1,13 @@
 // Bar avec les items pour filtrer les slides
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
 
 // redux
 import {
   selectTotalNumberOfResults,
   selectSearchCategory,
   selectSearchOrder,
+  selectCurrentSearch,
 } from "../../../redux/filter/filter-selectors";
 import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 
@@ -15,7 +15,6 @@ import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 import { categoryArray, orderArray } from "../../../helper/index";
 
 // component
-import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
 
 // assets
 import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
@@ -29,14 +28,14 @@ import { selectTheme } from "../../../redux/layout/layout-selectors";
 const FiltersBar = ({ handleClickSize }) => {
   const dispatch = useDispatch();
   const currentTheme = useSelector(selectTheme);
+  const currentSearch = useSelector(selectCurrentSearch);
   const searchCategory = useSelector(selectSearchCategory);
   const searchOrder = useSelector(selectSearchOrder);
-  const [redirection, setRedirection] = useState(false);
   const linkBar = document.querySelector(".FiltersBar__options--links");
 
-  useEffect(() => {
-    setRedirection(false);
-  }, []);
+  // useEffect(() => {
+  //   setRedirection(false);
+  // }, []);
 
   // pages de requêtes :
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
@@ -51,14 +50,14 @@ const FiltersBar = ({ handleClickSize }) => {
 
   const handleOrderChange = (e) => {
     const newOrder = e.target.options[e.target.selectedIndex].value;
-    dispatch(setCurrentSearch("searchOrder", newOrder));
-    setRedirection(true);
+    const currentSearchCopy = { ...currentSearch, searchOrder: newOrder };
+    dispatch(setCurrentSearch(currentSearchCopy));
   };
 
   const handleCategoryChange = (e) => {
     const newCategory = e.target.dataset.filter;
-    dispatch(setCurrentSearch("searchCategory", newCategory));
-    setRedirection(true);
+    const currentSearchCopy = { ...currentSearch, searchCategory: newCategory };
+    dispatch(setCurrentSearch(currentSearchCopy));
   };
 
   const handleScollRight = () => {
@@ -68,76 +67,71 @@ const FiltersBar = ({ handleClickSize }) => {
     linkBar.scrollBy(-50, 0);
   };
 
-  const redirectLink = SearchLinkRedirect();
-
   return (
-    <>
-      {redirection && <Redirect to={redirectLink} />}
-      <div className="FiltersBar">
-        <div className="FiltersBar__wrapper">
-          <div className="FiltersBar__up">
-            <select
-              className={`${currentTheme}-theme`}
-              name="cards-filter"
-              id="cards-filter"
-              onChange={(e) => handleOrderChange(e)}
-              value={searchOrder}
-            >
-              {orderArray.map((order, index) => (
-                <option key={index} value={order.queryName}>
-                  {order.name}
-                </option>
-              ))}
-            </select>
-            <div className="FiltersBar__options">
-              <div className="scroll-logo" onClick={handleScollLeft}>
-                <ChevronLeft />
-              </div>
-
-              <div className="FiltersBar__options--links">
-                {categoryArray &&
-                  categoryArray.map((category, index) => (
-                    <div
-                      onClick={(e) => handleCategoryChange(e)}
-                      className={`FiltersBar__options--item ${
-                        searchCategory === category.queryName && "active"
-                      }`}
-                      key={index}
-                      data-filter={category.queryName}
-                    >
-                      {category.name}
-                    </div>
-                  ))}
-              </div>
-
-              <div className="scroll-logo" onClick={handleScollRight}>
-                <ChevronRight />
-              </div>
-            </div>
-          </div>
-          <div className="FiltersBar__down">
-            <p className="FiltersBar__numberOfResults">
-              {`${totalNumberOfCardsSearched} résultats trouvés`}
-            </p>
-            <div
-              className="FiltersBar__size-logo active"
-              data-gridsize="small"
-              onClick={(e) => handleClickSize(e)}
-            >
-              <GridSmallLogo className="grid-size-logo" pointerEvents="none" />
+    <div className="FiltersBar">
+      <div className="FiltersBar__wrapper">
+        <div className="FiltersBar__up">
+          <select
+            className={`${currentTheme}-theme`}
+            name="cards-filter"
+            id="cards-filter"
+            onChange={(e) => handleOrderChange(e)}
+            value={searchOrder}
+          >
+            {orderArray.map((order, index) => (
+              <option key={index} value={order.queryName}>
+                {order.name}
+              </option>
+            ))}
+          </select>
+          <div className="FiltersBar__options">
+            <div className="scroll-logo" onClick={handleScollLeft}>
+              <ChevronLeft />
             </div>
 
-            <div
-              className="FiltersBar__size-logo "
-              data-gridsize="big"
-              onClick={(e) => handleClickSize(e)}
-            >
-              <GridLargeLogo className="grid-size-logo" pointerEvents="none" />
+            <div className="FiltersBar__options--links">
+              {categoryArray &&
+                categoryArray.map((category, index) => (
+                  <div
+                    onClick={(e) => handleCategoryChange(e)}
+                    className={`FiltersBar__options--item ${
+                      searchCategory === category.queryName && "active"
+                    }`}
+                    key={index}
+                    data-filter={category.queryName}
+                  >
+                    {category.name}
+                  </div>
+                ))}
+            </div>
+
+            <div className="scroll-logo" onClick={handleScollRight}>
+              <ChevronRight />
             </div>
           </div>
         </div>
+        <div className="FiltersBar__down">
+          <p className="FiltersBar__numberOfResults">
+            {`${totalNumberOfCardsSearched} résultats trouvés`}
+          </p>
+          <div
+            className="FiltersBar__size-logo active"
+            data-gridsize="small"
+            onClick={(e) => handleClickSize(e)}
+          >
+            <GridSmallLogo className="grid-size-logo" pointerEvents="none" />
+          </div>
+
+          <div
+            className="FiltersBar__size-logo "
+            data-gridsize="big"
+            onClick={(e) => handleClickSize(e)}
+          >
+            <GridLargeLogo className="grid-size-logo" pointerEvents="none" />
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 export default FiltersBar;

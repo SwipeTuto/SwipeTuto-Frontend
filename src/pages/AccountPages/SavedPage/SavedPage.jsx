@@ -13,7 +13,6 @@ import {
   selectTheme,
 } from "../../../redux/layout/layout-selectors";
 import Loading from "../../../components/Loading/Loading";
-import CardFullPopup from "../../../components/CardsComponents/CardFullPopup/CardFullPopup";
 
 const SavedPage = ({ location }) => {
   const currentTheme = useSelector(selectTheme);
@@ -41,7 +40,6 @@ const SavedPage = ({ location }) => {
         ) : (
           <p className="SavedPage__nocards">Aucune carte pour le moment.</p>
         )}
-        <CardFullPopup />
       </div>
     </div>
   );

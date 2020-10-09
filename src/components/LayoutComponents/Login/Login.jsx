@@ -1,6 +1,6 @@
 // Présent dans App.js dans une Route ("/")
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,7 +14,6 @@ import { selectUserErrors } from "../../../redux/user/user-selectors";
 
 // helper
 import { loginGit } from "../../../services/userService";
-import { checkRegexInput, errorMessageToDisplay } from "../../../helper/index";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
@@ -25,13 +24,10 @@ import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github
 
 import "./LoginAndRegister.scss";
 import FormInput from "../../FormInputs/FormInput";
-import { provider } from "../../../services/firebaseService";
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({ username: "", password: "" });
-  const [savedEmail, setSavedEmail] = useState();
-  const [savedPassword, setSavedPassword] = useState();
   const [submitOk, setSubmitOk] = useState(false);
   const userErrors = useSelector(selectUserErrors);
   const allInput = [...document.querySelectorAll(".FormInput")];
@@ -75,32 +71,6 @@ const Login = ({ history }) => {
       setSubmitOk(true);
     }
   }, [allInput, user]);
-
-  // useEffect(() => {
-  //   if (allInput && allInput.length !== 0) {
-  //     console.log(allInput[0]);
-  //     allInput[0].focus();
-  //   }
-  // }, [allInput]);
-
-  // const cred = async () => {
-  //   const savedCredentials = await navigator.credentials.get({
-  //     password: true,
-  //     // federated: provider,
-  //   });
-  //   console.log(savedCredentials);
-  //   if (savedCredentials && savedCredentials.id) {
-  //     setSavedEmail(savedCredentials.id);
-  //     // console.log;
-  //   }
-  //   if (savedCredentials && savedCredentials.password) {
-  //     setSavedPassword(savedCredentials.password);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   cred();
-  // }, []);
 
   return (
     <div className="Login">

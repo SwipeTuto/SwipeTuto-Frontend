@@ -1,7 +1,9 @@
 import { LayoutActionTypes } from './layout-types'
 
 const INITIAL_STATE = {
+  firstLoadDone: false,
   popupShown: false,
+  signalPopupOpen: false,
   fullscreen: false,
   showUserNav: false,
   mobileNavOpen: false,
@@ -12,6 +14,8 @@ const INITIAL_STATE = {
   clickedCardIsLoaded: false,
   imageIsLoaded: false,
   commentsAreLoaded: false,
+  redirectUrl: false,
+  connexionPopup: false,
   theme: "light"
 };
 
@@ -23,7 +27,7 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
     case LayoutActionTypes.SHOW_POPUP_CARD:
-      cardPopupElement.addEventListener('wheel', (e) => {
+      if (cardPopupElement) cardPopupElement.addEventListener('wheel', (e) => {
         e.stopPropagation();
       })
 
@@ -34,6 +38,11 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         popupShown: true,
       };
+    case LayoutActionTypes.FIRST_LOAD_DONE:
+      return {
+        ...state,
+        firstLoadDone: true,
+      };
     case LayoutActionTypes.CLOSE_POPUP_CARD:
       app.style.position = '';
       app.style.top = '';
@@ -43,7 +52,7 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         popupShown: false,
       };
     case LayoutActionTypes.SHOW_FULLSCREEN:
-      cardPopupElement.style.overflow = "hidden";
+      if (cardPopupElement) cardPopupElement.style.overflow = "hidden";
       return {
         ...state,
         fullscreen: true,
@@ -134,6 +143,26 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         imageIsLoaded: true,
       }
+    case LayoutActionTypes.SHOW_SIGNAL_POPUP:
+      return {
+        ...state,
+        signalPopupOpen: true,
+      }
+    case LayoutActionTypes.CLOSE_SIGNAL_POPUP:
+      return {
+        ...state,
+        signalPopupOpen: false,
+      }
+    case LayoutActionTypes.OPEN_CONNEXION_POPUP:
+      return {
+        ...state,
+        connexionPopup: true,
+      }
+    case LayoutActionTypes.CLOSE_CONNEXION_POPUP:
+      return {
+        ...state,
+        connexionPopup: false,
+      }
     case LayoutActionTypes.OTHER_PAGE_CARDS_LOADING:
       return {
         ...state,
@@ -145,10 +174,14 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         otherPageCardsLoaded: true,
       }
     case LayoutActionTypes.TOGGLE_THEME:
-      // const localTheme = window.localStorage.getItem('theme');
       return {
         ...state,
         theme: action.payload,
+      }
+    case LayoutActionTypes.REDIRECT_URL:
+      return {
+        ...state,
+        redirectUrl: action.payload,
       }
     default:
       return state;

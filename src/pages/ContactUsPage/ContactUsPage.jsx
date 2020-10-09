@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import FormInput from "../../components/FormInputs/FormInput";
 import FormSelect from "../../components/FormInputs/FormSelect";
@@ -73,20 +73,6 @@ const ContactUsPage = () => {
             <option value="bug">Bug</option>
             <option value="autre">Autre</option>
           </FormSelect>
-          {/* <label htmlFor="contact__category" className="FormInput__label">
-            Catégorie de votre message :
-          </label>
-          <select
-            name="contact__category"
-            className="FormInput"
-            onChange={(e) => getValue("category", e.target.value)}
-          >
-            <option value="question">Question</option>
-            <option value="signal">Signalement</option>
-            <option value="recommandation">Recommandation</option>
-            <option value="bug">Bug</option>
-            <option value="autre">Autre</option>
-          </select> */}
         </div>
         <div className="form__group">
           <FormTextarea

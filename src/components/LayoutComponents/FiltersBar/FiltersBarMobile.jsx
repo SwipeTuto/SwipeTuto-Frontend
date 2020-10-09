@@ -1,7 +1,7 @@
 // Bar avec les items pour filtrer les slides
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // redux
 import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
@@ -24,7 +24,6 @@ import {
 } from "../../../helper/index";
 
 // components
-import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
 import CustomButton from "../CustomButton/CustomButton";
 
 // assets
@@ -39,7 +38,6 @@ const FiltersBarMobile = ({ title, showResults }) => {
   const filterMobileMenuOpen = useSelector(selectFilterMobileMenuOpen);
   const currentSearch = useSelector(selectCurrentSearch);
   const currentTheme = useSelector(selectTheme);
-  const [redirection, setRedirection] = useState(false);
   const [newSearch, setNewSearch] = useState({});
 
   const [inputShowed, setInputShowed] = useState({
@@ -49,9 +47,8 @@ const FiltersBarMobile = ({ title, showResults }) => {
   });
 
   useEffect(() => {
-    setRedirection(false);
     setNewSearch(currentSearch);
-  }, [currentSearch]);
+  }, [currentSearch, dispatch]);
 
   const handleSearchChange = (e) => {
     const type = e.target.name;
@@ -75,7 +72,6 @@ const FiltersBarMobile = ({ title, showResults }) => {
   const handleDeleteCurrentSearch = () => {
     dispatch(deleteCurrentSearch());
     dispatch(closeFilterMobileMenu());
-    setRedirection(true);
   };
 
   const toggleShowInput = (item) => {
@@ -92,20 +88,19 @@ const FiltersBarMobile = ({ title, showResults }) => {
   };
 
   const handleFormSubmit = (e) => {
-    setRedirection(true);
     e.preventDefault();
-    dispatch(setCurrentSearch("searchWords", newSearch.searchWords));
-    dispatch(setCurrentSearch("searchTopic", newSearch.searchTopic));
-    dispatch(setCurrentSearch("searchOrder", newSearch.searchOrder));
-    dispatch(setCurrentSearch("searchCategory", newSearch.searchCategory));
+    const currentSearchCopy = {
+      searchWords: newSearch.searchWords,
+      searchTopic: newSearch.searchTopic,
+      searchOrder: newSearch.searchOrder,
+      searchCategory: newSearch.searchCategory,
+    };
+    dispatch(setCurrentSearch(currentSearchCopy));
     dispatch(closeFilterMobileMenu());
   };
 
-  const redirectLink = SearchLinkRedirect();
-
   return (
     <>
-      {redirection && <Redirect to={redirectLink} />}
       <div className="FiltersBarMobile">
         {filterMobileMenuOpen && (
           <div className={`FiltersBarMobile__menu ${currentTheme}-theme`}>

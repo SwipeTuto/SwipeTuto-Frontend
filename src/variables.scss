@@ -151,6 +151,20 @@ $title-font: "Montserrat", sans-serif;
   }
 }
 
+@mixin popup-style {
+  z-index: 100000000000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgba($black, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 // @mixin button-active-style {
 //   padding: $box-padding;
 //   display: flex;

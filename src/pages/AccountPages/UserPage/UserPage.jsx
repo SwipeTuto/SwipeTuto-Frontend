@@ -68,7 +68,6 @@ const UserPage = ({ userIsSame, location }) => {
         ) : (
           <p className="UserPage__nocards">Aucune carte pour le moment.</p>
         )}
-        <CardFullPopup />
       </div>
     </div>
   );

@@ -41,7 +41,6 @@ const SavedPage = ({ location }) => {
         ) : (
           <p className="SavedPage__nocards">Aucune carte pour le moment.</p>
         )}
-        <CardFullPopup />
       </div>
     </div>
   );

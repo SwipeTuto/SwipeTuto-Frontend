@@ -19,7 +19,7 @@ import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
 import { getCardByIdAction } from './redux/filter/filter-actions'
-import { selectIsLoaded, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
+import { selectIsLoaded, selectShowPopupCard, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
 import { setCurrentSearch } from "./redux/filter/filter-actions"
 
 
@@ -34,6 +34,7 @@ import InfosPage from "./pages/InfosPage/InfosPage";
 import { showPopupCard } from "./redux/layout/layout-actions";
 import { getUserByIdAction } from "./redux/user/user-actions";
 import SignalPopup from "./components/LayoutComponents/SignalPopup/SignalPopup";
+import CardFullPopup from "./components/CardsComponents/CardFullPopup/CardFullPopup";
 
 
 
@@ -46,6 +47,7 @@ function App(props) {
   const cardId = getUrlId(props.location.pathname, "card_id")
   const isLoaded = useSelector(selectIsLoaded)
   const signalPopup = useSelector(selectSignalPopupOpen)
+  const cardPopupShown = useSelector(selectShowPopupCard)
 
   useEffect(() => {
     if (!isLoaded && (topic || category || ordering || search)) {
@@ -75,6 +77,7 @@ function App(props) {
       <NavTop />
       <NavTopMobile />
       {signalPopup && <SignalPopup />}
+      {cardPopupShown && <CardFullPopup />}
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/search" component={SearchPage} />

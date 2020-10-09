@@ -90,7 +90,6 @@ const HomePage = () => {
           )}
         </div>
       </div>
-      <CardFullPopup />
 
       <div className="About section">
         <div className="about-section section-1">

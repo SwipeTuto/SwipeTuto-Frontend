@@ -170,7 +170,6 @@ const CardGridList = ({ loadFilter }) => {
         )}
       </div>
 
-      <CardFullPopup />
       {!isLoaded && <PageLoading />}
       {cards && nextPageLink && (
         <div className="bottom-grid" ref={bottomGrid}></div>

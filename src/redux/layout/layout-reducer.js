@@ -24,7 +24,7 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
     case LayoutActionTypes.SHOW_POPUP_CARD:
-      cardPopupElement.addEventListener('wheel', (e) => {
+      if (cardPopupElement) cardPopupElement.addEventListener('wheel', (e) => {
         e.stopPropagation();
       })
 
@@ -44,7 +44,7 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         popupShown: false,
       };
     case LayoutActionTypes.SHOW_FULLSCREEN:
-      cardPopupElement.style.overflow = "hidden";
+      if (cardPopupElement) cardPopupElement.style.overflow = "hidden";
       return {
         ...state,
         fullscreen: true,

@@ -4,14 +4,22 @@ import CustomButton from "../../../components/LayoutComponents/CustomButton/Cust
 import { checkRegexInput, errorMessageToDisplay } from "../../../helper/index";
 
 import "./SettingsPage.scss";
-import { selectCurrentUser } from "../../../redux/user/user-selectors";
-import { updateUserInfosAction } from "../../../redux/user/user-actions";
+import {
+  selectCurrentUser,
+  selectCurrentUserId,
+} from "../../../redux/user/user-selectors";
+import {
+  getCurrentUserAction,
+  updateUserInfosAction,
+} from "../../../redux/user/user-actions";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
-import FormInput from "../../../components/FormInput/FormInput";
+import FormInput from "../../../components/FormInputs/FormInput";
+import FormTextarea from "../../../components/FormInputs/FormTextarea";
 
 const SettingsPage = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
+  const currentUserId = useSelector(selectCurrentUserId);
   const currentTheme = useSelector(selectTheme);
   const [newUserInfos, setNewUserInfos] = useState(currentUser);
   const [sendNewInfos, setSendNewInfos] = useState(false);
@@ -44,13 +52,15 @@ const SettingsPage = () => {
       setInputValid({ ...inputValidCopy, avatar: false });
     }
     let avatarFormData = new FormData();
-    avatarFormData.append("avatar", newAvatarFile);
+    avatarFormData.append("avatar", newAvatarFile, newAvatarFile.name);
+    // upDateAvatar(avatarFormData).then((rep) => {
+    //   setInputValid({ ...inputValidCopy, avatar: true });
+    // });
 
     setNewUserInfos({
       ...currentUser,
       avatar: [avatarFormData],
     });
-    setInputValid({ ...inputValidCopy, avatar: true });
   };
 
   const handleChange = (name, value) => {
@@ -78,6 +88,7 @@ const SettingsPage = () => {
   const handleSubmitInput = (e) => {
     e.preventDefault();
     dispatch(updateUserInfosAction(newUserInfos));
+    currentUserId && dispatch(getCurrentUserAction(currentUserId));
     setSendNewInfos(true);
   };
 
@@ -90,165 +101,120 @@ const SettingsPage = () => {
       <h1 className="title title-1">Changer les informations du compte</h1>
       <div className="allForms">
         <form className="form__avatar form" onChange={handleAvatarUpdate}>
-          <label htmlFor="avatar">
-            Changez votre avatar (veuillez choisir une image au format{" "}
-            <em>.png</em> ou <em>.jpeg</em>) :
-          </label>
-          <div className="form__bottom">
-            <div className="form__bottom--input">
-              <input
-                className="settings__form--input invalid-input"
-                onChange={(e) => handleChange(e)}
-                type="file"
-                id="avatar"
-                name="avatar"
-                accept="image/png, image/jpeg"
-                required
-              />
-              <p className="input__message" data-inputfor="avatar"></p>
-            </div>
-            <CustomButton
+          <div className="form__avatar--left">
+            <label htmlFor="avatar">
+              Changez votre avatar (veuillez choisir une image au format{" "}
+              <em>.png</em> ou <em>.jpeg</em>) :
+            </label>
+            <input
+              className="settings__form--input invalid-input"
+              onChange={(e) => handleChange(e)}
+              type="file"
+              id="avatar"
               name="avatar"
-              onClick={(e) => handleSubmitInput(e)}
-              color="dark"
-              disabled={inputValid.avatar === false ? "disabled" : ""}
-            >
-              Valider
-            </CustomButton>
+              accept="image/png, image/jpeg"
+              required
+            />
+            <p className="input__message" data-inputfor="avatar"></p>
           </div>
+
+          <CustomButton
+            name="avatar"
+            onClick={(e) => handleSubmitInput(e)}
+            color="dark"
+            disabled={inputValid.avatar === false ? "disabled" : ""}
+          >
+            Valider
+          </CustomButton>
         </form>
         <form className="form__pseudo form">
-          <label htmlFor="username">Changez votre Pseudo :</label>
           <div className="form__bottom">
-            <div className="form__bottom--input">
-              <FormInput
-                idFor="username"
-                // label="Votre nom d'utilisateur :"
-                type="text"
-                name="username"
-                getValue={getValue}
-                required={true}
-                firstValue={currentUser && currentUser.username}
-              />
-              {/* <input
-                className="settings__form--input invalid-input"
-                type="text"
-                id="username"
-                name="username"
-                onChange={(e) => handleChange(e)}
-                placeholder={currentUser && currentUser.username}
-                required
-              />
-              <p className="input__message" data-inputfor="username"></p> */}
-            </div>
-            <CustomButton
+            <FormInput
+              idFor="username"
+              label="Changez votre Pseudo :"
+              type="text"
               name="username"
-              onClick={(e) => handleSubmitInput(e)}
-              color="dark"
-              disabled={inputValid.username === false ? "disabled" : ""}
-            >
-              Valider
-            </CustomButton>
+              getValue={getValue}
+              required={true}
+              firstValue={currentUser && currentUser.username}
+            />
           </div>
+
+          <CustomButton
+            name="username"
+            onClick={(e) => handleSubmitInput(e)}
+            color="dark"
+            disabled={inputValid.username === false ? "disabled" : ""}
+          >
+            Valider
+          </CustomButton>
         </form>
         <form className="form__first_name form">
-          <label htmlFor="first_name">Changez votre Prénom :</label>
           <div className="form__bottom">
-            <div className="form__bottom--input">
-              <FormInput
-                idFor="first_name"
-                // label="Votre nom d'utilisateur :"
-                type="text"
-                name="first_name"
-                getValue={getValue}
-                required={true}
-                firstValue={currentUser && currentUser.first_name}
-              />
-              {/* <input
-                className="settings__form--input invalid-input"
-                type="text"
-                id="first_name"
-                name="first_name"
-                onChange={(e) => handleChange(e)}
-                placeholder={currentUser && currentUser.first_name}
-                required
-              />
-              <p className="input__message" data-inputfor="first_name"></p> */}
-            </div>
-            <CustomButton
+            <FormInput
+              idFor="first_name"
+              label="Votre nom d'utilisateur :"
+              type="text"
               name="first_name"
-              onClick={(e) => handleSubmitInput(e)}
-              color="dark"
-              disabled={inputValid.first_name === false ? "disabled" : ""}
-            >
-              Valider
-            </CustomButton>
+              getValue={getValue}
+              required={true}
+              firstValue={currentUser && currentUser.first_name}
+            />
           </div>
+          <CustomButton
+            name="first_name"
+            onClick={(e) => handleSubmitInput(e)}
+            color="dark"
+            disabled={inputValid.first_name === false ? "disabled" : ""}
+          >
+            Valider
+          </CustomButton>
         </form>
         <form className="form__last_name form">
-          <label htmlFor="last_name">Changez votre Nom :</label>
           <div className="form__bottom">
-            <div className="form__bottom--input">
-              <FormInput
-                idFor="last_name"
-                // label="Votre nom d'utilisateur :"
-                type="text"
-                name="last_name"
-                getValue={getValue}
-                required={true}
-                firstValue={currentUser && currentUser.last_name}
-              />
-              {/* <input
-                className="settings__form--input invalid-input"
-                type="text"
-                id="last_name"
-                name="last_name"
-                onChange={(e) => handleChange(e)}
-                placeholder={currentUser && currentUser.last_name}
-                required
-              />
-              <p className="input__message" data-inputfor="last_name"></p> */}
-            </div>
-            <CustomButton
+            <FormInput
+              idFor="last_name"
+              label="Votre nom d'utilisateur :"
+              type="text"
               name="last_name"
-              onClick={(e) => handleSubmitInput(e)}
-              color="dark"
-              disabled={inputValid.last_name === false ? "disabled" : ""}
-            >
-              Valider
-            </CustomButton>
+              getValue={getValue}
+              required={true}
+              firstValue={currentUser && currentUser.last_name}
+            />
           </div>
+          <CustomButton
+            name="last_name"
+            onClick={(e) => handleSubmitInput(e)}
+            color="dark"
+            disabled={inputValid.last_name === false ? "disabled" : ""}
+          >
+            Valider
+          </CustomButton>
         </form>
         <form className="form__description form">
-          <label htmlFor="description">Changez votre description :</label>
           <div className="form__bottom">
-            <div className="form__bottom--input">
-              <textarea
-                className="settings__form--input invalid-input"
-                type="text"
-                id="description"
-                name="description"
-                onChange={(e) => handleChange(e)}
-                placeholder={
-                  currentUser &&
-                  currentUser.profile &&
-                  currentUser.profile.description
-                }
-                onFocus={() =>
-                  setInputValid({ ...inputValid, description: true })
-                }
-              />
-              <p className="input__message" data-inputfor="description"></p>
-            </div>
-            <CustomButton
+            <FormTextarea
+              idFor="description"
+              label="Votre description :"
+              type="text"
               name="description"
-              onClick={(e) => handleSubmitInput(e)}
-              color="dark"
-              disabled={inputValid.description === false ? "disabled" : ""}
-            >
-              Valider
-            </CustomButton>
+              getValue={getValue}
+              required={true}
+              firstValue={
+                currentUser &&
+                currentUser.profile &&
+                currentUser.profile.description
+              }
+            />
           </div>
+          <CustomButton
+            name="description"
+            onClick={(e) => handleSubmitInput(e)}
+            color="dark"
+            disabled={inputValid.description === false ? "disabled" : ""}
+          >
+            Valider
+          </CustomButton>
         </form>
       </div>
     </div>

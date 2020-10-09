@@ -24,7 +24,7 @@ import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google
 import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
 
 import "./LoginAndRegister.scss";
-import FormInput from "../../FormInput/FormInput";
+import FormInput from "../../FormInputs/FormInput";
 import { provider } from "../../../services/firebaseService";
 
 const Login = ({ history }) => {

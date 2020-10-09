@@ -142,7 +142,7 @@ export const strongPasswordRegex = RegExp(/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[
 export const passwordRegexErrorMessage = "Le mot de passe doit contenir au moins 8 caratcères, dont une lettre minuscule, une lettre majuscule et un nombre.";
 const passwordConfirmMessage = "Le mot de passe ne correspond pas à celui ajouté précédemment."
 
-export const descriptionRegex = RegExp(/(.*?) {0,250}$/); // lettres entre 0 et 250 caractères
+// export const descriptionRegex = RegExp(/(.*?){0,250}$/); // lettres entre 0 et 250 caractères
 const descriptionErrorMessage = "Entrez une description valide, entre 0 et 250 caractères."
 
 export const errorMessageToDisplay = (name) => {
@@ -185,7 +185,7 @@ export const checkRegexInput = (name, value) => {
     case "url":
       return urlRegex.test(value);
     case "description":
-      return true;
+      return (value.length >= 0 && value.length <= 250);
     default:
       return;
   }

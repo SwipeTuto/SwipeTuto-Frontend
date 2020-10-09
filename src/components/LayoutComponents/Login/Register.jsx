@@ -19,7 +19,7 @@ import CustomButton from "../CustomButton/CustomButton";
 import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google.svg";
 import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
 import "./LoginAndRegister.scss";
-import FormInput from "../../FormInput/FormInput";
+import FormInput from "../../FormInputs/FormInput";
 
 // Props history, location, match, depuis react router dom
 const Register = (props) => {

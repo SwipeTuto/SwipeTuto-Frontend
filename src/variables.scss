@@ -63,11 +63,13 @@ $title-font: "Montserrat", sans-serif;
   font-family: inherit;
   padding: $box-padding;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   transition: all 0.2s ease;
   margin-bottom: 1rem;
   border-left: 3px solid $grey;
+  width: 100%;
 
   &:focus.valid-input {
     border-left: 3px solid $green-success;
@@ -79,6 +81,10 @@ $title-font: "Montserrat", sans-serif;
     border-left: 3px solid $red-error;
   }
 
+  .FormInput__label {
+    margin-bottom: 0.5rem;
+  }
+
   &:focus {
     background-color: $white;
   }
@@ -87,9 +93,9 @@ $title-font: "Montserrat", sans-serif;
     display: block;
   }
 
-  & + .input__message-hide {
-    display: none;
-  }
+  // & + .input__message-hide {
+  //   display: none;
+  // }
 
   &:focus {
     &::placeholder {

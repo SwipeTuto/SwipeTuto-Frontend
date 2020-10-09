@@ -71,7 +71,7 @@ const NavTop = (props) => {
         >
           {topicArray &&
             topicArray.map((rubrique, index) => (
-              <div key={index}>
+              <Link key={index} to="/search">
                 <img
                   onClick={(e) => topicHandleClick(e)}
                   src={rubrique.logo}
@@ -79,7 +79,7 @@ const NavTop = (props) => {
                   className="NavTop__dropdown--logo"
                   alt={rubrique.name}
                 />
-              </div>
+              </Link>
             ))}
         </div>
       </div>

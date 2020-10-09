@@ -126,10 +126,12 @@ const NavTopMobile = (props) => {
         >
           <img src={SwipeTutoSmallLogo} alt="" />
         </Link>
-        <CustomButton color="white" onClick={handleFiltersMobileOpen}>
-          <SearchLogo />
-          Recherche
-        </CustomButton>
+        <Link to="/search">
+          <CustomButton color="white" onClick={handleFiltersMobileOpen}>
+            <SearchLogo />
+            Recherche
+          </CustomButton>
+        </Link>
       </div>
       <div className={`NavTopMobile__open ${mobileNavOpen ? "active" : ""}`}>
         <div className="NavTopMobile__swipeTuto-menu">

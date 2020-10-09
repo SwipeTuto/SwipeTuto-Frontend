@@ -19,7 +19,7 @@ import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
 import { getCardByIdAction } from './redux/filter/filter-actions'
-import { selectIsLoaded, selectTheme } from "./redux/layout/layout-selectors"
+import { selectIsLoaded, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
 import { setCurrentSearch } from "./redux/filter/filter-actions"
 
 
@@ -33,6 +33,7 @@ import CookiesPage from "./pages/CookiesPage/CookiesPage";
 import InfosPage from "./pages/InfosPage/InfosPage";
 import { showPopupCard } from "./redux/layout/layout-actions";
 import { getUserByIdAction } from "./redux/user/user-actions";
+import SignalPopup from "./components/LayoutComponents/SignalPopup/SignalPopup";
 
 
 
@@ -44,6 +45,7 @@ function App(props) {
   const userId = getUrlId(props.location.pathname, "user_id")
   const cardId = getUrlId(props.location.pathname, "card_id")
   const isLoaded = useSelector(selectIsLoaded)
+  const signalPopup = useSelector(selectSignalPopupOpen)
 
   useEffect(() => {
     if (!isLoaded && (topic || category || ordering || search)) {
@@ -68,13 +70,11 @@ function App(props) {
     bodyEl.classList.add(`${currentTheme}-theme`);
   }, [currentTheme])
 
-
-
-
   return (
     <div className={`App ${currentTheme}-theme`}>
       <NavTop />
       <NavTopMobile />
+      {signalPopup && <SignalPopup />}
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/search" component={SearchPage} />

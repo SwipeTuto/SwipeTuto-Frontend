@@ -55,7 +55,6 @@ const CardGridList = ({ loadFilter }) => {
       (prevCurrentSearch && prevCurrentSearch !== currentSearch) ||
       fetchWithFilter === true
     ) {
-      // console.log("call");
       dispatch(getCardAfterfilterAction(currentSearch));
     }
   }, [currentSearch, dispatch, fetchWithFilter, prevCurrentSearch]);

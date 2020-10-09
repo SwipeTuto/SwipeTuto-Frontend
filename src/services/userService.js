@@ -169,7 +169,7 @@ export const upDateAvatar = avatar => {
     }
   };
 
-  return axios.put(`${baseURL}avatar/`,avatar, requestOptions).then(rep => {
+  return axios.put(`${baseURL}avatar/`, avatar, requestOptions).then(rep => {
     return rep
   })
 }
@@ -186,3 +186,25 @@ export const getUserFavoriesById = userId => {
   })
 
 }
+export const signalContent = signal => {
+  var config = {
+    headers: { 'Content-Type': 'application/json' },
+    'Authorization': authHeader()
+  }
+
+  return axios.post(`${baseURL}backoffice/signalement/`, {
+    params: {
+      'reason': signal.reason,
+      'message': signal.description,
+      'id_card': signal.id_card ? signal.id_card : null,
+      'id_user': signal.id_user ? signal.id_user : null,
+      'id_comment': signal.id_comment ? signal.id_comment : null
+    }
+  }, config).then(rep => {
+    console.log(rep)
+    return rep
+  })
+
+}
+
+

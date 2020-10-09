@@ -53,3 +53,7 @@ export const selectOtherPageLoading = createSelector(
   [selectLayout],
   layout => layout.otherPageCardsLoaded
 );
+export const selectSignalPopupOpen = createSelector(
+  [selectLayout],
+  layout => layout.signalPopupOpen
+);

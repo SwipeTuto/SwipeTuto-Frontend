@@ -2,6 +2,7 @@ import { LayoutActionTypes } from './layout-types'
 
 const INITIAL_STATE = {
   popupShown: false,
+  signalPopupOpen: false,
   fullscreen: false,
   showUserNav: false,
   mobileNavOpen: false,
@@ -133,6 +134,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         imageIsLoaded: true,
+      }
+    case LayoutActionTypes.SHOW_SIGNAL_POPUP:
+      return {
+        ...state,
+        signalPopupOpen: true,
+      }
+    case LayoutActionTypes.CLOSE_SIGNAL_POPUP:
+      return {
+        ...state,
+        signalPopupOpen: false,
       }
     case LayoutActionTypes.OTHER_PAGE_CARDS_LOADING:
       return {

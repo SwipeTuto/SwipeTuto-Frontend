@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 // redux
 import {
@@ -183,7 +184,8 @@ const CommentsWrapper = () => {
                   <p className="CommentsWrapper__comment--error">
                     Une erreur est survenue lors de la publication du
                     commentaire. Merci de réessayer plus tard. Si le problème
-                    persiste, veuillez nous contacter.
+                    persiste, veuillez <Link to="/contact">nous contacter</Link>
+                    .
                   </p>
                   <p
                     className="CommentsWrapper__error-delete"

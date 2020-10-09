@@ -22,6 +22,7 @@ import "./HomePage.scss";
 import { selectIsLoaded } from "../../redux/layout/layout-selectors";
 import SearchLinkRedirect from "../../helper/SearchLinkRedirect";
 import { initialSearchState } from "../../helper";
+import { showSignalPopup } from "../../redux/layout/layout-actions";
 
 const HomePage = () => {
   const isLoaded = useSelector(selectIsLoaded);
@@ -54,6 +55,9 @@ const HomePage = () => {
           <img className="HomePage__header-image" src={HeaderImage} alt="" />
           <div className="HomePage__home-header--left">
             <h1 className="title title-1">Apprendre Rapidement</h1>
+            <CustomButton onClick={() => dispatch(showSignalPopup())}>
+              test signal
+            </CustomButton>
             <p>
               SwipeTuto c'est des centaines de tutoriels autour du web
               disponibles : programmation, design, SEO, frontend, backend... Le
@@ -70,6 +74,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+
       <div className="HomePage__lastCards section">
         <h1 className="title title-1">Nos dernières cartes</h1>
         <div className="HomePage__grid ">

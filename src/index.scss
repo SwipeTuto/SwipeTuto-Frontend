@@ -23,6 +23,10 @@ select {
   border-radius: 0 $box-radius $box-radius 0;
 }
 
+button {
+  border-radius: $box-radius;
+}
+
 label {
   margin-bottom: 0.5rem;
 }

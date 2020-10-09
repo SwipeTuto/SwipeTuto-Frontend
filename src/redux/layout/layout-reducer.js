@@ -1,6 +1,7 @@
 import { LayoutActionTypes } from './layout-types'
 
 const INITIAL_STATE = {
+  firstLoadDone: false,
   popupShown: false,
   signalPopupOpen: false,
   fullscreen: false,
@@ -13,6 +14,8 @@ const INITIAL_STATE = {
   clickedCardIsLoaded: false,
   imageIsLoaded: false,
   commentsAreLoaded: false,
+  redirectUrl: false,
+  connexionPopup: false,
   theme: "light"
 };
 
@@ -34,6 +37,11 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         popupShown: true,
+      };
+    case LayoutActionTypes.FIRST_LOAD_DONE:
+      return {
+        ...state,
+        firstLoadDone: true,
       };
     case LayoutActionTypes.CLOSE_POPUP_CARD:
       app.style.position = '';
@@ -145,6 +153,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         signalPopupOpen: false,
       }
+    case LayoutActionTypes.OPEN_CONNEXION_POPUP:
+      return {
+        ...state,
+        connexionPopup: true,
+      }
+    case LayoutActionTypes.CLOSE_CONNEXION_POPUP:
+      return {
+        ...state,
+        connexionPopup: false,
+      }
     case LayoutActionTypes.OTHER_PAGE_CARDS_LOADING:
       return {
         ...state,
@@ -156,10 +174,14 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         otherPageCardsLoaded: true,
       }
     case LayoutActionTypes.TOGGLE_THEME:
-      // const localTheme = window.localStorage.getItem('theme');
       return {
         ...state,
         theme: action.payload,
+      }
+    case LayoutActionTypes.REDIRECT_URL:
+      return {
+        ...state,
+        redirectUrl: action.payload,
       }
     default:
       return state;

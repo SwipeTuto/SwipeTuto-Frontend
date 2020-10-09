@@ -57,3 +57,16 @@ export const selectSignalPopupOpen = createSelector(
   [selectLayout],
   layout => layout.signalPopupOpen
 );
+export const selectRedirectUrl = createSelector(
+  [selectLayout],
+  layout => layout.redirectUrl
+);
+export const selectConnexionPopup = createSelector(
+  [selectLayout],
+  layout => layout.connexionPopup
+);
+export const selectFirstLoadDone = createSelector(
+  [selectLayout],
+  layout => layout.firstLoadDone
+
+);

@@ -11,7 +11,6 @@ import { commentsFormattedDate } from "../../../../helper/index";
 // components
 import UserAvatar from "../../../UserComponents/UserAvatar/UserAvatar";
 import UserUsername from "../../../UserComponents/UserAvatar/UserUsername";
-import ConnexionRedirect from "../../ConnexionRedirect/ConnexionRedirect";
 
 // assets
 import { ReactComponent as HeartEmpty } from "../../../../assets/images/heart-outline.svg";
@@ -20,6 +19,7 @@ import { ReactComponent as MobileMenu } from "../../../../assets/images/ellipsis
 
 import "./SecondLevelComment.scss";
 import ConfirmationOverlay from "../../ConfirmationOverlay/ConfirmationOverlay";
+import { openConnexionPopup } from "../../../../redux/layout/layout-actions";
 
 const SecondLevelComment = ({
   reply,
@@ -31,7 +31,6 @@ const SecondLevelComment = ({
   const commentAuthor = reply.author;
   const commentId = reply.id;
   const [commentIsLiked, setCommentIsLiked] = useState();
-  const [connectRedirect, setConnectRedirect] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [confirmPopupOpen, setConfirmPopupOpen] = useState({
     open: false,
@@ -57,7 +56,7 @@ const SecondLevelComment = ({
 
   const handleCommentLike = () => {
     if (!currentUser) {
-      setConnectRedirect(true);
+      dispatch(openConnexionPopup());
     } else {
       dispatch(toggleCommentLikeAction(commentId));
       const likeElMobile = document.querySelector(
@@ -80,7 +79,7 @@ const SecondLevelComment = ({
     setMobileMenu(false);
   };
   const handleCommentDelete = (e) => {
-    if (!currentUser) setConnectRedirect(true);
+    if (!currentUser) dispatch(openConnexionPopup());
     const commentId = e.target.dataset.commentid;
     setConfirmPopupOpen({
       open: true,
@@ -88,10 +87,6 @@ const SecondLevelComment = ({
       id: commentId,
     });
     setMobileMenu(false);
-  };
-
-  const handleClose = () => {
-    setConnectRedirect(false);
   };
 
   const handleConfirmClick = () => {
@@ -107,7 +102,6 @@ const SecondLevelComment = ({
 
   return (
     <>
-      {connectRedirect && <ConnexionRedirect handleClose={handleClose} />}
       {confirmPopupOpen &&
         confirmPopupOpen.open &&
         confirmPopupOpen.open === true && (

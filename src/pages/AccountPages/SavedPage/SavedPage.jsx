@@ -13,7 +13,6 @@ import {
   selectTheme,
 } from "../../../redux/layout/layout-selectors";
 import Loading from "../../../components/Loading/Loading";
-import CardFullPopup from "../../../components/CardsComponents/CardFullPopup/CardFullPopup";
 
 const SavedPage = ({ location }) => {
   const currentTheme = useSelector(selectTheme);

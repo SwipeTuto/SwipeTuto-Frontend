@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CustomButton from "../../../components/LayoutComponents/CustomButton/CustomButton";
-import { checkRegexInput, errorMessageToDisplay } from "../../../helper/index";
 
 import "./SettingsPage.scss";
 import {
@@ -79,7 +78,6 @@ const SettingsPage = () => {
           profile: { ...currentUser.profile, [name]: value },
         });
         setInputValid({ ...inputValidCopy, description: true });
-        // console.log(newUserInfos);
         break;
       default:
         return;

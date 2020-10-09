@@ -21,7 +21,6 @@ import { commentsFormattedDate } from "../../../../helper/index";
 // components
 import UserAvatar from "../../../UserComponents/UserAvatar/UserAvatar";
 import UserUsername from "../../../UserComponents/UserAvatar/UserUsername";
-import ConnexionRedirect from "../../ConnexionRedirect/ConnexionRedirect";
 import CommentsInput from "../../CommentsInput/CommentsInput";
 import ConfirmationOverlay from "../../ConfirmationOverlay/ConfirmationOverlay";
 import SecondLevelComment from "../SecondLevelComment/SecondLevelComment";
@@ -34,6 +33,7 @@ import { ReactComponent as MobileMenu } from "../../../../assets/images/ellipsis
 import { ReactComponent as CloseLogo } from "../../../../assets/images/close.svg";
 
 import "./FirstLevelComment.scss";
+import { openConnexionPopup } from "../../../../redux/layout/layout-actions";
 
 const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
   const dispatch = useDispatch();
@@ -46,7 +46,6 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
   const replyCount = comment.reply_count;
   const likesCount = comment.likes_count;
   const [commentIsLiked, setCommentIsLiked] = useState();
-  const [connectRedirect, setConnectRedirect] = useState(false);
   const [localRepliesArray, setLocalRepliesArray] = useState([]);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [repliesBlockVisible, setRepliesBlockVisible] = useState(false);
@@ -110,7 +109,7 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
 
   const handleCommentLike = (commentId) => {
     if (!currentUser) {
-      setConnectRedirect(true);
+      dispatch(openConnexionPopup());
     } else {
       dispatch(toggleCommentLikeAction(commentId));
       const likeElMobile = document.querySelector(
@@ -164,7 +163,8 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
   const handleAddCommentClick = async (e) => {
     e.preventDefault();
     if (!currentUser) {
-      setConnectRedirect(true);
+      dispatch(openConnexionPopup());
+      // setConnectRedirect(true);
     } else {
       await dispatch(addReplyAction(clickedCardId, commentId, newComment));
       // await handleRepliesFetch();
@@ -179,7 +179,7 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
   };
 
   const handleCommentDelete = (e) => {
-    if (!currentUser) setConnectRedirect(true);
+    if (!currentUser) dispatch(openConnexionPopup());
     const commentId = e.target.dataset.commentid;
     setConfirmPopupOpen({
       open: true,
@@ -187,10 +187,6 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
       id: commentId,
     });
     setMobileMenu(false);
-  };
-
-  const handleClose = () => {
-    setConnectRedirect(false);
   };
 
   const handleConfirmClick = () => {
@@ -267,7 +263,7 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
 
   return (
     <>
-      {connectRedirect && <ConnexionRedirect handleClose={handleClose} />}
+      {/* {connectRedirect && <ConnexionRedirect handleClose={handleClose} />} */}
       {confirmPopupOpen &&
         confirmPopupOpen.open &&
         confirmPopupOpen.open === true && (

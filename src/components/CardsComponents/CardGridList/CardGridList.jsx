@@ -12,13 +12,12 @@ import {
 } from "../../../redux/filter/filter-selectors";
 import {
   selectCardsSize,
+  selectFirstLoadDone,
   selectIsLoaded,
-  selectShowPopupCard,
 } from "../../../redux/layout/layout-selectors";
 
 // components
 import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
-import CardFullPopup from "../CardFullPopup/CardFullPopup";
 import PageLoading from "../../Loading/PageLoading";
 import ScrollButton from "../../LayoutComponents/ScrollButton/ScrollButton";
 
@@ -30,7 +29,6 @@ import {
 } from "../../../redux/filter/filter-actions";
 import { useCallback } from "react";
 import { useColumnsNumber } from "../../../hooks/useColumnsNumber";
-import { closePopupCard } from "../../../redux/layout/layout-actions";
 
 const CardGridList = ({ loadFilter }) => {
   const dispatch = useDispatch();
@@ -46,18 +44,23 @@ const CardGridList = ({ loadFilter }) => {
   const prevNumberOfColumns = usePrevious(numberOfColumns);
   const currentSearch = useSelector(selectCurrentSearch);
   const prevCurrentSearch = usePrevious(currentSearch);
-  const isPopupShown = useSelector(selectShowPopupCard);
+  const firstLoadDone = useSelector(selectFirstLoadDone);
 
   useEffect(() => {
-    // console.log(fetchWithFilter);
-    // console.log(prevCurrentSearch, currentSearch);
     if (
-      (prevCurrentSearch && prevCurrentSearch !== currentSearch) ||
-      fetchWithFilter === true
+      ((prevCurrentSearch && prevCurrentSearch !== currentSearch) ||
+        fetchWithFilter === true) &&
+      firstLoadDone
     ) {
       dispatch(getCardAfterfilterAction(currentSearch));
     }
-  }, [currentSearch, dispatch, fetchWithFilter, prevCurrentSearch]);
+  }, [
+    currentSearch,
+    dispatch,
+    fetchWithFilter,
+    firstLoadDone,
+    prevCurrentSearch,
+  ]);
 
   // gestion de l'ordre des cartes par colonne
   const reorderCards = useCallback(

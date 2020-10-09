@@ -39,6 +39,12 @@ export const openFilterMobileMenu = () => ({
 export const closeFilterMobileMenu = () => ({
   type: LayoutActionTypes.CLOSE_FILTER_MOBILE_MENU,
 })
+export const openConnexionPopup = () => ({
+  type: LayoutActionTypes.OPEN_CONNEXION_POPUP,
+})
+export const closeConnexionPopup = () => ({
+  type: LayoutActionTypes.CLOSE_CONNEXION_POPUP,
+})
 
 export const setLoading = () => ({
   type: LayoutActionTypes.SET_LOADING,
@@ -82,4 +88,11 @@ export const otherPageLoading = () => ({
 })
 export const otherPageLoaded = () => ({
   type: LayoutActionTypes.OTHER_PAGE_CARDS_LOADED,
+})
+export const setRedirectUrl = (bool) => ({
+  type: LayoutActionTypes.REDIRECT_URL,
+  payload: bool
+})
+export const setFirstLoadDone = () => ({
+  type: LayoutActionTypes.FIRST_LOAD_DONE,
 })

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import CardPreviewSmall from "../../components/CardsComponents/CardPreviewSmall/CardPreviewSmall";
-import CardFullPopup from "../../components/CardsComponents/CardFullPopup/CardFullPopup";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import Loading from "../../components/Loading/Loading";
 import { getCardAfterfilterAction } from "../../redux/filter/filter-actions";
@@ -22,7 +21,6 @@ import "./HomePage.scss";
 import { selectIsLoaded } from "../../redux/layout/layout-selectors";
 import SearchLinkRedirect from "../../helper/SearchLinkRedirect";
 import { initialSearchState } from "../../helper";
-import { showSignalPopup } from "../../redux/layout/layout-actions";
 
 const HomePage = () => {
   const isLoaded = useSelector(selectIsLoaded);
@@ -55,9 +53,6 @@ const HomePage = () => {
           <img className="HomePage__header-image" src={HeaderImage} alt="" />
           <div className="HomePage__home-header--left">
             <h1 className="title title-1">Apprendre Rapidement</h1>
-            <CustomButton onClick={() => dispatch(showSignalPopup())}>
-              test signal
-            </CustomButton>
             <p>
               SwipeTuto c'est des centaines de tutoriels autour du web
               disponibles : programmation, design, SEO, frontend, backend... Le

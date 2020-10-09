@@ -15,6 +15,7 @@ import {
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 import FormInput from "../../../components/FormInputs/FormInput";
 import FormTextarea from "../../../components/FormInputs/FormTextarea";
+import { upDateAvatar } from "../../../services/userService";
 
 const SettingsPage = () => {
   const dispatch = useDispatch();
@@ -53,9 +54,9 @@ const SettingsPage = () => {
     }
     let avatarFormData = new FormData();
     avatarFormData.append("avatar", newAvatarFile, newAvatarFile.name);
-    // upDateAvatar(avatarFormData).then((rep) => {
-    //   setInputValid({ ...inputValidCopy, avatar: true });
-    // });
+    upDateAvatar(avatarFormData).then((rep) => {
+      setInputValid({ ...inputValidCopy, avatar: true });
+    });
 
     setNewUserInfos({
       ...currentUser,

@@ -4,37 +4,6 @@ import { auth, provider, providerGit } from '../services/firebaseService';
 import { baseURL } from '../services/configService'
 
 
-
-
-export const loginGoogle = () => {
-  return auth().signInWithPopup(provider)
-    .then(result => {
-      var user = result.user;
-      return user.getIdToken()
-    })
-}
-
-
-export const loginGit = () => {
-  auth().signInWithPopup(providerGit)
-    .then(result => {
-      var user = result.user;
-      const emailConst = result.additionalUserInfo.profile.email
-      return user.getIdToken()
-        .then(idToken => {
-
-          Gitlogin(idToken, emailConst)
-            .then(rep => {
-              // history.push('/', history.location)
-              // history.go()
-              return rep
-            })
-        })
-    })
-}
-
-
-
 export const login = idToken => {
   var data = { 'token_id': idToken }
   var config = { headers: { 'Content-Type': 'application/json' }, }
@@ -52,11 +21,19 @@ export const login = idToken => {
 }
 
 
-export const Gitlogin = (idToken, emailConst) => {
+export const loginGoogle = () => {
+  return auth().signInWithPopup(provider)
+    .then(result => {
+      var user = result.user;
+      return user.getIdToken()
+    })
+}
+
+export const Gitlogin = (idToken, profile) => {
 
   var data = {
     'token_id': idToken,
-    'emailConst': emailConst,
+    'profile': profile,
   }
   var config = { headers: { 'Content-Type': 'application/json' }, }
 
@@ -74,6 +51,27 @@ export const Gitlogin = (idToken, emailConst) => {
     })
 
 }
+
+
+export const loginGit = () => {
+  auth().signInWithPopup(providerGit)
+    .then(result => {
+      var user = result.user;
+      const profile = result.additionalUserInfo.profile
+      return user.getIdToken()
+        .then(idToken => {
+
+          Gitlogin(idToken, profile)
+            .then(rep => {
+              return rep
+            })
+        })
+    })
+}
+
+
+
+
 
 
 
@@ -160,6 +158,20 @@ export const getUserById = id => {
     return rep
   })
 
+}
+
+export const upDateAvatar = avatar => {
+  console.log(avatar)
+  const requestOptions = {
+    headers: {
+      'Content-Type': "multipart/form-data",
+      'Authorization': authHeader()
+    }
+  };
+
+  return axios.put(`${baseURL}avatar/`,avatar, requestOptions).then(rep => {
+    return rep
+  })
 }
 
 

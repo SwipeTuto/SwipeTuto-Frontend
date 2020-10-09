@@ -63,19 +63,26 @@ $title-font: "Montserrat", sans-serif;
   font-family: inherit;
   padding: $box-padding;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   transition: all 0.2s ease;
   margin-bottom: 1rem;
-  border-bottom: 2px solid $grey;
+  border-left: 3px solid $grey;
+  width: 100%;
 
   &:focus.valid-input {
-    border-bottom: 2px solid $green-success;
+    border-left: 3px solid $green-success;
   }
 
+  &.invalid-input,
   &:focus.invalid-input {
     // border: 0.5px solid $red-error;
-    border-bottom: 2px solid $red-error;
+    border-left: 3px solid $red-error;
+  }
+
+  .FormInput__label {
+    margin-bottom: 0.5rem;
   }
 
   &:focus {
@@ -86,13 +93,9 @@ $title-font: "Montserrat", sans-serif;
     display: block;
   }
 
-  &[value=""] + .input__message {
-    display: none;
-  }
-
-  & + .input__message-hide {
-    display: none;
-  }
+  // & + .input__message-hide {
+  //   display: none;
+  // }
 
   &:focus {
     &::placeholder {

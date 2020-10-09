@@ -173,6 +173,7 @@ export const getCurrentUserAction = id => {
   return dispatch => {
     dispatch(setLoading());
     getUserById(id).then(rep => {
+      // console.log(rep.data.user)
       dispatch(setCurrentUser(rep.data.user))
       dispatch(setLoaded())
       dispatch(deleteUserErrors())

@@ -20,6 +20,15 @@ select {
   padding: 0.3rem 1.5rem;
   font-size: inherit;
   color: currentColor;
+  border-radius: 0 $box-radius $box-radius 0;
+}
+
+button {
+  border-radius: $box-radius;
+}
+
+label {
+  margin-bottom: 0.5rem;
 }
 
 button::placeholder,
@@ -28,16 +37,21 @@ textarea::placeholder {
   color: $black;
 }
 
+textarea {
+  resize: none;
+  min-height: 10rem;
+}
+
 button,
 select {
   cursor: pointer;
 }
 
-select {
-  // background-color: $white;
-  border: 0.5px solid $grey-light;
-  border-radius: $box-radius;
-}
+// select {
+//   // background-color: $white;
+//   border: 0.5px solid $grey-light;
+//   border-radius: $box-radius;
+// }
 
 ul {
   list-style: none;
@@ -108,6 +122,7 @@ body {
 
 .error__message {
   color: $red-error;
+  margin-bottom: 1rem;
 }
 
 // .blue-text {

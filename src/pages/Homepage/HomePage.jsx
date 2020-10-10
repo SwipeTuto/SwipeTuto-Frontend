@@ -15,6 +15,7 @@ import { ReactComponent as SuccessIllustration } from "../../assets/images/illus
 
 import { selectCardsFetchedCards } from "../../redux/filter/filter-selectors";
 import { selectTheme } from "../../redux/layout/layout-selectors";
+import { showSignalPopup } from "../../redux/layout/layout-actions";
 import { deleteCurrentSearch } from "../../redux/filter/filter-actions";
 
 import "./HomePage.scss";
@@ -43,6 +44,11 @@ const HomePage = () => {
       window.scroll(0, 0);
     }
   };
+  
+  const test = e => {
+    e.preventDefault()
+    dispatch(showSignalPopup())
+}
 
   const redirectLink = SearchLinkRedirect();
 
@@ -133,6 +139,9 @@ const HomePage = () => {
         <Link to={redirectLink}>
           <CustomButton onClick={() => handleRedirectClick()}>
             Voir les cartes
+          </CustomButton>
+          <CustomButton onClick={e => test(e)}>
+            TEST SIGANL
           </CustomButton>
         </Link>
       </div>

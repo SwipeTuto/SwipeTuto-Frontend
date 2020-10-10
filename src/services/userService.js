@@ -187,22 +187,23 @@ export const getUserFavoriesById = userId => {
 
 }
 export const signalContent = signal => {
+  console.log(signal)
   var config = {
     headers: { 'Content-Type': 'application/json' },
-    'Authorization': authHeader()
+  }
+  const data = {
+    reason: signal.reason,
+    message: signal.description,
+    id_user: 1,
+    id_card: signal.id_card ? signal.id_card : null,
+    id_comment: signal.id_comment,
   }
 
-  return axios.post(`${baseURL}backoffice/signalement/`, {
-    params: {
-      'reason': signal.reason,
-      'message': signal.description,
-      'id_card': signal.id_card ? signal.id_card : null,
-      'id_user': signal.id_user ? signal.id_user : null,
-      'id_comment': signal.id_comment ? signal.id_comment : null
-    }
-  }, config).then(rep => {
+  return axios.post(`${baseURL}backoffice/signalement/`, JSON.stringify(data) , config).then(rep => {
     console.log(rep)
-    return rep
+    // return rep
+  }).catch(err => {
+  console.log(err)
   })
 
 }

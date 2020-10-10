@@ -60,7 +60,6 @@ function App(props) {
   const locationPathname = props.location.pathname;
 
   useEffect(() => {
-
     if (firstLoadDone === false && locationPathname === "/search") {
       if (topic || category || ordering || search) {
         const currentSearchCopy = {

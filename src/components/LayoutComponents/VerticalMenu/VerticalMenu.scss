@@ -1,0 +1,29 @@
+@import "../../../variables.scss";
+
+.VerticalMenu {
+  &__logo {
+    display: inline-block;
+
+    &:hover {
+      cursor: pointer;
+    }
+    &--logo {
+      @include logo-size;
+    }
+  }
+
+  &__menu {
+    @include overlay-menu;
+    padding: 1rem;
+
+    &--item:not(:last-of-type) {
+      margin-bottom: 0.6rem;
+    }
+
+    &--item:hover {
+      cursor: pointer;
+      color: $primary-light;
+      transition: all 0.2s ease;
+    }
+  }
+}

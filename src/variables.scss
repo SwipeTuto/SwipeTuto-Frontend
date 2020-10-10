@@ -209,3 +209,13 @@ $title-font: "Montserrat", sans-serif;
     background-color: $primary-dark;
   }
 }
+
+@mixin overlay-menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0 0 $box-radius $box-radius;
+  box-shadow: $card-shadow;
+  border: 0.5px solid $grey-light;
+  overflow: hidden;
+}

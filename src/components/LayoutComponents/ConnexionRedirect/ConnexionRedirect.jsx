@@ -29,7 +29,6 @@ const ConnexionRedirect = ({ handleClose }) => {
         <h1 className="title title-1">
           Vous devez vous connecter pour réaliser cette action.
         </h1>
-        <div className="ConnexionRedirect__grid"></div>
         <Login />
       </div>
     </div>

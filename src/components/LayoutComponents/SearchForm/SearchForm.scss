@@ -37,6 +37,7 @@
     height: 100%;
 
     @include input-style;
+    flex-direction: row;
     margin-bottom: 0rem;
     border: none;
 

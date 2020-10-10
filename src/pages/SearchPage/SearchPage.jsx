@@ -52,7 +52,7 @@ const SearchPage = ({ location }) => {
             </p>
           </div>
           <FiltersBar handleClickSize={handleClickSize} />
-          <CardGridList />
+          <CardGridList loadFilter={true} />
         </div>
       </div>
     </>

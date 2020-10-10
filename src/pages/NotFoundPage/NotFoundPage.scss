@@ -23,7 +23,15 @@
     font-weight: bold;
   }
 
+  &__action {
+    display: flex;
+  }
+
   .custom-button {
     font-size: 3rem;
+
+    &:first-of-type {
+      margin-right: 1rem;
+    }
   }
 }

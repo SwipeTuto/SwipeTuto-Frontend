@@ -63,9 +63,9 @@ export const resetCurrentSearch = (item, value = null) => ({
   payload: initialSearchState
 })
 
-export const setCurrentSearch = (item, value = null) => ({
+export const setCurrentSearch = (newSearch) => ({
   type: FilterActionTypes.SET_CURRENT_SEARCH,
-  payload: { item, value }
+  payload: newSearch
 })
 
 export const deleteCurrentSearch = (item) => ({
@@ -105,6 +105,7 @@ export const getCardsByUserIdAction = userId => {
       .catch(err => {
         dispatch(getCardsByUserIdFailure(err.response))
         dispatch(setLoaded())
+        console.log(err)
       })
   }
 }

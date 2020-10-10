@@ -30,18 +30,13 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
 
       }
     case FilterActionTypes.SET_CURRENT_SEARCH:
-      if ("action payload: dans le reducer" && action.payload) {
-        return {
-          ...state, currentSearch: {
-            ...state.currentSearch,
-            [action.payload.item]: action.payload.value,
-          }
-        }
-      } else {
-        return {
-          ...state
-        }
-      };
+      return {
+        // ...state, currentSearch: {
+        //   ...state.currentSearch,
+        //   [action.payload.item]: action.payload.value,
+        // }
+        ...state, currentSearch: action.payload
+      }
     case FilterActionTypes.DELETE_CURRENT_SEARCH:
       if (action.payload) {
         return {

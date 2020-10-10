@@ -27,11 +27,23 @@ export const openMobileNav = () => ({
 export const closeMobileNav = () => ({
   type: LayoutActionTypes.CLOSE_MOBILE_NAV,
 })
+export const showSignalPopup = () => ({
+  type: LayoutActionTypes.SHOW_SIGNAL_POPUP,
+})
+export const closeSignalPopup = () => ({
+  type: LayoutActionTypes.CLOSE_SIGNAL_POPUP,
+})
 export const openFilterMobileMenu = () => ({
   type: LayoutActionTypes.OPEN_FILTER_MOBILE_MENU,
 })
 export const closeFilterMobileMenu = () => ({
   type: LayoutActionTypes.CLOSE_FILTER_MOBILE_MENU,
+})
+export const openConnexionPopup = () => ({
+  type: LayoutActionTypes.OPEN_CONNEXION_POPUP,
+})
+export const closeConnexionPopup = () => ({
+  type: LayoutActionTypes.CLOSE_CONNEXION_POPUP,
 })
 
 export const setLoading = () => ({
@@ -76,4 +88,11 @@ export const otherPageLoading = () => ({
 })
 export const otherPageLoaded = () => ({
   type: LayoutActionTypes.OTHER_PAGE_CARDS_LOADED,
+})
+export const setRedirectUrl = (bool) => ({
+  type: LayoutActionTypes.REDIRECT_URL,
+  payload: bool
+})
+export const setFirstLoadDone = () => ({
+  type: LayoutActionTypes.FIRST_LOAD_DONE,
 })

@@ -1,6 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import FormInput from "../../components/FormInputs/FormInput";
+import FormSelect from "../../components/FormInputs/FormSelect";
+import FormTextarea from "../../components/FormInputs/FormTextarea";
+import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import "./ContactUsPage.scss";
+import { selectCurrentUser } from "../../redux/user/user-selectors";
+
 const ContactUsPage = () => {
+  const [message, setMessage] = useState({
+    email: "",
+    category: "question",
+    description: "",
+  });
+  const currentUser = useSelector(selectCurrentUser);
+  const currentUserEmail = currentUser && currentUser.email;
+
+  if (window.scrollY) {
+    window.scroll(0, 0);
+  }
+
+  const getValue = (name, value) => {
+    setMessage({ ...message, [name]: value });
+  };
+
+  const handleMessageSubmit = () => {
+    // disptach action qui envoie message au back
+  };
+
   return (
     <div className="ContactPage">
       <h1 className="title title-1">Nous contacter</h1>
@@ -18,45 +45,47 @@ const ContactUsPage = () => {
         particulier, vous pouvez fournir l'URL de cette page.
       </p>
 
-      <form className="ContactPage__form">
+      <form
+        className="ContactPage__form"
+        onSubmit={() => handleMessageSubmit()}
+      >
         <div className="form__group">
-          <label htmlFor="contact__email" className="form__label">
-            Votre adresse mail (obligatoire pour avoir une réponse) :
-          </label>
-          <input
+          <FormInput
+            idFor="email"
+            label="Votre adresse mail (obligatoire pour avoir une réponse) :"
             type="email"
-            className="form__input"
-            id="contact__email"
-            name="contact__email"
+            name="email"
+            getValue={getValue}
+            required={true}
+            firstValue={currentUserEmail && currentUserEmail}
           />
         </div>
         <div className="form__group">
-          <label htmlFor="contact__category" className="form__label">
-            Catégorie de votre message :
-          </label>
-          <select
-            name="contact__category"
-            id="contact__category"
-            className="form__input"
+          <FormSelect
+            idFor="category"
+            label="Catégorie de votre message :"
+            name="category"
+            getValue={getValue}
           >
-            <option value="">-- Choisir une catégorie --</option>
             <option value="question">Question</option>
             <option value="signal">Signalement</option>
             <option value="recommandation">Recommandation</option>
             <option value="bug">Bug</option>
             <option value="autre">Autre</option>
-          </select>
+          </FormSelect>
         </div>
         <div className="form__group">
-          <label htmlFor="contact__message" className="form__label">
-            Votre message (soyez précis et complet !) :
-          </label>
-          <textarea
-            name="contact__message"
-            id="contact__message"
-            className="form__input"
-          ></textarea>
+          <FormTextarea
+            idFor="description"
+            label="Votre message :"
+            type="text"
+            name="description"
+            getValue={getValue}
+            required={true}
+          />
         </div>
+
+        <CustomButton color="dark">Envoyer</CustomButton>
       </form>
     </div>
   );

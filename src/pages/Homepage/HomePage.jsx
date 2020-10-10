@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import CardPreviewSmall from "../../components/CardsComponents/CardPreviewSmall/CardPreviewSmall";
-import CardFullPopup from "../../components/CardsComponents/CardFullPopup/CardFullPopup";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import Loading from "../../components/Loading/Loading";
 import { getCardAfterfilterAction } from "../../redux/filter/filter-actions";
@@ -70,6 +69,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+
       <div className="HomePage__lastCards section">
         <h1 className="title title-1">Nos dernières cartes</h1>
         <div className="HomePage__grid ">
@@ -85,7 +85,6 @@ const HomePage = () => {
           )}
         </div>
       </div>
-      <CardFullPopup />
 
       <div className="About section">
         <div className="about-section section-1">

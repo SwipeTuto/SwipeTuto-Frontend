@@ -12,13 +12,12 @@ import {
 } from "../../../redux/filter/filter-selectors";
 import {
   selectCardsSize,
+  selectFirstLoadDone,
   selectIsLoaded,
-  selectShowPopupCard,
 } from "../../../redux/layout/layout-selectors";
 
 // components
 import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
-import CardFullPopup from "../CardFullPopup/CardFullPopup";
 import PageLoading from "../../Loading/PageLoading";
 import ScrollButton from "../../LayoutComponents/ScrollButton/ScrollButton";
 
@@ -31,10 +30,10 @@ import {
 import { useCallback } from "react";
 import { useColumnsNumber } from "../../../hooks/useColumnsNumber";
 
-const CardGridList = () => {
+const CardGridList = ({ loadFilter }) => {
   const dispatch = useDispatch();
   const nextPageLink = useSelector(selectPaginationNext);
-
+  const fetchWithFilter = loadFilter !== undefined ? loadFilter : true;
   const cards = useSelector(selectCardsFetchedCards);
   const prevCards = usePrevious(cards);
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
@@ -45,13 +44,23 @@ const CardGridList = () => {
   const prevNumberOfColumns = usePrevious(numberOfColumns);
   const currentSearch = useSelector(selectCurrentSearch);
   const prevCurrentSearch = usePrevious(currentSearch);
-  const isPopupShown = useSelector(selectShowPopupCard);
+  const firstLoadDone = useSelector(selectFirstLoadDone);
 
   useEffect(() => {
-    if (prevCurrentSearch && prevCurrentSearch !== currentSearch) {
+    if (
+      ((prevCurrentSearch && prevCurrentSearch !== currentSearch) ||
+        fetchWithFilter === true) &&
+      firstLoadDone
+    ) {
       dispatch(getCardAfterfilterAction(currentSearch));
     }
-  }, [currentSearch, prevCurrentSearch, dispatch, isPopupShown]);
+  }, [
+    currentSearch,
+    dispatch,
+    fetchWithFilter,
+    firstLoadDone,
+    prevCurrentSearch,
+  ]);
 
   // gestion de l'ordre des cartes par colonne
   const reorderCards = useCallback(
@@ -118,6 +127,8 @@ const CardGridList = () => {
     window.scrollTo(0, 0);
   };
 
+  // console.log(gridItems);
+
   return (
     <div className="CardGridList">
       <div
@@ -162,7 +173,6 @@ const CardGridList = () => {
         )}
       </div>
 
-      <CardFullPopup />
       {!isLoaded && <PageLoading />}
       {cards && nextPageLink && (
         <div className="bottom-grid" ref={bottomGrid}></div>

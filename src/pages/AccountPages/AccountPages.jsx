@@ -20,9 +20,9 @@ const AccountPage = (props) => {
   const currentTheme = useSelector(selectTheme);
 
   // scroll reset
-  // if (window.scrollY) {
-  //   window.scroll(0, 0);
-  // }
+  if (window.scrollY) {
+    window.scroll(0, 0);
+  }
 
   return (
     <div className={`AccountPage ${currentTheme}-theme`}>

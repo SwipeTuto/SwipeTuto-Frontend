@@ -63,19 +63,26 @@ $title-font: "Montserrat", sans-serif;
   font-family: inherit;
   padding: $box-padding;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   transition: all 0.2s ease;
   margin-bottom: 1rem;
-  border-bottom: 2px solid $grey;
+  border-left: 3px solid $grey;
+  width: 100%;
 
   &:focus.valid-input {
-    border-bottom: 2px solid $green-success;
+    border-left: 3px solid $green-success;
   }
 
+  &.invalid-input,
   &:focus.invalid-input {
     // border: 0.5px solid $red-error;
-    border-bottom: 2px solid $red-error;
+    border-left: 3px solid $red-error;
+  }
+
+  .FormInput__label {
+    margin-bottom: 0.5rem;
   }
 
   &:focus {
@@ -86,13 +93,9 @@ $title-font: "Montserrat", sans-serif;
     display: block;
   }
 
-  &[value=""] + .input__message {
-    display: none;
-  }
-
-  & + .input__message-hide {
-    display: none;
-  }
+  // & + .input__message-hide {
+  //   display: none;
+  // }
 
   &:focus {
     &::placeholder {
@@ -146,6 +149,20 @@ $title-font: "Montserrat", sans-serif;
     background-color: $black;
     color: $white;
   }
+}
+
+@mixin popup-style {
+  z-index: 100000000000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgba($black, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 // @mixin button-active-style {

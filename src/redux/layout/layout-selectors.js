@@ -73,3 +73,7 @@ export const selectFirstLoadDone = createSelector(
   [selectLayout],
   layout => layout.firstLoadDone
 );
+export const selectUserLoaded = createSelector(
+  [selectLayout],
+  layout => layout.firstLoadDone
+);

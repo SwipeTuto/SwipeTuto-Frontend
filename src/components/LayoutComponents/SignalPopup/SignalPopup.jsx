@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 import FormSelect from "../../FormInputs/FormSelect";
@@ -56,7 +56,10 @@ const SignalPopup = ({ card_id, user_id, comment_id }) => {
         />
         <h2 className="title title-2">Signalement</h2>
         <form
-          onSubmit={() => handleSubmit()}
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
           onClick={(e) => e.stopPropagation()}
         >
           <FormSelect

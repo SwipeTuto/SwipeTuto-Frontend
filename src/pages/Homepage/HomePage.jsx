@@ -33,9 +33,15 @@ const HomePage = () => {
   }, [dispatch]);
 
   // scroll reset
-  if (window.scrollY) {
-    window.scroll(0, 0);
-  }
+  // if (window.scrollY) {
+  //   window.scroll(0, 0);
+  // }
+
+  useEffect(() => {
+    if (window.scrollY) {
+      window.scroll(0, 0);
+    }
+  }, []);
 
   const handleRedirectClick = () => {
     dispatch(deleteCurrentSearch());

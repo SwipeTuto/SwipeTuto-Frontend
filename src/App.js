@@ -78,9 +78,11 @@ function App(props) {
     } else if (cardId) {
       dispatch(getCardByIdAction(cardId))
       dispatch(showPopupCard())
+      // dispatch(setFirstLoadDone())
 
     } else if (!isLoaded && userId) {
       dispatch(getUserByIdAction(userId))
+      dispatch(setFirstLoadDone())
 
     } else if (prevSearchState && currentSearch && (
       prevSearchState.searchCategory !== currentSearch.searchCategory ||
@@ -88,6 +90,7 @@ function App(props) {
     )) {
 
       dispatch(setRedirectUrl(true));
+      // dispatch(setFirstLoadDone())
 
     }
   }, [cardId, category, currentSearch, dispatch, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, search, topic, userId]);

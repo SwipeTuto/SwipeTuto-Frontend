@@ -18,7 +18,6 @@ import UserUsername from "../../../UserComponents/UserAvatar/UserUsername";
 // assets
 import { ReactComponent as HeartEmpty } from "../../../../assets/images/heart-outline.svg";
 import { ReactComponent as HeartFull } from "../../../../assets/images/heart.svg";
-import { ReactComponent as MobileMenu } from "../../../../assets/images/ellipsis-vertical.svg";
 
 import "./SecondLevelComment.scss";
 import ConfirmationOverlay from "../../ConfirmationOverlay/ConfirmationOverlay";

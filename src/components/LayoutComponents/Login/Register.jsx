@@ -31,6 +31,7 @@ const Register = (props) => {
   const allInput = [...document.querySelectorAll(".FormInput")];
 
   // scroll reset
+
   if (window.scrollY) {
     window.scroll(0, 0);
   }

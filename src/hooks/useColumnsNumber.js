@@ -4,9 +4,9 @@ import { selectCardsSize } from '../redux/layout/layout-selectors';
 import { useWinWidth } from './useWinWidth';
 
 export const useColumnsNumber = () => {
-  const winWidth = useWinWidth();
   const [colNumber, setColNumber] = useState()
   const cardsSize = useSelector(selectCardsSize)
+  const winWidth = useWinWidth();
 
 
   useEffect(() => {

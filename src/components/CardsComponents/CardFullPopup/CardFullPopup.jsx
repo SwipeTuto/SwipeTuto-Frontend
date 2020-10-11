@@ -35,14 +35,12 @@ import {
 } from "../../../redux/layout/layout-actions";
 import {
   selectFullscreen,
-  selectShowPopupCard,
   selectTheme,
   selectClickedCardIsLoaded,
 } from "../../../redux/layout/layout-selectors";
 
 // components
-import CardSliderSwipable from "../CardSlider/CardSliderSwipable";
-import CardSliderFullscreen from "../CardSlider/CardSliderFullscreen";
+import CardSlider from "../CardSlider/CardSlider";
 import Loading from "../../Loading/Loading";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrapper";
@@ -71,7 +69,7 @@ import VerticalMenu from "../../LayoutComponents/VerticalMenu/VerticalMenu";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
 // handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
-const CardFullPopup = ({ history }) => {
+const CardFullPopup = ({ history, location }) => {
   const isFullScreen = useSelector(selectFullscreen);
   const currentTheme = useSelector(selectTheme);
   const currentSearch = useSelector(selectCurrentSearch);
@@ -80,7 +78,6 @@ const CardFullPopup = ({ history }) => {
   const currentUserId = useSelector(selectCurrentUserId);
   const clickedCard = useSelector(selectClickedCard);
   const clickedCardId = clickedCard && clickedCard.id;
-  const popupShown = useSelector(selectShowPopupCard);
   const dispatch = useDispatch();
   const [indexOfCurrentCard, setIndexOfCurrentCard] = useState();
   const cardsArray = useSelector(selectCardsFetchedCards);
@@ -95,8 +92,11 @@ const CardFullPopup = ({ history }) => {
   useEffect(() => {
     if (!clickedCard || !cardsArray) return;
     setCardsArrayLength(cardsArray.length);
-    setIndexOfCurrentCard(cardsArray.indexOf(clickedCard));
-  }, [clickedCard, cardsArray, cardsArrayLength, indexOfCurrentCard]);
+    const currentCardId = cardsArray.findIndex(
+      (card) => card.id === clickedCardId
+    );
+    setIndexOfCurrentCard(currentCardId);
+  }, [cardsArray, clickedCard, clickedCardId]);
 
   const userHasLiked = useCallback(() => {
     if (currentUser && currentUser.id) {
@@ -139,7 +139,7 @@ const CardFullPopup = ({ history }) => {
 
   const goPreviousCard = () => {
     const currentClickedCard = clickedCard
-      ? document.querySelector(".CardFullPopup.active")
+      ? document.querySelector(".CardFullPopup")
       : null;
 
     currentClickedCard.scroll(0, 0);
@@ -152,7 +152,7 @@ const CardFullPopup = ({ history }) => {
 
   const goNextCard = () => {
     const currentClickedCard = clickedCard
-      ? document.querySelector(".CardFullPopup.active")
+      ? document.querySelector(".CardFullPopup")
       : null;
     currentClickedCard.scroll(0, 0);
 
@@ -163,11 +163,13 @@ const CardFullPopup = ({ history }) => {
   };
 
   const handlePopupClose = () => {
-    if (document.getElementsByClassName("HomePage")[0]) {
+    if (location.pathname === "/") {
       window.history.pushState("", "", "/");
-    } else if (document.getElementsByClassName("SavedPage")[0]) {
+    } else if (location.pathname === "/account/saved") {
       window.history.pushState("", "", "/account/saved");
     } else {
+      // dispatch(setNoClickedCard());
+      // dispatch(closePopupCard());
       dispatch(setRedirectUrl(true));
 
       window.history.pushState(
@@ -176,27 +178,41 @@ const CardFullPopup = ({ history }) => {
         history.location.pathname + history.location.search
       );
       if (!cardsFetched) {
+        console.log('call')
         dispatch(getCardAfterfilterAction(currentSearch));
-        console.log("ici");
       }
     }
 
-    const currentClickedCard = clickedCard
-      ? document.querySelector(".CardFullPopup.active")
-      : null;
+    dispatch(setNoClickedCard());
+    // dispatch(closePopupCard());
+    // dispatch(getCurrentUserAction(currentUserId));
 
-    if (!currentClickedCard) return;
-    if (
-      currentClickedCard.classList.contains("CardFullPopup") &&
-      currentClickedCard.classList.contains("active")
-    ) {
-      dispatch(closePopupCard());
-      dispatch(setNoClickedCard());
-    } else {
-      return;
-    }
+    // if (document.getElementsByClassName("HomePage")[0]) {
+    //   window.history.pushState("", "", "/");
+    // } else if (document.getElementsByClassName("SavedPage")[0]) {
+    //   window.history.pushState("", "", "/account/saved");
+    // } else {
+    //   dispatch(setRedirectUrl(true));
 
-    dispatch(getCurrentUserAction(currentUserId));
+    //   window.history.pushState(
+    //     "",
+    //     "",
+    //     history.location.pathname + history.location.search
+    //   );
+    //   if (!cardsFetched) {
+    //     dispatch(getCardAfterfilterAction(currentSearch));
+    //   }
+    // }
+
+    // const currentClickedCard = clickedCard
+    //   ? document.querySelector(".CardFullPopup")
+    //   : null;
+
+    // if (!currentClickedCard) {
+    //   return;
+    // } else {
+    //   dispatch(setNoClickedCard());
+    // }
   };
 
   // LIKE
@@ -225,8 +241,10 @@ const CardFullPopup = ({ history }) => {
 
   return (
     <div
-      className={`CardFullPopup ${popupShown ? "active" : ""}`}
-      onClick={() => handlePopupClose()}
+      className="CardFullPopup"
+      onClick={() => {
+        handlePopupClose();
+      }}
     >
       <div
         className={`CardFullPopup__wrapper ${currentTheme}-theme`}
@@ -291,13 +309,7 @@ const CardFullPopup = ({ history }) => {
         {clickedCardIsLoaded ? (
           <>
             <div className="CardFullPopup__slider">
-              {clickedCard && isFullScreen ? (
-                <CardSliderFullscreen />
-              ) : clickedCard ? (
-                <CardSliderSwipable />
-              ) : (
-                ""
-              )}
+              <CardSlider />
             </div>
 
             <h1 className="title title-1 CardFullPopup__title">
@@ -348,9 +360,7 @@ const CardFullPopup = ({ history }) => {
                             "",
                             `/card_id=${card.id && card.id}`
                           );
-                          document
-                            .querySelector(".CardFullPopup.active")
-                            .scroll(0, 0);
+                          document.querySelector(".CardFullPopup").scroll(0, 0);
                         }}
                       >
                         {clickedCardIsLoaded &&
@@ -378,38 +388,42 @@ const CardFullPopup = ({ history }) => {
         )}
       </div>
 
-      {indexOfCurrentCard === 0 ? (
-        <ChevronCircleRight
-          className="nav__chevron nav__chevron--right"
-          onClick={(event) => {
-            event.stopPropagation();
-            goNextCard();
-          }}
-        />
-      ) : indexOfCurrentCard === cardsArrayLength - 1 ? (
-        <ChevronCircleLeft
-          className="nav__chevron nav__chevron--left"
-          onClick={(event) => {
-            event.stopPropagation();
-            goPreviousCard();
-          }}
-        />
-      ) : (
+      {!isFullScreen && cardsArray && (
         <>
-          <ChevronCircleRight
-            className="nav__chevron nav__chevron--right"
-            onClick={(event) => {
-              event.stopPropagation();
-              goNextCard();
-            }}
-          />
-          <ChevronCircleLeft
-            className="nav__chevron nav__chevron--left"
-            onClick={(event) => {
-              event.stopPropagation();
-              goPreviousCard();
-            }}
-          />
+          {indexOfCurrentCard === 0 ? (
+            <ChevronCircleRight
+              className="nav__chevron nav__chevron--right"
+              onClick={(event) => {
+                event.stopPropagation();
+                goNextCard();
+              }}
+            />
+          ) : indexOfCurrentCard === cardsArrayLength - 1 ? (
+            <ChevronCircleLeft
+              className="nav__chevron nav__chevron--left"
+              onClick={(event) => {
+                event.stopPropagation();
+                goPreviousCard();
+              }}
+            />
+          ) : (
+            <>
+              <ChevronCircleRight
+                className="nav__chevron nav__chevron--right"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  goNextCard();
+                }}
+              />
+              <ChevronCircleLeft
+                className="nav__chevron nav__chevron--left"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  goPreviousCard();
+                }}
+              />
+            </>
+          )}
         </>
       )}
     </div>

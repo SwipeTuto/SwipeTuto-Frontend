@@ -29,13 +29,20 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log('call')
     dispatch(getCardAfterfilterAction(initialSearchState));
   }, [dispatch]);
 
   // scroll reset
-  if (window.scrollY) {
-    window.scroll(0, 0);
-  }
+  // if (window.scrollY) {
+  //   window.scroll(0, 0);
+  // }
+
+  useEffect(() => {
+    if (window.scrollY) {
+      window.scroll(0, 0);
+    }
+  }, []);
 
   const handleRedirectClick = () => {
     dispatch(deleteCurrentSearch());

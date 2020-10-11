@@ -63,6 +63,7 @@ const FormInput = ({
         id={idFor && idFor}
         className={`FormInput ${isValid}-input`}
         required={required && required}
+        autoComplete="on"
       />
 
       <p

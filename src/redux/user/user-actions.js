@@ -1,7 +1,7 @@
 import { UserActionTypes } from './user-types'
 import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, loginGit } from '../../services/userService'
 import history from "../../helper/history"
-import { setLoading, setLoaded } from '../layout/layout-actions';
+import { setUserLoading, setUserLoaded } from '../layout/layout-actions';
 import { baseURL } from '../../services/configService';
 
 export const deleteUserErrors = () => ({
@@ -155,15 +155,15 @@ const getClickedUserError = error => ({
 
 export const getUserByIdAction = id => {
   return dispatch => {
-    dispatch(setLoading());
+    dispatch(setUserLoading());
     getUserById(id).then(rep => {
       dispatch(setClickedUser(rep.data))
-      dispatch(setLoaded())
+      dispatch(setUserLoaded())
       dispatch(deleteUserErrors())
       return rep.data
     }).catch(err => {
       dispatch(getClickedUserError(err.message))
-      dispatch(setLoaded())
+      dispatch(setUserLoaded())
       return err
     })
   }
@@ -171,16 +171,16 @@ export const getUserByIdAction = id => {
 
 export const getCurrentUserAction = id => {
   return dispatch => {
-    dispatch(setLoading());
+    dispatch(setUserLoading());
     getUserById(id).then(rep => {
       // console.log(rep.data.user)
       dispatch(setCurrentUser(rep.data.user))
-      dispatch(setLoaded())
+      dispatch(setUserLoaded())
       dispatch(deleteUserErrors())
       return rep.data
     }).catch(err => {
       dispatch(getClickedUserError(err.message))
-      dispatch(setLoaded())
+      dispatch(setUserLoaded())
       return err
     })
   }
@@ -196,11 +196,11 @@ export const updateUserInfosAction = userInfos => {
       updateUserInfos(userInfos)
         .then(rep => {
           dispatch(updateUserInfosSuccess(rep.data.user))
-          dispatch(setLoaded())
+          dispatch(setUserLoaded())
           return rep
         }).catch(err => {
           dispatch(updateUserInfosError(err))
-          dispatch(setLoaded())
+          dispatch(setUserLoaded())
           return err
         })
     )

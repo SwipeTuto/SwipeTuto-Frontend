@@ -32,7 +32,6 @@ import SecondLevelComment from "../SecondLevelComment/SecondLevelComment";
 import { ReactComponent as ChatLogo } from "../../../../assets/images/chatbubbles-outline.svg";
 import { ReactComponent as HeartEmpty } from "../../../../assets/images/heart-outline.svg";
 import { ReactComponent as HeartFull } from "../../../../assets/images/heart.svg";
-import { ReactComponent as MobileMenu } from "../../../../assets/images/ellipsis-vertical.svg";
 import { ReactComponent as CloseLogo } from "../../../../assets/images/close.svg";
 
 import "./FirstLevelComment.scss";

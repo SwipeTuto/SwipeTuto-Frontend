@@ -20,6 +20,7 @@ const AccountPage = (props) => {
   const currentTheme = useSelector(selectTheme);
 
   // scroll reset
+
   if (window.scrollY) {
     window.scroll(0, 0);
   }

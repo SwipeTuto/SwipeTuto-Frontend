@@ -15,6 +15,7 @@ const INITIAL_STATE = {
   otherPageCardsLoaded: true,
   clickedCardIsLoaded: false,
   imageIsLoaded: false,
+  userIsLoaded: false,
   commentsAreLoaded: false,
   redirectUrl: false,
   connexionPopup: false,
@@ -124,6 +125,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         clickedCardIsLoaded: true,
+      }
+    case LayoutActionTypes.SET_USER_LOADING:
+      return {
+        ...state,
+        userIsLoaded: false,
+      }
+    case LayoutActionTypes.SET_USER_LOADED:
+      return {
+        ...state,
+        userIsLoaded: true,
       }
     case LayoutActionTypes.SET_COMMENTS_LOADING:
       return {

@@ -75,6 +75,13 @@ const CardPreviewSmall = ({ card, size }) => {
 
   useEffect(() => {
     const elem = document.querySelector(`#CardPreviewSmall__image--${cardId}`);
+    console.log([...elem.childNodes]);
+    if (
+      elem &&
+      elem.childNodes &&
+      [...elem.childNodes].some((child) => child.localName === "img")
+    )
+      return;
     if (elem) {
       const img = document.createElement("img");
       img.setAttribute("onContextMenu", (e) => e.preventDefault());

@@ -40,13 +40,6 @@ const CardSliderSwipebale = () => {
     document.querySelector(".CardSliderLarge__slides-container").scrollTo(0, 0);
   }, [clickedCard, clickedCardSlides]);
 
-  // useEffect(() => {
-  //   setActiveIndex(0);
-  //   const slideForWidth = document.querySelector(".CardSliderLarge__slide")
-  //     .clientWidth;
-  //   setImageWidth(slideForWidth);
-  // }, [clickedCardSlides]);
-
   const goToPrevSlide = (e) => {
     document
       .querySelector(".CardSliderLarge__slides-container")
@@ -81,15 +74,6 @@ const CardSliderSwipebale = () => {
       return {};
     }
   };
-
-  // const fakeArray = [
-  //   "https://fakeimg.pl/500x500/?text=Hello",
-  //   "https://fakeimg.pl/500x500/?text=Card2",
-  //   "https://fakeimg.pl/500x500/?text=HEyyyy",
-  //   "https://fakeimg.pl/500x500/?text=Salut!",
-  //   "https://fakeimg.pl/500x500/?text=Aurevoir!",
-  //   "https://fakeimg.pl/500x500/?text=Youhouu",
-  // ];
 
   return (
     <div className="CardSliderLarge">

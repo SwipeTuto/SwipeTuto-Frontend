@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import imagesLoaded from "imagesloaded";
 
 // redux
 import {
@@ -74,18 +73,23 @@ const CardPreviewSmall = ({ card, size }) => {
     }
   };
 
-  const elem = document.querySelector(".CardPreviewSmall__image");
-
   useEffect(() => {
+    const elem = document.querySelector(`#CardPreviewSmall__image--${cardId}`);
     if (elem) {
-      imagesLoaded(elem).on("done", function (instance) {
-        setCardIsReady(true);
-      });
-      imagesLoaded(elem).on("fail", function (instance) {
-        setCardIsReady(false);
-      });
+      const img = document.createElement("img");
+      img.setAttribute("onContextMenu", (e) => e.preventDefault());
+      if (media_image[0].image) {
+        img.onload = () => {
+          setCardIsReady(true);
+        };
+        img.onerror = () => {
+          setCardIsReady(false);
+        };
+        img.src = `${media_image[0].image}`;
+      }
+      elem.append(img);
     }
-  }, [elem]);
+  }, [cardId, media_image]);
 
   return (
     <div className={`CardPreviewSmall ${currentTheme}-theme`} data-slideid="1">
@@ -93,19 +97,9 @@ const CardPreviewSmall = ({ card, size }) => {
         className={`CardPreviewSmall__image  ${
           cardIsReady ? "active" : "hide"
         }`}
+        id={`CardPreviewSmall__image--${cardId}`}
         onClick={() => handleClickedCardClick()}
       >
-        {media_image && media_image[0] && media_image[0].image ? (
-          <img
-            src={media_image[0].image}
-            // src={base + media_image[0].image}
-            alt="slides presentation"
-            onContextMenu={(e) => e.preventDefault()}
-          />
-        ) : (
-          <p>Erreur</p>
-        )}
-
         <div className="CardPreviewSmall__hover">
           <p>{name && truncate(name, 60, false)}</p>
           <div className="CardPreviewSmall__category--stamp">

@@ -19,7 +19,7 @@ import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
 import { getCardByIdAction } from './redux/filter/filter-actions'
-import { selectConnexionPopup, selectFirstLoadDone, selectIsLoaded, selectRedirectUrl, selectShowPopupCard, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
+import { selectConnexionPopup, selectFirstLoadDone, selectIsLoaded, selectRedirectUrl, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
 import { setCurrentSearch } from "./redux/filter/filter-actions"
 
 
@@ -31,7 +31,7 @@ import './App.scss';
 import ConfidentialityPage from "./pages/ConfidentialityPage/ConfidentialityPage";
 import CookiesPage from "./pages/CookiesPage/CookiesPage";
 import InfosPage from "./pages/InfosPage/InfosPage";
-import { closeConnexionPopup, setFirstLoadDone, setRedirectUrl, showPopupCard } from "./redux/layout/layout-actions";
+import { closeConnexionPopup, setFirstLoadDone, setRedirectUrl } from "./redux/layout/layout-actions";
 import { getUserByIdAction } from "./redux/user/user-actions";
 import SignalPopup from "./components/LayoutComponents/SignalPopup/SignalPopup";
 import CardFullPopup from "./components/CardsComponents/CardFullPopup/CardFullPopup";
@@ -52,14 +52,12 @@ function App(props) {
   const cardId = getUrlId(props.location.pathname, "card_id")
   const isLoaded = useSelector(selectIsLoaded)
   const signalPopup = useSelector(selectSignalPopupOpen)
-  const cardPopupShown = useSelector(selectShowPopupCard)
   const redirectUrl = useSelector(selectRedirectUrl)
   const firstLoadDone = useSelector(selectFirstLoadDone)
   const currentSearch = useSelector(selectCurrentSearch)
   const prevSearchState = usePrevious(currentSearch)
   const connexionPopup = useSelector(selectConnexionPopup)
   const locationPathname = props.location.pathname;
-  // console.log("firstLoadDone : " + firstLoadDone)
   const clickedCard = useSelector(selectClickedCard)
 
   useEffect(() => {
@@ -73,34 +71,19 @@ function App(props) {
         }
         dispatch(setCurrentSearch(currentSearchCopy))
         dispatch(setRedirectUrl(true));
-
       }
-      console.log('call fetchall')
-
-
     } else if (firstLoadDone === false && cardId) {
       console.log(cardId)
       dispatch(getCardByIdAction(cardId))
-      console.log('call id firstload')
-
-
-
     } else if (!isLoaded && userId) {
       dispatch(getUserByIdAction(userId))
       dispatch(setFirstLoadDone())
-      console.log('call userid')
-
     } else if (prevSearchState && currentSearch && (
       prevSearchState.searchCategory !== currentSearch.searchCategory ||
       prevSearchState.searchOrder !== currentSearch.searchOrder || prevSearchState.searchTopic !== currentSearch.searchTopic || prevSearchState.searchWords !== currentSearch.searchWords
     )) {
-
       dispatch(setRedirectUrl(true));
-      console.log('call fetch search')
-      // dispatch(setFirstLoadDone())
-
     }
-    console.log(firstLoadDone)
     dispatch(setFirstLoadDone())
   }, [cardId, category, currentSearch, dispatch, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, search, topic, userId]);
 

@@ -168,8 +168,6 @@ const CardFullPopup = ({ history, location }) => {
     } else if (location.pathname === "/account/saved") {
       window.history.pushState("", "", "/account/saved");
     } else {
-      // dispatch(setNoClickedCard());
-      // dispatch(closePopupCard());
       dispatch(setRedirectUrl(true));
 
       window.history.pushState(
@@ -178,14 +176,13 @@ const CardFullPopup = ({ history, location }) => {
         history.location.pathname + history.location.search
       );
       if (!cardsFetched) {
-        console.log('call')
         dispatch(getCardAfterfilterAction(currentSearch));
       }
     }
 
     dispatch(setNoClickedCard());
-    // dispatch(closePopupCard());
-    // dispatch(getCurrentUserAction(currentUserId));
+    dispatch(closePopupCard());
+    dispatch(getCurrentUserAction(currentUserId));
 
     // if (document.getElementsByClassName("HomePage")[0]) {
     //   window.history.pushState("", "", "/");

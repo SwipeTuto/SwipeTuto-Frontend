@@ -16,7 +16,7 @@ const SignalPopup = ({ card_id, user_id, comment_id }) => {
   const currentTheme = useSelector(selectTheme);
   const signalInfos = useSelector(selectSignalInfos);
   const [signal, setSignal] = useState({
-    reason: "indésirable",
+    reason: "indesirable",
     description: "",
     id_card: signalInfos && signalInfos.id_card,
     id_user: signalInfos && signalInfos.id_user,
@@ -68,8 +68,8 @@ const SignalPopup = ({ card_id, user_id, comment_id }) => {
             name="reason"
             getValue={getValue}
           >
-            <option value="indésirable">Contenu indésirable</option>
-            <option value="nudité">Nudité</option>
+            <option value="indesirable">Contenu indésirable</option>
+            <option value="nudite">Nudité</option>
             <option value="violence">Violence</option>
             <option value="harcelement">Harcèlement</option>
             <option value="interdit">Contenu interdit</option>

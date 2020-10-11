@@ -42,6 +42,7 @@ import {
 
 // components
 import CardSliderSwipable from "../CardSlider/CardSliderSwipable";
+import CardSliderGlid from "../CardSlider/CardSliderGlid";
 import CardSliderFullscreen from "../CardSlider/CardSliderFullscreen";
 import Loading from "../../Loading/Loading";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
@@ -291,13 +292,7 @@ const CardFullPopup = ({ history }) => {
         {clickedCardIsLoaded ? (
           <>
             <div className="CardFullPopup__slider">
-              {clickedCard && isFullScreen ? (
-                <CardSliderFullscreen />
-              ) : clickedCard ? (
-                <CardSliderSwipable />
-              ) : (
-                ""
-              )}
+              <CardSliderGlid />
             </div>
 
             <h1 className="title title-1 CardFullPopup__title">
@@ -378,38 +373,42 @@ const CardFullPopup = ({ history }) => {
         )}
       </div>
 
-      {indexOfCurrentCard === 0 ? (
-        <ChevronCircleRight
-          className="nav__chevron nav__chevron--right"
-          onClick={(event) => {
-            event.stopPropagation();
-            goNextCard();
-          }}
-        />
-      ) : indexOfCurrentCard === cardsArrayLength - 1 ? (
-        <ChevronCircleLeft
-          className="nav__chevron nav__chevron--left"
-          onClick={(event) => {
-            event.stopPropagation();
-            goPreviousCard();
-          }}
-        />
-      ) : (
+      {!isFullScreen && (
         <>
-          <ChevronCircleRight
-            className="nav__chevron nav__chevron--right"
-            onClick={(event) => {
-              event.stopPropagation();
-              goNextCard();
-            }}
-          />
-          <ChevronCircleLeft
-            className="nav__chevron nav__chevron--left"
-            onClick={(event) => {
-              event.stopPropagation();
-              goPreviousCard();
-            }}
-          />
+          {indexOfCurrentCard === 0 ? (
+            <ChevronCircleRight
+              className="nav__chevron nav__chevron--right"
+              onClick={(event) => {
+                event.stopPropagation();
+                goNextCard();
+              }}
+            />
+          ) : indexOfCurrentCard === cardsArrayLength - 1 ? (
+            <ChevronCircleLeft
+              className="nav__chevron nav__chevron--left"
+              onClick={(event) => {
+                event.stopPropagation();
+                goPreviousCard();
+              }}
+            />
+          ) : (
+            <>
+              <ChevronCircleRight
+                className="nav__chevron nav__chevron--right"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  goNextCard();
+                }}
+              />
+              <ChevronCircleLeft
+                className="nav__chevron nav__chevron--left"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  goPreviousCard();
+                }}
+              />
+            </>
+          )}
         </>
       )}
     </div>

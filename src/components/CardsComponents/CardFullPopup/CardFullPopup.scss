@@ -222,12 +222,6 @@
 
   @media screen and (max-width: $bp-tablet) {
     .CardFullPopup {
-      &__action-button {
-        #card-action-button__fullscreen {
-          display: none;
-        }
-      }
-
       &__wrapper {
         margin: 0;
         max-width: 100%;

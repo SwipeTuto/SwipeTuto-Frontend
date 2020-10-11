@@ -75,7 +75,6 @@ const CardPreviewSmall = ({ card, size }) => {
 
   useEffect(() => {
     const elem = document.querySelector(`#CardPreviewSmall__image--${cardId}`);
-    console.log([...elem.childNodes]);
     if (
       elem &&
       elem.childNodes &&

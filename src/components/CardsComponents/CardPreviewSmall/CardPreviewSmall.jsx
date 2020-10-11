@@ -87,7 +87,7 @@ const CardPreviewSmall = ({ card, size }) => {
     if (elem) {
       const img = document.createElement("img");
       img.setAttribute("onContextMenu", (e) => e.preventDefault());
-      if (media_image[0].image) {
+      if (media_image[0] && media_image[0].image) {
         img.onload = () => {
           setCardIsReady(true);
         };

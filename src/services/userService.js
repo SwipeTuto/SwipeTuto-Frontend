@@ -187,6 +187,7 @@ export const getUserFavoriesById = userId => {
 
 }
 export const signalContent = signal => {
+  console.log(signal)
   var config = {
     headers: { 'Content-Type': 'application/json' },
     'Authorization': authHeader()

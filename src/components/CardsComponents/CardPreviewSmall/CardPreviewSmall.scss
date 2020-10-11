@@ -133,13 +133,24 @@
     align-items: center;
 
     &--logo {
-      @include logo-size;
-      fill: $red-like;
-      // fill: $primary-light;
       margin-right: 0.3rem;
-      & * {
-        stroke: currentColor !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      & > svg {
+        @include logo-size;
+
+        &.active * {
+          fill: $red-like !important;
+          stroke: $red-like !important;
+        }
       }
+      // @include logo-size;
+      // // fill: $primary-light;
+      // & * {
+      //   stroke: currentColor !important;
+      // }
     }
   }
 }

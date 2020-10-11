@@ -29,7 +29,15 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // let isCancelled = false;
+
+    // if (!isCancelled) {
     dispatch(getCardAfterfilterAction(initialSearchState));
+    // }
+
+    // return () => {
+    //   isCancelled = true;
+    // };
   }, [dispatch]);
 
   // scroll reset

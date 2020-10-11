@@ -71,9 +71,10 @@ function App(props) {
         }
         dispatch(setCurrentSearch(currentSearchCopy))
         dispatch(setRedirectUrl(true));
+      } else {
+
       }
     } else if (firstLoadDone === false && cardId) {
-      console.log(cardId)
       dispatch(getCardByIdAction(cardId))
     } else if (!isLoaded && userId) {
       dispatch(getUserByIdAction(userId))

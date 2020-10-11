@@ -49,6 +49,7 @@ import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrap
 import {
   formattedDate,
   initialSignalState,
+  likeUpdate,
   renameCategory,
 } from "../../../helper/index";
 
@@ -218,7 +219,8 @@ const CardFullPopup = ({ history, location }) => {
       // setConnectRedirect(true);
       dispatch(openConnexionPopup());
     } else {
-      dispatch(toggleLikeCardAction(clickedCardId));
+      dispatch(toggleLikeCardAction(clickedCardId, currentUserId));
+      likeUpdate(clickedCardId);
       setCardIsLiked(!cardIsLiked);
     }
   };

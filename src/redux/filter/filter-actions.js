@@ -187,14 +187,14 @@ export const setNoClickedCard = () => ({
   payload: null,
 });
 
-export const toggleLikeCardAction = (cardId) => {
+export const toggleLikeCardAction = (cardId, currentUserId) => {
   return dispatch => {
     return toggleLike(cardId)
       .then(rep => {
-        dispatch(likeCardActionSuccess())
+        dispatch(likeCardActionSuccess(cardId, currentUserId))
       })
       .catch(err => {
-        dispatch(likeCardActionErrors(err.response.status))
+        dispatch(likeCardActionErrors(err))
       })
   }
 };
@@ -204,8 +204,9 @@ const likeCardActionErrors = error => ({
   payload: error
 })
 
-const likeCardActionSuccess = () => ({
+const likeCardActionSuccess = (cardId, currentUserId) => ({
   type: FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS,
+  payload: { cardId, currentUserId }
 })
 
 export const toggleSaveCardAction = (cardId) => {

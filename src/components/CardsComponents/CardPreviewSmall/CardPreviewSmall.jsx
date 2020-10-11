@@ -11,14 +11,17 @@ import {
   openConnexionPopup,
   showPopupCard,
 } from "../../../redux/layout/layout-actions";
-import { selectCurrentUser } from "../../../redux/user/user-selectors";
+import {
+  selectCurrentUser,
+  selectCurrentUserId,
+} from "../../../redux/user/user-selectors";
 
 // service & helper
 // import { base } from "../../../services/configService";
-import { renameCategory, truncate } from "../../../helper/index";
+import { likeUpdate, renameCategory, truncate } from "../../../helper/index";
 
 // assets
-import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
+// import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
 import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outline.svg";
 
 // components
@@ -34,8 +37,10 @@ const CardPreviewSmall = ({ card, size }) => {
   const currentTheme = useSelector(selectTheme);
   const cardId = card && card.id;
   const currentUser = useSelector(selectCurrentUser);
-  const [cardIsLiked, setCardIsLiked] = useState();
+  const currentUserId = useSelector(selectCurrentUserId);
+  // const [cardIsLiked, setCardIsLiked] = useState();
   const [cardIsReady, setCardIsReady] = useState(false);
+  const [firstCheck, setFirstCheck] = useState(true);
 
   const userHasLiked = useCallback(() => {
     if (currentUser && currentUser.id) {
@@ -46,8 +51,12 @@ const CardPreviewSmall = ({ card, size }) => {
   }, [currentUser, likes]);
 
   useEffect(() => {
-    setCardIsLiked(userHasLiked());
-  }, [currentUser, userHasLiked]);
+    const heartEl = document.getElementById(`CardPreviewSmall__heart${cardId}`);
+    if (userHasLiked() && firstCheck) {
+      heartEl && heartEl.classList.add("active");
+    }
+    setFirstCheck(false);
+  }, [cardId, firstCheck, userHasLiked]);
 
   const handleClickedCardClick = async () => {
     dispatch(showPopupCard());
@@ -62,14 +71,8 @@ const CardPreviewSmall = ({ card, size }) => {
     if (!currentUser) {
       dispatch(openConnexionPopup());
     } else {
-      dispatch(toggleLikeCardAction(cardId));
-      const likedCardText = document.getElementById(`likesNumber${cardId}`);
-      if (cardIsLiked) {
-        likedCardText.textContent = parseInt(likedCardText.textContent) - 1;
-      } else {
-        likedCardText.textContent = parseInt(likedCardText.textContent) + 1;
-      }
-      setCardIsLiked(!cardIsLiked);
+      dispatch(toggleLikeCardAction(cardId, currentUserId));
+      likeUpdate(cardId);
     }
   };
 
@@ -130,11 +133,9 @@ const CardPreviewSmall = ({ card, size }) => {
           className="CardPreviewSmall__likes"
           onClick={() => handleLikeClick()}
         >
-          {cardIsLiked ? (
-            <HeartFull className="CardPreviewSmall__likes--logo" />
-          ) : (
-            <HeartEmpty className="CardPreviewSmall__likes--logo" />
-          )}
+          <div className="CardPreviewSmall__likes--logo">
+            <HeartEmpty id={`CardPreviewSmall__heart${cardId}`} />
+          </div>
           <p
             className="CardPreviewSmall__likes--number"
             id={`likesNumber${cardId}`}

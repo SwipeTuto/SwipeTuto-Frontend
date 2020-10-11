@@ -28,7 +28,7 @@ const SearchPage = ({ location }) => {
     if (window.scrollY) {
       window.scrollTo(0, 0);
     }
-  });
+  }, []);
 
   const totalNumberOfCardsSearched = getRealNumber(totalNumberOfResults);
 

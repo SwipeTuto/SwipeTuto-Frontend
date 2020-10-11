@@ -33,7 +33,7 @@ import { useColumnsNumber } from "../../../hooks/useColumnsNumber";
 const CardGridList = ({ loadFilter }) => {
   const dispatch = useDispatch();
   const nextPageLink = useSelector(selectPaginationNext);
-  const fetchWithFilter = loadFilter !== undefined ? loadFilter : true;
+  const fetchWithFilter = loadFilter !== undefined ? loadFilter : null;
   const cards = useSelector(selectCardsFetchedCards);
   const prevCards = usePrevious(cards);
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
@@ -48,10 +48,12 @@ const CardGridList = ({ loadFilter }) => {
 
   useEffect(() => {
     if (
-      ((prevCurrentSearch && prevCurrentSearch !== currentSearch) ||
-        fetchWithFilter === true) &&
+      prevCurrentSearch &&
+      prevCurrentSearch !== currentSearch &&
+      fetchWithFilter === true &&
       firstLoadDone
     ) {
+      console.log("call");
       dispatch(getCardAfterfilterAction(currentSearch));
     }
   }, [

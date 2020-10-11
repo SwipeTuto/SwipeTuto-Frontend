@@ -37,7 +37,7 @@ import SignalPopup from "./components/LayoutComponents/SignalPopup/SignalPopup";
 import CardFullPopup from "./components/CardsComponents/CardFullPopup/CardFullPopup";
 import SearchLinkRedirect from "./helper/SearchLinkRedirect";
 import ConnexionRedirect from "./components/LayoutComponents/ConnexionRedirect/ConnexionRedirect";
-import { selectCurrentSearch } from "./redux/filter/filter-selectors";
+import { selectClickedCard, selectCurrentSearch } from "./redux/filter/filter-selectors";
 import { usePrevious } from "./hooks/usePrevious";
 
 
@@ -59,6 +59,8 @@ function App(props) {
   const prevSearchState = usePrevious(currentSearch)
   const connexionPopup = useSelector(selectConnexionPopup)
   const locationPathname = props.location.pathname;
+  // console.log("firstLoadDone : " + firstLoadDone)
+  const clickedCard = useSelector(selectClickedCard)
 
   useEffect(() => {
     if (firstLoadDone === false && locationPathname === "/search") {
@@ -73,16 +75,20 @@ function App(props) {
         dispatch(setRedirectUrl(true));
 
       }
+      console.log('call fetchall')
 
-      dispatch(setFirstLoadDone())
-    } else if (cardId) {
+
+    } else if (firstLoadDone === false && cardId) {
+      console.log(cardId)
       dispatch(getCardByIdAction(cardId))
-      dispatch(showPopupCard())
-      // dispatch(setFirstLoadDone())
+      console.log('call id firstload')
+
+
 
     } else if (!isLoaded && userId) {
       dispatch(getUserByIdAction(userId))
       dispatch(setFirstLoadDone())
+      console.log('call userid')
 
     } else if (prevSearchState && currentSearch && (
       prevSearchState.searchCategory !== currentSearch.searchCategory ||
@@ -90,9 +96,12 @@ function App(props) {
     )) {
 
       dispatch(setRedirectUrl(true));
+      console.log('call fetch search')
       // dispatch(setFirstLoadDone())
 
     }
+    console.log(firstLoadDone)
+    dispatch(setFirstLoadDone())
   }, [cardId, category, currentSearch, dispatch, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, search, topic, userId]);
 
   useEffect(() => {
@@ -117,7 +126,7 @@ function App(props) {
         <NavTop />
         <NavTopMobile />
         {signalPopup && <SignalPopup />}
-        {cardPopupShown && <CardFullPopup />}
+        {clickedCard && <CardFullPopup />}
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/search" component={SearchPage} />

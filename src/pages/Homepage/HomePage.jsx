@@ -29,6 +29,7 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log('call')
     dispatch(getCardAfterfilterAction(initialSearchState));
   }, [dispatch]);
 

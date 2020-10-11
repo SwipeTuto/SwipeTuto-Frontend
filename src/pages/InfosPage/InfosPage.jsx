@@ -8,6 +8,7 @@ import { selectTheme } from "../../redux/layout/layout-selectors";
 const InfosPage = () => {
   const currentTheme = useSelector(selectTheme);
   // scroll reset
+
   if (window.scrollY) {
     window.scroll(0, 0);
   }

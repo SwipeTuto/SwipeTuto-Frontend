@@ -1,9 +1,11 @@
+import { initialSignalState } from '../../helper';
 import { LayoutActionTypes } from './layout-types'
 
 const INITIAL_STATE = {
   firstLoadDone: false,
   popupShown: false,
   signalPopupOpen: false,
+  signalInfos: initialSignalState,
   fullscreen: false,
   showUserNav: false,
   mobileNavOpen: false,
@@ -13,6 +15,7 @@ const INITIAL_STATE = {
   otherPageCardsLoaded: true,
   clickedCardIsLoaded: false,
   imageIsLoaded: false,
+  userIsLoaded: false,
   commentsAreLoaded: false,
   redirectUrl: false,
   connexionPopup: false,
@@ -123,6 +126,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         clickedCardIsLoaded: true,
       }
+    case LayoutActionTypes.SET_USER_LOADING:
+      return {
+        ...state,
+        userIsLoaded: false,
+      }
+    case LayoutActionTypes.SET_USER_LOADED:
+      return {
+        ...state,
+        userIsLoaded: true,
+      }
     case LayoutActionTypes.SET_COMMENTS_LOADING:
       return {
         ...state,
@@ -147,11 +160,13 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         signalPopupOpen: true,
+        signalInfos: action.payload
       }
     case LayoutActionTypes.CLOSE_SIGNAL_POPUP:
       return {
         ...state,
         signalPopupOpen: false,
+        signalInfos: initialSignalState
       }
     case LayoutActionTypes.OPEN_CONNEXION_POPUP:
       return {

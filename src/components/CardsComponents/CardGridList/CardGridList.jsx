@@ -14,6 +14,7 @@ import {
   selectCardsSize,
   selectFirstLoadDone,
   selectIsLoaded,
+  selectShowPopupCard,
 } from "../../../redux/layout/layout-selectors";
 
 // components
@@ -29,11 +30,12 @@ import {
 } from "../../../redux/filter/filter-actions";
 import { useCallback } from "react";
 import { useColumnsNumber } from "../../../hooks/useColumnsNumber";
+import { getUrlId, initialSearchState, urlParams } from "../../../helper";
 
-const CardGridList = ({ loadFilter }) => {
+const CardGridList = ({ loadFilter, location }) => {
   const dispatch = useDispatch();
   const nextPageLink = useSelector(selectPaginationNext);
-  const fetchWithFilter = loadFilter !== undefined ? loadFilter : true;
+  const fetchWithFilter = loadFilter !== undefined ? loadFilter : null;
   const cards = useSelector(selectCardsFetchedCards);
   const prevCards = usePrevious(cards);
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
@@ -45,21 +47,46 @@ const CardGridList = ({ loadFilter }) => {
   const currentSearch = useSelector(selectCurrentSearch);
   const prevCurrentSearch = usePrevious(currentSearch);
   const firstLoadDone = useSelector(selectFirstLoadDone);
+  const cardPopupShown = useSelector(selectShowPopupCard);
+  const urlCardId = getUrlId(location.pathname, "card_id");
+  const [topic, category, ordering, search] = urlParams(location);
+  const userId = getUrlId(location.pathname, "user_id");
 
   useEffect(() => {
     if (
-      ((prevCurrentSearch && prevCurrentSearch !== currentSearch) ||
-        fetchWithFilter === true) &&
+      prevCurrentSearch &&
+      prevCurrentSearch !== currentSearch &&
+      fetchWithFilter === true &&
       firstLoadDone
     ) {
+      console.log("call");
       dispatch(getCardAfterfilterAction(currentSearch));
+    } else if (
+      firstLoadDone === false &&
+      cardPopupShown === false &&
+      !urlCardId &&
+      !topic &&
+      !category &&
+      !ordering &&
+      !search &&
+      !userId
+    ) {
+      dispatch(getCardAfterfilterAction(initialSearchState));
+      console.log("call");
     }
   }, [
+    cardPopupShown,
+    category,
     currentSearch,
     dispatch,
     fetchWithFilter,
     firstLoadDone,
+    ordering,
     prevCurrentSearch,
+    search,
+    topic,
+    urlCardId,
+    userId,
   ]);
 
   // gestion de l'ordre des cartes par colonne

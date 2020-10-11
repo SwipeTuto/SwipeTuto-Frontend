@@ -30,13 +30,27 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // let isCancelled = false;
+
+    // if (!isCancelled) {
     dispatch(getCardAfterfilterAction(initialSearchState));
+    // }
+
+    // return () => {
+    //   isCancelled = true;
+    // };
   }, [dispatch]);
 
   // scroll reset
-  if (window.scrollY) {
-    window.scroll(0, 0);
-  }
+  // if (window.scrollY) {
+  //   window.scroll(0, 0);
+  // }
+
+  useEffect(() => {
+    if (window.scrollY) {
+      window.scroll(0, 0);
+    }
+  }, []);
 
   const handleRedirectClick = () => {
     dispatch(deleteCurrentSearch());
@@ -139,9 +153,6 @@ const HomePage = () => {
         <Link to={redirectLink}>
           <CustomButton onClick={() => handleRedirectClick()}>
             Voir les cartes
-          </CustomButton>
-          <CustomButton onClick={e => test(e)}>
-            TEST SIGANL
           </CustomButton>
         </Link>
       </div>

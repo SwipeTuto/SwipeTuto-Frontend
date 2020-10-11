@@ -1,0 +1,51 @@
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+
+import { ReactComponent as MenuLogo } from "../../../assets/images/ellipsis-vertical.svg";
+import { selectTheme } from "../../../redux/layout/layout-selectors";
+
+import "./VerticalMenu.scss";
+
+const VerticalMenu = ({ className, children }) => {
+  // child model :
+  // <p className="VerticalMenu__menu--item"></p>
+  const [menuOpen, setMenuOpen] = useState(false);
+  const currentTheme = useSelector(selectTheme);
+
+  return (
+    <div className={`VerticalMenu ${className && className}`}>
+      <div
+        className="VerticalMenu__logo"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        <MenuLogo className="VerticalMenu__logo--logo" />
+      </div>
+      {menuOpen && (
+        <div className={`VerticalMenu__menu ${currentTheme}-theme`}>
+          {children && children.length ? (
+            children.map((child, index) => {
+              return (
+                <span
+                  className="VerticalMenu__menu--item"
+                  key={index}
+                  onClick={() => setMenuOpen(!menuOpen)}
+                >
+                  {child}
+                </span>
+              );
+            })
+          ) : children ? (
+            <span
+              className="VerticalMenu__menu--item"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {children}
+            </span>
+          ) : null}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default VerticalMenu;

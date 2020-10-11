@@ -8,7 +8,10 @@ import Login from "../../LayoutComponents/Login/Login";
 
 const ConnexionRedirect = ({ handleClose }) => {
   const currentTheme = useSelector(selectTheme);
-  window.scrollTo(0, 0);
+  // scroll reset
+  //  if (window.scrollY) {
+  //    window.scroll(0, 0);
+  //  }
 
   return (
     <div

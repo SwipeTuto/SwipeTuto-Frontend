@@ -1,5 +1,5 @@
 // Présent dans App.js dans une Route ("/search")
-import React from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import FiltersBar from "../../components/LayoutComponents/FiltersBar/FiltersBar";
@@ -24,9 +24,11 @@ const SearchPage = ({ location }) => {
     }
   };
 
-  window.addEventListener("load", () => {
-    window.scroll(0, 0);
-  });
+  useEffect(() => {
+    if (window.scrollY) {
+      window.scrollTo(0, 0);
+    }
+  }, []);
 
   const totalNumberOfCardsSearched = getRealNumber(totalNumberOfResults);
 

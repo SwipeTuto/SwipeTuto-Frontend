@@ -31,11 +31,10 @@ const Register = (props) => {
   const allInput = [...document.querySelectorAll(".FormInput")];
 
   // scroll reset
-  useEffect(() => {
-    if (window.scrollY) {
-      window.scroll(0, 0);
-    }
-  }, []);
+
+  if (window.scrollY) {
+    window.scroll(0, 0);
+  }
 
   const handleClick = (e) => {
     e.preventDefault();

@@ -27,8 +27,9 @@ export const openMobileNav = () => ({
 export const closeMobileNav = () => ({
   type: LayoutActionTypes.CLOSE_MOBILE_NAV,
 })
-export const showSignalPopup = () => ({
+export const showSignalPopup = (signal) => ({
   type: LayoutActionTypes.SHOW_SIGNAL_POPUP,
+  payload: signal
 })
 export const closeSignalPopup = () => ({
   type: LayoutActionTypes.CLOSE_SIGNAL_POPUP,
@@ -46,12 +47,12 @@ export const closeConnexionPopup = () => ({
   type: LayoutActionTypes.CLOSE_CONNEXION_POPUP,
 })
 
-export const setLoading = () => ({
-  type: LayoutActionTypes.SET_LOADING,
-})
 export const setCardsSize = (size) => ({
   type: LayoutActionTypes.SET_CARDS_SIZE,
   payload: size
+})
+export const setLoading = () => ({
+  type: LayoutActionTypes.SET_LOADING,
 })
 
 export const setLoaded = () => ({
@@ -63,6 +64,13 @@ export const setClickedCardLoading = () => ({
 
 export const setClickedCardLoaded = () => ({
   type: LayoutActionTypes.SET_CLICKED_CARD_LOADED,
+})
+export const setUserLoading = () => ({
+  type: LayoutActionTypes.SET_USER_LOADING,
+})
+
+export const setUserLoaded = () => ({
+  type: LayoutActionTypes.SET_USER_LOADED,
 })
 export const setCommentsLoading = () => ({
   type: LayoutActionTypes.SET_COMMENTS_LOADING,

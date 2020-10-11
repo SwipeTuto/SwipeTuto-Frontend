@@ -19,7 +19,7 @@ import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
 import { getCardByIdAction } from './redux/filter/filter-actions'
-import { selectConnexionPopup, selectFirstLoadDone, selectIsLoaded, selectRedirectUrl, selectShowPopupCard, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
+import { selectConnexionPopup, selectFirstLoadDone, selectIsLoaded, selectRedirectUrl, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
 import { setCurrentSearch } from "./redux/filter/filter-actions"
 
 
@@ -31,14 +31,15 @@ import './App.scss';
 import ConfidentialityPage from "./pages/ConfidentialityPage/ConfidentialityPage";
 import CookiesPage from "./pages/CookiesPage/CookiesPage";
 import InfosPage from "./pages/InfosPage/InfosPage";
-import { closeConnexionPopup, setFirstLoadDone, setRedirectUrl, showPopupCard } from "./redux/layout/layout-actions";
+import { closeConnexionPopup, setFirstLoadDone, setRedirectUrl } from "./redux/layout/layout-actions";
 import { getUserByIdAction } from "./redux/user/user-actions";
 import SignalPopup from "./components/LayoutComponents/SignalPopup/SignalPopup";
 import CardFullPopup from "./components/CardsComponents/CardFullPopup/CardFullPopup";
 import SearchLinkRedirect from "./helper/SearchLinkRedirect";
 import ConnexionRedirect from "./components/LayoutComponents/ConnexionRedirect/ConnexionRedirect";
-import { selectCurrentSearch } from "./redux/filter/filter-selectors";
+import { selectClickedCard, selectCurrentSearch } from "./redux/filter/filter-selectors";
 import { usePrevious } from "./hooks/usePrevious";
+
 
 
 
@@ -51,13 +52,13 @@ function App(props) {
   const cardId = getUrlId(props.location.pathname, "card_id")
   const isLoaded = useSelector(selectIsLoaded)
   const signalPopup = useSelector(selectSignalPopupOpen)
-  const cardPopupShown = useSelector(selectShowPopupCard)
   const redirectUrl = useSelector(selectRedirectUrl)
   const firstLoadDone = useSelector(selectFirstLoadDone)
   const currentSearch = useSelector(selectCurrentSearch)
   const prevSearchState = usePrevious(currentSearch)
   const connexionPopup = useSelector(selectConnexionPopup)
   const locationPathname = props.location.pathname;
+  const clickedCard = useSelector(selectClickedCard)
 
   useEffect(() => {
     if (firstLoadDone === false && locationPathname === "/search") {
@@ -70,25 +71,21 @@ function App(props) {
         }
         dispatch(setCurrentSearch(currentSearchCopy))
         dispatch(setRedirectUrl(true));
+      } else {
 
       }
-
-      dispatch(setFirstLoadDone())
-    } else if (cardId) {
+    } else if (firstLoadDone === false && cardId) {
       dispatch(getCardByIdAction(cardId))
-      dispatch(showPopupCard())
-
     } else if (!isLoaded && userId) {
       dispatch(getUserByIdAction(userId))
-
+      dispatch(setFirstLoadDone())
     } else if (prevSearchState && currentSearch && (
       prevSearchState.searchCategory !== currentSearch.searchCategory ||
       prevSearchState.searchOrder !== currentSearch.searchOrder || prevSearchState.searchTopic !== currentSearch.searchTopic || prevSearchState.searchWords !== currentSearch.searchWords
     )) {
-
       dispatch(setRedirectUrl(true));
-
     }
+    dispatch(setFirstLoadDone())
   }, [cardId, category, currentSearch, dispatch, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, search, topic, userId]);
 
   useEffect(() => {
@@ -113,7 +110,7 @@ function App(props) {
         <NavTop />
         <NavTopMobile />
         {signalPopup && <SignalPopup />}
-        {cardPopupShown && <CardFullPopup />}
+        {clickedCard && <CardFullPopup />}
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/search" component={SearchPage} />

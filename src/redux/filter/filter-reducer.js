@@ -133,6 +133,18 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: action.payload }
 
     case FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS:
+      // const cardLikedInStoreCopy = state.cardsFetched.results.filter(card => card.id === action.payload.cardId)
+      // console.log('fin')
+      // const cardLikedIndex = state.cardsFetched.results.findIndex(card => card.id === action.payload.cardId)
+      // let likesArrayCopy = cardLikedInStoreCopy.likes;
+      // if (likesArrayCopy.some(likers => action.payload.currentUserId)) {
+      //   likesArrayCopy = likesArrayCopy.filter(likers => likers !== action.payload.currentUserId)
+      // } else {
+      //   likesArrayCopy.push(action.payload.currentUserId)
+      // }
+      // cardLikedInStoreCopy.likes = likesArrayCopy;
+      // console.log(cardLikedInStoreCopy)
+      // console.log(cardLikedIndex)
       return { ...state, errors: null }
     case FilterActionTypes.TOGGLE_LIKE_CARD_ERROR:
       return { ...state, errors: action.payload }

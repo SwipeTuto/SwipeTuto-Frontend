@@ -8,21 +8,25 @@ import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 
 import "./SignalPopup.scss";
 import { closeSignalPopup } from "../../../redux/layout/layout-actions";
+import { selectSignalInfos } from "../../../redux/layout/layout-selectors";
 import { signalContent } from "../../../services/userService";
 
 const SignalPopup = ({ card_id, user_id, comment_id }) => {
   const dispatch = useDispatch();
   const currentTheme = useSelector(selectTheme);
+  const signalInfos = useSelector(selectSignalInfos);
   const [signal, setSignal] = useState({
     reason: "indésirable",
     description: "",
-    id_card: null,
-    id_user: null,
-    id_comment: null,
+    id_card: signalInfos && signalInfos.id_card,
+    id_user: signalInfos && signalInfos.id_user,
+    id_comment: signalInfos && signalInfos.id_comment,
   });
 
   const getValue = (name, value) => {
-    setSignal({ ...signal, [name]: value });
+    let signalCopy = signal;
+    signalCopy = { ...signalCopy, [name]: value };
+    setSignal(signalCopy);
   };
 
   const handleClose = () => {
@@ -31,6 +35,7 @@ const SignalPopup = ({ card_id, user_id, comment_id }) => {
 
   const handleSubmit = () => {
     signalContent(signal);
+    dispatch(closeSignalPopup());
   };
 
   return (
@@ -51,7 +56,10 @@ const SignalPopup = ({ card_id, user_id, comment_id }) => {
         />
         <h2 className="title title-2">Signalement</h2>
         <form
-          onSubmit={() => handleSubmit()}
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
           onClick={(e) => e.stopPropagation()}
         >
           <FormSelect

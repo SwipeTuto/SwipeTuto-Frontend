@@ -90,6 +90,14 @@
         // fill: $primary-light;
       }
     }
+
+    .VerticalMenu {
+      &__logo {
+        &--logo {
+          @include big-logo-size;
+        }
+      }
+    }
   }
 
   &__title.title.title-1 {

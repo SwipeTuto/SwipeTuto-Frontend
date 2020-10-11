@@ -154,16 +154,9 @@
   }
 
   &__userMenu {
-    position: absolute;
+    @include overlay-menu;
     top: 100%;
     right: 2rem;
-    display: flex;
-    flex-direction: column;
-    // background-color: $white;
-    border-radius: 0 0 $box-radius $box-radius;
-    box-shadow: $card-shadow;
-    border: 0.5px solid $grey-light;
-    overflow: hidden;
 
     p {
       width: 100%;

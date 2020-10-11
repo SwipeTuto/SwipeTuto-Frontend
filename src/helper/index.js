@@ -308,4 +308,9 @@ export const initialSearchState = {
   searchOrder: "-created",
   searchPage: 1,
 }
+export const initialSignalState = {
+  id_card: null,
+  id_user: null,
+  id_comment: null,
+}
 

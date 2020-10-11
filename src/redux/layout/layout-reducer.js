@@ -1,9 +1,11 @@
+import { initialSignalState } from '../../helper';
 import { LayoutActionTypes } from './layout-types'
 
 const INITIAL_STATE = {
   firstLoadDone: false,
   popupShown: false,
   signalPopupOpen: false,
+  signalInfos: initialSignalState,
   fullscreen: false,
   showUserNav: false,
   mobileNavOpen: false,
@@ -147,11 +149,13 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         signalPopupOpen: true,
+        signalInfos: action.payload
       }
     case LayoutActionTypes.CLOSE_SIGNAL_POPUP:
       return {
         ...state,
         signalPopupOpen: false,
+        signalInfos: initialSignalState
       }
     case LayoutActionTypes.OPEN_CONNEXION_POPUP:
       return {

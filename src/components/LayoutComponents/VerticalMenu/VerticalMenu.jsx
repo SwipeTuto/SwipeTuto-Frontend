@@ -1,16 +1,19 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { ReactComponent as MenuLogo } from "../../../assets/images/ellipsis-vertical.svg";
+import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 import "./VerticalMenu.scss";
 
-const VerticalMenu = ({ children }) => {
-  // modèle items : [{action onClick, value}, {action : () => openTab(), value : Menu}, ...]
+const VerticalMenu = ({ className, children }) => {
+  // child model :
+  // <p className="VerticalMenu__menu--item"></p>
   const [menuOpen, setMenuOpen] = useState(false);
-  console.log(children);
+  const currentTheme = useSelector(selectTheme);
+
   return (
-    <div className="VerticalMenu">
+    <div className={`VerticalMenu ${className && className}`}>
       <div
         className="VerticalMenu__logo"
         onClick={() => setMenuOpen(!menuOpen)}
@@ -18,15 +21,27 @@ const VerticalMenu = ({ children }) => {
         <MenuLogo className="VerticalMenu__logo--logo" />
       </div>
       {menuOpen && (
-        <div className="VerticalMenu__menu">
-          {children &&
+        <div className={`VerticalMenu__menu ${currentTheme}-theme`}>
+          {children && children.length ? (
             children.map((child, index) => {
               return (
-                <span key={index} onClick={() => setMenuOpen(!menuOpen)}>
+                <span
+                  className="VerticalMenu__menu--item"
+                  key={index}
+                  onClick={() => setMenuOpen(!menuOpen)}
+                >
                   {child}
                 </span>
               );
-            })}
+            })
+          ) : children ? (
+            <span
+              className="VerticalMenu__menu--item"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {children}
+            </span>
+          ) : null}
         </div>
       )}
     </div>

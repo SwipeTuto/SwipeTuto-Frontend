@@ -6,7 +6,10 @@ import { selectCurrentUser } from "../../../../redux/user/user-selectors";
 import { toggleCommentLikeAction } from "../../../../redux/filter/filter-actions";
 
 // helper
-import { commentsFormattedDate } from "../../../../helper/index";
+import {
+  commentsFormattedDate,
+  initialSignalState,
+} from "../../../../helper/index";
 
 // components
 import UserAvatar from "../../../UserComponents/UserAvatar/UserAvatar";
@@ -19,7 +22,11 @@ import { ReactComponent as MobileMenu } from "../../../../assets/images/ellipsis
 
 import "./SecondLevelComment.scss";
 import ConfirmationOverlay from "../../ConfirmationOverlay/ConfirmationOverlay";
-import { openConnexionPopup } from "../../../../redux/layout/layout-actions";
+import {
+  openConnexionPopup,
+  showSignalPopup,
+} from "../../../../redux/layout/layout-actions";
+import VerticalMenu from "../../VerticalMenu/VerticalMenu";
 
 const SecondLevelComment = ({
   reply,
@@ -31,7 +38,6 @@ const SecondLevelComment = ({
   const commentAuthor = reply.author;
   const commentId = reply.id;
   const [commentIsLiked, setCommentIsLiked] = useState();
-  const [mobileMenu, setMobileMenu] = useState(false);
   const [confirmPopupOpen, setConfirmPopupOpen] = useState({
     open: false,
     message: "",
@@ -76,7 +82,6 @@ const SecondLevelComment = ({
       }
       setCommentIsLiked(!commentIsLiked);
     }
-    setMobileMenu(false);
   };
   const handleCommentDelete = (e) => {
     if (!currentUser) dispatch(openConnexionPopup());
@@ -86,7 +91,6 @@ const SecondLevelComment = ({
       message: "Voulez-vous vraiment supprimer ce commentaire ?",
       id: commentId,
     });
-    setMobileMenu(false);
   };
 
   const handleConfirmClick = () => {
@@ -99,6 +103,8 @@ const SecondLevelComment = ({
   };
 
   const commentFormattedDate = commentsFormattedDate(reply.posted_on);
+
+  const newSignalObject = { ...initialSignalState, id_comment: commentId };
 
   return (
     <>
@@ -130,31 +136,28 @@ const SecondLevelComment = ({
         </div>
         <div className="SecondLevelComment__wrapper">
           <div className="SecondLevelComment__center">
-            <UserUsername user={commentAuthor} link={true} />
-            <p className="SecondLevelComment__comment">{reply && reply.text}</p>
-            <div className="SecondLevelComment__mobile-menu">
-              <MobileMenu
-                className="SecondLevelComment__mobile-menu--logo"
-                onClick={() => setMobileMenu(!mobileMenu)}
-              />
-              {mobileMenu && (
-                <div className="SecondLevelComment__mobile-menu--panel">
-                  {commentAuthor &&
-                    commentAuthor.id &&
-                    currentUser &&
-                    currentUser.id &&
-                    commentAuthor.id === currentUser.id && (
-                      <p
-                        className="SecondLevelComment__mobile-action"
-                        data-commentid={commentId}
-                        onClick={(e) => handleCommentDelete(e)}
-                      >
-                        Supprimer
-                      </p>
-                    )}
-                </div>
-              )}
+            <div className="SecondLevelComment__center--top">
+              <UserUsername user={commentAuthor} link={true} />
+              <VerticalMenu>
+                {commentAuthor &&
+                commentAuthor.id &&
+                currentUser &&
+                currentUser.id &&
+                commentAuthor.id === currentUser.id ? (
+                  <p
+                    data-commentid={commentId}
+                    onClick={(e) => handleCommentDelete(e)}
+                  >
+                    Supprimer
+                  </p>
+                ) : (
+                  <p onClick={() => dispatch(showSignalPopup(newSignalObject))}>
+                    Signaler
+                  </p>
+                )}
+              </VerticalMenu>
             </div>
+            <p className="SecondLevelComment__comment">{reply && reply.text}</p>
           </div>
           <div className="SecondLevelComment__actions">
             <p className="SecondLevelComment__action">

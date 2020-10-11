@@ -1,9 +1,11 @@
 @import "../../../variables.scss";
 
 .VerticalMenu {
-  &__logo {
-    display: inline-block;
+  position: relative;
 
+  // display: inline;
+
+  &__logo {
     &:hover {
       cursor: pointer;
     }
@@ -15,6 +17,8 @@
   &__menu {
     @include overlay-menu;
     padding: 1rem;
+    position: absolute;
+    right: 0;
 
     &--item:not(:last-of-type) {
       margin-bottom: 0.6rem;

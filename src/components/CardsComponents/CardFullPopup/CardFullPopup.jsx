@@ -31,6 +31,7 @@ import {
   openConnexionPopup,
   setRedirectUrl,
   showFullscreen,
+  showSignalPopup,
 } from "../../../redux/layout/layout-actions";
 import {
   selectFullscreen,
@@ -47,7 +48,11 @@ import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar
 import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrapper";
 
 // Services & helpers
-import { formattedDate, renameCategory } from "../../../helper/index";
+import {
+  formattedDate,
+  initialSignalState,
+  renameCategory,
+} from "../../../helper/index";
 
 // Assets
 import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevrons/chevron-back-circle.svg";
@@ -62,6 +67,7 @@ import { ReactComponent as FullscreenLogo } from "../../../assets/images/expand.
 // SCSS
 import "./CardFullPopup.scss";
 import { getCurrentUserAction } from "../../../redux/user/user-actions";
+import VerticalMenu from "../../LayoutComponents/VerticalMenu/VerticalMenu";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
 // handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
@@ -215,6 +221,8 @@ const CardFullPopup = ({ history }) => {
     }
   };
 
+  const newSignalObject = { ...initialSignalState, id_card: clickedCardId };
+
   return (
     <div
       className={`CardFullPopup ${popupShown ? "active" : ""}`}
@@ -263,6 +271,11 @@ const CardFullPopup = ({ history }) => {
                   id="card-action-button__fullscreen"
                   onClick={() => dispatch(showFullscreen())}
                 />
+                <VerticalMenu>
+                  <p onClick={() => dispatch(showSignalPopup(newSignalObject))}>
+                    Signaler
+                  </p>
+                </VerticalMenu>
               </>
             ) : null}
             <CloseLogo

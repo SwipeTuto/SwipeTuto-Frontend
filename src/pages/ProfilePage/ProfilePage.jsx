@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import UserHeader from "../AccountPages/UserHeader/UserHeader";
 
@@ -14,10 +14,13 @@ import {
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { Link } from "react-router-dom";
 import { ReactComponent as AccountLogo } from "../../assets/images/person.svg";
-import { getUrlId } from "../../helper";
+import { getUrlId, initialSignalState } from "../../helper";
 import { selectTheme } from "../../redux/layout/layout-selectors";
+import VerticalMenu from "../../components/LayoutComponents/VerticalMenu/VerticalMenu";
+import { showSignalPopup } from "../../redux/layout/layout-actions";
 
 const ProfilePage = ({ match, location }) => {
+  const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const currentTheme = useSelector(selectTheme);
   const userErrors = useSelector(selectUserErrors);
@@ -42,6 +45,11 @@ const ProfilePage = ({ match, location }) => {
     }
   }, [currentUser, userId]);
 
+  const newSignalObject = {
+    ...initialSignalState,
+    id_user: parseInt(userId),
+  };
+
   return (
     <div className={`ProfilePage ${currentTheme}-theme`}>
       <div className="ProfilePage__wrapper">
@@ -54,7 +62,7 @@ const ProfilePage = ({ match, location }) => {
           </div>
         ) : (
           <>
-            {userIsSame && (
+            {userIsSame ? (
               <div className="ProfilePage__link">
                 <Link to="/account/user">
                   <CustomButton color="dark">
@@ -63,6 +71,15 @@ const ProfilePage = ({ match, location }) => {
                   </CustomButton>
                 </Link>
               </div>
+            ) : (
+              <VerticalMenu className="ProfilePage__link">
+                <p
+                  className="VerticalMenu__menu--item"
+                  onClick={() => dispatch(showSignalPopup(newSignalObject))}
+                >
+                  Signaler
+                </p>
+              </VerticalMenu>
             )}
             <UserHeader userIsSame={userIsSame} />
             <UserPage userIsSame={userIsSame} />

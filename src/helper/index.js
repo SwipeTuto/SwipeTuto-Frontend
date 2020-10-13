@@ -144,6 +144,7 @@ const passwordConfirmMessage = "Le mot de passe ne correspond pas à celui ajout
 
 // export const descriptionRegex = RegExp(/(.*?){0,250}$/); // lettres entre 0 et 250 caractères
 const descriptionErrorMessage = "Entrez une description valide, entre 0 et 250 caractères."
+const commentErrorMessage = "Veuillez rédiger un commentaire pour l'envoyer."
 
 export const errorMessageToDisplay = (name) => {
   switch (name) {
@@ -163,6 +164,9 @@ export const errorMessageToDisplay = (name) => {
       return urlRegexErrorMessage;
     case "description":
       return descriptionErrorMessage
+    case "comment":
+    case "response":
+      return commentErrorMessage
     default:
       return;
   }
@@ -186,6 +190,9 @@ export const checkRegexInput = (name, value) => {
       return urlRegex.test(value);
     case "description":
       return (value.length >= 0 && value.length <= 250);
+    case "comment":
+    case "response":
+      return (value.length > 0);
     default:
       return;
   }

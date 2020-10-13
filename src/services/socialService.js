@@ -126,6 +126,7 @@ export const getCardComments = (cardId) => {
       return rep
     })
 }
+
 export const getCardCommentsNext = (url) => {
   var config = {
     headers: {
@@ -136,10 +137,10 @@ export const getCardCommentsNext = (url) => {
     .get(url
       , config)
     .then(rep => {
+
       return rep
     })
 }
-
 
 
 export const deleteComment = (commentId) => {

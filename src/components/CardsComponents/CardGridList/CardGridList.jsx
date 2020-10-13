@@ -59,7 +59,6 @@ const CardGridList = ({ loadFilter, location }) => {
       fetchWithFilter === true &&
       firstLoadDone
     ) {
-      console.log("call");
       dispatch(getCardAfterfilterAction(currentSearch));
     } else if (
       firstLoadDone === false &&
@@ -72,7 +71,6 @@ const CardGridList = ({ loadFilter, location }) => {
       !userId
     ) {
       dispatch(getCardAfterfilterAction(initialSearchState));
-      console.log("call");
     }
   }, [
     cardPopupShown,

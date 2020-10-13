@@ -133,18 +133,6 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: action.payload }
 
     case FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS:
-      // const cardLikedInStoreCopy = state.cardsFetched.results.filter(card => card.id === action.payload.cardId)
-      // console.log('fin')
-      // const cardLikedIndex = state.cardsFetched.results.findIndex(card => card.id === action.payload.cardId)
-      // let likesArrayCopy = cardLikedInStoreCopy.likes;
-      // if (likesArrayCopy.some(likers => action.payload.currentUserId)) {
-      //   likesArrayCopy = likesArrayCopy.filter(likers => likers !== action.payload.currentUserId)
-      // } else {
-      //   likesArrayCopy.push(action.payload.currentUserId)
-      // }
-      // cardLikedInStoreCopy.likes = likesArrayCopy;
-      // console.log(cardLikedInStoreCopy)
-      // console.log(cardLikedIndex)
       return { ...state, errors: null }
     case FilterActionTypes.TOGGLE_LIKE_CARD_ERROR:
       return { ...state, errors: action.payload }
@@ -161,6 +149,11 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: action.payload }
     case FilterActionTypes.ADD_COMMENT_SUCCESS:
       return { ...state, lastPublishedComment: action.payload, errors: null }
+
+    case FilterActionTypes.FETCH_NEW_COMMENTS_ERROR:
+      return { ...state, errors: action.payload }
+    case FilterActionTypes.FETCH_NEW_COMMENTS_SUCCESS:
+      return { ...state, clickedCardComments: { ...state.clickedCardComments, count: action.payload.count, next: action.payload.next && action.payload.next, results: [...state.clickedCardComments.results, ...action.payload.results] }, errors: null }
     case FilterActionTypes.DELETE_COMMENT_ERROR:
       return { ...state, errors: action.payload }
     case FilterActionTypes.DELETE_COMMENT_SUCCESS:
@@ -175,6 +168,10 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, clickedCardComments: action.payload, lastPublishedComment: null, errors: null }
     case FilterActionTypes.GET_CARD_COMMENTS_ERROR:
       return { ...state, errors: action.payload }
+    // case FilterActionTypes.GET_COMMENT_REPLIES_SUCCESS:
+    //   return { ...state, clickedCardComments: action.payload, lastPublishedComment: null, errors: null }
+    // case FilterActionTypes.GET_COMMENT_REPLIES_ERROR:
+    //   return { ...state, errors: action.payload }
 
     default:
       return state;

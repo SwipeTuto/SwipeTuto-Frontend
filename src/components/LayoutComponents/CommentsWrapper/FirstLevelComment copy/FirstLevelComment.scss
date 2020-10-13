@@ -1,12 +1,13 @@
 @import "../../../../variables.scss";
 
-.FirstLevelComment {
+.FirstLevelComment,
+.SecondLevelComment {
   margin-bottom: 1rem;
   display: flex;
 
   &__wrapper {
     flex-grow: 1;
-    margin: 0 1rem;
+    margin-left: 1rem;
   }
 
   &__author {
@@ -89,12 +90,16 @@
     }
 
     &--input {
-      margin: 0 0 0 5rem;
-      display: flex;
-      align-items: flex-start;
+      display: none;
 
-      form.CommentsInputReply {
-        width: 100%;
+      &.active {
+        margin: 0 0 0 5rem;
+        display: flex;
+        align-items: flex-start;
+
+        form.CommentsInputReply {
+          width: 100%;
+        }
       }
     }
   }
@@ -114,41 +119,30 @@
     }
   }
 
-  @media screen and (max-width: $bp-tablet) {
-    .FirstLevelComment {
-      &__wrapper {
-        margin: 0 0.5rem;
-        font-size: 1.6rem;
-      }
+  // @media screen and (max-width: $bp-tablet) {
+  //   .FirstLevelComment {
+  //     &__wrapper {
+  //       margin: 0 0.5rem;
+  //       font-size: 1.6rem;
+  //     }
 
-      &__center {
-        .UserUsername__username {
-          // margin-bottom: 0.3rem;
-        }
-      }
+  //   }
+  // }
+}
+
+.SecondLevelComment {
+  margin-left: 4rem;
+}
+
+@media screen and (max-width: $bp-phone) {
+  .FirstLevelComment {
+    &__author {
+      width: 3rem;
+      height: 3rem;
     }
   }
 
-  @media screen and (max-width: $bp-phone) {
-    .FirstLevelComment {
-      &__center {
-        position: relative;
-      }
-
-      &__author {
-        display: flex;
-        flex-direction: column;
-        height: max-content;
-
-        .user_avatar {
-          height: 3.5rem;
-          width: 3.5rem;
-          margin: 0 auto;
-        }
-      }
-    }
-  }
-
-  @media screen and (max-width: $bp-small-phone) {
+  .SecondLevelComment {
+    margin-left: 3rem;
   }
 }

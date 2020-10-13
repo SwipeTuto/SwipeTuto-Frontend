@@ -136,7 +136,17 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
 
   // juste toggle affichage input réponse
   const handleCommentRespond = () => {
-    setNewComment("@" + commentAuthor.username + " ");
+    const inputToScrollTo = [
+      ...document.getElementsByClassName("CommentsInput__newComment--input"),
+    ][1];
+    const userNameEl = document.createElement("span");
+    userNameEl.classList.add("primary-lighter-text");
+    const textNode = document.createTextNode(`@${commentAuthor.username} `);
+    userNameEl.appendChild(textNode);
+    // console.log(userNameEl);
+    // console.log(inputToScrollTo);
+    // trouver comment mettre la mention en couleur
+    setNewComment(`@${commentAuthor.username} `);
 
     setReplyInputShow(true);
   };
@@ -147,7 +157,7 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
         ...document.getElementsByClassName("CommentsInput__newComment--input"),
       ][1];
       const cardFullPopupEl = [
-        ...document.getElementsByClassName("CardFullPopup active"),
+        ...document.getElementsByClassName("CardFullPopup"),
       ][0];
       cardFullPopupEl.scrollTo(0, inputToScrollTo.offsetTop - 100);
       inputToScrollTo.focus();

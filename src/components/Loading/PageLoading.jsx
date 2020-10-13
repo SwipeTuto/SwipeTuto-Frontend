@@ -11,7 +11,6 @@ const PageLoading = () => {
           <div className="loading__dot"></div>
           <div className="loading__dot"></div>
         </div>
-        <div className="loading__message">Chargement ...</div>
       </div>
     </div>
   );

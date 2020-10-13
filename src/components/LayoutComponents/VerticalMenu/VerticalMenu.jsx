@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { ReactComponent as MenuLogo } from "../../../assets/images/ellipsis-vertical.svg";
+import { openConnexionPopup } from "../../../redux/layout/layout-actions";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
+import { selectCurrentUser } from "../../../redux/user/user-selectors";
 
 import "./VerticalMenu.scss";
 
@@ -11,13 +13,19 @@ const VerticalMenu = ({ className, children }) => {
   // <p className="VerticalMenu__menu--item"></p>
   const [menuOpen, setMenuOpen] = useState(false);
   const currentTheme = useSelector(selectTheme);
+  const currentUser = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
 
+  const checkIfConnected = () => {
+    if (!currentUser) {
+      dispatch(openConnexionPopup());
+    } else {
+      setMenuOpen(!menuOpen);
+    }
+  };
   return (
     <div className={`VerticalMenu ${className && className}`}>
-      <div
-        className="VerticalMenu__logo"
-        onClick={() => setMenuOpen(!menuOpen)}
-      >
+      <div className="VerticalMenu__logo" onClick={() => checkIfConnected()}>
         <MenuLogo className="VerticalMenu__logo--logo" />
       </div>
       {menuOpen && (

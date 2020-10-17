@@ -1,5 +1,5 @@
 // Bar avec les items pour filtrer les slides
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // redux
@@ -8,11 +8,16 @@ import {
   selectSearchCategory,
   selectSearchOrder,
   selectCurrentSearch,
+  selectSearchTopic,
 } from "../../../redux/filter/filter-selectors";
 import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
-import { categoryArray, orderArray } from "../../../helper/index";
+import {
+  categoryArray,
+  getCategoriesArray,
+  orderArray,
+} from "../../../helper/index";
 
 // component
 
@@ -30,12 +35,19 @@ const FiltersBar = ({ handleClickSize }) => {
   const currentTheme = useSelector(selectTheme);
   const currentSearch = useSelector(selectCurrentSearch);
   const searchCategory = useSelector(selectSearchCategory);
+  const searchTopic = useSelector(selectSearchTopic);
   const searchOrder = useSelector(selectSearchOrder);
   const linkBar = document.querySelector(".FiltersBar__options--links");
+  const [categoriesArray, setCategoriesArray] = useState([]);
 
   // useEffect(() => {
   //   setRedirection(false);
   // }, []);
+
+  useEffect(() => {
+    const array = getCategoriesArray(searchTopic);
+    setCategoriesArray(array);
+  }, [searchTopic]);
 
   // pages de requêtes :
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
@@ -90,8 +102,8 @@ const FiltersBar = ({ handleClickSize }) => {
             </div>
 
             <div className="FiltersBar__options--links">
-              {categoryArray &&
-                categoryArray.map((category, index) => (
+              {categoriesArray &&
+                categoriesArray.map((category, index) => (
                   <div
                     onClick={(e) => handleCategoryChange(e)}
                     className={`FiltersBar__options--item ${

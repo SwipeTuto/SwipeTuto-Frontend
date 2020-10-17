@@ -39,6 +39,7 @@ import SearchLinkRedirect from "./helper/SearchLinkRedirect";
 import ConnexionRedirect from "./components/LayoutComponents/ConnexionRedirect/ConnexionRedirect";
 import { selectClickedCard, selectCurrentSearch } from "./redux/filter/filter-selectors";
 import { usePrevious } from "./hooks/usePrevious";
+import { selectCurrentUser } from "./redux/user/user-selectors";
 
 
 
@@ -59,6 +60,7 @@ function App(props) {
   const connexionPopup = useSelector(selectConnexionPopup)
   const locationPathname = props.location.pathname;
   const clickedCard = useSelector(selectClickedCard)
+  // const currentUser = useSelector(selectCurrentUser);
 
   useEffect(() => {
     if (firstLoadDone === false && locationPathname === "/search") {
@@ -113,7 +115,7 @@ function App(props) {
         {clickedCard && <CardFullPopup />}
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route path="/search" component={SearchPage} />
+          <ProtectedRoute path="/search" component={SearchPage} />
           <Route path="/connexion" component={LoginPage} />
 
           <Route path="/ressources" component={RessourcesPage} />

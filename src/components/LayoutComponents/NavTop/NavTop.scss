@@ -214,8 +214,8 @@
     border-bottom: 0.5px solid $grey;
     border-top: 0.5px solid $grey;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    // justify-content: flex-start;
+    // align-items: center;
     opacity: 0;
     visibility: hidden;
     z-index: -1;
@@ -227,18 +227,50 @@
       visibility: visible;
     }
 
-    &--logo {
-      height: 3.5rem;
-      box-sizing: content-box;
-      // width: auto;
-      padding: 2rem 1.5rem;
-      cursor: pointer;
+    // &--logo {
+    //   height: 3.5rem;
+    //   box-sizing: content-box;
+    //   // width: auto;
+    //   padding: 2rem 1.5rem;
+    //   cursor: pointer;
+    //   transition: all 0.2s ease;
+
+    //   &:hover {
+    //     box-shadow: inset $button-shadow;
+    //     // background-color: $white;
+    //     background-color: inherit;
+    //   }
+    // }
+  }
+
+  &__topicList {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+
+    &:not(:last-of-type) {
+      margin-right: 4rem;
+    }
+
+    &--topic {
+      font-size: 2.5rem;
+      padding: 0.5rem 0;
+      margin: 0 0 0.5rem 0;
+      border-bottom: 1px solid $grey;
+      display: inline-block;
       transition: all 0.2s ease;
 
       &:hover {
-        box-shadow: inset $button-shadow;
-        // background-color: $white;
-        background-color: inherit;
+        color: $primary-light;
+      }
+    }
+
+    &--category {
+      display: inline-block;
+      padding: 0.5rem 0;
+      &:hover {
+        color: $primary-light;
       }
     }
   }

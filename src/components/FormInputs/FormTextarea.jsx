@@ -18,7 +18,7 @@ const FormTextarea = ({
   const errorEl = document.querySelector(
     `.input__message[data-inputfor=${name}]`
   );
-
+  
   const handleChange = useCallback(
     (e) => {
       const newValue = e.target && e.target.value;
@@ -59,7 +59,7 @@ const FormTextarea = ({
         onChange={(e) => handleChange(e)}
         type={type && type}
         name={name && name}
-        value={data}
+        value={data && data}
         id={idFor && idFor}
         className={`FormInput ${isValid}-input`}
         required={required && required}

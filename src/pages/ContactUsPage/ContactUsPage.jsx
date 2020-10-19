@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FormInput from "../../components/FormInputs/FormInput";
 import FormSelect from "../../components/FormInputs/FormSelect";
@@ -6,6 +6,7 @@ import FormTextarea from "../../components/FormInputs/FormTextarea";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import "./ContactUsPage.scss";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
+import { sendEmailContact } from "../../services/backOfficeService.js"
 
 const ContactUsPage = () => {
   const [message, setMessage] = useState({
@@ -16,6 +17,12 @@ const ContactUsPage = () => {
   const currentUser = useSelector(selectCurrentUser);
   const currentUserEmail = currentUser && currentUser.email;
 
+  useEffect(() => {
+    if (message.email === '') {
+      setMessage({ ...message, 'email':currentUserEmail})
+    }
+  }, [message]);
+
   if (window.scrollY) {
     window.scroll(0, 0);
   }
@@ -24,8 +31,9 @@ const ContactUsPage = () => {
     setMessage({ ...message, [name]: value });
   };
 
-  const handleMessageSubmit = () => {
-    // disptach action qui envoie message au back
+  const handleMessageSubmit = e => {
+    e.preventDefault();
+    sendEmailContact(message)
   };
 
   return (
@@ -47,7 +55,7 @@ const ContactUsPage = () => {
 
       <form
         className="ContactPage__form"
-        onSubmit={() => handleMessageSubmit()}
+        onSubmit={(e) => handleMessageSubmit(e)}
       >
         <div className="form__group">
           <FormInput

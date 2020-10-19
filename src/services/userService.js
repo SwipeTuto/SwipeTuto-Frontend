@@ -187,9 +187,6 @@ export const getUserFavoriesById = userId => {
 
 }
 
-axios.defaults.xsrfCookieName = 'csrftoken'
-axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-
 export const signalContent = signal => {
   console.log(signal)
   var config = {

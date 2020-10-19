@@ -180,10 +180,7 @@ export const getCardCommentsOtherPage = (url) => {
       'Content-Type': 'application/json',
     }
   }
-  return axios
-    .get(`${url}`
-      , config)
-    .then(rep => {
+  return axios.get(`${url}`, config).then(rep => {
       return rep
     })
 }

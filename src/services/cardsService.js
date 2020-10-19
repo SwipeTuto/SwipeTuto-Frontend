@@ -39,7 +39,8 @@ export const getCardById = cardId => {
 export const getCardAfterfilter = (search) => {
   var config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+   
     }
   }
   return axios

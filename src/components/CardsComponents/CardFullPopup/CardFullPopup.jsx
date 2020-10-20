@@ -43,7 +43,7 @@ import {
 import CardSlider from "../CardSlider/CardSlider";
 import Loading from "../../Loading/Loading";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
-import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrapper";
+import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrapper copy";
 
 // Services & helpers
 import {

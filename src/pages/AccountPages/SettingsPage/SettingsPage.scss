@@ -4,6 +4,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding: $grid-component-padding;
 
   // input:not([type="file"]),
   // textarea {
@@ -40,6 +41,11 @@
   // }
 }
 
+@media screen and (max-width: $bp-tablet) {
+  .SettingsPage {
+    padding: 0 2rem;
+  }
+}
 @media screen and (max-width: $bp-phone) {
   .SettingsPage {
     .form {

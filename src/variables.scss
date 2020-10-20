@@ -71,6 +71,13 @@ $title-font: "Montserrat", sans-serif;
   border-left: 3px solid $grey;
   width: 100%;
 
+  &:focus {
+    background-color: $white;
+    border-top: 1px solid $grey-light;
+    border-right: 1px solid $grey-light;
+    border-bottom: 1px solid $grey-light;
+  }
+
   &:focus.valid-input {
     border-left: 3px solid $green-success;
   }
@@ -83,10 +90,6 @@ $title-font: "Montserrat", sans-serif;
 
   .FormInput__label {
     margin-bottom: 0.5rem;
-  }
-
-  &:focus {
-    background-color: $white;
   }
 
   .input__message {
@@ -152,7 +155,7 @@ $title-font: "Montserrat", sans-serif;
 }
 
 @mixin popup-style {
-  z-index: 100000000000;
+  z-index: 90;
   position: fixed;
   top: 0;
   left: 0;

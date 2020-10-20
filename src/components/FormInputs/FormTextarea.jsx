@@ -11,6 +11,8 @@ const FormTextarea = ({
   getValue,
   firstValue,
   required,
+  placeholder,
+  id,
 }) => {
   const [data, setData] = useState("");
   const [isValid, setIsValid] = useState("unset");
@@ -47,6 +49,7 @@ const FormTextarea = ({
 
   useEffect(() => {
     if (firstValue) setData(firstValue);
+    if (firstValue === "") setData("");
   }, [firstValue]);
 
   return (
@@ -63,6 +66,7 @@ const FormTextarea = ({
         id={idFor && idFor}
         className={`FormInput ${isValid}-input`}
         required={required && required}
+        placeholder={placeholder}
       ></textarea>
 
       <p

@@ -24,7 +24,7 @@ import { getCardCommentsNext } from "../../../services/socialService";
 
 // components
 import Loading from "../../Loading/Loading";
-import FirstLevelComment from "./FirstLevelComment copy/FirstLevelComment";
+import FirstLevelComment from "./FirstLevelComment/FirstLevelComment";
 import CustomButton from "../CustomButton/CustomButton";
 import CommentsInput from "../CommentsInput/CommentsInput";
 
@@ -125,11 +125,6 @@ const CommentsWrapper = () => {
         const arrayCopy = localCommentsArray;
         arrayCopy.splice(index, 1);
         setLocalCommentsArray(arrayCopy);
-        const commentsNumberEl = document.querySelector(
-          "p.CommentsWrapper__title--commentsNumber"
-        );
-        commentsNumberEl.textContent =
-          parseInt(commentsNumberEl.textContent) - 1;
       }
     } else if (fullCommentLastLocal.length > 0) {
       const index = localLastPublishedComments.indexOf(fullCommentLastLocal[0]);
@@ -137,11 +132,6 @@ const CommentsWrapper = () => {
         const arrayCopy = localLastPublishedComments;
         arrayCopy.splice(index, 1);
         setLocalLastPublishedComments(arrayCopy);
-        const commentsNumberEl = document.querySelector(
-          "p.CommentsWrapper__title--commentsNumber"
-        );
-        commentsNumberEl.textContent =
-          parseInt(commentsNumberEl.textContent) - 1;
       }
     }
   };

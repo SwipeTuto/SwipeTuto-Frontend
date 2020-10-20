@@ -3,8 +3,6 @@
 .VerticalMenu {
   position: relative;
 
-  // display: inline;
-
   &__logo {
     &:hover {
       cursor: pointer;
@@ -19,7 +17,7 @@
     padding: 1rem;
     position: absolute;
     right: 0;
-    z-index: 100;
+    z-index: 30;
 
     &--item:not(:last-of-type) {
       margin-bottom: 0.6rem;

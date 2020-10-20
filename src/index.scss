@@ -74,6 +74,7 @@ body {
   padding: $navtop-height 0 0 0;
   max-width: 100%;
   margin: 0 auto;
+  touch-action: pan-x pan-y;
   @include theme-colors($themelight: true);
 }
 

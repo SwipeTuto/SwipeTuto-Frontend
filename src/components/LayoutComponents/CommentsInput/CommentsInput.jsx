@@ -6,6 +6,7 @@ import "./CommentsInput.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { openConnexionPopup } from "../../../redux/layout/layout-actions";
+import FormInput from "../../FormInputs/FormInput";
 
 const CommentsInput = ({
   className,
@@ -24,19 +25,23 @@ const CommentsInput = ({
       return;
     }
   };
+
+  // console.log(newComment.comment.length);
+
   return (
     <form className={className ? className : "CommentsInput"}>
-      <textarea
+      <FormInput
+        name="comment"
         placeholder="Ajouter un commentaire..."
         className="CommentsInput__newComment--input"
         type="text"
-        value={newComment}
-        onChange={(e) => handleInputValueChange(e)}
+        getValue={handleInputValueChange}
         onFocus={() => checkIfUser()}
+        required={true}
       />
       <CustomButton
         color="dark"
-        disabled={newComment === "" ? "disabled" : ""}
+        disabled={newComment && newComment.comment === "" ? "disabled" : ""}
         onClick={(e) => handleAddCommentClick(e)}
         className="custom-button CommentsInput__newComment--sendPC"
       >
@@ -44,7 +49,7 @@ const CommentsInput = ({
       </CustomButton>
       <CustomButton
         color="dark"
-        disabled={newComment === "" ? "disabled" : ""}
+        disabled={newComment && newComment.comment === "" ? "disabled" : ""}
         onClick={(e) => handleAddCommentClick(e)}
         className="custom-button CommentsInput__newComment--sendMobile"
       >

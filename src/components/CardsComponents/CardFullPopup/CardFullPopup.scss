@@ -3,7 +3,7 @@
 .CardFullPopup {
   display: none;
   visibility: hidden;
-  z-index: 10000000;
+  z-index: 50;
   scroll-behavior: smooth;
 
   &::-webkit-scrollbar {

@@ -11,6 +11,7 @@ const FormInput = ({
   getValue,
   firstValue,
   required,
+  placeholder,
 }) => {
   const [data, setData] = useState("");
   const [isValid, setIsValid] = useState("unset");
@@ -64,6 +65,7 @@ const FormInput = ({
         className={`FormInput ${isValid}-input`}
         required={required && required}
         autoComplete="on"
+        placeholder={placeholder}
       />
 
       <p

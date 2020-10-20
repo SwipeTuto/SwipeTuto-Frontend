@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   padding: 1rem 2rem;
-  z-index: 100000;
+  z-index: 20;
   // border-bottom: 0.5px solid $grey;
   @include theme-colors($themelight: true);
 
@@ -207,7 +207,6 @@
 
   &__dropdown {
     position: absolute;
-    z-index: 1000;
     top: 100%;
     left: 0;
     width: 100%;

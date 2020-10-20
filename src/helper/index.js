@@ -32,7 +32,6 @@ export const getUrlId = (url, query) => {
 }
 
 
-
 // Pour les mots / phrases trop longue, permet de couper. Params : phrase, nombre de caractères max, true/false pour couper les mots
 export const truncate = (str, n, useWordBoundary) => {
   if (str.length <= n) {

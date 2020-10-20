@@ -36,6 +36,7 @@ import { getUserByIdAction } from "./redux/user/user-actions";
 import SignalPopup from "./components/LayoutComponents/SignalPopup/SignalPopup";
 import CardFullPopup from "./components/CardsComponents/CardFullPopup/CardFullPopup";
 import SearchLinkRedirect from "./helper/SearchLinkRedirect";
+import { authHeader }  from './helper/auth-header';
 import ConnexionRedirect from "./components/LayoutComponents/ConnexionRedirect/ConnexionRedirect";
 import { selectClickedCard, selectCurrentSearch } from "./redux/filter/filter-selectors";
 import { usePrevious } from "./hooks/usePrevious";

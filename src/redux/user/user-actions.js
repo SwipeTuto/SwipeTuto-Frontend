@@ -104,6 +104,7 @@ export const setOtherUser = (otherUser) => ({
   payload: otherUser,
 });
 
+
 // REGISTER
 export const registerAction = users => {
   return dispatch => {

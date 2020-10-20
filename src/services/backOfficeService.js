@@ -1,8 +1,7 @@
-import axios from "axios"
-import { baseURL } from '../services/configService'
+import { client } from "../index";
+import history from "../helper/history"
 
 export const sendEmailContact = data => {
-
   const bodyFormData = new FormData();
   bodyFormData.append('email', data.email);
   bodyFormData.append('categories', data.category);
@@ -10,11 +9,8 @@ export const sendEmailContact = data => {
 
   var config = { headers: {'Content-Type':'multipart/form-data'}}
 
-  return axios.post(`${baseURL}backoffice/contact/`, bodyFormData , config).then(
-    rep => {
-      return rep
-    }).catch(err => {
-      return err
-    })
-
+  return client().post(`backoffice/contact/`, bodyFormData , config).then(rep => {
+    history.push('/contact', history.location)
+    history.go()
+  }).catch(err => {return err})
 }

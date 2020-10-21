@@ -1,20 +1,24 @@
 import React from 'react';
+import axios from "axios";
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import store from './redux/store';
-import axios from "axios";
 import { authHeader } from "./helper/auth-header"
+import { getCookie } from "./helper/getCookie"
 
 import { BrowserRouter } from 'react-router-dom'
 
 import './index.scss';
 
 // AXIOS SETTINGS
+var csrftoken = getCookie('csrftoken');
 const headersKeys = {
+  'Accept': 'application/json',
   'Content-Type': 'application/json',
-  'Authorization': authHeader()
+  'Authorization': authHeader(),
+  'X-CSRFToken': csrftoken
 }
 
 export const client = () => {

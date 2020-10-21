@@ -58,11 +58,6 @@ const HomePage = () => {
       window.scroll(0, 0);
     }
   };
-  
-  const test = e => {
-    e.preventDefault()
-    dispatch(showSignalPopup())
-}
 
   const redirectLink = SearchLinkRedirect();
 

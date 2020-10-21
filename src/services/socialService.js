@@ -106,6 +106,7 @@ export const modifyComment = (commentId, newComment) => {
 
 // PAS MODIFIER AVEC LA NOUVELLE CONFIG DE AXIOS !!!!!!!
 export const getCardCommentsOtherPage = (url) => {
+  console.log(url)
   var config = {
     headers: {
       'Content-Type': 'application/json',

@@ -1,5 +1,4 @@
 import axios from "axios"
-import { baseURL } from '../services/configService'
 import { client } from "../index";
 
 // export const getCards = () => {
@@ -21,7 +20,7 @@ import { client } from "../index";
 
 
 export const getCardById = cardId => {
-  return client().get(`card/list/${cardId}/`).then(rep => {
+  return client().get("card/list/${cardId}/").then(rep => {
     return rep
   }).catch(err => {return err})
 }
@@ -38,7 +37,7 @@ export const getCardAfterfilter = search => {
     }
   }
   
-  return client().get(`card/filter/`, data).then(rep => {
+  return client().get("card/filter/", data).then(rep => {
     return rep
   }).catch(err => {return err})
 }
@@ -50,8 +49,9 @@ export const getCardsByUser = userid => {
   }).catch(err => {return err})
 }
 
+
 // PAS MODIFIER AVEC LA NOUVELLE CONFIG DE AXIOS !!!!!!!
-export const getOtherPageCard = (linkToFetch) => {
+export const getOtherPageCard = linkToFetch => {
   var config = {
     headers: {
       "Content-Type": "application/json",

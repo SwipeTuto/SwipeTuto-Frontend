@@ -1,5 +1,4 @@
 
-import axios from "axios";
 
 export function authHeader() {
   let user = JSON.parse(localStorage.getItem('user'));

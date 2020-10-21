@@ -7,6 +7,7 @@ import CustomButton from "../../components/LayoutComponents/CustomButton/CustomB
 import "./ContactUsPage.scss";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
 import { sendEmailContact } from "../../services/backOfficeService.js"
+import  CSRFToken  from "../../components/Cookies/CsrfToken"
 
 const ContactUsPage = () => {
   const [message, setMessage] = useState({
@@ -57,6 +58,7 @@ const ContactUsPage = () => {
         className="ContactPage__form"
         onSubmit={(e) => handleMessageSubmit(e)}
       >
+        <CSRFToken />
         <div className="form__group">
           <FormInput
             idFor="email"

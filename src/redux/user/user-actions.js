@@ -104,13 +104,14 @@ export const setOtherUser = (otherUser) => ({
   payload: otherUser,
 });
 
+
 // REGISTER
 export const registerAction = users => {
   return dispatch => {
     register(users)
       .then(user => {
         dispatch(registerSuccess(user.data.user));
-        history.push('/', history.location)
+        history.push('/search', history.location)
         history.go()
       })
       .catch(err => {

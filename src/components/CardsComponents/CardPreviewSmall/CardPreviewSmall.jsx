@@ -111,11 +111,11 @@ const CardPreviewSmall = ({ card, size }) => {
       >
         <div className="CardPreviewSmall__hover">
           <p>{name && truncate(name, 60, false)}</p>
-          <div className="CardPreviewSmall__category--stamp">
+          {/* <div className="CardPreviewSmall__category--stamp">
             {renameCategory(categorie && categorie[0] && categorie[0].name)
               ? renameCategory(categorie && categorie[0].name)
               : "Autre"}
-          </div>
+          </div> */}
         </div>
       </div>
 

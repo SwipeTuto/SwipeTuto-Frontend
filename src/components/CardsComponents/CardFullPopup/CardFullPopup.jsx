@@ -317,13 +317,13 @@ const CardFullPopup = ({ history, location }) => {
             <div className="CardFullPopup__meta CardFullPopup__section">
               <div className="CardFullPopup__meta--other-infos">
                 <div className="CardFullPopup__meta--published-date">
-                  <div className="CardFullPopup__meta--category-stamp">
+                  {/* <div className="CardFullPopup__meta--category-stamp">
                     {clickedCard &&
                       clickedCard.categorie &&
                       clickedCard.categorie[0] &&
                       clickedCard.categorie[0].name &&
                       renameCategory(clickedCard.categorie[0].name)}
-                  </div>
+                  </div> */}
                   <p>Publié le :</p>
                   <p>{clickedCardDate}</p>
                 </div>

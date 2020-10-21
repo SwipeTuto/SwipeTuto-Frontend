@@ -61,7 +61,7 @@ const UserPage = ({ userIsSame, location }) => {
         {!isLoaded ? (
           <Loading />
         ) : userDatas && cards.length > 0 ? (
-          <CardGridList loadFilter={false} />
+          <CardGridList loadFilter={false} allowInfiniteScroll={true} />
         ) : (
           <p className="UserPage__nocards">Aucune carte pour le moment.</p>
         )}

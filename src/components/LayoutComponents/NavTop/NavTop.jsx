@@ -1,12 +1,15 @@
 // Présent dans App.js
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, Link } from "react-router-dom";
 
 // redux
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
-import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
+import {
+  selectCurrentSearch,
+  selectSearchTopic,
+} from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
 import {
@@ -16,7 +19,7 @@ import {
 import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
-import { topicArray } from "../../../helper/index";
+import { getCategoriesArray, topicArray } from "../../../helper/index";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
@@ -42,9 +45,24 @@ const NavTop = (props) => {
   const currentUserNav = useSelector(selectUserNav);
   const currentSearch = useSelector(selectCurrentSearch);
 
-  const topicHandleClick = async (e) => {
-    const topicName = e.target.name ? e.target.name : null;
-    const currentSearchCopy = { ...currentSearch, searchTopic: topicName };
+  const topicHandleClick = async (topicQueryName) => {
+    // const topicName = e.target.name ? e.target.name : null;
+
+    const currentSearchCopy = {
+      ...currentSearch,
+      searchTopic: topicQueryName,
+      searchCategory: null,
+    };
+    dispatch(setCurrentSearch(currentSearchCopy));
+  };
+  const categoryHandleClick = async (topicQueryName, categoryQueryName) => {
+    // const topicName = e.target.name ? e.target.name : null;
+
+    const currentSearchCopy = {
+      ...currentSearch,
+      searchTopic: topicQueryName,
+      searchCategory: categoryQueryName,
+    };
     dispatch(setCurrentSearch(currentSearchCopy));
   };
 
@@ -52,39 +70,67 @@ const NavTop = (props) => {
     <div className={`NavTop ${currentTheme}-theme`}>
       <div className="NavTop__left">
         <Link className="NavTop__swipeTuto" to="/">
-          <img src={SwipeTutoSmallSmall} alt="" />
+          <img className="NavTop__swipeTuto" src={SwipeTutoSmallSmall} alt="" />
         </Link>
 
-        <NavLink exact className="NavTop__link" to="/">
-          Accueil
-        </NavLink>
+        {!currentUser ? (
+          <NavLink exact className="NavTop__link" to="/">
+            Accueil
+          </NavLink>
+        ) : (
+          <>
+            <p className="NavTop__link NavTop__link--category">
+              Explorer
+              <DropDownLogo className="NavTop__link--logo" />
+            </p>
+            <div
+              className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme`}
+            >
+              {topicArray &&
+                topicArray.map((topic, index) => (
+                  <div className="NavTop__topicList">
+                    <Link
+                      key={index}
+                      to="/search"
+                      onClick={() => topicHandleClick(topic.queryName)}
+                      name={topic.queryName}
+                    >
+                      <span className="NavTop__topicList--topic">
+                        {topic.name}
+                      </span>
+                    </Link>
+                    {getCategoriesArray(topic.queryName).map(
+                      (category, index) => (
+                        <Link
+                          key={index}
+                          to="/search"
+                          onClick={() =>
+                            categoryHandleClick(
+                              topic.queryName,
+                              category.queryName
+                            )
+                          }
+                          name={category.queryName}
+                        >
+                          <span className="NavTop__topicList--category">
+                            {category.name}
+                          </span>
+                        </Link>
+                      )
+                    )}
+                  </div>
+                ))}
+            </div>
+          </>
+        )}
 
         <NavLink className="NavTop__link" to="/ressources">
           Ressources
         </NavLink>
-        <p className="NavTop__link NavTop__link--category">
-          Langages
-          <DropDownLogo className="NavTop__link--logo" />
-        </p>
-        <div
-          className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme`}
-        >
-          {topicArray &&
-            topicArray.map((rubrique, index) => (
-              <Link key={index} to="/search">
-                <img
-                  onClick={(e) => topicHandleClick(e)}
-                  src={rubrique.logo}
-                  name={rubrique.queryName}
-                  className="NavTop__dropdown--logo"
-                  alt={rubrique.name}
-                />
-              </Link>
-            ))}
-        </div>
       </div>
       <div className="NavTop__center">
-        <SearchForm />
+      {currentUser && <SearchForm />}
+        
       </div>
       <div className="NavTop__right">
         {currentUser ? (

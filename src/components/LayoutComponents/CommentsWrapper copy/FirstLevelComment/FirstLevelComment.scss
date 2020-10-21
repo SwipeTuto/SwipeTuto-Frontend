@@ -1,13 +1,10 @@
 @import "../../../../variables.scss";
 
-.SecondLevelComment {
+.FirstLevelComment {
   margin-bottom: 1rem;
-  margin-left: 5rem;
   display: flex;
 
   &__wrapper {
-    // flex-shrink: 1;
-    // justify-self: stretch;
     flex-grow: 1;
     margin: 0 1rem;
   }
@@ -22,9 +19,9 @@
     flex-direction: column;
     padding: 1rem;
     background-color: $grey-light;
+    color: $black;
     border-radius: $box-radius;
     border: 0.5px solid $grey;
-    color: $black;
 
     .UserUsername {
       display: inline-block;
@@ -76,11 +73,8 @@
 
     display: flex;
     width: 6rem;
-    min-width: 6rem;
-    max-width: 6rem;
     flex-direction: column;
     align-items: center;
-    // justify-self: flex-end;
 
     &--likes,
     &--comments {
@@ -110,37 +104,54 @@
       margin-left: 5rem;
       cursor: pointer;
       font-weight: bold;
-      color: $primary-dark;
+      color: $primary-light;
       transition: all 0.2s ease;
 
-      &:hover {
-        color: $primary-light;
-      }
+      // &:hover {
+      //   color: $primary-light;
+      // }
     }
-    .CommentsInput {
-      margin: 0 5rem;
 
-      button.custom-button {
-        margin-left: auto;
-        margin-right: 0;
+    &--input {
+      margin: 0 0 0 5rem;
+      display: flex;
+      // flex-direction: column;
+      align-items: flex-start;
+      // margin-top: 2rem;
+      // padding-top: 1rem;
+      // border-top: 1px solid $grey;
+
+      form.CommentsInputReply {
+        // padding: 0;
+        // margin: 0;
+        // border: none;
+
+        width: 100%;
       }
     }
   }
 
-  &__mobile {
-    &-stats {
-      display: none;
-    }
+  &__mobile-stats {
+    display: none;
+  }
 
-    &--logo {
-      &.comment-logo__liked {
-        fill: $red-like;
-      }
+  &__close-logo {
+    @include big-logo-size;
+    // margin-left: 1rem;
+    margin-top: 1rem;
+    display: inline-block;
+    width: 5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    fill: currentColor !important;
+
+    &:hover {
+      fill: $primary-light;
     }
   }
 
   @media screen and (max-width: $bp-tablet) {
-    .SecondLevelComment {
+    .FirstLevelComment {
       &__wrapper {
         margin: 0 0.5rem;
         font-size: 1.6rem;
@@ -155,32 +166,32 @@
   }
 
   @media screen and (max-width: $bp-phone) {
-    .SecondLevelComment {
+    .FirstLevelComment {
       &__center {
         position: relative;
       }
-      // &__mobile-menu {
-      //   z-index: 1000000;
-      //   display: block;
-      //   position: absolute;
-      //   top: 0.5rem;
-      //   right: 0rem;
+      &__mobile-menu {
+        z-index: 1000000;
+        display: block;
+        position: absolute;
+        top: 0.5rem;
+        right: 0rem;
 
-      //   &--logo {
-      //     @include logo-size;
-      //   }
+        &--logo {
+          @include logo-size;
+        }
 
-      //   &--panel {
-      //     position: absolute;
-      //     top: 0.2rem;
-      //     right: 1.5rem;
-      //     display: flex;
-      //     flex-direction: column;
-      //     // background-color: $white;
-      //     @include card-shadow;;
-      //     border: 0.5px solid $grey;
-      //   }
-      // }
+        &--panel {
+          position: absolute;
+          top: 0.2rem;
+          right: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          // background-color: $white;
+          // @include card-shadow;
+          border: 0.5px solid $grey;
+        }
+      }
 
       &__mobile-action {
         margin: 1rem;
@@ -218,6 +229,10 @@
         &--logo {
           @include logo-size;
           margin-left: 0.2rem;
+
+          &.comment-logo__liked {
+            fill: $red-like;
+          }
         }
       }
 

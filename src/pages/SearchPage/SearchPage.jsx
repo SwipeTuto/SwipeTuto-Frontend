@@ -6,13 +6,17 @@ import FiltersBar from "../../components/LayoutComponents/FiltersBar/FiltersBar"
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
 import CurrentSearchWords from "../../components/CurrentSearchWords/CurrentSearchWords";
 import { selectTheme } from "../../redux/layout/layout-selectors";
-import { selectTotalNumberOfResults } from "../../redux/filter/filter-selectors";
+import { selectCardsFetched, selectCurrentSearch, selectTotalNumberOfResults } from "../../redux/filter/filter-selectors";
 import "./SearchPage.scss";
 import { setCardsSize } from "../../redux/layout/layout-actions";
+import { setCurrentSearch } from "../../redux/filter/filter-actions";
+import { initialSearchState } from "../../helper";
 
 const SearchPage = ({ location }) => {
   const currentTheme = useSelector(selectTheme);
   const dispatch = useDispatch();
+  const fetchedCards = useSelector(selectCardsFetched)
+  const currentSearch = useSelector(selectCurrentSearch)
 
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
 
@@ -23,6 +27,13 @@ const SearchPage = ({ location }) => {
       return results;
     }
   };
+
+  useEffect(() => {
+    if(fetchedCards === null){
+      dispatch(setCurrentSearch({...currentSearch, searchOrder: "likes"}))
+      console.log("call")
+    }
+  }, [dispatch, fetchedCards])
 
   useEffect(() => {
     if (window.scrollY) {
@@ -54,7 +65,7 @@ const SearchPage = ({ location }) => {
             </p>
           </div>
           <FiltersBar handleClickSize={handleClickSize} />
-          <CardGridList loadFilter={true} />
+          <CardGridList loadFilter={true} allowInfiniteScroll={true} />
         </div>
       </div>
     </>

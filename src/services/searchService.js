@@ -1,50 +1,29 @@
-import axios from "axios"
-import { baseURL } from '../services/configService'
+import { client } from "../index";
+
 
 export const categorieList = () => {
-  var config = { headers: { 'Content-Type': 'application/json' }, }
-
-  return axios.get(`${baseURL}search/categorie/`, config)
-    .then(rep => {
-      return rep
-    })
-    .catch(function (err) {
-      return err
-    })
+  return client().get(`search/categorie/`).then(rep => {
+    return rep
+  }).catch(err => {return err})
 }
+
 
 export const tagList = () => {
-  var config = { headers: { 'Content-Type': 'application/json' }, }
-
-  return axios.get(`${baseURL}search/categorie/`, config)
-    .then(rep => {
-      return rep
-    })
-    .catch(function (err) {
-      return err
-    })
+  return client().get(`search/categorie/`).then(rep => {
+    return rep
+  }).catch(err => {return err})
 }
 
-export const topicList = () => {
-  var config = { headers: { 'Content-Type': 'application/json' }, }
 
-  return axios.get(`${baseURL}search/categorie/`, config)
-    .then(rep => {
-      return rep
-    })
-    .catch(function (err) {
-      return err
-    })
+export const topicList = () => {
+  return client().get(`search/categorie/`).then(rep => {
+    return rep
+  }).catch(err => {return err})
 }
 
 export const searchBar = kkord => {
-  var config = { headers: { 'Content-Type': 'application/json' }, }
-  return axios.get(`${baseURL}card/?search=${kkord}/`, config)
-    .then(rep => {
-      return rep
-    })
-    .catch(function (err) {
-      return err
-    })
+  return client().get(`${baseURL}card/?search=${kkord}/`).then(rep => {
+    return rep
+  }).catch(err => {return err})
 }
 

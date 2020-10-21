@@ -32,7 +32,7 @@ import { useCallback } from "react";
 import { useColumnsNumber } from "../../../hooks/useColumnsNumber";
 import { getUrlId, initialSearchState, urlParams } from "../../../helper";
 
-const CardGridList = ({ loadFilter, location }) => {
+const CardGridList = ({ loadFilter, allowInfiniteScroll, location }) => {
   const dispatch = useDispatch();
   const nextPageLink = useSelector(selectPaginationNext);
   const fetchWithFilter = loadFilter !== undefined ? loadFilter : null;
@@ -152,8 +152,6 @@ const CardGridList = ({ loadFilter, location }) => {
     window.scrollTo(0, 0);
   };
 
-  // console.log(gridItems);
-
   return (
     <div className="CardGridList">
       <div
@@ -199,7 +197,7 @@ const CardGridList = ({ loadFilter, location }) => {
       </div>
 
       {!isLoaded && <PageLoading />}
-      {cards && nextPageLink && (
+      {cards && nextPageLink && allowInfiniteScroll && (
         <div className="bottom-grid" ref={bottomGrid}></div>
       )}
       <ScrollButton />

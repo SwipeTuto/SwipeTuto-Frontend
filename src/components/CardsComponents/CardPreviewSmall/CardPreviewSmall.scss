@@ -8,13 +8,20 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  box-shadow: $card-shadow;
+
   border-radius: $box-radius;
   display: flex;
   flex-direction: column;
   transition: all 0.2s ease;
   break-inside: avoid;
   // margin-bottom: 1rem;
+
+  &.dark-theme {
+    @include card-shadow($themelight: false);
+  }
+  &.light-theme {
+    @include card-shadow($themelight: true);
+  }
 
   &__image {
     height: auto;
@@ -58,13 +65,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-
-      &-small {
-        width: 200px;
-      }
-      &-big {
-        width: 300px;
-      }
     }
   }
 

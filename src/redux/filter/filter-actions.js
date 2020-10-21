@@ -1,7 +1,7 @@
 import { FilterActionTypes } from "./filter-types"
 import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded } from '../layout/layout-actions'
 import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
-import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply, toggleSave, getCardCommentsNext, getReplies } from "../../services/socialService"
+import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply, toggleSave, getCardCommentsNext } from "../../services/socialService"
 import { getUserFavoriesById } from "../../services/userService"
 import { initialSearchState } from "../../helper"
 

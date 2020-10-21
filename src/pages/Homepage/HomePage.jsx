@@ -15,6 +15,7 @@ import { ReactComponent as SuccessIllustration } from "../../assets/images/illus
 
 import { selectCardsFetchedCards } from "../../redux/filter/filter-selectors";
 import { selectTheme } from "../../redux/layout/layout-selectors";
+import { showSignalPopup } from "../../redux/layout/layout-actions";
 import { deleteCurrentSearch } from "../../redux/filter/filter-actions";
 
 import "./HomePage.scss";

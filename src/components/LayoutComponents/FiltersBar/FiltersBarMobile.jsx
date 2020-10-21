@@ -13,7 +13,7 @@ import {
   selectFilterMobileMenuOpen,
   selectTheme,
 } from "../../../redux/layout/layout-selectors";
-import { closeFilterMobileMenu } from "../../../redux/layout/layout-actions";
+import { closeFilterMobileMenu, openConnexionPopup } from "../../../redux/layout/layout-actions";
 
 // helper
 import {
@@ -33,12 +33,14 @@ import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as CloseCircleLogo } from "../../../assets/images/close-circle.svg";
 
 import "./FiltersBarMobile.scss";
+import { selectCurrentUser } from "../../../redux/user/user-selectors";
 
 const FiltersBarMobile = ({ title, showResults }) => {
   const dispatch = useDispatch();
   const filterMobileMenuOpen = useSelector(selectFilterMobileMenuOpen);
   const currentSearch = useSelector(selectCurrentSearch);
   const currentTheme = useSelector(selectTheme);
+  const currentUser = useSelector(selectCurrentUser);
   const [newSearch, setNewSearch] = useState({});
   const [categoriesArray, setCategoriesArray] = useState([]);
 
@@ -76,9 +78,13 @@ const FiltersBarMobile = ({ title, showResults }) => {
   };
 
   const handleDeleteCurrentSearch = () => {
+    if (!currentUser) {
+      dispatch(openConnexionPopup());
+    } else {
     dispatch(deleteCurrentSearch());
     dispatch(closeFilterMobileMenu());
   };
+}
 
   const toggleShowInput = (item) => {
     const inputShowedCopy = inputShowed;
@@ -94,17 +100,19 @@ const FiltersBarMobile = ({ title, showResults }) => {
   };
 
   const handleFormSubmit = (e) => {
-    e.preventDefault();
+    if (!currentUser) {
+      dispatch(openConnexionPopup());
+    } else {
     const currentSearchCopy = {
       searchWords: newSearch.searchWords,
       searchTopic: newSearch.searchTopic,
       searchOrder: newSearch.searchOrder,
       searchCategory: newSearch.searchCategory,
     };
-    console.log(currentSearchCopy)
     dispatch(setCurrentSearch(currentSearchCopy));
     dispatch(closeFilterMobileMenu());
   };
+}
 
   return (
     <>
@@ -118,7 +126,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
             </div>
             <div className="FiltersBarMobile__search">
               <h1 className="title title-1">Votre recherche :</h1>
-              <form className="FiltersBarMobile__form">
+              <form className="FiltersBarMobile__form" onSubmit={e => e.preventDefault()}>
                 <div className="FiltersBarMobile__form--group">
                   <h2 className="title title-2">
                     <label htmlFor="wordsFilter">Termes de recherche :</label>
@@ -257,26 +265,8 @@ const FiltersBarMobile = ({ title, showResults }) => {
                   >
                     Réinitialiser
                   </CustomButton>
-                  <Link
-                    to={`/search?${
-                      newSearch.searchWords
-                        ? `search=${newSearch.searchWords}`
-                        : ""
-                    }${
-                      newSearch.searchTopic
-                        ? `&topic=${newSearch.searchTopic}`
-                        : ""
-                    }${
-                      newSearch.searchOrder
-                        ? `&order=${newSearch.searchOrder}`
-                        : ""
-                    }${
-                      newSearch.searchCategory
-                        ? `&category=${newSearch.searchCategory}`
-                        : ""
-                    }`}
-                  >
-                    {" "}
+
+                 
                     <CustomButton
                       type="submit"
                       color="dark"
@@ -284,7 +274,8 @@ const FiltersBarMobile = ({ title, showResults }) => {
                     >
                       Rechercher
                     </CustomButton>
-                  </Link>
+
+         
                 </div>
               </form>
             </div>

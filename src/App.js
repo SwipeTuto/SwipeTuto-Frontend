@@ -78,16 +78,19 @@ function App(props) {
       }
     } else if (firstLoadDone === false && cardId) {
       dispatch(getCardByIdAction(cardId))
-    } else if (!isLoaded && userId) {
+    } else if (firstLoadDone === false && !isLoaded && userId) {
       dispatch(getUserByIdAction(userId))
-      dispatch(setFirstLoadDone())
+      // dispatch(setFirstLoadDone())
     } else if (prevSearchState && currentSearch && (
       prevSearchState.searchCategory !== currentSearch.searchCategory ||
       prevSearchState.searchOrder !== currentSearch.searchOrder || prevSearchState.searchTopic !== currentSearch.searchTopic || prevSearchState.searchWords !== currentSearch.searchWords
     )) {
       dispatch(setRedirectUrl(true));
+      console.log('call')
     }
-    dispatch(setFirstLoadDone())
+    if (firstLoadDone === false) {
+      dispatch(setFirstLoadDone())
+    }
   }, [cardId, category, currentSearch, dispatch, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, search, topic, userId]);
 
   useEffect(() => {

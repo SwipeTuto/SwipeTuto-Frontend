@@ -5,11 +5,11 @@ $red-error: #cf0030;
 $green-success: #00b109;
 $green-saved: #1be970;
 $red-like: #ff5d83;
-$secondary-dark: #edb603ff;
-$secondary-light: #fed523ff;
+$secondary-dark: #dba800;
+$secondary-light: #eec200;
 $primary-light: #ad0cc2;
 $primary-dark: #280849;
-$black: #202020;
+$black: #2c2c2c;
 $white: #f6f6f6;
 // $black: #000000ff;
 // $white: #ffffffff;
@@ -24,14 +24,14 @@ $grey-dark: #636363;
 // $grey-dark-themedark: #2c2c2c;
 
 $box-radius: 5px;
-$box-padding: 0.8rem 1.2rem;
+$box-padding: 0.6rem 1.6rem;
 $button-radius: 3rem;
 
 $navtop-height: 5rem;
 $navtop-mobile-height: 4rem;
 
-$button-shadow: 0 2px 3px rgba($grey, 0.4);
-$card-shadow: 0 2px 3px rgba($grey, 0.4);
+$button-shadow: 0 2px 2px rgba($grey, 0.6);
+
 // $card-shadow-2: 0 0px 3px rgba($grey, 0.2);
 // $button-shadow-dark: 0 2px 3px $grey-themedark;
 // $card-shadow-dark: 0 2px 3px $grey-themedark;
@@ -153,6 +153,13 @@ $title-font: "Montserrat", sans-serif;
     color: $white;
   }
 }
+@mixin card-shadow($themelight: true) {
+  @if $themelight {
+    box-shadow: 0 2px 2px rgba($grey, 0.6), 0 0 5px rgba($grey, 0.6);
+  } @else {
+    box-shadow: 0 2px 2px rgba($grey-dark, 0.6), 0 0 5px rgba($grey-dark, 0.6);
+  }
+}
 
 @mixin popup-style {
   z-index: 90;
@@ -218,7 +225,7 @@ $title-font: "Montserrat", sans-serif;
   display: flex;
   flex-direction: column;
   border-radius: 0 0 $box-radius $box-radius;
-  box-shadow: $card-shadow;
+  @include card-shadow;
   border: 0.5px solid $grey-light;
   overflow: hidden;
 }

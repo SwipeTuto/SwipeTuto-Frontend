@@ -3,7 +3,7 @@ import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useDispatch, useSelector } from 'react-redux';
 
-import HomePage from './pages/Homepage/HomePage';
+import HomePage from './pages/Homepage/HomePageNew';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SearchPage from './pages/SearchPage/SearchPage'
 import RessourcesPage from './pages/RessourcesPage/RessourcesPage'
@@ -18,7 +18,7 @@ import NavTop from "./components/LayoutComponents/NavTop/NavTop";
 import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
-import { getCardByIdAction } from './redux/filter/filter-actions'
+import { getCardAfterfilterAction, getCardByIdAction } from './redux/filter/filter-actions'
 import { selectConnexionPopup, selectFirstLoadDone, selectIsLoaded, selectRedirectUrl, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
 import { setCurrentSearch } from "./redux/filter/filter-actions"
 
@@ -37,7 +37,7 @@ import SignalPopup from "./components/LayoutComponents/SignalPopup/SignalPopup";
 import CardFullPopup from "./components/CardsComponents/CardFullPopup/CardFullPopup";
 import SearchLinkRedirect from "./helper/SearchLinkRedirect";
 import ConnexionRedirect from "./components/LayoutComponents/ConnexionRedirect/ConnexionRedirect";
-import { selectClickedCard, selectCurrentSearch } from "./redux/filter/filter-selectors";
+import { selectCardsFetched, selectClickedCard, selectCurrentSearch } from "./redux/filter/filter-selectors";
 import { usePrevious } from "./hooks/usePrevious";
 import { selectCurrentUser } from "./redux/user/user-selectors";
 
@@ -60,7 +60,8 @@ function App(props) {
   const connexionPopup = useSelector(selectConnexionPopup)
   const locationPathname = props.location.pathname;
   const clickedCard = useSelector(selectClickedCard)
-  // const currentUser = useSelector(selectCurrentUser);
+  const currentUser = useSelector(selectCurrentUser);
+  const fetchedCards = useSelector(selectCardsFetched)
 
   useEffect(() => {
     if (firstLoadDone === false && locationPathname === "/search") {
@@ -81,17 +82,19 @@ function App(props) {
     } else if (firstLoadDone === false && !isLoaded && userId) {
       dispatch(getUserByIdAction(userId))
       // dispatch(setFirstLoadDone())
+    } else if (fetchedCards === null) {
+      const currentSearchCopy = { ...currentSearch, searchOrder: "likes" };
+      dispatch(getCardAfterfilterAction(currentSearchCopy))
     } else if (prevSearchState && currentSearch && (
       prevSearchState.searchCategory !== currentSearch.searchCategory ||
       prevSearchState.searchOrder !== currentSearch.searchOrder || prevSearchState.searchTopic !== currentSearch.searchTopic || prevSearchState.searchWords !== currentSearch.searchWords
     )) {
       dispatch(setRedirectUrl(true));
-      console.log('call')
     }
     if (firstLoadDone === false) {
       dispatch(setFirstLoadDone())
     }
-  }, [cardId, category, currentSearch, dispatch, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, search, topic, userId]);
+  }, [cardId, category, currentSearch, dispatch, fetchedCards, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, search, topic, userId]);
 
   useEffect(() => {
     const bodyEl = document.querySelector('body');
@@ -118,6 +121,7 @@ function App(props) {
         {clickedCard && <CardFullPopup />}
         <Switch>
           <Route exact path="/" component={HomePage} />
+
           <ProtectedRoute path="/search" component={SearchPage} />
           <Route path="/connexion" component={LoginPage} />
 

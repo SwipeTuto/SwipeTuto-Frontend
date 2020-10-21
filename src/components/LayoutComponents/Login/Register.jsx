@@ -19,9 +19,10 @@ import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google
 import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
 import "./LoginAndRegister.scss";
 import FormInput from "../../FormInputs/FormInput";
+import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 // Props history, location, match, depuis react router dom
-const Register = (props) => {
+const Register = ({title}) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({});
   const [submitOk, setSubmitOk] = useState(false);
@@ -29,12 +30,7 @@ const Register = (props) => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const userErrors = useSelector(selectUserErrors);
   const allInput = [...document.querySelectorAll(".FormInput")];
-
-  // scroll reset
-
-  if (window.scrollY) {
-    window.scroll(0, 0);
-  }
+  const currentTheme = useSelector(selectTheme)
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -49,8 +45,8 @@ const Register = (props) => {
   };
 
   const getValue = (name, value) => {
-    if (name === password) setPassword(value);
-    if (name === passwordConfirmation) setPasswordConfirmation(value);
+    if (name === "password") setPassword(value);
+    if (name === "passwordConfirmation") setPasswordConfirmation(value);
     setUser({ ...user, [name]: value });
   };
 
@@ -67,18 +63,19 @@ const Register = (props) => {
   }, [user, passwordConfirmation, allInput]);
 
   return (
-    <div className="Register">
-      <h1 className="title title-1">S'inscrire</h1>
+    <div className={`Register ${currentTheme}-theme`}>
+      <h2 className="title title-2">{title ? title : "Bienvenu chez Swipetuto !"}</h2>
       <div className="Login__google">
         <CustomButton color="white" onClick={(e) => handleClickGoogle(e)}>
           <GoogleLogo />
-          Google
+          Continuer avec Google
         </CustomButton>
         <CustomButton color="white" onClick={(e) => handleClickGit(e)}>
           <GithubLogo />
-          Git
+          Continuer avec Git
         </CustomButton>
       </div>
+      <p className="Login__ou">Ou :</p>
       <p className="Login__errors">
         {userErrors &&
           userErrors !== 400 &&
@@ -119,10 +116,11 @@ const Register = (props) => {
           name="passwordConfirm"
           required={true}
           getValue={getValue}
+          valueToCompare={password}
           // firstValue={}
         />
 
-        <label htmlFor="mdp2" className="FormInput__label">
+        {/* <label htmlFor="mdp2" className="FormInput__label">
           Confirmez le Mot de passe :
         </label>
         <input
@@ -153,7 +151,7 @@ const Register = (props) => {
           >
             Ce mot de passe ne correspond pas à celui mentionné précédemment.
           </p>
-        }
+        } */}
 
         <CustomButton
           onClick={(e) => handleClick(e)}
@@ -166,7 +164,8 @@ const Register = (props) => {
       </form>
       <span className="horizontal-separation-primary-light"></span>
       <Link to="/connexion/login" className="LoginPage__link">
-        Déjà un compte ?
+      <CustomButton>Déjà un compte ?</CustomButton>
+        
       </Link>
     </div>
   );

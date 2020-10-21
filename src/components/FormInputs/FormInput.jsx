@@ -12,6 +12,7 @@ const FormInput = ({
   firstValue,
   required,
   placeholder,
+  valueToCompare,
 }) => {
   const [data, setData] = useState("");
   const [isValid, setIsValid] = useState("unset");
@@ -32,14 +33,27 @@ const FormInput = ({
         if (formInputEl) formInputEl.classList.remove("valid-input");
         if (formInputEl) formInputEl.classList.remove("invalid-input");
       } else {
-        let inputIsOk = checkRegexInput(name, newValue);
-        if (inputIsOk === true) {
-          setIsValid("valid");
-          if (errorEl) errorEl.textContent = "";
-          getValue(name, newValue);
+        if(name==="passwordConfirm"){
+          console.log(valueToCompare, newValue)
+          if(valueToCompare === newValue){
+            setIsValid("valid");
+            if (errorEl) errorEl.textContent = "";
+            getValue(name, newValue);
+          } else {
+            setIsValid("invalid");
+            if (errorEl) errorEl.textContent = errorMessageToDisplay(name);
+          }
         } else {
-          setIsValid("invalid");
-          if (errorEl) errorEl.textContent = errorMessageToDisplay(name);
+          let inputIsOk = checkRegexInput(name, newValue);
+          if (inputIsOk === true) {
+            setIsValid("valid");
+            if (errorEl) errorEl.textContent = "";
+            getValue(name, newValue);
+          } else {
+            setIsValid("invalid");
+            if (errorEl) errorEl.textContent = errorMessageToDisplay(name);
+          }
+
         }
       }
     },

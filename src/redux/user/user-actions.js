@@ -111,7 +111,7 @@ export const registerAction = users => {
     register(users)
       .then(user => {
         dispatch(registerSuccess(user.data.user));
-        history.push('/', history.location)
+        history.push('/search', history.location)
         history.go()
       })
       .catch(err => {

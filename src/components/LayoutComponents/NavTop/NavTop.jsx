@@ -47,7 +47,7 @@ const NavTop = (props) => {
 
   const topicHandleClick = async (topicQueryName) => {
     // const topicName = e.target.name ? e.target.name : null;
-    console.log(topicQueryName);
+
     const currentSearchCopy = {
       ...currentSearch,
       searchTopic: topicQueryName,
@@ -70,7 +70,7 @@ const NavTop = (props) => {
     <div className={`NavTop ${currentTheme}-theme`}>
       <div className="NavTop__left">
         <Link className="NavTop__swipeTuto" to="/">
-          <img src={SwipeTutoSmallSmall} alt="" />
+          <img className="NavTop__swipeTuto" src={SwipeTutoSmallSmall} alt="" />
         </Link>
 
         {!currentUser ? (
@@ -129,7 +129,8 @@ const NavTop = (props) => {
         </NavLink>
       </div>
       <div className="NavTop__center">
-        <SearchForm />
+      {currentUser && <SearchForm />}
+        
       </div>
       <div className="NavTop__right">
         {currentUser ? (

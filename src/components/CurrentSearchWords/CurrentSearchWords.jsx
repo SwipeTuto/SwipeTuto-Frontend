@@ -11,7 +11,6 @@ import {
 } from "../../redux/filter/filter-selectors";
 import {
   topicArray,
-  categoryArray,
   getCategoriesArray,
 } from "../../helper/index";
 import { deleteCurrentSearch } from "../../redux/filter/filter-actions";

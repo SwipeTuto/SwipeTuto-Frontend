@@ -21,7 +21,9 @@
   }
 
   &:hover {
-    box-shadow: $card-shadow;
+
+      @include card-shadow($themelight: true);
+    
     transform: translateY(-2px);
   }
 

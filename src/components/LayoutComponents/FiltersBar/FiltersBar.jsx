@@ -14,7 +14,6 @@ import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
 import {
-  categoryArray,
   getCategoriesArray,
   orderArray,
 } from "../../../helper/index";

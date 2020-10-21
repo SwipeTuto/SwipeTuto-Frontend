@@ -198,91 +198,6 @@ export const checkRegexInput = (name, value) => {
 };
 
 
-// liste des catégories 
-export const categoryArray = [
-  {
-    queryName: null,
-    name: "Tous",
-  },
-  {
-    queryName: "theorie",
-    name: "Théorie",
-  },
-  {
-    queryName: "code",
-    name: "Code",
-  },
-  {
-    queryName: "memo",
-    name: "Mémo",
-  },
-  {
-    queryName: "design",
-    name: "Design",
-  },
-  {
-    queryName: "performances",
-    name: "Performances",
-  },
-  {
-    queryName: "ressources",
-    name: "Ressources",
-  },
-  {
-    queryName: "autre",
-    name: "Autre",
-  },
-];
-
-
-// liste des topics
-// export const topicArray = [
-//   {
-//     queryName: null,
-//     name: "Tous",
-//     logo: allLogo,
-//   },
-//   {
-//     queryName: "html",
-//     name: "HTML",
-//     logo: HTMLLogo,
-//   },
-//   {
-//     queryName: "css",
-//     name: "CSS",
-//     logo: CSSLogo,
-//   },
-//   {
-//     queryName: "javascript",
-//     name: "Javascript",
-//     logo: JavascriptLogo,
-//   },
-//   {
-//     queryName: "reactjs",
-//     name: "React JS",
-//     logo: ReactJSLogo,
-//   },
-//   {
-//     queryName: "nodejs",
-//     name: "Node JS",
-//     logo: NodeJSLogo,
-//   },
-//   {
-//     queryName: "python",
-//     name: "Python",
-//     logo: PythonLogo,
-//   },
-//   {
-//     queryName: "php",
-//     name: "PHP",
-//     logo: PHPLogo,
-//   },
-//   {
-//     queryName: "sass",
-//     name: "Sass",
-//     logo: SassLogo,
-//   },
-// ];
 export const topicArray = [
   {
     queryName: null,
@@ -290,50 +205,36 @@ export const topicArray = [
     // logo: allLogo,
   },
   {
-    queryName: "html",
+    queryName: "technologie",
     name: "Technologie",
     // logo: HTMLLogo,
   },
   {
-    queryName: "css",
+    queryName: "cuisine",
     name: "Cuisine",
     // logo: CSSLogo,
   },
   {
-    queryName: "javascript",
+    queryName: "maison",
     name: "Maison",
     // logo: JavascriptLogo,
   },
   {
-    queryName: "reactjs",
+    queryName: "beaute",
     name: "Beauté",
     // logo: ReactJSLogo,
   },
   {
-    queryName: "nodejs",
+    queryName: "bienetre",
     name: "Bien-être",
     // logo: NodeJSLogo,
   },
-  // {
-  //   queryName: "python",
-  //   name: "Python",
-  //   // logo: PythonLogo,
-  // },
-  // {
-  //   queryName: "php",
-  //   name: "PHP",
-  //   // logo: PHPLogo,
-  // },
-  // {
-  //   queryName: "sass",
-  //   name: "Sass",
-  //   // logo: SassLogo,
-  // },
+
 ];
 
 export const getCategoriesArray = (topic) => {
   switch (topic) {
-    case "html":
+    case "technologie":
       return [
         {
           queryName: null,
@@ -364,11 +265,15 @@ export const getCategoriesArray = (topic) => {
           name: "Autre"
         },
       ];
-    case "css":
+    case "cuisine":
       return [
         {
           queryName: null,
           name: "Tous"
+        },
+        {
+          queryName: "nutrition",
+          name: "Nutrition"
         },
         {
           queryName: "entrees",
@@ -387,7 +292,7 @@ export const getCategoriesArray = (topic) => {
           name: "Végétarien / Vegan"
         },
         {
-          queryName: "gluten",
+          queryName: "sansgluten",
           name: "Sans gluten"
         },
         {
@@ -395,7 +300,7 @@ export const getCategoriesArray = (topic) => {
           name: "Autre"
         },
       ];
-    case "javascript":
+    case "maison":
       return [
         {
           queryName: null,
@@ -418,7 +323,7 @@ export const getCategoriesArray = (topic) => {
           name: "Autre"
         },
       ];
-    case "reactjs":
+    case "beaute":
       return [
         {
           queryName: null,
@@ -445,7 +350,7 @@ export const getCategoriesArray = (topic) => {
           name: "Autre"
         },
       ];
-    case "nodejs":
+    case "bienetre":
       return [
         {
           queryName: null,

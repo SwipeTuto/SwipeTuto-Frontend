@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // redux
@@ -9,10 +9,9 @@ import {
 } from "../../../redux/filter/filter-actions";
 import { showPopupCard } from "../../../redux/layout/layout-actions";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
-import { getUserByIdAction } from "../../../redux/user/user-actions";
 
 // service & helper
-import { base } from "../../../services/configService";
+// import { base } from "../../../services/configService";
 import { renameCategory, truncate } from "../../../helper/index";
 
 // assets
@@ -33,9 +32,17 @@ const CardPreviewSmall = ({ card }) => {
   const [connectRedirect, setConnectRedirect] = useState(false);
   const [cardIsLiked, setCardIsLiked] = useState();
 
+  const userHasLiked = useCallback(() => {
+    if (currentUser && currentUser.id) {
+      return likes && likes.some((likers) => likers === currentUser.id);
+    } else {
+      return false;
+    }
+  }, [currentUser, likes]);
+
   useEffect(() => {
     setCardIsLiked(userHasLiked());
-  }, [currentUser]);
+  }, [currentUser, userHasLiked]);
 
   const handleClickedCardClick = async () => {
     dispatch(showPopupCard());
@@ -44,14 +51,6 @@ const CardPreviewSmall = ({ card }) => {
     await dispatch(setClickedCard(clickedCard));
 
     await window.history.pushState("", "", `/card_id=${cardId && cardId}`);
-  };
-
-  const userHasLiked = () => {
-    if (currentUser && currentUser.id) {
-      return likes && likes.some((likers) => likers === currentUser.id);
-    } else {
-      return false;
-    }
   };
 
   const handleLikeClick = () => {
@@ -89,7 +88,7 @@ const CardPreviewSmall = ({ card }) => {
               onContextMenu={(e) => e.preventDefault()}
             />
           ) : (
-            <img src="https://fakeimg.pl/500x500/" />
+            <img src="https://fakeimg.pl/500x500/" alt="slide" />
           )}
 
           <div className="CardPreviewSmall__hover">
@@ -101,7 +100,6 @@ const CardPreviewSmall = ({ card }) => {
             </div>
           </div>
         </div>
-        {/* </Link> */}
         <div className="CardPreviewSmall__details">
           <UserNameAndAvatar user={user} link={true} />
           <div

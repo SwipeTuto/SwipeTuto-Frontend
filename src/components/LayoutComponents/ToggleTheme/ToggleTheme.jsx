@@ -8,7 +8,7 @@ import "./ToggleTheme.scss";
 const ToggleButton = ({ theme, toggleTheme }) => {
   const isLight = theme === "light";
   return (
-    <button onClick={toggleTheme} className="ToggleTheme">
+    <button onClick={() => toggleTheme()} className="ToggleTheme">
       {isLight ? (
         <>
           Thème Sombre

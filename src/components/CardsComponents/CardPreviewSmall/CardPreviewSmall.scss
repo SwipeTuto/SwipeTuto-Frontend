@@ -2,6 +2,7 @@
 
 .CardPreviewSmall {
   height: 100%;
+  // max-height: 25rem;
   width: 100%;
   // background-color: $white;
   cursor: pointer;
@@ -12,6 +13,8 @@
   display: flex;
   flex-direction: column;
   transition: all 0.2s ease;
+  break-inside: avoid;
+  margin-bottom: 1rem;
 
   &__image {
     height: 100%;
@@ -23,9 +26,12 @@
     overflow: hidden;
 
     & > img {
-      height: 100%;
+      // height: auto;
+      // width: 100%;
       width: 100%;
-      max-height: 100%;
+      max-width: 100%;
+      // max-height: 100%;
+      object-fit: contain;
     }
 
     &:hover .CardPreviewSmall__hover {

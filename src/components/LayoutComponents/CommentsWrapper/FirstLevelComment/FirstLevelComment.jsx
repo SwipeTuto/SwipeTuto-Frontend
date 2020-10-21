@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // redux
 import { selectCurrentUser } from "../../../../redux/user/user-selectors";
 import {
-  selectClickedCardComments,
   selectCommentLikers,
   selectClickedCardId,
   selectLastPublishedComment,
@@ -39,7 +38,6 @@ import "./FirstLevelComment.scss";
 const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
-  const cardComments = useSelector(selectClickedCardComments);
   const clickedCardId = useSelector(selectClickedCardId);
   const lastPublishedComment = useSelector(selectLastPublishedComment);
   const commentAuthor = comment.author;
@@ -47,13 +45,11 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
   const commentLikers = useSelector(selectCommentLikers(commentId));
   const replyCount = comment.reply_count;
   const likesCount = comment.likes_count;
-  const replyLinkToFetch = comment.reply_comments;
   const [commentIsLiked, setCommentIsLiked] = useState();
   const [connectRedirect, setConnectRedirect] = useState(false);
   const [localRepliesArray, setLocalRepliesArray] = useState([]);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [repliesBlockVisible, setRepliesBlockVisible] = useState(false);
-  const [repliesArray, setRepliesArray] = useState([]);
   const [replyInputShow, setReplyInputShow] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [newCommentSubmit, setNewCommentSubmit] = useState(false);
@@ -78,13 +74,8 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
       arrayCopy.push(lastPublishedComment);
       setLocalLastPublishedComments(arrayCopy);
       setNewCommentSubmit(false);
-      // console.table(localLastPublishedComments);
     }
-  }, [newCommentSubmit, lastPublishedComment]);
-
-  // useEffect(() => {
-  //   console.table(localLastPublishedComments);
-  // }, [localLastPublishedComments]);
+  }, [newCommentSubmit, lastPublishedComment, localLastPublishedComments]);
 
   useEffect(() => {
     localLastPublishedComments.forEach((localComment) => {
@@ -100,13 +91,9 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
         }
       }
     });
-  }, [localRepliesArray]);
+  }, [localRepliesArray, localLastPublishedComments]);
 
-  useEffect(() => {
-    setCommentIsLiked(userHasLiked());
-  }, [commentLikers, currentUser]);
-
-  const userHasLiked = () => {
+  const userHasLiked = useCallback(() => {
     if (currentUser && currentUser.id) {
       return (
         commentLikers &&
@@ -115,7 +102,11 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
     } else {
       return false;
     }
-  };
+  }, [commentLikers, currentUser]);
+
+  useEffect(() => {
+    setCommentIsLiked(userHasLiked());
+  }, [commentLikers, currentUser, userHasLiked]);
 
   const handleCommentLike = (commentId) => {
     if (!currentUser) {

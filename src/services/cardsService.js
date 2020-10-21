@@ -1,10 +1,6 @@
 import axios from "axios"
 import { baseURL } from '../services/configService'
 
-
-
-
-
 export const getCards = () => {
   var config = {
     headers: {
@@ -72,12 +68,6 @@ export const getCardsByUser = userid => {
       return rep
     })
 }
-
-
-
-
-
-
 
 
 export const getOtherPageCard = (linkToFetch) => {

@@ -5,15 +5,11 @@ import { Redirect } from "react-router-dom";
 
 // redux
 import {
-  selectCurrentSearch,
   selectTotalNumberOfResults,
   selectSearchCategory,
   selectSearchPage,
 } from "../../../redux/filter/filter-selectors";
-import {
-  getCardAfterfilterAction,
-  setCurrentSearch,
-} from "../../../redux/filter/filter-actions";
+import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
 import { categoryArray, orderArray } from "../../../helper/index";
@@ -33,7 +29,6 @@ import { selectTheme } from "../../../redux/layout/layout-selectors";
 const FiltersBar = ({ handleClickSize }) => {
   const dispatch = useDispatch();
   // paramètres de recherche :
-  const currentSearch = useSelector(selectCurrentSearch);
   const currentTheme = useSelector(selectTheme);
   const currentPage = useSelector(selectSearchPage);
   const searchCategory = useSelector(selectSearchCategory);
@@ -60,26 +55,12 @@ const FiltersBar = ({ handleClickSize }) => {
     // lancer nouvelle requete cards
     dispatch(setCurrentSearch("searchOrder", newOrder));
     dispatch(setCurrentSearch("searchPage", 1));
-    // dispatch(
-    //   getCardAfterfilterAction({
-    //     ...currentSearch,
-    //     searchOrder: newOrder,
-    //     searchPage: 1,
-    //   })
-    // );
     setRedirection(true);
   };
 
   const handleCategoryChange = (e) => {
     const newCategory = e.target.dataset.filter;
     dispatch(setCurrentSearch("searchCategory", newCategory));
-    // dispatch(
-    //   getCardAfterfilterAction({
-    //     ...currentSearch,
-    //     searchCategory: newCategory,
-    //     searchPage: 1,
-    //   })
-    // );
     dispatch(setCurrentSearch("searchPage", 1));
     setRedirection(true);
   };

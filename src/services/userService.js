@@ -3,62 +3,51 @@ import { authHeader } from '../helper/auth-header';
 import { auth, provider, providerGit } from '../services/firebaseService';
 import { baseURL } from '../services/configService'
 import history from "../helper/history"
-import { updateUserInfosSuccess } from "../redux/user/user-actions";
+import { loginErrors } from "../redux/user/user-actions";
 
 
 
 export const loginGoogle = () => {
-
-  // var user = auth().currentUser;
-
-
-  // auth().onAuthStateChanged(function(user) {
-  //   if (user) {
-  //    console.log(user)
-  //    user.emailVerified  = true
-  //   } else {
-  //     // No user is signed in.
-  //   }
-  // });
-
+  // return auth().signInWithPopup(provider)
+  //   .then(result => {
+  //     var user = result.user;
+  //     return user.getIdToken()
+  //       .then(idToken => {
+  //         login(idToken)
+  //           .then(rep => {
+  //             // history.push('/', history.location)
+  //             // history.go()
+  //             console.log(rep)
+  //             return rep
+  //           })
+  //       })
+  //   })
   return auth().signInWithPopup(provider)
     .then(result => {
       
 
       var user = result.user;
-      user.reload();
-      console.log(user)
-      return user.getIdToken(true)
-        .then(idToken => {
-          login(idToken)
-      
-            .then(rep => {
-              // history.push('/', history.location)
-              // history.go()
-              return rep
-            })
-        })
+      return user.getIdToken()
     })
 }
 
 
 export const loginGit = () => {
   auth().signInWithPopup(providerGit)
-  .then(result => {
-    var user = result.user;
-    const emailConst = result.additionalUserInfo
-    console.log(emailConst)
-    return user.getIdToken()
-      .then(idToken => {
-   
-        Gitlogin(idToken,emailConst)
-          .then(rep => {
-            // history.push('/', history.location)
-            // history.go()
-            return rep
-          })
-      })
-  })
+    .then(result => {
+      var user = result.user;
+      const emailConst = result.additionalUserInfo.profile.email
+      return user.getIdToken()
+        .then(idToken => {
+
+          Gitlogin(idToken, emailConst)
+            .then(rep => {
+              history.push('/', history.location)
+              history.go()
+              return rep
+            })
+        })
+    })
 }
 
 
@@ -70,19 +59,19 @@ export const login = idToken => {
   return axios.post(`${baseURL}google-login/`, JSON.stringify(data), config)
     .then(rep => {
       localStorage.setItem('user', JSON.stringify(rep.data))
-
       return rep
     })
     .catch(function (err) {
       localStorage.removeItem('user')
       localStorage.removeItem('token')
-
       return err
     })
-
 }
-export const Gitlogin = (idToken,emailConst) => {
-  var data = { 
+
+
+export const Gitlogin = (idToken, emailConst) => {
+
+  var data = {
     'token_id': idToken,
     'emailConst': emailConst,
   }
@@ -112,15 +101,15 @@ export const loginManuel = (email, password) => {
   return axios.post(`${baseURL}login/`, { email, password }, config)
     .then(user => {
       localStorage.setItem('user', JSON.stringify(user.data))
-
+      console.log(user)
       return user;
     })
-  // .catch(function (err) {
-  //   localStorage.removeItem('user')
+    .catch(function (err) {
+      localStorage.removeItem('user')
+      console.log(err)
+      return err
 
-  //   return err
-
-  // })
+    })
 }
 
 export const logout = () => {

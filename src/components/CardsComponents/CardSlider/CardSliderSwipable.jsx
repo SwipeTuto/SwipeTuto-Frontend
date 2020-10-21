@@ -2,7 +2,10 @@
 
 import React, { Fragment, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectClickedCardSlides } from "../../../redux/filter/filter-selectors";
+import {
+  selectClickedCardSlides,
+  selectClickedCard,
+} from "../../../redux/filter/filter-selectors";
 import { selectFullscreen } from "../../../redux/layout/layout-selectors";
 import { closeFullscreen } from "../../../redux/layout/layout-actions";
 
@@ -16,17 +19,33 @@ import "./CardSliderSwipable.scss";
 
 const CardSliderSwipebale = () => {
   const clickedCardSlides = useSelector(selectClickedCardSlides); //array
+  const [localSlides, setLocalSlides] = useState();
+  const clickedCard = useSelector(selectClickedCard);
   const isFullScreen = useSelector(selectFullscreen);
   const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState(0);
   const [imageWidth, setImageWidth] = useState(0);
+  const firstSlideEl = document.querySelector(".CardSliderLarge__slide");
+
+  useEffect(() => {
+    const slideForWidth =
+      document.querySelector(".CardSliderLarge__slide") &&
+      document.querySelector(".CardSliderLarge__slide").clientWidth;
+    setImageWidth(slideForWidth);
+  }, [firstSlideEl]);
 
   useEffect(() => {
     setActiveIndex(0);
-    const slideForWidth = document.querySelector(".CardSliderLarge__slide")
-      .clientWidth;
-    setImageWidth(slideForWidth);
-  }, [clickedCardSlides]);
+    setLocalSlides(clickedCardSlides);
+    document.querySelector(".CardSliderLarge__slides-container").scrollTo(0, 0);
+  }, [clickedCard, clickedCardSlides]);
+
+  // useEffect(() => {
+  //   setActiveIndex(0);
+  //   const slideForWidth = document.querySelector(".CardSliderLarge__slide")
+  //     .clientWidth;
+  //   setImageWidth(slideForWidth);
+  // }, [clickedCardSlides]);
 
   const goToPrevSlide = (e) => {
     document
@@ -63,14 +82,14 @@ const CardSliderSwipebale = () => {
     }
   };
 
-  const fakeArray = [
-    "https://fakeimg.pl/500x500/?text=Hello",
-    "https://fakeimg.pl/500x500/?text=Card2",
-    "https://fakeimg.pl/500x500/?text=HEyyyy",
-    "https://fakeimg.pl/500x500/?text=Salut!",
-    "https://fakeimg.pl/500x500/?text=Aurevoir!",
-    "https://fakeimg.pl/500x500/?text=Youhouu",
-  ];
+  // const fakeArray = [
+  //   "https://fakeimg.pl/500x500/?text=Hello",
+  //   "https://fakeimg.pl/500x500/?text=Card2",
+  //   "https://fakeimg.pl/500x500/?text=HEyyyy",
+  //   "https://fakeimg.pl/500x500/?text=Salut!",
+  //   "https://fakeimg.pl/500x500/?text=Aurevoir!",
+  //   "https://fakeimg.pl/500x500/?text=Youhouu",
+  // ];
 
   return (
     <div className="CardSliderLarge">
@@ -111,38 +130,37 @@ const CardSliderSwipebale = () => {
           }`}
           onScroll={(e) => handleScrollLevel(e)}
         >
-          {/* {clickedCardSlides !== ["http://localhost:8000null"]
-            ? clickedCardSlides.map((slide, index) => (
-                <img
-                  className={
-                    index === activeIndex
-                      ? "CardSliderLarge__slide CardSliderLarge__slide--active"
-                      : "CardSliderLarge__slide"
-                  }
-                  key={index}
-                  index={index}
-                  src={slide}
-                  slide={slide}
-                  alt="slide element"
-                  onContextMenu={(e) => e.preventDefault()}
-                />
-              ))
-            : fakeArray.map((source, index) => (
-                <img
-                  className={
-                    index === activeIndex
-                      ? "CardSliderLarge__slide CardSliderLarge__slide--active"
-                      : "CardSliderLarge__slide"
-                  }
-                  key={index}
-                  index={index}
-                  src={source}
-                  slide={source}
-                  alt="slide element"
-                  onContextMenu={(e) => e.preventDefault()}
-                />
-              ))} */}
-          {fakeArray.map((source, index) => (
+          {localSlides !== ["http://localhost:8000null"] ? (
+            localSlides &&
+            localSlides.map((slide, index) => (
+              <img
+                className={
+                  index === activeIndex
+                    ? "CardSliderLarge__slide CardSliderLarge__slide--active"
+                    : "CardSliderLarge__slide"
+                }
+                key={index}
+                index={index}
+                src={slide}
+                slide={slide}
+                alt="slide element"
+                onContextMenu={(e) => e.preventDefault()}
+              />
+            ))
+          ) : (
+            <div
+              className="CardSliderLarge__slide CardSliderLarge__slide--active"
+              key={1}
+              index={1}
+              slide={1}
+              alt="slide element"
+              onContextMenu={(e) => e.preventDefault()}
+            >
+              Erreur de chargement des images.
+            </div>
+          )}
+          {/* POUR LES TESTS : */}
+          {/* {fakeArray.map((source, index) => (
             <img
               className={
                 index === activeIndex
@@ -156,9 +174,10 @@ const CardSliderSwipebale = () => {
               alt="slide element"
               onContextMenu={(e) => e.preventDefault()}
             />
-          ))}
+          ))} */}
         </div>
-        {/* Chevron left */}
+
+        {/* Chevron right */}
         {isFullScreen ? (
           <Fragment>
             <ChevronRightWhite
@@ -183,6 +202,8 @@ const CardSliderSwipebale = () => {
           />
         )}
       </div>
+
+      {/* bullet Indicators navigation */}
       {isFullScreen ? null : (
         <ul className="CardSliderLarge__indicators">
           {clickedCardSlides &&

@@ -11,7 +11,6 @@ import {
   selectSearchWords,
   selectSearchOrder,
   selectSearchPage,
-  selectCurrentSearch,
   selectSearchTopic,
 } from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
@@ -20,14 +19,9 @@ import {
   selectUserNav,
   selectTheme,
 } from "../../../redux/layout/layout-selectors";
-import {
-  getCardAfterfilterAction,
-  setCurrentSearch,
-  deleteCurrentSearch,
-} from "../../../redux/filter/filter-actions";
+import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
-import { initialSearchState } from "../../../helper/index";
 import { topicArray } from "../../../helper/index";
 
 // components
@@ -53,7 +47,6 @@ const NavTop = (props) => {
   const currentUser = useSelector(selectCurrentUser);
   const currentTheme = useSelector(selectTheme);
   const currentUserNav = useSelector(selectUserNav);
-  const currentSearch = useSelector(selectCurrentSearch);
 
   const searchCategory = useSelector(selectSearchCategory);
   const searchTopic = useSelector(selectSearchTopic);
@@ -72,13 +65,6 @@ const NavTop = (props) => {
     const topicName = e.target.name ? e.target.name : null;
     dispatch(setCurrentSearch("searchTopic", topicName));
     dispatch(setCurrentSearch("searchPage", 1));
-    // dispatch(
-    //   getCardAfterfilterAction({
-    //     ...currentSearch,
-    //     searchTopic: topicName,
-    //     searchPage: 1,
-    //   })
-    // );
   };
 
   const redirectLink = SearchLinkRedirect();

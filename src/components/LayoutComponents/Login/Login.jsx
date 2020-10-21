@@ -8,11 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   loginAction,
   deleteUserErrors,
+  loginGoogleAction,
 } from "../../../redux/user/user-actions";
 import { selectUserErrors } from "../../../redux/user/user-selectors";
 
 // helper
-import { loginGoogle, loginGit } from "../../../services/userService";
+import { loginGit } from "../../../services/userService";
 import { checkRegexInput, errorMessageToDisplay } from "../../../helper/index";
 
 // components
@@ -34,10 +35,11 @@ const Login = ({ history }) => {
       window.scroll(0, 0);
     }
     dispatch(deleteUserErrors());
-  }, []);
+  }, [dispatch]);
 
   const handleClickGoogle = (e) => {
-    loginGoogle();
+    // loginGoogle();
+    dispatch(loginGoogleAction());
   };
   const handleClickGit = (e) => {
     loginGit();
@@ -116,7 +118,7 @@ const Login = ({ history }) => {
         {userErrors
           ? userErrors === 400
             ? "Le compte n'a pas pu être trouvé. Merci de vérifier votre email et votre mot de passe."
-            : "Une erreur est survenue. Si l'erreur persiste, merci de nous le signaler."
+            : "Une erreur est survenue avec ce compte. Si l'erreur persiste, merci de nous le signaler."
           : ""}
       </p>
       <form className="login__form">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Switch, Route, withRouter } from 'react-router-dom';
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +10,6 @@ import RessourcesPage from './pages/RessourcesPage/RessourcesPage'
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
 import AccountPage from './pages/AccountPages/AccountPages'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
-// import SettingsPage from './pages/SettingsPage/SettingsPage'
 import HelpPage from './pages/HelpPage/HelpPage'
 import ConditionsOfUsagePage from './pages/ConditionsOfUsagePage/ConditionsOfUsagePage'
 import ContactUsPage from './pages/ContactUsPage/ContactUsPage'
@@ -21,8 +20,7 @@ import Footer from "./components/LayoutComponents/Footer/Footer";
 
 import { getCardsAction, getCardByIdAction } from './redux/filter/filter-actions'
 import { selectIsLoaded, selectTheme } from "./redux/layout/layout-selectors"
-import { getCardAfterfilterAction, setCurrentSearch } from "./redux/filter/filter-actions"
-import { getCardAfterfilter, getCards } from './services/cardsService'
+import { setCurrentSearch } from "./redux/filter/filter-actions"
 
 
 import { urlParams, getUrlId } from "./helper/index"
@@ -33,33 +31,22 @@ import './App.scss';
 import ConfidentialityPage from "./pages/ConfidentialityPage/ConfidentialityPage";
 import CookiesPage from "./pages/CookiesPage/CookiesPage";
 import InfosPage from "./pages/InfosPage/InfosPage";
-import { selectCurrentSearch } from "./redux/filter/filter-selectors";
 import { showPopupCard } from "./redux/layout/layout-actions";
-import CardFullPopup from "./components/CardsComponents/CardFullPopup/CardFullPopup";
 import { getUserByIdAction } from "./redux/user/user-actions";
 
 
 
 function App(props) {
 
-  const currentSearch = useSelector(selectCurrentSearch)
   const currentTheme = useSelector(selectTheme)
   const dispatch = useDispatch();
   const [topic, category, ordering, search, page] = urlParams(props.location)
   const userId = getUrlId(props.location.pathname, "user_id")
   const cardId = getUrlId(props.location.pathname, "card_id")
   const isLoaded = useSelector(selectIsLoaded)
-  const [theme, setTheme] = useState()
 
   useEffect(() => {
     if (!isLoaded && (topic || category || ordering || search || page)) {
-      // dispatch(getCardAfterfilterAction({
-      //   searchWords: search,
-      //   searchTopic: topic,
-      //   searchCategory: category,
-      //   searchOrder: ordering,
-      //   searchPage: page,
-      // }));
       dispatch(setCurrentSearch("searchWords", search))
       dispatch(setCurrentSearch("searchTopic", topic))
       dispatch(setCurrentSearch("searchCategory", category))
@@ -74,9 +61,7 @@ function App(props) {
     } else if (!isLoaded && userId) {
       dispatch(getUserByIdAction(userId))
     }
-    else {
-      // dispatch(getCardAfterfilterAction(currentSearch))
-    }
+
   }, []);
 
   useEffect(() => {
@@ -101,7 +86,7 @@ function App(props) {
         <Route path="/conditions" component={ConditionsOfUsagePage} />
         <Route path="/confidentiality" component={ConfidentialityPage} />
         <Route path="/cookies" component={CookiesPage} />
-        <Route path="/contact-us" component={ContactUsPage} />
+        <Route path="/contact" component={ContactUsPage} />
         <Route path="/infos" component={InfosPage} />
         <Route path="/help" component={HelpPage} />
         <Route path="/card_id=:card_id" component={SearchPage} />

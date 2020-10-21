@@ -6,14 +6,6 @@ import {
   selectClickedUser,
 } from "../../../redux/user/user-selectors";
 import { selectCardsFetchedCards } from "../../../redux/filter/filter-selectors";
-import { ReactComponent as LogoFacebook } from "../../../assets/images/logo-facebook.svg";
-import { ReactComponent as LogoTwitter } from "../../../assets/images/logo-twitter.svg";
-import { ReactComponent as LogoYoutube } from "../../../assets/images/logo-youtube.svg";
-import { ReactComponent as LogoGithub } from "../../../assets/images/logo-github.svg";
-import {
-  closeFullscreen,
-  closePopupCard,
-} from "../../../redux/layout/layout-actions";
 import Loading from "../../../components/Loading/Loading";
 import CardPreviewSmall from "../../../components/CardsComponents/CardPreviewSmall/CardPreviewSmall";
 import CardFullPopup from "../../../components/CardsComponents/CardFullPopup/CardFullPopup";
@@ -28,7 +20,6 @@ import { getCardsByUserIdAction } from "../../../redux/filter/filter-actions";
 const UserPage = ({ userIsSame, location }) => {
   const locationPath = location && location.pathname;
 
-  // Voir comment faire requete pour récupérer les cartes du user dans cards
   // user = current pour user actuel
   // user = other pour la visite d'un autre profil
   const isLoaded = useSelector(selectIsLoaded);
@@ -39,8 +30,6 @@ const UserPage = ({ userIsSame, location }) => {
   const [userDatas, setUserDatas] = useState();
   const [pageType, setPageType] = useState();
   const dispatch = useDispatch();
-  // dispatch(closeFullscreen());
-  // dispatch(closePopupCard(false));
 
   useEffect(() => {
     if (locationPath) {

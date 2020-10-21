@@ -34,10 +34,6 @@ export const closeFilterMobileMenu = () => ({
   type: LayoutActionTypes.CLOSE_FILTER_MOBILE_MENU,
 })
 
-export const closeBetaAlert = () => ({
-  type: LayoutActionTypes.CLOSE_BETA_ALERT,
-})
-
 export const setLoading = () => ({
   type: LayoutActionTypes.SET_LOADING,
 })

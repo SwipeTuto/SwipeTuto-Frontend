@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import UserHeader from "../AccountPages/UserHeader/UserHeader";
 
@@ -9,24 +9,19 @@ import "./ProfilePage.scss";
 import UserPage from "../AccountPages/UserPage/UserPage";
 import {
   selectCurrentUser,
-  selectClickedUser,
   selectUserErrors,
 } from "../../redux/user/user-selectors";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { Link } from "react-router-dom";
 import { ReactComponent as AccountLogo } from "../../assets/images/person.svg";
-import { urlParams, getUrlId } from "../../helper";
+import { getUrlId } from "../../helper";
 import { selectTheme } from "../../redux/layout/layout-selectors";
 
 const ProfilePage = ({ match, location }) => {
-  const [user, setUser] = useState();
   const currentUser = useSelector(selectCurrentUser);
   const currentTheme = useSelector(selectTheme);
-  const clickedUser = useSelector(selectClickedUser);
   const userErrors = useSelector(selectUserErrors);
   const [userIsSame, setUserIsSame] = useState(false);
-  const dispatch = useDispatch();
-  // const [userId, setUserId] = useState();
   const userId = getUrlId(location.pathname, "user_id") || null;
 
   // scroll reset
@@ -37,9 +32,7 @@ const ProfilePage = ({ match, location }) => {
   }, [location.pathname]);
 
   useEffect(() => {
-    // const urlUserId = match.params.user_id ? match.params.user_id : null;
     if (userId) {
-      // setUserId(urlUserId);
       getUserByIdAction(userId);
       if (currentUser && userId === currentUser.id) {
         setUserIsSame(true);

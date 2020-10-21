@@ -135,8 +135,7 @@ export const nameRegex = RegExp(/^[A-Za-zÀ-ÿ]{2,16}$/); // lettres entre 2 et 
 export const firstnameRegexErrorMessage = "Votre Prénom ne doit contenir que des lettres et contenir entre 2 et 16 caractères.";
 export const lastnameRegexErrorMessage = "Votre Nom ne doit contenir que des lettres et contenir entre 2 et 16 caractères.";
 
-export const urlRegex = RegExp(/[https:\/\/www.a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/);
-// export const urlRegex = RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/);
+export const urlRegex = RegExp(/[https://www.a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/);
 export const urlRegexErrorMessage = "L'URL n'est pas dans un format valide. Merci d'utiliser un URL https au format valide.";
 
 export const strongPasswordRegex = RegExp(/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/); //1 lowercase, 1 uppercase, 1 number, 8 caractères mini
@@ -168,7 +167,6 @@ export const errorMessageToDisplay = (name) => {
       return;
   }
 };
-// cas avatar ?
 
 export const checkRegexInput = (name, value) => {
   switch (name) {
@@ -190,11 +188,9 @@ export const checkRegexInput = (name, value) => {
       return;
   }
 };
-// cas avatar ?
 
 
 // liste des catégories 
-
 export const categoryArray = [
   {
     queryName: null,

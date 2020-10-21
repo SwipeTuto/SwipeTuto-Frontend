@@ -1,7 +1,6 @@
 import { UserActionTypes } from './user-types'
 
 let currentUser = JSON.parse(localStorage.getItem('user'));
-let token = localStorage.getItem('token');
 
 const INITIAL_STATE = {
   currentUser: currentUser ? currentUser.user : null,

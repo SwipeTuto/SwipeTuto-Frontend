@@ -5,7 +5,9 @@ import { Redirect, Switch, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
 import SwipeTutoSmallLogo from "../../assets/logos/Logo_small_border_black_smaller_700px.png";
+import SwipeTutoLargeLogo from "../../assets/logos/Logo full border black smaller_800px.png";
 import Login from "../../components/LayoutComponents/Login/Login";
+
 
 import "./LoginPage.scss";
 import Register from "../../components/LayoutComponents/Login/Register";
@@ -30,21 +32,17 @@ const LoginPage = () => {
   }, [popupOpen, dispatch]);
   return (
     <>
-      {currentUser && <Redirect to={"/"} />}
+      {currentUser && <Redirect to={"/search"} />}
       <div className={`LoginPage ${currentTheme}-theme`}>
-        <div className="LoginPage__message">
-          <div className="LoginPage__message--logo">
-            <img src={SwipeTutoSmallLogo} alt="swipetuto" />
-          </div>
-          {location.pathname === "/connexion/login" ? (
-            <h1 className="title title-1">Heureux de vous revoir !</h1>
-          ) : location.pathname === "/connexion/signup" ? (
-            <h1 className="title title-1">Bienvenue chez SwipeTuto !</h1>
-          ) : (
-            ""
-          )}
-        </div>
-        <div className={`LoginPage--wrapper ${currentTheme}-theme`}>
+
+    <div className="LoginPage__logo">
+            <img className="LoginPage__logo--logo" src={SwipeTutoLargeLogo} alt="swipetuto" />
+
+    </div>
+
+          
+
+        <div className={`LoginPage__wrapper ${currentTheme}-theme`}>
           <Switch>
             <Route path="/connexion/login" component={Login} />
             <Route path="/connexion/signup" component={Register} />

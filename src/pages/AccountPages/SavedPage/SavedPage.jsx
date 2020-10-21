@@ -36,7 +36,7 @@ const SavedPage = ({ location }) => {
         {!isLoaded ? (
           <Loading />
         ) : cards.length > 0 ? (
-          <CardGridList loadFilter={false} />
+          <CardGridList loadFilter={false} allowInfiniteScroll={true} />
         ) : (
           <p className="SavedPage__nocards">Aucune carte pour le moment.</p>
         )}

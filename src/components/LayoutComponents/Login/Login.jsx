@@ -24,19 +24,19 @@ import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github
 
 import "./LoginAndRegister.scss";
 import FormInput from "../../FormInputs/FormInput";
+import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
+import { selectTheme } from "../../../redux/layout/layout-selectors";
 
-const Login = ({ history }) => {
+const Login = ({title,  history }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({ username: "", password: "" });
   const [submitOk, setSubmitOk] = useState(false);
   const userErrors = useSelector(selectUserErrors);
   const allInput = [...document.querySelectorAll(".FormInput")];
+  const currentTheme = useSelector(selectTheme)
 
   // scroll reset
   useEffect(() => {
-    if (window.scrollY) {
-      window.scroll(0, 0);
-    }
     dispatch(deleteUserErrors());
   }, [dispatch]);
 
@@ -73,18 +73,21 @@ const Login = ({ history }) => {
   }, [allInput, user]);
 
   return (
-    <div className="Login">
-      <h1 className="title title-1">Se connecter</h1>
+    <div className={`Login ${currentTheme}-theme`}>
+      <h2 className="title title-2">
+      {title ? title : "Content de vous revoir !"}
+      </h2>
       <div className="Login__google">
         <CustomButton color="white" onClick={(e) => handleClickGoogle(e)}>
           <GoogleLogo />
-          Google
+          Continuer avec Google
         </CustomButton>
         <CustomButton color="white" onClick={(e) => handleClickGit(e)}>
           <GithubLogo />
-          Git
+          Continuer avec Git
         </CustomButton>
       </div>
+      <p className="Login__ou">Ou :</p>
       <p className="error__message">
         {userErrors
           ? userErrors === 400

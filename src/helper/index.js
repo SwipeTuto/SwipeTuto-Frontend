@@ -198,91 +198,194 @@ export const checkRegexInput = (name, value) => {
 };
 
 
-// liste des catégories 
-export const categoryArray = [
-  {
-    queryName: null,
-    name: "Tous",
-  },
-  {
-    queryName: "theorie",
-    name: "Théorie",
-  },
-  {
-    queryName: "code",
-    name: "Code",
-  },
-  {
-    queryName: "memo",
-    name: "Mémo",
-  },
-  {
-    queryName: "design",
-    name: "Design",
-  },
-  {
-    queryName: "performances",
-    name: "Performances",
-  },
-  {
-    queryName: "ressources",
-    name: "Ressources",
-  },
-  {
-    queryName: "autre",
-    name: "Autre",
-  },
-];
-
-
-// liste des topics
 export const topicArray = [
   {
     queryName: null,
     name: "Tous",
-    logo: allLogo,
+    // logo: allLogo,
   },
   {
-    queryName: "html",
-    name: "HTML",
-    logo: HTMLLogo,
+    queryName: "technologie",
+    name: "Technologie",
+    // logo: HTMLLogo,
   },
   {
-    queryName: "css",
-    name: "CSS",
-    logo: CSSLogo,
+    queryName: "cuisine",
+    name: "Cuisine",
+    // logo: CSSLogo,
   },
   {
-    queryName: "javascript",
-    name: "Javascript",
-    logo: JavascriptLogo,
+    queryName: "maison",
+    name: "Maison",
+    // logo: JavascriptLogo,
   },
   {
-    queryName: "reactjs",
-    name: "React JS",
-    logo: ReactJSLogo,
+    queryName: "beaute",
+    name: "Beauté",
+    // logo: ReactJSLogo,
   },
   {
-    queryName: "nodejs",
-    name: "Node JS",
-    logo: NodeJSLogo,
+    queryName: "bienetre",
+    name: "Bien-être",
+    // logo: NodeJSLogo,
   },
-  {
-    queryName: "python",
-    name: "Python",
-    logo: PythonLogo,
-  },
-  {
-    queryName: "php",
-    name: "PHP",
-    logo: PHPLogo,
-  },
-  {
-    queryName: "sass",
-    name: "Sass",
-    logo: SassLogo,
-  },
+
 ];
+
+export const getCategoriesArray = (topic) => {
+  switch (topic) {
+    case "technologie":
+      return [
+        {
+          queryName: null,
+          name: "Tous"
+        },
+        {
+          queryName: "informatique",
+          name: "Informatique"
+        },
+        {
+          queryName: "design",
+          name: "Design"
+        },
+        {
+          queryName: "photo",
+          name: "Photo"
+        },
+        {
+          queryName: "video",
+          name: "Vidéo"
+        },
+        {
+          queryName: "programmation",
+          name: "Programmation"
+        },
+        {
+          queryName: "autre",
+          name: "Autre"
+        },
+      ];
+    case "cuisine":
+      return [
+        {
+          queryName: null,
+          name: "Tous"
+        },
+        {
+          queryName: "nutrition",
+          name: "Nutrition"
+        },
+        {
+          queryName: "entrees",
+          name: "Entrées"
+        },
+        {
+          queryName: "plats",
+          name: "Plats"
+        },
+        {
+          queryName: "desserts",
+          name: "Desserts"
+        },
+        {
+          queryName: "vege",
+          name: "Végétarien / Vegan"
+        },
+        {
+          queryName: "sansgluten",
+          name: "Sans gluten"
+        },
+        {
+          queryName: "autre",
+          name: "Autre"
+        },
+      ];
+    case "maison":
+      return [
+        {
+          queryName: null,
+          name: "Tous"
+        },
+        {
+          queryName: "decoration",
+          name: "Décoration"
+        },
+        {
+          queryName: "bricolage",
+          name: "Bricolage"
+        },
+        {
+          queryName: "jardinage",
+          name: "Jardinage"
+        },
+        {
+          queryName: "autre",
+          name: "Autre"
+        },
+      ];
+    case "beaute":
+      return [
+        {
+          queryName: null,
+          name: "Tous"
+        },
+        {
+          queryName: "vetements",
+          name: "Vêtements"
+        },
+        {
+          queryName: "maquillage",
+          name: "Maquillage"
+        },
+        {
+          queryName: "coiffure",
+          name: "Coiffure"
+        },
+        {
+          queryName: "accessoires",
+          name: "Accessoires"
+        },
+        {
+          queryName: "autre",
+          name: "Autre"
+        },
+      ];
+    case "bienetre":
+      return [
+        {
+          queryName: null,
+          name: "Tous"
+        },
+        {
+          queryName: "sport",
+          name: "Sport"
+        },
+        {
+          queryName: "yoga",
+          name: "Yoga"
+        },
+        {
+          queryName: "devperso",
+          name: "Développement personnel"
+        },
+        {
+          queryName: "meditation",
+          name: "Méditation"
+        },
+        {
+          queryName: "autre",
+          name: "Autre"
+        },
+      ];
+    default:
+      return [
+        {
+          queryName: null,
+          name: "Tous"
+        },
+      ]
+  }
+}
 
 export const orderArray = [
   {

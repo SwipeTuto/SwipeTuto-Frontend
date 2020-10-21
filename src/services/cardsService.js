@@ -20,9 +20,9 @@ import { client } from "../index";
 
 
 export const getCardById = cardId => {
-  return client().get("card/list/${cardId}/").then(rep => {
+  return client().get(`card/list/${cardId}/`).then(rep => {
     return rep
-  }).catch(err => {return err})
+  }).catch(err => { return err })
 }
 
 
@@ -36,17 +36,17 @@ export const getCardAfterfilter = search => {
       'page': 1
     }
   }
-  
+
   return client().get("card/filter/", data).then(rep => {
     return rep
-  }).catch(err => {return err})
+  }).catch(err => { return err })
 }
 
 
 export const getCardsByUser = userid => {
   return client().get(`card/user/${userid}/`).then(rep => {
     return rep
-  }).catch(err => {return err})
+  }).catch(err => { return err })
 }
 
 

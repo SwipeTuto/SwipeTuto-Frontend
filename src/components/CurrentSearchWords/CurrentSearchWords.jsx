@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 
@@ -9,7 +9,10 @@ import {
   selectSearchTopic,
   selectSearchCategory,
 } from "../../redux/filter/filter-selectors";
-import { topicArray, categoryArray } from "../../helper/index";
+import {
+  topicArray,
+  getCategoriesArray,
+} from "../../helper/index";
 import { deleteCurrentSearch } from "../../redux/filter/filter-actions";
 
 import "./CurrentSearchWords.scss";
@@ -23,9 +26,15 @@ const CurrentSearchWords = ({ history }) => {
 
   const handleDelete = (e) => {
     e.stopPropagation();
-    const itemToDelete = () =>
-      e.target.dataset.searchitem ? e.target.dataset.searchitem : null;
-    dispatch(deleteCurrentSearch(itemToDelete()));
+    const itemToDelete = e.target.dataset.searchitem
+      ? e.target.dataset.searchitem
+      : null;
+    if (itemToDelete === "searchTopic" && searchTopic) {
+      dispatch(deleteCurrentSearch("searchCategory"));
+      dispatch(deleteCurrentSearch(itemToDelete));
+    } else {
+      dispatch(deleteCurrentSearch(itemToDelete));
+    }
   };
 
   const paramsArray = [
@@ -42,11 +51,12 @@ const CurrentSearchWords = ({ history }) => {
         return `Langage : ${topicArray[topicIndex].name}`;
 
       case "searchCategory":
-        const category = categoryArray.find(
+        const categoryArrayCopy = getCategoriesArray(searchTopic);
+        const category = categoryArrayCopy.find(
           (item) => item.queryName === param.value
         );
-        const categoryIndex = categoryArray.indexOf(category);
-        return `Catégorie : ${categoryArray[categoryIndex].name}`;
+        const categoryIndex = categoryArrayCopy.indexOf(category);
+        return `Catégorie : ${categoryArrayCopy[categoryIndex].name}`;
       case "searchWords":
         return `Termes : ${param.value}`;
 

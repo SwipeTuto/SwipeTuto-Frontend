@@ -18,7 +18,7 @@ const headersKeys = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
   'Authorization': authHeader(),
-  'X-CSRFToken': csrftoken
+  // 'X-CSRFToken': csrftoken
 }
 
 export const client = () => {

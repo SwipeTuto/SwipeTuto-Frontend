@@ -8,8 +8,9 @@ import "./ContactUsPage.scss";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
 import { sendEmailContact } from "../../services/backOfficeService.js"
 import  CSRFToken  from "../../components/Cookies/CsrfToken"
+import { withRouter } from "react-router-dom";
 
-const ContactUsPage = () => {
+const ContactUsPage = ({history}) => {
   const [message, setMessage] = useState({
     email: "",
     category: "question",
@@ -33,8 +34,20 @@ const ContactUsPage = () => {
   };
 
   const handleMessageSubmit = e => {
+    const feedbackEl = document.querySelector('.ContactPage__feedback');
     e.preventDefault();
-    sendEmailContact(message)
+    sendEmailContact(message).then(rep => {
+      if(rep && rep.status && rep.status >=200 && rep.status <300){
+        console.log("VICTOIRE")
+        feedbackEl.textContent = "Votre message a bien été envoyé, merci. Vous allez être redirigé."
+        setTimeout(() => {
+          history.push('/search', history.location)
+          history.go()
+        }, 3000)
+      } else {
+        feedbackEl.textContent = "Une erreur s'est produite. Merci de réessayer."
+      }
+    })
   };
 
   return (
@@ -96,9 +109,10 @@ const ContactUsPage = () => {
         </div>
 
         <CustomButton color="dark">Envoyer</CustomButton>
+        <p className="ContactPage__feedback"></p>
       </form>
     </div>
   );
 };
 
-export default ContactUsPage;
+export default withRouter(ContactUsPage);

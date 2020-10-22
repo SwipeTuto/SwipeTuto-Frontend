@@ -24,4 +24,11 @@
       margin-top: 3rem;
     }
   }
+
+  &__feedback {
+    margin: 2rem auto;
+    text-align: center;
+    font-weight: bold;
+    color: $primary-light;
+  }
 }

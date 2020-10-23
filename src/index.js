@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import axios from "axios";
 import ReactDOM from 'react-dom';
 import App from './App';
@@ -13,12 +13,14 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.scss';
 
 // AXIOS SETTINGS
-var csrftoken = getCookie('csrftoken');
+// var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]');
+// // var csrftoken = getCookie('csrftoken');
+// console.log(csrftoken)
 const headersKeys = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
   'Authorization': authHeader(),
-  // 'X-CSRFToken': csrftoken
+  // 'X-CSRF-TOKEN': csrftoken,
 }
 
 export const client = () => {
@@ -34,7 +36,6 @@ export const client = () => {
   });
 }
 }
-
 
 ReactDOM.render(
   <React.StrictMode>

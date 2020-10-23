@@ -44,7 +44,6 @@ const NavTop = (props) => {
   const currentTheme = useSelector(selectTheme);
   const currentUserNav = useSelector(selectUserNav);
   const currentSearch = useSelector(selectCurrentSearch);
-
   const topicHandleClick = async (topicQueryName) => {
     // const topicName = e.target.name ? e.target.name : null;
 
@@ -139,6 +138,7 @@ const NavTop = (props) => {
               onClick={() => dispatch(toggleUserNav())}
               className="NavTop__avatar"
             >
+              
               <UserAvatar user={currentUser} link={false} />
             </div>
           </>

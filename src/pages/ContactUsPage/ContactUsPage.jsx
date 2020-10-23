@@ -22,6 +22,7 @@ const ContactUsPage = () => {
     if (message.email === '') {
       setMessage({ ...message, 'email':currentUserEmail})
     }
+
   }, [message]);
 
   if (window.scrollY) {
@@ -58,7 +59,6 @@ const ContactUsPage = () => {
         className="ContactPage__form"
         onSubmit={(e) => handleMessageSubmit(e)}
       >
-        <CSRFToken />
         <div className="form__group">
           <FormInput
             idFor="email"

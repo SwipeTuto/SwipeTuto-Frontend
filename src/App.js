@@ -103,10 +103,8 @@ function App(props) {
     bodyEl.classList.add(`${currentTheme}-theme`);
 
   
-    ReactGA.set({
-      userId: currentUser.id,
-    })
-  }, [currentTheme,ReactGA])
+
+  }, [currentTheme])
 
   const redirectLink = SearchLinkRedirect();
 

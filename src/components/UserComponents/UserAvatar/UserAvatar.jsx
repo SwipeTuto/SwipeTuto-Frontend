@@ -11,11 +11,11 @@ import "./UserAvatar.scss";
 
 const UserAvatar = ({ user, link }) => {
   const dispatch = useDispatch();
+
   const userImage =
-    user && user.avatar && user.avatar[0] && user.avatar[0].avatar
-      ? `${user.avatar[0].avatar}`
-      : // ? `${base}${user.avatar[0].avatar}`
-        null;
+    user && user.profile && user.profile.url && user.profile.url
+      ? `${user.profile.url}`
+      : null;
   const [error, setError] = useState(false);
   return (
     <>
@@ -30,6 +30,7 @@ const UserAvatar = ({ user, link }) => {
           }}
         >
           <div className="user_avatar">
+          
             {userImage && !error ? (
               <img
                 className="user_avatar--image"

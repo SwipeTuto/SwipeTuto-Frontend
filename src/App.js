@@ -41,7 +41,7 @@ import { selectCardsFetched, selectClickedCard, selectCurrentSearch } from "./re
 import { usePrevious } from "./hooks/usePrevious";
 import { selectCurrentUser } from "./redux/user/user-selectors";
 
-
+import ReactGA from 'react-ga';
 
 
 function App(props) {
@@ -101,13 +101,23 @@ function App(props) {
     bodyEl.classList.remove('light-theme');
     bodyEl.classList.remove('dark-theme');
     bodyEl.classList.add(`${currentTheme}-theme`);
-  }, [currentTheme])
+
+
+    // ReactGA.set({
+    //   userId: currentUser.id,
+    // })
+  }, [currentTheme, ReactGA])
 
   const redirectLink = SearchLinkRedirect();
 
   const handleClose = () => {
     dispatch(closeConnexionPopup())
   };
+
+
+  // const trackingId = "G-1P437JHB68"; // Replace with your Google Analytics tracking ID
+  // ReactGA.initialize(trackingId);
+
 
 
   return (

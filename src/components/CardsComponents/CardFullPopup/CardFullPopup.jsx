@@ -324,6 +324,9 @@ const CardFullPopup = ({ history, location }) => {
                       clickedCard.categorie[0].name &&
                       renameCategory(clickedCard.categorie[0].name)}
                   </div> */}
+                  {clickedCard && clickedCard.id }
+                  {clickedCard && clickedCard.topic && clickedCard.topic[0] && clickedCard.topic[0].name }
+                  {clickedCard && clickedCard.categorie && clickedCard.categorie[0] && clickedCard.categorie[0].name }
                   <p>Publié le :</p>
                   <p>{clickedCardDate}</p>
                 </div>

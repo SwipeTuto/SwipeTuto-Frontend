@@ -12,24 +12,22 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.scss';
 
 // AXIOS SETTINGS
-
 const headersKeys = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
-  // 'X-CSRF-TOKEN': csrftoken,
 }
 
 export const client = () => {
   if (process.env.NODE_ENV === "development") {
-  return axios.create({
-    baseURL: 'http://localhost:8000/api/v1/',
-    headers: headersKeys
-  });
+    return axios.create({
+      baseURL: 'http://localhost:8000/api/v1/',
+      headers: headersKeys
+    });
   } else if (process.env.NODE_ENV === "production") {
-  return axios.create({
-    baseURL: 'https://swipetuto-back-dev.herokuapp.com/api/v1/',
-    headers: headersKeys
-  });
+    return axios.create({
+      baseURL: 'https://swipetuto-back-dev.herokuapp.com/api/v1/',
+      headers: headersKeys
+    });
   }
 }
 

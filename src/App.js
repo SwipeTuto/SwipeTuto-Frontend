@@ -101,6 +101,12 @@ function App(props) {
     bodyEl.classList.remove('light-theme');
     bodyEl.classList.remove('dark-theme');
     bodyEl.classList.add(`${currentTheme}-theme`);
+
+    ReactGA.initialize('G-1P437JHB68');
+    ReactGA.pageview(window.location.pathname + window.location.search);
+    ReactGA.set({
+      userId: currentUser.id,
+    })
   }, [currentTheme])
 
   const redirectLink = SearchLinkRedirect();
@@ -110,14 +116,9 @@ function App(props) {
   };
 
 
+// const trackingId = "G-1P437JHB68"; // Replace with your Google Analytics tracking ID
+// ReactGA.initialize(trackingId);
 
-const trackingId = "G-1P437JHB68"; // Replace with your Google Analytics tracking ID
-ReactGA.initialize(trackingId);
-ReactGA.set({
-  userId: currentUser.id,
-  // any data that is relevant to the user session
-  // that you would like to track with google analytics
-})
 
 
   return (

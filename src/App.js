@@ -102,12 +102,12 @@ function App(props) {
     bodyEl.classList.remove('dark-theme');
     bodyEl.classList.add(`${currentTheme}-theme`);
 
-    ReactGA.initialize('G-1P437JHB68');
+    ReactGA.initialize('G-TCN3CN97S1');
     ReactGA.pageview(window.location.pathname + window.location.search);
     ReactGA.set({
       userId: currentUser.id,
     })
-  }, [currentTheme])
+  }, [currentTheme,ReactGA])
 
   const redirectLink = SearchLinkRedirect();
 

@@ -102,11 +102,11 @@ function App(props) {
     bodyEl.classList.remove('dark-theme');
     bodyEl.classList.add(`${currentTheme}-theme`);
 
-  
-    ReactGA.set({
-      userId: currentUser.id,
-    })
-  }, [currentTheme,ReactGA])
+
+    // ReactGA.set({
+    //   userId: currentUser.id,
+    // })
+  }, [currentTheme, ReactGA])
 
   const redirectLink = SearchLinkRedirect();
 
@@ -115,8 +115,8 @@ function App(props) {
   };
 
 
-// const trackingId = "G-1P437JHB68"; // Replace with your Google Analytics tracking ID
-// ReactGA.initialize(trackingId);
+  // const trackingId = "G-1P437JHB68"; // Replace with your Google Analytics tracking ID
+  // ReactGA.initialize(trackingId);
 
 
 

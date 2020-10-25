@@ -6,7 +6,6 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import store from './redux/store';
 import { authHeader } from "./helper/auth-header"
-import { getCookie } from "./helper/getCookie"
 
 import { BrowserRouter } from 'react-router-dom'
 

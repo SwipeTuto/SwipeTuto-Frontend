@@ -1,13 +1,11 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import store from './redux/store';
-import ReactGA from 'react-ga';
-import history from "./helper/history"
+
 import { BrowserRouter } from 'react-router-dom'
 import './index.scss';
 

@@ -1,6 +1,6 @@
 import ReactGA from "react-ga"
  
-const TRACKING_ID = "G-7VHW5BHZYQ"
+const TRACKING_ID = "G-E00JF2WVS0"
  
 function init() {
   // Enable debug mode on the local development environment

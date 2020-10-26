@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useDispatch, useSelector } from 'react-redux';
-
 import HomePage from './pages/Homepage/HomePageNew';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SearchPage from './pages/SearchPage/SearchPage'
@@ -42,7 +41,32 @@ import { usePrevious } from "./hooks/usePrevious";
 import { selectCurrentUser } from "./redux/user/user-selectors";
 
 import ReactGA from 'react-ga';
+import useGoogleAnalytics from "../src/hooks/useGoogleAnalytics "
 
+function Routes() {
+  useGoogleAnalytics()
+ 
+  return (
+    <Switch>
+    <Route exact path="/" component={HomePage} />
+
+    <ProtectedRoute path="/search" component={SearchPage} />
+    <Route path="/connexion" component={LoginPage} />
+
+    <Route path="/ressources" component={RessourcesPage} />
+    <Route path="/conditions" component={ConditionsOfUsagePage} />
+    <Route path="/confidentiality" component={ConfidentialityPage} />
+    <Route path="/cookies" component={CookiesPage} />
+    <Route path="/contact" component={ContactUsPage} />
+    <Route path="/infos" component={InfosPage} />
+    <Route path="/help" component={HelpPage} />
+    <Route path="/card_id=:card_id" component={SearchPage} />
+    <Route path="/profile/user_id=:user_id" component={ProfilePage} />
+    <ProtectedRoute path="/account" component={AccountPage} />
+    <Route component={NotFoundPage} />
+  </Switch>
+  )
+}
 
 function App(props) {
 
@@ -62,6 +86,7 @@ function App(props) {
   const clickedCard = useSelector(selectClickedCard)
   const currentUser = useSelector(selectCurrentUser);
   const fetchedCards = useSelector(selectCardsFetched)
+  
 
   useEffect(() => {
     if (firstLoadDone === false && locationPathname === "/search") {
@@ -128,24 +153,7 @@ function App(props) {
         <NavTopMobile />
         {signalPopup && <SignalPopup />}
         {clickedCard && <CardFullPopup />}
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-
-          <ProtectedRoute path="/search" component={SearchPage} />
-          <Route path="/connexion" component={LoginPage} />
-
-          <Route path="/ressources" component={RessourcesPage} />
-          <Route path="/conditions" component={ConditionsOfUsagePage} />
-          <Route path="/confidentiality" component={ConfidentialityPage} />
-          <Route path="/cookies" component={CookiesPage} />
-          <Route path="/contact" component={ContactUsPage} />
-          <Route path="/infos" component={InfosPage} />
-          <Route path="/help" component={HelpPage} />
-          <Route path="/card_id=:card_id" component={SearchPage} />
-          <Route path="/profile/user_id=:user_id" component={ProfilePage} />
-          <ProtectedRoute path="/account" component={AccountPage} />
-          <Route component={NotFoundPage} />
-        </Switch>
+        <Routes />
         <Footer />
       </div>
     </>

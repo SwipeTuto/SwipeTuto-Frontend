@@ -30,9 +30,9 @@ export const client = () => {
     });
   }
 }
-ReactGA.initialize('G-7VHW5BHZYQ');
-ReactGA.pageview(window.location.pathname + window.location.search);
-console.log(window.location.pathname)
+// ReactGA.initialize('G-7VHW5BHZYQ');
+// ReactGA.pageview(window.location.pathname + window.location.search);
+// console.log(window.location.pathname)
 // history.listen(rep => {
 //   console.log(rep)
 // })

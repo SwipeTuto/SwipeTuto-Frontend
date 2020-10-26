@@ -44,7 +44,7 @@ import ReactGA from 'react-ga';
 import useGoogleAnalytics from "../src/hooks/useGoogleAnalytics "
 
 function Routes() {
-  useGoogleAnalytics()
+  // useGoogleAnalytics()
  
   return (
     <Switch>

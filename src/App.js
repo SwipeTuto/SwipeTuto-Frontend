@@ -102,11 +102,11 @@ function App(props) {
     bodyEl.classList.remove('dark-theme');
     bodyEl.classList.add(`${currentTheme}-theme`);
 
-    if (currentUser && currentUser.id ){
-      ReactGA.set({
-        userId: currentUser.id,
-      })
-    }
+    // if (currentUser && currentUser.id ){
+    //   ReactGA.set({
+    //     userId: currentUser.id,
+    //   })
+    // }
   
   }, [currentTheme,ReactGA])
 
@@ -116,9 +116,6 @@ function App(props) {
     dispatch(closeConnexionPopup())
   };
 
-
-// const trackingId = "G-1P437JHB68"; // Replace with your Google Analytics tracking ID
-// ReactGA.initialize(trackingId);
 
 
 

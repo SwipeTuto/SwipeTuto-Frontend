@@ -31,17 +31,23 @@ export const client = () => {
   }
 }
 ReactGA.initialize('G-7VHW5BHZYQ');
-// ReactGA.pageview(window.location.pathname + window.location.search);
-history.listen(location => {
-  ReactGA.set({ page: location.pathname }); // Update the user's current page
-  ReactGA.pageview(location.pathname); // Record a pageview for the given page
-});
+ReactGA.pageview(window.location.pathname + window.location.search);
+console.log(window.location.pathname)
+// history.listen(rep => {
+//   console.log(rep)
+// })
+// history.listen(location => {
+//   console.log(location.pathname)
+//   ReactGA.set({ page: location.pathname }); // Update the user's current page
+//   ReactGA.pageview(location.pathname); // Record a pageview for the given page
+// });
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter history={history}>
+      <BrowserRouter >
+      {/* <BrowserRouter history={history}> */}
         <App />
       </BrowserRouter>
     </Provider>

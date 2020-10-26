@@ -30,11 +30,11 @@ export const client = () => {
     });
   }
 }
-ReactGA.initialize('G-TCN3CN97S1');
-ReactGA.pageview(window.location.pathname + window.location.search);
+ReactGA.initialize('G-7VHW5BHZYQ');
+// ReactGA.pageview(window.location.pathname + window.location.search);
 history.listen(location => {
-  // ReactGA.set({ page: location.pathname }); // Update the user's current page
-  // ReactGA.pageview(location.pathname); // Record a pageview for the given page
+  ReactGA.set({ page: location.pathname }); // Update the user's current page
+  ReactGA.pageview(location.pathname); // Record a pageview for the given page
 });
 
 

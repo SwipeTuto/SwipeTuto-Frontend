@@ -102,9 +102,13 @@ function App(props) {
     bodyEl.classList.remove('dark-theme');
     bodyEl.classList.add(`${currentTheme}-theme`);
 
+    if (currentUser && currentUser.id ){
+      ReactGA.set({
+        userId: currentUser.id,
+      })
+    }
   
-
-  }, [currentTheme])
+  }, [currentTheme,ReactGA])
 
   const redirectLink = SearchLinkRedirect();
 

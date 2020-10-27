@@ -34,8 +34,18 @@ const SignalPopup = ({ card_id, user_id, comment_id }) => {
   };
 
   const handleSubmit = () => {
-    signalContent(signal);
-    dispatch(closeSignalPopup());
+    const feedbackEl = document.querySelector('.SignalPopup__feedback');
+    signalContent(signal).then(rep => {
+      if(rep && rep.status && rep.status >=200 && rep.status <300){
+        console.log("VICTOIRE")
+        feedbackEl.textContent = "Votre signalement a bien été envoyé, merci. Vous allez être redirigé."
+        setTimeout(() => {
+          dispatch(closeSignalPopup());
+        }, 3000)
+      } else {
+        feedbackEl.textContent = "Une erreur s'est produite. Merci de réessayer."
+      }
+    } );
   };
 
   return (
@@ -87,6 +97,7 @@ const SignalPopup = ({ card_id, user_id, comment_id }) => {
           />
 
           <CustomButton color="dark">Envoyer</CustomButton>
+          <p className="SignalPopup__feedback"></p>
         </form>
       </div>
     </div>

@@ -87,22 +87,17 @@ function App(props) {
     bodyEl.classList.remove('dark-theme');
     bodyEl.classList.add(`${currentTheme}-theme`);
 
-    // if (currentUser && currentUser.id ){
-    //   ReactGA.set({
-    //     userId: currentUser.id,
-    //   })
-    // }
-  
-  }, [currentTheme,ReactGA])
+
+    ReactGA.set({
+      userId: currentUser.id,
+    })
+  }, [currentTheme, ReactGA])
 
   const redirectLink = SearchLinkRedirect();
 
   const handleClose = () => {
     dispatch(closeConnexionPopup())
   };
-
-
-
 
   return (
     <>

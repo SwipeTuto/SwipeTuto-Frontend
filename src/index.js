@@ -45,7 +45,6 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter >
-      {/* <BrowserRouter history={history}> */}
         <App />
       </BrowserRouter>
     </Provider>

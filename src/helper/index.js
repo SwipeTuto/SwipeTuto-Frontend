@@ -229,6 +229,11 @@ export const topicArray = [
     name: "Bien-être",
     // logo: NodeJSLogo,
   },
+  {
+    queryName: "autre",
+    name: "Autre",
+    // logo: NodeJSLogo,
+  },
 
 ];
 
@@ -377,6 +382,13 @@ export const getCategoriesArray = (topic) => {
           name: "Autre"
         },
       ];
+    case "autre":
+      return [
+        {
+          queryName: null,
+          name: "Tous"
+        },
+      ]
     default:
       return [
         {

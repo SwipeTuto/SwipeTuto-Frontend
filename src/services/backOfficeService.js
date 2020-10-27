@@ -7,10 +7,11 @@ export const sendEmailContact = data => {
   bodyFormData.append('categories', data.category);
   bodyFormData.append('message', data.description);
 
-  var config = { headers: {'Content-Type':'multipart/form-data'}}
+  var config = { headers: { 'Content-Type': 'multipart/form-data' } }
 
-  return client().post(`backoffice/contact/`, bodyFormData , config).then(rep => {
-    history.push('/contact', history.location)
-    history.go()
-  }).catch(err => {return err})
+  return client().post(`backoffice/contact/`, bodyFormData, config).then(rep => {
+    return rep
+    // history.push('/contact', history.location)
+    // history.go()
+  }).catch(err => { return err })
 }

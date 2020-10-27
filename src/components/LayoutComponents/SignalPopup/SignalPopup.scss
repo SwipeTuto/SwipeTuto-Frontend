@@ -28,4 +28,11 @@
   .custom-button {
     margin: 2rem auto 0 auto;
   }
+
+  &__feedback {
+    margin: 2rem auto;
+    text-align: center;
+    font-weight: bold;
+    color: $primary-light;
+  }
 }

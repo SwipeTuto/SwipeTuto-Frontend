@@ -6,20 +6,20 @@ export const login = idToken => {
   var data = { 'token_id': idToken }
 
   return client().post(`google-login/`, JSON.stringify(data)).then(rep => {
-      localStorage.setItem('user', JSON.stringify(rep.data))
-      return rep
-    }).catch(function (err) {
-      localStorage.removeItem('user')
-      localStorage.removeItem('token')
-      return err
-    })
+    localStorage.setItem('user', JSON.stringify(rep.data))
+    return rep
+  }).catch(function (err) {
+    localStorage.removeItem('user')
+    localStorage.removeItem('token')
+    return err
+  })
 }
 
 
 export const loginGoogle = () => {
   return auth().signInWithPopup(provider).then(result => {
-      var user = result.user;
-      return user.getIdToken()
+    var user = result.user;
+    return user.getIdToken()
   })
 }
 
@@ -31,25 +31,25 @@ export const Gitlogin = (idToken, profile) => {
   }
 
   return client().post(`github-login/`, JSON.stringify(data)).then(rep => {
-      localStorage.setItem('user', JSON.stringify(rep.data))
-      return rep
+    localStorage.setItem('user', JSON.stringify(rep.data))
+    return rep
   }).catch(function (err) {
-      localStorage.removeItem('user')
-      localStorage.removeItem('token')
-      return err
+    localStorage.removeItem('user')
+    localStorage.removeItem('token')
+    return err
   })
 }
 
 
 export const loginGit = () => {
   auth().signInWithPopup(providerGit).then(result => {
-      var user = result.user;
-      const profile = result.additionalUserInfo.profile
-      return user.getIdToken().then(idToken => {
-          Gitlogin(idToken, profile).then(rep => {
-              return rep
-          })
+    var user = result.user;
+    const profile = result.additionalUserInfo.profile
+    return user.getIdToken().then(idToken => {
+      Gitlogin(idToken, profile).then(rep => {
+        return rep
       })
+    })
   })
 }
 

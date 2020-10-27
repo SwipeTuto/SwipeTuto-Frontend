@@ -29,7 +29,7 @@ import ReactGA from 'react-ga';
 
 
 function App(props) {
-
+  console.log(props)
   const currentTheme = useSelector(selectTheme)
   const dispatch = useDispatch();
   const [topic, category, ordering, search] = urlParams(props.location)

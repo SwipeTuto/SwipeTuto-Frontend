@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import store from './redux/store';
+import { authHeader } from "./helper/auth-header"
 
 import { BrowserRouter } from 'react-router-dom'
 import './index.scss';
@@ -13,6 +14,7 @@ import './index.scss';
 const headersKeys = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
+  'authorization': authHeader()
 }
 
 export const client = () => {

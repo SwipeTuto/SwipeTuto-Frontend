@@ -20,8 +20,6 @@ import CookiesPage from "./pages/CookiesPage/CookiesPage";
 import InfosPage from "./pages/InfosPage/InfosPage";
 const Routes = () => {
 
-  useGoogleAnalytics()
-
   return (
     <Switch>
     <Route exact path="/" component={HomePage} />

@@ -36,6 +36,7 @@ import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/
 import { ReactComponent as BookmarkLogo } from "../../../assets/images/bookmark.svg";
 import SwipeTutoSmallSmall from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
 
+
 import "./NavTop.scss";
 
 const NavTop = (props) => {
@@ -47,6 +48,8 @@ const NavTop = (props) => {
   const topicHandleClick = async (topicQueryName) => {
     // const topicName = e.target.name ? e.target.name : null;
 
+  
+
     const currentSearchCopy = {
       ...currentSearch,
       searchTopic: topicQueryName,
@@ -54,6 +57,7 @@ const NavTop = (props) => {
     };
     dispatch(setCurrentSearch(currentSearchCopy));
   };
+
   const categoryHandleClick = async (topicQueryName, categoryQueryName) => {
     // const topicName = e.target.name ? e.target.name : null;
 

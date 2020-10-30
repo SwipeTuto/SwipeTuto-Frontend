@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
+import { Switch, Route, withRouter, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -26,10 +26,10 @@ import { usePrevious } from "./hooks/usePrevious";
 import { selectCurrentUser } from "./redux/user/user-selectors";
 import  Routes  from "./Routes"
 import ReactGA from 'react-ga';
-
+import { BrowserRouter } from 'react-router-dom'
 
 function App(props) {
-  console.log(props)
+  
   const currentTheme = useSelector(selectTheme)
   const dispatch = useDispatch();
   const [topic, category, ordering, search] = urlParams(props.location)
@@ -47,8 +47,11 @@ function App(props) {
   const currentUser = useSelector(selectCurrentUser);
   const fetchedCards = useSelector(selectCardsFetched)
   
-
+  const location = useLocation()
   useEffect(() => {
+    // console.log(location.pathname)
+    // ReactGA.initialize("G-LK11G49643")
+    ReactGA.pageview(props.history.location.pathname)
     if (firstLoadDone === false && locationPathname === "/search") {
       if (topic || category || ordering || search) {
         const currentSearchCopy = {
@@ -79,19 +82,20 @@ function App(props) {
     if (firstLoadDone === false) {
       dispatch(setFirstLoadDone())
     }
-  }, [cardId, category, currentSearch, dispatch, fetchedCards, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, search, topic, userId]);
+  }, [cardId, category, currentSearch, dispatch, fetchedCards, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, search, topic, userId, ReactGA]);
 
   useEffect(() => {
+
     const bodyEl = document.querySelector('body');
     bodyEl.classList.remove('light-theme');
     bodyEl.classList.remove('dark-theme');
     bodyEl.classList.add(`${currentTheme}-theme`);
 
 
-    ReactGA.set({
-      userId: currentUser.id,
-    })
-  }, [currentTheme, ReactGA])
+    // ReactGA.set({
+    //   userId: currentUser.id,
+    // })
+  }, [currentTheme])
 
   const redirectLink = SearchLinkRedirect();
 
@@ -110,6 +114,7 @@ function App(props) {
         {clickedCard && <CardFullPopup />}
         <Routes />
         <Footer />
+        
       </div>
     </>
   );

@@ -22,23 +22,21 @@ const Routes = () => {
 
   return (
     <Switch>
-    <Route exact path="/" component={HomePage} />
-
-    <ProtectedRoute path="/search" component={SearchPage} />
-    <Route path="/connexion" component={LoginPage} />
-
-    <Route path="/ressources" component={RessourcesPage} />
-    <Route path="/conditions" component={ConditionsOfUsagePage} />
-    <Route path="/confidentiality" component={ConfidentialityPage} />
-    <Route path="/cookies" component={CookiesPage} />
-    <Route path="/contact" component={ContactUsPage} />
-    <Route path="/infos" component={InfosPage} />
-    <Route path="/help" component={HelpPage} />
-    <Route path="/card_id=:card_id" component={SearchPage} />
-    <Route path="/profile/user_id=:user_id" component={ProfilePage} />
-    <ProtectedRoute path="/account" component={AccountPage} />
-    <Route component={NotFoundPage} />
-  </Switch>
+      <Route exact path="/" component={HomePage} />
+      <ProtectedRoute path="/search" component={SearchPage} />
+      <Route path="/connexion" component={LoginPage} />
+      <Route path="/ressources" component={RessourcesPage} />
+      <Route path="/conditions" component={ConditionsOfUsagePage} />
+      <Route path="/confidentiality" component={ConfidentialityPage} />
+      <Route path="/cookies" component={CookiesPage} />
+      <Route path="/contact" component={ContactUsPage} />
+      <Route path="/infos" component={InfosPage} />
+      <Route path="/help" component={HelpPage} />
+      <Route path="/card_id=:card_id" component={SearchPage} />
+      <Route path="/profile/user_id=:user_id" component={ProfilePage} />
+      <ProtectedRoute path="/account" component={AccountPage} />
+      <Route component={NotFoundPage} />
+    </Switch>
   )
 }
 

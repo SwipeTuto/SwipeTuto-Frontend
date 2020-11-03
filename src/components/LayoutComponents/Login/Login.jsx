@@ -9,6 +9,7 @@ import {
   loginAction,
   deleteUserErrors,
   loginGoogleAction,
+  loginFacebookAction,
 } from "../../../redux/user/user-actions";
 import { selectUserErrors } from "../../../redux/user/user-selectors";
 
@@ -24,10 +25,9 @@ import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github
 
 import "./LoginAndRegister.scss";
 import FormInput from "../../FormInputs/FormInput";
-import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 
-const Login = ({title,  history }) => {
+const Login = ({title}) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({ username: "", password: "" });
   const [submitOk, setSubmitOk] = useState(false);
@@ -44,8 +44,10 @@ const Login = ({title,  history }) => {
     e.stopPropagation();
     dispatch(loginGoogleAction());
   };
-  const handleClickGit = (e) => {
-    loginGit();
+  const handleClickFacebook = (e) => {
+    e.stopPropagation();
+    dispatch(loginFacebookAction());
+    
   };
 
   const handleClick = (e) => {
@@ -82,9 +84,9 @@ const Login = ({title,  history }) => {
           <GoogleLogo />
           Continuer avec Google
         </CustomButton>
-        <CustomButton color="white" onClick={(e) => handleClickGit(e)}>
+        <CustomButton color="white" onClick={(e) => handleClickFacebook(e)}>
           <GithubLogo />
-          Continuer avec Git
+          Continuer avec Facebook
         </CustomButton>
       </div>
       <p className="Login__ou">Ou :</p>

@@ -6,10 +6,10 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import store from './redux/store';
 import { authHeader } from "./helper/auth-header"
-import useGoogleAnalytics from "./hooks/useGoogleAnalytics "
+
 import { BrowserRouter } from 'react-router-dom'
 import './index.scss';
-import ReactGA from 'react-ga';
+
 import history from "./helper/history"
 // AXIOS SETTINGS
 const headersKeys = {
@@ -33,11 +33,6 @@ export const client = () => {
   }
 }
 
-// Initialize google analytics page view tracking
-// history.listen(location => {
-//   ReactGA.set({ page: location.pathname }); // Update the user's current page
-//   ReactGA.pageview(location.pathname); // Record a pageview for the given page
-// });
 
 ReactDOM.render(
 

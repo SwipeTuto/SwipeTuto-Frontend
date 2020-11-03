@@ -1,5 +1,5 @@
 import { UserActionTypes } from './user-types'
-import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, loginGit } from '../../services/userService'
+import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin } from '../../services/userService'
 import history from "../../helper/history"
 import { setUserLoading, setUserLoaded } from '../layout/layout-actions';
 import { baseURL } from '../../services/configService';
@@ -33,6 +33,7 @@ export const loginAction = (username, password) => {
 
   }
 }
+
 export const loginGoogleAction = () => {
   const currentUrl = window.location.href;
   return dispatch => {
@@ -55,12 +56,15 @@ export const loginGoogleAction = () => {
 
   }
 }
-export const loginGitAction = () => {
+
+
+export const loginFacebookAction = () => {
   const currentUrl = window.location.href;
   return dispatch => {
-    return loginGit()
+    return LoginProviderFacebook()
       .then(rep => {
-        login(rep)
+        console.log('rep', rep)
+        FacebookLogin(rep)
           .then(rep => {
             dispatch(deleteUserErrors())
             if (!rep.data) {
@@ -74,7 +78,6 @@ export const loginGitAction = () => {
             }
           })
       })
-
   }
 }
 

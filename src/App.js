@@ -25,8 +25,6 @@ import { selectCardsFetched, selectClickedCard, selectCurrentSearch } from "./re
 import { usePrevious } from "./hooks/usePrevious";
 import { selectCurrentUser } from "./redux/user/user-selectors";
 import  Routes  from "./Routes"
-import ReactGA from 'react-ga';
-import { BrowserRouter } from 'react-router-dom'
 
 function App(props) {
   
@@ -49,9 +47,6 @@ function App(props) {
   
   const location = useLocation()
   useEffect(() => {
-    // console.log(location.pathname)
-    // ReactGA.initialize("G-LK11G49643")
-    ReactGA.pageview(props.history.location.pathname)
     if (firstLoadDone === false && locationPathname === "/search") {
       if (topic || category || ordering || search) {
         const currentSearchCopy = {
@@ -82,7 +77,7 @@ function App(props) {
     if (firstLoadDone === false) {
       dispatch(setFirstLoadDone())
     }
-  }, [cardId, category, currentSearch, dispatch, fetchedCards, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, search, topic, userId, ReactGA]);
+  }, [cardId, category, currentSearch, dispatch, fetchedCards, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, search, topic, userId]);
 
   useEffect(() => {
 
@@ -91,10 +86,6 @@ function App(props) {
     bodyEl.classList.remove('dark-theme');
     bodyEl.classList.add(`${currentTheme}-theme`);
 
-
-    // ReactGA.set({
-    //   userId: currentUser.id,
-    // })
   }, [currentTheme])
 
   const redirectLink = SearchLinkRedirect();

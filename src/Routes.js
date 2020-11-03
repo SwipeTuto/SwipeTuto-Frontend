@@ -1,9 +1,7 @@
-import useGoogleAnalytics from "./hooks/useGoogleAnalytics "
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Switch, Route, withRouter } from 'react-router-dom';
 import ProtectedRoute from "./components/ProtectedRoute";
-import { useDispatch, useSelector } from 'react-redux';
 import HomePage from './pages/Homepage/HomePageNew';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SearchPage from './pages/SearchPage/SearchPage'
@@ -14,10 +12,10 @@ import ProfilePage from './pages/ProfilePage/ProfilePage'
 import HelpPage from './pages/HelpPage/HelpPage'
 import ConditionsOfUsagePage from './pages/ConditionsOfUsagePage/ConditionsOfUsagePage'
 import ContactUsPage from './pages/ContactUsPage/ContactUsPage'
-
 import ConfidentialityPage from "./pages/ConfidentialityPage/ConfidentialityPage";
 import CookiesPage from "./pages/CookiesPage/CookiesPage";
 import InfosPage from "./pages/InfosPage/InfosPage";
+
 const Routes = () => {
 
   return (

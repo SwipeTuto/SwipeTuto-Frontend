@@ -49,7 +49,6 @@ const NavTop = (props) => {
     // const topicName = e.target.name ? e.target.name : null;
 
   
-
     const currentSearchCopy = {
       ...currentSearch,
       searchTopic: topicQueryName,

@@ -1,4 +1,4 @@
-import { auth, provider, providerGit } from '../services/firebaseService';
+import { auth, provider, providerGit, providerFacebook } from '../services/firebaseService';
 import { client } from "../index"
 
 
@@ -15,7 +15,6 @@ export const login = idToken => {
   })
 }
 
-
 export const loginGoogle = () => {
   return auth().signInWithPopup(provider).then(result => {
     var user = result.user;
@@ -24,13 +23,14 @@ export const loginGoogle = () => {
 }
 
 
-export const Gitlogin = (idToken, profile) => {
-  var data = {
-    'token_id': idToken,
-    'profile': profile,
-  }
+export const FacebookLogin = (res) => {
 
-  return client().post(`github-login/`, JSON.stringify(data)).then(rep => {
+  return res.user.getIdToken().then( rep =>{
+  var data = {
+    'token_id': rep,
+    'profile': res.user.email,
+  }
+  return client().post(`facebook-login/`, data).then(rep => {
     localStorage.setItem('user', JSON.stringify(rep.data))
     return rep
   }).catch(function (err) {
@@ -38,20 +38,45 @@ export const Gitlogin = (idToken, profile) => {
     localStorage.removeItem('token')
     return err
   })
-}
-
-
-export const loginGit = () => {
-  auth().signInWithPopup(providerGit).then(result => {
-    var user = result.user;
-    const profile = result.additionalUserInfo.profile
-    return user.getIdToken().then(idToken => {
-      Gitlogin(idToken, profile).then(rep => {
-        return rep
-      })
-    })
+   
   })
 }
+
+export const LoginProviderFacebook = () => {
+  return auth().signInWithPopup(providerFacebook).then(result => {
+    return result
+  })
+}
+
+
+// export const Gitlogin = (idToken, profile) => {
+//   var data = {
+//     'token_id': idToken,
+//     'profile': profile,
+//   }
+
+//   return client().post(`github-login/`, JSON.stringify(data)).then(rep => {
+//     localStorage.setItem('user', JSON.stringify(rep.data))
+//     return rep
+//   }).catch(function (err) {
+//     localStorage.removeItem('user')
+//     localStorage.removeItem('token')
+//     return err
+//   })
+// }
+
+
+// export const loginGit = () => {
+//   auth().signInWithPopup(providerGit).then(result => {
+//     var user = result.user;
+//     const profile = result.additionalUserInfo.profile
+//     return user.getIdToken().then(idToken => {
+//       Gitlogin(idToken, profile).then(rep => {
+//         return rep
+//       })
+//     })
+//   })
+// }
 
 
 export const loginManuel = (email, password) => {
@@ -107,6 +132,7 @@ export const updateUserInfos = newUserInfos => {
   }
 
   return client().patch(`me/`, JSON.stringify(data)).then(user => {
+    console.log('user', user)
     localStorage.setItem('user', JSON.stringify(user.data))
     return user
   });
@@ -122,8 +148,8 @@ export const getUserById = id => {
 }
 
 export const upDateAvatar = avatar => {
-
   return client().put(`avatar/`, avatar).then(rep => {
+    console.log('rep-avatar', rep)
     return rep
   })
 }

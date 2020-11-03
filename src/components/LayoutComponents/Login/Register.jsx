@@ -9,7 +9,7 @@ import { registerAction } from "../../../redux/user/user-actions";
 import { selectUserErrors } from "../../../redux/user/user-selectors";
 
 // helper
-import { loginGoogle, loginGit } from "../../../services/userService";
+import { loginGoogle } from "../../../services/userService";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
@@ -41,7 +41,7 @@ const Register = ({title}) => {
     loginGoogle();
   };
   const handleClickGit = (e) => {
-    loginGit();
+    // loginGit();
   };
 
   const getValue = (name, value) => {

@@ -64,19 +64,19 @@ export const loginFacebookAction = () => {
     return LoginProviderFacebook()
       .then(rep => {
         console.log('rep', rep)
-        FacebookLogin(rep)
-          .then(rep => {
-            dispatch(deleteUserErrors())
-            if (!rep.data) {
-              dispatch(loginErrors("Erreur avec votre compte. Merci d'en essayer un autre."))
-            } else {
-              if (currentUrl) {
-                window.location.href = currentUrl;
-              } else {
-                return
-              }
-            }
-          })
+        // FacebookLogin(rep)
+        //   .then(rep => {
+        //     dispatch(deleteUserErrors())
+        //     if (!rep.data) {
+        //       dispatch(loginErrors("Erreur avec votre compte. Merci d'en essayer un autre."))
+        //     } else {
+        //       if (currentUrl) {
+        //         window.location.href = currentUrl;
+        //       } else {
+        //         return
+        //       }
+        //     }
+        //   })
       })
   }
 }

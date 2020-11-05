@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { withRouter, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+
 // redux
 import {
   loginAction,
@@ -14,7 +15,7 @@ import {
 import { selectUserErrors } from "../../../redux/user/user-selectors";
 
 // helper
-import { loginGit } from "../../../services/userService";
+
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
@@ -37,6 +38,7 @@ const Login = ({title}) => {
 
   // scroll reset
   useEffect(() => {
+
     dispatch(deleteUserErrors());
   }, [dispatch]);
 
@@ -85,9 +87,10 @@ const Login = ({title}) => {
           Continuer avec Google
         </CustomButton>
         <CustomButton color="white" onClick={(e) => handleClickFacebook(e)}>
-          <GithubLogo />
+          {/* <GithubLogo /> */}
           Continuer avec Facebook
         </CustomButton>
+
       </div>
       <p className="Login__ou">Ou :</p>
       <p className="error__message">

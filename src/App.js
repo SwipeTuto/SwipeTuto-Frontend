@@ -25,6 +25,7 @@ import { selectCardsFetched, selectClickedCard, selectCurrentSearch } from "./re
 import { usePrevious } from "./hooks/usePrevious";
 import { selectCurrentUser } from "./redux/user/user-selectors";
 import Routes from "./Routes"
+import { auth } from "./services/firebaseService"
 
 function App(props) {
 
@@ -46,6 +47,7 @@ function App(props) {
   const fetchedCards = useSelector(selectCardsFetched)
   const location = useLocation()
   useEffect(() => {
+ 
     if (firstLoadDone === false && locationPathname === "/search") { // si params url
       if (topic || category || ordering || search) {
         const currentSearchCopy = {

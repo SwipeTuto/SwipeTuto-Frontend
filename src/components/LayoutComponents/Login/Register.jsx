@@ -71,8 +71,8 @@ const Register = ({title}) => {
           Continuer avec Google
         </CustomButton>
         <CustomButton color="white" onClick={(e) => handleClickGit(e)}>
-          <GithubLogo />
-          Continuer avec Git
+          {/* <GithubLogo /> */}
+          Continuer avec Facebook
         </CustomButton>
       </div>
       <p className="Login__ou">Ou :</p>

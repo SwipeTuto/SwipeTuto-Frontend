@@ -25,13 +25,13 @@ export const loginGoogle = () => {
 
 
 export const FacebookLogin = (res) => {
-
   return res.user.getIdToken().then(rep => {
-    var data = {
+    var data2 = {
       'token_id': rep,
-      'profile': res.user.email,
+      'email': res.additionalUserInfo.profile.email,
     }
-    return client().post(`facebook-login/`, data).then(rep => {
+    return client().post(`facebook-login/`, JSON.stringify(data2)).then(rep => {
+      
       localStorage.setItem('user', JSON.stringify(rep.data))
       return rep
     }).catch(function (err) {
@@ -44,50 +44,11 @@ export const FacebookLogin = (res) => {
 }
 
 export const LoginProviderFacebook = () => {
-  return   auth().getRedirectResult().then(function(result) {
-    console.log('result', result)
-    if (result.credential) {
-      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-      var token = result.credential.accessToken;
-      // ...
-    }
-    // The signed-in user info.
-    var user = result.user;
+  return auth().signInWithPopup(providerFacebook).then(result => {
+    return result
   })
-  // return auth().signInWithPopup(providerFacebook).then(result => {
-  //   return result
-  // })
 }
 
-
-// export const Gitlogin = (idToken, profile) => {
-//   var data = {
-//     'token_id': idToken,
-//     'profile': profile,
-//   }
-
-//   return client().post(`github-login/`, JSON.stringify(data)).then(rep => {
-//     localStorage.setItem('user', JSON.stringify(rep.data))
-//     return rep
-//   }).catch(function (err) {
-//     localStorage.removeItem('user')
-//     localStorage.removeItem('token')
-//     return err
-//   })
-// }
-
-
-// export const loginGit = () => {
-//   auth().signInWithPopup(providerGit).then(result => {
-//     var user = result.user;
-//     const profile = result.additionalUserInfo.profile
-//     return user.getIdToken().then(idToken => {
-//       Gitlogin(idToken, profile).then(rep => {
-//         return rep
-//       })
-//     })
-//   })
-// }
 
 
 export const loginManuel = (email, password) => {

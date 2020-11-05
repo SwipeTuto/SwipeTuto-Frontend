@@ -59,6 +59,7 @@ const CardGridList = ({ loadFilter, allowInfiniteScroll, location }) => {
       fetchWithFilter === true &&
       firstLoadDone
     ) {
+      // console.log("HERE")
       dispatch(getCardAfterfilterAction(currentSearch));
     } else if (
       firstLoadDone === false &&

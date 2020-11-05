@@ -24,10 +24,10 @@ import ConnexionRedirect from "./components/LayoutComponents/ConnexionRedirect/C
 import { selectCardsFetched, selectClickedCard, selectCurrentSearch } from "./redux/filter/filter-selectors";
 import { usePrevious } from "./hooks/usePrevious";
 import { selectCurrentUser } from "./redux/user/user-selectors";
-import  Routes  from "./Routes"
+import Routes from "./Routes"
 
 function App(props) {
-  
+
   const currentTheme = useSelector(selectTheme)
   const dispatch = useDispatch();
   const [topic, category, ordering, search] = urlParams(props.location)
@@ -44,10 +44,10 @@ function App(props) {
   const clickedCard = useSelector(selectClickedCard)
   const currentUser = useSelector(selectCurrentUser);
   const fetchedCards = useSelector(selectCardsFetched)
-  
+
   const location = useLocation()
   useEffect(() => {
-    if (firstLoadDone === false && locationPathname === "/search") {
+    if (firstLoadDone === false && locationPathname === "/search") { // si params url
       if (topic || category || ordering || search) {
         const currentSearchCopy = {
           "searchWords": search,
@@ -57,18 +57,16 @@ function App(props) {
         }
         dispatch(setCurrentSearch(currentSearchCopy))
         dispatch(setRedirectUrl(true));
-      } else {
-
       }
-    } else if (firstLoadDone === false && cardId) {
+    } else if (firstLoadDone === false && cardId) { // si page d'une carte ouverte
       dispatch(getCardByIdAction(cardId))
-    } else if (firstLoadDone === false && !isLoaded && userId) {
+    } else if (firstLoadDone === false && !isLoaded && userId) { // si page de user autre que celle du currentUser
       dispatch(getUserByIdAction(userId))
       // dispatch(setFirstLoadDone())
-    } else if (fetchedCards === null) {
+    } else if (fetchedCards === null && locationPathname && !locationPathname.includes("/account")) {
       const currentSearchCopy = { ...currentSearch, searchOrder: "likes" };
       dispatch(getCardAfterfilterAction(currentSearchCopy))
-    } else if (prevSearchState && currentSearch && (
+    } else if (prevSearchState && currentSearch && ( // à chaque changement de state de recherche, modifier l'url
       prevSearchState.searchCategory !== currentSearch.searchCategory ||
       prevSearchState.searchOrder !== currentSearch.searchOrder || prevSearchState.searchTopic !== currentSearch.searchTopic || prevSearchState.searchWords !== currentSearch.searchWords
     )) {
@@ -105,7 +103,7 @@ function App(props) {
         {clickedCard && <CardFullPopup />}
         <Routes />
         <Footer />
-        
+
       </div>
     </>
   );

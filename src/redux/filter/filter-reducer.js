@@ -97,7 +97,11 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, totalNumberOfCardsSearched: 0 };
 
     case FilterActionTypes.SET_CARDS_FETCHED_IN_STORE:
-      return { ...state, cardsFetched: action.payload.data };
+      if (action && action.payload && action.payload.data) {
+        return { ...state, cardsFetched: action.payload.data };
+      } else {
+        return { ...state, cardsFetched: null };
+      }
 
     case FilterActionTypes.GET_OTHER_PAGE_ACTION_SUCCESS:
       const flattenArray = state.cardsFetched.results.concat(action.payload.results)

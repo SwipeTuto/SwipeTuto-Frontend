@@ -25,20 +25,20 @@ export const loginGoogle = () => {
 
 export const FacebookLogin = (res) => {
 
-  return res.user.getIdToken().then( rep =>{
-  var data = {
-    'token_id': rep,
-    'profile': res.user.email,
-  }
-  return client().post(`facebook-login/`, data).then(rep => {
-    localStorage.setItem('user', JSON.stringify(rep.data))
-    return rep
-  }).catch(function (err) {
-    localStorage.removeItem('user')
-    localStorage.removeItem('token')
-    return err
-  })
-   
+  return res.user.getIdToken().then(rep => {
+    var data = {
+      'token_id': rep,
+      'profile': res.user.email,
+    }
+    return client().post(`facebook-login/`, data).then(rep => {
+      localStorage.setItem('user', JSON.stringify(rep.data))
+      return rep
+    }).catch(function (err) {
+      localStorage.removeItem('user')
+      localStorage.removeItem('token')
+      return err
+    })
+
   })
 }
 
@@ -157,7 +157,7 @@ export const upDateAvatar = avatar => {
 
 export const getUserFavoriesById = userId => {
 
-  return client().get(`}get-favorie/${userId}/`).then(rep => {
+  return client().get(`get-favorie/${userId}/`).then(rep => {
     return rep
   })
 }

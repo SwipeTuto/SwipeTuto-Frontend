@@ -23,9 +23,10 @@ $grey-dark: #636363;
 // $grey-light-themedark: #bebebe;
 // $grey-dark-themedark: #2c2c2c;
 
-$box-radius: 5px;
-$box-padding: 0.6rem 1.6rem;
-$button-radius: 3rem;
+
+$card-radius: 8px;
+$box-padding: 0.6rem 2rem;
+$button-radius: 15px;
 
 $navtop-height: 5rem;
 $navtop-mobile-height: 4rem;
@@ -69,6 +70,7 @@ $title-font: "Montserrat", sans-serif;
   transition: all 0.2s ease;
   margin-bottom: 1rem;
   border-left: 3px solid $grey;
+  border-radius: $button-radius;
   width: 100%;
 
   &:focus {
@@ -76,6 +78,10 @@ $title-font: "Montserrat", sans-serif;
     border-top: 1px solid $grey-light;
     border-right: 1px solid $grey-light;
     border-bottom: 1px solid $grey-light;
+
+    & input {
+      border-radius: 0;
+    }
   }
 
   &:focus.valid-input {
@@ -237,7 +243,7 @@ $title-font: "Montserrat", sans-serif;
   position: absolute;
   display: flex;
   flex-direction: column;
-  border-radius: 0 0 $box-radius $box-radius;
+  border-radius: $card-radius;
   @include card-shadow;
   border: 0.5px solid $grey-light;
   overflow: hidden;

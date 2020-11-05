@@ -52,15 +52,6 @@ const SearchForm = () => {
   return (
     <form className="SearchForm" onSubmit={(e) => handleSubmit(e)}>
       <div className="SearchForm__search">
-        <input
-          className="SearchForm__search--input"
-          id="search"
-          name="search"
-          type="text"
-          placeholder="Recherche..."
-          onChange={(e) => handleChange(e)}
-          value={searchInput || ""}
-        />
         {searchWords ? (
           <div
             className="SearchForm__button"
@@ -72,10 +63,19 @@ const SearchForm = () => {
             />
           </div>
         ) : (
-          <button type="submit" className="SearchForm__button">
-            <SearchLogo className="SearchForm__button--logo" />
-          </button>
-        )}
+            <button type="submit" className="SearchForm__button">
+              <SearchLogo className="SearchForm__button--logo" />
+            </button>
+          )}
+        <input
+          className="SearchForm__search--input"
+          id="search"
+          name="search"
+          type="text"
+          placeholder="Recherche..."
+          onChange={(e) => handleChange(e)}
+          value={searchInput || ""}
+        />
       </div>
     </form>
   );

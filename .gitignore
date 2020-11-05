@@ -24,4 +24,4 @@ yarn-error.log*
 
 # files
 ./src/index.js
-# ./index.js
+./index.js

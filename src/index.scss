@@ -17,16 +17,13 @@ select {
   outline: none;
   font-family: inherit;
   background-color: inherit;
-  padding: 0.3rem 1.5rem;
+  padding: $box-padding;
   font-size: inherit;
   color: currentColor;
-  border-radius: $box-radius;
+  border-radius: $button-radius;
   overflow: hidden;
 }
 
-button {
-  border-radius: $box-radius;
-}
 
 label {
   margin-bottom: 0.5rem;

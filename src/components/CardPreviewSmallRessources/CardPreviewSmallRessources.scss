@@ -1,7 +1,7 @@
 @import "../../variables.scss";
 
 .CardPreviewSmallRessources {
-  border-radius: $box-radius;
+  border-radius: $card-radius;
   transition: all 0.2s ease;
 
   &__image {
@@ -28,7 +28,7 @@
   }
 
   & a {
-    border-radius: $box-radius;
+    border-radius: $button-radius;
     padding: 1rem 1.4rem;
     display: block;
     height: 100%;

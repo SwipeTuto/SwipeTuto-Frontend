@@ -35,9 +35,11 @@ import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg
 import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
 import { ReactComponent as BookmarkLogo } from "../../../assets/images/bookmark.svg";
 import SwipeTutoSmallSmall from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
+import { ReactComponent as DropdownFullLogo } from "../../../assets/images/chevrons/caret-down.svg";
 
 
 import "./NavTop.scss";
+import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 
 const NavTop = (props) => {
   const dispatch = useDispatch();
@@ -49,7 +51,7 @@ const NavTop = (props) => {
     // const topicName = e.target.name ? e.target.name : null;
     dispatch(setCardsFetchedInStore(null))
 
-  
+
     const currentSearchCopy = {
       ...currentSearch,
       searchTopic: topicQueryName,
@@ -74,84 +76,86 @@ const NavTop = (props) => {
     <div className={`NavTop ${currentTheme}-theme`}>
       <div className="NavTop__left">
         <Link className="NavTop__swipeTuto" to="/">
-          <img className="NavTop__swipeTuto" src={SwipeTutoSmallSmall} alt="" />
+          <img className="NavTop__swipeTuto--image" src={SwipeTutoSmallSmall} alt="" />
         </Link>
-
+        {currentUser && <SearchForm />}
+      </div>
+      <div className="NavTop__center">
         {!currentUser ? (
           <NavLink exact className="NavTop__link" to="/">
             Accueil
           </NavLink>
         ) : (
-          <>
-            <p className="NavTop__link NavTop__link--category">
-              Explorer
+            <>
+              <p className="NavTop__link NavTop__link--category">
+                Explorer
               <DropDownLogo className="NavTop__link--logo" />
-            </p>
-            <div
-              className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme`}
-            >
-              {topicArray &&
-                topicArray.map((topic, index) => (
-                  <div className="NavTop__topicList">
-                    <Link
-                      key={index}
-                      to="/search"
-                      onClick={() => topicHandleClick(topic.queryName)}
-                      name={topic.queryName}
-                    >
-                      <span className="NavTop__topicList--topic">
-                        {topic.name}
-                      </span>
-                    </Link>
-                    {getCategoriesArray(topic.queryName).map(
-                      (category, index) => (
-                        <Link
-                          key={index}
-                          to="/search"
-                          onClick={() =>
-                            categoryHandleClick(
-                              topic.queryName,
-                              category.queryName
-                            )
-                          }
-                          name={category.queryName}
-                        >
-                          <span className="NavTop__topicList--category">
-                            {category.name}
-                          </span>
-                        </Link>
-                      )
-                    )}
-                  </div>
-                ))}
-            </div>
-          </>
-        )}
+              </p>
+              <div
+                className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme`}
+              >
+                {topicArray &&
+                  topicArray.map((topic, index) => (
+                    <div className="NavTop__topicList">
+                      <Link
+                        key={index}
+                        to="/search"
+                        onClick={() => topicHandleClick(topic.queryName)}
+                        name={topic.queryName}
+                      >
+                        <span className="NavTop__topicList--topic">
+                          {topic.name}
+                        </span>
+                      </Link>
+                      {getCategoriesArray(topic.queryName).map(
+                        (category, index) => (
+                          <Link
+                            key={index}
+                            to="/search"
+                            onClick={() =>
+                              categoryHandleClick(
+                                topic.queryName,
+                                category.queryName
+                              )
+                            }
+                            name={category.queryName}
+                          >
+                            <span className="NavTop__topicList--category">
+                              {category.name}
+                            </span>
+                          </Link>
+                        )
+                      )}
+                    </div>
+                  ))}
+              </div>
+            </>
+          )}
 
         <NavLink className="NavTop__link" to="/ressources">
           Ressources
         </NavLink>
       </div>
-      <div className="NavTop__center">
-      {currentUser && <SearchForm />}
-        
-      </div>
       <div className="NavTop__right">
         {currentUser ? (
           <>
             <div
-              onClick={() => dispatch(toggleUserNav())}
+
               className="NavTop__avatar"
             >
-              
-              <UserAvatar user={currentUser} link={false} />
+
+              {/* <UserAvatar user={currentUser} link={false} /> */}
+              <UserNameAndAvatar user={currentUser} link={true} />
+            </div>
+            <div className="NavTop__dropdownUserMenu" onClick={() => dispatch(toggleUserNav())}>
+              <DropdownFullLogo />
             </div>
           </>
         ) : (
-          <Link className="NavTop__linkConnexion" to="/connexion/login">
-            <CustomButton color="dark">Connexion / Inscription</CustomButton>
-          </Link>
-        )}
+            <Link className="NavTop__linkConnexion" to="/connexion/login">
+              <CustomButton color="dark">Connexion / Inscription</CustomButton>
+            </Link>
+          )}
       </div>
       {currentUserNav ? (
         <div className={`NavTop__userMenu ${currentTheme}-theme`}>

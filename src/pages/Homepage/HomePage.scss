@@ -119,19 +119,6 @@
       }
     }
 
-    &::-webkit-scrollbar {
-      // display: none;
-      background-color: $grey-light;
-      height: 0.5rem;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      // height: 1rem;
-      background-color: $grey;
-      height: 1rem;
-      width: 1rem;
-    }
-
     .loading {
       margin: 0 auto;
     }

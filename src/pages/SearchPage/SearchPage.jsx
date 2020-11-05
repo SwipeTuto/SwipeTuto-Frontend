@@ -29,9 +29,9 @@ const SearchPage = ({ location }) => {
   };
 
   useEffect(() => {
-    if(fetchedCards === null){
-      dispatch(setCurrentSearch({...currentSearch, searchOrder: "likes"}))
-      console.log("call")
+    if (fetchedCards === null) {
+      dispatch(setCurrentSearch({ ...currentSearch, searchOrder: "likes" }))
+
     }
   }, [dispatch, fetchedCards])
 
@@ -57,7 +57,7 @@ const SearchPage = ({ location }) => {
     <>
       <div className={`SearchPage ${currentTheme}-theme`}>
         <div className="SearchPage__wrapper">
-          <CurrentSearchWords />
+          {/* <CurrentSearchWords /> */}
           <div className="SearchPage__filtersBarMobile">
             <p className="SearchPage__searchResults">
               {totalNumberOfCardsSearched ? totalNumberOfCardsSearched : 0}{" "}

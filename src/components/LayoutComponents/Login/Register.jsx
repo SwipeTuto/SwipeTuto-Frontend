@@ -22,7 +22,7 @@ import FormInput from "../../FormInputs/FormInput";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 // Props history, location, match, depuis react router dom
-const Register = ({title}) => {
+const Register = ({ title }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({});
   const [submitOk, setSubmitOk] = useState(false);
@@ -64,15 +64,11 @@ const Register = ({title}) => {
 
   return (
     <div className={`Register ${currentTheme}-theme`}>
-      <h2 className="title title-2">{title ? title : "Bienvenu chez Swipetuto !"}</h2>
+      <h2 className="title title-2">{title ? title : "Bienvenue chez Swipetuto !"}</h2>
       <div className="Login__google">
         <CustomButton color="white" onClick={(e) => handleClickGoogle(e)}>
           <GoogleLogo />
           Continuer avec Google
-        </CustomButton>
-        <CustomButton color="white" onClick={(e) => handleClickGit(e)}>
-          <GithubLogo />
-          Continuer avec Git
         </CustomButton>
       </div>
       <p className="Login__ou">Ou :</p>
@@ -98,7 +94,7 @@ const Register = ({title}) => {
           name="email"
           required={true}
           getValue={getValue}
-          // firstValue={}
+        // firstValue={}
         />
         <FormInput
           idFor="mdp"
@@ -107,7 +103,7 @@ const Register = ({title}) => {
           name="password"
           required={true}
           getValue={getValue}
-          // firstValue={}
+        // firstValue={}
         />
         <FormInput
           idFor="mdp2"
@@ -117,7 +113,7 @@ const Register = ({title}) => {
           required={true}
           getValue={getValue}
           valueToCompare={password}
-          // firstValue={}
+        // firstValue={}
         />
 
         {/* <label htmlFor="mdp2" className="FormInput__label">
@@ -164,8 +160,8 @@ const Register = ({title}) => {
       </form>
       <span className="horizontal-separation-primary-light"></span>
       <Link to="/connexion/login" className="LoginPage__link">
-      <CustomButton>Déjà un compte ?</CustomButton>
-        
+        <CustomButton>Déjà un compte ?</CustomButton>
+
       </Link>
     </div>
   );

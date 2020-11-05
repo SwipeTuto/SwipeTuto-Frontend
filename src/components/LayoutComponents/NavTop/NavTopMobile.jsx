@@ -93,9 +93,8 @@ const NavTopMobile = (props) => {
 
   return (
     <div
-      className={`NavTopMobile ${
-        mobileNavOpen ? "active" : ""
-      } ${currentTheme}-theme`}
+      className={`NavTopMobile ${mobileNavOpen ? "active" : ""
+        } ${currentTheme}-theme`}
     >
       {filtersBarMobile && (
         <FiltersBarMobile title="Recherche" showResults={false} />
@@ -111,14 +110,14 @@ const NavTopMobile = (props) => {
             }}
           />
         ) : (
-          <MenuLogo
-            className="NavTopMobile__toggle"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleNavOpen();
-            }}
-          />
-        )}
+            <MenuLogo
+              className="NavTopMobile__toggle"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNavOpen();
+              }}
+            />
+          )}
         <Link
           className="NavTopMobile__swipeTuto"
           to="/"
@@ -147,7 +146,7 @@ const NavTopMobile = (props) => {
           >
             Accueil
           </Link>
-          <Link
+          {/* <Link
             className="NavTopMobile__link"
             to="/ressources"
             onClick={() => {
@@ -155,14 +154,12 @@ const NavTopMobile = (props) => {
             }}
           >
             Ressources
-          </Link>
+          </Link> */}
           <Link
             className="NavTopMobile__link"
-            to={`/search?${searchWords ? `search=${searchWords}` : ""}${
-              searchTopic ? `&topic=${searchTopic}` : ""
-            }${searchOrder ? `&order=${searchOrder}` : ""}${
-              searchCategory ? `&category=${searchCategory}` : ""
-            }`}
+            to={`/search?${searchWords ? `search=${searchWords}` : ""}${searchTopic ? `&topic=${searchTopic}` : ""
+              }${searchOrder ? `&order=${searchOrder}` : ""}${searchCategory ? `&category=${searchCategory}` : ""
+              }`}
             onClick={() => {
               dispatch(setCurrentSearch(initialSearchState));
               dispatch(closeMobileNav());
@@ -232,14 +229,14 @@ const NavTopMobile = (props) => {
             </div>
           </div>
         ) : (
-          <Link
-            className="NavTopMobile__linkConnexion"
-            to="/connexion/login"
-            onClick={() => handleNavClose()}
-          >
-            <CustomButton color="dark">Connexion / Inscription</CustomButton>
-          </Link>
-        )}
+            <Link
+              className="NavTopMobile__linkConnexion"
+              to="/connexion/login"
+              onClick={() => handleNavClose()}
+            >
+              <CustomButton color="dark">Connexion / Inscription</CustomButton>
+            </Link>
+          )}
         <ToggleButton toggleTheme={toggleTheme} theme={theme} />
       </div>
     </div>

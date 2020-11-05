@@ -27,7 +27,7 @@ import "./LoginAndRegister.scss";
 import FormInput from "../../FormInputs/FormInput";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 
-const Login = ({title}) => {
+const Login = ({ title }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({ username: "", password: "" });
   const [submitOk, setSubmitOk] = useState(false);
@@ -47,7 +47,7 @@ const Login = ({title}) => {
   const handleClickFacebook = (e) => {
     e.stopPropagation();
     dispatch(loginFacebookAction());
-    
+
   };
 
   const handleClick = (e) => {
@@ -77,16 +77,12 @@ const Login = ({title}) => {
   return (
     <div className={`Login ${currentTheme}-theme`}>
       <h2 className="title title-2">
-      {title ? title : "Content de vous revoir !"}
+        {title ? title : "Content de vous revoir !"}
       </h2>
       <div className="Login__google">
         <CustomButton color="white" onClick={(e) => handleClickGoogle(e)}>
           <GoogleLogo />
           Continuer avec Google
-        </CustomButton>
-        <CustomButton color="white" onClick={(e) => handleClickFacebook(e)}>
-          <GithubLogo />
-          Continuer avec Facebook
         </CustomButton>
       </div>
       <p className="Login__ou">Ou :</p>
@@ -105,7 +101,7 @@ const Login = ({title}) => {
           name="email"
           getValue={getValue}
           required={true}
-          // firstValue={savedEmail}
+        // firstValue={savedEmail}
         />
         <FormInput
           idFor="password"
@@ -114,7 +110,7 @@ const Login = ({title}) => {
           name="password"
           getValue={getValue}
           required={true}
-          // firstValue={savedPassword}
+        // firstValue={savedPassword}
         />
         <CustomButton
           onClick={(e) => handleClick(e)}

@@ -132,9 +132,9 @@ const NavTop = (props) => {
             </>
           )}
 
-        <NavLink className="NavTop__link" to="/ressources">
+        {/* <NavLink className="NavTop__link" to="/ressources">
           Ressources
-        </NavLink>
+        </NavLink> */}
       </div>
       <div className="NavTop__right">
         {currentUser ? (

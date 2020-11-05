@@ -14,7 +14,8 @@
   z-index: 20;
   // border-bottom: 0.5px solid $grey;
   // @include theme-colors($themelight: true);
-  box-shadow: none;
+  // box-shadow: none;
+  box-shadow: $light-shadow;
   font-size: 1.6rem;
 
   &__left,
@@ -129,23 +130,59 @@
   }
 
   &__right {
-    flex-grow: 0;
+    margin-left: auto;
     display: flex;
     justify-content: flex-end;
     align-items: center;
 
+    & div:not(:first-child){
+      margin-left: 2rem;
+    }
+
     .NavTop__avatar {
-      .user_avatar {
-        height: 3rem;
-        width: 3rem;
+      .UserNameAndAvatar {
+        display: flex;
+        background-color: $grey-light;
+        border-radius: $button-radius;
+        padding: $round-padding;
+
+        &__avatar {
+          margin-right: 1rem;
+          height: 3.5rem;
+          width: 3.5rem;
+        }
+
+        &__username{
+          display: flex;
+          align-items: center;
+          padding-right: .6rem;
+        }
       }
+      // .user_avatar {
+      //   height: 3rem;
+      //   width: 3rem;
+      // }
     }
 
     .NavTop__linkConnexion {
       height: 100%;
     }
-  }
 
+  }
+  &__dropdownUserMenu{
+    background-color: $grey-light;
+    cursor: pointer;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: $round-radius;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & > svg {
+      @include big-logo-size;
+    }
+  }
+  
   &__swipeTuto {
     margin-right: 1.5rem;
     height: 3.5rem;

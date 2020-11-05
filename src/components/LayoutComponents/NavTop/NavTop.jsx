@@ -35,9 +35,11 @@ import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg
 import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
 import { ReactComponent as BookmarkLogo } from "../../../assets/images/bookmark.svg";
 import SwipeTutoSmallSmall from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
+import { ReactComponent as DropdownFullLogo } from "../../../assets/images/chevrons/caret-down.svg";
 
 
 import "./NavTop.scss";
+import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 
 const NavTop = (props) => {
   const dispatch = useDispatch();
@@ -138,11 +140,15 @@ const NavTop = (props) => {
         {currentUser ? (
           <>
             <div
-              onClick={() => dispatch(toggleUserNav())}
+
               className="NavTop__avatar"
             >
 
-              <UserAvatar user={currentUser} link={false} />
+              {/* <UserAvatar user={currentUser} link={false} /> */}
+              <UserNameAndAvatar user={currentUser} link={true} />
+            </div>
+            <div className="NavTop__dropdownUserMenu" onClick={() => dispatch(toggleUserNav())}>
+              <DropdownFullLogo />
             </div>
           </>
         ) : (

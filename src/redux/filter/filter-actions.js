@@ -391,12 +391,16 @@ const deleteCommentSuccess = () => ({
 
 export const getUserFavoriesAction = userId => {
   return dispatch => {
+    console.log(userId)
+    dispatch(setCardsFetchedInStore(null))
     dispatch(setLoading());
-    getUserFavoriesById(userId).then(rep => {
+    userId && getUserFavoriesById(userId).then(rep => {
+      console.log(rep)
       dispatch(getUserFavoriesSuccess(rep.data))
       dispatch(setLoaded())
       return rep.data
     }).catch(err => {
+      console.log(err)
       dispatch(getUserFavoriesError(err))
       dispatch(setLoaded())
       return err

@@ -20,7 +20,8 @@ select {
   padding: 0.3rem 1.5rem;
   font-size: inherit;
   color: currentColor;
-  border-radius: 0 $box-radius $box-radius 0;
+  border-radius: $box-radius;
+  overflow: hidden;
 }
 
 button {

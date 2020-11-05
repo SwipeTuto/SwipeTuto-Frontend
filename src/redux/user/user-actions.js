@@ -2,7 +2,7 @@ import { UserActionTypes } from './user-types'
 import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin } from '../../services/userService'
 import history from "../../helper/history"
 import { setUserLoading, setUserLoaded } from '../layout/layout-actions';
-import { baseURL } from '../../services/configService';
+// import { base } from '../../services/configService';
 
 export const deleteUserErrors = () => ({
   type: UserActionTypes.DELETE_USER_ERRORS,
@@ -26,7 +26,7 @@ export const loginAction = (username, password) => {
           if (currentUrl) {
             window.location.href = currentUrl;
           } else {
-            window.location.href = baseURL;
+            return
           }
         }
       })
@@ -48,7 +48,7 @@ export const loginGoogleAction = () => {
               if (currentUrl) {
                 window.location.href = currentUrl;
               } else {
-                window.location.href = baseURL;
+                return
               }
             }
           })
@@ -73,7 +73,7 @@ export const loginFacebookAction = () => {
               if (currentUrl) {
                 window.location.href = currentUrl;
               } else {
-                window.location.href = baseURL;
+                return
               }
             }
           })

@@ -16,7 +16,7 @@ import {
   selectUserNav,
   selectTheme,
 } from "../../../redux/layout/layout-selectors";
-import { setCurrentSearch } from "../../../redux/filter/filter-actions";
+import { setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
 import { getCategoriesArray, topicArray } from "../../../helper/index";
@@ -47,6 +47,7 @@ const NavTop = (props) => {
   const currentSearch = useSelector(selectCurrentSearch);
   const topicHandleClick = async (topicQueryName) => {
     // const topicName = e.target.name ? e.target.name : null;
+    dispatch(setCardsFetchedInStore(null))
 
   
     const currentSearchCopy = {
@@ -59,6 +60,7 @@ const NavTop = (props) => {
 
   const categoryHandleClick = async (topicQueryName, categoryQueryName) => {
     // const topicName = e.target.name ? e.target.name : null;
+    dispatch(setCardsFetchedInStore(null))
 
     const currentSearchCopy = {
       ...currentSearch,

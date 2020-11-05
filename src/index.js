@@ -24,13 +24,17 @@ export const client = () => {
       baseURL: 'http://localhost:8000/api/v1/',
       headers: headersKeys
     });
-    
+
   } else if (process.env.NODE_ENV === "production") {
     return axios.create({
       baseURL: 'https://swipetuto-back-dev.herokuapp.com/api/v1/',
       headers: headersKeys
     });
   }
+  // return axios.create({
+  //   baseURL: 'https://swipetuto-back-dev.herokuapp.com/api/v1/',
+  //   headers: headersKeys
+  // });
 }
 
 

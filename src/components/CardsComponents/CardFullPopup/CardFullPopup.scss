@@ -6,10 +6,6 @@
   z-index: 50;
   scroll-behavior: smooth;
 
-  &::-webkit-scrollbar {
-    // display: none;
-  }
-
   display: flex;
   justify-content: center;
   visibility: visible;

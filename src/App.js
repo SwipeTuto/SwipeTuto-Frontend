@@ -44,7 +44,7 @@ function App(props) {
   const clickedCard = useSelector(selectClickedCard)
   const currentUser = useSelector(selectCurrentUser);
   const fetchedCards = useSelector(selectCardsFetched)
-  
+ 
   const location = useLocation()
   useEffect(() => {
     if (firstLoadDone === false && locationPathname === "/search") {

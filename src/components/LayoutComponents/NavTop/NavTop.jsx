@@ -19,7 +19,7 @@ import {
 import { setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
-import { getCategoriesArray, topicArray } from "../../../helper/index";
+import { getCategoriesArray, initialSearchState, topicArray } from "../../../helper/index";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
@@ -76,7 +76,7 @@ const NavTop = (props) => {
     <div className={`NavTop ${currentTheme}-theme`}>
       <div className="NavTop__left">
         <Link className="NavTop__swipeTuto" to="/">
-          <img className="NavTop__swipeTuto--image" src={SwipeTutoSmallSmall} alt="" />
+          <img className="NavTop__swipeTuto--image" src={SwipeTutoSmallSmall} alt="" onClick={() => dispatch(setCurrentSearch(initialSearchState))} />
         </Link>
         {currentUser && <SearchForm />}
       </div>
@@ -98,7 +98,7 @@ const NavTop = (props) => {
                   topicArray.map((topic, index) => (
                     <div className="NavTop__topicList">
                       <Link
-                        key={index}
+                        key={`topicList${index}`}
                         to="/search"
                         onClick={() => topicHandleClick(topic.queryName)}
                         name={topic.queryName}

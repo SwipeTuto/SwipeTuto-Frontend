@@ -49,40 +49,40 @@ const HomePage = () => {
 
   const handleTopicClick = (newTopic) => {
     console.log(newTopic)
-    const currentSearchCopy = {...currentSearch, searchTopic: newTopic, searchOrder: "likes"};
+    const currentSearchCopy = { ...currentSearch, searchTopic: newTopic, searchOrder: "likes" };
     dispatch(setCurrentSearch(currentSearchCopy))
   }
 
   return (
     <>
-    {currentUser && <Redirect to={"/search"} />}
-    <div className={`HomePage ${currentTheme}-theme`}>
-      <header className="HomePage__header">
-        <h1 className="title title-1">Swipetuto</h1>
-        <h2 className="title title-2">On apprend quoi aujourd'hui ?</h2>
-      <div className="HomePage__topics">
-        {topicArray.map((topic, index) => 
-          
-            <CustomButton onClick={() => handleTopicClick(topic.queryName)} >{topic.name}</CustomButton>
-          
-        )}
-      </div>
-      </header>
-      <div className="HomePage__grid">
-        <div className="HomePage__grid--overlay"></div>
-        {isLoaded ? <CardGridList loadFilter={true} allowInfiniteScroll={false} /> : 
-          <Loading />
-        }
+      {currentUser && <Redirect to={"/search"} />}
+      <div className={`HomePage ${currentTheme}-theme`}>
+        <header className="HomePage__header">
+          <h1 className="title title-1">Swipetuto</h1>
+          <h2 className="title title-2">On apprend quoi aujourd'hui ?</h2>
+          <div className="HomePage__topics">
+            {topicArray.map((topic, index) =>
 
-      </div>
-      <div className="HomePage__login">
-        <h2 className="title title-2">Inscrivez-vous pour en découvrir bien plus :</h2>
-        <div className="HomePage__login--box">
-        <CommunityIllustration className="HomePage__login--illustration" />
-        <Register />
+              <CustomButton key={`topicKey${index}`} onClick={() => handleTopicClick(topic.queryName)} >{topic.name}</CustomButton>
+
+            )}
+          </div>
+        </header>
+        <div className="HomePage__grid">
+          <div className="HomePage__grid--overlay"></div>
+          {isLoaded ? <CardGridList loadFilter={true} allowInfiniteScroll={false} /> :
+            <Loading />
+          }
+
+        </div>
+        <div className="HomePage__login">
+          <h2 className="title title-2">Inscrivez-vous pour en découvrir bien plus :</h2>
+          <div className="HomePage__login--box">
+            <CommunityIllustration className="HomePage__login--illustration" />
+            <Register />
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 };

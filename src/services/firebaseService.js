@@ -19,6 +19,8 @@ if (!firebase.apps.length) {
 
 export const provider = new firebase.auth.GoogleAuthProvider();
 export const providerFacebook  = new firebase.auth.FacebookAuthProvider();
+providerFacebook.addScope('email');
+providerFacebook.addScope('user_photos');
 providerFacebook.setCustomParameters({
   'display': 'redirect'
   // 'display': 'popup'

@@ -24,7 +24,7 @@
     & select {
       border: 1px solid $grey;
       margin-right: 2rem;
-      box-shadow: $button-shadow;
+      box-shadow: $light-shadow;
     }
   }
 
@@ -108,7 +108,7 @@
     }
         &--item.active {
           background-color: $primary-light;
-          box-shadow: $button-shadow;
+          box-shadow: $light-shadow;
           color: $white;
           border-radius: $button-radius;
         }

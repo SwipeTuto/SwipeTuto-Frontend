@@ -169,6 +169,10 @@ $title-font: "Montserrat", sans-serif;
   }
 }
 
+@mixin large-shadow {
+  box-shadow: 0 0 20px rgba($black, 0.3);
+}
+
 @mixin popup-style {
   z-index: 90;
   position: fixed;
@@ -246,7 +250,8 @@ $title-font: "Montserrat", sans-serif;
   display: flex;
   flex-direction: column;
   border-radius: $card-radius;
-  @include card-shadow;
+  @include large-shadow;
+  // @include card-shadow;
   border: 0.5px solid $grey-light;
   overflow: hidden;
 }

@@ -12,11 +12,12 @@
   align-items: center;
   padding: 1rem 2rem;
   z-index: 20;
-  // border-bottom: 0.5px solid $grey;
+  border-bottom: 0.5px solid $grey-light;
   // @include theme-colors($themelight: true);
   // box-shadow: none;
   box-shadow: $light-shadow;
   font-size: 1.6rem;
+  height: 6rem;
 
   &__left,
   &__center,
@@ -185,7 +186,8 @@
   
   &__swipeTuto {
     margin-right: 1.5rem;
-    height: 3.5rem;
+    // height: 3.5rem;
+    height: 100%;
 
     &--image {
       max-height: 100%;
@@ -250,7 +252,7 @@
     left: 0;
     width: 100%;
     // background-color: $white;
-    // border-bottom: 0.5px solid $grey-dark;
+    border-bottom: 1px solid $grey-light;
     // border-top: 0.5px solid $grey;
     display: flex;
     // justify-content: flex-start;
@@ -259,6 +261,7 @@
     visibility: hidden;
     z-index: -1;
     padding: 0 2rem;
+    box-shadow: $button-shadow;
     transition: all 0.2s ease;
 
     &:hover {

@@ -3,7 +3,7 @@ import { client } from "../index"
 
 
 export const login = idToken => {
-  var data = { 'token_id': idToken }
+  var data = { 'token_id': idToken}
 
   return client().post(`google-login/`, JSON.stringify(data)).then(rep => {
     localStorage.setItem('user', JSON.stringify(rep.data))

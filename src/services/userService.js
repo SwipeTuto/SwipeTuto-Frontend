@@ -1,4 +1,4 @@
-import { auth, provider, providerGit, providerFacebook } from '../services/firebaseService';
+import { auth, provider, providerFacebook } from '../services/firebaseService';
 import { client } from "../index"
 
 
@@ -16,6 +16,7 @@ export const login = idToken => {
 }
 
 export const loginGoogle = () => {
+
   return auth().signInWithPopup(provider).then(result => {
     var user = result.user;
     return user.getIdToken()
@@ -24,13 +25,13 @@ export const loginGoogle = () => {
 
 
 export const FacebookLogin = (res) => {
-
   return res.user.getIdToken().then(rep => {
-    var data = {
+    var data2 = {
       'token_id': rep,
-      'profile': res.user.email,
+      'email': res.additionalUserInfo.profile.email,
     }
-    return client().post(`facebook-login/`, data).then(rep => {
+    return client().post(`facebook-login/`, JSON.stringify(data2)).then(rep => {
+
       localStorage.setItem('user', JSON.stringify(rep.data))
       return rep
     }).catch(function (err) {
@@ -48,35 +49,6 @@ export const LoginProviderFacebook = () => {
   })
 }
 
-
-// export const Gitlogin = (idToken, profile) => {
-//   var data = {
-//     'token_id': idToken,
-//     'profile': profile,
-//   }
-
-//   return client().post(`github-login/`, JSON.stringify(data)).then(rep => {
-//     localStorage.setItem('user', JSON.stringify(rep.data))
-//     return rep
-//   }).catch(function (err) {
-//     localStorage.removeItem('user')
-//     localStorage.removeItem('token')
-//     return err
-//   })
-// }
-
-
-// export const loginGit = () => {
-//   auth().signInWithPopup(providerGit).then(result => {
-//     var user = result.user;
-//     const profile = result.additionalUserInfo.profile
-//     return user.getIdToken().then(idToken => {
-//       Gitlogin(idToken, profile).then(rep => {
-//         return rep
-//       })
-//     })
-//   })
-// }
 
 
 export const loginManuel = (email, password) => {

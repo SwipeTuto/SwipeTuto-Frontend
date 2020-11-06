@@ -50,7 +50,6 @@ import {
   formattedDate,
   initialSignalState,
   likeUpdate,
-  renameCategory,
   renameQuery,
 } from "../../../helper/index";
 

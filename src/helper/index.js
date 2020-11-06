@@ -1,15 +1,3 @@
-// Récupérer les paramètres de l'URL dans les recherches par langage et catégorie
-import HTMLLogo from "../assets/images/tech_logo/HTML.png";
-import CSSLogo from "../assets/images/tech_logo/CSS.png";
-import JavascriptLogo from "../assets/images/tech_logo/javascript.png";
-import SassLogo from "../assets/images/tech_logo/sass.png";
-import PythonLogo from "../assets/images/tech_logo/python.png";
-import PHPLogo from "../assets/images/tech_logo/PHP.png";
-import ReactJSLogo from "../assets/images/tech_logo/reactJS.png";
-import NodeJSLogo from "../assets/images/tech_logo/nodeJS.png";
-import allLogo from "../assets/images/tech_logo/all_logo.png";
-
-
 export const urlParams = url => {
 
   var queryString = url.search ? url.search.split('?')[1] : window.location.search;

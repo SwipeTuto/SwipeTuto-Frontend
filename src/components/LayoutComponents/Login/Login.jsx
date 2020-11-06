@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { withRouter, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+
 // redux
 import {
   loginAction,
@@ -12,16 +13,15 @@ import {
   loginFacebookAction,
 } from "../../../redux/user/user-actions";
 import { selectUserErrors } from "../../../redux/user/user-selectors";
-
 // helper
-import { loginGit } from "../../../services/userService";
+
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
 
 // assets
 import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google.svg";
-import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
+import { ReactComponent as FacebookLogo } from "../../../assets/images/logo-facebook.svg";
 
 import "./LoginAndRegister.scss";
 import FormInput from "../../FormInputs/FormInput";
@@ -37,6 +37,7 @@ const Login = ({ title }) => {
 
   // scroll reset
   useEffect(() => {
+
     dispatch(deleteUserErrors());
   }, [dispatch]);
 
@@ -84,6 +85,11 @@ const Login = ({ title }) => {
           <GoogleLogo />
           Continuer avec Google
         </CustomButton>
+        <CustomButton color="white" onClick={(e) => handleClickFacebook(e)}>
+          <FacebookLogo />
+          Continuer avec Facebook
+        </CustomButton>
+
       </div>
       <p className="Login__ou">Ou :</p>
       <p className="error__message">

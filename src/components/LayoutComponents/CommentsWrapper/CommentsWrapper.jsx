@@ -1,41 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 // redux
 import {
-  selectClickedCardCommentsNumber,
+  // selectClickedCardCommentsNumber,
   selectClickedCardCommentsArray,
   selectClickedCardId,
-  selectFilterError,
+  // selectFilterError,
   selectClickedCardCommentsNextLink,
   selectLastPublishedComment,
 } from "../../../redux/filter/filter-selectors";
 import {
   addCommentAction,
-  deleteFilterErrorAction,
+  // deleteFilterErrorAction,
   getCardCommentsAction,
   deleteCommentAction,
   fetchNewComments,
 } from "../../../redux/filter/filter-actions";
-import { selectCurrentUser } from "../../../redux/user/user-selectors";
+// import { selectCurrentUser } from "../../../redux/user/user-selectors";
 
 // services & helper
-import { getCardCommentsNext } from "../../../services/socialService";
+// import { getCardCommentsNext } from "../../../services/socialService";
 
 // components
-import Loading from "../../Loading/Loading";
+// import Loading from "../../Loading/Loading";
 import FirstLevelComment from "./FirstLevelComment/FirstLevelComment";
 import CustomButton from "../CustomButton/CustomButton";
 import CommentsInput from "../CommentsInput copy/CommentsInput";
 
 // assets
-import { ReactComponent as ChatLogo } from "../../../assets/images/chatbubbles-outline.svg";
-import { usePrevious } from "../../../hooks/usePrevious";
+// import { ReactComponent as ChatLogo } from "../../../assets/images/chatbubbles-outline.svg";
+// import { usePrevious } from "../../../hooks/usePrevious";
 
 import "./CommentsWrapper.scss";
-import { selectCommentsLoaded } from "../../../redux/layout/layout-selectors";
-import { openConnexionPopup } from "../../../redux/layout/layout-actions";
+// import { selectCommentsLoaded } from "../../../redux/layout/layout-selectors";
+// import { openConnexionPopup } from "../../../redux/layout/layout-actions";
 
 const CommentsWrapper = () => {
   const dispatch = useDispatch();

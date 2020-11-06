@@ -1,6 +1,6 @@
 // Présent dans App.js
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, Link } from "react-router-dom";
 
@@ -8,7 +8,7 @@ import { NavLink, Link } from "react-router-dom";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import {
   selectCurrentSearch,
-  selectSearchTopic,
+  // selectSearchTopic,
 } from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
@@ -23,7 +23,7 @@ import { getCategoriesArray, initialSearchState, topicArray } from "../../../hel
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
-import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
+// import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 import SearchForm from "../SearchForm/SearchForm";
 import UserUsername from "../../UserComponents/UserAvatar/UserUsername";
 

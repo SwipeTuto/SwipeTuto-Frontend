@@ -29,7 +29,7 @@ import ConfirmationOverlay from "../../ConfirmationOverlay/ConfirmationOverlay";
 import SecondLevelComment from "../SecondLevelComment/SecondLevelComment";
 
 // assets
-import { ReactComponent as ChatLogo } from "../../../../assets/images/chatbubbles-outline.svg";
+// import { ReactComponent as ChatLogo } from "../../../../assets/images/chatbubbles-outline.svg";
 import { ReactComponent as HeartEmpty } from "../../../../assets/images/heart-outline.svg";
 import { ReactComponent as HeartFull } from "../../../../assets/images/heart.svg";
 import { ReactComponent as CloseLogo } from "../../../../assets/images/close.svg";
@@ -51,7 +51,7 @@ const FirstLevelComment = ({ comment, confirmCommentDelete, handleUpdate }) => {
   const commentId = comment.id;
   const commentLikers = useSelector(selectCommentLikers(commentId));
   const replyCount = comment.reply_count;
-  let replyNextLink = comment.reply_comments;
+  // let replyNextLink = comment.reply_comments;
   const likesCount = comment.likes_count;
   const [commentIsLiked, setCommentIsLiked] = useState();
   // const [localRepliesArray, setLocalRepliesArray] = useState([]);

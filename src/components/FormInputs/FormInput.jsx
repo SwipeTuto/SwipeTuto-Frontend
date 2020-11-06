@@ -33,9 +33,9 @@ const FormInput = ({
         if (formInputEl) formInputEl.classList.remove("valid-input");
         if (formInputEl) formInputEl.classList.remove("invalid-input");
       } else {
-        if(name==="passwordConfirm"){
+        if (name === "passwordConfirm") {
           console.log(valueToCompare, newValue)
-          if(valueToCompare === newValue){
+          if (valueToCompare === newValue) {
             setIsValid("valid");
             if (errorEl) errorEl.textContent = "";
             getValue(name, newValue);
@@ -57,7 +57,7 @@ const FormInput = ({
         }
       }
     },
-    [errorEl, formInputEl, getValue, name]
+    [errorEl, formInputEl, getValue, name, valueToCompare]
   );
 
   useEffect(() => {

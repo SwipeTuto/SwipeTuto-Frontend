@@ -4,13 +4,12 @@ import { withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import FiltersBar from "../../components/LayoutComponents/FiltersBar/FiltersBar";
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
-import CurrentSearchWords from "../../components/CurrentSearchWords/CurrentSearchWords";
 import { selectTheme } from "../../redux/layout/layout-selectors";
 import { selectCardsFetched, selectCurrentSearch, selectTotalNumberOfResults } from "../../redux/filter/filter-selectors";
 import "./SearchPage.scss";
 import { setCardsSize } from "../../redux/layout/layout-actions";
 import { setCurrentSearch } from "../../redux/filter/filter-actions";
-import { initialSearchState } from "../../helper";
+
 
 const SearchPage = ({ location }) => {
   const currentTheme = useSelector(selectTheme);
@@ -33,7 +32,7 @@ const SearchPage = ({ location }) => {
       dispatch(setCurrentSearch({ ...currentSearch, searchOrder: "likes" }))
 
     }
-  }, [dispatch, fetchedCards])
+  }, [currentSearch, dispatch, fetchedCards])
 
   useEffect(() => {
     if (window.scrollY) {

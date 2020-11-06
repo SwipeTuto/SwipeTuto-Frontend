@@ -19,7 +19,7 @@ import UserUsername from "../../../UserComponents/UserAvatar/UserUsername";
 import { ReactComponent as HeartEmpty } from "../../../../assets/images/heart-outline.svg";
 import { ReactComponent as HeartFull } from "../../../../assets/images/heart.svg";
 
-import "./SecondLevelComment.scss";
+import "../FirstLevelComment/FirstLevelComment.scss";
 import ConfirmationOverlay from "../../ConfirmationOverlay/ConfirmationOverlay";
 import {
   openConnexionPopup,
@@ -59,29 +59,23 @@ const SecondLevelComment = ({
     setCommentIsLiked(userHasLiked());
   }, [commentLikers, currentUser, userHasLiked]);
 
-  const handleCommentLike = () => {
+  const handleCommentLike = (commentId) => {
     if (!currentUser) {
       dispatch(openConnexionPopup());
     } else {
       dispatch(toggleCommentLikeAction(commentId));
-      const likeElMobile = document.querySelector(
-        `.SecondLevelComment__mobile--likes-number[data-likes="${commentId}"]`
-      );
       const likeEl = document.querySelector(
-        `.SecondLevelComment__aside--likes-number[data-likes="${commentId}"]`
+        `.SecondLevelComment__action--likes-number[data-likes="${commentId}"]`
       );
       if (commentIsLiked) {
-        if (likeElMobile)
-          likeElMobile.textContent = parseInt(likeElMobile.textContent) - 1;
-        if (likeEl) likeEl.textContent = parseInt(likeEl.textContent) - 1;
+        likeEl.textContent = parseInt(likeEl.textContent) - 1;
       } else {
-        if (likeElMobile)
-          likeElMobile.textContent = parseInt(likeElMobile.textContent) + 1;
-        if (likeEl) likeEl.textContent = parseInt(likeEl.textContent) + 1;
+        likeEl.textContent = parseInt(likeEl.textContent) + 1;
       }
       setCommentIsLiked(!commentIsLiked);
     }
   };
+
   const handleCommentDelete = (e) => {
     if (!currentUser) dispatch(openConnexionPopup());
     const commentId = e.target.dataset.commentid;
@@ -120,18 +114,6 @@ const SecondLevelComment = ({
       <div className="SecondLevelComment">
         <div className=" SecondLevelComment__author">
           <UserAvatar user={commentAuthor} link={true} />
-          <div className="SecondLevelComment__mobile-stats">
-            <div className="SecondLevelComment__mobile--likes">
-              <p className="SecondLevelComment__mobile--likes-number">
-                {reply && reply.likes && reply.likes.length}
-              </p>
-              {commentIsLiked ? (
-                <HeartFull className=" SecondLevelComment__mobile--logo comment-logo__liked" />
-              ) : (
-                <HeartEmpty className=" SecondLevelComment__mobile--logo" />
-              )}
-            </div>
-          </div>
         </div>
         <div className="SecondLevelComment__wrapper">
           <div className="SecondLevelComment__center">
@@ -139,21 +121,21 @@ const SecondLevelComment = ({
               <UserUsername user={commentAuthor} link={true} />
               <VerticalMenu>
                 {commentAuthor &&
-                commentAuthor.id &&
-                currentUser &&
-                currentUser.id &&
-                commentAuthor.id === currentUser.id ? (
-                  <p
-                    data-commentid={commentId}
-                    onClick={(e) => handleCommentDelete(e)}
-                  >
-                    Supprimer
-                  </p>
-                ) : (
-                  <p onClick={() => dispatch(showSignalPopup(newSignalObject))}>
-                    Signaler
-                  </p>
-                )}
+                  commentAuthor.id &&
+                  currentUser &&
+                  currentUser.id &&
+                  commentAuthor.id === currentUser.id ? (
+                    <p
+                      data-commentid={commentId}
+                      onClick={(e) => handleCommentDelete(e)}
+                    >
+                      Supprimer
+                    </p>
+                  ) : (
+                    <p onClick={() => dispatch(showSignalPopup(newSignalObject))}>
+                      Signaler
+                    </p>
+                  )}
               </VerticalMenu>
             </div>
             <p className="SecondLevelComment__comment">{reply && reply.text}</p>
@@ -164,7 +146,7 @@ const SecondLevelComment = ({
             </p>
             <p
               className="SecondLevelComment__action"
-              onClick={() => handleCommentLike()}
+              onClick={() => handleCommentLike(commentId)}
             >
               {commentIsLiked ? "Je n'aime plus" : "J'aime"}
             </p>
@@ -174,34 +156,17 @@ const SecondLevelComment = ({
             >
               Répondre
             </p>
-            {commentAuthor &&
-              commentAuthor.id &&
-              currentUser &&
-              currentUser.id &&
-              commentAuthor.id === currentUser.id && (
-                <p
-                  className="SecondLevelComment__action"
-                  data-commentid={commentId}
-                  onClick={(e) => handleCommentDelete(e)}
-                >
-                  Supprimer
-                </p>
-              )}
-          </div>
-        </div>
-        <div className=" SecondLevelComment__aside">
-          <div className="SecondLevelComment__aside--likes">
-            {commentIsLiked ? (
-              <HeartFull className=" SecondLevelComment__aside--logo comment-logo__liked" />
-            ) : (
-              <HeartEmpty className=" SecondLevelComment__aside--logo" />
-            )}
             <p
-              className="SecondLevelComment__aside--likes-number"
+              className="SecondLevelComment__action--likes-number"
               data-likes={commentId}
             >
               {reply && reply.likes && reply.likes.length}
             </p>
+            {commentIsLiked ? (
+              <HeartFull className=" SecondLevelComment__action--logo comment-logo__liked" />
+            ) : (
+                <HeartEmpty className=" SecondLevelComment__action--logo" />
+              )}
           </div>
         </div>
       </div>

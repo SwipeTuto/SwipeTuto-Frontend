@@ -43,7 +43,7 @@ import {
 import CardSlider from "../CardSlider/CardSlider";
 import Loading from "../../Loading/Loading";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
-import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrapper copy";
+import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrapper";
 
 // Services & helpers
 import {
@@ -51,6 +51,7 @@ import {
   initialSignalState,
   likeUpdate,
   renameCategory,
+  renameQuery,
 } from "../../../helper/index";
 
 // Assets
@@ -266,22 +267,22 @@ const CardFullPopup = ({ history, location }) => {
                     onClick={handleSaveClick}
                   />
                 ) : (
-                  <BookmarkEmpty
-                    className="card-action-button"
-                    onClick={handleSaveClick}
-                  />
-                )}
+                    <BookmarkEmpty
+                      className="card-action-button"
+                      onClick={handleSaveClick}
+                    />
+                  )}
                 {cardIsLiked ? (
                   <HeartFull
                     className="card-action-button card-action-button__liked"
                     onClick={handleLikeClick}
                   />
                 ) : (
-                  <HeartEmpty
-                    className="card-action-button"
-                    onClick={handleLikeClick}
-                  />
-                )}
+                    <HeartEmpty
+                      className="card-action-button"
+                      onClick={handleLikeClick}
+                    />
+                  )}
 
                 <FullscreenLogo
                   className="card-action-button"
@@ -311,32 +312,22 @@ const CardFullPopup = ({ history, location }) => {
               <CardSlider />
             </div>
 
+
             <h1 className="title title-1 CardFullPopup__title">
               {clickedCard && clickedCard.name}
             </h1>
+
             <div className="CardFullPopup__meta CardFullPopup__section">
-              <div className="CardFullPopup__meta--other-infos">
-                <div className="CardFullPopup__meta--published-date">
-                  {/* <div className="CardFullPopup__meta--category-stamp">
-                    {clickedCard &&
-                      clickedCard.categorie &&
-                      clickedCard.categorie[0] &&
-                      clickedCard.categorie[0].name &&
-                      renameCategory(clickedCard.categorie[0].name)}
-                  </div> */}
-                  {clickedCard && clickedCard.id }
-                  {clickedCard && clickedCard.topic && clickedCard.topic[0] && clickedCard.topic[0].name }
-                  {clickedCard && clickedCard.categorie && clickedCard.categorie[0] && clickedCard.categorie[0].name }
-                  <p>Publié le :</p>
-                  <p>{clickedCardDate}</p>
-                </div>
-              </div>
+              <p className="CardFullPopup__meta--topic_category">{clickedCard && clickedCard.topic && clickedCard.topic[0] && clickedCard.topic[0].name && renameQuery(clickedCard.topic[0].name)} / {clickedCard && clickedCard.categorie && clickedCard.categorie[0] && clickedCard.categorie[0].name && renameQuery(clickedCard.categorie[0].name)}</p>
+              <p className="CardFullPopup__meta--date">Publié le {clickedCardDate}</p>
             </div>
 
+
             <div className="CardFullPopup__description CardFullPopup__section">
-              <h1 className="title title-1">Description</h1>
+              <h2 className="title title-2">Description</h2>
               <p>{clickedCard && clickedCard.description}</p>
             </div>
+
 
             <div className="CardFullPopup__commentaires CardFullPopup__section">
               <CommentsWrapper />
@@ -366,28 +357,28 @@ const CardFullPopup = ({ history, location }) => {
                         }}
                       >
                         {clickedCardIsLoaded &&
-                        card &&
-                        card.media_image &&
-                        card.media_image["0"] &&
-                        card.media_image["0"].image ? (
-                          <img
-                            style={{ width: "100%", height: "100%" }}
-                            src={card.media_image["0"].image}
-                            alt="autre"
-                          />
-                        ) : (
-                          <div className="CardFullPopup__empty-image">
-                            Image(s) Indisponible(s)
-                          </div>
-                        )}
+                          card &&
+                          card.media_image &&
+                          card.media_image["0"] &&
+                          card.media_image["0"].image ? (
+                            <img
+                              style={{ width: "100%", height: "100%" }}
+                              src={card.media_image["0"].image}
+                              alt="autre"
+                            />
+                          ) : (
+                            <div className="CardFullPopup__empty-image">
+                              Image(s) Indisponible(s)
+                            </div>
+                          )}
                       </div>
                     ))}
               </div>
             </div>
           </>
         ) : (
-          <Loading />
-        )}
+            <Loading />
+          )}
       </div>
 
       {!isFullScreen && cardsArray && (
@@ -409,23 +400,23 @@ const CardFullPopup = ({ history, location }) => {
               }}
             />
           ) : (
-            <>
-              <ChevronCircleRight
-                className="nav__chevron nav__chevron--right"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  goNextCard();
-                }}
-              />
-              <ChevronCircleLeft
-                className="nav__chevron nav__chevron--left"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  goPreviousCard();
-                }}
-              />
-            </>
-          )}
+                <>
+                  <ChevronCircleRight
+                    className="nav__chevron nav__chevron--right"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      goNextCard();
+                    }}
+                  />
+                  <ChevronCircleLeft
+                    className="nav__chevron nav__chevron--left"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      goPreviousCard();
+                    }}
+                  />
+                </>
+              )}
         </>
       )}
     </div>

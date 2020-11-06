@@ -24,7 +24,7 @@
     height: max-content;
     border-radius: $card-radius;
     // background-color: $white;
-    padding: 1rem 2rem;
+    padding: 2rem;
     margin: 2rem auto;
     border: 0.5px solid $grey;
 
@@ -34,10 +34,14 @@
     }
   }
 
+  .CardSlider{
+    margin-bottom: 4rem;
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
   }
 
   &__user {
@@ -103,47 +107,28 @@
   }
 
   &__section {
-    margin-bottom: 6rem;
-    width: 75%;
-    margin-left: auto;
-    margin-right: auto;
+    padding: 4rem;
   }
 
   &__meta {
     display: flex;
     justify-content: center;
+    padding: 2rem 4rem;
 
-    &--published-date {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    &--category-stamp {
-      font-size: 1.3rem;
-      padding: 0.3rem 1rem;
+    & p {
+      @include button-style;
       background-color: $primary-dark;
-      color: white;
-      margin-bottom: 1rem;
-    }
+      cursor: default; 
 
-    &--tags {
-      text-align: center;
-
-      &--container {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        padding: 0 2rem;
-
-        .tag {
-          // @include big-tag-style;
-          background-color: $primary-dark;
-          margin: 0.3rem;
-        }
+      &:hover{
+        background-color: $primary-dark;
       }
     }
+
+    &--topic_category{
+      margin-right: 1rem;
+    }
+
   }
 
   &__empty-image {

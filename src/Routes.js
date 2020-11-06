@@ -5,7 +5,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from './pages/Homepage/HomePageNew';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SearchPage from './pages/SearchPage/SearchPage'
-import RessourcesPage from './pages/RessourcesPage/RessourcesPage'
+// import RessourcesPage from './pages/RessourcesPage/RessourcesPage'
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
 import AccountPage from './pages/AccountPages/AccountPages'
 import ProfilePage from './pages/ProfilePage/ProfilePage'

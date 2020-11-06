@@ -16,7 +16,7 @@ import CustomButton from "../CustomButton/CustomButton";
 
 // assets
 import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google.svg";
-import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
+import { ReactComponent as FacebookLogo } from "../../../assets/images/logo-facebook.svg";
 import "./LoginAndRegister.scss";
 import FormInput from "../../FormInputs/FormInput";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
@@ -69,6 +69,10 @@ const Register = ({ title }) => {
         <CustomButton color="white" onClick={(e) => handleClickGoogle(e)}>
           <GoogleLogo />
           Continuer avec Google
+        </CustomButton>
+        <CustomButton color="white" onClick={(e) => handleClickGit(e)}>
+          <FacebookLogo />
+          Continuer avec Facebook
         </CustomButton>
       </div>
       <p className="Login__ou">Ou :</p>

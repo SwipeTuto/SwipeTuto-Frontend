@@ -1,7 +1,7 @@
 // Bar avec les items pour filtrer les slides
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+
 
 // redux
 import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
@@ -17,7 +17,7 @@ import { closeFilterMobileMenu, openConnexionPopup } from "../../../redux/layout
 
 // helper
 import {
-  categoryArray,
+
   topicArray,
   getNameFromQueryName,
   orderArray,
@@ -81,10 +81,10 @@ const FiltersBarMobile = ({ title, showResults }) => {
     if (!currentUser) {
       dispatch(openConnexionPopup());
     } else {
-    dispatch(deleteCurrentSearch());
-    dispatch(closeFilterMobileMenu());
-  };
-}
+      dispatch(deleteCurrentSearch());
+      dispatch(closeFilterMobileMenu());
+    };
+  }
 
   const toggleShowInput = (item) => {
     const inputShowedCopy = inputShowed;
@@ -103,16 +103,16 @@ const FiltersBarMobile = ({ title, showResults }) => {
     if (!currentUser) {
       dispatch(openConnexionPopup());
     } else {
-    const currentSearchCopy = {
-      searchWords: newSearch.searchWords,
-      searchTopic: newSearch.searchTopic,
-      searchOrder: newSearch.searchOrder,
-      searchCategory: newSearch.searchCategory,
+      const currentSearchCopy = {
+        searchWords: newSearch.searchWords,
+        searchTopic: newSearch.searchTopic,
+        searchOrder: newSearch.searchOrder,
+        searchCategory: newSearch.searchCategory,
+      };
+      dispatch(setCurrentSearch(currentSearchCopy));
+      dispatch(closeFilterMobileMenu());
     };
-    dispatch(setCurrentSearch(currentSearchCopy));
-    dispatch(closeFilterMobileMenu());
-  };
-}
+  }
 
   return (
     <>
@@ -164,21 +164,21 @@ const FiltersBarMobile = ({ title, showResults }) => {
                         <input
                           className="FiltersBarMobile__input-radio"
                           type="radio"
-                          id={'topic'+index}
+                          id={'topic' + index}
                           name="searchTopic"
                           onChange={(e) => handleSearchChange(e)}
                           value={topic.queryName || ""}
                           checked={newSearch.searchTopic === topic.queryName}
                         />
-                        <label htmlFor={'topic'+index}>{topic.name}</label>
+                        <label htmlFor={'topic' + index}>{topic.name}</label>
                       </div>
                     ))
                   ) : (
-                    <p className="FiltersBarMobile__currentSearch">
-                      {newSearch.searchTopic !== undefined &&
-                        getNameFromQueryName(topicArray, newSearch.searchTopic)}
-                    </p>
-                  )}
+                      <p className="FiltersBarMobile__currentSearch">
+                        {newSearch.searchTopic !== undefined &&
+                          getNameFromQueryName(topicArray, newSearch.searchTopic)}
+                      </p>
+                    )}
                 </div>
 
                 <div
@@ -200,7 +200,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
                         <input
                           className="FiltersBarMobile__input-radio"
                           type="radio"
-                          id={'category'+index}
+                          id={'category' + index}
                           name="searchCategory"
                           onChange={(e) => handleSearchChange(e)}
                           value={category.queryName || ""}
@@ -208,18 +208,18 @@ const FiltersBarMobile = ({ title, showResults }) => {
                             newSearch.searchCategory === category.queryName
                           }
                         />
-                        <label htmlFor={'category'+index}>{category.name}</label>
+                        <label htmlFor={'category' + index}>{category.name}</label>
                       </div>
                     ))
                   ) : (
-                    <p className="FiltersBarMobile__currentSearch">
-                      {newSearch.searchCategory !== undefined &&
-                        getNameFromQueryName(
-                          getCategoriesArray(newSearch.searchTopic),
-                          newSearch.searchCategory
-                        )}
-                    </p>
-                  )}
+                      <p className="FiltersBarMobile__currentSearch">
+                        {newSearch.searchCategory !== undefined &&
+                          getNameFromQueryName(
+                            getCategoriesArray(newSearch.searchTopic),
+                            newSearch.searchCategory
+                          )}
+                      </p>
+                    )}
                 </div>
 
                 <div
@@ -241,21 +241,21 @@ const FiltersBarMobile = ({ title, showResults }) => {
                         <input
                           className="FiltersBarMobile__input-radio"
                           type="radio"
-                          id={'order'+index}
+                          id={'order' + index}
                           name="searchOrder"
                           onChange={(e) => handleSearchChange(e)}
                           value={order.queryName || ""}
                           checked={newSearch.searchOrder === order.queryName}
                         />
-                        <label htmlFor={'order'+index}>{order.name}</label>
+                        <label htmlFor={'order' + index}>{order.name}</label>
                       </div>
                     ))
                   ) : (
-                    <p className="FiltersBarMobile__currentSearch">
-                      {newSearch.searchOrder !== undefined &&
-                        getNameFromQueryName(orderArray, newSearch.searchOrder)}
-                    </p>
-                  )}
+                      <p className="FiltersBarMobile__currentSearch">
+                        {newSearch.searchOrder !== undefined &&
+                          getNameFromQueryName(orderArray, newSearch.searchOrder)}
+                      </p>
+                    )}
                 </div>
 
                 <div className="FiltersBarMobile__form--buttons">
@@ -266,16 +266,16 @@ const FiltersBarMobile = ({ title, showResults }) => {
                     Réinitialiser
                   </CustomButton>
 
-                 
-                    <CustomButton
-                      type="submit"
-                      color="dark"
-                      onClick={(e) => handleFormSubmit(e)}
-                    >
-                      Rechercher
+
+                  <CustomButton
+                    type="submit"
+                    color="dark"
+                    onClick={(e) => handleFormSubmit(e)}
+                  >
+                    Rechercher
                     </CustomButton>
 
-         
+
                 </div>
               </form>
             </div>

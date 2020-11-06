@@ -7,10 +7,10 @@ import CustomButton from "../../components/LayoutComponents/CustomButton/CustomB
 import "./ContactUsPage.scss";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
 import { sendEmailContact } from "../../services/backOfficeService.js"
-import  CSRFToken  from "../../components/Cookies/CsrfToken"
+// import  CSRFToken  from "../../components/Cookies/CsrfToken"
 import { withRouter } from "react-router-dom";
 
-const ContactUsPage = ({history}) => {
+const ContactUsPage = ({ history }) => {
   const [message, setMessage] = useState({
     email: "",
     category: "question",
@@ -21,10 +21,10 @@ const ContactUsPage = ({history}) => {
 
   useEffect(() => {
     if (message.email === '') {
-      setMessage({ ...message, 'email':currentUserEmail})
+      setMessage({ ...message, 'email': currentUserEmail })
     }
 
-  }, [message]);
+  }, [currentUserEmail, message]);
 
   if (window.scrollY) {
     window.scroll(0, 0);
@@ -38,7 +38,7 @@ const ContactUsPage = ({history}) => {
     const feedbackEl = document.querySelector('.ContactPage__feedback');
     e.preventDefault();
     sendEmailContact(message).then(rep => {
-      if(rep && rep.status && rep.status >=200 && rep.status <300){
+      if (rep && rep.status && rep.status >= 200 && rep.status < 300) {
         console.log("VICTOIRE")
         feedbackEl.textContent = "Votre message a bien été envoyé, merci. Vous allez être redirigé."
         setTimeout(() => {

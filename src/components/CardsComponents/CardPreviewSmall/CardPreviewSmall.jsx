@@ -18,7 +18,7 @@ import {
 
 // service & helper
 // import { base } from "../../../services/configService";
-import { likeUpdate, renameCategory, truncate } from "../../../helper/index";
+import { likeUpdate, truncate } from "../../../helper/index";
 
 // assets
 // import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
@@ -32,7 +32,7 @@ import Loading from "../../Loading/Loading";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 const CardPreviewSmall = ({ card, size }) => {
-  const { media_image, user, categorie, name, number_of_likes, likes } = card;
+  const { media_image, user, name, number_of_likes, likes } = card;
   const dispatch = useDispatch();
   const currentTheme = useSelector(selectTheme);
   const cardId = card && card.id;
@@ -103,9 +103,8 @@ const CardPreviewSmall = ({ card, size }) => {
   return (
     <div className={`CardPreviewSmall ${currentTheme}-theme`} data-slideid="1">
       <div
-        className={`CardPreviewSmall__image  ${
-          cardIsReady ? "active" : "hide"
-        }`}
+        className={`CardPreviewSmall__image  ${cardIsReady ? "active" : "hide"
+          }`}
         id={`CardPreviewSmall__image--${cardId}`}
         onClick={() => handleClickedCardClick()}
       >
@@ -120,9 +119,8 @@ const CardPreviewSmall = ({ card, size }) => {
       </div>
 
       <div
-        className={`CardPreviewSmall__image ${
-          !cardIsReady ? "active" : "hide"
-        } CardPreviewSmall__image--loading CardPreviewSmall__image--loading-${size}`}
+        className={`CardPreviewSmall__image ${!cardIsReady ? "active" : "hide"
+          } CardPreviewSmall__image--loading CardPreviewSmall__image--loading-${size}`}
       >
         <Loading />
       </div>

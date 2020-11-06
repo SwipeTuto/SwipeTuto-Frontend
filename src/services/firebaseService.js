@@ -18,7 +18,11 @@ if (!firebase.apps.length) {
 }
 
 export const provider = new firebase.auth.GoogleAuthProvider();
-export const providerGit = new firebase.auth.GithubAuthProvider();
 export const providerFacebook  = new firebase.auth.FacebookAuthProvider();
+// providerFacebook.addScope('email');
+// providerFacebook.setCustomParameters({
+//   // 'display': 'redirect'
+//   'display': 'popup'
+// })
 export const auth = firebase.auth;
 

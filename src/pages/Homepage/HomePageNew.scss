@@ -36,6 +36,7 @@
       word-break: keep-all;
       flex-wrap: nowrap;
       white-space: nowrap;
+      flex-shrink: 0;
 
       &:not(:last-child) {
         margin-right: 3rem;

@@ -1,5 +1,5 @@
 import { client } from "../index";
-import history from "../helper/history"
+// import history from "../helper/history"
 
 export const sendEmailContact = data => {
   const bodyFormData = new FormData();

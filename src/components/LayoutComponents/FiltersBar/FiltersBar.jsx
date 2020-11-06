@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 // redux
 import {
-  selectTotalNumberOfResults,
   selectSearchCategory,
   selectSearchOrder,
   selectCurrentSearch,
@@ -24,8 +23,6 @@ import {
 // assets
 import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
 import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";
-import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
-import { ReactComponent as ChevronRight } from "../../../assets/images/chevrons/chevron-forward.svg";
 
 import "./FiltersBar.scss";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
@@ -37,7 +34,6 @@ const FiltersBar = ({ handleClickSize }) => {
   const searchCategory = useSelector(selectSearchCategory);
   const searchTopic = useSelector(selectSearchTopic);
   const searchOrder = useSelector(selectSearchOrder);
-  const linkBar = document.querySelector(".FiltersBar__options--links");
   const [categoriesArray, setCategoriesArray] = useState([]);
 
 
@@ -81,13 +77,6 @@ const FiltersBar = ({ handleClickSize }) => {
     const newCategory = categoryQueryName;
     const currentSearchCopy = { ...currentSearch, searchCategory: newCategory };
     dispatch(setCurrentSearch(currentSearchCopy));
-  };
-
-  const handleScollRight = () => {
-    linkBar.scrollBy(50, 0);
-  };
-  const handleScollLeft = () => {
-    linkBar.scrollBy(-50, 0);
   };
 
   return (

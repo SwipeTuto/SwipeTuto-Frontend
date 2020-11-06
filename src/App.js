@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Switch, Route, withRouter, Redirect, useLocation } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -23,8 +23,9 @@ import SearchLinkRedirect from "./helper/SearchLinkRedirect";
 import ConnexionRedirect from "./components/LayoutComponents/ConnexionRedirect/ConnexionRedirect";
 import { selectCardsFetched, selectClickedCard, selectCurrentSearch } from "./redux/filter/filter-selectors";
 import { usePrevious } from "./hooks/usePrevious";
-import { selectCurrentUser } from "./redux/user/user-selectors";
+// import { selectCurrentUser } from "./redux/user/user-selectors";
 import Routes from "./Routes"
+// import { auth } from "./services/firebaseService"
 
 function App(props) {
 
@@ -42,11 +43,11 @@ function App(props) {
   const connexionPopup = useSelector(selectConnexionPopup)
   const locationPathname = props.location.pathname;
   const clickedCard = useSelector(selectClickedCard)
-  const currentUser = useSelector(selectCurrentUser);
+  // const currentUser = useSelector(selectCurrentUser);
   const fetchedCards = useSelector(selectCardsFetched)
-
-  const location = useLocation()
+  // const location = useLocation()
   useEffect(() => {
+
     if (firstLoadDone === false && locationPathname === "/search") { // si params url
       if (topic || category || ordering || search) {
         const currentSearchCopy = {

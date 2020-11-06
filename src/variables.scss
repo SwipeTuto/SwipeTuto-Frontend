@@ -124,6 +124,7 @@ $title-font: "Montserrat", sans-serif;
   transition: all 0.2s ease;
   color: $white;
   background-color: $secondary-dark;
+  border-radius: $button-radius;
 
   &:hover {
     background-color: $secondary-light;

@@ -2,7 +2,7 @@ import { UserActionTypes } from './user-types'
 import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin } from '../../services/userService'
 import history from "../../helper/history"
 import { setUserLoading, setUserLoaded } from '../layout/layout-actions';
-// import { base } from '../../services/configService';
+
 
 export const deleteUserErrors = () => ({
   type: UserActionTypes.DELETE_USER_ERRORS,
@@ -57,13 +57,11 @@ export const loginGoogleAction = () => {
   }
 }
 
-
 export const loginFacebookAction = () => {
   const currentUrl = window.location.href;
   return dispatch => {
     return LoginProviderFacebook()
       .then(rep => {
-        console.log('rep', rep)
         FacebookLogin(rep)
           .then(rep => {
             dispatch(deleteUserErrors())

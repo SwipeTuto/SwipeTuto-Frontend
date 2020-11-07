@@ -168,33 +168,33 @@ const CardGridList = ({ loadFilter, allowInfiniteScroll, location }) => {
             Désolé, aucune carte trouvée. Essayez une autre recherche.
           </h2>
         ) : (
-          <>
-            {gridItems &&
-              gridItems.map((column, index) => {
-                return (
-                  <div
-                    className={`grid-column grid-column--${cardsSize}`}
-                    key={index}
-                  >
-                    {column &&
-                      column.map((card) => {
-                        return (
-                          <div
-                            className={`grid-item grid-item--${cardsSize}`}
-                            key={card.id}
-                            data-key={card.id}
-                          >
-                            {card && (
-                              <CardPreviewSmall size={cardsSize} card={card} />
-                            )}
-                          </div>
-                        );
-                      })}
-                  </div>
-                );
-              })}
-          </>
-        )}
+              <>
+                {gridItems &&
+                  gridItems.map((column, index) => {
+                    return (
+                      <div
+                        className={`grid-column grid-column--${cardsSize}`}
+                        key={index}
+                      >
+                        {column &&
+                          column.map((card) => {
+                            return (
+                              <div
+                                className={`grid-item grid-item--${cardsSize}`}
+                                key={card.id}
+                                data-key={card.id}
+                              >
+                                {card && (
+                                  <CardPreviewSmall size={cardsSize} card={card} />
+                                )}
+                              </div>
+                            );
+                          })}
+                      </div>
+                    );
+                  })}
+              </>
+            )}
       </div>
 
       {!isLoaded && <PageLoading />}

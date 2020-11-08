@@ -30,9 +30,9 @@ const SearchPage = ({ location }) => {
   useEffect(() => {
     if (fetchedCards === null) {
       dispatch(setCurrentSearch({ ...currentSearch, searchOrder: "likes" }))
-
     }
-  }, [currentSearch, dispatch, fetchedCards])
+  }, [dispatch, fetchedCards])
+  // ! NE PAS AJOUTER currentSearch EN DEPENDENCIES DU USEEFFECT
 
   useEffect(() => {
     if (window.scrollY) {

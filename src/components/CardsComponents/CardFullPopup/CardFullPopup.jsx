@@ -4,6 +4,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 
+
 // redux
 import {
   selectCurrentUser,
@@ -44,6 +45,7 @@ import CardSlider from "../CardSlider/CardSlider";
 import Loading from "../../Loading/Loading";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrapper";
+import ShareButtons from "../../ShareButtons/ShareButtons"
 
 // Services & helpers
 import {
@@ -162,7 +164,7 @@ const CardFullPopup = ({ history, location }) => {
     const nextCard = cardsArray[indexOfCurrentCard + 1];
     dispatch(setClickedCard(nextCard));
   };
-
+ 
   const handlePopupClose = () => {
     if (location.pathname === "/") {
       window.history.pushState("", "", "/");
@@ -256,7 +258,9 @@ const CardFullPopup = ({ history, location }) => {
               link={true}
             />
           </div>
-
+           {/* SHARE BUTTON */}
+          <ShareButtons/>
+   
           <div className="CardFullPopup__action-button">
             {clickedCardIsLoaded ? (
               <>

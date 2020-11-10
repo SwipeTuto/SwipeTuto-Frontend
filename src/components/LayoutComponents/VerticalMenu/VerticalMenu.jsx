@@ -24,8 +24,17 @@ const VerticalMenu = ({ className, children }) => {
     }
   };
   return (
-    <div className={`VerticalMenu ${className && className}`}>
-      <div className="VerticalMenu__logo" onClick={() => checkIfConnected()}>
+    <div
+      className={`VerticalMenu ${className && className}`}
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div
+        className="VerticalMenu__logo"
+        onClick={(e) => {
+          e.stopPropagation();
+          checkIfConnected();
+        }}
+      >
         <MenuLogo className="VerticalMenu__logo--logo" />
       </div>
       {menuOpen && (

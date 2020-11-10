@@ -24,8 +24,6 @@ select {
   overflow: hidden;
 }
 
-
-
 label {
   margin-bottom: 0.5rem;
 }
@@ -156,22 +154,22 @@ body {
   }
   .title {
     &-1 {
-      margin-bottom: 1.4rem;
-      font-size: 3rem;
+      margin-bottom: 5rem;
+      font-size: 4rem;
     }
 
     &-2 {
-      margin-bottom: 1.2rem;
+      margin-bottom: 2.5rem;
       font-size: 2.6rem;
     }
 
     &-3 {
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
       font-size: 2.3rem;
     }
 
     &-4 {
-      margin-bottom: 0.8rem;
+      margin-bottom: 1.6rem;
       font-size: 2.1rem;
     }
   }

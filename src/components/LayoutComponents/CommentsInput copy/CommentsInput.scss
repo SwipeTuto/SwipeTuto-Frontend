@@ -2,8 +2,8 @@
 
 .CommentsInput,
 .CommentsInputReply {
-  margin: 2rem 0;
-  padding: 2rem 0;
+  margin: 6rem 0 0 0;
+  padding: 6rem 0;
   // display: flex;
   // align-items: flex-end;
   border-top: 1px solid $grey;
@@ -22,8 +22,8 @@
 @media screen and (max-width: $bp-tablet) {
   .CommentsInput,
   .CommentsInputReply {
-    display: flex;
-    align-items: flex-end;
+    // display: flex;
+    // align-items: flex-end;
 
     &__newComment {
       &--sendPC {
@@ -50,13 +50,16 @@
     }
 
     button.custom-button {
-      margin: 0 0 0 0.6rem;
+      margin-left: auto;
     }
   }
 }
 @media screen and (max-width: $bp-phone) {
   .CommentsInput,
   .CommentsInputReply {
+    margin: 3rem 0 0 0;
+    padding: 3rem 0;
+
     &__newComment {
       &--sendMobile {
         height: 5rem;

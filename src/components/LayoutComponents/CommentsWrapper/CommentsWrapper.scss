@@ -52,8 +52,8 @@
     }
   }
 
-  .FirstLevelComment__replies + .custom-button {
-    margin: 2rem auto;
+  &__nextButton .custom-button {
+    margin: 6rem auto;
   }
 }
 @media screen and (max-width: $bp-tablet) {
@@ -65,7 +65,7 @@
 @media screen and (max-width: $bp-phone) {
   .CommentsWrapper {
     .CommentsInput {
-      margin-bottom: 6rem;
+      margin-bottom: 0rem;
     }
   }
 }

@@ -15,7 +15,8 @@
   border-bottom: 0.5px solid $grey-light;
   // @include theme-colors($themelight: true);
   // box-shadow: none;
-  box-shadow: $light-shadow;
+  // box-shadow: $light-shadow;
+  box-shadow: $button-shadow;
   font-size: 1.6rem;
   height: 6rem;
 
@@ -64,7 +65,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
 
     .NavTop__search {
       display: flex;
@@ -136,7 +136,7 @@
     justify-content: flex-end;
     align-items: center;
 
-    & div:not(:first-child){
+    & div:not(:first-child) {
       margin-left: 2rem;
     }
 
@@ -153,10 +153,10 @@
           width: 3.5rem;
         }
 
-        &__username{
+        &__username {
           display: flex;
           align-items: center;
-          padding-right: .6rem;
+          padding-right: 0.6rem;
         }
       }
       // .user_avatar {
@@ -168,9 +168,8 @@
     .NavTop__linkConnexion {
       height: 100%;
     }
-
   }
-  &__dropdownUserMenu{
+  &__dropdownUserMenu {
     background-color: $grey-light;
     cursor: pointer;
     width: 3.5rem;
@@ -183,7 +182,7 @@
       @include big-logo-size;
     }
   }
-  
+
   &__swipeTuto {
     margin-right: 1.5rem;
     // height: 3.5rem;

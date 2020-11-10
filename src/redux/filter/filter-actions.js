@@ -416,3 +416,9 @@ export const getUserFavoriesSuccess = favories => ({
   type: FilterActionTypes.GET_FAVORIES_CARDS_SUCCESS,
   payload: favories
 })
+
+
+export const deleteLastPublishedCommentInStore = () => ({
+  type: FilterActionTypes.DELETE_LAST_PUBLISHED_COMMENT_IN_STORE,
+})
+

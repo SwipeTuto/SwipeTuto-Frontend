@@ -99,6 +99,7 @@ export const renameQuery = (query) => {
     case "beaute":
       return "Beauté";
     case "bienetre":
+    case "bien-être":
       return "Bien-être";
 
     case "informatique":

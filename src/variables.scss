@@ -44,8 +44,8 @@ $inner-component-padding: 0 14vw;
 $grid-component-padding: 0 14vw;
 $inner-component-padding-tablet: 0 8vw;
 $grid-component-padding-tablet: 0 8vw;
-$inner-component-padding-phone: 0 1rem;
-$grid-component-padding-phone: 0 1rem;
+$inner-component-padding-phone: 0 2rem;
+$grid-component-padding-phone: 0 2rem;
 
 // Breakpoints
 $bp-big: 1300px;
@@ -183,9 +183,6 @@ $title-font: "Montserrat", sans-serif;
   height: 100vh;
   overflow: auto;
   background-color: rgba($black, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 @mixin thin-scrollbar {

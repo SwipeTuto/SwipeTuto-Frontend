@@ -29,7 +29,6 @@
     display: flex;
     flex-direction: column;
     padding: 2rem 3rem;
-    // margin-bottom: 2rem;
     color: $black;
 
     .UserUsername {
@@ -44,7 +43,6 @@
 
     &--top {
       display: flex;
-      // align-items: flex-end;
     }
   }
   &__actions {
@@ -164,8 +162,16 @@
 @media screen and (max-width: $bp-phone) {
   .FirstLevelComment {
     &__author {
-      width: 3rem;
-      height: 3rem;
+      .UserNameAndAvatar {
+        .user_avatar {
+          width: 4rem;
+          height: 4rem;
+        }
+      }
+    }
+
+    &__wrapper {
+      margin-left: 1rem;
     }
   }
 

@@ -91,6 +91,7 @@ const CardFullPopup = ({ history, location }) => {
   const clickedCardIsLoaded = useSelector(selectClickedCardIsLoaded);
   const currentUserSavedCards = useSelector(selectUserFavories);
   const popupCardIsOpen = useSelector(selectShowPopupCard);
+  const isFullscreen = useSelector(selectFullscreen);
 
   useEffect(() => {
     if (!clickedCard || !cardsArray) return;
@@ -247,6 +248,76 @@ const CardFullPopup = ({ history, location }) => {
         handlePopupClose();
       }}
     >
+      {!isFullscreen && (
+        <div className="CardFullPopup__mobile">
+          {clickedCardIsLoaded ? (
+            <>
+              {cardIsLiked ? (
+                <HeartFull
+                  className="card-action-button card-action-button__liked"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLikeClick();
+                  }}
+                />
+              ) : (
+                <HeartEmpty
+                  className="card-action-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLikeClick();
+                  }}
+                />
+              )}
+              {cardIsSaved ? (
+                <BookmarkFull
+                  className="card-action-button card-action-button__saved"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSaveClick();
+                  }}
+                />
+              ) : (
+                <BookmarkEmpty
+                  className="card-action-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSaveClick();
+                  }}
+                />
+              )}
+
+              <FullscreenLogo
+                className="card-action-button"
+                id="card-action-button__fullscreen"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dispatch(showFullscreen());
+                }}
+              />
+
+              <VerticalMenu>
+                <p
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    dispatch(showSignalPopup(newSignalObject));
+                  }}
+                >
+                  Signaler
+                </p>
+              </VerticalMenu>
+              <CloseLogo
+                className="card-action-button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePopupClose();
+                }}
+              />
+            </>
+          ) : null}
+        </div>
+      )}
+
       <div className="CardFullPopup__allwrapper">
         <div className="CardFullPopup__scroll-wrapper">
           <div

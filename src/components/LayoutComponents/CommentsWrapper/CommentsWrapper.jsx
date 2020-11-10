@@ -35,6 +35,7 @@ import CommentsInput from "../CommentsInput copy/CommentsInput";
 // import { usePrevious } from "../../../hooks/usePrevious";
 
 import "./CommentsWrapper.scss";
+import { selectCommentsLoaded } from "../../../redux/layout/layout-selectors";
 // import { selectCommentsLoaded } from "../../../redux/layout/layout-selectors";
 // import { openConnexionPopup } from "../../../redux/layout/layout-actions";
 
@@ -48,6 +49,7 @@ const CommentsWrapper = () => {
   const [localCommentsArray, setLocalCommentsArray] = useState([]);
   const [shouldUpdate, setShouldUpdate] = useState(false);
   const [firstValue, setNewFirstValue] = useState("");
+  const commentsLoaded = useSelector(selectCommentsLoaded);
 
   useEffect(() => {
     if (clickedCardId) dispatch(getCardCommentsAction(clickedCardId));
@@ -122,45 +124,51 @@ const CommentsWrapper = () => {
 
   return (
     <div className="CommentsWrapper">
-      <div className="CommentsWrapper__comments">
-        {localCommentsArray &&
-          localCommentsArray.map((comment) => (
-            <FirstLevelComment
-              key={comment.id}
-              comment={comment}
-              confirmCommentDelete={confirmCommentDelete}
-              // handleUpdate={handleUpdate}
-              handleCommentRespond={handleCommentRespond}
-            />
-          ))}
-      </div>
-      <div className="CommentsWrapper__nextButton">
-        {nextCommentsLink && (
-          <CustomButton color="white" onClick={handleFetchNextLink}>
-            Commentaires plus anciens ...
-          </CustomButton>
-        )}
-      </div>
-      <div className="CommentsWrapper__comments">
-        {shouldUpdate &&
-          localLastPublishedArray.map((comment) => (
-            <FirstLevelComment
-              key={comment.id}
-              comment={comment}
-              confirmCommentDelete={confirmCommentDelete}
-              // handleUpdate={handleUpdate}
-              handleCommentRespond={handleCommentRespond}
-            />
-          ))}
-      </div>
+      {commentsLoaded ? (
+        <>
+          <div className="CommentsWrapper__comments">
+            {localCommentsArray &&
+              localCommentsArray.map((comment) => (
+                <FirstLevelComment
+                  key={comment.id}
+                  comment={comment}
+                  confirmCommentDelete={confirmCommentDelete}
+                  // handleUpdate={handleUpdate}
+                  handleCommentRespond={handleCommentRespond}
+                />
+              ))}
+          </div>
+          <div className="CommentsWrapper__nextButton">
+            {nextCommentsLink && (
+              <CustomButton color="white" onClick={handleFetchNextLink}>
+                Commentaires plus anciens ...
+              </CustomButton>
+            )}
+          </div>
+          <div className="CommentsWrapper__comments">
+            {shouldUpdate &&
+              localLastPublishedArray.map((comment) => (
+                <FirstLevelComment
+                  key={comment.id}
+                  comment={comment}
+                  confirmCommentDelete={confirmCommentDelete}
+                  // handleUpdate={handleUpdate}
+                  handleCommentRespond={handleCommentRespond}
+                />
+              ))}
+          </div>
 
-      <div className="CommentsWrapper__input">
-        <CommentsInput
-          id="commentInput"
-          handleAddCommentClick={handleAddCommentClick}
-          firstValue={firstValue}
-        />
-      </div>
+          <div className="CommentsWrapper__input">
+            <CommentsInput
+              id="commentInput"
+              handleAddCommentClick={handleAddCommentClick}
+              firstValue={firstValue}
+            />
+          </div>
+        </>
+      ) : (
+        "Chargement des commentaires ..."
+      )}
     </div>
   );
 };

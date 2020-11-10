@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 
 import "./ConnexionRedirect.scss";
@@ -8,14 +8,20 @@ import Login from "../../LayoutComponents/Login/Login";
 
 const ConnexionRedirect = ({ handleClose }) => {
   const currentTheme = useSelector(selectTheme);
+  const popupEl = useRef(null);
   // scroll reset
-  //  if (window.scrollY) {
-  //    window.scroll(0, 0);
-  //  }
+  // if (window.scrollY) {
+  //   window.scroll(0, 0);
+  // }
+
+  useEffect(() => {
+    console.log(popupEl.current.offsetTop);
+  }, [popupEl]);
 
   return (
     <div
       className="ConnexionRedirect"
+      ref={popupEl}
       onClick={(e) => {
         e.stopPropagation();
         handleClose();

@@ -11,9 +11,10 @@
     right: 4rem;
     z-index: 70;
     @include button-round;
+    padding: 0.6rem;
 
     & svg {
-      @include big-logo-size;
+      @include logo-size;
     }
 
     // &:hover {
@@ -157,6 +158,11 @@
       &__arrows {
         display: none;
       }
+    }
+
+    &__close {
+      top: 1rem;
+      right: 1rem;
     }
 
     &--fullscreen {

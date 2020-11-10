@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { Link } from "react-router-dom";
 
@@ -45,10 +45,12 @@ const CommentsWrapper = () => {
   const lastPublishedComment = useSelector(selectLastPublishedComment);
   const [localLastPublishedArray, setLocalLastPublishedArray] = useState([]);
   const [localCommentsArray, setLocalCommentsArray] = useState([]);
-  const [shouldUpdate, setShouldUpdate] = useState(false);
+  // const [shouldUpdate, setShouldUpdate] = useState(false);
+  const [firstValue, setNewFirstValue] = useState("");
 
   useEffect(() => {
     if (clickedCardId) dispatch(getCardCommentsAction(clickedCardId));
+    setLocalLastPublishedArray([]);
   }, [clickedCardId, dispatch]);
 
   useEffect(() => {
@@ -57,16 +59,16 @@ const CommentsWrapper = () => {
 
   const handleAddCommentClick = (value) => {
     dispatch(addCommentAction(clickedCardId, value));
-    setShouldUpdate(false);
+    // setShouldUpdate(false);
   };
 
   useEffect(() => {
-    if (lastPublishedComment && lastPublishedComment.reply_comments) {
+    if (lastPublishedComment) {
       const arrayCopy = localLastPublishedArray;
-      arrayCopy.unshift(lastPublishedComment);
+      arrayCopy.push(lastPublishedComment);
       setLocalLastPublishedArray(arrayCopy);
     }
-    setShouldUpdate(true);
+    // setShouldUpdate(true);
     // console.log(localLastPublishedArray);
   }, [lastPublishedComment, localLastPublishedArray]);
 
@@ -91,7 +93,7 @@ const CommentsWrapper = () => {
         arrayCopy.splice(index, 1);
         setLocalCommentsArray(arrayCopy);
         console.log(localCommentsArray);
-        setShouldUpdate(true);
+        // setShouldUpdate(true);
       }
     } else if (fullCommentLastLocal.length > 0) {
       const index = localLastPublishedArray.indexOf(fullCommentLastLocal[0]);
@@ -99,48 +101,63 @@ const CommentsWrapper = () => {
         const arrayCopy = localLastPublishedArray;
         arrayCopy.splice(index, 1);
         setLocalLastPublishedArray(arrayCopy);
-        setShouldUpdate(true);
+        // setShouldUpdate(true);
       }
     }
   };
 
-  const handleUpdate = () => {
-    console.log("call");
-    setShouldUpdate(false);
+  // const handleUpdate = () => {
+  //   console.log("call");
+  //   // setShouldUpdate(false);
+  // };
+
+  const handleCommentRespond = (commentAuthor) => {
+    const commentInput = document.querySelector("#commentInput");
+    const cardFullPopupEl = document.querySelector(".CardFullPopup");
+    cardFullPopupEl.scrollTo(0, commentInput.offsetTop);
+    commentInput.focus();
+    setNewFirstValue(`@${commentAuthor.username} `);
   };
 
   return (
     <div className="CommentsWrapper">
-      <div className="CommentsWrapper__input">
-        <CommentsInput handleAddCommentClick={handleAddCommentClick} />
-      </div>
       <div className="CommentsWrapper__comments">
-        {shouldUpdate &&
-          localLastPublishedArray.map((comment) => (
-            <FirstLevelComment
-              key={comment.id}
-              comment={comment}
-              confirmCommentDelete={confirmCommentDelete}
-              handleUpdate={handleUpdate}
-            />
-          ))}
-        {shouldUpdate &&
-          localCommentsArray &&
+        {localCommentsArray &&
           localCommentsArray.map((comment) => (
             <FirstLevelComment
               key={comment.id}
               comment={comment}
               confirmCommentDelete={confirmCommentDelete}
-              handleUpdate={handleUpdate}
+              // handleUpdate={handleUpdate}
+              handleCommentRespond={handleCommentRespond}
             />
           ))}
       </div>
       <div className="CommentsWrapper__nextButton">
         {nextCommentsLink && (
           <CustomButton color="white" onClick={handleFetchNextLink}>
-            Suivants
+            Commentaires plus anciens ...
           </CustomButton>
         )}
+      </div>
+      <div className="CommentsWrapper__comments">
+        {localLastPublishedArray.map((comment) => (
+          <FirstLevelComment
+            key={comment.id}
+            comment={comment}
+            confirmCommentDelete={confirmCommentDelete}
+            // handleUpdate={handleUpdate}
+            handleCommentRespond={handleCommentRespond}
+          />
+        ))}
+      </div>
+
+      <div className="CommentsWrapper__input">
+        <CommentsInput
+          id="commentInput"
+          handleAddCommentClick={handleAddCommentClick}
+          firstValue={firstValue}
+        />
       </div>
     </div>
   );

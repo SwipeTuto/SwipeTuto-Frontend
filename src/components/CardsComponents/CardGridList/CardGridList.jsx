@@ -163,38 +163,38 @@ const CardGridList = ({ loadFilter, allowInfiniteScroll, location }) => {
             Désolé, une erreur est survenue. Si le problème persiste, merci de
             nous le signaler.
           </h2>
-        ) : totalNumberOfResults === 0 ? (
+        ) : totalNumberOfResults === 0 && !isLoaded ? (
           <h2 className="title title-2 nocards-message">
             Désolé, aucune carte trouvée. Essayez une autre recherche.
           </h2>
         ) : (
-              <>
-                {gridItems &&
-                  gridItems.map((column, index) => {
-                    return (
-                      <div
-                        className={`grid-column grid-column--${cardsSize}`}
-                        key={index}
-                      >
-                        {column &&
-                          column.map((card) => {
-                            return (
-                              <div
-                                className={`grid-item grid-item--${cardsSize}`}
-                                key={card.id}
-                                data-key={card.id}
-                              >
-                                {card && (
-                                  <CardPreviewSmall size={cardsSize} card={card} />
-                                )}
-                              </div>
-                            );
-                          })}
-                      </div>
-                    );
-                  })}
-              </>
-            )}
+          <>
+            {gridItems &&
+              gridItems.map((column, index) => {
+                return (
+                  <div
+                    className={`grid-column grid-column--${cardsSize}`}
+                    key={index}
+                  >
+                    {column &&
+                      column.map((card) => {
+                        return (
+                          <div
+                            className={`grid-item grid-item--${cardsSize}`}
+                            key={card.id}
+                            data-key={card.id}
+                          >
+                            {card && (
+                              <CardPreviewSmall size={cardsSize} card={card} />
+                            )}
+                          </div>
+                        );
+                      })}
+                  </div>
+                );
+              })}
+          </>
+        )}
       </div>
 
       {!isLoaded && <PageLoading />}

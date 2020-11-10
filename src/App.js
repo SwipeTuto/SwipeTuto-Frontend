@@ -66,7 +66,7 @@ function App(props) {
       // dispatch(setFirstLoadDone())
     } else if (fetchedCards === null && locationPathname && !locationPathname.includes("/account")) {
       const currentSearchCopy = { ...currentSearch, searchOrder: "likes" };
-      dispatch(getCardAfterfilterAction(currentSearchCopy))
+      // dispatch(getCardAfterfilterAction(currentSearchCopy))
     } else if (prevSearchState && currentSearch && ( // à chaque changement de state de recherche, modifier l'url
       prevSearchState.searchCategory !== currentSearch.searchCategory ||
       prevSearchState.searchOrder !== currentSearch.searchOrder || prevSearchState.searchTopic !== currentSearch.searchTopic || prevSearchState.searchWords !== currentSearch.searchWords

@@ -29,7 +29,6 @@ const UserAvatar = ({ user, link }) => {
           }}
         >
           <div className="user_avatar">
-          
             {userImage && !error ? (
               <img
                 className="user_avatar--image"
@@ -37,8 +36,10 @@ const UserAvatar = ({ user, link }) => {
                 alt="user"
                 onError={() => setError(true)}
               />
-            ) : (
+            ) : user && user.username ? (
               user && user.username && user.username.slice(0, 1)
+            ) : (
+              "S"
             )}
           </div>
         </Link>

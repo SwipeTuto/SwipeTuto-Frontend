@@ -45,12 +45,13 @@ const CardSlider = () => {
     <div
       className={`CardSlider ${isFullScreen ? "CardSlider--fullscreen" : ""}`}
     >
-      <CloseLogo
+      <div
         className={`CardSlider__close CardSlider__close--${
           isFullScreen ? "active" : "hide"
         }`}
-        onClick={() => dispatch(closeFullscreen())}
-      />
+      >
+        <CloseLogo onClick={() => dispatch(closeFullscreen())} />
+      </div>
       <div className="glide">
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">

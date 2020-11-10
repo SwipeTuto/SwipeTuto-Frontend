@@ -201,16 +201,21 @@ $title-font: "Montserrat", sans-serif;
   }
 }
 
-// @mixin button-active-style {
-//   padding: $box-padding;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   transition: all 0.2s ease;
-//   box-shadow: 0 2px 3px $grey;
-//   color: $white;
-//   background-color: $secondary-light;
-// }
+@mixin button-round {
+  transition: all 0.2s ease;
+  padding: 1.5rem;
+  border-radius: $round-radius;
+  cursor: pointer;
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: none;
+  }
+}
 
 @mixin nav-style {
   padding: $box-padding;

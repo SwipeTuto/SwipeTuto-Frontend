@@ -17,15 +17,29 @@
   left: 0;
   overflow-y: scroll;
 
+  &__allwrapper {
+    display: flex;
+    margin: 0 auto;
+    transform: translateX(8rem);
+    position: fixed;
+    height: 100vh;
+  }
+
+  &__scroll-wrapper {
+    overflow-y: auto;
+    height: 100%;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   &__wrapper {
     max-width: 90rem;
     width: 90rem;
     position: relative;
-    height: max-content;
     border-radius: $card-radius;
-    // background-color: $white;
     padding: 2rem;
-    margin: 2rem auto;
+
     border: 0.5px solid $grey;
 
     .loading {
@@ -66,27 +80,26 @@
   }
 
   &__action-button {
-    position: fixed;
-    right: 12rem;
-    top: 2rem;
+    // position: fixed;
+    // right: 22rem;
+    // top: 2rem;
     display: flex;
     flex-direction: column;
     box-sizing: content-box;
+    margin-left: 2rem;
     // background-color: rgba($grey, 0.2);
     // border-radius: $card-radius;
 
     .card-action-button {
-      &__wrapper {
-        padding: 1.5rem;
-        border-radius: $round-radius;
-        cursor: pointer;
-        background-color: $white;
-        // height: 6rem;
-        // width: 6rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      @include big-logo-size;
+      display: block;
 
+      & & * {
+        stroke: currentColor !important;
+      }
+
+      &__wrapper {
+        @include button-round;
         &:not(:last-of-type) {
           margin-bottom: 1.5rem;
         }
@@ -94,13 +107,6 @@
         &:first-child {
           margin-bottom: 4rem;
         }
-      }
-
-      @include big-logo-size;
-      display: block;
-
-      & & * {
-        stroke: currentColor !important;
       }
 
       &__liked {
@@ -121,6 +127,11 @@
         }
       }
     }
+  }
+
+  &__wrapper,
+  &__action-button {
+    margin-top: 2rem;
   }
 
   &__title.title.title-1 {
@@ -233,6 +244,14 @@
 
     &--right {
       right: 2rem;
+    }
+  }
+
+  &.noscroll {
+    position: fixed;
+
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 

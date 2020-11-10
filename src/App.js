@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { withRouter, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,14 +8,14 @@ import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
 import { getCardAfterfilterAction, getCardByIdAction } from './redux/filter/filter-actions'
-import { selectConnexionPopup, selectFirstLoadDone, selectIsLoaded, selectRedirectUrl, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
+import { selectConnexionPopup, selectFirstLoadDone, selectIsLoaded, selectRedirectUrl, selectShowPopupCard, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
 import { setCurrentSearch } from "./redux/filter/filter-actions"
 
 import { urlParams, getUrlId } from "./helper/index"
 
 import './index.scss'
 import './App.scss';
-import { closeConnexionPopup, setFirstLoadDone, setRedirectUrl } from "./redux/layout/layout-actions";
+import { closeConnexionPopup, setFirstLoadDone, setRedirectUrl, showPopupCard } from "./redux/layout/layout-actions";
 import { getUserByIdAction } from "./redux/user/user-actions";
 import SignalPopup from "./components/LayoutComponents/SignalPopup/SignalPopup";
 import CardFullPopup from "./components/CardsComponents/CardFullPopup/CardFullPopup";
@@ -46,6 +46,9 @@ function App(props) {
   // const currentUser = useSelector(selectCurrentUser);
   const fetchedCards = useSelector(selectCardsFetched)
   // const location = useLocation()
+  const popupCardIsOpen = useSelector(selectShowPopupCard);
+  const appEl = useRef(null)
+
   useEffect(() => {
 
     if (firstLoadDone === false && locationPathname === "/search") { // si params url
@@ -60,17 +63,19 @@ function App(props) {
         dispatch(setRedirectUrl(true));
       }
     } else if (firstLoadDone === false && cardId) { // si page d'une carte ouverte
+      dispatch(showPopupCard())
       dispatch(getCardByIdAction(cardId))
     } else if (firstLoadDone === false && !isLoaded && userId) { // si page de user autre que celle du currentUser
       dispatch(getUserByIdAction(userId))
       // dispatch(setFirstLoadDone())
-    } else if (fetchedCards === null && locationPathname && !locationPathname.includes("/account")) {
-      const currentSearchCopy = { ...currentSearch, searchOrder: "likes" };
-      // dispatch(getCardAfterfilterAction(currentSearchCopy))
     } else if (prevSearchState && currentSearch && ( // à chaque changement de state de recherche, modifier l'url
-      prevSearchState.searchCategory !== currentSearch.searchCategory ||
-      prevSearchState.searchOrder !== currentSearch.searchOrder || prevSearchState.searchTopic !== currentSearch.searchTopic || prevSearchState.searchWords !== currentSearch.searchWords
-    )) {
+      prevSearchState.searchCategory !== currentSearch.searchCategory
+      || prevSearchState.searchOrder !== currentSearch.searchOrder
+      || prevSearchState.searchTopic !== currentSearch.searchTopic
+      || prevSearchState.searchWords !== currentSearch.searchWords)
+      && !cardId
+      && !userId
+    ) {
       dispatch(setRedirectUrl(true));
     }
     if (firstLoadDone === false) {
@@ -93,11 +98,27 @@ function App(props) {
     dispatch(closeConnexionPopup())
   };
 
+  const scrollYWindow = window.scrollY;
+  const scrollY = appEl.current && appEl.current.style.top;
+
+  useEffect(() => {
+    if (popupCardIsOpen) {
+      appEl.current.style.position = 'fixed';
+      appEl.current.style.top = `-${scrollYWindow}px`;
+    } else {
+      appEl.current.style.position = '';
+      appEl.current.style.top = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [popupCardIsOpen])
+
+
   return (
     <>
       {redirectUrl && <Redirect to={redirectLink} />}
       {connexionPopup ? <ConnexionRedirect handleClose={handleClose} /> : null}
-      <div className={`App ${currentTheme}-theme`}>
+      <div ref={appEl} className={`App ${currentTheme}-theme ${popupCardIsOpen ? "noscroll" : ""}`}>
         <NavTop />
         <NavTopMobile />
         {signalPopup && <SignalPopup />}

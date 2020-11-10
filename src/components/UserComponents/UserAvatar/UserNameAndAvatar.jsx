@@ -39,8 +39,10 @@ const UserNameAndAvatar = ({ user, link }) => {
                 alt="user"
                 onError={() => setError(true)}
               />
-            ) : (
+            ) : user && user.username ? (
               user && user.username && user.username.slice(0, 1)
+            ) : (
+              "S"
             )}
           </div>
           <p className="UserNameAndAvatar__username">

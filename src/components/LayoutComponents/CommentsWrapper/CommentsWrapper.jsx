@@ -17,6 +17,7 @@ import {
   getCardCommentsAction,
   deleteCommentAction,
   fetchNewComments,
+  deleteLastPublishedCommentInStore,
 } from "../../../redux/filter/filter-actions";
 // import { selectCurrentUser } from "../../../redux/user/user-selectors";
 
@@ -45,7 +46,7 @@ const CommentsWrapper = () => {
   const lastPublishedComment = useSelector(selectLastPublishedComment);
   const [localLastPublishedArray, setLocalLastPublishedArray] = useState([]);
   const [localCommentsArray, setLocalCommentsArray] = useState([]);
-  // const [shouldUpdate, setShouldUpdate] = useState(false);
+  const [shouldUpdate, setShouldUpdate] = useState(false);
   const [firstValue, setNewFirstValue] = useState("");
 
   useEffect(() => {
@@ -59,7 +60,7 @@ const CommentsWrapper = () => {
 
   const handleAddCommentClick = (value) => {
     dispatch(addCommentAction(clickedCardId, value));
-    // setShouldUpdate(false);
+    setShouldUpdate(false);
   };
 
   useEffect(() => {
@@ -68,9 +69,9 @@ const CommentsWrapper = () => {
       arrayCopy.push(lastPublishedComment);
       setLocalLastPublishedArray(arrayCopy);
     }
-    // setShouldUpdate(true);
-    // console.log(localLastPublishedArray);
-  }, [lastPublishedComment, localLastPublishedArray]);
+    setShouldUpdate(true);
+    dispatch(deleteLastPublishedCommentInStore());
+  }, [dispatch, lastPublishedComment, localLastPublishedArray]);
 
   const handleFetchNextLink = () => {
     dispatch(fetchNewComments(nextCommentsLink));
@@ -93,7 +94,7 @@ const CommentsWrapper = () => {
         arrayCopy.splice(index, 1);
         setLocalCommentsArray(arrayCopy);
         console.log(localCommentsArray);
-        // setShouldUpdate(true);
+        setShouldUpdate(true);
       }
     } else if (fullCommentLastLocal.length > 0) {
       const index = localLastPublishedArray.indexOf(fullCommentLastLocal[0]);
@@ -101,7 +102,7 @@ const CommentsWrapper = () => {
         const arrayCopy = localLastPublishedArray;
         arrayCopy.splice(index, 1);
         setLocalLastPublishedArray(arrayCopy);
-        // setShouldUpdate(true);
+        setShouldUpdate(true);
       }
     }
   };
@@ -141,15 +142,16 @@ const CommentsWrapper = () => {
         )}
       </div>
       <div className="CommentsWrapper__comments">
-        {localLastPublishedArray.map((comment) => (
-          <FirstLevelComment
-            key={comment.id}
-            comment={comment}
-            confirmCommentDelete={confirmCommentDelete}
-            // handleUpdate={handleUpdate}
-            handleCommentRespond={handleCommentRespond}
-          />
-        ))}
+        {shouldUpdate &&
+          localLastPublishedArray.map((comment) => (
+            <FirstLevelComment
+              key={comment.id}
+              comment={comment}
+              confirmCommentDelete={confirmCommentDelete}
+              // handleUpdate={handleUpdate}
+              handleCommentRespond={handleCommentRespond}
+            />
+          ))}
       </div>
 
       <div className="CommentsWrapper__input">

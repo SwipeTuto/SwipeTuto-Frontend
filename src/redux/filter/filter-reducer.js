@@ -172,6 +172,8 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, clickedCardComments: action.payload, lastPublishedComment: null, errors: null }
     case FilterActionTypes.GET_CARD_COMMENTS_ERROR:
       return { ...state, errors: action.payload }
+    case FilterActionTypes.DELETE_LAST_PUBLISHED_COMMENT_IN_STORE:
+      return { ...state, lastPublishedComment: null }
     // case FilterActionTypes.GET_COMMENT_REPLIES_SUCCESS:
     //   return { ...state, clickedCardComments: action.payload, lastPublishedComment: null, errors: null }
     // case FilterActionTypes.GET_COMMENT_REPLIES_ERROR:

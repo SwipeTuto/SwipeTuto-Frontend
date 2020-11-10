@@ -6,21 +6,23 @@
 
   &__close {
     cursor: pointer;
-    @include big-logo-size;
-    fill: $white;
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 2rem;
+    right: 4rem;
     z-index: 70;
-    background-color: $grey-dark;
+    @include button-round;
 
-    &:hover {
-      fill: $primary-light;
-      transition: all 0.2s ease;
+    & svg {
+      @include big-logo-size;
     }
 
+    // &:hover {
+    //   fill: $primary-light;
+    //   transition: all 0.2s ease;
+    // }
+
     &--active {
-      display: block;
+      display: flex;
     }
 
     &--hide {

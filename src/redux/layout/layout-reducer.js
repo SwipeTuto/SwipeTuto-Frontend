@@ -30,12 +30,12 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
     case LayoutActionTypes.SHOW_POPUP_CARD:
-      if (cardPopupElement) cardPopupElement.addEventListener('wheel', (e) => {
-        e.stopPropagation();
-      })
+      // if (cardPopupElement) cardPopupElement.addEventListener('wheel', (e) => {
+      //   e.stopPropagation();
+      // })
 
-      app.style.position = 'fixed';
-      app.style.top = `-${scrollYWindow}px`;
+      // app.style.position = 'fixed';
+      // app.style.top = `-${scrollYWindow}px`;
 
       return {
         ...state,
@@ -47,9 +47,9 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         firstLoadDone: true,
       };
     case LayoutActionTypes.CLOSE_POPUP_CARD:
-      app.style.position = '';
-      app.style.top = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      // app.style.position = '';
+      // app.style.top = '';
+      // window.scrollTo(0, parseInt(scrollY || '0') * -1);
       return {
         ...state,
         popupShown: false,

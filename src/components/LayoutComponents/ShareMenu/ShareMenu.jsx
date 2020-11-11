@@ -27,7 +27,7 @@ import { openNotificationPopup } from "../../../redux/layout/layout-actions";
 
 const ShareMenu = ({ addclass, test }) => {
   const clickedCard = useSelector(selectClickedCard);
-  console.log('clickedCard', clickedCard)
+  console.log('clickedCard', clickedCard.topic[0].name)
 
   var history = createBrowserHistory();
   const dispatch = useDispatch();
@@ -43,11 +43,12 @@ const ShareMenu = ({ addclass, test }) => {
   const emailBody = `
    vous partage une carte
   `
-
   return (
     <VerticalMenu addclass={addclass} type="share">
       <FacebookShareButton 
         url={base + history.location.pathname}
+        quote={"SwipeTuto - Swap end learn"}
+        hashtag={`#${clickedCard.categorie[0].name}`}
       >
         <FacebookIcon size={45} round={true} />
       </FacebookShareButton>
@@ -55,6 +56,7 @@ const ShareMenu = ({ addclass, test }) => {
       <TwitterShareButton 
         url={base + history.location.pathname}
         title={clickedCard.name}
+        hashtag={`#${clickedCard.categorie[0].name}`}
       >
         <TwitterIcon size={45} round={true} />
       </TwitterShareButton>
@@ -62,7 +64,7 @@ const ShareMenu = ({ addclass, test }) => {
       <WhatsappShareButton 
         url={base + history.location.pathname}
         title={clickedCard.name}
-        separator={` ----> `}
+        separator=":: "
       >
         <WhatsappIcon size={45} round={true} />
       </WhatsappShareButton>

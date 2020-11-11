@@ -14,6 +14,7 @@ $white: #f6f6f6;
 // $black: #000000ff;
 // $white: #ffffffff;
 $grey: #cecece;
+$grey-lighter: #f1f1f1;
 $grey-light: #ebebeb;
 $grey-dark: #636363;
 
@@ -33,7 +34,7 @@ $navtop-height: 5rem;
 $navtop-mobile-height: 4rem;
 
 $button-shadow: 0 2px 2px rgba($grey, 0.6);
-$light-shadow: 0 1px 3px rgba($grey-light, 0.8);
+$light-shadow: 0 1px 3px $grey-lighter;
 
 // $card-shadow-2: 0 0px 3px rgba($grey, 0.2);
 // $button-shadow-dark: 0 2px 3px $grey-themedark;
@@ -60,7 +61,8 @@ $text-font: "Nunito", sans-serif;
 $title-font: "Montserrat", sans-serif;
 
 @mixin input-style {
-  background: $grey-light;
+  background: $grey-lighter;
+  // background: $white;
   color: $black;
   font-size: inherit;
   font-family: inherit;
@@ -71,29 +73,41 @@ $title-font: "Montserrat", sans-serif;
   align-items: center;
   transition: all 0.2s ease;
   margin-bottom: 1rem;
-  border-left: 3px solid $grey;
-  border-radius: $button-radius;
+  border-bottom: 3px solid $grey;
+  // border-radius: $button-radius;
+  border-radius: 0;
   width: 100%;
 
   &:focus {
-    background-color: $white;
-    border-top: 2px solid $grey;
-    border-right: 2px solid $grey;
-    border-bottom: 2px solid $grey;
+    // background-color: $white;
+    // border-top: 2px solid $grey;
+    // border-right: 2px solid $grey;
+    // border-bottom: 2px solid $grey;
 
     & input {
       border-radius: 0;
+
+      &::placeholder {
+        color: $grey;
+      }
     }
   }
 
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px $grey-lighter inset;
+  }
+
   &:focus.valid-input {
-    border-left: 3px solid $green-success;
+    border-bottom: 3px solid $green-success;
   }
 
   &.invalid-input,
   &:focus.invalid-input {
     // border: 0.5px solid $red-error;
-    border-left: 3px solid $red-error;
+    border-bottom: 3px solid $red-error;
   }
 
   .FormInput__label {

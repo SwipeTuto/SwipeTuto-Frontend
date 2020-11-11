@@ -32,7 +32,7 @@ import Loading from "../../Loading/Loading";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 const CardPreviewSmall = ({ card, size }) => {
-  const { media_image, user, name, number_of_likes, likes } = card;
+  const { media_image, user, name, number_of_likes, likes, total_views } = card;
   const dispatch = useDispatch();
   const currentTheme = useSelector(selectTheme);
   const cardId = card && card.id;
@@ -102,6 +102,7 @@ const CardPreviewSmall = ({ card, size }) => {
 
   return (
     <div className={`CardPreviewSmall ${currentTheme}-theme`} data-slideid="1">
+
       <div
         className={`CardPreviewSmall__image  ${cardIsReady ? "active" : "hide"
           }`}
@@ -124,7 +125,12 @@ const CardPreviewSmall = ({ card, size }) => {
       >
         <Loading />
       </div>
-
+      <p
+            className="CardPreviewSmall__likes--number"
+            id={`likesNumber${cardId}`}
+          >
+            {total_views ? total_views : 0}
+        </p>
       <div className="CardPreviewSmall__details">
         <UserNameAndAvatar user={user} link={true} />
         <div
@@ -134,6 +140,7 @@ const CardPreviewSmall = ({ card, size }) => {
           <div className="CardPreviewSmall__likes--logo">
             <HeartEmpty id={`CardPreviewSmall__heart${cardId}`} />
           </div>
+       
           <p
             className="CardPreviewSmall__likes--number"
             id={`likesNumber${cardId}`}

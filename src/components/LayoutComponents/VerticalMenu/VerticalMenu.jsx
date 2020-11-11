@@ -9,13 +9,15 @@ import { selectCurrentUser } from "../../../redux/user/user-selectors";
 
 import "./VerticalMenu.scss";
 
-const VerticalMenu = ({ className, type, children }) => {
+const VerticalMenu = ({ addclass, type, children }) => {
   // child model :
   // <p className="VerticalMenu__menu--item"></p>
   const [menuOpen, setMenuOpen] = useState(false);
   const currentTheme = useSelector(selectTheme);
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
+
+  // console.log(addclass);
 
   const checkIfConnected = () => {
     if (!currentUser) {
@@ -26,15 +28,18 @@ const VerticalMenu = ({ className, type, children }) => {
   };
   return (
     <div
-      className={`VerticalMenu ${className && className}`}
-      onClick={(e) => e.stopPropagation()}
+      className={`VerticalMenu ${addclass && addclass}`}
+      onClick={(e) => {
+        e.stopPropagation();
+        checkIfConnected();
+      }}
     >
       <div
         className="VerticalMenu__logo"
-        onClick={(e) => {
-          e.stopPropagation();
-          checkIfConnected();
-        }}
+        // onClick={(e) => {
+        //   e.stopPropagation();
+        //   checkIfConnected();
+        // }}
       >
         {type && type === "share" ? (
           <ShareLogo className="VerticalMenu__logo--logo" />

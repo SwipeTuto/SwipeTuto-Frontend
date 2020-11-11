@@ -4,7 +4,6 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-
 // redux
 import {
   selectCurrentUser,
@@ -46,7 +45,7 @@ import CardSlider from "../CardSlider/CardSlider";
 import Loading from "../../Loading/Loading";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrapper";
-import ShareButtons from "../../ShareButtons/ShareButtons"
+// import ShareButtons from "../../LayoutComponents/ShareButtons/ShareButtons";
 
 // Services & helpers
 import {
@@ -65,12 +64,13 @@ import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outli
 import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as FullscreenLogo } from "../../../assets/images/expand.svg";
-import { ReactComponent as ShareLogo } from "../../../assets/images/share-social.svg";
+// import { ReactComponent as ShareLogo } from "../../../assets/images/share-social.svg";
 
 // SCSS
 import "./CardFullPopup.scss";
 import { getCurrentUserAction } from "../../../redux/user/user-actions";
 import VerticalMenu from "../../LayoutComponents/VerticalMenu/VerticalMenu";
+import ShareMenu from "../../LayoutComponents/ShareMenu/ShareMenu";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
 // handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
@@ -168,7 +168,7 @@ const CardFullPopup = ({ history, location }) => {
     const nextCard = cardsArray[indexOfCurrentCard + 1];
     dispatch(setClickedCard(nextCard));
   };
- 
+
   const handlePopupClose = () => {
     if (location.pathname === "/") {
       window.history.pushState("", "", "/");
@@ -251,7 +251,6 @@ const CardFullPopup = ({ history, location }) => {
         handlePopupClose();
       }}
     >
-        
       {!isFullscreen && (
         <div className="CardFullPopup__mobile">
           {clickedCardIsLoaded ? (
@@ -291,12 +290,13 @@ const CardFullPopup = ({ history, location }) => {
                 />
               )}
 
-              <ShareLogo
+              {/* <ShareLogo
                 className="card-action-button"
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
-              />
+              /> */}
+              <ShareMenu />
 
               <FullscreenLogo
                 className="card-action-button"
@@ -317,7 +317,7 @@ const CardFullPopup = ({ history, location }) => {
                   Signaler
                 </p>
               </VerticalMenu>
-             
+
               <CloseLogo
                 className="card-action-button"
                 onClick={(e) => {
@@ -336,19 +336,18 @@ const CardFullPopup = ({ history, location }) => {
         }`}
       >
         <div className="CardFullPopup__scroll-wrapper">
-
           <div
             className={`CardFullPopup__wrapper ${currentTheme}-theme`}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="CardFullPopup__user CardFullPopup__section">
-            <ShareButtons/>
+              {/* <ShareButtons /> */}
               <UserNameAndAvatar
                 user={clickedCard && clickedCard.user && clickedCard.user}
                 link={true}
               />
             </div>
-           
+
             {clickedCardIsLoaded ? (
               <>
                 <div className="CardFullPopup__slider">
@@ -442,86 +441,119 @@ const CardFullPopup = ({ history, location }) => {
         <div className="CardFullPopup__action-button">
           {clickedCardIsLoaded ? (
             <>
-              <div className="card-action-button__wrapper">
+              <div
+                className="card-action-button__wrapper"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 <CloseLogo
                   className="card-action-button"
                   onClick={(e) => {
-                    e.stopPropagation();
                     handlePopupClose();
                   }}
                 />
               </div>
               {cardIsLiked ? (
-                <div className="card-action-button__wrapper">
+                <div
+                  className="card-action-button__wrapper"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
                   <HeartFull
                     className="card-action-button card-action-button__liked"
                     onClick={(e) => {
-                      e.stopPropagation();
                       handleLikeClick();
                     }}
                   />
                 </div>
               ) : (
-                <div className="card-action-button__wrapper">
+                <div
+                  className="card-action-button__wrapper"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
                   <HeartEmpty
                     className="card-action-button"
                     onClick={(e) => {
-                      e.stopPropagation();
                       handleLikeClick();
                     }}
                   />
                 </div>
               )}
               {cardIsSaved ? (
-                <div className="card-action-button__wrapper">
+                <div
+                  className="card-action-button__wrapper"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
                   <BookmarkFull
                     className="card-action-button card-action-button__saved"
                     onClick={(e) => {
-                      e.stopPropagation();
                       handleSaveClick();
                     }}
                   />
                 </div>
               ) : (
-                <div className="card-action-button__wrapper">
+                <div
+                  className="card-action-button__wrapper"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
                   <BookmarkEmpty
                     className="card-action-button"
                     onClick={(e) => {
-                      e.stopPropagation();
                       handleSaveClick();
                     }}
                   />
                 </div>
               )}
 
-              <div className="card-action-button__wrapper">
-                <VerticalMenu type="share">
-                  <div></div>
-                </VerticalMenu>
-              </div>
+              {/* <div
+                className="card-action-button__wrapper"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              > */}
+              {/* <ShareMenu addclass="card-action-button__wrapper" /> */}
+              <ShareMenu addclass="card-action-button__wrapper" test="test" />
+              {/* </div> */}
 
-              <div className="card-action-button__wrapper">
+              <div
+                className="card-action-button__wrapper"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dispatch(showFullscreen());
+                }}
+              >
                 <FullscreenLogo
                   className="card-action-button"
                   id="card-action-button__fullscreen"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    dispatch(showFullscreen());
-                  }}
+                  // onClick={(e) => {
+                  //   dispatch(showFullscreen());
+                  // }}
                 />
               </div>
-              <div className="card-action-button__wrapper">
-                <VerticalMenu>
-                  <p
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      dispatch(showSignalPopup(newSignalObject));
-                    }}
-                  >
-                    Signaler
-                  </p>
-                </VerticalMenu>
-              </div>
+              {/* <div
+                className="card-action-button__wrapper"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              > */}
+              <VerticalMenu addclass="card-action-button__wrapper">
+                <p
+                  onClick={(e) => {
+                    dispatch(showSignalPopup(newSignalObject));
+                  }}
+                >
+                  Signaler
+                </p>
+              </VerticalMenu>
+              {/* </div> */}
             </>
           ) : null}
         </div>

@@ -9,6 +9,10 @@ const INITIAL_STATE = {
   fullscreen: false,
   showUserNav: false,
   mobileNavOpen: false,
+  notificationPopupOpen: {
+    open: false,
+    notification: ""
+  },
   filterMobileMenuOpen: false,
   isLoaded: false,
   cardsSize: 'small',
@@ -187,6 +191,22 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         otherPageCardsLoaded: true,
+      }
+    case LayoutActionTypes.OPEN_NOTIFICATION_POPUP:
+      return {
+        ...state,
+        notificationPopupOpen: {
+          open: true,
+          notification: action.payload
+        },
+      }
+    case LayoutActionTypes.CLOSE_NOTIFICATION_POPUP:
+      return {
+        ...state,
+        notificationPopupOpen: {
+          open: false,
+          notification: ""
+        },
       }
     case LayoutActionTypes.TOGGLE_THEME:
       return {

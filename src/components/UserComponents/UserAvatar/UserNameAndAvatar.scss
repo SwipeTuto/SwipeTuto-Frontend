@@ -1,9 +1,6 @@
 @import "../../../variables.scss";
 
 .UserNameAndAvatar {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   flex: 1;
   min-width: 0;
 
@@ -22,5 +19,11 @@
     &--image {
       height: 100%;
     }
+  }
+
+  &__username {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

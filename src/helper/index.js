@@ -458,12 +458,30 @@ export const getNameFromQueryName = (array, queryName) => {
   }
 }
 
-export const copyToClipboard = (content) => {
-  navigator && navigator.clipboard && navigator.clipboard.writeText(content).then(() => {
-    // à faire quand copié
-  }, () => {
-    window.alert("Copie impossible. Vous n'avez pas les autorisations." + content)
-  });
+export const copyToClipboard = async (content) => {
+  if (!content) return false
+  try {
+    await navigator.clipboard.writeText(content)
+    return true;
+
+  } catch (err) {
+    return false
+  }
+}
+
+export const convertNumber = (number) => {
+  const value = parseInt(number)
+  if (value >= 0 && value < 1000) {
+    return value;
+  } else if (value >= 1000 && value < 10000) {
+    return `${(value / 1000).toFixed(1)}k`;
+
+  } else if (value >= 10000 && value < 1000000) {
+    return `${(value / 1000).toFixed(0)}k`;
+
+  } else if (value >= 1000000) {
+    return `${(value / 1000000).toFixed(2)}M`;
+  }
 }
 
 export const initialSearchState = {
@@ -481,15 +499,27 @@ export const initialSignalState = {
 
 
 export const likeUpdate = (cardId) => {
+  console.log(cardId)
   const likedCardText = document.getElementById(`likesNumber${cardId}`);
   const heartEl = document.getElementById(`CardPreviewSmall__heart${cardId}`);
+  const likesNumberPopupLogo = document.getElementById(`likesNumberPopupLogo${cardId}`)
+  const likesNumberPopupNumber = document.getElementById(`likesNumberPopupNumber${cardId}`)
+  console.log(likesNumberPopupLogo, likesNumberPopupNumber)
   if (heartEl && heartEl.classList.contains("active") && likedCardText) {
     likedCardText.textContent = parseInt(likedCardText.textContent) - 1;
     heartEl.classList.remove("active");
-    return;
   } else if (heartEl && likedCardText) {
     likedCardText.textContent = parseInt(likedCardText.textContent) + 1;
     heartEl.classList.add("active");
-    return
+  }
+
+  if (likesNumberPopupLogo && likesNumberPopupLogo.classList.contains("active") && likesNumberPopupNumber) {
+    likesNumberPopupNumber.textContent = parseInt(likesNumberPopupNumber.textContent) - 1;
+    likesNumberPopupLogo.classList.remove("active");
+    console.log('remove class')
+  } else if (likesNumberPopupLogo && likesNumberPopupNumber) {
+    likesNumberPopupNumber.textContent = parseInt(likesNumberPopupNumber.textContent) + 1;
+    likesNumberPopupLogo.classList.add("active");
+    console.log('add class')
   }
 };

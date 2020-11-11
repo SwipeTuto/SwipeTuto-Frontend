@@ -11,7 +11,7 @@ import { getCardAfterfilterAction, getCardByIdAction } from './redux/filter/filt
 import { selectConnexionPopup, selectFirstLoadDone, selectIsLoaded, selectRedirectUrl, selectShowPopupCard, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
 import { setCurrentSearch } from "./redux/filter/filter-actions"
 
-import { urlParams, getUrlId } from "./helper/index"
+import { urlParams, getUrlId, convertNumber } from "./helper/index"
 
 import './index.scss'
 import './App.scss';
@@ -25,6 +25,7 @@ import { selectCardsFetched, selectClickedCard, selectCurrentSearch } from "./re
 import { usePrevious } from "./hooks/usePrevious";
 // import { selectCurrentUser } from "./redux/user/user-selectors";
 import Routes from "./Routes"
+import NotificationPopup from "./components/LayoutComponents/NotificationPopup/NotificationPopup";
 // import { auth } from "./services/firebaseService"
 
 function App(props) {
@@ -119,6 +120,7 @@ function App(props) {
       {redirectUrl && <Redirect to={redirectLink} />}
       {connexionPopup ? <ConnexionRedirect handleClose={handleClose} /> : null}
       <div ref={appEl} className={`App ${currentTheme}-theme ${popupCardIsOpen ? "noscroll" : ""}`}>
+        <NotificationPopup />
         <NavTop />
         <NavTopMobile />
         {signalPopup && <SignalPopup />}

@@ -18,11 +18,12 @@ import {
 
 // service & helper
 // import { base } from "../../../services/configService";
-import { likeUpdate, truncate } from "../../../helper/index";
+import { convertNumber, likeUpdate, truncate } from "../../../helper/index";
 
 // assets
 // import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
-import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outline.svg";
+import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
+import { ReactComponent as EyeLogo } from "../../../assets/images/eye.svg";
 
 // components
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
@@ -102,50 +103,48 @@ const CardPreviewSmall = ({ card, size }) => {
 
   return (
     <div className={`CardPreviewSmall ${currentTheme}-theme`} data-slideid="1">
-
       <div
-        className={`CardPreviewSmall__image  ${cardIsReady ? "active" : "hide"
-          }`}
+        className={`CardPreviewSmall__image  ${
+          cardIsReady ? "active" : "hide"
+        }`}
         id={`CardPreviewSmall__image--${cardId}`}
         onClick={() => handleClickedCardClick()}
       >
         <div className="CardPreviewSmall__hover">
           <p>{name && truncate(name, 60, false)}</p>
-          {/* <div className="CardPreviewSmall__category--stamp">
-            {renameCategory(categorie && categorie[0] && categorie[0].name)
-              ? renameCategory(categorie && categorie[0].name)
-              : "Autre"}
-          </div> */}
         </div>
       </div>
 
       <div
-        className={`CardPreviewSmall__image ${!cardIsReady ? "active" : "hide"
-          } CardPreviewSmall__image--loading CardPreviewSmall__image--loading-${size}`}
+        className={`CardPreviewSmall__image ${
+          !cardIsReady ? "active" : "hide"
+        } CardPreviewSmall__image--loading CardPreviewSmall__image--loading-${size}`}
       >
         <Loading />
       </div>
-      <p
-            className="CardPreviewSmall__likes--number"
-            id={`likesNumber${cardId}`}
-          >
-            {total_views ? total_views : 0}
-        </p>
+
       <div className="CardPreviewSmall__details">
         <UserNameAndAvatar user={user} link={true} />
+        <div className="CardPreviewSmall__likes--logo">
+          <EyeLogo />
+        </div>
+
+        <p className="CardPreviewSmall__likes--number">
+          {total_views ? convertNumber(total_views) : 0}
+        </p>
         <div
           className="CardPreviewSmall__likes"
           onClick={() => handleLikeClick()}
         >
           <div className="CardPreviewSmall__likes--logo">
-            <HeartEmpty id={`CardPreviewSmall__heart${cardId}`} />
+            <HeartFull id={`CardPreviewSmall__heart${cardId}`} />
           </div>
-       
+
           <p
             className="CardPreviewSmall__likes--number"
             id={`likesNumber${cardId}`}
           >
-            {number_of_likes ? number_of_likes : 0}
+            {number_of_likes ? convertNumber(number_of_likes) : 0}
           </p>
         </div>
       </div>

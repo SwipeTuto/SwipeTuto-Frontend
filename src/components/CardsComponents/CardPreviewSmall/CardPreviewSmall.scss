@@ -131,8 +131,10 @@
   &__likes {
     display: flex;
     align-items: center;
+    color: $grey-dark;
 
     &--logo {
+      margin-left: 0.6rem;
       margin-right: 0.3rem;
       display: flex;
       justify-content: center;
@@ -140,6 +142,7 @@
 
       & > svg {
         @include logo-size;
+        fill: $grey;
 
         &.active * {
           fill: $red-like !important;

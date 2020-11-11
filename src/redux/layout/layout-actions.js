@@ -104,3 +104,10 @@ export const setRedirectUrl = (bool) => ({
 export const setFirstLoadDone = () => ({
   type: LayoutActionTypes.FIRST_LOAD_DONE,
 })
+export const openNotificationPopup = (notification) => ({
+  type: LayoutActionTypes.OPEN_NOTIFICATION_POPUP,
+  payload: notification
+})
+export const closeNotificationPopup = () => ({
+  type: LayoutActionTypes.CLOSE_NOTIFICATION_POPUP,
+})

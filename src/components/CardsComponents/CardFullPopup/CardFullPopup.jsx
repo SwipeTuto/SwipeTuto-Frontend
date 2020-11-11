@@ -49,6 +49,7 @@ import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrap
 
 // Services & helpers
 import {
+  convertNumber,
   formattedDate,
   initialSignalState,
   likeUpdate,
@@ -64,6 +65,7 @@ import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outli
 import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as FullscreenLogo } from "../../../assets/images/expand.svg";
+import { ReactComponent as EyeLogo } from "../../../assets/images/eye.svg";
 // import { ReactComponent as ShareLogo } from "../../../assets/images/share-social.svg";
 
 // SCSS
@@ -359,7 +361,7 @@ const CardFullPopup = ({ history, location }) => {
                 </h1>
 
                 <div className="CardFullPopup__meta CardFullPopup__section">
-                  <p className="CardFullPopup__meta--topic_category">
+                  <p className="CardFullPopup__meta-block CardFullPopup__meta--topic_category">
                     {clickedCard &&
                       clickedCard.topic &&
                       clickedCard.topic[0] &&
@@ -372,9 +374,45 @@ const CardFullPopup = ({ history, location }) => {
                       clickedCard.categorie[0].name &&
                       renameQuery(clickedCard.categorie[0].name)}
                   </p>
-                  <p className="CardFullPopup__meta--date">
+                  <p className="CardFullPopup__meta-block CardFullPopup__meta--date">
                     Publié le {clickedCardDate}
                   </p>
+                  <div className="CardFullPopup__meta-block  CardFullPopup__meta--stats">
+                    <span className="CardFullPopup__meta--logo">
+                      <EyeLogo />
+                    </span>
+
+                    <span className="CardFullPopup__meta--number">
+                      {clickedCard && clickedCard.total_views
+                        ? convertNumber(clickedCard.total_views)
+                        : 0}
+                    </span>
+
+                    <div
+                      className="CardFullPopup__like-btn"
+                      onClick={() => handleLikeClick()}
+                    >
+                      <span
+                        className={`CardFullPopup__meta--logo ${
+                          userHasLiked() ? "active" : ""
+                        }`}
+                        id={`likesNumberPopupLogo${clickedCard.id}`}
+                      >
+                        {userHasLiked() ? <HeartFull /> : <HeartEmpty />}
+                      </span>
+
+                      <span
+                        className={`CardFullPopup__meta--number ${
+                          userHasLiked() ? "active" : ""
+                        }`}
+                        id={`likesNumberPopupNumber${clickedCard.id}`}
+                      >
+                        {clickedCard && clickedCard.number_of_likes
+                          ? convertNumber(clickedCard.number_of_likes)
+                          : 0}
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="CardFullPopup__description CardFullPopup__section">

@@ -18,17 +18,20 @@ import VerticalMenu from "../VerticalMenu/VerticalMenu";
 import { ReactComponent as CopyLogo } from "../../../assets/images/copy.svg";
 import "./ShareMenu.scss";
 import { copyToClipboard } from "../../../helper";
+import { useDispatch } from "react-redux";
+import { openNotificationPopup } from "../../../redux/layout/layout-actions";
 
 const ShareMenu = ({ addclass, test }) => {
   var history = createBrowserHistory();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(addclass);
-    console.log(test);
-  }, [addclass, test]);
-
-  const handleClipboardCopy = (text) => {
-    copyToClipboard(text);
+  const handleClipboardCopy = async (text) => {
+    const isCopied = await copyToClipboard(text);
+    if (isCopied) {
+      dispatch(openNotificationPopup("URL Copié dans le presse-papier !"));
+    } else {
+      dispatch(openNotificationPopup("La copie automatique à échouée ..."));
+    }
   };
 
   return (

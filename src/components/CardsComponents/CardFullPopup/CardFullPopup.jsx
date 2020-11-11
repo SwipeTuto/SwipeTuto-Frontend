@@ -318,7 +318,11 @@ const CardFullPopup = ({ history, location }) => {
         </div>
       )}
 
-      <div className="CardFullPopup__allwrapper">
+      <div
+        className={`CardFullPopup__allwrapper${
+          isFullscreen ? "--fullscreen" : ""
+        }`}
+      >
         <div className="CardFullPopup__scroll-wrapper">
           <div
             className={`CardFullPopup__wrapper ${currentTheme}-theme`}

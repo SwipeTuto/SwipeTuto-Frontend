@@ -5,7 +5,7 @@
   visibility: hidden;
   z-index: 50;
   scroll-behavior: smooth;
-  font-size: 2rem;
+  font-size: 1.8rem;
   display: flex;
   justify-content: center;
   visibility: visible;
@@ -18,27 +18,30 @@
   overflow-y: scroll;
 
   &__allwrapper {
-    display: flex;
-    margin: 0 auto;
-    transform: translateX(8rem);
-    position: fixed;
-    height: 100vh;
+    width: 100%;
+    transform: translateX(0);
   }
 
   &__scroll-wrapper {
-    overflow-y: auto;
     height: 100%;
+    overflow-y: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 80rem 1fr;
+
     &::-webkit-scrollbar {
       display: none;
     }
   }
 
   &__wrapper {
-    max-width: 80rem;
-    position: relative;
-    border-radius: $card-radius;
-    padding: 2rem;
-
+    grid-column: 2/3;
+    padding: 3rem 6rem;
+    padding-top: 8rem;
+    max-width: 100%;
+    margin: 0;
+    width: 100%;
+    border-radius: 0;
     border: 0.5px solid $grey;
 
     .loading {
@@ -52,20 +55,17 @@
     margin: 0 4rem;
   }
 
-  .CardSlider {
-    margin-bottom: 4rem;
-  }
-
   &__user {
     display: flex;
     align-items: center;
     text-overflow: ellipsis;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     padding: 0;
 
     .UserNameAndAvatar {
       display: flex;
       align-items: center;
+
       &__avatar {
         height: 6rem;
         width: 6rem;
@@ -79,10 +79,7 @@
   }
 
   &__action-button {
-    display: flex;
-    flex-direction: column;
-    box-sizing: content-box;
-    margin-left: 2rem;
+    display: none;
   }
 
   .VerticalMenu {
@@ -114,22 +111,27 @@
 
     &__liked {
       fill: $red-like;
-      // fill: $primary-light;
     }
 
     &__saved {
       fill: $green-saved;
-      // fill: $primary-light;
     }
   }
 
   &__mobile {
     display: flex;
-  }
+    justify-content: flex-end;
+    position: absolute;
+    z-index: 80;
+    background-color: $white;
+    box-shadow: $button-shadow;
+    width: 100%;
+    padding: 1rem;
 
-  &__wrapper,
-  &__action-button {
-    margin-top: 2rem;
+    .card-action-button,
+    .VerticalMenu__logo--logo {
+      margin-left: 1rem;
+    }
   }
 
   &__title.title.title-1 {
@@ -137,9 +139,9 @@
     margin-bottom: 2rem;
     font-size: 4rem;
   }
-  &__title.title.title.title-2 {
-    margin-bottom: 4rem;
-    font-size: 3rem;
+  & .title.title.title-2 {
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
   }
 
   &__description {
@@ -149,7 +151,6 @@
   &__meta {
     display: flex;
     justify-content: center;
-    // padding: 2rem 4rem;
     padding: 0;
 
     & p {
@@ -187,11 +188,6 @@
   }
 
   &__autres-posts {
-    // display: flex;
-    // // align-items: center;
-    // align-items: center;
-    // flex-direction: column;
-
     .autres-posts {
       &--grid {
         width: 100%;
@@ -202,8 +198,6 @@
     }
 
     .autres-posts--preview {
-      // width: 12rem;
-      // height: 12rem;
       cursor: pointer;
 
       & > img {
@@ -213,20 +207,18 @@
   }
 
   &__slider {
-    min-height: 500px;
-    min-width: 500px;
+    min-height: 400px;
+    min-width: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .nav__chevron {
-    display: block;
+    display: none;
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    // height: 5rem;
-    // width: 5rem;
     @include big-logo-size;
     cursor: pointer;
     fill: rgba($grey, 0.7);
@@ -253,6 +245,16 @@
     }
   }
 
+  .FirstLevelComment .VerticalMenu {
+    height: 2.5rem;
+    width: 2.5rem;
+    &__logo {
+      &--logo {
+        @include logo-size;
+      }
+    }
+  }
+
   // MEDIA QUERIES
 
   @media screen and (min-width: $bp-big) {
@@ -260,67 +262,66 @@
       &__wrapper {
         max-width: 90rem;
       }
+
+      &__mobile {
+        display: none;
+      }
+
+      &__wrapper,
+      &__action-button {
+        margin: 2rem 0;
+      }
+
+      &__action-button {
+        display: flex;
+        flex-direction: column;
+        box-sizing: content-box;
+        margin-left: 2rem;
+      }
+
+      &__allwrapper {
+        display: flex;
+        margin: 0 auto;
+        transform: translateX(8rem);
+        position: fixed;
+        height: 100vh;
+        width: max-content;
+        // padding: 2rem;
+      }
+
+      &__scroll-wrapper {
+        display: block;
+      }
+
+      &__wrapper {
+        max-width: 90rem;
+        border-radius: $card-radius;
+        padding: 3rem 6rem;
+      }
+    }
+    .nav__chevron {
+      display: block;
     }
   }
 
   @media screen and (max-width: $bp-tablet) {
     .CardFullPopup {
-      &__mobile {
-        display: flex;
-        justify-content: flex-end;
-        position: absolute;
-        z-index: 80;
-        background-color: $white;
-        box-shadow: $button-shadow;
-        width: 100%;
-        padding: 1rem;
-
-        .card-action-button,
-        .VerticalMenu__logo--logo {
-          margin-left: 1rem;
-        }
-      }
-
-      &__action-button {
-        display: none;
-      }
-
-      &__allwrapper {
-        width: 100%;
-        transform: translateX(0);
-      }
-
       &__scroll-wrapper {
-        width: 100%;
+        display: block;
       }
 
       &__wrapper {
-        padding-top: 7rem;
-        max-width: 100%;
-        margin: 0;
-        width: 100%;
-        border-radius: 0;
-      }
-
-      &__section {
-        margin: 0;
-      }
-
-      &__user {
-        margin-bottom: 2rem;
-      }
-
-      &__title {
-        font-size: 4rem;
+        padding: 7rem 10rem;
       }
 
       &__slider {
-        min-height: unset;
-        min-width: unset;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
-    .nav__chevron {
-      display: none;
+    .CardSlider {
+      height: 100%;
     }
   }
 

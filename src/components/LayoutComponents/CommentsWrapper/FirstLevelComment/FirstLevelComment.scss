@@ -28,7 +28,7 @@
     border-radius: $card-radius;
     display: flex;
     flex-direction: column;
-    padding: 2rem 3rem;
+    padding: 1.5rem 2rem;
     color: $black;
 
     .UserUsername {
@@ -159,6 +159,10 @@
   margin-left: 4rem;
 }
 
+@media screen and (max-width: $bp-tablet) {
+  .FirstLevelComment {
+  }
+}
 @media screen and (max-width: $bp-phone) {
   .FirstLevelComment {
     &__author {

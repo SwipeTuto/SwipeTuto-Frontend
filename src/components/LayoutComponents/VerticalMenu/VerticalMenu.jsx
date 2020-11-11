@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ReactComponent as MenuLogo } from "../../../assets/images/ellipsis-vertical.svg";
+import { ReactComponent as ShareLogo } from "../../../assets/images/share-social.svg";
 import { openConnexionPopup } from "../../../redux/layout/layout-actions";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 
 import "./VerticalMenu.scss";
 
-const VerticalMenu = ({ className, children }) => {
+const VerticalMenu = ({ className, type, children }) => {
   // child model :
   // <p className="VerticalMenu__menu--item"></p>
   const [menuOpen, setMenuOpen] = useState(false);
@@ -35,7 +36,11 @@ const VerticalMenu = ({ className, children }) => {
           checkIfConnected();
         }}
       >
-        <MenuLogo className="VerticalMenu__logo--logo" />
+        {type && type === "share" ? (
+          <ShareLogo className="VerticalMenu__logo--logo" />
+        ) : (
+          <MenuLogo className="VerticalMenu__logo--logo" />
+        )}
       </div>
       {menuOpen && (
         <div className={`VerticalMenu__menu ${currentTheme}-theme`}>

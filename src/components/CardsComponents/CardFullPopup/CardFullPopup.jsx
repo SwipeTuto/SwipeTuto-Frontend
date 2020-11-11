@@ -63,6 +63,7 @@ import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outli
 import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as FullscreenLogo } from "../../../assets/images/expand.svg";
+import { ReactComponent as ShareLogo } from "../../../assets/images/share-social.svg";
 
 // SCSS
 import "./CardFullPopup.scss";
@@ -287,6 +288,13 @@ const CardFullPopup = ({ history, location }) => {
                 />
               )}
 
+              <ShareLogo
+                className="card-action-button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              />
+
               <FullscreenLogo
                 className="card-action-button"
                 id="card-action-button__fullscreen"
@@ -479,6 +487,12 @@ const CardFullPopup = ({ history, location }) => {
                   />
                 </div>
               )}
+
+              <div className="card-action-button__wrapper">
+                <VerticalMenu type="share">
+                  <div></div>
+                </VerticalMenu>
+              </div>
 
               <div className="card-action-button__wrapper">
                 <FullscreenLogo

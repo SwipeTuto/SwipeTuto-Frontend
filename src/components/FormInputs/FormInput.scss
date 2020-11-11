@@ -2,10 +2,4 @@
 
 .FormInput {
   @include input-style;
-
-
-}
-
-textarea.FormInput{
-  border-radius: $card-radius;
 }

@@ -4,6 +4,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 
+
 // redux
 import {
   selectCurrentUser,
@@ -45,6 +46,7 @@ import CardSlider from "../CardSlider/CardSlider";
 import Loading from "../../Loading/Loading";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrapper";
+import ShareButtons from "../../ShareButtons/ShareButtons"
 
 // Services & helpers
 import {
@@ -166,7 +168,7 @@ const CardFullPopup = ({ history, location }) => {
     const nextCard = cardsArray[indexOfCurrentCard + 1];
     dispatch(setClickedCard(nextCard));
   };
-
+ 
   const handlePopupClose = () => {
     if (location.pathname === "/") {
       window.history.pushState("", "", "/");
@@ -249,6 +251,7 @@ const CardFullPopup = ({ history, location }) => {
         handlePopupClose();
       }}
     >
+        
       {!isFullscreen && (
         <div className="CardFullPopup__mobile">
           {clickedCardIsLoaded ? (
@@ -314,6 +317,7 @@ const CardFullPopup = ({ history, location }) => {
                   Signaler
                 </p>
               </VerticalMenu>
+             
               <CloseLogo
                 className="card-action-button"
                 onClick={(e) => {
@@ -332,17 +336,19 @@ const CardFullPopup = ({ history, location }) => {
         }`}
       >
         <div className="CardFullPopup__scroll-wrapper">
+
           <div
             className={`CardFullPopup__wrapper ${currentTheme}-theme`}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="CardFullPopup__user CardFullPopup__section">
+            <ShareButtons/>
               <UserNameAndAvatar
                 user={clickedCard && clickedCard.user && clickedCard.user}
                 link={true}
               />
             </div>
-
+           
             {clickedCardIsLoaded ? (
               <>
                 <div className="CardFullPopup__slider">

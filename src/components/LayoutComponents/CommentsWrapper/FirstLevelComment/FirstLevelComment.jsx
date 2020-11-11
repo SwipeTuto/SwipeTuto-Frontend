@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // redux
@@ -12,6 +12,7 @@ import {
   toggleCommentLikeAction,
   deleteCommentAction,
   addReplyAction,
+  addCommentAction,
 } from "../../../../redux/filter/filter-actions";
 import { getReplies, getNextReplies } from "../../../../services/socialService";
 
@@ -41,27 +42,33 @@ import {
 } from "../../../../redux/layout/layout-actions";
 import VerticalMenu from "../../VerticalMenu/VerticalMenu";
 
-const FirstLevelComment = ({ comment, confirmCommentDelete, handleUpdate }) => {
+const FirstLevelComment = ({
+  comment,
+  confirmCommentDelete,
+  handleUpdate,
+  handleCommentRespond,
+}) => {
   // console.log(comment);
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const clickedCardId = useSelector(selectClickedCardId);
-  const lastPublishedComment = useSelector(selectLastPublishedComment);
+  // const lastPublishedComment = useSelector(selectLastPublishedComment);
   const commentAuthor = comment.author;
   const commentId = comment.id;
   const commentLikers = useSelector(selectCommentLikers(commentId));
-  const replyCount = comment.reply_count;
+
+  // const replyCount = comment.reply_count;
   // let replyNextLink = comment.reply_comments;
   const likesCount = comment.likes_count;
   const [commentIsLiked, setCommentIsLiked] = useState();
   // const [localRepliesArray, setLocalRepliesArray] = useState([]);
-  const [repliesBlockVisible, setRepliesBlockVisible] = useState(false);
-  const [localReplyArray, setLocalReplyArray] = useState([]);
-  const [replyInputShow, setReplyInputShow] = useState(false);
-  const [firstValue, setNewFirstValue] = useState("");
-  const [localLastPublishedArray, setLocalLastPublishedArray] = useState([]);
-  const [shouldUpdate, setShouldUpdate] = useState(false);
-  const [nextRepliesLink, setNextRepliesLink] = useState();
+  // const [repliesBlockVisible, setRepliesBlockVisible] = useState(false);
+  // const [localReplyArray, setLocalReplyArray] = useState([]);
+  // const [replyInputShow, setReplyInputShow] = useState(false);
+  // const [firstValue, setNewFirstValue] = useState("");
+  // const [localLastPublishedArray, setLocalLastPublishedArray] = useState([]);
+  // const [shouldUpdate, setShouldUpdate] = useState(false);
+  // const [nextRepliesLink, setNextRepliesLink] = useState();
 
   //! GESTION DELETE
   const [confirmPopupOpen, setConfirmPopupOpen] = useState({
@@ -96,48 +103,49 @@ const FirstLevelComment = ({ comment, confirmCommentDelete, handleUpdate }) => {
 
   //! GESTION INPUT REPONSE
   // toggle affichage input réponse
-  const handleCommentRespond = () => {
-    setReplyInputShow(true);
-    setNewFirstValue(`@${commentAuthor.username} `);
-  };
+  // const handleCommentRespond = () => {
+  //   // setReplyInputShow(true);
+  //   setNewFirstValue(`@${commentAuthor.username} `);
+  // };
 
   // Si clic sur réponse alors focus dans l'input réponse et scroll jusque lui
-  useEffect(() => {
-    if (replyInputShow) {
-      const inputToScrollTo = document.querySelector(
-        `#replyInput-${commentId}`
-      );
-      const cardFullPopupEl = document.querySelector(".CardFullPopup");
-      cardFullPopupEl.scrollTo(0, inputToScrollTo.offsetTop - 100);
-      inputToScrollTo.focus({ preventScroll: false });
-      inputToScrollTo.setSelectionRange(
-        inputToScrollTo.value.length,
-        inputToScrollTo.value.length
-      );
-    }
-  }, [commentId, replyInputShow]);
+  // useEffect(() => {
+  //   if (replyInputShow) {
+  //     const inputToScrollTo = document.querySelector(
+  //       `#replyInput-${commentId}`
+  //     );
+  //     const cardFullPopupEl = document.querySelector(".CardFullPopup");
+  //     cardFullPopupEl.scrollTo(0, inputToScrollTo.offsetTop - 100);
+  //     inputToScrollTo.focus({ preventScroll: false });
+  //     inputToScrollTo.setSelectionRange(
+  //       inputToScrollTo.value.length,
+  //       inputToScrollTo.value.length
+  //     );
+  //   }
+  // }, [commentId, replyInputShow]);
 
-  const handleReplyInputClose = () => {
-    setReplyInputShow(false);
-  };
+  // const handleReplyInputClose = () => {
+  //   // setReplyInputShow(false);
+  // };
 
   // gestion du nouveau commentaire
-  const handleAddCommentClick = async (value) => {
-    await dispatch(addReplyAction(clickedCardId, commentId, value));
-    setNewFirstValue("");
-    setReplyInputShow(false);
-  };
+  // const handleAddCommentClick = async (value) => {
+  //   // await dispatch(addReplyAction(clickedCardId, commentId, value));
+  //   dispatch(addCommentAction(clickedCardId, value));
+  //   // setNewFirstValue("");
+  //   // setReplyInputShow(false);
+  // };
 
   // Dès la publication d'une réponse on la récupère pour la mettre dans ce array local
-  useEffect(() => {
-    if (lastPublishedComment && !lastPublishedComment.reply_comments) {
-      const arrayCopy = localLastPublishedArray;
-      arrayCopy.unshift(lastPublishedComment);
-      setLocalLastPublishedArray(arrayCopy);
-    }
-    setShouldUpdate(true);
-    // console.log(localLastPublishedArray);
-  }, [lastPublishedComment, localLastPublishedArray]);
+  // useEffect(() => {
+  //   if (lastPublishedComment && !lastPublishedComment.reply_comments) {
+  //     const arrayCopy = localLastPublishedArray;
+  //     arrayCopy.unshift(lastPublishedComment);
+  //     setLocalLastPublishedArray(arrayCopy);
+  //   }
+  //   // setShouldUpdate(true);
+  //   // console.log(localLastPublishedArray);
+  // }, [lastPublishedComment, localLastPublishedArray]);
 
   //! FIRST LEVEL COMMENT ELEMENT
   const userHasLiked = useCallback(() => {
@@ -174,66 +182,66 @@ const FirstLevelComment = ({ comment, confirmCommentDelete, handleUpdate }) => {
 
   //! GESTION FETECH REPONSES
   // Gestion load des réponses
-  const handleRepliesFetch = async () => {
-    const repliesArrayFetched = getReplies(commentId);
-    await repliesArrayFetched.then((rep) => {
-      // console.log(rep.data);
-      rep &&
-        rep.data &&
-        rep.data.results &&
-        setLocalReplyArray([...localReplyArray, ...rep.data.results]);
+  // const handleRepliesFetch = async () => {
+  //   const repliesArrayFetched = getReplies(commentId);
+  //   await repliesArrayFetched.then((rep) => {
+  //     // console.log(rep.data);
+  //     rep &&
+  //       rep.data &&
+  //       rep.data.results &&
+  //       setLocalReplyArray([...localReplyArray, ...rep.data.results]);
 
-      rep && rep.data && rep.data.next
-        ? setNextRepliesLink(rep.data.next)
-        : setNextRepliesLink(null);
-    });
-    setRepliesBlockVisible(true);
-  };
+  //     rep && rep.data && rep.data.next
+  //       ? setNextRepliesLink(rep.data.next)
+  //       : setNextRepliesLink(null);
+  //   });
+  //   setRepliesBlockVisible(true);
+  // };
 
-  const handleRepliesNextFetch = async () => {
-    // lancer action pour fetch les réponses
-    const repliesArrayFetched = getNextReplies(nextRepliesLink);
-    await repliesArrayFetched.then((rep) => {
-      rep &&
-        rep.data &&
-        rep.data.results &&
-        setLocalReplyArray([...localReplyArray, ...rep.data.results]);
-      rep && rep.data && rep.data.next
-        ? setNextRepliesLink(rep.data.next)
-        : setNextRepliesLink(null);
-    });
-    setRepliesBlockVisible(true);
-  };
+  // const handleRepliesNextFetch = async () => {
+  //   // lancer action pour fetch les réponses
+  //   const repliesArrayFetched = getNextReplies(nextRepliesLink);
+  //   await repliesArrayFetched.then((rep) => {
+  //     rep &&
+  //       rep.data &&
+  //       rep.data.results &&
+  //       setLocalReplyArray([...localReplyArray, ...rep.data.results]);
+  //     rep && rep.data && rep.data.next
+  //       ? setNextRepliesLink(rep.data.next)
+  //       : setNextRepliesLink(null);
+  //   });
+  //   setRepliesBlockVisible(true);
+  // };
 
   //! GESTION DELETE DES REPLIES
-  const handleReplyDelete = async (replyId) => {
-    await dispatch(deleteCommentAction(replyId));
-    const fullReplylocalReplyArray = localReplyArray.filter(
-      (reply) => reply.id === parseInt(replyId)
-    );
-    const fullReplyLastLocal = localLastPublishedArray.filter(
-      (reply) => reply.id === parseInt(replyId)
-    );
-    if (fullReplylocalReplyArray.length > 0) {
-      const index = localReplyArray.indexOf(fullReplylocalReplyArray[0]);
-      if (index > -1) {
-        const arrayCopy = localReplyArray;
-        arrayCopy.splice(index, 1);
-        setLocalReplyArray(arrayCopy);
-        setRepliesBlockVisible(false);
-        setRepliesBlockVisible(true);
-      }
-    } else if (fullReplyLastLocal.length > 0) {
-      const index = localLastPublishedArray.indexOf(fullReplyLastLocal[0]);
-      if (index > -1) {
-        const arrayCopy = localLastPublishedArray;
-        arrayCopy.splice(index, 1);
-        setLocalLastPublishedArray(arrayCopy);
-        setRepliesBlockVisible(false);
-        setRepliesBlockVisible(true);
-      }
-    }
-  };
+  // const handleReplyDelete = async (replyId) => {
+  //   await dispatch(deleteCommentAction(replyId));
+  //   const fullReplylocalReplyArray = localReplyArray.filter(
+  //     (reply) => reply.id === parseInt(replyId)
+  //   );
+  //   const fullReplyLastLocal = localLastPublishedArray.filter(
+  //     (reply) => reply.id === parseInt(replyId)
+  //   );
+  //   if (fullReplylocalReplyArray.length > 0) {
+  //     const index = localReplyArray.indexOf(fullReplylocalReplyArray[0]);
+  //     if (index > -1) {
+  //       const arrayCopy = localReplyArray;
+  //       arrayCopy.splice(index, 1);
+  //       setLocalReplyArray(arrayCopy);
+  //       setRepliesBlockVisible(false);
+  //       setRepliesBlockVisible(true);
+  //     }
+  //   } else if (fullReplyLastLocal.length > 0) {
+  //     const index = localLastPublishedArray.indexOf(fullReplyLastLocal[0]);
+  //     if (index > -1) {
+  //       const arrayCopy = localLastPublishedArray;
+  //       arrayCopy.splice(index, 1);
+  //       setLocalLastPublishedArray(arrayCopy);
+  //       setRepliesBlockVisible(false);
+  //       setRepliesBlockVisible(true);
+  //     }
+  //   }
+  // };
 
   // utilitaires :
   const commentFormattedDate = commentsFormattedDate(comment.posted_on);
@@ -257,35 +265,37 @@ const FirstLevelComment = ({ comment, confirmCommentDelete, handleUpdate }) => {
         </div>
         <div className="FirstLevelComment__wrapper">
           <div className="FirstLevelComment__center">
+            <VerticalMenu>
+              {commentAuthor &&
+              commentAuthor.id &&
+              currentUser &&
+              currentUser.id &&
+              commentAuthor.id === currentUser.id ? (
+                <p
+                  data-commentid={commentId}
+                  onClick={(e) => handleCommentDelete(e)}
+                >
+                  Supprimer
+                </p>
+              ) : (
+                <p onClick={() => dispatch(showSignalPopup(newSignalObject))}>
+                  Signaler
+                </p>
+              )}
+            </VerticalMenu>
             <div className="FirstLevelComment__center--top">
-              <UserUsername user={commentAuthor} link={true} />
-              <VerticalMenu>
-                {commentAuthor &&
-                  commentAuthor.id &&
-                  currentUser &&
-                  currentUser.id &&
-                  commentAuthor.id === currentUser.id ? (
-                    <p
-                      data-commentid={commentId}
-                      onClick={(e) => handleCommentDelete(e)}
-                    >
-                      Supprimer
-                    </p>
-                  ) : (
-                    <p onClick={() => dispatch(showSignalPopup(newSignalObject))}>
-                      Signaler
-                    </p>
-                  )}
-              </VerticalMenu>
+              <div className="FirstLevelComment__username">
+                <UserUsername user={commentAuthor} link={true} />
+                <span className="FirstLevelComment__date">
+                  {comment && commentFormattedDate}
+                </span>
+              </div>
             </div>
             <p className="FirstLevelComment__comment">
               {comment && comment.text}
             </p>
           </div>
           <div className="FirstLevelComment__actions">
-            <p className="FirstLevelComment__date">
-              {comment && commentFormattedDate}
-            </p>
             <p
               className="FirstLevelComment__action--likes-number"
               data-likes={commentId}
@@ -295,8 +305,8 @@ const FirstLevelComment = ({ comment, confirmCommentDelete, handleUpdate }) => {
             {commentIsLiked ? (
               <HeartFull className=" FirstLevelComment__action--logo comment-logo__liked" />
             ) : (
-                <HeartEmpty className=" FirstLevelComment__action--logo" />
-              )}
+              <HeartEmpty className=" FirstLevelComment__action--logo" />
+            )}
             <p
               className="FirstLevelComment__action"
               onClick={() => handleCommentLike(commentId)}
@@ -305,15 +315,14 @@ const FirstLevelComment = ({ comment, confirmCommentDelete, handleUpdate }) => {
             </p>
             <p
               className="FirstLevelComment__action"
-              onClick={() => handleCommentRespond()}
+              onClick={() => handleCommentRespond(commentAuthor)}
             >
               Répondre
             </p>
           </div>
-
         </div>
       </div>
-      <div className="FirstLevelComment__replies">
+      {/* <div className="FirstLevelComment__replies">
         {repliesBlockVisible ? (
           <>
             {shouldUpdate &&
@@ -324,7 +333,7 @@ const FirstLevelComment = ({ comment, confirmCommentDelete, handleUpdate }) => {
                   key={reply.id}
                   reply={reply}
                   handleCommentRespond={handleCommentRespond}
-                  handleReplyDelete={handleReplyDelete}
+                  // handleReplyDelete={handleReplyDelete}
                 />
               ))}
             {localReplyArray &&
@@ -357,22 +366,23 @@ const FirstLevelComment = ({ comment, confirmCommentDelete, handleUpdate }) => {
                 </p>
               ) : null}
             </>
-          )}
-        <div
-          className={`FirstLevelComment__replies--input ${replyInputShow ? "active" : ""
-            }`}
-        >
-          <CommentsInput
-            handleAddCommentClick={handleAddCommentClick}
-            id={`replyInput-${comment.id}`}
-            firstValue={firstValue}
-          />
-          <CloseLogo
-            className="FirstLevelComment__close-logo"
-            onClick={() => handleReplyInputClose()}
-          />
-        </div>
-      </div>
+          )} */}
+      {/* <div
+        className={`FirstLevelComment__replies--input ${
+          replyInputShow ? "active" : ""
+        }`}
+      >
+        <CommentsInput
+          handleAddCommentClick={handleAddCommentClick}
+          id={`replyInput-${comment.id}`}
+          firstValue={firstValue}
+        />
+        <CloseLogo
+          className="FirstLevelComment__close-logo"
+          onClick={() => handleReplyInputClose()}
+        />
+      </div> */}
+      {/* </div> */}
     </>
   );
 };

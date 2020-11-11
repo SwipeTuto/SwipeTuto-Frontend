@@ -34,16 +34,16 @@ const ShareMenu = ({ addclass, test }) => {
   return (
     <VerticalMenu addclass={addclass} type="share">
       <FacebookShareButton url={base + history.location.pathname}>
-        <FacebookIcon size={50} round={true} />
+        <FacebookIcon size={45} round={true} />
       </FacebookShareButton>
       <TwitterShareButton url={base + history.location.pathname}>
-        <TwitterIcon size={50} round={true} />
+        <TwitterIcon size={45} round={true} />
       </TwitterShareButton>
       <WhatsappShareButton url={base + history.location.pathname}>
-        <WhatsappIcon size={50} round={true} />
+        <WhatsappIcon size={45} round={true} />
       </WhatsappShareButton>
       <EmailShareButton body={base + history.location.pathname}>
-        <EmailIcon size={50} round={true} />
+        <EmailIcon size={45} round={true} />
       </EmailShareButton>
       <div
         className="ShareMenu__copy"

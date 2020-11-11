@@ -2,8 +2,8 @@
 
 .ShareMenu {
   &__copy {
-    height: 50px;
-    width: 50px;
+    height: 45px;
+    width: 45px;
     border-radius: 50%;
     background-color: $primary-dark;
     display: flex;
@@ -22,13 +22,13 @@
 }
 
 .VerticalMenu__menu {
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  // flex-direction: row;
+  // align-items: center;
+  // justify-content: center;
 
   &--item {
-    margin-left: 1rem;
-    margin-bottom: 0 !important;
+    // margin-left: 1rem;
+    // margin-bottom: 0 !important;
 
     & button {
       display: flex;

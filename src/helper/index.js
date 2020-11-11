@@ -459,7 +459,7 @@ export const getNameFromQueryName = (array, queryName) => {
 }
 
 export const copyToClipboard = (content) => {
-  navigator.clipboard.writeText(content).then(() => {
+  navigator && navigator.clipboard && navigator.clipboard.writeText(content).then(() => {
     // à faire quand copié
   }, () => {
     window.alert("Copie impossible. Vous n'avez pas les autorisations." + content)

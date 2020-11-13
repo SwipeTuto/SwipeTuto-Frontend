@@ -445,8 +445,12 @@ export const orderArray = [
     name: "Modifié",
   },
   {
-    queryName: "likes",
+    queryName: "-likes",
     name: "Populaire",
+  },
+  {
+    queryName: "-total_views",
+    name: "Vue",
   }
 ]
 

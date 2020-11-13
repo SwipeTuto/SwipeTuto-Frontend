@@ -437,11 +437,11 @@ export const getCategoriesArray = (topic) => {
 
 export const orderArray = [
   {
-    queryName: "-created",
+    queryName: "created",
     name: "Nouveau",
   },
   {
-    queryName: "-update",
+    queryName: "update",
     name: "Modifié",
   },
   {
@@ -449,7 +449,7 @@ export const orderArray = [
     name: "Populaire",
   },
   {
-    queryName: "-total_views",
+    queryName: "total_views",
     name: "Vue",
   }
 ]

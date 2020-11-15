@@ -18,7 +18,7 @@
   // box-shadow: $light-shadow;
   box-shadow: $button-shadow;
   font-size: 1.6rem;
-  height: 6rem;
+  height: $navtop-height;
 
   &__left,
   &__center,
@@ -137,7 +137,7 @@
     align-items: center;
 
     & div:not(:first-child) {
-      margin-left: 2rem;
+      margin-left: 1.5rem;
     }
 
     .NavTop__avatar {
@@ -169,7 +169,7 @@
       height: 100%;
     }
   }
-  &__dropdownUserMenu {
+  &__roundBtn {
     background-color: $grey-light;
     cursor: pointer;
     width: 3.5rem;

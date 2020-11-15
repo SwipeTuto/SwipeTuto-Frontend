@@ -1,0 +1,64 @@
+@import "../../variables.scss";
+
+.AddCardPage {
+  padding: $grid-component-padding;
+  min-height: 100vh;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+
+  .title-1 {
+    margin-bottom: 6rem;
+    text-align: center;
+  }
+
+  &__wrapper,
+  &__section {
+    border-radius: $card-radius;
+  }
+
+  &__wrapper {
+    padding: 6rem;
+    margin: 2rem;
+    border: 1px solid $grey;
+  }
+
+  &__section {
+    padding: 2rem;
+    border: 1px solid $grey;
+    @include card-shadow;
+
+    &:not(:last-of-type) {
+      margin-bottom: 6rem;
+    }
+  }
+
+  &__description {
+    margin-bottom: 4rem;
+  }
+
+  &__inputZone {
+    display: flex;
+    white-space: nowrap;
+
+    &:not(:last-of-type) {
+      margin-bottom: 2rem;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 70%;
+      margin-left: auto;
+    }
+  }
+
+  &__buttons {
+    padding: 2rem;
+    display: flex;
+    justify-content: flex-end;
+
+    & .custom-button:last-of-type {
+      margin-left: 2rem;
+    }
+  }
+}

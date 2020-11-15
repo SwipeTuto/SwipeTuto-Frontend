@@ -12,10 +12,7 @@ import {
 } from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
 import { toggleUserNav } from "../../../redux/layout/layout-actions";
-import {
-  selectUserNav,
-  selectTheme,
-} from "../../../redux/layout/layout-selectors";
+import { selectUserNav, selectTheme } from "../../../redux/layout/layout-selectors";
 import { setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
@@ -34,9 +31,9 @@ import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.s
 import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
 import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
 import { ReactComponent as BookmarkLogo } from "../../../assets/images/bookmark.svg";
+import { ReactComponent as AddLogo } from "../../../assets/images/add.svg";
 import SwipeTutoSmallSmall from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
 import { ReactComponent as DropdownFullLogo } from "../../../assets/images/chevrons/caret-down.svg";
-
 
 import "./NavTop.scss";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
@@ -49,8 +46,7 @@ const NavTop = (props) => {
   const currentSearch = useSelector(selectCurrentSearch);
   const topicHandleClick = async (topicQueryName) => {
     // const topicName = e.target.name ? e.target.name : null;
-    dispatch(setCardsFetchedInStore(null))
-
+    dispatch(setCardsFetchedInStore(null));
 
     const currentSearchCopy = {
       ...currentSearch,
@@ -62,7 +58,7 @@ const NavTop = (props) => {
 
   const categoryHandleClick = async (topicQueryName, categoryQueryName) => {
     // const topicName = e.target.name ? e.target.name : null;
-    dispatch(setCardsFetchedInStore(null))
+    dispatch(setCardsFetchedInStore(null));
 
     const currentSearchCopy = {
       ...currentSearch,
@@ -86,51 +82,33 @@ const NavTop = (props) => {
             Accueil
           </NavLink>
         ) : (
-            <>
-              <p className="NavTop__link NavTop__link--category">
-                Explorer
+          <>
+            <p className="NavTop__link NavTop__link--category">
+              Explorer
               <DropDownLogo className="NavTop__link--logo" />
-              </p>
-              <div
-                className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme`}
-              >
-                {topicArray &&
-                  topicArray.map((topic, index) => (
-                    <div className="NavTop__topicList">
+            </p>
+            <div className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme`}>
+              {topicArray &&
+                topicArray.map((topic, index) => (
+                  <div className="NavTop__topicList">
+                    <Link key={`topicList${index}`} to="/search" onClick={() => topicHandleClick(topic.queryName)} name={topic.queryName}>
+                      <span className="NavTop__topicList--topic">{topic.name}</span>
+                    </Link>
+                    {getCategoriesArray(topic.queryName).map((category, index) => (
                       <Link
-                        key={`topicList${index}`}
+                        key={index}
                         to="/search"
-                        onClick={() => topicHandleClick(topic.queryName)}
-                        name={topic.queryName}
+                        onClick={() => categoryHandleClick(topic.queryName, category.queryName)}
+                        name={category.queryName}
                       >
-                        <span className="NavTop__topicList--topic">
-                          {topic.name}
-                        </span>
+                        <span className="NavTop__topicList--category">{category.name}</span>
                       </Link>
-                      {getCategoriesArray(topic.queryName).map(
-                        (category, index) => (
-                          <Link
-                            key={index}
-                            to="/search"
-                            onClick={() =>
-                              categoryHandleClick(
-                                topic.queryName,
-                                category.queryName
-                              )
-                            }
-                            name={category.queryName}
-                          >
-                            <span className="NavTop__topicList--category">
-                              {category.name}
-                            </span>
-                          </Link>
-                        )
-                      )}
-                    </div>
-                  ))}
-              </div>
-            </>
-          )}
+                    ))}
+                  </div>
+                ))}
+            </div>
+          </>
+        )}
 
         {/* <NavLink className="NavTop__link" to="/ressources">
           Ressources
@@ -139,23 +117,24 @@ const NavTop = (props) => {
       <div className="NavTop__right">
         {currentUser ? (
           <>
-            <div
-
-              className="NavTop__avatar"
-            >
-
+            <div className="NavTop__avatar">
               {/* <UserAvatar user={currentUser} link={false} /> */}
               <UserNameAndAvatar user={currentUser} link={true} />
             </div>
-            <div className="NavTop__dropdownUserMenu" onClick={() => dispatch(toggleUserNav())}>
+            <div className="NavTop__addcard">
+              <Link to="/add" className="NavTop__roundBtn">
+                <AddLogo />
+              </Link>
+            </div>
+            <div className="NavTop__dropdownUserMenu NavTop__roundBtn" onClick={() => dispatch(toggleUserNav())}>
               <DropdownFullLogo />
             </div>
           </>
         ) : (
-            <Link className="NavTop__linkConnexion" to="/connexion/login">
-              <CustomButton color="dark">Connexion / Inscription</CustomButton>
-            </Link>
-          )}
+          <Link className="NavTop__linkConnexion" to="/connexion/login">
+            <CustomButton color="dark">Connexion / Inscription</CustomButton>
+          </Link>
+        )}
       </div>
       {currentUserNav ? (
         <div className={`NavTop__userMenu ${currentTheme}-theme`}>
@@ -164,35 +143,19 @@ const NavTop = (props) => {
             <p className="NavTop__userMenu--text">{currentUser.email}</p>
           </div>
           <div className="NavTop__userMenu--links">
-            <Link
-              className="NavTop__userMenu--link"
-              to="/account/user"
-              onClick={() => dispatch(toggleUserNav())}
-            >
+            <Link className="NavTop__userMenu--link" to="/account/user" onClick={() => dispatch(toggleUserNav())}>
               <AccountLogo className="NavTop__userMenu--logo" />
               Compte
             </Link>
-            <Link
-              className="NavTop__userMenu--link"
-              to="/account/settings"
-              onClick={() => dispatch(toggleUserNav())}
-            >
+            <Link className="NavTop__userMenu--link" to="/account/settings" onClick={() => dispatch(toggleUserNav())}>
               <SettingsLogo className="NavTop__userMenu--logo" />
               Paramètres
             </Link>
-            <Link
-              className="NavTop__userMenu--link"
-              to="/account/saved"
-              onClick={() => dispatch(toggleUserNav())}
-            >
+            <Link className="NavTop__userMenu--link" to="/account/saved" onClick={() => dispatch(toggleUserNav())}>
               <BookmarkLogo className="NavTop__userMenu--logo" />
               Sauvegardés
             </Link>
-            <Link
-              className="NavTop__userMenu--link"
-              to="/help"
-              onClick={() => dispatch(toggleUserNav())}
-            >
+            <Link className="NavTop__userMenu--link" to="/help" onClick={() => dispatch(toggleUserNav())}>
               <HelpLogo className="NavTop__userMenu--logo" />
               Aide
             </Link>

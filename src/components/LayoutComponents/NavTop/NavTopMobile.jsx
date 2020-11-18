@@ -5,17 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 // redux
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { setCurrentSearch } from "../../../redux/filter/filter-actions";
-import {
-  selectMobileNavOpen,
-  selectFilterMobileMenuOpen,
-  selectTheme,
-} from "../../../redux/layout/layout-selectors";
-import {
-  openMobileNav,
-  closeMobileNav,
-  openFilterMobileMenu,
-  setLoaded,
-} from "../../../redux/layout/layout-actions";
+import { selectMobileNavOpen, selectFilterMobileMenuOpen, selectTheme } from "../../../redux/layout/layout-selectors";
+import { openMobileNav, closeMobileNav, openFilterMobileMenu, setLoaded } from "../../../redux/layout/layout-actions";
 import { logoutAction } from "../../../redux/user/user-actions";
 import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
 
@@ -34,6 +25,7 @@ import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg"
 import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
 import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
 import { ReactComponent as BookmarkLogo } from "../../../assets/images/bookmark.svg";
+import { ReactComponent as AddLogo } from "../../../assets/images/add.svg";
 import SwipeTutoSmallLogo from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
 import SwipeTutoSmallFull from "../../../assets/logos/Logo full border black smaller_350px.png";
 
@@ -50,12 +42,7 @@ const NavTopMobile = (props) => {
   const mobileNavOpen = useSelector(selectMobileNavOpen);
   // const searchWords = useSelector(selectSearchWords);
   const currentSearch = useSelector(selectCurrentSearch);
-  const {
-    searchWords,
-    searchTopic,
-    searchCategory,
-    searchOrder,
-  } = currentSearch;
+  const { searchWords, searchTopic, searchCategory, searchOrder } = currentSearch;
 
   useEffect(() => {
     const NavTopMobileMenu = document.querySelector(".NavTopMobile");
@@ -92,13 +79,8 @@ const NavTopMobile = (props) => {
   };
 
   return (
-    <div
-      className={`NavTopMobile ${mobileNavOpen ? "active" : ""
-        } ${currentTheme}-theme`}
-    >
-      {filtersBarMobile && (
-        <FiltersBarMobile title="Recherche" showResults={false} />
-      )}
+    <div className={`NavTopMobile ${mobileNavOpen ? "active" : ""} ${currentTheme}-theme`}>
+      {filtersBarMobile && <FiltersBarMobile title="Recherche" showResults={false} />}
 
       <div className="NavTopMobile__top">
         {mobileNavOpen ? (
@@ -110,34 +92,29 @@ const NavTopMobile = (props) => {
             }}
           />
         ) : (
-            <MenuLogo
-              className="NavTopMobile__toggle"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleNavOpen();
-              }}
-            />
-          )}
-        <Link
-          className="NavTopMobile__swipeTuto"
-          to="/"
-          onClick={() => handleNavClose()}
-        >
+          <MenuLogo
+            className="NavTopMobile__toggle"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleNavOpen();
+            }}
+          />
+        )}
+        <Link className="NavTopMobile__swipeTuto" to="/" onClick={() => handleNavClose()}>
           <img src={SwipeTutoSmallLogo} alt="" />
         </Link>
-        <Link to="/search">
-          <CustomButton color="white" onClick={handleFiltersMobileOpen}>
-            <SearchLogo />
-            Recherche
-          </CustomButton>
-        </Link>
+
+        <CustomButton color="white" onClick={handleFiltersMobileOpen}>
+          <SearchLogo />
+          Recherche
+        </CustomButton>
       </div>
       <div className={`NavTopMobile__open ${mobileNavOpen ? "active" : ""}`}>
         <div className="NavTopMobile__swipeTuto-menu">
           <img src={SwipeTutoSmallFull} alt="swipetuto" />
         </div>
         <div className="NavTopMobile__menu">
-          <Link
+          {/* <Link
             className="NavTopMobile__link"
             onClick={() => {
               dispatch(closeMobileNav());
@@ -145,7 +122,7 @@ const NavTopMobile = (props) => {
             to="/"
           >
             Accueil
-          </Link>
+          </Link> */}
           {/* <Link
             className="NavTopMobile__link"
             to="/ressources"
@@ -157,11 +134,11 @@ const NavTopMobile = (props) => {
           </Link> */}
           <Link
             className="NavTopMobile__link"
-            to={`/search?${searchWords ? `search=${searchWords}` : ""}${searchTopic ? `&topic=${searchTopic}` : ""
-              }${searchOrder ? `&order=${searchOrder}` : ""}${searchCategory ? `&category=${searchCategory}` : ""
-              }`}
+            to={`/search?${searchWords ? `search=${searchWords}` : ""}${searchTopic ? `&topic=${searchTopic}` : ""}${
+              searchOrder ? `&order=${searchOrder}` : ""
+            }${searchCategory ? `&category=${searchCategory}` : ""}`}
             onClick={() => {
-              dispatch(setCurrentSearch(initialSearchState));
+              // dispatch(setCurrentSearch(initialSearchState));
               dispatch(closeMobileNav());
             }}
           >
@@ -183,35 +160,23 @@ const NavTopMobile = (props) => {
               </div>
             </div>
             <div className="NavTopMobile__userMenu">
-              <Link
-                className="NavTopMobile__userMenu--link"
-                to="/account/user"
-                onClick={() => handleNavClose()}
-              >
+              <Link className="NavTopMobile__userMenu--link" to="/add" onClick={() => handleNavClose()}>
+                <AddLogo className="NavTopMobile__logo" />
+                Ajouter une carte
+              </Link>
+              <Link className="NavTopMobile__userMenu--link" to="/account/user" onClick={() => handleNavClose()}>
                 <AccountLogo className="NavTopMobile__logo" />
                 Compte
               </Link>
-              <Link
-                className="NavTopMobile__userMenu--link"
-                to="/account/settings"
-                onClick={() => handleNavClose()}
-              >
+              <Link className="NavTopMobile__userMenu--link" to="/account/settings" onClick={() => handleNavClose()}>
                 <SettingsLogo className="NavTopMobile__logo" />
                 Paramètres
               </Link>
-              <Link
-                className="NavTopMobile__userMenu--link"
-                to="/help"
-                onClick={() => handleNavClose()}
-              >
+              <Link className="NavTopMobile__userMenu--link" to="/help" onClick={() => handleNavClose()}>
                 <HelpLogo className="NavTopMobile__logo" />
                 Aide
               </Link>
-              <Link
-                className="NavTopMobile__userMenu--link"
-                to="/account/saved"
-                onClick={() => handleNavClose()}
-              >
+              <Link className="NavTopMobile__userMenu--link" to="/account/saved" onClick={() => handleNavClose()}>
                 <BookmarkLogo className="NavTopMobile__logo" />
                 Sauvegardés
               </Link>
@@ -229,14 +194,10 @@ const NavTopMobile = (props) => {
             </div>
           </div>
         ) : (
-            <Link
-              className="NavTopMobile__linkConnexion"
-              to="/connexion/login"
-              onClick={() => handleNavClose()}
-            >
-              <CustomButton color="dark">Connexion / Inscription</CustomButton>
-            </Link>
-          )}
+          <Link className="NavTopMobile__linkConnexion" to="/connexion/login" onClick={() => handleNavClose()}>
+            <CustomButton color="dark">Connexion / Inscription</CustomButton>
+          </Link>
+        )}
         <ToggleButton toggleTheme={toggleTheme} theme={theme} />
       </div>
     </div>

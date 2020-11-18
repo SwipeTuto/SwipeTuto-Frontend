@@ -5,11 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 // redux
-import {
-  selectCurrentUser,
-  selectUserFavories,
-  selectCurrentUserId,
-} from "../../../redux/user/user-selectors";
+import { selectCurrentUser, selectUserFavories, selectCurrentUserId } from "../../../redux/user/user-selectors";
 import {
   selectClickedCard,
   selectCardLikers,
@@ -26,19 +22,8 @@ import {
   getOtherCardsByAuthorNameAction,
   toggleSaveCardAction,
 } from "../../../redux/filter/filter-actions";
-import {
-  closePopupCard,
-  openConnexionPopup,
-  setRedirectUrl,
-  showFullscreen,
-  showSignalPopup,
-} from "../../../redux/layout/layout-actions";
-import {
-  selectFullscreen,
-  selectTheme,
-  selectClickedCardIsLoaded,
-  selectShowPopupCard,
-} from "../../../redux/layout/layout-selectors";
+import { closePopupCard, openConnexionPopup, setRedirectUrl, showFullscreen, showSignalPopup } from "../../../redux/layout/layout-actions";
+import { selectFullscreen, selectTheme, selectClickedCardIsLoaded, selectShowPopupCard } from "../../../redux/layout/layout-selectors";
 
 // components
 import CardSlider from "../CardSlider/CardSlider";
@@ -48,13 +33,7 @@ import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrap
 // import ShareButtons from "../../LayoutComponents/ShareButtons/ShareButtons";
 
 // Services & helpers
-import {
-  convertNumber,
-  formattedDate,
-  initialSignalState,
-  likeUpdate,
-  renameQuery,
-} from "../../../helper/index";
+import { convertNumber, formattedDate, initialSignalState, likeUpdate, renameQuery } from "../../../helper/index";
 
 // Assets
 import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevrons/chevron-back-circle.svg";
@@ -73,6 +52,8 @@ import "./CardFullPopup.scss";
 import { getCurrentUserAction } from "../../../redux/user/user-actions";
 import VerticalMenu from "../../LayoutComponents/VerticalMenu/VerticalMenu";
 import ShareMenu from "../../LayoutComponents/ShareMenu/ShareMenu";
+import { deleteCardService } from "../../../services/cardsService";
+import ConfirmationOverlay from "../../LayoutComponents/ConfirmationOverlay/ConfirmationOverlay";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
 // handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
@@ -97,21 +78,21 @@ const CardFullPopup = ({ history, location }) => {
   const currentUserSavedCards = useSelector(selectUserFavories);
   const popupCardIsOpen = useSelector(selectShowPopupCard);
   const isFullscreen = useSelector(selectFullscreen);
+  const [confirmPopupOpen, setConfirmPopupOpen] = useState({
+    open: false,
+    message: "",
+  });
 
   useEffect(() => {
     if (!clickedCard || !cardsArray) return;
     setCardsArrayLength(cardsArray.length);
-    const currentCardId = cardsArray.findIndex(
-      (card) => card.id === clickedCardId
-    );
+    const currentCardId = cardsArray.findIndex((card) => card.id === clickedCardId);
     setIndexOfCurrentCard(currentCardId);
   }, [cardsArray, clickedCard, clickedCardId]);
 
   const userHasLiked = useCallback(() => {
     if (currentUser && currentUser.id) {
-      return (
-        cardLikers && cardLikers.some((likers) => likers === currentUser.id)
-      );
+      return cardLikers && cardLikers.some((likers) => likers === currentUser.id);
     } else {
       return false;
     }
@@ -119,10 +100,7 @@ const CardFullPopup = ({ history, location }) => {
 
   const userHasSaved = useCallback(() => {
     if (currentUser && currentUser.id) {
-      return (
-        currentUserSavedCards &&
-        currentUserSavedCards.some((cardsId) => cardsId === clickedCardId)
-      );
+      return currentUserSavedCards && currentUserSavedCards.some((cardsId) => cardsId === clickedCardId);
     } else {
       return false;
     }
@@ -143,13 +121,10 @@ const CardFullPopup = ({ history, location }) => {
     }
   }, [clickedCard, dispatch]);
 
-  const clickedCardDate =
-    clickedCard && formattedDate(new Date(clickedCard.modified));
+  const clickedCardDate = clickedCard && formattedDate(new Date(clickedCard.modified));
 
   const goPreviousCard = () => {
-    const currentClickedCard = clickedCard
-      ? document.querySelector(".CardFullPopup")
-      : null;
+    const currentClickedCard = clickedCard ? document.querySelector(".CardFullPopup") : null;
 
     currentClickedCard.scroll(0, 0);
 
@@ -160,9 +135,7 @@ const CardFullPopup = ({ history, location }) => {
   };
 
   const goNextCard = () => {
-    const currentClickedCard = clickedCard
-      ? document.querySelector(".CardFullPopup")
-      : null;
+    const currentClickedCard = clickedCard ? document.querySelector(".CardFullPopup") : null;
     currentClickedCard.scroll(0, 0);
 
     const indexOfCurrentCard = cardsArray.indexOf(clickedCard);
@@ -179,11 +152,7 @@ const CardFullPopup = ({ history, location }) => {
     } else {
       dispatch(setRedirectUrl(true));
 
-      window.history.pushState(
-        "",
-        "",
-        history.location.pathname + history.location.search
-      );
+      window.history.pushState("", "", history.location.pathname + history.location.search);
       if (!cardsFetched) {
         dispatch(getCardAfterfilterAction(currentSearch));
       }
@@ -244,379 +213,370 @@ const CardFullPopup = ({ history, location }) => {
     }
   };
 
+  const handleConfirmClick = () => {
+    deleteCardService(clickedCardId);
+    setConfirmPopupOpen({ ...confirmPopupOpen, open: false });
+    dispatch(closePopupCard());
+    document.location.reload(true);
+    // A VOIR pour fermer popup et rediriger
+  };
+
+  const handleRejectClick = () => {
+    setConfirmPopupOpen({ open: false, message: "" });
+  };
+
+  const handleCardDelete = () => {
+    if (!currentUser) dispatch(openConnexionPopup());
+    setConfirmPopupOpen({
+      open: true,
+      message: "Voulez-vous vraiment supprimer cette carte ?",
+    });
+  };
+
   const newSignalObject = { ...initialSignalState, id_card: clickedCardId };
 
   return (
-    <div
-      className={`CardFullPopup ${popupCardIsOpen ? "noscroll" : ""}`}
-      onClick={() => {
-        handlePopupClose();
-      }}
-    >
-      {!isFullscreen && (
-        <div className="CardFullPopup__mobile">
-          {clickedCardIsLoaded ? (
-            <>
-              {cardIsLiked ? (
-                <HeartFull
-                  className="card-action-button card-action-button__liked"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleLikeClick();
-                  }}
-                />
-              ) : (
-                <HeartEmpty
-                  className="card-action-button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleLikeClick();
-                  }}
-                />
-              )}
-              {cardIsSaved ? (
-                <BookmarkFull
-                  className="card-action-button card-action-button__saved"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleSaveClick();
-                  }}
-                />
-              ) : (
-                <BookmarkEmpty
-                  className="card-action-button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleSaveClick();
-                  }}
-                />
-              )}
+    <>
+      {confirmPopupOpen && confirmPopupOpen.open && confirmPopupOpen.open === true && (
+        <ConfirmationOverlay
+          handleConfirmClick={handleConfirmClick}
+          handleRejectClick={handleRejectClick}
+          message={confirmPopupOpen && confirmPopupOpen.message}
+        />
+      )}
+      <div
+        className={`CardFullPopup ${popupCardIsOpen ? "noscroll" : ""}`}
+        onClick={() => {
+          handlePopupClose();
+        }}
+      >
+        {!isFullscreen && (
+          <div className="CardFullPopup__mobile">
+            {clickedCardIsLoaded ? (
+              <>
+                {cardIsLiked ? (
+                  <HeartFull
+                    className="card-action-button card-action-button__liked"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLikeClick();
+                    }}
+                  />
+                ) : (
+                  <HeartEmpty
+                    className="card-action-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLikeClick();
+                    }}
+                  />
+                )}
+                {cardIsSaved ? (
+                  <BookmarkFull
+                    className="card-action-button card-action-button__saved"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSaveClick();
+                    }}
+                  />
+                ) : (
+                  <BookmarkEmpty
+                    className="card-action-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSaveClick();
+                    }}
+                  />
+                )}
 
-              {/* <ShareLogo
+                {/* <ShareLogo
                 className="card-action-button"
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
               /> */}
-              <ShareMenu />
+                <ShareMenu />
 
-              <FullscreenLogo
-                className="card-action-button"
-                id="card-action-button__fullscreen"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  dispatch(showFullscreen());
-                }}
-              />
-
-              <VerticalMenu>
-                <p
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    dispatch(showSignalPopup(newSignalObject));
-                  }}
-                >
-                  Signaler
-                </p>
-              </VerticalMenu>
-
-              <CloseLogo
-                className="card-action-button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handlePopupClose();
-                }}
-              />
-            </>
-          ) : null}
-        </div>
-      )}
-
-      <div
-        className={`CardFullPopup__allwrapper${
-          isFullscreen ? "--fullscreen" : ""
-        }`}
-      >
-        <div className="CardFullPopup__scroll-wrapper">
-          <div
-            className={`CardFullPopup__wrapper ${currentTheme}-theme`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="CardFullPopup__user CardFullPopup__section">
-              {/* <ShareButtons /> */}
-              <UserNameAndAvatar
-                user={clickedCard && clickedCard.user && clickedCard.user}
-                link={true}
-              />
-            </div>
-
-            {clickedCardIsLoaded ? (
-              <>
-                <div className="CardFullPopup__slider">
-                  <CardSlider />
-                </div>
-
-                <h1 className="title title-1 CardFullPopup__title">
-                  {clickedCard && clickedCard.name}
-                </h1>
-
-                <div className="CardFullPopup__meta CardFullPopup__section">
-                  <p className="CardFullPopup__meta-block CardFullPopup__meta--topic_category">
-                    {clickedCard &&
-                      clickedCard.topic &&
-                      clickedCard.topic[0] &&
-                      clickedCard.topic[0].name &&
-                      renameQuery(clickedCard.topic[0].name)}{" "}
-                    /{" "}
-                    {clickedCard &&
-                      clickedCard.categorie &&
-                      clickedCard.categorie[0] &&
-                      clickedCard.categorie[0].name &&
-                      renameQuery(clickedCard.categorie[0].name)}
-                  </p>
-                  <p className="CardFullPopup__meta-block CardFullPopup__meta--date">
-                    Publié le {clickedCardDate}
-                  </p>
-                  <div className="CardFullPopup__meta-block  CardFullPopup__meta--stats">
-                    <span className="CardFullPopup__meta--logo">
-                      <EyeLogo />
-                    </span>
-
-                    <span className="CardFullPopup__meta--number">
-                      {clickedCard && clickedCard.total_views
-                        ? convertNumber(clickedCard.total_views)
-                        : 0}
-                    </span>
-
-                    <div
-                      className="CardFullPopup__like-btn"
-                      onClick={() => handleLikeClick()}
-                    >
-                      <span
-                        className={`CardFullPopup__meta--logo ${
-                          userHasLiked() ? "active" : ""
-                        }`}
-                        id={`likesNumberPopupLogo${clickedCard.id}`}
-                      >
-                        {userHasLiked() ? <HeartFull /> : <HeartEmpty />}
-                      </span>
-
-                      <span
-                        className={`CardFullPopup__meta--number ${
-                          userHasLiked() ? "active" : ""
-                        }`}
-                        id={`likesNumberPopupNumber${clickedCard.id}`}
-                      >
-                        {clickedCard && clickedCard.number_of_likes
-                          ? convertNumber(clickedCard.number_of_likes)
-                          : 0}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="CardFullPopup__description CardFullPopup__section">
-                  <h2 className="title title-2">Description</h2>
-                  <p>{clickedCard && clickedCard.description}</p>
-                </div>
-
-                <div className="CardFullPopup__commentaires CardFullPopup__section">
-                  <h2 className="title title-2">Commentaires</h2>
-                  <CommentsWrapper />
-                </div>
-
-                <div className="CardFullPopup__autres-posts CardFullPopup__section">
-                  <h2 className="title title-2">Du même auteur :</h2>
-                  <div className="autres-posts--grid">
-                    {otherCardsByAuthor &&
-                      clickedCard &&
-                      otherCardsByAuthor.results
-                        .filter((card) => card.id !== clickedCard.id)
-                        .slice(0, 4)
-                        .map((card) => (
-                          <div
-                            className="autres-posts--preview"
-                            key={card.id}
-                            card={card}
-                            onClick={() => {
-                              dispatch(setClickedCard(card));
-                              window.history.pushState(
-                                "",
-                                "",
-                                `/card_id=${card.id && card.id}`
-                              );
-                              document
-                                .querySelector(".CardFullPopup")
-                                .scroll(0, 0);
-                            }}
-                          >
-                            {clickedCardIsLoaded &&
-                            card &&
-                            card.media_image &&
-                            card.media_image["0"] &&
-                            card.media_image["0"].image ? (
-                              <img
-                                style={{ width: "100%", height: "100%" }}
-                                src={card.media_image["0"].image}
-                                alt="autre"
-                              />
-                            ) : (
-                              <div className="CardFullPopup__empty-image">
-                                Image(s) Indisponible(s)
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                  </div>
-                </div>
-              </>
-            ) : (
-              <Loading />
-            )}
-          </div>
-        </div>
-
-        <div className="CardFullPopup__action-button">
-          {clickedCardIsLoaded ? (
-            <>
-              <div
-                className="card-action-button__wrapper"
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              >
-                <CloseLogo
-                  className="card-action-button"
-                  onClick={(e) => {
-                    handlePopupClose();
-                  }}
-                />
-              </div>
-              {cardIsLiked ? (
-                <div
-                  className="card-action-button__wrapper"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <HeartFull
-                    className="card-action-button card-action-button__liked"
-                    onClick={(e) => {
-                      handleLikeClick();
-                    }}
-                  />
-                </div>
-              ) : (
-                <div
-                  className="card-action-button__wrapper"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <HeartEmpty
-                    className="card-action-button"
-                    onClick={(e) => {
-                      handleLikeClick();
-                    }}
-                  />
-                </div>
-              )}
-              {cardIsSaved ? (
-                <div
-                  className="card-action-button__wrapper"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <BookmarkFull
-                    className="card-action-button card-action-button__saved"
-                    onClick={(e) => {
-                      handleSaveClick();
-                    }}
-                  />
-                </div>
-              ) : (
-                <div
-                  className="card-action-button__wrapper"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <BookmarkEmpty
-                    className="card-action-button"
-                    onClick={(e) => {
-                      handleSaveClick();
-                    }}
-                  />
-                </div>
-              )}
-
-              {/* <div
-                className="card-action-button__wrapper"
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              > */}
-              {/* <ShareMenu addclass="card-action-button__wrapper" /> */}
-              <ShareMenu addclass="card-action-button__wrapper" test="test" />
-              {/* </div> */}
-
-              <div
-                className="card-action-button__wrapper"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  dispatch(showFullscreen());
-                }}
-              >
                 <FullscreenLogo
                   className="card-action-button"
                   id="card-action-button__fullscreen"
-                  // onClick={(e) => {
-                  //   dispatch(showFullscreen());
-                  // }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    dispatch(showFullscreen());
+                  }}
                 />
+
+                <VerticalMenu>
+                  {currentUserId === clickedCard.user.id ? (
+                    <p
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCardDelete();
+                      }}
+                    >
+                      Supprimer
+                    </p>
+                  ) : (
+                    <p
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        dispatch(showSignalPopup(newSignalObject));
+                      }}
+                    >
+                      Signaler
+                    </p>
+                  )}
+                </VerticalMenu>
+
+                <CloseLogo
+                  className="card-action-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePopupClose();
+                  }}
+                />
+              </>
+            ) : null}
+          </div>
+        )}
+
+        <div className={`CardFullPopup__allwrapper${isFullscreen ? "--fullscreen" : ""}`}>
+          <div className="CardFullPopup__scroll-wrapper">
+            <div className={`CardFullPopup__wrapper ${currentTheme}-theme`} onClick={(e) => e.stopPropagation()}>
+              <div className="CardFullPopup__user CardFullPopup__section">
+                {/* <ShareButtons /> */}
+                <UserNameAndAvatar user={clickedCard && clickedCard.user && clickedCard.user} link={true} />
               </div>
-              {/* <div
+
+              {clickedCardIsLoaded ? (
+                <>
+                  <div className="CardFullPopup__slider">
+                    <CardSlider />
+                  </div>
+
+                  <h1 className="title title-1 CardFullPopup__title">{clickedCard && clickedCard.name}</h1>
+
+                  <div className="CardFullPopup__meta CardFullPopup__section">
+                    <p className="CardFullPopup__meta-block CardFullPopup__meta--topic_category">
+                      {clickedCard &&
+                        clickedCard.topic &&
+                        clickedCard.topic[0] &&
+                        clickedCard.topic[0].name &&
+                        renameQuery(clickedCard.topic[0].name)}{" "}
+                      /{" "}
+                      {clickedCard &&
+                        clickedCard.categorie &&
+                        clickedCard.categorie[0] &&
+                        clickedCard.categorie[0].name &&
+                        renameQuery(clickedCard.categorie[0].name)}
+                    </p>
+                    <p className="CardFullPopup__meta-block CardFullPopup__meta--date">Publié le {clickedCardDate}</p>
+                    <div className="CardFullPopup__meta-block  CardFullPopup__meta--stats">
+                      <span className="CardFullPopup__meta--logo">
+                        <EyeLogo />
+                      </span>
+
+                      <span className="CardFullPopup__meta--number">
+                        {clickedCard && clickedCard.total_views ? convertNumber(clickedCard.total_views) : 0}
+                      </span>
+
+                      <div className="CardFullPopup__like-btn" onClick={() => handleLikeClick()}>
+                        <span className={`CardFullPopup__meta--logo ${userHasLiked() ? "active" : ""}`} id={`likesNumberPopupLogo${clickedCard.id}`}>
+                          {userHasLiked() ? <HeartFull /> : <HeartEmpty />}
+                        </span>
+
+                        <span
+                          className={`CardFullPopup__meta--number ${userHasLiked() ? "active" : ""}`}
+                          id={`likesNumberPopupNumber${clickedCard.id}`}
+                        >
+                          {clickedCard && clickedCard.number_of_likes ? convertNumber(clickedCard.number_of_likes) : 0}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="CardFullPopup__description CardFullPopup__section">
+                    <h2 className="title title-2">Description</h2>
+                    <p>{clickedCard && clickedCard.description}</p>
+                  </div>
+
+                  <div className="CardFullPopup__commentaires CardFullPopup__section">
+                    <h2 className="title title-2">Commentaires</h2>
+                    <CommentsWrapper />
+                  </div>
+
+                  <div className="CardFullPopup__autres-posts CardFullPopup__section">
+                    <h2 className="title title-2">Du même auteur :</h2>
+                    <div className="autres-posts--grid">
+                      {otherCardsByAuthor &&
+                        clickedCard &&
+                        otherCardsByAuthor.results
+                          .filter((card) => card.id !== clickedCard.id)
+                          .slice(0, 4)
+                          .map((card) => (
+                            <div
+                              className="autres-posts--preview"
+                              key={card.id}
+                              card={card}
+                              onClick={() => {
+                                dispatch(setClickedCard(card));
+                                window.history.pushState("", "", `/card_id=${card.id && card.id}`);
+                                document.querySelector(".CardFullPopup").scroll(0, 0);
+                              }}
+                            >
+                              {clickedCardIsLoaded && card && card.media_image && card.media_image["0"] && card.media_image["0"].image ? (
+                                <img style={{ width: "100%", height: "100%" }} src={card.media_image["0"].image} alt="autre" />
+                              ) : (
+                                <div className="CardFullPopup__empty-image">Image(s) Indisponible(s)</div>
+                              )}
+                            </div>
+                          ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <Loading />
+              )}
+            </div>
+          </div>
+
+          <div className="CardFullPopup__action-button">
+            {clickedCardIsLoaded ? (
+              <>
+                <div
+                  className="card-action-button__wrapper"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <CloseLogo
+                    className="card-action-button"
+                    onClick={(e) => {
+                      handlePopupClose();
+                    }}
+                  />
+                </div>
+                {cardIsLiked ? (
+                  <div
+                    className="card-action-button__wrapper"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <HeartFull
+                      className="card-action-button card-action-button__liked"
+                      onClick={(e) => {
+                        handleLikeClick();
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="card-action-button__wrapper"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <HeartEmpty
+                      className="card-action-button"
+                      onClick={(e) => {
+                        handleLikeClick();
+                      }}
+                    />
+                  </div>
+                )}
+                {cardIsSaved ? (
+                  <div
+                    className="card-action-button__wrapper"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <BookmarkFull
+                      className="card-action-button card-action-button__saved"
+                      onClick={(e) => {
+                        handleSaveClick();
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="card-action-button__wrapper"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <BookmarkEmpty
+                      className="card-action-button"
+                      onClick={(e) => {
+                        handleSaveClick();
+                      }}
+                    />
+                  </div>
+                )}
+
+                {/* <div
                 className="card-action-button__wrapper"
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
               > */}
-              <VerticalMenu addclass="card-action-button__wrapper">
-                <p
+                {/* <ShareMenu addclass="card-action-button__wrapper" /> */}
+                <ShareMenu addclass="card-action-button__wrapper" test="test" />
+                {/* </div> */}
+
+                <div
+                  className="card-action-button__wrapper"
                   onClick={(e) => {
-                    dispatch(showSignalPopup(newSignalObject));
+                    e.stopPropagation();
+                    dispatch(showFullscreen());
                   }}
                 >
-                  Signaler
-                </p>
-              </VerticalMenu>
-              {/* </div> */}
-            </>
-          ) : null}
-        </div>
-      </div>
+                  <FullscreenLogo
+                    className="card-action-button"
+                    id="card-action-button__fullscreen"
+                    // onClick={(e) => {
+                    //   dispatch(showFullscreen());
+                    // }}
+                  />
+                </div>
+                {/* <div
+                className="card-action-button__wrapper"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              > */}
 
-      {!isFullScreen && cardsArray && (
-        <>
-          {indexOfCurrentCard === 0 ? (
-            <ChevronCircleRight
-              className="nav__chevron nav__chevron--right"
-              onClick={(event) => {
-                event.stopPropagation();
-                goNextCard();
-              }}
-            />
-          ) : indexOfCurrentCard === cardsArrayLength - 1 ? (
-            <ChevronCircleLeft
-              className="nav__chevron nav__chevron--left"
-              onClick={(event) => {
-                event.stopPropagation();
-                goPreviousCard();
-              }}
-            />
-          ) : (
-            <>
+                <VerticalMenu addclass="card-action-button__wrapper">
+                  {currentUserId === clickedCard.user.id ? (
+                    <p
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCardDelete();
+                      }}
+                    >
+                      Supprimer
+                    </p>
+                  ) : (
+                    <p
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        dispatch(showSignalPopup(newSignalObject));
+                      }}
+                    >
+                      Signaler
+                    </p>
+                  )}
+                </VerticalMenu>
+                {/* </div> */}
+              </>
+            ) : null}
+          </div>
+        </div>
+
+        {!isFullScreen && cardsArray && (
+          <>
+            {indexOfCurrentCard === 0 ? (
               <ChevronCircleRight
                 className="nav__chevron nav__chevron--right"
                 onClick={(event) => {
@@ -624,6 +584,7 @@ const CardFullPopup = ({ history, location }) => {
                   goNextCard();
                 }}
               />
+            ) : indexOfCurrentCard === cardsArrayLength - 1 ? (
               <ChevronCircleLeft
                 className="nav__chevron nav__chevron--left"
                 onClick={(event) => {
@@ -631,11 +592,28 @@ const CardFullPopup = ({ history, location }) => {
                   goPreviousCard();
                 }}
               />
-            </>
-          )}
-        </>
-      )}
-    </div>
+            ) : (
+              <>
+                <ChevronCircleRight
+                  className="nav__chevron nav__chevron--right"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    goNextCard();
+                  }}
+                />
+                <ChevronCircleLeft
+                  className="nav__chevron nav__chevron--left"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    goPreviousCard();
+                  }}
+                />
+              </>
+            )}
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

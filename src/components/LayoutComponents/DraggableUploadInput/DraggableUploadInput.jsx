@@ -18,6 +18,12 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 const DraggableUploadInput = React.forwardRef((props, ref) => {
   const [files, setFiles] = useState([]);
 
+  useEffect(() => {
+    if (props.emptyState) {
+      setFiles([]);
+    }
+  }, [props.emptyState]);
+
   const handleUpdate = (cards) => {
     setFiles(cards);
     if (cards.length > 0) {

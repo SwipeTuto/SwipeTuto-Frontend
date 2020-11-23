@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import FormInput from "../../components/FormInputs/FormInput";
 import FormSelect from "../../components/FormInputs/FormSelect";
 import FormTextarea from "../../components/FormInputs/FormTextarea";
+import RichTextInput from "../../components/FormInputs/RichTextInput";
 // import JoditInput from "../../components/FormInputs/RichTextInput";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import DraggableUploadInput from "../../components/LayoutComponents/DraggableUploadInput/DraggableUploadInput";
@@ -21,12 +22,12 @@ const AddCardPage = () => {
     card_topic: null,
     card_category: null,
   });
-  const [initLocalStorageInfos, setInitLocalStorageInfos] = useState({
-    card_title: "",
-    card_description: "",
-    card_topic: null,
-    card_category: null,
-  });
+  // const [initLocalStorageInfos, setInitLocalStorageInfos] = useState({
+  //   card_title: "",
+  //   card_description: "",
+  //   card_topic: null,
+  //   card_category: null,
+  // });
   const [categoriesLocalArray, setCategoriesLocalArray] = useState([]);
   const [imagesArray, setImagesArray] = useState([]);
   const [imagesArrayNotEmpty, setImagesArrayNotEmpty] = useState(false);
@@ -190,6 +191,7 @@ const AddCardPage = () => {
                 required={true}
                 firstValue={cardInfos.card_description || ""}
               /> */}
+              <RichTextInput />
             </div>
           </section>
           <section className="AddCardPage__section">

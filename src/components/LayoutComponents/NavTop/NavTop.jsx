@@ -90,13 +90,13 @@ const NavTop = (props) => {
             <div className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme`}>
               {topicArray &&
                 topicArray.map((topic, index) => (
-                  <div className="NavTop__topicList">
+                  <div className="NavTop__topicList" key={`topic${topic.name}${index}`}>
                     <Link key={`topicList${index}`} to="/search" onClick={() => topicHandleClick(topic.queryName)} name={topic.queryName}>
                       <span className="NavTop__topicList--topic">{topic.name}</span>
                     </Link>
                     {getCategoriesArray(topic.queryName).map((category, index) => (
                       <Link
-                        key={index}
+                        key={`category${index}${category.name}`}
                         to="/search"
                         onClick={() => categoryHandleClick(topic.queryName, category.queryName)}
                         name={category.queryName}

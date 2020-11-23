@@ -50,7 +50,6 @@ const CardPreviewSmall = ({ card, size }) => {
   }, [cardId, firstCheck, userHasLiked]);
 
   const handleClickedCardClick = async () => {
-    console.log("cli");
     dispatch(showPopupCard());
     const clickedCardRequest = await dispatch(getCardByIdAction(cardId));
     const clickedCard = await clickedCardRequest.data;
@@ -74,6 +73,7 @@ const CardPreviewSmall = ({ card, size }) => {
     if (elem) {
       const img = document.createElement("img");
       img.setAttribute("onContextMenu", (e) => e.preventDefault());
+      elem.append(img);
       if (media_image[0] && media_image[0].image) {
         img.onload = () => {
           setCardIsReady(true);
@@ -83,7 +83,6 @@ const CardPreviewSmall = ({ card, size }) => {
         };
         img.src = `${media_image[0].image}`;
       }
-      elem.append(img);
     }
   }, [cardId, media_image]);
 

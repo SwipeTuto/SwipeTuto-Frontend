@@ -101,15 +101,25 @@ function App(props) {
 
   const scrollYWindow = window.scrollY;
   const scrollY = appEl.current && appEl.current.style.top;
+  // const largeurEcran = window.innerWidth;
+  const getScrollbarWidth = () => {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    return scrollbarWidth;
+  }
 
   useEffect(() => {
     if (popupCardIsOpen) {
-      appEl.current.style.position = 'fixed';
-      appEl.current.style.top = `-${scrollYWindow}px`;
+      document.body.style.paddingRight = `${getScrollbarWidth()}px`;
+      document.body.style.overflow = 'hidden';
+      document.body.style.height = '100%';
+
     } else {
-      appEl.current.style.position = '';
-      appEl.current.style.top = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+
+      document.body.style.paddingRight = '0px';
+      document.body.style.overflow = 'auto';
+      document.body.style.height = 'auto';
+
+
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [popupCardIsOpen])

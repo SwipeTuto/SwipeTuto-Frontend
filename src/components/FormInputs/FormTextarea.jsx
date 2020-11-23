@@ -3,24 +3,12 @@ import React, { useCallback, useEffect, useState } from "react";
 import "./FormInput.scss";
 import { checkRegexInput, errorMessageToDisplay } from "../../helper";
 
-const FormTextarea = ({
-  idFor,
-  label,
-  type,
-  name,
-  getValue,
-  firstValue,
-  required,
-  placeholder,
-  id,
-}) => {
+const FormTextarea = ({ idFor, label, type, name, getValue, firstValue, required, placeholder, id }) => {
   const [data, setData] = useState("");
   const [isValid, setIsValid] = useState("unset");
   const formInputEl = document.querySelector(`.FormInput[name=${name}]`);
-  const errorEl = document.querySelector(
-    `.input__message[data-inputfor=${name}]`
-  );
-  
+  const errorEl = document.querySelector(`.input__message[data-inputfor=${name}]`);
+
   const handleChange = useCallback(
     (e) => {
       const newValue = e.target && e.target.value;
@@ -28,6 +16,7 @@ const FormTextarea = ({
       setData(newValue);
 
       if (newValue === "") {
+        getValue(name, "");
         setIsValid("unset");
         if (errorEl) errorEl.textContent = "";
         if (formInputEl) formInputEl.classList.remove("valid-input");
@@ -69,10 +58,7 @@ const FormTextarea = ({
         placeholder={placeholder}
       ></textarea>
 
-      <p
-        className="input__message error__message"
-        data-inputfor={name && name}
-      ></p>
+      <p className="input__message error__message" data-inputfor={name && name}></p>
     </>
   );
 };

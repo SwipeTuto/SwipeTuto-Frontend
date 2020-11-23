@@ -2,19 +2,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // redux
-import {
-  setClickedCard,
-  getCardByIdAction,
-  toggleLikeCardAction,
-} from "../../../redux/filter/filter-actions";
-import {
-  openConnexionPopup,
-  showPopupCard,
-} from "../../../redux/layout/layout-actions";
-import {
-  selectCurrentUser,
-  selectCurrentUserId,
-} from "../../../redux/user/user-selectors";
+import { setClickedCard, getCardByIdAction, toggleLikeCardAction } from "../../../redux/filter/filter-actions";
+import { openConnexionPopup, showPopupCard } from "../../../redux/layout/layout-actions";
+import { selectCurrentUser, selectCurrentUserId } from "../../../redux/user/user-selectors";
 
 // service & helper
 // import { base } from "../../../services/configService";
@@ -60,6 +50,7 @@ const CardPreviewSmall = ({ card, size }) => {
   }, [cardId, firstCheck, userHasLiked]);
 
   const handleClickedCardClick = async () => {
+    console.log("cli");
     dispatch(showPopupCard());
     const clickedCardRequest = await dispatch(getCardByIdAction(cardId));
     const clickedCard = await clickedCardRequest.data;
@@ -79,12 +70,7 @@ const CardPreviewSmall = ({ card, size }) => {
 
   useEffect(() => {
     const elem = document.querySelector(`#CardPreviewSmall__image--${cardId}`);
-    if (
-      elem &&
-      elem.childNodes &&
-      [...elem.childNodes].some((child) => child.localName === "img")
-    )
-      return;
+    if (elem && elem.childNodes && [...elem.childNodes].some((child) => child.localName === "img")) return;
     if (elem) {
       const img = document.createElement("img");
       img.setAttribute("onContextMenu", (e) => e.preventDefault());
@@ -104,9 +90,7 @@ const CardPreviewSmall = ({ card, size }) => {
   return (
     <div className={`CardPreviewSmall ${currentTheme}-theme`} data-slideid="1">
       <div
-        className={`CardPreviewSmall__image  ${
-          cardIsReady ? "active" : "hide"
-        }`}
+        className={`CardPreviewSmall__image  ${cardIsReady ? "active" : "hide"}`}
         id={`CardPreviewSmall__image--${cardId}`}
         onClick={() => handleClickedCardClick()}
       >
@@ -119,6 +103,7 @@ const CardPreviewSmall = ({ card, size }) => {
         className={`CardPreviewSmall__image ${
           !cardIsReady ? "active" : "hide"
         } CardPreviewSmall__image--loading CardPreviewSmall__image--loading-${size}`}
+        onClick={() => handleClickedCardClick()}
       >
         <Loading />
       </div>
@@ -129,21 +114,13 @@ const CardPreviewSmall = ({ card, size }) => {
           <EyeLogo />
         </div>
 
-        <p className="CardPreviewSmall__likes--number">
-          {total_views ? convertNumber(total_views) : 0}
-        </p>
-        <div
-          className="CardPreviewSmall__likes"
-          onClick={() => handleLikeClick()}
-        >
+        <p className="CardPreviewSmall__likes--number">{total_views ? convertNumber(total_views) : 0}</p>
+        <div className="CardPreviewSmall__likes" onClick={() => handleLikeClick()}>
           <div className="CardPreviewSmall__likes--logo">
             <HeartFull id={`CardPreviewSmall__heart${cardId}`} />
           </div>
 
-          <p
-            className="CardPreviewSmall__likes--number"
-            id={`likesNumber${cardId}`}
-          >
+          <p className="CardPreviewSmall__likes--number" id={`likesNumber${cardId}`}>
             {number_of_likes ? convertNumber(number_of_likes) : 0}
           </p>
         </div>

@@ -15,6 +15,7 @@ import ContactUsPage from './pages/ContactUsPage/ContactUsPage'
 import ConfidentialityPage from "./pages/ConfidentialityPage/ConfidentialityPage";
 import CookiesPage from "./pages/CookiesPage/CookiesPage";
 import InfosPage from "./pages/InfosPage/InfosPage";
+import AddCardPage from "./pages/AddCardPage/AddCardPage";
 
 const Routes = () => {
 
@@ -33,6 +34,7 @@ const Routes = () => {
       <Route path="/card_id=:card_id" component={SearchPage} />
       <Route path="/profile/user_id=:user_id" component={ProfilePage} />
       <ProtectedRoute path="/account" component={AccountPage} />
+      <ProtectedRoute path="/add" component={AddCardPage} />
       <Route component={NotFoundPage} />
     </Switch>
   )

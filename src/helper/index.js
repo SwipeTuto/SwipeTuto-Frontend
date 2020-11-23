@@ -180,6 +180,8 @@ const passwordConfirmMessage = "Le mot de passe ne correspond pas à celui ajout
 // export const descriptionRegex = RegExp(/(.*?){0,250}$/); // lettres entre 0 et 250 caractères
 const descriptionErrorMessage = "Entrez une description valide, entre 0 et 250 caractères."
 const commentErrorMessage = "Veuillez rédiger un commentaire pour l'envoyer."
+const cardTitleErrorMessage = "Le titre de votre carte doit contenir entre 0 et 250 caractères."
+const cardDescriptionErrorMessage = "La description de votre carte ne peut pas être vide."
 
 export const errorMessageToDisplay = (name) => {
   switch (name) {
@@ -199,6 +201,10 @@ export const errorMessageToDisplay = (name) => {
       return urlRegexErrorMessage;
     case "description":
       return descriptionErrorMessage
+    case "card_title":
+      return cardTitleErrorMessage;
+    case "card_description":
+      return cardDescriptionErrorMessage;
     case "comment":
     case "response":
       return commentErrorMessage
@@ -224,8 +230,10 @@ export const checkRegexInput = (name, value) => {
     case "url":
       return urlRegex.test(value);
     case "description":
+    case "card_title":
       return (value.length >= 0 && value.length <= 250);
     case "comment":
+    case "card_description":
     case "response":
       return (value.length > 0);
     default:

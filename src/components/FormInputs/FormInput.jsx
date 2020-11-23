@@ -3,23 +3,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import "./FormInput.scss";
 import { checkRegexInput, errorMessageToDisplay } from "../../helper";
 
-const FormInput = ({
-  idFor,
-  label,
-  type,
-  name,
-  getValue,
-  firstValue,
-  required,
-  placeholder,
-  valueToCompare,
-}) => {
+const FormInput = ({ idFor, label, type, name, getValue, firstValue, required, placeholder, valueToCompare }) => {
   const [data, setData] = useState("");
   const [isValid, setIsValid] = useState("unset");
   const formInputEl = document.querySelector(`.FormInput[name=${name}]`);
-  const errorEl = document.querySelector(
-    `.input__message[data-inputfor=${name}]`
-  );
+  const errorEl = document.querySelector(`.input__message[data-inputfor=${name}]`);
 
   const handleChange = useCallback(
     (e) => {
@@ -28,13 +16,14 @@ const FormInput = ({
       setData(newValue);
 
       if (newValue === "") {
+        getValue(name, "");
         setIsValid("unset");
         if (errorEl) errorEl.textContent = "";
         if (formInputEl) formInputEl.classList.remove("valid-input");
         if (formInputEl) formInputEl.classList.remove("invalid-input");
       } else {
         if (name === "passwordConfirm") {
-          console.log(valueToCompare, newValue)
+          console.log(valueToCompare, newValue);
           if (valueToCompare === newValue) {
             setIsValid("valid");
             if (errorEl) errorEl.textContent = "";
@@ -53,7 +42,6 @@ const FormInput = ({
             setIsValid("invalid");
             if (errorEl) errorEl.textContent = errorMessageToDisplay(name);
           }
-
         }
       }
     },
@@ -82,10 +70,7 @@ const FormInput = ({
         placeholder={placeholder}
       />
 
-      <p
-        className="input__message error__message"
-        data-inputfor={name && name}
-      ></p>
+      <p className="input__message error__message" data-inputfor={name && name}></p>
     </>
   );
 };

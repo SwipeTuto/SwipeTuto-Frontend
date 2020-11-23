@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import FormInput from "../../components/FormInputs/FormInput";
 import FormSelect from "../../components/FormInputs/FormSelect";
 import FormTextarea from "../../components/FormInputs/FormTextarea";
+// import JoditInput from "../../components/FormInputs/RichTextInput";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import DraggableUploadInput from "../../components/LayoutComponents/DraggableUploadInput/DraggableUploadInput";
 import { getCategoriesArray, topicArray } from "../../helper";
@@ -176,7 +177,7 @@ const AddCardPage = () => {
               />
             </div>
             <div className="AddCardPage__inputZone">
-              <FormTextarea
+              {/* <FormTextarea
                 idFor="card_description"
                 label={
                   <span>
@@ -188,7 +189,7 @@ const AddCardPage = () => {
                 getValue={getValue}
                 required={true}
                 firstValue={cardInfos.card_description || ""}
-              />
+              /> */}
             </div>
           </section>
           <section className="AddCardPage__section">

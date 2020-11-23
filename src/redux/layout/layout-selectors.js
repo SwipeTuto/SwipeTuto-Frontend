@@ -11,10 +11,6 @@ export const selectFullscreen = createSelector(
   layout => layout.fullscreen
 )
 
-export const selectUserNav = createSelector(
-  [selectLayout],
-  layout => layout.showUserNav
-)
 
 export const selectMobileNavOpen = createSelector(
   [selectLayout],

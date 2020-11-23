@@ -20,7 +20,6 @@ const VerticalMenu = ({ addclass, type, children }) => {
 
   // console.log(addclass);
 
-  //I'm using "click" but it works with any event
   document.addEventListener("click", function (event) {
     const isClickInside = modal.current && modal.current.contains(event.target);
 

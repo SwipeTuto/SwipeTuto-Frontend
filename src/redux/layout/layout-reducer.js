@@ -7,7 +7,6 @@ const INITIAL_STATE = {
   signalPopupOpen: false,
   signalInfos: initialSignalState,
   fullscreen: false,
-  showUserNav: false,
   mobileNavOpen: false,
   notificationPopupOpen: {
     open: false,
@@ -74,11 +73,6 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cardsSize: action.payload,
-      };
-    case LayoutActionTypes.TOGGLE_USER_NAV:
-      return {
-        ...state,
-        showUserNav: !state.showUserNav,
       };
     case LayoutActionTypes.OPEN_MOBILE_NAV:
       app.style.position = "fixed";

@@ -1,35 +1,53 @@
-import React, { Component } from "react";
-import { convertFromRaw } from "draft-js";
+import React, { useEffect, useState } from "react";
+// import { EditorState } from "draft-js";
+// import { Editor } from "react-draft-wysiwyg";
+// import React, { Component } from 'react';
+import { EditorState, convertToRaw, ContentState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
+import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-const content = {
-  entityMap: {},
-  blocks: [{ key: "637gr", text: "Initialized from content state.", type: "unstyled", depth: 0, inlineStyleRanges: [], entityRanges: [], data: {} }],
-};
+const RichTextInput = () => {
+  const editorState = EditorState.createEmpty();
+  // const [content, setContent] = useState(editorState);
+  const [content, setContent] = useState(editorState);
+  const [contentInHTML, setContentInHTML] = useState();
+  // const html = "<p>Hey this <strong>editor</strong> rocks 😀</p>";
+  const html = "<p></p>";
 
-export default class RichTextInput extends Component {
-  constructor(props) {
-    super(props);
-    const contentState = convertFromRaw(content);
-    this.state = {
-      contentState,
-    };
-  }
-
-  onContentStateChange: Function = (contentState) => {
-    this.setState({
-      contentState,
-    });
+  const onEditorStateChange = (editorState) => {
+    setContent(editorState);
   };
 
-  render() {
-    const { contentState } = this.state;
-    return (
-      <div>
-        <Editor wrapperClassName="demo-wrapper" editorClassName="demo-editor" onContentStateChange={this.onContentStateChange} />
-        {/* <textarea disabled value={JSON.stringify(contentState, null, 4)} /> */}
-      </div>
-    );
-  }
-}
+  useEffect(() => {
+    setContentInHTML(draftToHtml(convertToRaw(content.getCurrentContent())));
+    console.log(contentInHTML);
+  }, [content, contentInHTML]);
+
+  // return <Editor editorState={editorState} wrapperClassName="demo-wrapper" editorClassName="demo-editor" onEditorStateChange={onEditorStateChange} />;
+
+  useEffect(() => {
+    const contentBlock = htmlToDraft(html);
+    if (contentBlock) {
+      const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+      const editorState = EditorState.createWithContent(contentState);
+      setContent(editorState);
+    }
+  }, []);
+
+  // const contentBlock = htmlToDraft(html);
+  // if (contentBlock) {
+  //   const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+  //   const editorState = EditorState.createWithContent(contentState);
+  //   setContent(editorState);
+  // }
+
+  return (
+    <div>
+      <Editor editorState={content} wrapperClassName="demo-wrapper" editorClassName="demo-editor" onEditorStateChange={onEditorStateChange} />
+    </div>
+  );
+};
+
+export default RichTextInput;

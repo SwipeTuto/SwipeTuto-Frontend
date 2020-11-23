@@ -12,12 +12,10 @@ const NotificationPopup = ({ notification }) => {
 
   useEffect(() => {
     if (notificationPopup && notificationPopup.open) {
-      console.log("open");
       setIsActive(true);
       setTimeout(() => {
         setIsActive(false);
         dispatch(closeNotificationPopup());
-        console.log("close");
       }, 4000);
     }
   }, [dispatch, notificationPopup]);

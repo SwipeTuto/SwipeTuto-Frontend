@@ -31,6 +31,7 @@ const CardPreviewSmall = ({ card, size }) => {
   const currentUserId = useSelector(selectCurrentUserId);
   // const [cardIsLiked, setCardIsLiked] = useState();
   const [cardIsReady, setCardIsReady] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [firstCheck, setFirstCheck] = useState(true);
 
   const userHasLiked = useCallback(() => {
@@ -77,11 +78,15 @@ const CardPreviewSmall = ({ card, size }) => {
       if (media_image[0] && media_image[0].image) {
         img.onload = () => {
           setCardIsReady(true);
+          setIsError(false);
         };
         img.onerror = () => {
           setCardIsReady(false);
+          setIsError(true);
         };
         img.src = `${media_image[0].image}`;
+      } else {
+        setIsError(true);
       }
     }
   }, [cardId, media_image]);
@@ -104,7 +109,7 @@ const CardPreviewSmall = ({ card, size }) => {
         } CardPreviewSmall__image--loading CardPreviewSmall__image--loading-${size}`}
         onClick={() => handleClickedCardClick()}
       >
-        <Loading />
+        {isError ? <p>Image non disponible.</p> : <Loading />}
       </div>
 
       <div className="CardPreviewSmall__details">

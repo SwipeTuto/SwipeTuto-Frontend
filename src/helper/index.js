@@ -537,3 +537,17 @@ export const likeUpdate = (cardId) => {
     console.log('add class')
   }
 };
+
+
+
+// function removeBlockFromBlockMap(editorState: EditorState, blockKey: string) {
+//   var contentState = editorState.getCurrentContent();
+//   var blockMap = contentState.getBlockMap();
+//   var newBlockMap = blockMap.remove(blockKey)
+//   var newContentState = contentState.merge({
+//     blockMap: newBlockMap
+//   })
+//   export { removeBlockFromBlockMap as Draft.Model.ImmutableData.ContentState }
+//   var newEditorState = EditorState.push(editorState, newContentState, 'remove-range')
+//   return newEditorState
+// }

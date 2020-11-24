@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FormInput from "../../components/FormInputs/FormInput";
 import FormSelect from "../../components/FormInputs/FormSelect";
-import FormTextarea from "../../components/FormInputs/FormTextarea";
+// import FormTextarea from "../../components/FormInputs/FormTextarea";
 import RichTextInput from "../../components/FormInputs/RichTextInput";
 // import JoditInput from "../../components/FormInputs/RichTextInput";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
@@ -22,14 +22,9 @@ const AddCardPage = () => {
     card_topic: null,
     card_category: null,
   });
-  // const [initLocalStorageInfos, setInitLocalStorageInfos] = useState({
-  //   card_title: "",
-  //   card_description: "",
-  //   card_topic: null,
-  //   card_category: null,
-  // });
+
   const [categoriesLocalArray, setCategoriesLocalArray] = useState([]);
-  const [imagesArray, setImagesArray] = useState([]);
+  // const [imagesArray, setImagesArray] = useState([]);
   const [imagesArrayNotEmpty, setImagesArrayNotEmpty] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [emptyState, setEmptyState] = useState(false);
@@ -73,7 +68,7 @@ const AddCardPage = () => {
 
   const updateFiles = (isFiles, cards) => {
     setImagesArrayNotEmpty(isFiles);
-    setImagesArray(cards);
+    // setImagesArray(cards);
     // const localObj = window.localStorage.getItem("draftNewCard");
   };
 
@@ -115,7 +110,6 @@ const AddCardPage = () => {
     try {
       const files = await filedrop.current.getFiles();
       const imagesFiles = await files.map((obj) => obj.file);
-      setImagesArray(files);
       const cardObject = {
         name: cardInfos.card_title,
         description: cardInfos.card_description,
@@ -124,9 +118,8 @@ const AddCardPage = () => {
         user: currentuserId,
         image: await imagesFiles,
       };
-      console.log(cardObject);
-      // createCardService(cardObject);
-      window.localStorage.removeItem("draftNewCard");
+      createCardService(cardObject);
+      await window.localStorage.removeItem("draftNewCard");
       // console.log(cardObject);
       setIsValid(false);
     } catch (err) {
@@ -144,6 +137,7 @@ const AddCardPage = () => {
     await filedrop.current.removeFiles();
     window.localStorage.removeItem("draftNewCard");
     setEmptyState(true);
+    document.location.reload();
   };
 
   // useEffect(() => {
@@ -159,8 +153,8 @@ const AddCardPage = () => {
       localDraftNewCard &&
       (localDraftNewCard.title ||
         localDraftNewCard.categorie ||
-        (localDraftNewCard.description !== "<p></p>↵" && localDraftNewCard.description) ||
-        localDraftNewCard.name ||
+        (localDraftNewCard.description !== "<p></p>↵" && localDraftNewCard.description !== "<p></p>" && localDraftNewCard.description) ||
+        (localDraftNewCard.name && localDraftNewCard.name !== "") ||
         localDraftNewCard.topic) &&
       localDraftNewCard.user === currentuserId
     ) {

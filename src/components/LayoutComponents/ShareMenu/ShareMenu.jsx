@@ -1,17 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-} from "react-share";
-import {
-  FacebookIcon,
-  EmailIcon,
-  TwitterIcon,
-  WhatsappIcon,
-} from "react-share";
+import { EmailShareButton, FacebookShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
+import { FacebookIcon, EmailIcon, TwitterIcon, WhatsappIcon } from "react-share";
 import { base } from "../../../services/configService";
 import { createBrowserHistory } from "history";
 import VerticalMenu from "../VerticalMenu/VerticalMenu";
@@ -48,12 +38,7 @@ const ShareMenu = ({ addclass, test }) => {
       <EmailShareButton body={base + history.location.pathname}>
         <EmailIcon size={45} round={true} />
       </EmailShareButton>
-      <div
-        className="ShareMenu__copy"
-        onClick={() =>
-          handleClipboardCopy(`${base}${history.location.pathname}`)
-        }
-      >
+      <div className="ShareMenu__copy" onClick={() => handleClipboardCopy(`${base}${history.location.pathname}`)}>
         {" "}
         <CopyLogo />
       </div>

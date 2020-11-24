@@ -97,19 +97,13 @@ const AddCardPage = () => {
         user: currentuserId,
       })
     );
-    // console.log({
-    //   name: cardInfos.card_title,
-    //   description: cardInfos.card_description,
-    //   topic: cardInfos.card_topic,
-    //   categorie: cardInfos.card_category,
-    //   user: currentuserId,
-    // });
+
   }, [cardInfos.card_category, cardInfos.card_description, cardInfos.card_title, cardInfos.card_topic, currentuserId]);
 
   const createCard = async () => {
     try {
       const files = await filedrop.current.getFiles();
-      const imagesFiles = await files.map((obj) => obj.file);
+      const imagesFiles = await files.map((obj) => obj);
       const cardObject = {
         name: cardInfos.card_title,
         description: cardInfos.card_description,
@@ -119,6 +113,7 @@ const AddCardPage = () => {
         image: await imagesFiles,
       };
       createCardService(cardObject);
+      // createCardService(files);
       await window.localStorage.removeItem("draftNewCard");
       // console.log(cardObject);
       setIsValid(false);

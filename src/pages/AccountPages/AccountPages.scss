@@ -6,11 +6,9 @@
   &__wrapper {
     width: 100%;
     min-height: 100vh;
-    padding: 2rem;
   }
 
   &__top {
-    padding: $grid-component-padding;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -54,10 +52,6 @@
   .AccountPage {
     grid-template-columns: 1fr;
 
-    &__top {
-      padding: 0 2rem;
-    }
-
     &__navigation {
       display: none;
     }
@@ -70,8 +64,6 @@
 
     &__wrapper {
       padding: $inner-component-padding-phone;
-      padding-top: 2rem;
-      padding-bottom: 2rem;
     }
   }
 }

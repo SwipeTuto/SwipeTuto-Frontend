@@ -8,10 +8,7 @@ import "./SavedPage.scss";
 import { setCardsSize } from "../../../redux/layout/layout-actions";
 import { selectCardsFetchedCards } from "../../../redux/filter/filter-selectors";
 import { withRouter } from "react-router-dom";
-import {
-  selectIsLoaded,
-  selectTheme,
-} from "../../../redux/layout/layout-selectors";
+import { selectIsLoaded, selectTheme } from "../../../redux/layout/layout-selectors";
 import Loading from "../../../components/Loading/Loading";
 
 const SavedPage = ({ location }) => {
@@ -32,7 +29,7 @@ const SavedPage = ({ location }) => {
   return (
     <div className={`SavedPage ${currentTheme}-theme`}>
       <div className="SavedPage__cards">
-        <h1 className="title title-1">Vos cartes sauvegardées :</h1>
+        <h3 className="title title-3">Vos cartes sauvegardées :</h3>
         {!isLoaded ? (
           <Loading />
         ) : cards && cards.length > 0 ? (

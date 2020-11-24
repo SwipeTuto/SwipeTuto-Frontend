@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import store from './redux/store';
 import { authHeader } from "./helper/auth-header"
 
-import { BrowserRouter } from 'react-router-dom'
+import { Router } from 'react-router-dom'
 import './index.scss';
 
 import history from "./helper/history"
@@ -43,9 +43,9 @@ ReactDOM.render(
   <React.StrictMode>
 
     <Provider store={store}>
-      <BrowserRouter history={history}>
+      <Router history={history}>
         <App />
-      </BrowserRouter>
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

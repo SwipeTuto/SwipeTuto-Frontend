@@ -7,10 +7,7 @@ import { getUserByIdAction } from "../../redux/user/user-actions";
 
 import "./ProfilePage.scss";
 import UserPage from "../AccountPages/UserPage/UserPage";
-import {
-  selectCurrentUser,
-  selectUserErrors,
-} from "../../redux/user/user-selectors";
+import { selectCurrentUser, selectUserErrors } from "../../redux/user/user-selectors";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { Link } from "react-router-dom";
 import { ReactComponent as AccountLogo } from "../../assets/images/person.svg";
@@ -55,32 +52,21 @@ const ProfilePage = ({ match, location }) => {
       <div className="ProfilePage__wrapper">
         {userErrors ? (
           <div className="ProfilePage__error">
-            <h1>Le profil de cet utilisateur n'a pas été trouvé.</h1>
+            <h3 className="title title-3">Le profil de cet utilisateur n'a pas été trouvé.</h3>
             <Link to="/">
               <CustomButton>Revenir à l'accueil</CustomButton>
             </Link>
           </div>
         ) : (
           <>
-            {userIsSame ? (
-              <div className="ProfilePage__link">
-                <Link to="/account/user">
-                  <CustomButton color="dark">
-                    <AccountLogo />
-                    Gérer votre compte
-                  </CustomButton>
-                </Link>
-              </div>
-            ) : (
+            {!userIsSame && (
               <VerticalMenu className="ProfilePage__link">
-                <p
-                  className="VerticalMenu__menu--item"
-                  onClick={() => dispatch(showSignalPopup(newSignalObject))}
-                >
+                <p className="VerticalMenu__menu--item" onClick={() => dispatch(showSignalPopup(newSignalObject))}>
                   Signaler
                 </p>
               </VerticalMenu>
             )}
+
             <UserHeader userIsSame={userIsSame} />
             <UserPage userIsSame={userIsSame} />
           </>

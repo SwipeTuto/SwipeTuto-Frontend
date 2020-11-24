@@ -107,10 +107,8 @@ const AddCardPage = () => {
   const createCard = async () => {
     try {
       const files = await filedrop.current.getFiles();
-      // console.log('files', files[0].origin)
       const imagesFiles = await files.map((obj) => obj);
-      // console.log('obj', imagesFiles)
-      setImagesArray(files);
+      console.log('obj', imagesFiles)
       const cardObject = {
         name: cardInfos.card_title,
         description: cardInfos.card_description,

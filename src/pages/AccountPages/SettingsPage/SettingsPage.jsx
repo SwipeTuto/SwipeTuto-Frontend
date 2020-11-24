@@ -3,14 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import CustomButton from "../../../components/LayoutComponents/CustomButton/CustomButton";
 
 import "./SettingsPage.scss";
-import {
-  selectCurrentUser,
-  selectCurrentUserId,
-} from "../../../redux/user/user-selectors";
-import {
-  getCurrentUserAction,
-  updateUserInfosAction,
-} from "../../../redux/user/user-actions";
+import { selectCurrentUser, selectCurrentUserId } from "../../../redux/user/user-selectors";
+import { getCurrentUserAction, updateUserInfosAction } from "../../../redux/user/user-actions";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 import FormInput from "../../../components/FormInputs/FormInput";
 import FormTextarea from "../../../components/FormInputs/FormTextarea";
@@ -97,13 +91,12 @@ const SettingsPage = () => {
 
   return (
     <div className={`SettingsPage ${currentTheme}-theme`}>
-      <h1 className="title title-1">Changer les informations du compte</h1>
+      <h3 className="title title-3">Changer les informations du compte</h3>
       <div className="allForms">
         <form className="form__avatar form" onChange={handleAvatarUpdate}>
           <div className="form__avatar--left">
             <label htmlFor="avatar">
-              Changez votre avatar (veuillez choisir une image au format{" "}
-              <em>.png</em> ou <em>.jpeg</em>) :
+              Changez votre avatar (veuillez choisir une image au format <em>.png</em> ou <em>.jpeg</em>) :
             </label>
             <input
               className="settings__form--input invalid-input"
@@ -117,12 +110,7 @@ const SettingsPage = () => {
             <p className="input__message" data-inputfor="avatar"></p>
           </div>
 
-          <CustomButton
-            name="avatar"
-            onClick={(e) => handleSubmitInput(e)}
-            color="dark"
-            disabled={inputValid.avatar === false ? "disabled" : ""}
-          >
+          <CustomButton name="avatar" onClick={(e) => handleSubmitInput(e)} color="dark" disabled={inputValid.avatar === false ? "disabled" : ""}>
             Valider
           </CustomButton>
         </form>
@@ -139,12 +127,7 @@ const SettingsPage = () => {
             />
           </div>
 
-          <CustomButton
-            name="username"
-            onClick={(e) => handleSubmitInput(e)}
-            color="dark"
-            disabled={inputValid.username === false ? "disabled" : ""}
-          >
+          <CustomButton name="username" onClick={(e) => handleSubmitInput(e)} color="dark" disabled={inputValid.username === false ? "disabled" : ""}>
             Valider
           </CustomButton>
         </form>
@@ -199,11 +182,7 @@ const SettingsPage = () => {
               name="description"
               getValue={getValue}
               required={true}
-              firstValue={
-                currentUser &&
-                currentUser.profile &&
-                currentUser.profile.description
-              }
+              firstValue={currentUser && currentUser.profile && currentUser.profile.description}
             />
           </div>
           <CustomButton

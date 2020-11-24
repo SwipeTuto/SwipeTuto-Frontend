@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 // redux
 import { selectCurrentSearch, selectSearchWords } from "../../../redux/filter/filter-selectors";
-import { setCurrentSearch, deleteCurrentSearch } from "../../../redux/filter/filter-actions";
+import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 import { closeMobileNav } from "../../../redux/layout/layout-actions";
 
 // components

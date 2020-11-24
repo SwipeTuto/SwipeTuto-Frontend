@@ -28,8 +28,8 @@ const INITIAL_STATE = {
 const layoutReducer = (state = INITIAL_STATE, action) => {
   const app = document.getElementsByClassName("App")[0];
   const cardPopupElement = document.getElementsByClassName("CardFullPopup")[0];
-  const scrollYWindow = window.scrollY;
-  const scrollY = app && app.style.top;
+  // const scrollYWindow = window.scrollY;
+  // const scrollY = app && app.style.top;
 
   switch (action.type) {
     case LayoutActionTypes.SHOW_POPUP_CARD:

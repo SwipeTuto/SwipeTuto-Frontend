@@ -20,6 +20,12 @@ export const getUrlId = (url, query) => {
 }
 
 
+export const stringToHTML = (str) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(str, 'text/html');
+  return doc.body;
+}
+
 // Pour les mots / phrases trop longue, permet de couper. Params : phrase, nombre de caractères max, true/false pour couper les mots
 export const truncate = (str, n, useWordBoundary) => {
   if (str.length <= n) {
@@ -500,7 +506,7 @@ export const initialSearchState = {
   searchWords: null,
   searchTopic: null,
   searchCategory: null,
-  searchOrder: "-created",
+  searchOrder: "likes",
   searchPage: 1,
 }
 export const initialSignalState = {
@@ -535,3 +541,17 @@ export const likeUpdate = (cardId) => {
     console.log('add class')
   }
 };
+
+
+
+// function removeBlockFromBlockMap(editorState: EditorState, blockKey: string) {
+//   var contentState = editorState.getCurrentContent();
+//   var blockMap = contentState.getBlockMap();
+//   var newBlockMap = blockMap.remove(blockKey)
+//   var newContentState = contentState.merge({
+//     blockMap: newBlockMap
+//   })
+//   export { removeBlockFromBlockMap as Draft.Model.ImmutableData.ContentState }
+//   var newEditorState = EditorState.push(editorState, newContentState, 'remove-range')
+//   return newEditorState
+// }

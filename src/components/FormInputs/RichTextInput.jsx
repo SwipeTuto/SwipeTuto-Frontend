@@ -1,52 +1,62 @@
-import React, { useEffect, useState } from "react";
-// import { EditorState } from "draft-js";
-// import { Editor } from "react-draft-wysiwyg";
-// import React, { Component } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "./RichTextInput.scss";
 
-const RichTextInput = () => {
+const RichTextInput = ({ label, getDescriptionValue, firstValue }) => {
   const editorState = EditorState.createEmpty();
-  // const [content, setContent] = useState(editorState);
   const [content, setContent] = useState(editorState);
   const [contentInHTML, setContentInHTML] = useState();
-  // const html = "<p>Hey this <strong>editor</strong> rocks 😀</p>";
-  const html = "<p></p>";
+  const editor = useRef(null);
+
+  useEffect(() => {
+    if (firstValue) {
+      setContent(firstValue);
+      const contentBlock = htmlToDraft(firstValue);
+      if (contentBlock) {
+        const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+        const editorState = EditorState.createWithContent(contentState);
+        setContent(editorState);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setContentInHTML(draftToHtml(convertToRaw(content.getCurrentContent())));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [content]);
+
+  useEffect(() => {
+    getDescriptionValue(contentInHTML);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contentInHTML]);
 
   const onEditorStateChange = (editorState) => {
     setContent(editorState);
   };
 
-  useEffect(() => {
-    setContentInHTML(draftToHtml(convertToRaw(content.getCurrentContent())));
-    console.log(contentInHTML);
-  }, [content, contentInHTML]);
-
-  // return <Editor editorState={editorState} wrapperClassName="demo-wrapper" editorClassName="demo-editor" onEditorStateChange={onEditorStateChange} />;
-
-  useEffect(() => {
-    const contentBlock = htmlToDraft(html);
-    if (contentBlock) {
-      const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-      const editorState = EditorState.createWithContent(contentState);
-      setContent(editorState);
-    }
-  }, []);
-
-  // const contentBlock = htmlToDraft(html);
-  // if (contentBlock) {
-  //   const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-  //   const editorState = EditorState.createWithContent(contentState);
-  //   setContent(editorState);
-  // }
-
   return (
-    <div>
-      <Editor editorState={content} wrapperClassName="demo-wrapper" editorClassName="demo-editor" onEditorStateChange={onEditorStateChange} />
-    </div>
+    <>
+      <label className="FormInput__label">{label && label}</label>
+      <Editor
+        // blockRendererFn={myBlockRenderer}
+        ref={editor}
+        editorState={content}
+        wrapperClassName="demo-editor"
+        editorClassName="demo-editor"
+        onEditorStateChange={onEditorStateChange}
+        toolbar={{
+          inline: { inDropdown: true },
+          list: { inDropdown: true },
+          textAlign: { inDropdown: true },
+          link: { inDropdown: true },
+        }}
+      />
+    </>
   );
 };
 

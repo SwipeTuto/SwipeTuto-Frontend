@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 // Import React FilePond
-import { FilePond, File, registerPlugin } from "react-filepond";
+import { FilePond, registerPlugin } from "react-filepond";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 
 // Import FilePond styles

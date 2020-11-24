@@ -1,21 +1,7 @@
-import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
+import React, {useSelector} from "react";
 import { withRouter } from "react-router-dom";
-import {
-  selectClickedCard,
-} from "../../../redux/filter/filter-selectors";
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-} from "react-share";
-import {
-  FacebookIcon,
-  EmailIcon,
-  TwitterIcon,
-  WhatsappIcon,
-} from "react-share";
+import { EmailShareButton, FacebookShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
+import { FacebookIcon, EmailIcon, TwitterIcon, WhatsappIcon } from "react-share";
 import { base } from "../../../services/configService";
 import { createBrowserHistory } from "history";
 import VerticalMenu from "../VerticalMenu/VerticalMenu";
@@ -24,6 +10,7 @@ import "./ShareMenu.scss";
 import { copyToClipboard } from "../../../helper";
 import { useDispatch } from "react-redux";
 import { openNotificationPopup } from "../../../redux/layout/layout-actions";
+import { selectClickedCard } from "../../../redux/filter/filter-selectors"
 
 const ShareMenu = ({ addclass, test }) => {
   const clickedCard = useSelector(selectClickedCard);
@@ -77,13 +64,7 @@ const ShareMenu = ({ addclass, test }) => {
       >
         <EmailIcon size={45} round={true} />
       </EmailShareButton>
-
-      <div
-        className="ShareMenu__copy"
-        onClick={() =>
-          handleClipboardCopy(`${base}${history.location.pathname}`)
-        }
-      >
+      <div className="ShareMenu__copy" onClick={() => handleClipboardCopy(`${base}${history.location.pathname}`)}>
         {" "}
         <CopyLogo />
       </div>

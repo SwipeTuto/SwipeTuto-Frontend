@@ -1,41 +1,43 @@
 // Présent dans App.js dans une Route ("/")
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 
 // redux
 import {
   loginAction,
   deleteUserErrors,
   loginGoogleAction,
+  loginFacebookAction,
 } from "../../../redux/user/user-actions";
 import { selectUserErrors } from "../../../redux/user/user-selectors";
-
 // helper
-import { loginGit } from "../../../services/userService";
-import { checkRegexInput, errorMessageToDisplay } from "../../../helper/index";
+
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
 
 // assets
 import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google.svg";
-import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
+import { ReactComponent as FacebookLogo } from "../../../assets/images/logo-facebook.svg";
 
 import "./LoginAndRegister.scss";
+import FormInput from "../../FormInputs/FormInput";
+import { selectTheme } from "../../../redux/layout/layout-selectors";
 
-const Login = ({ history }) => {
+const Login = ({ title }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({ username: "", password: "" });
   const [submitOk, setSubmitOk] = useState(false);
   const userErrors = useSelector(selectUserErrors);
+  const allInput = [...document.querySelectorAll(".FormInput")];
+  const currentTheme = useSelector(selectTheme)
 
   // scroll reset
   useEffect(() => {
-    if (window.scrollY) {
-      window.scroll(0, 0);
-    }
+
     dispatch(deleteUserErrors());
   }, [dispatch]);
 
@@ -43,40 +45,11 @@ const Login = ({ history }) => {
     e.stopPropagation();
     dispatch(loginGoogleAction());
   };
-  const handleClickGit = (e) => {
-    loginGit();
+  const handleClickFacebook = (e) => {
+    e.stopPropagation();
+    dispatch(loginFacebookAction());
+
   };
-
-  const handleChange = useCallback(
-    (e) => {
-      const { name, value } = e.target;
-
-      const currentInput = document.querySelector(`input[name=${name}]`);
-      const errorMessage = document.querySelector(
-        `.input__message[data-inputfor=${name}`
-      );
-
-      currentInput && currentInput.classList.remove("valid-input");
-      currentInput && currentInput.classList.add("invalid-input");
-
-      if (value) {
-        let inputIsOk = checkRegexInput(name, value); //test valeur avec regex, true or false
-
-        if (!inputIsOk) {
-          currentInput.classList.remove("valid-input");
-          currentInput.classList.add("invalid-input");
-          errorMessage.classList.add("error__message");
-          errorMessage.textContent = errorMessageToDisplay(name);
-        } else {
-          errorMessage.classList.remove("error__message");
-          currentInput.classList.remove("invalid-input");
-          currentInput.classList.add("valid-input");
-        }
-      }
-      setUser({ ...user, [name]: value });
-    },
-    [user]
-  );
 
   const handleClick = (e) => {
     const { email, password } = user;
@@ -86,8 +59,11 @@ const Login = ({ history }) => {
     }
   };
 
+  const getValue = (name, value) => {
+    setUser({ ...user, [name]: value });
+  };
+
   useEffect(() => {
-    const allInput = [...document.querySelectorAll(".login__form--input")];
     const readyToSubmit = allInput.every((input) =>
       input.classList.contains("valid-input")
     );
@@ -97,21 +73,25 @@ const Login = ({ history }) => {
     } else {
       setSubmitOk(true);
     }
-  }, [user]);
+  }, [allInput, user]);
 
   return (
-    <div className="Login">
-      <h1 className="title title-1">Se connecter</h1>
+    <div className={`Login ${currentTheme}-theme`}>
+      <h2 className="title title-2">
+        {title ? title : "Content de vous revoir !"}
+      </h2>
       <div className="Login__google">
         <CustomButton color="white" onClick={(e) => handleClickGoogle(e)}>
           <GoogleLogo />
-          Google
+          Continuer avec Google
         </CustomButton>
-        <CustomButton color="white" onClick={(e) => handleClickGit(e)}>
-          <GithubLogo />
-          Git
+        <CustomButton color="white" onClick={(e) => handleClickFacebook(e)}>
+          <FacebookLogo />
+          Continuer avec Facebook
         </CustomButton>
+
       </div>
+      <p className="Login__ou">Ou :</p>
       <p className="error__message">
         {userErrors
           ? userErrors === 400
@@ -120,34 +100,24 @@ const Login = ({ history }) => {
           : ""}
       </p>
       <form className="Login__form">
-        <label htmlFor="pseudo" className="Login__form--label">
-          {" "}
-          Email :{" "}
-        </label>
-        <input
-          onChange={(e) => handleChange(e)}
+        <FormInput
+          idFor="email"
+          label="Votre email :"
           type="email"
           name="email"
-          value={user.email || ""}
-          id="email_login"
-          className="Login__form--input invalid-input"
-          required
+          getValue={getValue}
+          required={true}
+        // firstValue={savedEmail}
         />
-        <p className="input__message" data-inputfor="email"></p>
-        <label htmlFor="mdp" className="Login__form--label">
-          {" "}
-          Mot de passe :{" "}
-        </label>
-        <input
-          onChange={(e) => handleChange(e)}
-          value={user.password}
+        <FormInput
+          idFor="password"
+          label="Votre mot de passe :"
           type="password"
           name="password"
-          id="mdp_login"
-          className="Login__form--input invalid-input"
-          required
+          getValue={getValue}
+          required={true}
+        // firstValue={savedPassword}
         />
-        <p className="input__message" data-inputfor="password"></p>
         <CustomButton
           onClick={(e) => handleClick(e)}
           id="login-button"

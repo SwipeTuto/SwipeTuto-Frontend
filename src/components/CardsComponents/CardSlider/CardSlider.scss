@@ -1,0 +1,193 @@
+@import "../../../variables.scss";
+@import "../../../../node_modules/@glidejs/glide/src/assets/sass/glide.core.scss";
+
+.CardSlider {
+  width: 100%;
+  margin-bottom: 4rem;
+
+  &__close {
+    cursor: pointer;
+    position: absolute;
+    top: 2rem;
+    right: 4rem;
+    z-index: 70;
+    @include button-round;
+    padding: 0.6rem;
+
+    & svg {
+      @include logo-size;
+    }
+
+    // &:hover {
+    //   fill: $primary-light;
+    //   transition: all 0.2s ease;
+    // }
+
+    &--active {
+      display: flex;
+    }
+
+    &--hide {
+      display: none;
+    }
+  }
+
+  &__nav {
+    @include big-logo-size;
+
+    &:hover > *,
+    &:active > * {
+      stroke: $primary-light !important;
+      transition: all 0.2s ease;
+    }
+  }
+
+  .glide {
+    position: relative;
+    height: 70vh;
+
+    &__track {
+      height: 100%;
+      // background-color: $grey-lighter;
+    }
+
+    &__slides {
+      height: 100%;
+    }
+
+    &__slide {
+      display: block;
+      text-align: center;
+      height: 100%;
+
+      & > img {
+        height: 100%;
+        width: auto;
+      }
+    }
+
+    &__arrows {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__bullets {
+      text-align: center;
+    }
+
+    &__bullet {
+      padding: 0;
+      height: 0.6rem;
+      width: 0.6rem;
+      background-color: $grey;
+
+      &--active {
+        background-color: $grey-dark;
+      }
+
+      &:not(:last-of-type) {
+        margin-right: 0.4rem;
+      }
+    }
+  }
+
+  &--fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $black;
+    // height: 100vh;
+    // width: 100vw;
+    z-index: 60;
+    margin-bottom: 0rem;
+
+    & .glide {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      &__track {
+        flex-grow: 1;
+      }
+
+      &__slides {
+        height: 100%;
+      }
+
+      &__slide {
+        height: 100%;
+      }
+
+      &__bullet {
+        background-color: $grey-dark;
+
+        &--active {
+          background-color: $grey;
+        }
+      }
+    }
+
+    & .CardSlider__nav {
+      & * {
+        stroke: $white !important;
+      }
+      &:hover > *,
+      &:active > * {
+        stroke: $primary-light !important;
+        transition: all 0.2s ease;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .CardSlider {
+    .glide {
+      &__arrows {
+        display: none;
+      }
+    }
+
+    &__close {
+      top: 1rem;
+      right: 1rem;
+    }
+
+    &--fullscreen {
+      & .glide {
+        height: 90vh;
+
+        &__slides {
+        }
+
+        &__slide {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $bp-phone) {
+    .CardSlider {
+      .glide {
+        height: auto;
+        max-height: 70vh;
+
+        &__slide {
+          & > img {
+            width: 100%;
+            height: auto;
+          }
+        }
+      }
+    }
+  }
+}

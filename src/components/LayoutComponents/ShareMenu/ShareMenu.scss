@@ -1,0 +1,39 @@
+@import "../../../variables.scss";
+
+.ShareMenu {
+  &__copy {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    background-color: $primary-dark;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & svg {
+      height: 50%;
+      width: 50%;
+
+      & path {
+        fill: $white;
+      }
+    }
+  }
+}
+
+.VerticalMenu__menu {
+  // flex-direction: row;
+  // align-items: center;
+  // justify-content: center;
+
+  &--item {
+    // margin-left: 1rem;
+    // margin-bottom: 0 !important;
+
+    & button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

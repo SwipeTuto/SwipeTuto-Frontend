@@ -11,10 +11,6 @@ export const selectFullscreen = createSelector(
   layout => layout.fullscreen
 )
 
-export const selectUserNav = createSelector(
-  [selectLayout],
-  layout => layout.showUserNav
-)
 
 export const selectMobileNavOpen = createSelector(
   [selectLayout],
@@ -52,4 +48,32 @@ export const selectTheme = createSelector(
 export const selectOtherPageLoading = createSelector(
   [selectLayout],
   layout => layout.otherPageCardsLoaded
+);
+export const selectSignalPopupOpen = createSelector(
+  [selectLayout],
+  layout => layout.signalPopupOpen
+);
+export const selectSignalInfos = createSelector(
+  [selectLayout],
+  layout => layout.signalInfos
+);
+export const selectRedirectUrl = createSelector(
+  [selectLayout],
+  layout => layout.redirectUrl
+);
+export const selectConnexionPopup = createSelector(
+  [selectLayout],
+  layout => layout.connexionPopup
+);
+export const selectFirstLoadDone = createSelector(
+  [selectLayout],
+  layout => layout.firstLoadDone
+);
+export const selectUserLoaded = createSelector(
+  [selectLayout],
+  layout => layout.firstLoadDone
+);
+export const selectNotificationPopupOpen = createSelector(
+  [selectLayout],
+  layout => layout.notificationPopupOpen
 );

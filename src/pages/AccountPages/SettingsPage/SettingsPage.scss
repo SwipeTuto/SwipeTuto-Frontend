@@ -4,20 +4,21 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding: $grid-component-padding;
 
-  input:not([type="file"]),
-  textarea {
-    @include input-style;
-  }
+  // input:not([type="file"]),
+  // textarea {
+  //   @include input-style;
+  // }
 
-  input[name="mdp1"] {
-    margin-bottom: 2rem;
-  }
+  // input[name="mdp1"] {
+  //   margin-bottom: 2rem;
+  // }
 
-  textarea {
-    resize: none;
-    min-height: 10rem;
-  }
+  // textarea {
+  //   resize: none;
+  //   min-height: 10rem;
+  // }
 
   .allForms {
     display: flex;
@@ -26,44 +27,37 @@
 
   .form {
     display: flex;
-    flex-direction: column;
     padding: 2rem;
     border-bottom: 1px solid $grey-dark;
-
-    &:first-of-type {
-      border-top: 1px solid $grey-dark;
-    }
-
-    label {
-      margin-bottom: 2rem;
-    }
+    justify-content: space-between;
+    align-items: center;
 
     &__bottom {
       display: flex;
-      justify-content: space-between;
-
-      &--input {
-        width: 70%;
-
-        input,
-        textarea {
-          width: 100%;
-          margin-bottom: 1rem;
-        }
-      }
+      flex-direction: column;
+      width: 70%;
     }
   }
+  // }
 }
 
+@media screen and (max-width: $bp-tablet) {
+  .SettingsPage {
+    padding: 0 2rem;
+  }
+}
 @media screen and (max-width: $bp-phone) {
   .SettingsPage {
     .form {
-      &__bottom {
-        flex-direction: column;
+      flex-direction: column;
 
-        &--input {
-          width: 100%;
-        }
+      &__bottom {
+        width: 100%;
+      }
+
+      .custom-button {
+        margin-top: 1rem;
+        margin-left: auto;
       }
     }
   }

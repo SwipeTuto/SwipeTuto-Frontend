@@ -1,8 +1,8 @@
 import { UserActionTypes } from './user-types'
-import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, loginGit } from '../../services/userService'
+import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin } from '../../services/userService'
 import history from "../../helper/history"
-import { setLoading, setLoaded } from '../layout/layout-actions';
-import { baseURL } from '../../services/configService';
+import { setUserLoading, setUserLoaded } from '../layout/layout-actions';
+
 
 export const deleteUserErrors = () => ({
   type: UserActionTypes.DELETE_USER_ERRORS,
@@ -26,13 +26,14 @@ export const loginAction = (username, password) => {
           if (currentUrl) {
             window.location.href = currentUrl;
           } else {
-            window.location.href = baseURL;
+            return
           }
         }
       })
 
   }
 }
+
 export const loginGoogleAction = () => {
   const currentUrl = window.location.href;
   return dispatch => {
@@ -47,7 +48,7 @@ export const loginGoogleAction = () => {
               if (currentUrl) {
                 window.location.href = currentUrl;
               } else {
-                window.location.href = baseURL;
+                return
               }
             }
           })
@@ -55,12 +56,13 @@ export const loginGoogleAction = () => {
 
   }
 }
-export const loginGitAction = () => {
+
+export const loginFacebookAction = () => {
   const currentUrl = window.location.href;
   return dispatch => {
-    return loginGit()
+    return LoginProviderFacebook()
       .then(rep => {
-        login(rep)
+        FacebookLogin(rep)
           .then(rep => {
             dispatch(deleteUserErrors())
             if (!rep.data) {
@@ -69,12 +71,11 @@ export const loginGitAction = () => {
               if (currentUrl) {
                 window.location.href = currentUrl;
               } else {
-                window.location.href = baseURL;
+                return
               }
             }
           })
       })
-
   }
 }
 
@@ -104,13 +105,14 @@ export const setOtherUser = (otherUser) => ({
   payload: otherUser,
 });
 
+
 // REGISTER
 export const registerAction = users => {
   return dispatch => {
     register(users)
       .then(user => {
         dispatch(registerSuccess(user.data.user));
-        history.push('/', history.location)
+        history.push('/search', history.location)
         history.go()
       })
       .catch(err => {
@@ -155,15 +157,15 @@ const getClickedUserError = error => ({
 
 export const getUserByIdAction = id => {
   return dispatch => {
-    dispatch(setLoading());
+    dispatch(setUserLoading());
     getUserById(id).then(rep => {
       dispatch(setClickedUser(rep.data))
-      dispatch(setLoaded())
+      dispatch(setUserLoaded())
       dispatch(deleteUserErrors())
       return rep.data
     }).catch(err => {
       dispatch(getClickedUserError(err.message))
-      dispatch(setLoaded())
+      dispatch(setUserLoaded())
       return err
     })
   }
@@ -171,15 +173,16 @@ export const getUserByIdAction = id => {
 
 export const getCurrentUserAction = id => {
   return dispatch => {
-    dispatch(setLoading());
+    dispatch(setUserLoading());
     getUserById(id).then(rep => {
+      // console.log(rep.data.user)
       dispatch(setCurrentUser(rep.data.user))
-      dispatch(setLoaded())
+      dispatch(setUserLoaded())
       dispatch(deleteUserErrors())
       return rep.data
     }).catch(err => {
       dispatch(getClickedUserError(err.message))
-      dispatch(setLoaded())
+      dispatch(setUserLoaded())
       return err
     })
   }
@@ -195,11 +198,11 @@ export const updateUserInfosAction = userInfos => {
       updateUserInfos(userInfos)
         .then(rep => {
           dispatch(updateUserInfosSuccess(rep.data.user))
-          dispatch(setLoaded())
+          dispatch(setUserLoaded())
           return rep
         }).catch(err => {
           dispatch(updateUserInfosError(err))
-          dispatch(setLoaded())
+          dispatch(setUserLoaded())
           return err
         })
     )

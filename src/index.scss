@@ -17,9 +17,15 @@ select {
   outline: none;
   font-family: inherit;
   background-color: inherit;
-  padding: 0.3rem 1.5rem;
+  padding: $box-padding;
   font-size: inherit;
   color: currentColor;
+  border-radius: $button-radius;
+  overflow: hidden;
+}
+
+label {
+  margin-bottom: 0.5rem;
 }
 
 button::placeholder,
@@ -28,16 +34,21 @@ textarea::placeholder {
   color: $black;
 }
 
+textarea {
+  resize: none;
+  min-height: 10rem;
+}
+
 button,
 select {
   cursor: pointer;
 }
 
-select {
-  // background-color: $white;
-  border: 0.5px solid $grey-light;
-  border-radius: $box-radius;
-}
+// select {
+//   // background-color: $white;
+//   border: 0.5px solid $grey-light;
+//   border-radius: $box-radius;
+// }
 
 ul {
   list-style: none;
@@ -55,11 +66,12 @@ html {
 
 body {
   margin: 0;
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   font-family: $text-font;
   padding: $navtop-height 0 0 0;
   max-width: 100%;
   margin: 0 auto;
+  touch-action: pan-x pan-y;
   @include theme-colors($themelight: true);
 }
 
@@ -70,27 +82,6 @@ body {
 
 .section {
   @include section-padding;
-}
-
-@media screen and (max-width: $bp-tablet) {
-  body {
-    padding: 0;
-  }
-}
-@media screen and (max-width: $bp-phone) {
-  body {
-    font-size: 2rem;
-  }
-
-  .section {
-    @include section-small-padding;
-  }
-}
-
-@media screen and (min-width: $bp-big) {
-  .section {
-    @include section-big-padding;
-  }
 }
 
 // Components spécifiques
@@ -108,6 +99,7 @@ body {
 
 .error__message {
   color: $red-error;
+  margin-bottom: 1rem;
 }
 
 // .blue-text {
@@ -125,22 +117,22 @@ body {
   font-family: $title-font;
   &-1 {
     margin-bottom: 1.4rem;
-    font-size: 2.2rem;
+    font-size: 3.6rem;
   }
 
   &-2 {
     margin-bottom: 1.2rem;
-    font-size: 1.8rem;
+    font-size: 2.6rem;
   }
 
   &-3 {
     margin-bottom: 1rem;
-    font-size: 1.6rem;
+    font-size: 2.2rem;
   }
 
   &-4 {
     margin-bottom: 0.8rem;
-    font-size: 1.4rem;
+    font-size: 1.8rem;
   }
 }
 
@@ -149,4 +141,40 @@ body {
 }
 .light-theme {
   @include theme-colors($themelight: true);
+}
+
+@media screen and (max-width: $bp-tablet) {
+  body {
+    padding: 0;
+  }
+}
+@media screen and (max-width: $bp-phone) {
+  body {
+    font-size: 1.8rem;
+  }
+  .title {
+    &-1 {
+      margin-bottom: 5rem;
+      font-size: 4rem;
+    }
+
+    &-2 {
+      margin-bottom: 2.5rem;
+      font-size: 2.6rem;
+    }
+
+    &-3 {
+      margin-bottom: 2rem;
+      font-size: 2.3rem;
+    }
+
+    &-4 {
+      margin-bottom: 1.6rem;
+      font-size: 2.1rem;
+    }
+  }
+
+  .section {
+    @include section-small-padding;
+  }
 }

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import CardPreviewSmall from "../../components/CardsComponents/CardPreviewSmall/CardPreviewSmall";
-import CardFullPopup from "../../components/CardsComponents/CardFullPopup/CardFullPopup";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import Loading from "../../components/Loading/Loading";
 import { getCardAfterfilterAction } from "../../redux/filter/filter-actions";
@@ -16,6 +15,7 @@ import { ReactComponent as SuccessIllustration } from "../../assets/images/illus
 
 import { selectCardsFetchedCards } from "../../redux/filter/filter-selectors";
 import { selectTheme } from "../../redux/layout/layout-selectors";
+import { showSignalPopup } from "../../redux/layout/layout-actions";
 import { deleteCurrentSearch } from "../../redux/filter/filter-actions";
 
 import "./HomePage.scss";
@@ -30,13 +30,27 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // let isCancelled = false;
+
+    // if (!isCancelled) {
     dispatch(getCardAfterfilterAction(initialSearchState));
+    // }
+
+    // return () => {
+    //   isCancelled = true;
+    // };
   }, [dispatch]);
 
   // scroll reset
-  if (window.scrollY) {
-    window.scroll(0, 0);
-  }
+  // if (window.scrollY) {
+  //   window.scroll(0, 0);
+  // }
+
+  useEffect(() => {
+    if (window.scrollY) {
+      window.scroll(0, 0);
+    }
+  }, []);
 
   const handleRedirectClick = () => {
     dispatch(deleteCurrentSearch());
@@ -70,6 +84,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+
       <div className="HomePage__lastCards section">
         <h1 className="title title-1">Nos dernières cartes</h1>
         <div className="HomePage__grid ">
@@ -85,7 +100,6 @@ const HomePage = () => {
           )}
         </div>
       </div>
-      <CardFullPopup />
 
       <div className="About section">
         <div className="about-section section-1">

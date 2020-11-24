@@ -30,18 +30,13 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
 
       }
     case FilterActionTypes.SET_CURRENT_SEARCH:
-      if ("action payload: dans le reducer" && action.payload) {
-        return {
-          ...state, currentSearch: {
-            ...state.currentSearch,
-            [action.payload.item]: action.payload.value,
-          }
-        }
-      } else {
-        return {
-          ...state
-        }
-      };
+      return {
+        // ...state, currentSearch: {
+        //   ...state.currentSearch,
+        //   [action.payload.item]: action.payload.value,
+        // }
+        ...state, currentSearch: action.payload
+      }
     case FilterActionTypes.DELETE_CURRENT_SEARCH:
       if (action.payload) {
         return {
@@ -102,7 +97,11 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, totalNumberOfCardsSearched: 0 };
 
     case FilterActionTypes.SET_CARDS_FETCHED_IN_STORE:
-      return { ...state, cardsFetched: action.payload.data };
+      if (action && action.payload && action.payload.data) {
+        return { ...state, cardsFetched: action.payload.data };
+      } else {
+        return { ...state, cardsFetched: null };
+      }
 
     case FilterActionTypes.GET_OTHER_PAGE_ACTION_SUCCESS:
       const flattenArray = state.cardsFetched.results.concat(action.payload.results)
@@ -154,6 +153,11 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: action.payload }
     case FilterActionTypes.ADD_COMMENT_SUCCESS:
       return { ...state, lastPublishedComment: action.payload, errors: null }
+
+    case FilterActionTypes.FETCH_NEW_COMMENTS_ERROR:
+      return { ...state, errors: action.payload }
+    case FilterActionTypes.FETCH_NEW_COMMENTS_SUCCESS:
+      return { ...state, clickedCardComments: { ...state.clickedCardComments, count: action.payload.count, next: action.payload.next && action.payload.next, results: [...state.clickedCardComments.results, ...action.payload.results] }, errors: null }
     case FilterActionTypes.DELETE_COMMENT_ERROR:
       return { ...state, errors: action.payload }
     case FilterActionTypes.DELETE_COMMENT_SUCCESS:
@@ -168,6 +172,12 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, clickedCardComments: action.payload, lastPublishedComment: null, errors: null }
     case FilterActionTypes.GET_CARD_COMMENTS_ERROR:
       return { ...state, errors: action.payload }
+    case FilterActionTypes.DELETE_LAST_PUBLISHED_COMMENT_IN_STORE:
+      return { ...state, lastPublishedComment: null }
+    // case FilterActionTypes.GET_COMMENT_REPLIES_SUCCESS:
+    //   return { ...state, clickedCardComments: action.payload, lastPublishedComment: null, errors: null }
+    // case FilterActionTypes.GET_COMMENT_REPLIES_ERROR:
+    //   return { ...state, errors: action.payload }
 
     default:
       return state;

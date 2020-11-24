@@ -1,26 +1,21 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import imagesLoaded from "imagesloaded";
 
 // redux
-import {
-  setClickedCard,
-  getCardByIdAction,
-  toggleLikeCardAction,
-} from "../../../redux/filter/filter-actions";
-import { showPopupCard } from "../../../redux/layout/layout-actions";
-import { selectCurrentUser } from "../../../redux/user/user-selectors";
+import { setClickedCard, getCardByIdAction, toggleLikeCardAction } from "../../../redux/filter/filter-actions";
+import { openConnexionPopup, showPopupCard } from "../../../redux/layout/layout-actions";
+import { selectCurrentUser, selectCurrentUserId } from "../../../redux/user/user-selectors";
 
 // service & helper
 // import { base } from "../../../services/configService";
-import { renameCategory, truncate } from "../../../helper/index";
+import { convertNumber, likeUpdate, truncate } from "../../../helper/index";
 
 // assets
+// import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
 import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
-import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outline.svg";
+import { ReactComponent as EyeLogo } from "../../../assets/images/eye.svg";
 
 // components
-import ConnexionRedirect from "../../LayoutComponents/ConnexionRedirect/ConnexionRedirect";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 
 import "./CardPreviewSmall.scss";
@@ -28,14 +23,16 @@ import Loading from "../../Loading/Loading";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 const CardPreviewSmall = ({ card, size }) => {
-  const { media_image, user, categorie, name, number_of_likes, likes } = card;
+  const { media_image, user, name, number_of_likes, likes, total_views } = card;
   const dispatch = useDispatch();
   const currentTheme = useSelector(selectTheme);
   const cardId = card && card.id;
   const currentUser = useSelector(selectCurrentUser);
-  const [connectRedirect, setConnectRedirect] = useState(false);
-  const [cardIsLiked, setCardIsLiked] = useState();
+  const currentUserId = useSelector(selectCurrentUserId);
+  // const [cardIsLiked, setCardIsLiked] = useState();
   const [cardIsReady, setCardIsReady] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [firstCheck, setFirstCheck] = useState(true);
 
   const userHasLiked = useCallback(() => {
     if (currentUser && currentUser.id) {
@@ -46,8 +43,12 @@ const CardPreviewSmall = ({ card, size }) => {
   }, [currentUser, likes]);
 
   useEffect(() => {
-    setCardIsLiked(userHasLiked());
-  }, [currentUser, userHasLiked]);
+    const heartEl = document.getElementById(`CardPreviewSmall__heart${cardId}`);
+    if (userHasLiked() && firstCheck) {
+      heartEl && heartEl.classList.add("active");
+    }
+    setFirstCheck(false);
+  }, [cardId, firstCheck, userHasLiked]);
 
   const handleClickedCardClick = async () => {
     dispatch(showPopupCard());
@@ -60,99 +61,75 @@ const CardPreviewSmall = ({ card, size }) => {
 
   const handleLikeClick = () => {
     if (!currentUser) {
-      setConnectRedirect(true);
+      dispatch(openConnexionPopup());
     } else {
-      dispatch(toggleLikeCardAction(cardId));
-      const likedCardText = document.getElementById(`likesNumber${cardId}`);
-      if (cardIsLiked) {
-        likedCardText.textContent = parseInt(likedCardText.textContent) - 1;
-      } else {
-        likedCardText.textContent = parseInt(likedCardText.textContent) + 1;
-      }
-      setCardIsLiked(!cardIsLiked);
+      dispatch(toggleLikeCardAction(cardId, currentUserId));
+      likeUpdate(cardId);
     }
   };
-
-  const handleClose = () => {
-    setConnectRedirect(false);
-  };
-
-  const elem = document.querySelector(".CardPreviewSmall__image");
 
   useEffect(() => {
+    const elem = document.querySelector(`#CardPreviewSmall__image--${cardId}`);
+    if (elem && elem.childNodes && [...elem.childNodes].some((child) => child.localName === "img")) return;
     if (elem) {
-      imagesLoaded(elem).on("done", function (instance) {
-        setCardIsReady(true);
-      });
-      imagesLoaded(elem).on("fail", function (instance) {
-        setCardIsReady(false);
-      });
+      const img = document.createElement("img");
+      img.setAttribute("onContextMenu", (e) => e.preventDefault());
+      elem.append(img);
+      if (media_image[0] && media_image[0].image) {
+        img.onload = () => {
+          setCardIsReady(true);
+          setIsError(false);
+        };
+        img.onerror = () => {
+          setCardIsReady(false);
+          setIsError(true);
+        };
+        img.src = `${media_image[0].image}`;
+      } else {
+        setIsError(true);
+      }
     }
-  }, [elem]);
+  }, [cardId, media_image]);
 
   return (
-    <>
-      {connectRedirect && <ConnexionRedirect handleClose={handleClose} />}
+    <div className={`CardPreviewSmall ${currentTheme}-theme`} data-slideid="1">
       <div
-        className={`CardPreviewSmall ${currentTheme}-theme`}
-        data-slideid="1"
+        className={`CardPreviewSmall__image  ${cardIsReady ? "active" : "hide"}`}
+        id={`CardPreviewSmall__image--${cardId}`}
+        onClick={() => handleClickedCardClick()}
       >
-        <div
-          className={`CardPreviewSmall__image  ${
-            cardIsReady ? "active" : "hide"
-          }`}
-          onClick={() => handleClickedCardClick()}
-        >
-          {media_image && media_image[0] && media_image[0].image ? (
-            <img
-              src={media_image[0].image}
-              // src={base + media_image[0].image}
-              alt="slides presentation"
-              onContextMenu={(e) => e.preventDefault()}
-            />
-          ) : (
-            <p>Erreur</p>
-          )}
-
-          <div className="CardPreviewSmall__hover">
-            <p>{name && truncate(name, 60, false)}</p>
-            <div className="CardPreviewSmall__category--stamp">
-              {renameCategory(categorie && categorie[0] && categorie[0].name)
-                ? renameCategory(categorie && categorie[0].name)
-                : "Autre"}
-            </div>
-          </div>
-        </div>
-
-        <div
-          className={`CardPreviewSmall__image ${
-            !cardIsReady ? "active" : "hide"
-          } CardPreviewSmall__image--loading CardPreviewSmall__image--loading-${size}`}
-        >
-          <Loading />
-        </div>
-
-        <div className="CardPreviewSmall__details">
-          <UserNameAndAvatar user={user} link={true} />
-          <div
-            className="CardPreviewSmall__likes"
-            onClick={() => handleLikeClick()}
-          >
-            {cardIsLiked ? (
-              <HeartFull className="CardPreviewSmall__likes--logo" />
-            ) : (
-              <HeartEmpty className="CardPreviewSmall__likes--logo" />
-            )}
-            <p
-              className="CardPreviewSmall__likes--number"
-              id={`likesNumber${cardId}`}
-            >
-              {number_of_likes ? number_of_likes : 0}
-            </p>
-          </div>
+        <div className="CardPreviewSmall__hover">
+          <p>{name && truncate(name, 60, false)}</p>
         </div>
       </div>
-    </>
+
+      <div
+        className={`CardPreviewSmall__image ${
+          !cardIsReady ? "active" : "hide"
+        } CardPreviewSmall__image--loading CardPreviewSmall__image--loading-${size}`}
+        onClick={() => handleClickedCardClick()}
+      >
+        {isError ? <p>Image non disponible.</p> : <Loading />}
+      </div>
+
+      <div className="CardPreviewSmall__details">
+        <UserNameAndAvatar user={user} link={true} />
+        <div className="CardPreviewSmall__likes--logo">
+          <EyeLogo />
+        </div>
+
+        <p className="CardPreviewSmall__likes--number">{total_views ? convertNumber(total_views) : 0}</p>
+        <div className="CardPreviewSmall__likes" onClick={() => handleLikeClick()}>
+          <div className="CardPreviewSmall__likes--logo">
+            <HeartFull id={`CardPreviewSmall__heart${cardId}`} />
+          </div>
+
+          <p className="CardPreviewSmall__likes--number" id={`likesNumber${cardId}`}>
+            {number_of_likes ? convertNumber(number_of_likes) : 0}
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 export default CardPreviewSmall;

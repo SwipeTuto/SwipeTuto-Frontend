@@ -14,9 +14,6 @@ export const closeFullscreen = () => ({
   type: LayoutActionTypes.CLOSE_FULLSCREEN,
 })
 
-export const toggleUserNav = () => ({
-  type: LayoutActionTypes.TOGGLE_USER_NAV,
-})
 
 export const showFullscreen = () => ({
   type: LayoutActionTypes.SHOW_FULLSCREEN,
@@ -27,19 +24,32 @@ export const openMobileNav = () => ({
 export const closeMobileNav = () => ({
   type: LayoutActionTypes.CLOSE_MOBILE_NAV,
 })
+export const showSignalPopup = (signal) => ({
+  type: LayoutActionTypes.SHOW_SIGNAL_POPUP,
+  payload: signal
+})
+export const closeSignalPopup = () => ({
+  type: LayoutActionTypes.CLOSE_SIGNAL_POPUP,
+})
 export const openFilterMobileMenu = () => ({
   type: LayoutActionTypes.OPEN_FILTER_MOBILE_MENU,
 })
 export const closeFilterMobileMenu = () => ({
   type: LayoutActionTypes.CLOSE_FILTER_MOBILE_MENU,
 })
-
-export const setLoading = () => ({
-  type: LayoutActionTypes.SET_LOADING,
+export const openConnexionPopup = () => ({
+  type: LayoutActionTypes.OPEN_CONNEXION_POPUP,
 })
+export const closeConnexionPopup = () => ({
+  type: LayoutActionTypes.CLOSE_CONNEXION_POPUP,
+})
+
 export const setCardsSize = (size) => ({
   type: LayoutActionTypes.SET_CARDS_SIZE,
   payload: size
+})
+export const setLoading = () => ({
+  type: LayoutActionTypes.SET_LOADING,
 })
 
 export const setLoaded = () => ({
@@ -51,6 +61,13 @@ export const setClickedCardLoading = () => ({
 
 export const setClickedCardLoaded = () => ({
   type: LayoutActionTypes.SET_CLICKED_CARD_LOADED,
+})
+export const setUserLoading = () => ({
+  type: LayoutActionTypes.SET_USER_LOADING,
+})
+
+export const setUserLoaded = () => ({
+  type: LayoutActionTypes.SET_USER_LOADED,
 })
 export const setCommentsLoading = () => ({
   type: LayoutActionTypes.SET_COMMENTS_LOADING,
@@ -76,4 +93,18 @@ export const otherPageLoading = () => ({
 })
 export const otherPageLoaded = () => ({
   type: LayoutActionTypes.OTHER_PAGE_CARDS_LOADED,
+})
+export const setRedirectUrl = (bool) => ({
+  type: LayoutActionTypes.REDIRECT_URL,
+  payload: bool
+})
+export const setFirstLoadDone = () => ({
+  type: LayoutActionTypes.FIRST_LOAD_DONE,
+})
+export const openNotificationPopup = (notification) => ({
+  type: LayoutActionTypes.OPEN_NOTIFICATION_POPUP,
+  payload: notification
+})
+export const closeNotificationPopup = () => ({
+  type: LayoutActionTypes.CLOSE_NOTIFICATION_POPUP,
 })

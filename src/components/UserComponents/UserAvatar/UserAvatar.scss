@@ -11,8 +11,9 @@
   // box-shadow: $button-shadow;
   cursor: pointer;
   color: $black;
-  background-color: $white;
-  border: 1px solid $grey-light;
+  background-color: $grey-light;
+  box-shadow: $light-shadow;
+  border: 1px solid $grey;
 
   &--image {
     height: 100%;

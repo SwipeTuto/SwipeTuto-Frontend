@@ -14,31 +14,21 @@
     flex-direction: column;
     // background-color: grey;
     // border: 1px solid $grey;
-    box-shadow: $card-shadow;
-    border-radius: $box-radius;
-    padding: 0 2rem;
+    // @include card-shadow;
+    border-radius: $button-radius;
+    padding: 2rem;
     width: 50%;
     margin-top: 5rem;
+
+    .custom-button {
+      margin-top: 3rem;
+    }
   }
 
-  textarea {
-    resize: none;
-    min-height: 10rem;
-  }
-
-  .form {
-    &__group {
-      display: flex;
-      flex-direction: column;
-      margin: 1.5rem 0;
-    }
-
-    &__input {
-      @include input-style;
-    }
-
-    &__label {
-      margin-bottom: 0.5rem;
-    }
+  &__feedback {
+    margin: 2rem auto;
+    text-align: center;
+    font-weight: bold;
+    color: $primary-light;
   }
 }

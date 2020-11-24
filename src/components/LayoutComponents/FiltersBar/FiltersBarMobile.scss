@@ -46,7 +46,7 @@
     width: 100%;
     overflow-y: scroll;
     visibility: visible;
-    z-index: 1000000000000;
+    z-index: 30;
 
     &--top {
       display: flex;
@@ -127,6 +127,10 @@
         margin-left: 1rem;
       }
     }
+  }
+
+  .custom-button {
+    font-size: 2rem;
   }
 
   &__currentSearch {

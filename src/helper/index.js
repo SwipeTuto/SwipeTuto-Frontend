@@ -1,15 +1,3 @@
-// Récupérer les paramètres de l'URL dans les recherches par langage et catégorie
-import HTMLLogo from "../assets/images/tech_logo/HTML.png";
-import CSSLogo from "../assets/images/tech_logo/CSS.png";
-import JavascriptLogo from "../assets/images/tech_logo/javascript.png";
-import SassLogo from "../assets/images/tech_logo/sass.png";
-import PythonLogo from "../assets/images/tech_logo/python.png";
-import PHPLogo from "../assets/images/tech_logo/PHP.png";
-import ReactJSLogo from "../assets/images/tech_logo/reactJS.png";
-import NodeJSLogo from "../assets/images/tech_logo/nodeJS.png";
-import allLogo from "../assets/images/tech_logo/all_logo.png";
-
-
 export const urlParams = url => {
 
   var queryString = url.search ? url.search.split('?')[1] : window.location.search;
@@ -32,6 +20,11 @@ export const getUrlId = (url, query) => {
 }
 
 
+export const stringToHTML = (str) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(str, 'text/html');
+  return doc.body;
+}
 
 // Pour les mots / phrases trop longue, permet de couper. Params : phrase, nombre de caractères max, true/false pour couper les mots
 export const truncate = (str, n, useWordBoundary) => {
@@ -99,22 +92,70 @@ export const formattedDate = (date) => {
 
 
 // Passer du nom de catégorie minuscule / sans accent à majuscule / avec accent
-export const renameCategory = (category) => {
-  switch (category) {
-    case "theorie":
-      return "Théorie";
-    case "code":
-      return "Code";
+export const renameQuery = (query) => {
+  switch (query) {
+    case null:
+      return "Tous";
+    case "technologie":
+      return "Technologie";
+    case "cuisine":
+      return "Cuisine";
+    case "maison":
+      return "Maison";
+    case "beaute":
+      return "Beauté";
+    case "bienetre":
+    case "bien-être":
+      return "Bien-être";
+
+    case "informatique":
+      return "Informatique";
     case "design":
       return "Design";
-    case "performances":
-      return "Performances";
-    case "ressources":
-      return "Ressources";
+    case "photo":
+      return "Photo";
+    case "video":
+      return "Vidéo";
+    case "programmation":
+      return "Programmation";
+    case "nutrition":
+      return "Nutrition";
+    case "entrees":
+      return "Entrées";
+    case "plats":
+      return "Plats";
+    case "desserts":
+      return "Desserts";
+    case "vege":
+      return "Végétarien / Vegan";
+    case "Végétarien / Vegan":
+      return "Sans gluten";
+    case "decoration":
+      return "Décoration";
+    case "bricolage":
+      return "Bricolage";
+    case "jardinage":
+      return "Jardinage";
+    case "vetements":
+      return "Vêtements";
+    case "maquillage":
+      return "Maquillage";
+    case "coiffure":
+      return "Coiffure";
+    case "accessoires":
+      return "Accessoires";
+    case "sport":
+      return "Sport";
+    case "yoga":
+      return "Yoga";
+    case "devperso":
+      return "Développement personnel";
+    case "meditation":
+      return "Méditation";
     case "autre":
       return "Autre";
     default:
-      return category;
+      return query;
   }
 }
 
@@ -142,8 +183,11 @@ export const strongPasswordRegex = RegExp(/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[
 export const passwordRegexErrorMessage = "Le mot de passe doit contenir au moins 8 caratcères, dont une lettre minuscule, une lettre majuscule et un nombre.";
 const passwordConfirmMessage = "Le mot de passe ne correspond pas à celui ajouté précédemment."
 
-export const descriptionRegex = RegExp(/(.*?) {0,250}$/); // lettres entre 0 et 250 caractères
+// export const descriptionRegex = RegExp(/(.*?){0,250}$/); // lettres entre 0 et 250 caractères
 const descriptionErrorMessage = "Entrez une description valide, entre 0 et 250 caractères."
+const commentErrorMessage = "Veuillez rédiger un commentaire pour l'envoyer."
+const cardTitleErrorMessage = "Le titre de votre carte doit contenir entre 0 et 250 caractères."
+const cardDescriptionErrorMessage = "La description de votre carte ne peut pas être vide."
 
 export const errorMessageToDisplay = (name) => {
   switch (name) {
@@ -163,6 +207,13 @@ export const errorMessageToDisplay = (name) => {
       return urlRegexErrorMessage;
     case "description":
       return descriptionErrorMessage
+    case "card_title":
+      return cardTitleErrorMessage;
+    case "card_description":
+      return cardDescriptionErrorMessage;
+    case "comment":
+    case "response":
+      return commentErrorMessage
     default:
       return;
   }
@@ -178,103 +229,225 @@ export const checkRegexInput = (name, value) => {
       return nameRegex.test(value);
     case "password":
       return strongPasswordRegex.test(value);
+    case "passwordConfirm":
+      return strongPasswordRegex.test(value);
     case "email":
       return emailRegex.test(value);
     case "url":
       return urlRegex.test(value);
     case "description":
-      return true;
+    case "card_title":
+      return (value.length >= 0 && value.length <= 250);
+    case "comment":
+    case "card_description":
+    case "response":
+      return (value.length > 0);
     default:
       return;
   }
 };
 
 
-// liste des catégories 
-export const categoryArray = [
-  {
-    queryName: null,
-    name: "Tous",
-  },
-  {
-    queryName: "theorie",
-    name: "Théorie",
-  },
-  {
-    queryName: "code",
-    name: "Code",
-  },
-  {
-    queryName: "memo",
-    name: "Mémo",
-  },
-  {
-    queryName: "design",
-    name: "Design",
-  },
-  {
-    queryName: "performances",
-    name: "Performances",
-  },
-  {
-    queryName: "ressources",
-    name: "Ressources",
-  },
-  {
-    queryName: "autre",
-    name: "Autre",
-  },
-];
-
-
-// liste des topics
 export const topicArray = [
   {
     queryName: null,
     name: "Tous",
-    logo: allLogo,
+    // logo: allLogo,
   },
   {
-    queryName: "html",
-    name: "HTML",
-    logo: HTMLLogo,
+    queryName: "technologie",
+    name: "Technologie",
+    // logo: HTMLLogo,
   },
   {
-    queryName: "css",
-    name: "CSS",
-    logo: CSSLogo,
+    queryName: "cuisine",
+    name: "Cuisine",
+    // logo: CSSLogo,
   },
   {
-    queryName: "javascript",
-    name: "Javascript",
-    logo: JavascriptLogo,
+    queryName: "maison",
+    name: "Maison",
+    // logo: JavascriptLogo,
   },
   {
-    queryName: "reactjs",
-    name: "React JS",
-    logo: ReactJSLogo,
+    queryName: "beaute",
+    name: "Beauté",
+    // logo: ReactJSLogo,
   },
   {
-    queryName: "nodejs",
-    name: "Node JS",
-    logo: NodeJSLogo,
+    queryName: "bienetre",
+    name: "Bien-être",
+    // logo: NodeJSLogo,
   },
   {
-    queryName: "python",
-    name: "Python",
-    logo: PythonLogo,
+    queryName: "autre",
+    name: "Autre",
+    // logo: NodeJSLogo,
   },
-  {
-    queryName: "php",
-    name: "PHP",
-    logo: PHPLogo,
-  },
-  {
-    queryName: "sass",
-    name: "Sass",
-    logo: SassLogo,
-  },
+
 ];
+
+export const getCategoriesArray = (topic) => {
+  switch (topic) {
+    case "technologie":
+      return [
+        {
+          queryName: null,
+          name: "Tous"
+        },
+        {
+          queryName: "informatique",
+          name: "Informatique"
+        },
+        {
+          queryName: "design",
+          name: "Design"
+        },
+        {
+          queryName: "photo",
+          name: "Photo"
+        },
+        {
+          queryName: "video",
+          name: "Vidéo"
+        },
+        {
+          queryName: "programmation",
+          name: "Programmation"
+        },
+        {
+          queryName: "autre",
+          name: "Autre"
+        },
+      ];
+    case "cuisine":
+      return [
+        {
+          queryName: null,
+          name: "Tous"
+        },
+        {
+          queryName: "nutrition",
+          name: "Nutrition"
+        },
+        {
+          queryName: "entrees",
+          name: "Entrées"
+        },
+        {
+          queryName: "plats",
+          name: "Plats"
+        },
+        {
+          queryName: "desserts",
+          name: "Desserts"
+        },
+        {
+          queryName: "vege",
+          name: "Végétarien / Vegan"
+        },
+        {
+          queryName: "sansgluten",
+          name: "Sans gluten"
+        },
+        {
+          queryName: "autre",
+          name: "Autre"
+        },
+      ];
+    case "maison":
+      return [
+        {
+          queryName: null,
+          name: "Tous"
+        },
+        {
+          queryName: "decoration",
+          name: "Décoration"
+        },
+        {
+          queryName: "bricolage",
+          name: "Bricolage"
+        },
+        {
+          queryName: "jardinage",
+          name: "Jardinage"
+        },
+        {
+          queryName: "autre",
+          name: "Autre"
+        },
+      ];
+    case "beaute":
+      return [
+        {
+          queryName: null,
+          name: "Tous"
+        },
+        {
+          queryName: "vetements",
+          name: "Vêtements"
+        },
+        {
+          queryName: "maquillage",
+          name: "Maquillage"
+        },
+        {
+          queryName: "coiffure",
+          name: "Coiffure"
+        },
+        {
+          queryName: "accessoires",
+          name: "Accessoires"
+        },
+        {
+          queryName: "autre",
+          name: "Autre"
+        },
+      ];
+    case "bienetre":
+      return [
+        {
+          queryName: null,
+          name: "Tous"
+        },
+        {
+          queryName: "sport",
+          name: "Sport"
+        },
+        {
+          queryName: "yoga",
+          name: "Yoga"
+        },
+        {
+          queryName: "devperso",
+          name: "Développement personnel"
+        },
+        {
+          queryName: "meditation",
+          name: "Méditation"
+        },
+        {
+          queryName: "autre",
+          name: "Autre"
+        },
+      ];
+    case "autre":
+      return [
+        {
+          queryName: null,
+          name: "Tous"
+        },
+      ]
+    default:
+      return [
+        {
+          queryName: null,
+          name: "Tous"
+        },
+      ]
+  }
+}
 
 export const orderArray = [
   {
@@ -299,11 +472,82 @@ export const getNameFromQueryName = (array, queryName) => {
   }
 }
 
+export const copyToClipboard = async (content) => {
+  if (!content) return false
+  try {
+    await navigator.clipboard.writeText(content)
+    return true;
+
+  } catch (err) {
+    return false
+  }
+}
+
+export const convertNumber = (number) => {
+  const value = parseInt(number)
+  if (value >= 0 && value < 1000) {
+    return value;
+  } else if (value >= 1000 && value < 10000) {
+    return `${(value / 1000).toFixed(1)}k`;
+
+  } else if (value >= 10000 && value < 1000000) {
+    return `${(value / 1000).toFixed(0)}k`;
+
+  } else if (value >= 1000000) {
+    return `${(value / 1000000).toFixed(2)}M`;
+  }
+}
+
 export const initialSearchState = {
   searchWords: null,
   searchTopic: null,
   searchCategory: null,
-  searchOrder: "-created",
+  searchOrder: "likes",
   searchPage: 1,
 }
+export const initialSignalState = {
+  id_card: null,
+  id_user: null,
+  id_comment: null,
+}
 
+
+export const likeUpdate = (cardId) => {
+  console.log(cardId)
+  const likedCardText = document.getElementById(`likesNumber${cardId}`);
+  const heartEl = document.getElementById(`CardPreviewSmall__heart${cardId}`);
+  const likesNumberPopupLogo = document.getElementById(`likesNumberPopupLogo${cardId}`)
+  const likesNumberPopupNumber = document.getElementById(`likesNumberPopupNumber${cardId}`)
+  console.log(likesNumberPopupLogo, likesNumberPopupNumber)
+  if (heartEl && heartEl.classList.contains("active") && likedCardText) {
+    likedCardText.textContent = parseInt(likedCardText.textContent) - 1;
+    heartEl.classList.remove("active");
+  } else if (heartEl && likedCardText) {
+    likedCardText.textContent = parseInt(likedCardText.textContent) + 1;
+    heartEl.classList.add("active");
+  }
+
+  if (likesNumberPopupLogo && likesNumberPopupLogo.classList.contains("active") && likesNumberPopupNumber) {
+    likesNumberPopupNumber.textContent = parseInt(likesNumberPopupNumber.textContent) - 1;
+    likesNumberPopupLogo.classList.remove("active");
+    console.log('remove class')
+  } else if (likesNumberPopupLogo && likesNumberPopupNumber) {
+    likesNumberPopupNumber.textContent = parseInt(likesNumberPopupNumber.textContent) + 1;
+    likesNumberPopupLogo.classList.add("active");
+    console.log('add class')
+  }
+};
+
+
+
+// function removeBlockFromBlockMap(editorState: EditorState, blockKey: string) {
+//   var contentState = editorState.getCurrentContent();
+//   var blockMap = contentState.getBlockMap();
+//   var newBlockMap = blockMap.remove(blockKey)
+//   var newContentState = contentState.merge({
+//     blockMap: newBlockMap
+//   })
+//   export { removeBlockFromBlockMap as Draft.Model.ImmutableData.ContentState }
+//   var newEditorState = EditorState.push(editorState, newContentState, 'remove-range')
+//   return newEditorState
+// }

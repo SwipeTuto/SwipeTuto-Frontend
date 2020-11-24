@@ -5,16 +5,17 @@ $red-error: #cf0030;
 $green-success: #00b109;
 $green-saved: #1be970;
 $red-like: #ff5d83;
-$secondary-dark: #edb603ff;
-$secondary-light: #fed523ff;
+$secondary-dark: #dba800;
+$secondary-light: #eec200;
 $primary-light: #ad0cc2;
 $primary-dark: #280849;
-$black: #202020;
+$black: #2c2c2c;
 $white: #f6f6f6;
 // $black: #000000ff;
 // $white: #ffffffff;
-$grey: #b6b6b6;
-$grey-light: #ececec;
+$grey: #cecece;
+$grey-lighter: #f1f1f1;
+$grey-light: #ebebeb;
 $grey-dark: #636363;
 
 // $black-themedark: #202020;
@@ -23,15 +24,18 @@ $grey-dark: #636363;
 // $grey-light-themedark: #bebebe;
 // $grey-dark-themedark: #2c2c2c;
 
-$box-radius: 5px;
-$box-padding: 0.8rem 1.2rem;
-$button-radius: 3rem;
+$round-radius: 50%;
+$round-padding: 0.3rem;
+$card-radius: 8px;
+$box-padding: 0.6rem 2rem;
+$button-radius: 40px;
 
-$navtop-height: 5rem;
+$navtop-height: 6rem;
 $navtop-mobile-height: 4rem;
 
-$button-shadow: 0 2px 3px rgba($grey, 0.4);
-$card-shadow: 0 2px 3px rgba($grey, 0.4);
+$button-shadow: 0 2px 2px rgba($grey, 0.6);
+$light-shadow: 0 1px 3px $grey-lighter;
+
 // $card-shadow-2: 0 0px 3px rgba($grey, 0.2);
 // $button-shadow-dark: 0 2px 3px $grey-themedark;
 // $card-shadow-dark: 0 2px 3px $grey-themedark;
@@ -41,11 +45,11 @@ $inner-component-padding: 0 14vw;
 $grid-component-padding: 0 14vw;
 $inner-component-padding-tablet: 0 8vw;
 $grid-component-padding-tablet: 0 8vw;
-$inner-component-padding-phone: 0 1rem;
-$grid-component-padding-phone: 0 1rem;
+$inner-component-padding-phone: 0 2rem;
+$grid-component-padding-phone: 0 2rem;
 
 // Breakpoints
-$bp-big: 1300px;
+$bp-big: 1260px;
 $bp-tablet: 960px;
 $bp-phone: 680px;
 $bp-small-phone: 540px;
@@ -57,42 +61,66 @@ $text-font: "Nunito", sans-serif;
 $title-font: "Montserrat", sans-serif;
 
 @mixin input-style {
-  background: $grey-light;
+  background: $grey-lighter;
+  // background: $white;
   color: $black;
   font-size: inherit;
   font-family: inherit;
   padding: $box-padding;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   transition: all 0.2s ease;
   margin-bottom: 1rem;
-  border-bottom: 2px solid $grey;
-
-  &:focus.valid-input {
-    border-bottom: 2px solid $green-success;
-  }
-
-  &:focus.invalid-input {
-    // border: 0.5px solid $red-error;
-    border-bottom: 2px solid $red-error;
-  }
+  border-bottom: 3px solid $grey;
+  // border-radius: $button-radius;
+  border-radius: 0;
+  width: 100%;
 
   &:focus {
-    background-color: $white;
+    // background-color: $white;
+    // border-top: 2px solid $grey;
+    // border-right: 2px solid $grey;
+    // border-bottom: 2px solid $grey;
+
+    & input {
+      border-radius: 0;
+
+      &::placeholder {
+        color: $grey;
+      }
+    }
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px $grey-lighter inset;
+  }
+
+  &:focus.valid-input {
+    border-bottom: 3px solid $green-success;
+  }
+
+  &.invalid-input,
+  &:focus.invalid-input {
+    // border: 0.5px solid $red-error;
+    border-bottom: 3px solid $red-error;
+  }
+
+  .FormInput__label {
+    margin-bottom: 0.5rem;
   }
 
   .input__message {
     display: block;
   }
 
-  &[value=""] + .input__message {
-    display: none;
-  }
-
-  & + .input__message-hide {
-    display: none;
-  }
+  // & + .input__message-hide {
+  //   display: none;
+  // }
 
   &:focus {
     &::placeholder {
@@ -110,6 +138,7 @@ $title-font: "Montserrat", sans-serif;
   transition: all 0.2s ease;
   color: $white;
   background-color: $secondary-dark;
+  border-radius: $button-radius;
 
   &:hover {
     background-color: $secondary-light;
@@ -147,17 +176,57 @@ $title-font: "Montserrat", sans-serif;
     color: $white;
   }
 }
+@mixin card-shadow($themelight: true) {
+  @if $themelight {
+    box-shadow: 0 2px 2px rgba($grey, 0.6), 0 0 5px rgba($grey, 0.6);
+  } @else {
+    box-shadow: 0 2px 2px rgba($grey-dark, 0.6), 0 0 5px rgba($grey-dark, 0.6);
+  }
+}
 
-// @mixin button-active-style {
-//   padding: $box-padding;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   transition: all 0.2s ease;
-//   box-shadow: 0 2px 3px $grey;
-//   color: $white;
-//   background-color: $secondary-light;
-// }
+@mixin large-shadow {
+  box-shadow: 0 0 20px rgba($black, 0.3);
+}
+
+@mixin popup-style {
+  z-index: 90;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgba($black, 0.8);
+}
+
+@mixin thin-scrollbar {
+  ::-webkit-scrollbar {
+    background-color: $grey-light;
+    height: 0.5rem;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: $grey;
+    height: 1rem;
+    width: 1rem;
+  }
+}
+
+@mixin button-round {
+  transition: all 0.2s ease;
+  padding: 1.5rem;
+  border-radius: $round-radius;
+  cursor: pointer;
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: none;
+  }
+}
 
 @mixin nav-style {
   padding: $box-padding;
@@ -191,4 +260,15 @@ $title-font: "Montserrat", sans-serif;
     height: 1px;
     background-color: $primary-dark;
   }
+}
+
+@mixin overlay-menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  border-radius: $card-radius;
+  @include large-shadow;
+  // @include card-shadow;
+  border: 0.5px solid $grey-light;
+  overflow: hidden;
 }

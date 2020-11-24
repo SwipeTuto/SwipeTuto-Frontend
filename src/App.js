@@ -1,40 +1,32 @@
-import React, { useEffect } from "react";
-import { Switch, Route, withRouter } from 'react-router-dom';
-import ProtectedRoute from "./components/ProtectedRoute";
+import React, { useEffect, useRef } from "react";
+import { withRouter, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import HomePage from './pages/Homepage/HomePage';
-import LoginPage from './pages/LoginPage/LoginPage';
-import SearchPage from './pages/SearchPage/SearchPage'
-import RessourcesPage from './pages/RessourcesPage/RessourcesPage'
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
-import AccountPage from './pages/AccountPages/AccountPages'
-import ProfilePage from './pages/ProfilePage/ProfilePage'
-import HelpPage from './pages/HelpPage/HelpPage'
-import ConditionsOfUsagePage from './pages/ConditionsOfUsagePage/ConditionsOfUsagePage'
-import ContactUsPage from './pages/ContactUsPage/ContactUsPage'
 
 import NavTop from "./components/LayoutComponents/NavTop/NavTop";
-import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
+import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile copy";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
 import { getCardByIdAction } from './redux/filter/filter-actions'
-import { selectIsLoaded, selectTheme } from "./redux/layout/layout-selectors"
+import { selectConnexionPopup, selectFirstLoadDone, selectIsLoaded, selectRedirectUrl, selectShowPopupCard, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
 import { setCurrentSearch } from "./redux/filter/filter-actions"
-
 
 import { urlParams, getUrlId } from "./helper/index"
 
-
 import './index.scss'
 import './App.scss';
-import ConfidentialityPage from "./pages/ConfidentialityPage/ConfidentialityPage";
-import CookiesPage from "./pages/CookiesPage/CookiesPage";
-import InfosPage from "./pages/InfosPage/InfosPage";
-import { showPopupCard } from "./redux/layout/layout-actions";
+import { closeConnexionPopup, setFirstLoadDone, setRedirectUrl, showPopupCard } from "./redux/layout/layout-actions";
 import { getUserByIdAction } from "./redux/user/user-actions";
-
-
+import SignalPopup from "./components/LayoutComponents/SignalPopup/SignalPopup";
+import CardFullPopup from "./components/CardsComponents/CardFullPopup/CardFullPopup";
+import SearchLinkRedirect from "./helper/SearchLinkRedirect";
+import ConnexionRedirect from "./components/LayoutComponents/ConnexionRedirect/ConnexionRedirect";
+import { selectCardsFetched, selectClickedCard, selectCurrentSearch } from "./redux/filter/filter-selectors";
+import { usePrevious } from "./hooks/usePrevious";
+// import { selectCurrentUser } from "./redux/user/user-selectors";
+import Routes from "./Routes"
+import NotificationPopup from "./components/LayoutComponents/NotificationPopup/NotificationPopup";
+// import { auth } from "./services/firebaseService"
 
 function App(props) {
 
@@ -44,56 +36,110 @@ function App(props) {
   const userId = getUrlId(props.location.pathname, "user_id")
   const cardId = getUrlId(props.location.pathname, "card_id")
   const isLoaded = useSelector(selectIsLoaded)
+  const signalPopup = useSelector(selectSignalPopupOpen)
+  const redirectUrl = useSelector(selectRedirectUrl)
+  const firstLoadDone = useSelector(selectFirstLoadDone)
+  const currentSearch = useSelector(selectCurrentSearch)
+  const prevSearchState = usePrevious(currentSearch)
+  const connexionPopup = useSelector(selectConnexionPopup)
+  const locationPathname = props.location.pathname;
+  const clickedCard = useSelector(selectClickedCard)
+  // const currentUser = useSelector(selectCurrentUser);
+  const fetchedCards = useSelector(selectCardsFetched)
+  // const location = useLocation()
+  const popupCardIsOpen = useSelector(selectShowPopupCard);
+  const appEl = useRef(null)
 
   useEffect(() => {
-    if (!isLoaded && (topic || category || ordering || search)) {
-      dispatch(setCurrentSearch("searchWords", search))
-      dispatch(setCurrentSearch("searchTopic", topic))
-      dispatch(setCurrentSearch("searchCategory", category))
-      dispatch(setCurrentSearch("searchOrder", ordering || "-created"))
-    } else if (cardId) {
-      dispatch(getCardByIdAction(cardId))
+
+    if (firstLoadDone === false && locationPathname === "/search") { // si params url
+      if (topic || category || ordering || search) {
+        const currentSearchCopy = {
+          "searchWords": search,
+          "searchTopic": topic,
+          "searchCategory": category,
+          "searchOrder": ordering,
+        }
+        dispatch(setCurrentSearch(currentSearchCopy))
+        dispatch(setRedirectUrl(true));
+      }
+    } else if (firstLoadDone === false && cardId) { // si page d'une carte ouverte
       dispatch(showPopupCard())
-    } else if (!isLoaded && userId) {
+      dispatch(getCardByIdAction(cardId))
+    } else if (firstLoadDone === false && !isLoaded && userId) { // si page de user autre que celle du currentUser
       dispatch(getUserByIdAction(userId))
-    } else {
-      return
+      // dispatch(setFirstLoadDone())
+    } else if (prevSearchState && currentSearch && ( // à chaque changement de state de recherche, modifier l'url
+      prevSearchState.searchCategory !== currentSearch.searchCategory
+      || prevSearchState.searchOrder !== currentSearch.searchOrder
+      || prevSearchState.searchTopic !== currentSearch.searchTopic
+      || prevSearchState.searchWords !== currentSearch.searchWords)
+      && !cardId
+      && !userId
+    ) {
+      dispatch(setRedirectUrl(true));
     }
-  }, []);
+    if (firstLoadDone === false) {
+      dispatch(setFirstLoadDone())
+    }
+  }, [cardId, category, currentSearch, dispatch, fetchedCards, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, search, topic, userId]);
 
   useEffect(() => {
+
     const bodyEl = document.querySelector('body');
     bodyEl.classList.remove('light-theme');
     bodyEl.classList.remove('dark-theme');
     bodyEl.classList.add(`${currentTheme}-theme`);
+
   }, [currentTheme])
 
+  const redirectLink = SearchLinkRedirect();
 
+  const handleClose = () => {
+    dispatch(closeConnexionPopup())
+  };
+
+  // const scrollYWindow = window.scrollY;
+  // const scrollY = appEl.current && appEl.current.style.top;
+  // const largeurEcran = window.innerWidth;
+  const getScrollbarWidth = () => {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    return scrollbarWidth;
+  }
+
+  useEffect(() => {
+    if (popupCardIsOpen) {
+      document.body.style.paddingRight = `${getScrollbarWidth()}px`;
+      document.body.style.overflow = 'hidden';
+      document.body.style.height = '100%';
+
+    } else {
+
+      document.body.style.paddingRight = '0px';
+      document.body.style.overflow = 'auto';
+      document.body.style.height = 'auto';
+
+
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [popupCardIsOpen])
 
 
   return (
-    <div className={`App ${currentTheme}-theme`}>
-      <NavTop />
-      <NavTopMobile />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/search" component={SearchPage} />
-        <Route path="/connexion" component={LoginPage} />
+    <>
+      {redirectUrl && <Redirect to={redirectLink} />}
+      {connexionPopup ? <ConnexionRedirect handleClose={handleClose} /> : null}
+      <div ref={appEl} className={`App ${currentTheme}-theme ${popupCardIsOpen ? "noscroll" : ""}`}>
+        <NotificationPopup />
+        <NavTop />
+        <NavTopMobile />
+        {signalPopup && <SignalPopup />}
+        {clickedCard && <CardFullPopup />}
+        <Routes />
+        <Footer />
 
-        <Route path="/ressources" component={RessourcesPage} />
-        <Route path="/conditions" component={ConditionsOfUsagePage} />
-        <Route path="/confidentiality" component={ConfidentialityPage} />
-        <Route path="/cookies" component={CookiesPage} />
-        <Route path="/contact" component={ContactUsPage} />
-        <Route path="/infos" component={InfosPage} />
-        <Route path="/help" component={HelpPage} />
-        <Route path="/card_id=:card_id" component={SearchPage} />
-        <Route path="/profile/user_id=:user_id" component={ProfilePage} />
-        <ProtectedRoute path="/account" component={AccountPage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-      <Footer />
-    </div>
+      </div>
+    </>
   );
 }
 

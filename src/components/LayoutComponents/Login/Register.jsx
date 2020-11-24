@@ -1,6 +1,6 @@
 // Présent dans App.js dans une Route ("/")
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,68 +9,28 @@ import { registerAction } from "../../../redux/user/user-actions";
 import { selectUserErrors } from "../../../redux/user/user-selectors";
 
 // helper
-import { loginGoogle, loginGit } from "../../../services/userService";
-import { checkRegexInput, errorMessageToDisplay } from "../../../helper/index";
+import { loginGoogle } from "../../../services/userService";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
 
 // assets
 import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google.svg";
-import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
+import { ReactComponent as FacebookLogo } from "../../../assets/images/logo-facebook.svg";
 import "./LoginAndRegister.scss";
+import FormInput from "../../FormInputs/FormInput";
+import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 // Props history, location, match, depuis react router dom
-const Register = (props) => {
+const Register = ({ title }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({});
   const [submitOk, setSubmitOk] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const userErrors = useSelector(selectUserErrors);
-
-  // scroll reset
-  useEffect(() => {
-    if (window.scrollY) {
-      window.scroll(0, 0);
-    }
-  }, []);
-
-  const handleChange = useCallback(
-    (e) => {
-      const { name, value } = e.target;
-
-      const currentInput = document.querySelector(
-        `.LoginPage input[name=${name}]`
-      );
-      const errorMessage = document.querySelector(
-        `.LoginPage .input__message[data-inputfor=${name}`
-      );
-
-      console.log(currentInput);
-      console.log(errorMessage);
-
-      currentInput.classList.remove("valid-input");
-      currentInput.classList.add("invalid-input");
-
-      if (value) {
-        let inputIsOk = checkRegexInput(name, value); //test valeur avec regex, true or false
-
-        if (!inputIsOk) {
-          currentInput.classList.remove("valid-input");
-          currentInput.classList.add("invalid-input");
-          errorMessage.classList.add("error__message");
-          errorMessage.textContent = errorMessageToDisplay(name);
-        } else {
-          currentInput.classList.remove("invalid-input");
-          currentInput.classList.add("valid-input");
-          errorMessage.classList.remove("error__message");
-        }
-      }
-      setUser({ ...user, [name]: value });
-    },
-    [user]
-  );
+  const allInput = [...document.querySelectorAll(".FormInput")];
+  const currentTheme = useSelector(selectTheme)
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -81,11 +41,16 @@ const Register = (props) => {
     loginGoogle();
   };
   const handleClickGit = (e) => {
-    loginGit();
+    // loginGit();
+  };
+
+  const getValue = (name, value) => {
+    if (name === "password") setPassword(value);
+    if (name === "passwordConfirmation") setPasswordConfirmation(value);
+    setUser({ ...user, [name]: value });
   };
 
   useEffect(() => {
-    const allInput = [...document.querySelectorAll(".Register__form--input")];
     const readyToSubmit = allInput.every((input) =>
       input.classList.contains("valid-input")
     );
@@ -95,71 +60,67 @@ const Register = (props) => {
     } else {
       setSubmitOk(true);
     }
-  }, [user, handleChange, passwordConfirmation]);
+  }, [user, passwordConfirmation, allInput]);
 
   return (
-    <div className="Register">
-      <h1 className="title title-1">S'inscrire</h1>
+    <div className={`Register ${currentTheme}-theme`}>
+      <h2 className="title title-2">{title ? title : "Bienvenue chez Swipetuto !"}</h2>
       <div className="Login__google">
         <CustomButton color="white" onClick={(e) => handleClickGoogle(e)}>
           <GoogleLogo />
-          Google
+          Continuer avec Google
         </CustomButton>
         <CustomButton color="white" onClick={(e) => handleClickGit(e)}>
-          <GithubLogo />
-          Git
+          <FacebookLogo />
+          Continuer avec Facebook
         </CustomButton>
       </div>
+      <p className="Login__ou">Ou :</p>
       <p className="Login__errors">
         {userErrors &&
           userErrors !== 400 &&
           "Une erreur est survenue. Si l'erreur persiste, merci de nous le signaler."}
       </p>
       <form className="Register__form">
-        <label htmlFor="nom" className="Register__form--label">
-          Pseudo :
-        </label>
-        <input
-          onChange={(e) => handleChange(e)}
-          name="username"
-          value={user.username || ""}
+        <FormInput
+          idFor="nom"
+          label="Votre nom d'utilisateur :"
           type="text"
-          id="nom"
-          className="Register__form--input invalid-input"
-          required
+          name="username"
+          getValue={getValue}
+          required={true}
+          firstValue={user.username || ""}
         />
-        <p className="input__message" data-inputfor="username"></p>
-        <label htmlFor="email" className="Register__form--label">
-          Email :
-        </label>
-        <input
-          name="email"
-          value={user.email || ""}
-          onChange={(e) => handleChange(e)}
+        <FormInput
+          idFor="email"
+          label="Votre email :"
           type="email"
-          id="email_register"
-          className="Register__form--input invalid-input"
-          required
+          name="email"
+          required={true}
+          getValue={getValue}
+        // firstValue={}
         />
-        <p className="input__message" data-inputfor="email"></p>
-        <label htmlFor="mdp" className="Register__form--label">
-          Mot de passe :
-        </label>
-        <input
-          name="password"
-          value={user.password || ""}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            handleChange(e);
-          }}
+        <FormInput
+          idFor="mdp"
+          label="Votre mot de passe :"
           type="password"
-          id="mdp_register"
-          className="Register__form--input invalid-input"
-          required
+          name="password"
+          required={true}
+          getValue={getValue}
+        // firstValue={}
+        />
+        <FormInput
+          idFor="mdp2"
+          label="Confirmer votre mot de passe :"
+          type="password"
+          name="passwordConfirm"
+          required={true}
+          getValue={getValue}
+          valueToCompare={password}
+        // firstValue={}
         />
 
-        <p className="input__message" data-inputfor="password"></p>
-        <label htmlFor="mdp2" className="Register__form--label">
+        {/* <label htmlFor="mdp2" className="FormInput__label">
           Confirmez le Mot de passe :
         </label>
         <input
@@ -169,9 +130,11 @@ const Register = (props) => {
             setPasswordConfirmation(e.target.value);
           }}
           type="password"
-          id="mdp_register_confirm"
-          className={`Register__form--input ${
-            passwordConfirmation !== password || passwordConfirmation === ""
+          id="mdp2"
+          className={`FormInput ${
+            !passwordConfirmation
+              ? "unset-input"
+              : passwordConfirmation !== password || passwordConfirmation === ""
               ? "invalid-input"
               : "valid-input"
           }`}
@@ -188,7 +151,7 @@ const Register = (props) => {
           >
             Ce mot de passe ne correspond pas à celui mentionné précédemment.
           </p>
-        }
+        } */}
 
         <CustomButton
           onClick={(e) => handleClick(e)}
@@ -201,7 +164,8 @@ const Register = (props) => {
       </form>
       <span className="horizontal-separation-primary-light"></span>
       <Link to="/connexion/login" className="LoginPage__link">
-        Déjà un compte ?
+        <CustomButton>Déjà un compte ?</CustomButton>
+
       </Link>
     </div>
   );

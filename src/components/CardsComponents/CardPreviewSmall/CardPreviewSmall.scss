@@ -8,20 +8,27 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  box-shadow: $card-shadow;
-  border-radius: $box-radius;
+
+  border-radius: $card-radius;
   display: flex;
   flex-direction: column;
   transition: all 0.2s ease;
   break-inside: avoid;
   // margin-bottom: 1rem;
 
+  &.dark-theme {
+    @include card-shadow($themelight: false);
+  }
+  &.light-theme {
+    @include card-shadow($themelight: true);
+  }
+
   &__image {
     height: auto;
 
     width: 100%;
     margin: auto;
-    // background-color: $white;
+    background-color: $black;
     position: relative;
     display: flex;
     justify-content: center;
@@ -58,17 +65,29 @@
       display: flex;
       justify-content: center;
       align-items: center;
+<<<<<<< HEAD
+=======
+
+      & .loading {
+        height: 100%;
+      }
+
+      & p {
+        display: block;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+>>>>>>> develop
     }
   }
 
   &__hover {
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba($black, 0.85)
-    );
+    background-image: linear-gradient(to bottom, transparent 0%, rgba($black, 0.85));
     display: flex;
     align-items: flex-end;
     text-align: center;
@@ -124,15 +143,29 @@
   &__likes {
     display: flex;
     align-items: center;
+    color: $grey-dark;
 
     &--logo {
-      @include logo-size;
-      fill: $red-like;
-      // fill: $primary-light;
+      margin-left: 0.6rem;
       margin-right: 0.3rem;
-      & * {
-        stroke: currentColor !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      & > svg {
+        @include logo-size;
+        fill: $grey;
+
+        &.active * {
+          fill: $red-like !important;
+          stroke: $red-like !important;
+        }
       }
+      // @include logo-size;
+      // // fill: $primary-light;
+      // & * {
+      //   stroke: currentColor !important;
+      // }
     }
   }
 }

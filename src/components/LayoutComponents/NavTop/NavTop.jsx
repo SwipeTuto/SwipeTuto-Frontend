@@ -1,32 +1,26 @@
 // Présent dans App.js
 
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Redirect, NavLink, Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 // redux
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import {
-  selectSearchCategory,
-  selectSearchWords,
-  selectSearchOrder,
-  selectSearchTopic,
+  selectCurrentSearch,
+  // selectSearchTopic,
 } from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
-import { toggleUserNav } from "../../../redux/layout/layout-actions";
-import {
-  selectUserNav,
-  selectTheme,
-} from "../../../redux/layout/layout-selectors";
-import { setCurrentSearch } from "../../../redux/filter/filter-actions";
+
+import { selectTheme } from "../../../redux/layout/layout-selectors";
+import { setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
-import { topicArray } from "../../../helper/index";
+import { getCategoriesArray, initialSearchState, topicArray } from "../../../helper/index";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
-import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
-import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
+// import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 import SearchForm from "../SearchForm/SearchForm";
 import UserUsername from "../../UserComponents/UserAvatar/UserUsername";
 
@@ -37,151 +31,160 @@ import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.s
 import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
 import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
 import { ReactComponent as BookmarkLogo } from "../../../assets/images/bookmark.svg";
+import { ReactComponent as AddLogo } from "../../../assets/images/add.svg";
 import SwipeTutoSmallSmall from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
+import { ReactComponent as DropdownFullLogo } from "../../../assets/images/chevrons/caret-down.svg";
 
 import "./NavTop.scss";
+import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 
 const NavTop = (props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const currentTheme = useSelector(selectTheme);
-  const currentUserNav = useSelector(selectUserNav);
-  const searchCategory = useSelector(selectSearchCategory);
-  const searchTopic = useSelector(selectSearchTopic);
-  const searchWords = useSelector(selectSearchWords);
-  const searchOrder = useSelector(selectSearchOrder);
-  const [redirection, setRedirection] = useState(false);
+  const currentSearch = useSelector(selectCurrentSearch);
+  const dropdown = useRef();
+  const dropdownBtn = useRef();
+  const [navDropdownOpen, setNavDropdownOpen] = useState(false);
 
-  useEffect(() => {
-    setRedirection(true);
-    setRedirection(false);
-  }, [searchWords, searchTopic, searchOrder, searchCategory]);
+  const topicHandleClick = async (topicQueryName) => {
+    // const topicName = e.target.name ? e.target.name : null;
+    dispatch(setCardsFetchedInStore(null));
 
-  const topicHandleClick = async (e) => {
-    const topicName = e.target.name ? e.target.name : null;
-    dispatch(setCurrentSearch("searchTopic", topicName));
+    const currentSearchCopy = {
+      ...currentSearch,
+      searchTopic: topicQueryName,
+      searchCategory: null,
+    };
+    dispatch(setCurrentSearch(currentSearchCopy));
   };
 
-  const redirectLink = SearchLinkRedirect();
+  const categoryHandleClick = async (topicQueryName, categoryQueryName) => {
+    // const topicName = e.target.name ? e.target.name : null;
+    dispatch(setCardsFetchedInStore(null));
+
+    const currentSearchCopy = {
+      ...currentSearch,
+      searchTopic: topicQueryName,
+      searchCategory: categoryQueryName,
+    };
+    dispatch(setCurrentSearch(currentSearchCopy));
+  };
+
+  document.addEventListener("click", function (event) {
+    const isClickInside = dropdown.current && dropdown.current.contains(event.target);
+    const isClickOnBtn = dropdownBtn.current && dropdownBtn.current.contains(event.target);
+
+    if (!isClickInside && !isClickOnBtn && navDropdownOpen) {
+      setNavDropdownOpen(false);
+    }
+  });
 
   return (
-    <>
-      {redirection && <Redirect to={redirectLink} />}
-      <div className={`NavTop ${currentTheme}-theme`}>
-        <div className="NavTop__left">
-          <Link className="NavTop__swipeTuto" to="/">
-            <img src={SwipeTutoSmallSmall} alt="" />
-          </Link>
-
+    <div className={`NavTop ${currentTheme}-theme`}>
+      <div className="NavTop__left">
+        <Link className="NavTop__swipeTuto" to="/">
+          <img className="NavTop__swipeTuto--image" src={SwipeTutoSmallSmall} alt="" onClick={() => dispatch(setCurrentSearch(initialSearchState))} />
+        </Link>
+        {currentUser && <SearchForm />}
+      </div>
+      <div className="NavTop__center">
+        {!currentUser ? (
           <NavLink exact className="NavTop__link" to="/">
             Accueil
           </NavLink>
+        ) : (
+          <>
+            <p className="NavTop__link NavTop__link--category">
+              Explorer
+              <DropDownLogo className="NavTop__link--logo" />
+            </p>
+            <div className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme`}>
+              {topicArray &&
+                topicArray.map((topic, index) => (
+                  <div className="NavTop__topicList" key={`topic${topic.name}${index}`}>
+                    <Link key={`topicList${index}`} to="/search" onClick={() => topicHandleClick(topic.queryName)} name={topic.queryName}>
+                      <span className="NavTop__topicList--topic">{topic.name}</span>
+                    </Link>
+                    {getCategoriesArray(topic.queryName).map((category, index) => (
+                      <Link
+                        key={`category${index}${category.name}`}
+                        to="/search"
+                        onClick={() => categoryHandleClick(topic.queryName, category.queryName)}
+                        name={category.queryName}
+                      >
+                        <span className="NavTop__topicList--category">{category.name}</span>
+                      </Link>
+                    ))}
+                  </div>
+                ))}
+            </div>
+          </>
+        )}
 
-          <NavLink className="NavTop__link" to="/ressources">
-            Ressources
-          </NavLink>
-          <p className="NavTop__link NavTop__link--category">
-            Langages
-            <DropDownLogo className="NavTop__link--logo" />
-          </p>
-          <div
-            className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme`}
-          >
-            {topicArray &&
-              topicArray.map((rubrique, index) => (
-                <Link
-                  key={index}
-                  to={`/search?${searchWords ? `search=${searchWords}` : ""}${
-                    rubrique.queryName ? `&topic=${rubrique.queryName}` : ""
-                  }${searchOrder ? `&order=${searchOrder}` : ""}${
-                    searchCategory ? `&category=${searchCategory}` : ""
-                  }`}
-                >
-                  <img
-                    onClick={(e) => topicHandleClick(e)}
-                    src={rubrique.logo}
-                    name={rubrique.queryName}
-                    className="NavTop__dropdown--logo"
-                    alt={rubrique.name}
-                  />
-                </Link>
-              ))}
-          </div>
-        </div>
-        <div className="NavTop__center">
-          <SearchForm />
-        </div>
-        <div className="NavTop__right">
-          {currentUser ? (
-            <>
-              <div
-                onClick={() => dispatch(toggleUserNav())}
-                className="NavTop__avatar"
-              >
-                <UserAvatar user={currentUser} link={false} />
-              </div>
-            </>
-          ) : (
-            <Link className="NavTop__linkConnexion" to="/connexion/login">
-              <CustomButton color="dark">Connexion / Inscription</CustomButton>
-            </Link>
-          )}
-        </div>
-        {currentUserNav ? (
-          <div className={`NavTop__userMenu ${currentTheme}-theme`}>
-            <div className="NavTop__userMenu--meta">
-              <UserUsername user={currentUser} link={true} />
-              <p className="NavTop__userMenu--text">{currentUser.email}</p>
-            </div>
-            <div className="NavTop__userMenu--links">
-              <Link
-                className="NavTop__userMenu--link"
-                to="/account/user"
-                onClick={() => dispatch(toggleUserNav())}
-              >
-                <AccountLogo className="NavTop__userMenu--logo" />
-                Compte
-              </Link>
-              <Link
-                className="NavTop__userMenu--link"
-                to="/account/settings"
-                onClick={() => dispatch(toggleUserNav())}
-              >
-                <SettingsLogo className="NavTop__userMenu--logo" />
-                Paramètres
-              </Link>
-              <Link
-                className="NavTop__userMenu--link"
-                to="/account/saved"
-                onClick={() => dispatch(toggleUserNav())}
-              >
-                <BookmarkLogo className="NavTop__userMenu--logo" />
-                Sauvegardés
-              </Link>
-              <Link
-                className="NavTop__userMenu--link"
-                to="/help"
-                onClick={() => dispatch(toggleUserNav())}
-              >
-                <HelpLogo className="NavTop__userMenu--logo" />
-                Aide
-              </Link>
-              <Link
-                onClick={() => {
-                  dispatch(logoutAction());
-                  dispatch(toggleUserNav());
-                }}
-                className="NavTop__userMenu--link"
-                to="/"
-              >
-                <LogOutLogo className="NavTop__userMenu--logo" />
-                Deconnexion
-              </Link>
-            </div>
-          </div>
-        ) : null}
+        {/* <NavLink className="NavTop__link" to="/ressources">
+          Ressources
+        </NavLink> */}
       </div>
-    </>
+      <div className="NavTop__right">
+        {currentUser ? (
+          <>
+            <div className="NavTop__avatar">
+              <UserNameAndAvatar user={currentUser} link={true} />
+            </div>
+            <div className="NavTop__addcard">
+              <Link to="/add" className="NavTop__roundBtn">
+                <AddLogo />
+              </Link>
+            </div>
+            <div className="NavTop__dropdownUserMenu NavTop__roundBtn" ref={dropdownBtn} onClick={() => setNavDropdownOpen(true)}>
+              <DropdownFullLogo />
+            </div>
+          </>
+        ) : (
+          <Link className="NavTop__linkConnexion" to="/connexion/login">
+            <CustomButton color="dark">Connexion / Inscription</CustomButton>
+          </Link>
+        )}
+      </div>
+      {navDropdownOpen ? (
+        <div className={`NavTop__userMenu ${currentTheme}-theme`} ref={dropdown}>
+          <div className="NavTop__userMenu--meta">
+            <UserUsername user={currentUser} link={true} />
+            <p className="NavTop__userMenu--text">{currentUser.email}</p>
+          </div>
+          <div className="NavTop__userMenu--links">
+            <Link className="NavTop__userMenu--link" to="/account/user" onClick={() => setNavDropdownOpen(false)}>
+              <AccountLogo className="NavTop__userMenu--logo" />
+              Compte
+            </Link>
+            <Link className="NavTop__userMenu--link" to="/account/settings" onClick={() => setNavDropdownOpen(false)}>
+              <SettingsLogo className="NavTop__userMenu--logo" />
+              Paramètres
+            </Link>
+            <Link className="NavTop__userMenu--link" to="/account/saved" onClick={() => setNavDropdownOpen(false)}>
+              <BookmarkLogo className="NavTop__userMenu--logo" />
+              Sauvegardés
+            </Link>
+            <Link className="NavTop__userMenu--link" to="/help" onClick={() => setNavDropdownOpen(false)}>
+              <HelpLogo className="NavTop__userMenu--logo" />
+              Aide
+            </Link>
+            <Link
+              onClick={() => {
+                dispatch(logoutAction());
+                setNavDropdownOpen(false);
+              }}
+              className="NavTop__userMenu--link"
+              to="/"
+            >
+              <LogOutLogo className="NavTop__userMenu--logo" />
+              Deconnexion
+            </Link>
+          </div>
+        </div>
+      ) : null}
+    </div>
   );
 };
 

@@ -1,7 +1,7 @@
 import { FilterActionTypes } from "./filter-types"
 import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded } from '../layout/layout-actions'
 import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
-import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply, toggleSave } from "../../services/socialService"
+import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply, toggleSave, getCardCommentsNext } from "../../services/socialService"
 import { getUserFavoriesById } from "../../services/userService"
 import { initialSearchState } from "../../helper"
 
@@ -63,9 +63,9 @@ export const resetCurrentSearch = (item, value = null) => ({
   payload: initialSearchState
 })
 
-export const setCurrentSearch = (item, value = null) => ({
+export const setCurrentSearch = (newSearch) => ({
   type: FilterActionTypes.SET_CURRENT_SEARCH,
-  payload: { item, value }
+  payload: newSearch
 })
 
 export const deleteCurrentSearch = (item) => ({
@@ -105,6 +105,7 @@ export const getCardsByUserIdAction = userId => {
       .catch(err => {
         dispatch(getCardsByUserIdFailure(err.response))
         dispatch(setLoaded())
+        console.log(err)
       })
   }
 }
@@ -186,14 +187,14 @@ export const setNoClickedCard = () => ({
   payload: null,
 });
 
-export const toggleLikeCardAction = (cardId) => {
+export const toggleLikeCardAction = (cardId, currentUserId) => {
   return dispatch => {
     return toggleLike(cardId)
       .then(rep => {
-        dispatch(likeCardActionSuccess())
+        dispatch(likeCardActionSuccess(cardId, currentUserId))
       })
       .catch(err => {
-        dispatch(likeCardActionErrors(err.response.status))
+        dispatch(likeCardActionErrors(err))
       })
   }
 };
@@ -203,8 +204,9 @@ const likeCardActionErrors = error => ({
   payload: error
 })
 
-const likeCardActionSuccess = () => ({
+const likeCardActionSuccess = (cardId, currentUserId) => ({
   type: FilterActionTypes.TOGGLE_LIKE_CARD_SUCCESS,
+  payload: { cardId, currentUserId }
 })
 
 export const toggleSaveCardAction = (cardId) => {
@@ -269,7 +271,7 @@ export const addCommentAction = (cardId, comment) => {
 };
 
 const addCommentErrors = error => ({
-  type: FilterActionTypes.ADD_COMMENT_SUCCESS,
+  type: FilterActionTypes.ADD_COMMENT_ERROR,
   payload: error
 })
 
@@ -278,10 +280,33 @@ const addCommentSuccess = (commentData) => ({
   payload: commentData
 })
 
+export const fetchNewComments = (url) => {
+  return dispatch => {
+    return getCardCommentsNext(url)
+      .then(rep => {
+        dispatch(fetchNewCommentsSuccess(rep.data))
+      })
+      .catch(err => {
+        dispatch(fetchNewCommentsErrors(err))
+      })
+  }
+};
+
+const fetchNewCommentsErrors = error => ({
+  type: FilterActionTypes.FETCH_NEW_COMMENTS_ERROR,
+  payload: error
+})
+
+const fetchNewCommentsSuccess = (nextCommentsData) => ({
+  type: FilterActionTypes.FETCH_NEW_COMMENTS_SUCCESS,
+  payload: nextCommentsData
+})
+
 export const addReplyAction = (cardId, commentId, comment) => {
   return dispatch => {
     return addReply(commentId, comment)
       .then(rep => {
+        console.log(rep)
         dispatch(addCommentSuccess(rep.data))
       })
       .catch(err => {
@@ -315,6 +340,32 @@ const getCardCommentsSuccess = (comments) => ({
   type: FilterActionTypes.GET_CARD_COMMENTS_SUCCESS,
   payload: comments
 })
+// export const getCommentRepliesAction = (commentId) => {
+//   return dispatch => {
+//     // dispatch(setCommentsLoading())
+//     return getReplies(commentId)
+//       .then(rep => {
+//         console.log(rep)
+//         dispatch(getCommentRepliesSuccess(rep.data))
+//         // dispatch(setCommentsLoaded()) // stop loader
+//       })
+//       .catch(err => {
+//         dispatch(getCommentRepliesError(err))
+//         // dispatch(setCommentsLoaded()) // stop loader
+//       })
+//   }
+// };
+
+
+// const getCommentRepliesError = error => ({
+//   type: FilterActionTypes.GET_COMMENT_REPLIES_ERROR,
+//   payload: error
+// })
+
+// const getCommentRepliesSuccess = (comments) => ({
+//   type: FilterActionTypes.GET_COMMENT_REPLIES_SUCCESS,
+//   payload: comments
+// })
 
 
 export const deleteCommentAction = (commentId) => {
@@ -340,12 +391,16 @@ const deleteCommentSuccess = () => ({
 
 export const getUserFavoriesAction = userId => {
   return dispatch => {
+    console.log(userId)
+    dispatch(setCardsFetchedInStore(null))
     dispatch(setLoading());
-    getUserFavoriesById(userId).then(rep => {
+    userId && getUserFavoriesById(userId).then(rep => {
+      console.log(rep)
       dispatch(getUserFavoriesSuccess(rep.data))
       dispatch(setLoaded())
       return rep.data
     }).catch(err => {
+      console.log(err)
       dispatch(getUserFavoriesError(err))
       dispatch(setLoaded())
       return err
@@ -361,3 +416,9 @@ export const getUserFavoriesSuccess = favories => ({
   type: FilterActionTypes.GET_FAVORIES_CARDS_SUCCESS,
   payload: favories
 })
+
+
+export const deleteLastPublishedCommentInStore = () => ({
+  type: FilterActionTypes.DELETE_LAST_PUBLISHED_COMMENT_IN_STORE,
+})
+

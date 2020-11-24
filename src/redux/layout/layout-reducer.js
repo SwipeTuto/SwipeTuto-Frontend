@@ -1,49 +1,64 @@
+import { initialSignalState } from '../../helper';
 import { LayoutActionTypes } from './layout-types'
 
 const INITIAL_STATE = {
+  firstLoadDone: false,
   popupShown: false,
+  signalPopupOpen: false,
+  signalInfos: initialSignalState,
   fullscreen: false,
-  showUserNav: false,
   mobileNavOpen: false,
+  notificationPopupOpen: {
+    open: false,
+    notification: ""
+  },
   filterMobileMenuOpen: false,
   isLoaded: false,
   cardsSize: 'small',
   otherPageCardsLoaded: true,
   clickedCardIsLoaded: false,
   imageIsLoaded: false,
+  userIsLoaded: false,
   commentsAreLoaded: false,
+  redirectUrl: false,
+  connexionPopup: false,
   theme: "light"
 };
 
 const layoutReducer = (state = INITIAL_STATE, action) => {
   const app = document.getElementsByClassName("App")[0];
   const cardPopupElement = document.getElementsByClassName("CardFullPopup")[0];
-  const scrollYWindow = window.scrollY;
-  const scrollY = app && app.style.top;
+  // const scrollYWindow = window.scrollY;
+  // const scrollY = app && app.style.top;
 
   switch (action.type) {
     case LayoutActionTypes.SHOW_POPUP_CARD:
-      cardPopupElement.addEventListener('wheel', (e) => {
-        e.stopPropagation();
-      })
+      // if (cardPopupElement) cardPopupElement.addEventListener('wheel', (e) => {
+      //   e.stopPropagation();
+      // })
 
-      app.style.position = 'fixed';
-      app.style.top = `-${scrollYWindow}px`;
+      // app.style.position = 'fixed';
+      // app.style.top = `-${scrollYWindow}px`;
 
       return {
         ...state,
         popupShown: true,
       };
+    case LayoutActionTypes.FIRST_LOAD_DONE:
+      return {
+        ...state,
+        firstLoadDone: true,
+      };
     case LayoutActionTypes.CLOSE_POPUP_CARD:
-      app.style.position = '';
-      app.style.top = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      // app.style.position = '';
+      // app.style.top = '';
+      // window.scrollTo(0, parseInt(scrollY || '0') * -1);
       return {
         ...state,
         popupShown: false,
       };
     case LayoutActionTypes.SHOW_FULLSCREEN:
-      cardPopupElement.style.overflow = "hidden";
+      if (cardPopupElement) cardPopupElement.style.overflow = "hidden";
       return {
         ...state,
         fullscreen: true,
@@ -58,11 +73,6 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cardsSize: action.payload,
-      };
-    case LayoutActionTypes.TOGGLE_USER_NAV:
-      return {
-        ...state,
-        showUserNav: !state.showUserNav,
       };
     case LayoutActionTypes.OPEN_MOBILE_NAV:
       app.style.position = "fixed";
@@ -114,6 +124,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         clickedCardIsLoaded: true,
       }
+    case LayoutActionTypes.SET_USER_LOADING:
+      return {
+        ...state,
+        userIsLoaded: false,
+      }
+    case LayoutActionTypes.SET_USER_LOADED:
+      return {
+        ...state,
+        userIsLoaded: true,
+      }
     case LayoutActionTypes.SET_COMMENTS_LOADING:
       return {
         ...state,
@@ -134,6 +154,28 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         imageIsLoaded: true,
       }
+    case LayoutActionTypes.SHOW_SIGNAL_POPUP:
+      return {
+        ...state,
+        signalPopupOpen: true,
+        signalInfos: action.payload
+      }
+    case LayoutActionTypes.CLOSE_SIGNAL_POPUP:
+      return {
+        ...state,
+        signalPopupOpen: false,
+        signalInfos: initialSignalState
+      }
+    case LayoutActionTypes.OPEN_CONNEXION_POPUP:
+      return {
+        ...state,
+        connexionPopup: true,
+      }
+    case LayoutActionTypes.CLOSE_CONNEXION_POPUP:
+      return {
+        ...state,
+        connexionPopup: false,
+      }
     case LayoutActionTypes.OTHER_PAGE_CARDS_LOADING:
       return {
         ...state,
@@ -144,11 +186,31 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         otherPageCardsLoaded: true,
       }
+    case LayoutActionTypes.OPEN_NOTIFICATION_POPUP:
+      return {
+        ...state,
+        notificationPopupOpen: {
+          open: true,
+          notification: action.payload
+        },
+      }
+    case LayoutActionTypes.CLOSE_NOTIFICATION_POPUP:
+      return {
+        ...state,
+        notificationPopupOpen: {
+          open: false,
+          notification: ""
+        },
+      }
     case LayoutActionTypes.TOGGLE_THEME:
-      // const localTheme = window.localStorage.getItem('theme');
       return {
         ...state,
         theme: action.payload,
+      }
+    case LayoutActionTypes.REDIRECT_URL:
+      return {
+        ...state,
+        redirectUrl: action.payload,
       }
     default:
       return state;

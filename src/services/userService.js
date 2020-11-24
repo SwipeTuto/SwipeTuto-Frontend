@@ -120,19 +120,8 @@ export const getUserById = id => {
 }
 
 export const upDateAvatar = avatar => {
-<<<<<<< HEAD
-  const requestOptions = {
-    headers: {
-      'Content-Type': "multipart/form-data",
-      'Authorization': authHeader()
-    }
-  };
-
-  return axios.put(`${baseURL}avatar/`, avatar, requestOptions).then(rep => {
-=======
   return client().put(`avatar/`, avatar).then(rep => {
     console.log('rep-avatar', rep)
->>>>>>> develop
     return rep
   })
 }

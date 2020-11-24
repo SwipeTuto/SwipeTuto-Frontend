@@ -31,10 +31,6 @@ export const client = () => {
       headers: headersKeys
     });
   }
-  // return axios.create({
-  //   baseURL: 'https://swipetuto-back-dev.herokuapp.com/api/v1/',
-  //   headers: headersKeys
-  // });
 }
 
 

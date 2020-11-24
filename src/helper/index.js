@@ -461,6 +461,10 @@ export const orderArray = [
   {
     queryName: "likes",
     name: "Populaire",
+  },
+  {
+    queryName: "-total_views",
+    name: "Vue",
   }
 ]
 

@@ -10,12 +10,7 @@ import {
   selectPaginationNext,
   selectCurrentSearch,
 } from "../../../redux/filter/filter-selectors";
-import {
-  selectCardsSize,
-  selectFirstLoadDone,
-  selectIsLoaded,
-  selectShowPopupCard,
-} from "../../../redux/layout/layout-selectors";
+import { selectCardsSize, selectFirstLoadDone, selectIsLoaded, selectShowPopupCard } from "../../../redux/layout/layout-selectors";
 
 // components
 import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
@@ -24,10 +19,7 @@ import ScrollButton from "../../LayoutComponents/ScrollButton/ScrollButton";
 
 // scss
 import "./CardGridList.scss";
-import {
-  getCardAfterfilterAction,
-  getOtherPageAction,
-} from "../../../redux/filter/filter-actions";
+import { getCardAfterfilterAction, getOtherPageAction } from "../../../redux/filter/filter-actions";
 import { useCallback } from "react";
 import { useColumnsNumber } from "../../../hooks/useColumnsNumber";
 import { getUrlId, initialSearchState, urlParams } from "../../../helper";
@@ -53,24 +45,10 @@ const CardGridList = ({ loadFilter, allowInfiniteScroll, location }) => {
   const userId = getUrlId(location.pathname, "user_id");
 
   useEffect(() => {
-    if (
-      prevCurrentSearch &&
-      prevCurrentSearch !== currentSearch &&
-      fetchWithFilter === true &&
-      firstLoadDone
-    ) {
+    if (prevCurrentSearch && prevCurrentSearch !== currentSearch && fetchWithFilter === true && firstLoadDone) {
       // console.log("HERE")
       dispatch(getCardAfterfilterAction(currentSearch));
-    } else if (
-      firstLoadDone === false &&
-      cardPopupShown === false &&
-      !urlCardId &&
-      !topic &&
-      !category &&
-      !ordering &&
-      !search &&
-      !userId
-    ) {
+    } else if (firstLoadDone === false && cardPopupShown === false && !urlCardId && !topic && !category && !ordering && !search && !userId) {
       dispatch(getCardAfterfilterAction(initialSearchState));
     }
   }, [
@@ -155,38 +133,22 @@ const CardGridList = ({ loadFilter, allowInfiniteScroll, location }) => {
 
   return (
     <div className="CardGridList">
-      <div
-        className={`CardGridList__wrapper CardGridList__wrapper--${cardsSize}`}
-      >
+      <div className={`CardGridList__wrapper CardGridList__wrapper--${cardsSize}`}>
         {isNaN(totalNumberOfResults) ? (
-          <h2 className="title title-2 nocards-message">
-            Désolé, une erreur est survenue. Si le problème persiste, merci de
-            nous le signaler.
-          </h2>
-        ) : totalNumberOfResults === 0 && !isLoaded ? (
-          <h2 className="title title-2 nocards-message">
-            Désolé, aucune carte trouvée. Essayez une autre recherche.
-          </h2>
+          <h2 className="title title-2 nocards-message">Désolé, une erreur est survenue. Si le problème persiste, merci de nous le signaler.</h2>
+        ) : totalNumberOfResults === 0 && isLoaded ? (
+          <h2 className="title title-2 nocards-message">Désolé, aucune carte trouvée. Essayez une autre recherche.</h2>
         ) : (
           <>
             {gridItems &&
               gridItems.map((column, index) => {
                 return (
-                  <div
-                    className={`grid-column grid-column--${cardsSize}`}
-                    key={index}
-                  >
+                  <div className={`grid-column grid-column--${cardsSize}`} key={index}>
                     {column &&
                       column.map((card) => {
                         return (
-                          <div
-                            className={`grid-item grid-item--${cardsSize}`}
-                            key={card.id}
-                            data-key={card.id}
-                          >
-                            {card && (
-                              <CardPreviewSmall size={cardsSize} card={card} />
-                            )}
+                          <div className={`grid-item grid-item--${cardsSize}`} key={card.id} data-key={card.id}>
+                            {card && <CardPreviewSmall size={cardsSize} card={card} />}
                           </div>
                         );
                       })}
@@ -198,9 +160,7 @@ const CardGridList = ({ loadFilter, allowInfiniteScroll, location }) => {
       </div>
 
       {!isLoaded && <PageLoading />}
-      {cards && nextPageLink && allowInfiniteScroll && (
-        <div className="bottom-grid" ref={bottomGrid}></div>
-      )}
+      {cards && nextPageLink && allowInfiniteScroll && <div className="bottom-grid" ref={bottomGrid}></div>}
       <ScrollButton />
     </div>
   );

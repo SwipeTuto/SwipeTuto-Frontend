@@ -29,9 +29,9 @@ const AccountPage = (props) => {
     <div className={`AccountPage ${currentTheme}-theme`}>
       <div className="AccountPage__wrapper">
         <div className="AccountPage__top">
-          <UserHeader user="current" />
+          <UserHeader userIsSame={true} />
           <div className="AccountPage__navigation">
-            <h2 className="title title-2">Navigation</h2>
+            <h3 className="title title-3">Navigation</h3>
             {currentUser ? (
               <>
                 <NavLink to="/account/user">
@@ -54,11 +54,7 @@ const AccountPage = (props) => {
         </div>
         <Switch>
           <ProtectedRoute exact path="/account/user" component={UserPage} />
-          <ProtectedRoute
-            exact
-            path="/account/settings"
-            component={SettingsPage}
-          />
+          <ProtectedRoute exact path="/account/settings" component={SettingsPage} />
           <ProtectedRoute exact path="/account/saved" component={SavedPage} />
         </Switch>
       </div>

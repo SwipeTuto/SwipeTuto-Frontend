@@ -502,7 +502,7 @@ export const initialSearchState = {
   searchWords: null,
   searchTopic: null,
   searchCategory: null,
-  searchOrder: "-created",
+  searchOrder: "likes",
   searchPage: 1,
 }
 export const initialSignalState = {

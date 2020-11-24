@@ -9,12 +9,9 @@ import { closePopupCard } from "../../../redux/layout/layout-actions";
 
 import "./UserAvatar.scss";
 
-const UserAvatar = ({ user, link }) => {
+const UserAvatar = ({ user, link, addActionOnClick }) => {
   const dispatch = useDispatch();
-  const userImage =
-    user && user.avatar && user.avatar[0] && user.avatar[0].avatar
-      ? `${user.avatar[0].avatar}`
-      : null;
+  const userImage = user && user.avatar && user.avatar[0] && user.avatar[0].avatar ? `${user.avatar[0].avatar}` : null;
   const [error, setError] = useState(false);
   return (
     <>
@@ -23,6 +20,7 @@ const UserAvatar = ({ user, link }) => {
           to={`/profile/user_id=${user && user.id}`}
           className="UserNameAndAvatar"
           onClick={() => {
+            addActionOnClick && addActionOnClick();
             dispatch(closePopupCard());
             dispatch(setNoClickedCard());
             dispatch(getUserByIdAction(parseInt(user && user.id)));
@@ -30,12 +28,7 @@ const UserAvatar = ({ user, link }) => {
         >
           <div className="user_avatar">
             {userImage && !error ? (
-              <img
-                className="user_avatar--image"
-                src={userImage}
-                alt="user"
-                onError={() => setError(true)}
-              />
+              <img className="user_avatar--image" src={userImage} alt="user" onError={() => setError(true)} />
             ) : user && user.username ? (
               user && user.username && user.username.slice(0, 1)
             ) : (
@@ -46,11 +39,7 @@ const UserAvatar = ({ user, link }) => {
       ) : (
         <div className="user_avatar">
           {userImage ? (
-            <img
-              className="UserNameAndAvatar__avatar--image"
-              src={userImage}
-              alt="user"
-            />
+            <img className="UserNameAndAvatar__avatar--image" src={userImage} alt="user" />
           ) : (
             user && user.username && user.username.slice(0, 1)
           )}

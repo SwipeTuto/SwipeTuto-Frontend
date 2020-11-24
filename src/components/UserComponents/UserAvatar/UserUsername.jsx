@@ -8,7 +8,7 @@ import { closePopupCard } from "../../../redux/layout/layout-actions";
 
 import "./UserAvatar.scss";
 
-const UserUsername = ({ user, link }) => {
+const UserUsername = ({ user, link, addActionOnClick }) => {
   const dispatch = useDispatch();
 
   return (
@@ -18,19 +18,16 @@ const UserUsername = ({ user, link }) => {
           to={`/profile/user_id=${user && user.id}`}
           className="UserUsername"
           onClick={() => {
+            addActionOnClick && addActionOnClick();
             dispatch(closePopupCard());
             dispatch(setNoClickedCard());
             dispatch(getUserByIdAction(parseInt(user && user.id)));
           }}
         >
-          <p className="UserUsername__username">
-            {user && user.username ? user.username : "Utilisateur SwipeTuto"}
-          </p>
+          <p className="UserUsername__username">{user && user.username ? user.username : "Utilisateur SwipeTuto"}</p>
         </Link>
       ) : (
-        <p className="UserUsername__username">
-          {user && user.username ? user.username : "Utilisateur SwipeTuto"}
-        </p>
+        <p className="UserUsername__username">{user && user.username ? user.username : "Utilisateur SwipeTuto"}</p>
       )}
     </>
   );

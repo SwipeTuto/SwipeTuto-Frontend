@@ -49,7 +49,7 @@ const FormInput = ({ idFor, label, type, name, getValue, firstValue, required, p
   );
 
   useEffect(() => {
-    if (firstValue) setData(firstValue);
+    if (firstValue || firstValue === "") setData(firstValue);
   }, [firstValue]);
 
   return (

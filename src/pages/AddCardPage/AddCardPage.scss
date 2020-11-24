@@ -52,15 +52,18 @@
     }
   }
 
-  &__buttons {
+  &__action {
     padding: 2rem;
     display: flex;
     justify-content: center;
     align-items: flex-end;
     flex-direction: column;
+  }
 
+  &__buttons {
+    display: flex;
     & .custom-button:last-of-type {
-      margin-left: 2rem;
+      margin-left: 1.5rem;
     }
   }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ReactComponent as MenuLogo } from "../../../assets/images/ellipsis-vertical.svg";
@@ -16,8 +16,17 @@ const VerticalMenu = ({ addclass, type, children }) => {
   const currentTheme = useSelector(selectTheme);
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
+  const modal = useRef();
 
   // console.log(addclass);
+
+  document.addEventListener("click", function (event) {
+    const isClickInside = modal.current && modal.current.contains(event.target);
+
+    if (!isClickInside) {
+      setMenuOpen(false);
+    }
+  });
 
   const checkIfConnected = () => {
     if (!currentUser) {
@@ -28,6 +37,7 @@ const VerticalMenu = ({ addclass, type, children }) => {
   };
   return (
     <div
+      ref={modal}
       className={`VerticalMenu ${addclass && addclass}`}
       onClick={(e) => {
         e.stopPropagation();
@@ -41,31 +51,20 @@ const VerticalMenu = ({ addclass, type, children }) => {
         //   checkIfConnected();
         // }}
       >
-        {type && type === "share" ? (
-          <ShareLogo className="VerticalMenu__logo--logo" />
-        ) : (
-          <MenuLogo className="VerticalMenu__logo--logo" />
-        )}
+        {type && type === "share" ? <ShareLogo className="VerticalMenu__logo--logo" /> : <MenuLogo className="VerticalMenu__logo--logo" />}
       </div>
       {menuOpen && (
         <div className={`VerticalMenu__menu ${currentTheme}-theme`}>
           {children && children.length ? (
             children.map((child, index) => {
               return (
-                <span
-                  className="VerticalMenu__menu--item"
-                  key={index}
-                  onClick={() => setMenuOpen(!menuOpen)}
-                >
+                <span className="VerticalMenu__menu--item" key={index} onClick={() => setMenuOpen(!menuOpen)}>
                   {child}
                 </span>
               );
             })
           ) : children ? (
-            <span
-              className="VerticalMenu__menu--item"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
+            <span className="VerticalMenu__menu--item" onClick={() => setMenuOpen(!menuOpen)}>
               {children}
             </span>
           ) : null}

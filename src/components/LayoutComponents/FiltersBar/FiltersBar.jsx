@@ -3,20 +3,11 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // redux
-import {
-  selectSearchCategory,
-  selectSearchOrder,
-  selectCurrentSearch,
-  selectSearchTopic,
-} from "../../../redux/filter/filter-selectors";
+import { selectSearchCategory, selectSearchOrder, selectCurrentSearch, selectSearchTopic } from "../../../redux/filter/filter-selectors";
 import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
-import {
-  getCategoriesArray,
-  orderArray,
-  topicArray
-} from "../../../helper/index";
+import { getCategoriesArray, orderArray, topicArray } from "../../../helper/index";
 
 // component
 
@@ -35,7 +26,6 @@ const FiltersBar = ({ handleClickSize }) => {
   const searchTopic = useSelector(selectSearchTopic);
   const searchOrder = useSelector(selectSearchOrder);
   const [categoriesArray, setCategoriesArray] = useState([]);
-
 
   // useEffect(() => {
   //   setRedirection(false);
@@ -66,12 +56,12 @@ const FiltersBar = ({ handleClickSize }) => {
   const handleTopicChange = (e) => {
     let newTopic = e.target.value;
     if (newTopic === "Tous") {
-      newTopic = null
+      newTopic = null;
     }
-    const currentSearchCopy = { ...currentSearch, searchTopic: newTopic };
+    const currentSearchCopy = { ...currentSearch, searchTopic: newTopic, searchCategory: null };
     dispatch(setCurrentSearch(currentSearchCopy));
     // const newTopic = e.target.dataset
-  }
+  };
 
   const handleCategoryChange = (categoryQueryName) => {
     const newCategory = categoryQueryName;
@@ -87,21 +77,20 @@ const FiltersBar = ({ handleClickSize }) => {
           onChange={(e) => handleTopicChange(e)}
           value={searchTopic === null ? "Tous" : searchTopic}
         >
-          {topicArray && topicArray.map((topic, index) => {
-            return (
-              <option
-                // className={`FiltersBar__options--item ${searchCategory === topic.queryName && "active"
-                //   }`}
-                key={`topic${topic.queryName}${index}`}
-                data-topic={topic.queryName}
-                value={topic.queryName}
-              >
-                {topic.name}
-              </option>
-
-            )
-          }
-          )}
+          {topicArray &&
+            topicArray.map((topic, index) => {
+              return (
+                <option
+                  // className={`FiltersBar__options--item ${searchCategory === topic.queryName && "active"
+                  //   }`}
+                  key={`topic${topic.queryName}${index}`}
+                  data-topic={topic.queryName}
+                  value={topic.queryName}
+                >
+                  {topic.name}
+                </option>
+              );
+            })}
         </select>
         <div className="FiltersBar__options">
           {/* <div className="scroll-logo" onClick={handleScollLeft}>
@@ -113,8 +102,7 @@ const FiltersBar = ({ handleClickSize }) => {
               categoriesArray.map((category, index) => (
                 <div
                   onClick={() => handleCategoryChange(category.queryName)}
-                  className={`FiltersBar__options--item ${searchCategory === category.queryName && "active"
-                    }`}
+                  className={`FiltersBar__options--item ${searchCategory === category.queryName && "active"}`}
                   key={`category${category.queryName}${index}`}
                   data-category={category.queryName}
                 >
@@ -128,36 +116,21 @@ const FiltersBar = ({ handleClickSize }) => {
           </div> */}
         </div>
 
-
         {/* <p className="FiltersBar__numberOfResults">
             {`${totalNumberOfCardsSearched} résultats trouvés`}
           </p> */}
-        <select
-          className={`${currentTheme}-theme`}
-          name="cards-filter"
-          id="cards-filter"
-          onChange={(e) => handleOrderChange(e)}
-          value={searchOrder}
-        >
+        <select className={`${currentTheme}-theme`} name="cards-filter" id="cards-filter" onChange={(e) => handleOrderChange(e)} value={searchOrder}>
           {orderArray.map((order, index) => (
             <option key={`${order}${index}`} value={order.queryName}>
               {order.name}
             </option>
           ))}
         </select>
-        <div
-          className="FiltersBar__size-logo active"
-          data-gridsize="small"
-          onClick={(e) => handleClickSize(e)}
-        >
+        <div className="FiltersBar__size-logo active" data-gridsize="small" onClick={(e) => handleClickSize(e)}>
           <GridSmallLogo className="grid-size-logo" pointerEvents="none" />
         </div>
 
-        <div
-          className="FiltersBar__size-logo "
-          data-gridsize="big"
-          onClick={(e) => handleClickSize(e)}
-        >
+        <div className="FiltersBar__size-logo " data-gridsize="big" onClick={(e) => handleClickSize(e)}>
           <GridLargeLogo className="grid-size-logo" pointerEvents="none" />
         </div>
       </div>

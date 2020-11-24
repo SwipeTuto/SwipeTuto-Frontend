@@ -2,14 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // redux
-import {
-  selectCurrentSearch,
-  selectSearchWords,
-} from "../../../redux/filter/filter-selectors";
-import {
-  setCurrentSearch,
-  deleteCurrentSearch,
-} from "../../../redux/filter/filter-actions";
+import { selectCurrentSearch, selectSearchWords } from "../../../redux/filter/filter-selectors";
+import { setCurrentSearch, deleteCurrentSearch } from "../../../redux/filter/filter-actions";
 import { closeMobileNav } from "../../../redux/layout/layout-actions";
 
 // components
@@ -19,6 +13,7 @@ import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg"
 import { ReactComponent as CloseLogo } from "../../../assets/images/close-circle.svg";
 
 import "./SearchForm.scss";
+import { initialSearchState } from "../../../helper";
 
 const SearchForm = () => {
   const dispatch = useDispatch();
@@ -46,27 +41,21 @@ const SearchForm = () => {
 
   const handleSearchDelete = () => {
     setSearchInput("");
-    dispatch(deleteCurrentSearch());
+    dispatch(setCurrentSearch(initialSearchState));
   };
 
   return (
     <form className="SearchForm" onSubmit={(e) => handleSubmit(e)}>
       <div className="SearchForm__search">
         {searchWords ? (
-          <div
-            className="SearchForm__button"
-            onClick={() => handleSearchDelete()}
-          >
-            <CloseLogo
-              className="SearchForm__button--logo"
-              pointerEvents="none"
-            />
+          <div className="SearchForm__button" onClick={() => handleSearchDelete()}>
+            <CloseLogo className="SearchForm__button--logo" pointerEvents="none" />
           </div>
         ) : (
-            <button type="submit" className="SearchForm__button">
-              <SearchLogo className="SearchForm__button--logo" />
-            </button>
-          )}
+          <button type="submit" className="SearchForm__button">
+            <SearchLogo className="SearchForm__button--logo" />
+          </button>
+        )}
         <input
           className="SearchForm__search--input"
           id="search"

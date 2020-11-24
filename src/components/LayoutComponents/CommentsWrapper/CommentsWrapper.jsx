@@ -47,7 +47,7 @@ const CommentsWrapper = () => {
   const lastPublishedComment = useSelector(selectLastPublishedComment);
   const [localLastPublishedArray, setLocalLastPublishedArray] = useState([]);
   const [localCommentsArray, setLocalCommentsArray] = useState([]);
-  const [shouldUpdate, setShouldUpdate] = useState(false);
+  // const [shouldUpdate, setShouldUpdate] = useState(false);
   const [firstValue, setNewFirstValue] = useState("");
   const commentsLoaded = useSelector(selectCommentsLoaded);
 
@@ -62,7 +62,7 @@ const CommentsWrapper = () => {
 
   const handleAddCommentClick = (value) => {
     dispatch(addCommentAction(clickedCardId, value));
-    setShouldUpdate(false);
+    // setShouldUpdate(false);
   };
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const CommentsWrapper = () => {
       arrayCopy.push(lastPublishedComment);
       setLocalLastPublishedArray(arrayCopy);
     }
-    setShouldUpdate(true);
+    // setShouldUpdate(true);
     dispatch(deleteLastPublishedCommentInStore());
   }, [dispatch, lastPublishedComment, localLastPublishedArray]);
 
@@ -81,30 +81,26 @@ const CommentsWrapper = () => {
 
   const confirmCommentDelete = (commentId) => {
     dispatch(deleteCommentAction(parseInt(commentId)));
-    const fullCommentLocalArray = localCommentsArray.filter(
-      (comment) => comment.id === parseInt(commentId)
-    );
-    const fullCommentLastLocal = localLastPublishedArray.filter(
-      (comment) => comment.id === parseInt(commentId)
-    );
-    // console.log(fullCommentLocalArray, fullCommentLastLocal);
-    if (fullCommentLocalArray.length > 0) {
-      const index = localCommentsArray.indexOf(fullCommentLocalArray[0]);
+    const commentInLocalArray = localCommentsArray.filter((comment) => comment.id === parseInt(commentId));
+    const fullCommentLastLocal = localLastPublishedArray.filter((comment) => comment.id === parseInt(commentId));
+    // console.log(commentInLocalArray, fullCommentLastLocal);
+    if (commentInLocalArray.length > 0) {
+      const index = localCommentsArray.indexOf(commentInLocalArray[0]);
 
       if (index > -1) {
-        const arrayCopy = localCommentsArray;
+        const arrayCopy = [...localCommentsArray];
         arrayCopy.splice(index, 1);
         setLocalCommentsArray(arrayCopy);
         console.log(localCommentsArray);
-        setShouldUpdate(true);
+        // setShouldUpdate(true);
       }
     } else if (fullCommentLastLocal.length > 0) {
       const index = localLastPublishedArray.indexOf(fullCommentLastLocal[0]);
       if (index > -1) {
-        const arrayCopy = localLastPublishedArray;
+        const arrayCopy = [...localLastPublishedArray];
         arrayCopy.splice(index, 1);
         setLocalLastPublishedArray(arrayCopy);
-        setShouldUpdate(true);
+        // setShouldUpdate(true);
       }
     }
   };
@@ -146,24 +142,19 @@ const CommentsWrapper = () => {
             )}
           </div>
           <div className="CommentsWrapper__comments">
-            {shouldUpdate &&
-              localLastPublishedArray.map((comment) => (
-                <FirstLevelComment
-                  key={comment.id}
-                  comment={comment}
-                  confirmCommentDelete={confirmCommentDelete}
-                  // handleUpdate={handleUpdate}
-                  handleCommentRespond={handleCommentRespond}
-                />
-              ))}
+            {localLastPublishedArray.map((comment) => (
+              <FirstLevelComment
+                key={comment.id}
+                comment={comment}
+                confirmCommentDelete={confirmCommentDelete}
+                // handleUpdate={handleUpdate}
+                handleCommentRespond={handleCommentRespond}
+              />
+            ))}
           </div>
 
           <div className="CommentsWrapper__input">
-            <CommentsInput
-              id="commentInput"
-              handleAddCommentClick={handleAddCommentClick}
-              firstValue={firstValue}
-            />
+            <CommentsInput id="commentInput" handleAddCommentClick={handleAddCommentClick} firstValue={firstValue} />
           </div>
         </>
       ) : (

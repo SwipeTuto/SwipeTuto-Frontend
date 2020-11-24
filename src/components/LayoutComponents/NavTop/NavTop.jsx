@@ -1,6 +1,6 @@
 // Présent dans App.js
 
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, Link } from "react-router-dom";
 
@@ -11,8 +11,8 @@ import {
   // selectSearchTopic,
 } from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
-import { toggleUserNav } from "../../../redux/layout/layout-actions";
-import { selectUserNav, selectTheme } from "../../../redux/layout/layout-selectors";
+
+import { selectTheme } from "../../../redux/layout/layout-selectors";
 import { setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
@@ -42,8 +42,11 @@ const NavTop = (props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const currentTheme = useSelector(selectTheme);
-  const currentUserNav = useSelector(selectUserNav);
   const currentSearch = useSelector(selectCurrentSearch);
+  const dropdown = useRef();
+  const dropdownBtn = useRef();
+  const [navDropdownOpen, setNavDropdownOpen] = useState(false);
+
   const topicHandleClick = async (topicQueryName) => {
     // const topicName = e.target.name ? e.target.name : null;
     dispatch(setCardsFetchedInStore(null));
@@ -68,6 +71,15 @@ const NavTop = (props) => {
     dispatch(setCurrentSearch(currentSearchCopy));
   };
 
+  document.addEventListener("click", function (event) {
+    const isClickInside = dropdown.current && dropdown.current.contains(event.target);
+    const isClickOnBtn = dropdownBtn.current && dropdownBtn.current.contains(event.target);
+
+    if (!isClickInside && !isClickOnBtn && navDropdownOpen) {
+      setNavDropdownOpen(false);
+    }
+  });
+
   return (
     <div className={`NavTop ${currentTheme}-theme`}>
       <div className="NavTop__left">
@@ -90,13 +102,13 @@ const NavTop = (props) => {
             <div className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme`}>
               {topicArray &&
                 topicArray.map((topic, index) => (
-                  <div className="NavTop__topicList">
+                  <div className="NavTop__topicList" key={`topic${topic.name}${index}`}>
                     <Link key={`topicList${index}`} to="/search" onClick={() => topicHandleClick(topic.queryName)} name={topic.queryName}>
                       <span className="NavTop__topicList--topic">{topic.name}</span>
                     </Link>
                     {getCategoriesArray(topic.queryName).map((category, index) => (
                       <Link
-                        key={index}
+                        key={`category${index}${category.name}`}
                         to="/search"
                         onClick={() => categoryHandleClick(topic.queryName, category.queryName)}
                         name={category.queryName}
@@ -118,7 +130,6 @@ const NavTop = (props) => {
         {currentUser ? (
           <>
             <div className="NavTop__avatar">
-              {/* <UserAvatar user={currentUser} link={false} /> */}
               <UserNameAndAvatar user={currentUser} link={true} />
             </div>
             <div className="NavTop__addcard">
@@ -126,7 +137,7 @@ const NavTop = (props) => {
                 <AddLogo />
               </Link>
             </div>
-            <div className="NavTop__dropdownUserMenu NavTop__roundBtn" onClick={() => dispatch(toggleUserNav())}>
+            <div className="NavTop__dropdownUserMenu NavTop__roundBtn" ref={dropdownBtn} onClick={() => setNavDropdownOpen(true)}>
               <DropdownFullLogo />
             </div>
           </>
@@ -136,33 +147,33 @@ const NavTop = (props) => {
           </Link>
         )}
       </div>
-      {currentUserNav ? (
-        <div className={`NavTop__userMenu ${currentTheme}-theme`}>
+      {navDropdownOpen ? (
+        <div className={`NavTop__userMenu ${currentTheme}-theme`} ref={dropdown}>
           <div className="NavTop__userMenu--meta">
             <UserUsername user={currentUser} link={true} />
             <p className="NavTop__userMenu--text">{currentUser.email}</p>
           </div>
           <div className="NavTop__userMenu--links">
-            <Link className="NavTop__userMenu--link" to="/account/user" onClick={() => dispatch(toggleUserNav())}>
+            <Link className="NavTop__userMenu--link" to="/account/user" onClick={() => setNavDropdownOpen(false)}>
               <AccountLogo className="NavTop__userMenu--logo" />
               Compte
             </Link>
-            <Link className="NavTop__userMenu--link" to="/account/settings" onClick={() => dispatch(toggleUserNav())}>
+            <Link className="NavTop__userMenu--link" to="/account/settings" onClick={() => setNavDropdownOpen(false)}>
               <SettingsLogo className="NavTop__userMenu--logo" />
               Paramètres
             </Link>
-            <Link className="NavTop__userMenu--link" to="/account/saved" onClick={() => dispatch(toggleUserNav())}>
+            <Link className="NavTop__userMenu--link" to="/account/saved" onClick={() => setNavDropdownOpen(false)}>
               <BookmarkLogo className="NavTop__userMenu--logo" />
               Sauvegardés
             </Link>
-            <Link className="NavTop__userMenu--link" to="/help" onClick={() => dispatch(toggleUserNav())}>
+            <Link className="NavTop__userMenu--link" to="/help" onClick={() => setNavDropdownOpen(false)}>
               <HelpLogo className="NavTop__userMenu--logo" />
               Aide
             </Link>
             <Link
               onClick={() => {
                 dispatch(logoutAction());
-                dispatch(toggleUserNav());
+                setNavDropdownOpen(false);
               }}
               className="NavTop__userMenu--link"
               to="/"

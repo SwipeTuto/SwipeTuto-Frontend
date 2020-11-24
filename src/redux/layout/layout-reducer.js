@@ -7,7 +7,6 @@ const INITIAL_STATE = {
   signalPopupOpen: false,
   signalInfos: initialSignalState,
   fullscreen: false,
-  showUserNav: false,
   mobileNavOpen: false,
   notificationPopupOpen: {
     open: false,
@@ -29,8 +28,8 @@ const INITIAL_STATE = {
 const layoutReducer = (state = INITIAL_STATE, action) => {
   const app = document.getElementsByClassName("App")[0];
   const cardPopupElement = document.getElementsByClassName("CardFullPopup")[0];
-  const scrollYWindow = window.scrollY;
-  const scrollY = app && app.style.top;
+  // const scrollYWindow = window.scrollY;
+  // const scrollY = app && app.style.top;
 
   switch (action.type) {
     case LayoutActionTypes.SHOW_POPUP_CARD:
@@ -74,11 +73,6 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cardsSize: action.payload,
-      };
-    case LayoutActionTypes.TOGGLE_USER_NAV:
-      return {
-        ...state,
-        showUserNav: !state.showUserNav,
       };
     case LayoutActionTypes.OPEN_MOBILE_NAV:
       app.style.position = "fixed";

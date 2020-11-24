@@ -7,11 +7,11 @@ import NavTop from "./components/LayoutComponents/NavTop/NavTop";
 import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
-import { getCardAfterfilterAction, getCardByIdAction } from './redux/filter/filter-actions'
+import { getCardByIdAction } from './redux/filter/filter-actions'
 import { selectConnexionPopup, selectFirstLoadDone, selectIsLoaded, selectRedirectUrl, selectShowPopupCard, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
 import { setCurrentSearch } from "./redux/filter/filter-actions"
 
-import { urlParams, getUrlId, convertNumber } from "./helper/index"
+import { urlParams, getUrlId } from "./helper/index"
 
 import './index.scss'
 import './App.scss';
@@ -99,17 +99,27 @@ function App(props) {
     dispatch(closeConnexionPopup())
   };
 
-  const scrollYWindow = window.scrollY;
-  const scrollY = appEl.current && appEl.current.style.top;
+  // const scrollYWindow = window.scrollY;
+  // const scrollY = appEl.current && appEl.current.style.top;
+  // const largeurEcran = window.innerWidth;
+  const getScrollbarWidth = () => {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    return scrollbarWidth;
+  }
 
   useEffect(() => {
     if (popupCardIsOpen) {
-      appEl.current.style.position = 'fixed';
-      appEl.current.style.top = `-${scrollYWindow}px`;
+      document.body.style.paddingRight = `${getScrollbarWidth()}px`;
+      document.body.style.overflow = 'hidden';
+      document.body.style.height = '100%';
+
     } else {
-      appEl.current.style.position = '';
-      appEl.current.style.top = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+
+      document.body.style.paddingRight = '0px';
+      document.body.style.overflow = 'auto';
+      document.body.style.height = 'auto';
+
+
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [popupCardIsOpen])

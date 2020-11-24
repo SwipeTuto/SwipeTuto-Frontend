@@ -12,21 +12,15 @@ const NotificationPopup = ({ notification }) => {
 
   useEffect(() => {
     if (notificationPopup && notificationPopup.open) {
-      console.log("open");
       setIsActive(true);
       setTimeout(() => {
         setIsActive(false);
         dispatch(closeNotificationPopup());
-        console.log("close");
-      }, 3000);
+      }, 4000);
     }
   }, [dispatch, notificationPopup]);
 
-  return (
-    <div className={`NotificationPopup ${isActive ? "active" : ""}`}>
-      {notificationPopup && notificationPopup.notification}
-    </div>
-  );
+  return <div className={`NotificationPopup ${isActive ? "active" : ""}`}>{notificationPopup && notificationPopup.notification}</div>;
 };
 
 export default NotificationPopup;

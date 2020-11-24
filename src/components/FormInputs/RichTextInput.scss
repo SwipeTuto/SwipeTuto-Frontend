@@ -1,0 +1,18 @@
+@import "../../variables.scss";
+
+.rdw-editor-wrapper {
+  height: max-content;
+  max-width: 100%;
+}
+
+.rdw-editor-main {
+  background-color: $grey-lighter;
+  min-height: 20rem;
+  cursor: text;
+  padding: 0 1rem;
+}
+
+.rdw-image-wrapper,
+.rdw-embedded-wrapper {
+  display: none;
+}

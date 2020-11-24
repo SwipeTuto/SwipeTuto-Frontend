@@ -31,6 +31,7 @@ const CardPreviewSmall = ({ card, size }) => {
   const currentUserId = useSelector(selectCurrentUserId);
   // const [cardIsLiked, setCardIsLiked] = useState();
   const [cardIsReady, setCardIsReady] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [firstCheck, setFirstCheck] = useState(true);
 
   const userHasLiked = useCallback(() => {
@@ -50,7 +51,6 @@ const CardPreviewSmall = ({ card, size }) => {
   }, [cardId, firstCheck, userHasLiked]);
 
   const handleClickedCardClick = async () => {
-    console.log("cli");
     dispatch(showPopupCard());
     const clickedCardRequest = await dispatch(getCardByIdAction(cardId));
     const clickedCard = await clickedCardRequest.data;
@@ -74,16 +74,20 @@ const CardPreviewSmall = ({ card, size }) => {
     if (elem) {
       const img = document.createElement("img");
       img.setAttribute("onContextMenu", (e) => e.preventDefault());
+      elem.append(img);
       if (media_image[0] && media_image[0].image) {
         img.onload = () => {
           setCardIsReady(true);
+          setIsError(false);
         };
         img.onerror = () => {
           setCardIsReady(false);
+          setIsError(true);
         };
         img.src = `${media_image[0].image}`;
+      } else {
+        setIsError(true);
       }
-      elem.append(img);
     }
   }, [cardId, media_image]);
 
@@ -105,7 +109,7 @@ const CardPreviewSmall = ({ card, size }) => {
         } CardPreviewSmall__image--loading CardPreviewSmall__image--loading-${size}`}
         onClick={() => handleClickedCardClick()}
       >
-        <Loading />
+        {isError ? <p>Image non disponible.</p> : <Loading />}
       </div>
 
       <div className="CardPreviewSmall__details">

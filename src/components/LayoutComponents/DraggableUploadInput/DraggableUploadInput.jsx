@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 // Import React FilePond
-import { FilePond, File, registerPlugin } from "react-filepond";
+import { FilePond, registerPlugin } from "react-filepond";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 
 // Import FilePond styles
@@ -17,6 +17,12 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 // Our app
 const DraggableUploadInput = React.forwardRef((props, ref) => {
   const [files, setFiles] = useState([]);
+
+  useEffect(() => {
+    if (props.emptyState) {
+      setFiles([]);
+    }
+  }, [props.emptyState]);
 
   const handleUpdate = (cards) => {
     setFiles(cards);

@@ -7,46 +7,65 @@ import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "./RichTextInput.scss";
+import { checkRegexInput, errorMessageToDisplay } from "../../helper";
 
-const RichTextInput = () => {
+const RichTextInput = ({ label, getDescriptionValue, firstValue }) => {
+  // console.log(firstValue);
   const editorState = EditorState.createEmpty();
-  // const [content, setContent] = useState(editorState);
   const [content, setContent] = useState(editorState);
   const [contentInHTML, setContentInHTML] = useState();
-  // const html = "<p>Hey this <strong>editor</strong> rocks 😀</p>";
-  const html = "<p></p>";
 
-  const onEditorStateChange = (editorState) => {
-    setContent(editorState);
-  };
+  useEffect(() => {
+    if (firstValue) {
+      // console.log("enter");
+      setContent(firstValue);
+      const contentBlock = htmlToDraft(firstValue);
+      if (contentBlock) {
+        const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+        const editorState = EditorState.createWithContent(contentState);
+        setContent(editorState);
+      }
+    }
+    // if (firstValue === "") setContent("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setContentInHTML(draftToHtml(convertToRaw(content.getCurrentContent())));
-    console.log(contentInHTML);
-  }, [content, contentInHTML]);
-
-  // return <Editor editorState={editorState} wrapperClassName="demo-wrapper" editorClassName="demo-editor" onEditorStateChange={onEditorStateChange} />;
+    // console.log(contentInHTML);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [content]);
 
   useEffect(() => {
-    const contentBlock = htmlToDraft(html);
-    if (contentBlock) {
-      const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-      const editorState = EditorState.createWithContent(contentState);
-      setContent(editorState);
-    }
-  }, []);
+    getDescriptionValue(contentInHTML);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contentInHTML]);
 
-  // const contentBlock = htmlToDraft(html);
-  // if (contentBlock) {
-  //   const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-  //   const editorState = EditorState.createWithContent(contentState);
-  //   setContent(editorState);
-  // }
+  const onEditorStateChange = (editorState) => {
+    // console.log(editorState);
+    setContent(editorState);
+  };
 
   return (
-    <div>
-      <Editor editorState={content} wrapperClassName="demo-wrapper" editorClassName="demo-editor" onEditorStateChange={onEditorStateChange} />
-    </div>
+    <>
+      <label className="FormInput__label">{label && label}</label>
+      <Editor
+        editorState={content}
+        wrapperClassName="demo-editor"
+        editorClassName="demo-editor"
+        onEditorStateChange={onEditorStateChange}
+        // onFocus={() => onEditorStateChange(onEditorStateChange)}
+        // onChange={() => onEditorStateChange(onEditorStateChange)}
+        toolbar={{
+          inline: { inDropdown: true },
+          list: { inDropdown: true },
+          textAlign: { inDropdown: true },
+          link: { inDropdown: true },
+          history: { inDropdown: true },
+        }}
+      />
+    </>
   );
 };
 

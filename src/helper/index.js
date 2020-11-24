@@ -20,6 +20,12 @@ export const getUrlId = (url, query) => {
 }
 
 
+export const stringToHTML = (str) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(str, 'text/html');
+  return doc.body;
+}
+
 // Pour les mots / phrases trop longue, permet de couper. Params : phrase, nombre de caractères max, true/false pour couper les mots
 export const truncate = (str, n, useWordBoundary) => {
   if (str.length <= n) {

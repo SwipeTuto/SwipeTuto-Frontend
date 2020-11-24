@@ -56,21 +56,18 @@ const AddCardPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardInfos.card_topic]);
 
-  useEffect(() => {
-    if (localDraftNewCard && (localDraftNewCard.categorie || localDraftNewCard.description || localDraftNewCard.name || localDraftNewCard.topic)) {
-      dispatch(
-        openNotificationPopup(
-          'Un brouillon de carte a été trouvé. Merci de rajouter vos images pour compléter la carte, ou cliquer sur "Effacer la carte" pour vider tous les champs'
-        )
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
-
   const getValue = (name, value) => {
     if (!name) return;
     // setEmptyState(false);
     const cardInfosCopy = { ...cardInfos, [name]: value };
+    setCardInfos(cardInfosCopy);
+  };
+
+  const getDescriptionValue = (description) => {
+    if (!description) return;
+    // console.log(description);
+    const cardInfosCopy = { ...cardInfos, card_description: description };
+    // console.log(cardInfosCopy);
     setCardInfos(cardInfosCopy);
   };
 
@@ -81,13 +78,16 @@ const AddCardPage = () => {
   };
 
   useEffect(() => {
-    localDraftNewCard &&
+    if (localDraftNewCard && localDraftNewCard.user !== currentuserId) {
+      handleDeleteCard();
+    } else if (localDraftNewCard) {
       setCardInfos({
         card_title: localDraftNewCard.name,
         card_description: localDraftNewCard.description,
         card_topic: localDraftNewCard.topic,
         card_category: localDraftNewCard.categorie,
       });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -102,7 +102,14 @@ const AddCardPage = () => {
         user: currentuserId,
       })
     );
-  }, [cardInfos.card_category, cardInfos.card_description, cardInfos.card_title, cardInfos.card_topic, currentuserId, imagesArray]);
+    // console.log({
+    //   name: cardInfos.card_title,
+    //   description: cardInfos.card_description,
+    //   topic: cardInfos.card_topic,
+    //   categorie: cardInfos.card_category,
+    //   user: currentuserId,
+    // });
+  }, [cardInfos.card_category, cardInfos.card_description, cardInfos.card_title, cardInfos.card_topic, currentuserId]);
 
   const createCard = async () => {
     try {
@@ -117,7 +124,8 @@ const AddCardPage = () => {
         user: currentuserId,
         image: await imagesFiles,
       };
-      createCardService(cardObject);
+      console.log(cardObject);
+      // createCardService(cardObject);
       window.localStorage.removeItem("draftNewCard");
       // console.log(cardObject);
       setIsValid(false);
@@ -129,7 +137,7 @@ const AddCardPage = () => {
   const handleDeleteCard = async () => {
     setCardInfos({
       card_title: "",
-      card_description: "",
+      card_description: "<p></p>",
       card_topic: null,
       card_category: null,
     });
@@ -145,6 +153,25 @@ const AddCardPage = () => {
   useEffect(() => {
     if (emptyState) setEmptyState(false);
   }, [emptyState]);
+
+  useEffect(() => {
+    if (
+      localDraftNewCard &&
+      (localDraftNewCard.title ||
+        localDraftNewCard.categorie ||
+        (localDraftNewCard.description !== "<p></p>↵" && localDraftNewCard.description) ||
+        localDraftNewCard.name ||
+        localDraftNewCard.topic) &&
+      localDraftNewCard.user === currentuserId
+    ) {
+      dispatch(
+        openNotificationPopup(
+          'Un brouillon de carte a été trouvé. Merci de rajouter vos images pour compléter la carte, ou cliquer sur "Effacer la carte" pour vider tous les champs'
+        )
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   return (
     <div className="AddCardPage">
@@ -191,7 +218,11 @@ const AddCardPage = () => {
                 required={true}
                 firstValue={cardInfos.card_description || ""}
               /> */}
-              <RichTextInput />
+              <RichTextInput
+                label={<span>Description :</span>}
+                getDescriptionValue={getDescriptionValue}
+                firstValue={(localDraftNewCard && localDraftNewCard.description) || "<p></p>"}
+              />
             </div>
           </section>
           <section className="AddCardPage__section">
@@ -201,7 +232,17 @@ const AddCardPage = () => {
               carte.
             </p>
             <div className="AddCardPage__inputZone">
-              <FormSelect idFor="card_topic" label="Catégorie :" name="card_topic" getValue={getValue} firstValue={cardInfos.card_topic || null}>
+              <FormSelect
+                idFor="card_topic"
+                label={
+                  <span>
+                    Catégorie <sup>(*)</sup> :
+                  </span>
+                }
+                name="card_topic"
+                getValue={getValue}
+                firstValue={cardInfos.card_topic || null}
+              >
                 {topicArray &&
                   topicArray.map((topic, index) => (
                     <option value={topic.queryName} key={`topicAdd${topic.name}${index}`}>
@@ -213,7 +254,11 @@ const AddCardPage = () => {
             <div className="AddCardPage__inputZone">
               <FormSelect
                 idFor="card_category"
-                label="Sous-catégorie :"
+                label={
+                  <span>
+                    Sous-catégorie <sup>(*)</sup> :
+                  </span>
+                }
                 name="card_category"
                 getValue={getValue}
                 firstValue={cardInfos.card_category || null}

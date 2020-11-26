@@ -138,9 +138,6 @@ const AddCardPage = () => {
     setEmptyState(true);
   };
 
-  // useEffect(() => {
-  //   console.log(cardInfos);
-  // }, [cardInfos]);
 
   useEffect(() => {
     if (emptyState) setEmptyState(false);

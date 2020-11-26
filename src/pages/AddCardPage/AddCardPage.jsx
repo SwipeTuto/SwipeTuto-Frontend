@@ -175,7 +175,7 @@ const AddCardPage = () => {
               />
             </div>
             <div className="AddCardPage__inputZone">
-               <FormTextarea
+               {/* <FormTextarea
                 idFor="card_description"
                 label={
                   <span>
@@ -187,7 +187,7 @@ const AddCardPage = () => {
                 getValue={getValue}
                 required={true}
                 firstValue={cardInfos.card_description || ""}
-              />
+              /> */}
               <RichTextInput />
             </div>
           </section>

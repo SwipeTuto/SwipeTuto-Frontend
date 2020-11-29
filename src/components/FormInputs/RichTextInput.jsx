@@ -31,7 +31,7 @@ const RichTextInput = ({ label, getDescriptionValue, firstValue }) => {
   }, [content]);
 
   useEffect(() => {
-    getDescriptionValue && getDescriptionValue(contentInHTML);
+    getDescriptionValue(contentInHTML);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentInHTML]);
 

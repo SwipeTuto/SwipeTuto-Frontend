@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FormInput from "../../components/FormInputs/FormInput";
 import FormSelect from "../../components/FormInputs/FormSelect";
-import FormTextarea from "../../components/FormInputs/FormTextarea";
+// import FormTextarea from "../../components/FormInputs/FormTextarea";
 import RichTextInput from "../../components/FormInputs/RichTextInput";
 // import JoditInput from "../../components/FormInputs/RichTextInput";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
@@ -22,14 +22,9 @@ const AddCardPage = () => {
     card_topic: null,
     card_category: null,
   });
-  // const [initLocalStorageInfos, setInitLocalStorageInfos] = useState({
-  //   card_title: "",
-  //   card_description: "",
-  //   card_topic: null,
-  //   card_category: null,
-  // });
+
   const [categoriesLocalArray, setCategoriesLocalArray] = useState([]);
-  const [imagesArray, setImagesArray] = useState([]);
+  // const [imagesArray, setImagesArray] = useState([]);
   const [imagesArrayNotEmpty, setImagesArrayNotEmpty] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [emptyState, setEmptyState] = useState(false);
@@ -56,17 +51,6 @@ const AddCardPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardInfos.card_topic]);
 
-  useEffect(() => {
-    if (localDraftNewCard && (localDraftNewCard.categorie || localDraftNewCard.description || localDraftNewCard.name || localDraftNewCard.topic)) {
-      dispatch(
-        openNotificationPopup(
-          'Un brouillon de carte a été trouvé. Merci de rajouter vos images pour compléter la carte, ou cliquer sur "Effacer la carte" pour vider tous les champs'
-        )
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
-
   const getValue = (name, value) => {
     if (!name) return;
     // setEmptyState(false);
@@ -74,20 +58,31 @@ const AddCardPage = () => {
     setCardInfos(cardInfosCopy);
   };
 
+  const getDescriptionValue = (description) => {
+    if (!description) return;
+    // console.log(description);
+    const cardInfosCopy = { ...cardInfos, card_description: description };
+    // console.log(cardInfosCopy);
+    setCardInfos(cardInfosCopy);
+  };
+
   const updateFiles = (isFiles, cards) => {
     setImagesArrayNotEmpty(isFiles);
-    setImagesArray(cards);
+    // setImagesArray(cards);
     // const localObj = window.localStorage.getItem("draftNewCard");
   };
 
   useEffect(() => {
-    localDraftNewCard &&
+    if (localDraftNewCard && localDraftNewCard.user !== currentuserId) {
+      handleDeleteCard();
+    } else if (localDraftNewCard) {
       setCardInfos({
         card_title: localDraftNewCard.name,
         card_description: localDraftNewCard.description,
         card_topic: localDraftNewCard.topic,
         card_category: localDraftNewCard.categorie,
       });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -102,13 +97,19 @@ const AddCardPage = () => {
         user: currentuserId,
       })
     );
-  }, [cardInfos.card_category, cardInfos.card_description, cardInfos.card_title, cardInfos.card_topic, currentuserId, imagesArray]);
+    // console.log({
+    //   name: cardInfos.card_title,
+    //   description: cardInfos.card_description,
+    //   topic: cardInfos.card_topic,
+    //   categorie: cardInfos.card_category,
+    //   user: currentuserId,
+    // });
+  }, [cardInfos.card_category, cardInfos.card_description, cardInfos.card_title, cardInfos.card_topic, currentuserId]);
 
   const createCard = async () => {
     try {
       const files = await filedrop.current.getFiles();
       const imagesFiles = await files.map((obj) => obj);
-      console.log('obj', imagesFiles)
       const cardObject = {
         name: cardInfos.card_title,
         description: cardInfos.card_description,
@@ -118,7 +119,8 @@ const AddCardPage = () => {
         image: await imagesFiles,
       };
       createCardService(cardObject);
-      window.localStorage.removeItem("draftNewCard");
+      // createCardService(files);
+      await window.localStorage.removeItem("draftNewCard");
       // console.log(cardObject);
       setIsValid(false);
     } catch (err) {
@@ -128,13 +130,14 @@ const AddCardPage = () => {
   const handleDeleteCard = async () => {
     setCardInfos({
       card_title: "",
-      card_description: "",
+      card_description: "<p></p>",
       card_topic: null,
       card_category: null,
     });
     await filedrop.current.removeFiles();
     window.localStorage.removeItem("draftNewCard");
     setEmptyState(true);
+    document.location.reload();
   };
 
   // useEffect(() => {
@@ -144,6 +147,25 @@ const AddCardPage = () => {
   useEffect(() => {
     if (emptyState) setEmptyState(false);
   }, [emptyState]);
+
+  useEffect(() => {
+    if (
+      localDraftNewCard &&
+      (localDraftNewCard.title ||
+        localDraftNewCard.categorie ||
+        (localDraftNewCard.description !== "<p></p>↵" && localDraftNewCard.description !== "<p></p>" && localDraftNewCard.description) ||
+        (localDraftNewCard.name && localDraftNewCard.name !== "") ||
+        localDraftNewCard.topic) &&
+      localDraftNewCard.user === currentuserId
+    ) {
+      dispatch(
+        openNotificationPopup(
+          'Un brouillon de carte a été trouvé. Merci de rajouter vos images pour compléter la carte, ou cliquer sur "Effacer la carte" pour vider tous les champs'
+        )
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   return (
     <div className="AddCardPage">
@@ -177,7 +199,7 @@ const AddCardPage = () => {
               />
             </div>
             <div className="AddCardPage__inputZone">
-               <FormTextarea
+              {/* <FormTextarea
                 idFor="card_description"
                 label={
                   <span>
@@ -189,8 +211,12 @@ const AddCardPage = () => {
                 getValue={getValue}
                 required={true}
                 firstValue={cardInfos.card_description || ""}
+              /> */}
+              <RichTextInput
+                label={<span>Description :</span>}
+                getDescriptionValue={getDescriptionValue}
+                firstValue={(localDraftNewCard && localDraftNewCard.description) || "<p></p>"}
               />
-              <RichTextInput />
             </div>
           </section>
           <section className="AddCardPage__section">
@@ -200,7 +226,17 @@ const AddCardPage = () => {
               carte.
             </p>
             <div className="AddCardPage__inputZone">
-              <FormSelect idFor="card_topic" label="Catégorie :" name="card_topic" getValue={getValue} firstValue={cardInfos.card_topic || null}>
+              <FormSelect
+                idFor="card_topic"
+                label={
+                  <span>
+                    Catégorie <sup>(*)</sup> :
+                  </span>
+                }
+                name="card_topic"
+                getValue={getValue}
+                firstValue={cardInfos.card_topic || null}
+              >
                 {topicArray &&
                   topicArray.map((topic, index) => (
                     <option value={topic.queryName} key={`topicAdd${topic.name}${index}`}>
@@ -212,7 +248,11 @@ const AddCardPage = () => {
             <div className="AddCardPage__inputZone">
               <FormSelect
                 idFor="card_category"
-                label="Sous-catégorie :"
+                label={
+                  <span>
+                    Sous-catégorie <sup>(*)</sup> :
+                  </span>
+                }
                 name="card_category"
                 getValue={getValue}
                 firstValue={cardInfos.card_category || null}
@@ -227,7 +267,8 @@ const AddCardPage = () => {
             </div>
           </section>
           <div className="AddCardPage__action">
-            {!isValid && <p className="AddCardPage__error">Veuillez compléter tous les champs (*) avant de pouvoir publier votre carte.</p>}
+            {!isValid && <p className="AddCardPage__error">Veuillez compléter tous les champs (*)
+ avant de pouvoir publier votre carte.</p>}
 
             <div className="AddCardPage__buttons">
               <CustomButton color="white" type="button" onClick={() => handleDeleteCard()}>

@@ -13,7 +13,8 @@ import { openNotificationPopup } from "../../../redux/layout/layout-actions";
 import { selectClickedCard } from "../../../redux/filter/filter-selectors"
 
 const ShareMenu = ({ addclass, test }) => {
-
+// const clickedCard = useSelector(selectClickedCard);
+// console.log('clickedCard', clickedCard.topic[0].name)
 
   var history = createBrowserHistory();
   const dispatch = useDispatch();

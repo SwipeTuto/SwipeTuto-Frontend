@@ -109,7 +109,7 @@ const AddCardPage = () => {
   const createCard = async () => {
     try {
       const files = await filedrop.current.getFiles();
-      const imagesFiles = await files.map((obj) => obj.file);
+      const imagesFiles = await files.map((obj) => obj);
       const cardObject = {
         name: cardInfos.card_title,
         description: cardInfos.card_description,
@@ -119,11 +119,11 @@ const AddCardPage = () => {
         image: await imagesFiles,
       };
       createCardService(cardObject);
+      // createCardService(files);
       await window.localStorage.removeItem("draftNewCard");
       // console.log(cardObject);
       setIsValid(false);
     } catch (err) {
-      console.log(err);
     }
   };
 
@@ -267,7 +267,8 @@ const AddCardPage = () => {
             </div>
           </section>
           <div className="AddCardPage__action">
-            {!isValid && <p className="AddCardPage__error">Veuillez compléter tous les champs (*) avant de pouvoir publier votre carte.</p>}
+            {!isValid && <p className="AddCardPage__error">Veuillez compléter tous les champs (*)
+ avant de pouvoir publier votre carte.</p>}
 
             <div className="AddCardPage__buttons">
               <CustomButton color="white" type="button" onClick={() => handleDeleteCard()}>

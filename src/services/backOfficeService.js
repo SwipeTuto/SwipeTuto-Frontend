@@ -22,5 +22,8 @@ export const sendEmailContact = data => {
     return rep
     // history.push('/contact', history.location)
     // history.go()
-  }).catch(err => { return err })
+  }).catch(err => { 
+    console.log(err.message)
+    return err 
+  })
 }

@@ -96,6 +96,7 @@ function App(props) {
 
   useEffect(() => {
     if (filterError && clickedCard === null) {
+
       dispatch(openNotificationPopup('Une erreur est survenue. Vous avez été redirigé.'))
       dispatch(deleteFilterErrorAction())
       dispatch(closePopupCard())

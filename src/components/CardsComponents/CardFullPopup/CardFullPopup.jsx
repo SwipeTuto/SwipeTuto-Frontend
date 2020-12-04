@@ -153,10 +153,13 @@ const CardFullPopup = ({ history, location }) => {
   };
 
   const handlePopupClose = () => {
+    console.log(location.pathname);
     if (location.pathname === "/") {
       window.history.pushState("", "", "/");
-    } else if (location.pathname === "/account/saved") {
-      window.history.pushState("", "", "/account/saved");
+    } else if (location.pathname.includes("/account/")) {
+      window.history.pushState("", "", location.pathname);
+    } else if (location.pathname.includes("/profile/")) {
+      window.history.pushState("", "", location.pathname);
     } else {
       dispatch(setRedirectUrl(true));
 

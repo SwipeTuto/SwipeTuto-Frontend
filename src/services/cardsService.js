@@ -70,19 +70,19 @@ export const getOtherPageCard = linkToFetch => {
 
 
 export const createCardService = (cardObject) => {
-  console.log('cardObject', cardObject)
-  
+  // console.log('cardObject', cardObject)
+
   var formData = new FormData();
-  formData.append("user",cardObject.user);
-  formData.append("topic",cardObject.topic);
-  formData.append("name",cardObject.name);
+  formData.append("user", cardObject.user);
+  formData.append("topic", cardObject.topic);
+  formData.append("name", cardObject.name);
   cardObject.image.map(rep => {
-    console.log('rep', rep)
-    formData.append("image",rep.source);
+    // console.log('rep', rep)
+    formData.append("image", rep.source);
   })
-  
-  formData.append("description",cardObject.description);
-  formData.append("categorie",cardObject.categorie);
+
+  formData.append("description", cardObject.description);
+  formData.append("categorie", cardObject.categorie);
 
   var config = {
     headers: {
@@ -91,7 +91,7 @@ export const createCardService = (cardObject) => {
   };
 
   return client().post("card/create_card/", formData).then(rep => {
-    console.log(rep)
+    // console.log(rep)
     return rep
   }).catch(err => {
     console.log(err)

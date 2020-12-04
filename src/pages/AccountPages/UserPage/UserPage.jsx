@@ -10,6 +10,8 @@ import { selectIsLoaded, selectTheme } from "../../../redux/layout/layout-select
 import { getCardsByUserIdAction } from "../../../redux/filter/filter-actions";
 import CardGridList from "../../../components/CardsComponents/CardGridList/CardGridList";
 import { setCardsSize } from "../../../redux/layout/layout-actions";
+import { usePrevious } from "../../../hooks/usePrevious";
+import { getUrlId } from "../../../helper";
 
 const UserPage = ({ userIsSame, location }) => {
   const locationPath = location && location.pathname;
@@ -19,26 +21,44 @@ const UserPage = ({ userIsSame, location }) => {
   const isLoaded = useSelector(selectIsLoaded);
   const cards = useSelector(selectCardsFetchedCards);
   const currentUser = useSelector(selectCurrentUser);
+  const prevCurrentUserId = usePrevious(currentUser?.id) || null;
   const clickedUser = useSelector(selectClickedUser);
+  const prevClickedUserId = usePrevious(clickedUser?.id) || null;
   const currentTheme = useSelector(selectTheme);
   const [userDatas, setUserDatas] = useState();
   const dispatch = useDispatch();
+  const userId = getUrlId(location.pathname, "user_id");
 
   useEffect(() => {
-    if ((userIsSame && currentUser && currentUser.id) || (locationPath && locationPath.includes("/account/user") && currentUser)) {
-      setUserDatas(currentUser);
-      dispatch(getCardsByUserIdAction(currentUser.id));
-    } else if (!userIsSame && clickedUser && clickedUser.id) {
+    console.log(userIsSame);
+  }, [userIsSame]);
+
+  useEffect(() => {
+    if (locationPath.includes("card_id")) return;
+    if (userId && clickedUser) {
       setUserDatas(clickedUser);
       dispatch(getCardsByUserIdAction(clickedUser.id));
-    } else {
-      setUserDatas(null);
+    } else if (locationPath === "/account/user" && currentUser && currentUser.id) {
+      setUserDatas(currentUser);
+      dispatch(getCardsByUserIdAction(currentUser.id));
     }
-  }, [clickedUser, currentUser, dispatch, locationPath, userIsSame]);
+    // console.log(userIsSame);
+    // if (userIsSame && currentUser && currentUser.id && locationPath && locationPath.includes("/account/user")) {
+    //   setUserDatas(currentUser);
+    //   dispatch(getCardsByUserIdAction(currentUser.id));
+    //   console.log("call", currentUser.id);
+    // } else if (!userIsSame && clickedUser && clickedUser.id) {
+    //   setUserDatas(clickedUser);
+    //   dispatch(getCardsByUserIdAction(clickedUser.id));
+    //   console.log("call", clickedUser.id);
+    // } else {
+    //   setUserDatas(null);
+    // }
+  }, [clickedUser, currentUser, dispatch, locationPath, userId]);
 
   useEffect(() => {
     dispatch(setCardsSize("small"));
-  });
+  }, [dispatch]);
 
   return (
     <div className={`UserPage ${currentTheme}-theme`}>

@@ -14,9 +14,9 @@ const ConnexionRedirect = ({ handleClose }) => {
   //   window.scroll(0, 0);
   // }
 
-  useEffect(() => {
-    console.log(popupEl.current.offsetTop);
-  }, [popupEl]);
+  // useEffect(() => {
+  //   console.log(popupEl.current.offsetTop);
+  // }, [popupEl]);
 
   return (
     <div

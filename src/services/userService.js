@@ -104,7 +104,7 @@ export const updateUserInfos = newUserInfos => {
   }
 
   return client().patch(`me/`, JSON.stringify(data)).then(user => {
-    console.log('user', user)
+    // console.log('user', user)
     localStorage.setItem('user', JSON.stringify(user.data))
     return user
   });
@@ -121,7 +121,7 @@ export const getUserById = id => {
 
 export const upDateAvatar = avatar => {
   return client().put(`avatar/`, avatar).then(rep => {
-    console.log('rep-avatar', rep)
+    // console.log('rep-avatar', rep)
     return rep
   })
 }

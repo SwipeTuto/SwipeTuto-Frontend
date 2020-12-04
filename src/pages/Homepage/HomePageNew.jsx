@@ -46,7 +46,7 @@ const HomePage = () => {
   }, [dispatch]);
 
   const handleTopicClick = (newTopic) => {
-    console.log(newTopic);
+    // console.log(newTopic);
     const currentSearchCopy = {
       ...currentSearch,
       searchTopic: newTopic,

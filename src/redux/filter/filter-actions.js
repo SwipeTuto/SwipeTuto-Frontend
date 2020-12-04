@@ -45,15 +45,15 @@ export const getCardByIdAction = cardId => {
     return getCardById(cardId)
       .then(rep => {
         const repObj = { ...rep };
-        console.log(repObj)
+        // console.log(repObj)
 
         if ((repObj.response && repObj.response.status >= 400) || repObj.status >= 400) {
           dispatch(getCardByIdFailure(repObj.response.statusText))
           dispatch(setClickedCardLoaded());
-          console.log('ici')
+          // console.log('ici')
           return
         }
-        console.log(rep.data)
+        // console.log(rep.data)
         dispatch(getCardByIdSuccess(rep.data))
         dispatch(setClickedCardLoaded())
         // return rep
@@ -317,7 +317,7 @@ export const addReplyAction = (cardId, commentId, comment) => {
   return dispatch => {
     return addReply(commentId, comment)
       .then(rep => {
-        console.log(rep)
+        // console.log(rep)
         dispatch(addCommentSuccess(rep.data))
       })
       .catch(err => {
@@ -402,11 +402,11 @@ const deleteCommentSuccess = () => ({
 
 export const getUserFavoriesAction = userId => {
   return dispatch => {
-    console.log(userId)
+    // console.log(userId)
     dispatch(setCardsFetchedInStore(null))
     dispatch(setLoading());
     userId && getUserFavoriesById(userId).then(rep => {
-      console.log(rep)
+      // console.log(rep)
       dispatch(getUserFavoriesSuccess(rep.data))
       dispatch(setLoaded())
       return rep.data

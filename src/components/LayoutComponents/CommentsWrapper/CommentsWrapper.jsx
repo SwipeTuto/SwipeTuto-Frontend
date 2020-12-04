@@ -91,7 +91,7 @@ const CommentsWrapper = () => {
         const arrayCopy = [...localCommentsArray];
         arrayCopy.splice(index, 1);
         setLocalCommentsArray(arrayCopy);
-        console.log(localCommentsArray);
+        // console.log(localCommentsArray);
         // setShouldUpdate(true);
       }
     } else if (fullCommentLastLocal.length > 0) {

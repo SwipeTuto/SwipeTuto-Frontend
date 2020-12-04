@@ -54,7 +54,6 @@ const CardPreviewSmall = ({ card, size }) => {
     dispatch(showPopupCard());
     const clickedCardRequest = await dispatch(getCardByIdAction(cardId));
     const clickedCard = clickedCardRequest && (await clickedCardRequest.data);
-    console.log(clickedCard);
     clickedCard && dispatch(setClickedCard(clickedCard));
 
     await window.history.pushState("", "", `/card_id=${cardId && cardId}`);

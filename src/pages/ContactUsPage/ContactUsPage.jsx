@@ -35,16 +35,16 @@ const ContactUsPage = ({ history }) => {
     setMessage(messageCopy);
   };
 
-  useEffect(() => {
-    console.log(message);
-  }, [message]);
+  // useEffect(() => {
+  //   console.log(message);
+  // }, [message]);
 
   const handleMessageSubmit = (e) => {
     const feedbackEl = document.querySelector(".ContactPage__feedback");
     e.preventDefault();
     sendEmailContact(message).then((rep) => {
       if (rep && rep.status && rep.status >= 200 && rep.status < 300) {
-        console.log("VICTOIRE");
+        // console.log("VICTOIRE");
         feedbackEl.textContent = "Votre message a bien été envoyé, merci. Vous allez être redirigé.";
         setTimeout(() => {
           history.push("/search", history.location);

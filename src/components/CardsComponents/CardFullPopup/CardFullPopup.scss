@@ -149,6 +149,47 @@
     body {
       line-height: 1.6;
       padding: 0;
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 3rem 0 1rem 0;
+      }
+
+      ul,
+      ol {
+        list-style: initial;
+        padding-left: 3rem;
+      }
+
+      blockquote {
+        font-style: italic;
+      }
+
+      blockquote,
+      pre {
+        margin: 2rem 0;
+        background-color: $grey-light;
+        padding: 1rem;
+        border-radius: $card-radius;
+      }
+
+      a,
+      a:visited {
+        // text-decoration: initial;
+        border-bottom: 1px solid transparent;
+        color: $primary-dark;
+        transition: all 0.2s ease;
+
+        &:hover,
+        &:active {
+          color: $primary-light;
+          border-bottom: 1px solid $primary-light;
+        }
+      }
     }
   }
 

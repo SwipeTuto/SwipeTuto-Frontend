@@ -19,11 +19,32 @@ export const getUrlId = (url, query) => {
   return url && parseInt(url.split(`${query}=`)[1]);
 }
 
+var support = (function () {
+  if (!window.DOMParser) return false;
+  var parser = new DOMParser();
+  try {
+    parser.parseFromString('x', 'text/html');
+  } catch (err) {
+    return false;
+  }
+  return true;
+})();
 
 export const stringToHTML = (str) => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(str, 'text/html');
-  return doc.body;
+  if (typeof DOMParser !== 'undefined' && window.DOMParser.prototype.parseFromString) {
+    const parser = new window.DOMParser();
+    const parsed = parser.parseFromString(str, 'text/html');
+    if (parsed && parsed.body) {
+      return parsed.body;
+    }
+  }
+
+  // DOMParser support is not present or non-standard
+  const newDoc = document.implementation.createHTMLDocument('processing doc');
+  const dom = newDoc.createElement('div');
+  dom.innerHTML = str;
+
+  return dom;
 }
 
 // Pour les mots / phrases trop longue, permet de couper. Params : phrase, nombre de caractères max, true/false pour couper les mots
@@ -451,7 +472,7 @@ export const getCategoriesArray = (topic) => {
 
 export const orderArray = [
   {
-    queryName: "-created",
+    queryName: "created",
     name: "Nouveau",
   },
   {

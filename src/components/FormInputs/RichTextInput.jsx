@@ -55,6 +55,7 @@ const RichTextInput = ({ label, getDescriptionValue, firstValue }) => {
           textAlign: { inDropdown: true },
           link: { inDropdown: true },
         }}
+        spellCheck={true}
       />
     </>
   );

@@ -33,7 +33,7 @@ import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrap
 // import ShareButtons from "../../LayoutComponents/ShareButtons/ShareButtons";
 
 // Services & helpers
-import { convertNumber, formattedDate, initialSignalState, likeUpdate, renameQuery } from "../../../helper/index";
+import { convertNumber, formattedDate, initialSignalState, likeUpdate, renameQuery, stringToHTML } from "../../../helper/index";
 
 // Assets
 import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevrons/chevron-back-circle.svg";
@@ -82,6 +82,7 @@ const CardFullPopup = ({ history, location }) => {
     open: false,
     message: "",
   });
+  const descrEl = document.querySelector(".CardFullPopup__description");
 
   useEffect(() => {
     if (!clickedCard || !cardsArray) return;
@@ -232,6 +233,17 @@ const CardFullPopup = ({ history, location }) => {
       message: "Voulez-vous vraiment supprimer cette carte ?",
     });
   };
+
+  useEffect(() => {
+    let cardDescrHTML;
+    if (clickedCard.description) {
+      cardDescrHTML = stringToHTML(clickedCard.description);
+    }
+    console.log(descrEl, cardDescrHTML);
+    if (descrEl && cardDescrHTML) {
+      descrEl.appendChild(cardDescrHTML);
+    }
+  }, [clickedCard.description, descrEl]);
 
   const newSignalObject = { ...initialSignalState, id_card: clickedCardId };
 
@@ -397,7 +409,7 @@ const CardFullPopup = ({ history, location }) => {
 
                   <div className="CardFullPopup__description CardFullPopup__section">
                     <h2 className="title title-2">Description</h2>
-                    <p>{clickedCard && clickedCard.description}</p>
+                    {/* {clickedCard && <> {stringToHTML(clickedCard.description)}</>} */}
                   </div>
 
                   <div className="CardFullPopup__commentaires CardFullPopup__section">
@@ -421,7 +433,7 @@ const CardFullPopup = ({ history, location }) => {
                               onClick={() => {
                                 dispatch(setClickedCard(card));
                                 window.history.pushState("", "", `/card_id=${card.id && card.id}`);
-                                document.querySelector(".CardFullPopup").scroll(0, 0);
+                                document.querySelector(".CardFullPopup__scroll-wrapper").scroll(0, 0);
                               }}
                             >
                               {clickedCardIsLoaded && card && card.media_image && card.media_image["0"] && card.media_image["0"].image ? (

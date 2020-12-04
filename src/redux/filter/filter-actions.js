@@ -44,14 +44,25 @@ export const getCardByIdAction = cardId => {
     dispatch(setClickedCardLoading());
     return getCardById(cardId)
       .then(rep => {
+        const repObj = { ...rep };
+        console.log(repObj)
+
+        if ((repObj.response && repObj.response.status >= 400) || repObj.status >= 400) {
+          dispatch(getCardByIdFailure(repObj.response.statusText))
+          dispatch(setClickedCardLoaded());
+          console.log('ici')
+          return
+        }
+        console.log(rep.data)
         dispatch(getCardByIdSuccess(rep.data))
         dispatch(setClickedCardLoaded())
-        return rep
+        // return rep
       })
-      .catch(err => {
-        dispatch(getCardByIdFailure(err.response))
-        dispatch(setClickedCardLoaded())
-      })
+    // .catch(err => {
+    //   console.log(err)
+    //   dispatch(getCardByIdFailure(err))
+    //   dispatch(setClickedCardLoaded())
+    // })
 
   }
 }

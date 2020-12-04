@@ -76,6 +76,7 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
         otherCardsByAuthor: action.payload,
       };
     case FilterActionTypes.GET_CARD_BY_ID_SUCCESS:
+      console.log(action.payload)
       return {
         ...state,
         clickedCard: action.payload,

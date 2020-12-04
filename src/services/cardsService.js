@@ -91,7 +91,6 @@ export const createCardService = (cardObject) => {
   };
 
   return client().post("card/create_card/", formData).then(rep => {
-    // return client().post("card/create_card/", cardObject, config).then(rep => {
     console.log(rep)
     return rep
   }).catch(err => {
@@ -100,13 +99,10 @@ export const createCardService = (cardObject) => {
   })
 }
 export const deleteCardService = (cardId) => {
-  var config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
 
-  return client().delete(`card/${cardId}`, config).then(rep => {
+
+  return client().delete(`card/list/${cardId}`).then(rep => {
+
     return rep
   }).catch(err => {
     return err

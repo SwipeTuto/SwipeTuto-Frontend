@@ -450,13 +450,15 @@ export const createCardAction = (cardObject) => {
   }
 }
 
-export const deleteCardAction = cardId => {
+export const deleteCardAction = (cardId, currentUserId, history) => {
   return dispatch => {
     // console.log(userId)
     dispatch(setLoading());
     cardId && deleteCardService(cardId).then(rep => {
       dispatch(openNotificationPopup("Carte supprimée avec succès !"))
       dispatch(setLoaded())
+      dispatch(getCardsByUserIdAction(currentUserId));
+      history.push("/account/user");
       return rep.data
     }).catch(err => {
       console.error(err)

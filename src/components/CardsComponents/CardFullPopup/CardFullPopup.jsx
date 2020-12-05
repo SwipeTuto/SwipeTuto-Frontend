@@ -22,6 +22,7 @@ import {
   getOtherCardsByAuthorNameAction,
   toggleSaveCardAction,
   deleteCardAction,
+  getCardsByUserIdAction,
 } from "../../../redux/filter/filter-actions";
 import {
   closePopupCard,
@@ -232,10 +233,11 @@ const CardFullPopup = ({ history, location }) => {
   };
 
   const handleConfirmClick = async () => {
-    await dispatch(deleteCardAction(clickedCardId));
+    await dispatch(deleteCardAction(clickedCardId, currentUserId, history));
     setConfirmPopupOpen({ ...confirmPopupOpen, open: false });
     dispatch(closePopupCard());
-    history.push("/account/user");
+    // dispatch(getCardsByUserIdAction(currentUserId));
+    // history.push("/account/user");
 
     // A VOIR pour fermer popup et rediriger
   };

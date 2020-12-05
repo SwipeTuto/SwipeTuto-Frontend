@@ -62,7 +62,7 @@ const CommentsWrapper = () => {
 
   const handleAddCommentClick = (value) => {
     dispatch(addCommentAction(clickedCardId, value));
-    // setShouldUpdate(false);
+    setNewFirstValue(null);
   };
 
   useEffect(() => {
@@ -71,7 +71,6 @@ const CommentsWrapper = () => {
       arrayCopy.push(lastPublishedComment);
       setLocalLastPublishedArray(arrayCopy);
     }
-    // setShouldUpdate(true);
     dispatch(deleteLastPublishedCommentInStore());
   }, [dispatch, lastPublishedComment, localLastPublishedArray]);
 
@@ -83,7 +82,6 @@ const CommentsWrapper = () => {
     dispatch(deleteCommentAction(parseInt(commentId)));
     const commentInLocalArray = localCommentsArray.filter((comment) => comment.id === parseInt(commentId));
     const fullCommentLastLocal = localLastPublishedArray.filter((comment) => comment.id === parseInt(commentId));
-    // console.log(commentInLocalArray, fullCommentLastLocal);
     if (commentInLocalArray.length > 0) {
       const index = localCommentsArray.indexOf(commentInLocalArray[0]);
 
@@ -91,8 +89,6 @@ const CommentsWrapper = () => {
         const arrayCopy = [...localCommentsArray];
         arrayCopy.splice(index, 1);
         setLocalCommentsArray(arrayCopy);
-        // console.log(localCommentsArray);
-        // setShouldUpdate(true);
       }
     } else if (fullCommentLastLocal.length > 0) {
       const index = localLastPublishedArray.indexOf(fullCommentLastLocal[0]);
@@ -100,7 +96,6 @@ const CommentsWrapper = () => {
         const arrayCopy = [...localLastPublishedArray];
         arrayCopy.splice(index, 1);
         setLocalLastPublishedArray(arrayCopy);
-        // setShouldUpdate(true);
       }
     }
   };
@@ -111,11 +106,12 @@ const CommentsWrapper = () => {
   // };
 
   const handleCommentRespond = (commentAuthor) => {
+    const newFirstValue = `@${commentAuthor.username} `;
     const commentInput = document.querySelector("#commentInput");
     const cardFullPopupEl = document.querySelector(".CardFullPopup");
     cardFullPopupEl.scrollTo(0, commentInput.offsetTop);
     commentInput.focus();
-    setNewFirstValue(`@${commentAuthor.username} `);
+    setNewFirstValue(newFirstValue);
   };
 
   return (
@@ -130,7 +126,9 @@ const CommentsWrapper = () => {
                   comment={comment}
                   confirmCommentDelete={confirmCommentDelete}
                   // handleUpdate={handleUpdate}
-                  handleCommentRespond={handleCommentRespond}
+                  handleCommentRespond={() => {
+                    handleCommentRespond(comment.author);
+                  }}
                 />
               ))}
           </div>
@@ -148,7 +146,9 @@ const CommentsWrapper = () => {
                 comment={comment}
                 confirmCommentDelete={confirmCommentDelete}
                 // handleUpdate={handleUpdate}
-                handleCommentRespond={handleCommentRespond}
+                handleCommentRespond={() => {
+                  handleCommentRespond(comment.author);
+                }}
               />
             ))}
           </div>

@@ -93,14 +93,12 @@ const CardPreviewSmall = ({ card, size }) => {
 
   useEffect(() => {
     if (!cardIsReady) {
-      console.log("timeout");
       var thisTimeout = setTimeout(function () {
         setIsError(true);
       }, 5000);
     }
     if (cardIsReady) {
       clearTimeout(thisTimeout);
-      console.log("clear");
     }
   }, [cardIsReady]);
 

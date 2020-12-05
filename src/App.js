@@ -7,11 +7,11 @@ import NavTop from "./components/LayoutComponents/NavTop/NavTop";
 import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile copy";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
-import { deleteFilterErrorAction, getCardByIdAction } from './redux/filter/filter-actions'
+import { deleteFilterErrorAction, getCardAfterfilterAction, getCardByIdAction } from './redux/filter/filter-actions'
 import { selectConnexionPopup, selectFirstLoadDone, selectIsLoaded, selectRedirectUrl, selectShowPopupCard, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
 import { setCurrentSearch } from "./redux/filter/filter-actions"
 
-import { urlParams, getUrlId } from "./helper/index"
+import { urlParams, getUrlId, initialSearchState } from "./helper/index"
 
 import './index.scss'
 import './App.scss';
@@ -64,6 +64,8 @@ function App(props) {
         dispatch(setCurrentSearch(currentSearchCopy))
         dispatch(setRedirectUrl(true));
       }
+    } else if (firstLoadDone === false && locationPathname === "/") { // si page d'une carte ouverte
+      dispatch(getCardAfterfilterAction(initialSearchState))
     } else if (firstLoadDone === false && cardId) { // si page d'une carte ouverte
       dispatch(showPopupCard())
       dispatch(getCardByIdAction(cardId))

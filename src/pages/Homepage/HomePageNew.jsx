@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Redirect } from "react-router-dom";
@@ -6,14 +6,11 @@ import { Redirect } from "react-router-dom";
 // import CardPreviewSmall from "../../components/CardsComponents/CardPreviewSmall/CardPreviewSmall";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import Loading from "../../components/Loading/Loading";
-import {
-  getCardAfterfilterAction,
-  setCurrentSearch,
-} from "../../redux/filter/filter-actions";
+import { getCardAfterfilterAction, setCurrentSearch } from "../../redux/filter/filter-actions";
 // import HeaderImage from "../../assets/logos/header_image.png";
 import { ReactComponent as CommunityIllustration } from "../../assets/images/illustrations/community_illustration.svg";
 
-import { selectCurrentSearch } from "../../redux/filter/filter-selectors";
+import { selectCardsFetchedCards, selectCurrentSearch, selectTotalNumberOfResults } from "../../redux/filter/filter-selectors";
 import { selectTheme } from "../../redux/layout/layout-selectors";
 
 import "./HomePageNew.scss";
@@ -24,26 +21,26 @@ import CardGridList from "../../components/CardsComponents/CardGridList/CardGrid
 
 import Register from "../../components/LayoutComponents/Login/Register";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
+import HowItWorks from "../../components/LayoutComponents/HowItWorks/HowItWorks";
+import { setLoaded } from "../../redux/layout/layout-actions";
 
 const HomePage = () => {
   // const isLoaded = useSelector(selectIsLoaded);
   const currentTheme = useSelector(selectTheme);
-
+  const numOfResults = useSelector(selectTotalNumberOfResults);
   const dispatch = useDispatch();
   const currentSearch = useSelector(selectCurrentSearch);
   const isLoaded = useSelector(selectIsLoaded);
   const currentUser = useSelector(selectCurrentUser);
+  // const [cardsAreReady, setCardsAreReady] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
+  // const cardsFetched = useSelector(selectCardsFetchedCards);
 
-  useEffect(() => {
-    if (window.scrollY) {
-      window.scroll(0, 0);
-    }
-    // const currentSearchCopy = {...currentSearch, searchTopic: null, searchOrder: "likes"};
-    // dispatch(setCurrentSearch(currentSearchCopy))
-    // console.log("call")
-    const currentSearchCopy = { ...initialSearchState, searchOrder: "likes" };
-    dispatch(getCardAfterfilterAction(currentSearchCopy));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   if (window.scrollY) {
+  //     window.scroll(0, 0);
+  //   }
+  // }, []);
 
   const handleTopicClick = (newTopic) => {
     // console.log(newTopic);
@@ -53,7 +50,21 @@ const HomePage = () => {
       searchOrder: "likes",
     };
     dispatch(setCurrentSearch(currentSearchCopy));
+    dispatch(getCardAfterfilterAction(currentSearchCopy));
   };
+
+  useEffect(() => {
+    console.log(numOfResults === 0);
+    if (numOfResults === 0) {
+      setIsEmpty(true);
+    } else {
+      setIsEmpty(false);
+    }
+  }, [numOfResults]);
+
+  useEffect(() => {
+    console.log("isEmpty: ", isEmpty);
+  }, [isEmpty, numOfResults]);
 
   return (
     <>
@@ -64,27 +75,35 @@ const HomePage = () => {
           <h2 className="title title-2">On apprend quoi aujourd'hui ?</h2>
           <div className="HomePage__topics">
             {topicArray.map((topic, index) => (
-              <CustomButton
-                key={`topicKey${index}`}
-                onClick={() => handleTopicClick(topic.queryName)}
-              >
+              <CustomButton key={`topicKey${index}`} onClick={() => handleTopicClick(topic.queryName)}>
                 {topic.name}
               </CustomButton>
             ))}
           </div>
         </header>
         <div className="HomePage__grid">
-          <div className="HomePage__grid--overlay"></div>
-          {isLoaded ? (
-            <CardGridList loadFilter={true} allowInfiniteScroll={false} />
+          {isLoaded && !isEmpty ? (
+            <>
+              <div className="HomePage__grid--overlay"></div>
+              <CardGridList loadFilter={true} allowInfiniteScroll={false} />
+            </>
+          ) : isLoaded && isEmpty ? (
+            <div className="HomePage__nocard">
+              <h2 className="title title-2">Oups ! Il semble qu'aucune carte n'a été trouvée...</h2>
+              <h2 className="title title-2">Mais au fait, comment ça marche Swipetuto ?</h2>
+              <HowItWorks />
+            </div>
           ) : (
             <Loading />
           )}
+          {/* {isEmpty && (
+            <div className="HomePage__nocard">
+              <HowItWorks />
+            </div>
+          )} */}
         </div>
         <div className="HomePage__login">
-          <h2 className="title title-2">
-            Inscrivez-vous pour en découvrir bien plus :
-          </h2>
+          <h2 className="title title-2">Inscrivez-vous pour en découvrir bien plus :</h2>
           <div className="HomePage__login--box">
             <CommunityIllustration className="HomePage__login--illustration" />
             <Register />

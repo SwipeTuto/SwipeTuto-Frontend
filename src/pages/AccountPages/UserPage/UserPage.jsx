@@ -35,10 +35,15 @@ const UserPage = ({ userIsSame, location }) => {
 
   useEffect(() => {
     if (locationPath.includes("card_id")) return;
-    if (userId && clickedUser) {
+    if (userId && clickedUser && (prevClickedUserId === null || prevClickedUserId !== clickedUser.id)) {
       setUserDatas(clickedUser);
       dispatch(getCardsByUserIdAction(clickedUser.id));
-    } else if (locationPath === "/account/user" && currentUser && currentUser.id) {
+    } else if (
+      locationPath === "/account/user" &&
+      currentUser &&
+      currentUser.id &&
+      (prevCurrentUserId === null || prevCurrentUserId !== currentUser.id)
+    ) {
       setUserDatas(currentUser);
       dispatch(getCardsByUserIdAction(currentUser.id));
     }
@@ -54,7 +59,7 @@ const UserPage = ({ userIsSame, location }) => {
     // } else {
     //   setUserDatas(null);
     // }
-  }, [clickedUser, currentUser, dispatch, locationPath, userId]);
+  }, [clickedUser, currentUser, dispatch, locationPath, prevClickedUserId, prevCurrentUserId, userId]);
 
   useEffect(() => {
     dispatch(setCardsSize("small"));

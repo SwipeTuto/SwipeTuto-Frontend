@@ -1,5 +1,6 @@
 import axios from "axios"
 import { client } from "../index";
+import history from "../helper/history"
 
 // export const getCards = () => {
 //   var config = {
@@ -77,7 +78,6 @@ export const createCardService = (cardObject) => {
   formData.append("topic",cardObject.topic);
   formData.append("name",cardObject.name);
   cardObject.image.map(rep => {
-    console.log('rep', rep)
     formData.append("image",rep.source);
   })
   
@@ -102,7 +102,6 @@ export const deleteCardService = (cardId) => {
 
 
   return client().delete(`card/list/${cardId}`).then(rep => {
-
     return rep
   }).catch(err => {
     return err

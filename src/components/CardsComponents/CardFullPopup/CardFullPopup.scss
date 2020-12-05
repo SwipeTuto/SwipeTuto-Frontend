@@ -16,6 +16,18 @@
   overflow-y: scroll;
   position: fixed;
 
+  &__loading {
+    width: max-content;
+    padding: 2rem;
+    border-radius: $card-radius;
+    @include large-shadow;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+  }
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -32,6 +44,7 @@
     display: grid;
     grid-template-columns: 1fr 80rem 1fr;
     scrollbar-width: none;
+    scroll-behavior: smooth;
 
     &::-webkit-scrollbar {
       display: none;

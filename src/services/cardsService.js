@@ -94,7 +94,7 @@ export const createCardService = (cardObject) => {
     // console.log(rep)
     return rep
   }).catch(err => {
-    console.log(err)
+    console.error(err)
     return err
   })
 }

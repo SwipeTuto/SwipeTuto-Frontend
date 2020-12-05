@@ -21,6 +21,7 @@ import {
   getCardAfterfilterAction,
   getOtherCardsByAuthorNameAction,
   toggleSaveCardAction,
+  deleteCardAction,
 } from "../../../redux/filter/filter-actions";
 import {
   closePopupCard,
@@ -30,7 +31,13 @@ import {
   showFullscreen,
   showSignalPopup,
 } from "../../../redux/layout/layout-actions";
-import { selectFullscreen, selectTheme, selectClickedCardIsLoaded, selectShowPopupCard } from "../../../redux/layout/layout-selectors";
+import {
+  selectFullscreen,
+  selectTheme,
+  selectClickedCardIsLoaded,
+  selectShowPopupCard,
+  selectIsLoaded,
+} from "../../../redux/layout/layout-selectors";
 
 // components
 import CardSlider from "../CardSlider/CardSlider";
@@ -90,6 +97,7 @@ const CardFullPopup = ({ history, location }) => {
     message: "",
   });
   const descrEl = document.querySelector(".CardFullPopup__description");
+  const isLoaded = useSelector(selectIsLoaded);
 
   useEffect(() => {
     if (!clickedCard || !cardsArray) return;
@@ -132,21 +140,20 @@ const CardFullPopup = ({ history, location }) => {
   const clickedCardDate = clickedCard && formattedDate(new Date(clickedCard.modified));
 
   const goPreviousCard = () => {
-    const currentClickedCard = clickedCard ? document.querySelector(".CardFullPopup") : null;
-
+    const currentClickedCard = clickedCard ? document.querySelector(".CardFullPopup__scroll-wrapper") : null;
     currentClickedCard.scroll(0, 0);
 
-    const indexOfCurrentCard = cardsArray.indexOf(clickedCard);
+    const indexOfCurrentCard = cardsArray.findIndex((card) => card.id === clickedCard.id);
     if (indexOfCurrentCard <= 0) return;
     const previousCard = cardsArray[indexOfCurrentCard - 1];
     dispatch(setClickedCard(previousCard));
   };
 
   const goNextCard = () => {
-    const currentClickedCard = clickedCard ? document.querySelector(".CardFullPopup") : null;
+    const currentClickedCard = clickedCard ? document.querySelector(".CardFullPopup__scroll-wrapper") : null;
     currentClickedCard.scroll(0, 0);
 
-    const indexOfCurrentCard = cardsArray.indexOf(clickedCard);
+    const indexOfCurrentCard = cardsArray.findIndex((card) => card.id === clickedCard.id);
     if (indexOfCurrentCard >= cardsArray.length - 1) return;
     const nextCard = cardsArray[indexOfCurrentCard + 1];
     dispatch(setClickedCard(nextCard));
@@ -225,16 +232,10 @@ const CardFullPopup = ({ history, location }) => {
   };
 
   const handleConfirmClick = async () => {
-    try {
-      await deleteCardService(clickedCardId);
-      setConfirmPopupOpen({ ...confirmPopupOpen, open: false });
-      dispatch(closePopupCard());
-      window.history.back();
-      document.location.reload();
-      dispatch(openNotificationPopup("Cette carte a bien été supprimée !"));
-    } catch (error) {
-      dispatch(openNotificationPopup("Une erreur est survenue lors de la suppression..."));
-    }
+    await dispatch(deleteCardAction(clickedCardId));
+    setConfirmPopupOpen({ ...confirmPopupOpen, open: false });
+    dispatch(closePopupCard());
+    history.push("/account/user");
 
     // A VOIR pour fermer popup et rediriger
   };
@@ -257,6 +258,7 @@ const CardFullPopup = ({ history, location }) => {
       cardDescrHTML = stringToHTML(clickedCard.description);
     }
     if (descrEl && cardDescrHTML) {
+      descrEl.innerHTML = "";
       descrEl.appendChild(cardDescrHTML);
     }
   }, [clickedCard.description, descrEl]);
@@ -265,6 +267,11 @@ const CardFullPopup = ({ history, location }) => {
 
   return (
     <>
+      {!isLoaded && (
+        <div className="CardFullPopup__loading">
+          <Loading />
+        </div>
+      )}
       {confirmPopupOpen && confirmPopupOpen.open && confirmPopupOpen.open === true && (
         <ConfirmationOverlay
           handleConfirmClick={handleConfirmClick}

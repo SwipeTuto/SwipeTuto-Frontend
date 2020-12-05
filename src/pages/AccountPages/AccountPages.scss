@@ -1,6 +1,7 @@
 @import "../../variables.scss";
 
 .AccountPage {
+  padding: $grid-component-padding;
   min-height: 100vh;
 
   &__wrapper {

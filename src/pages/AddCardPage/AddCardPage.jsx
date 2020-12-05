@@ -7,8 +7,11 @@ import RichTextInput from "../../components/FormInputs/RichTextInput";
 // import JoditInput from "../../components/FormInputs/RichTextInput";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import DraggableUploadInput from "../../components/LayoutComponents/DraggableUploadInput/DraggableUploadInput";
+import Loading from "../../components/Loading/Loading";
 import { getCategoriesArray, topicArray } from "../../helper";
+import { createCardAction } from "../../redux/filter/filter-actions";
 import { openNotificationPopup } from "../../redux/layout/layout-actions";
+import { selectIsLoaded } from "../../redux/layout/layout-selectors";
 import { selectCurrentUserId } from "../../redux/user/user-selectors";
 import { createCardService } from "../../services/cardsService";
 
@@ -31,6 +34,7 @@ const AddCardPage = () => {
   const filedrop = useRef();
   const localDraftNewCard = JSON.parse(window.localStorage.getItem("draftNewCard"));
   const dispatch = useDispatch();
+  const isLoaded = useSelector(selectIsLoaded);
 
   useEffect(() => {
     if (imagesArrayNotEmpty && cardInfos.card_title !== "" && cardInfos.card_description !== "") {
@@ -118,13 +122,13 @@ const AddCardPage = () => {
         user: currentuserId,
         image: await imagesFiles,
       };
-      createCardService(cardObject);
+      dispatch(createCardAction(cardObject));
+      // createCardService(cardObject);
       // createCardService(files);
       await window.localStorage.removeItem("draftNewCard");
       // console.log(cardObject);
       setIsValid(false);
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   const handleDeleteCard = async () => {
@@ -169,6 +173,14 @@ const AddCardPage = () => {
 
   return (
     <div className="AddCardPage">
+      {!isLoaded && (
+        <div className="AddCardPage__loading">
+          <Loading />
+        </div>
+      )}
+      {/* <div className="AddCardPage__loading">
+        <Loading />
+      </div> */}
       <div className="AddCardPage__wrapper">
         <h1 className="title title-1">Ajouter une carte</h1>
         <form onSubmit={(e) => e.preventDefault()}>
@@ -267,8 +279,7 @@ const AddCardPage = () => {
             </div>
           </section>
           <div className="AddCardPage__action">
-            {!isValid && <p className="AddCardPage__error">Veuillez compléter tous les champs (*)
- avant de pouvoir publier votre carte.</p>}
+            {!isValid && <p className="AddCardPage__error">Veuillez compléter tous les champs (*) avant de pouvoir publier votre carte.</p>}
 
             <div className="AddCardPage__buttons">
               <CustomButton color="white" type="button" onClick={() => handleDeleteCard()}>

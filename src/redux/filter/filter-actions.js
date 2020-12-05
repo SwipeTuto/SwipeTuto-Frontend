@@ -1,6 +1,6 @@
 import { FilterActionTypes } from "./filter-types"
-import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded } from '../layout/layout-actions'
-import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
+import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded, openNotificationPopup, setRedirectUrl } from '../layout/layout-actions'
+import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById, createCardService, deleteCardService } from '../../services/cardsService'
 import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply, toggleSave, getCardCommentsNext } from "../../services/socialService"
 import { getUserFavoriesById } from "../../services/userService"
 import { initialSearchState } from "../../helper"
@@ -427,6 +427,45 @@ export const getUserFavoriesSuccess = favories => ({
   type: FilterActionTypes.GET_FAVORIES_CARDS_SUCCESS,
   payload: favories
 })
+
+export const createCardAction = (cardObject) => {
+  return dispatch => {
+    // console.log(userId)
+    dispatch(setLoading());
+    dispatch(setRedirectUrl(false))
+    cardObject && createCardService(cardObject).then(rep => {
+      dispatch(openNotificationPopup("Carte créée avec succès !"))
+      dispatch(setLoaded())
+      dispatch(setCurrentSearch(initialSearchState))
+      dispatch(getCardAfterfilterAction(initialSearchState))
+      dispatch(setRedirectUrl(true))
+      return rep.data
+    }).catch(err => {
+
+      console.error(err)
+      dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
+      dispatch(setLoaded())
+      return err
+    })
+  }
+}
+
+export const deleteCardAction = cardId => {
+  return dispatch => {
+    // console.log(userId)
+    dispatch(setLoading());
+    cardId && deleteCardService(cardId).then(rep => {
+      dispatch(openNotificationPopup("Carte supprimée avec succès !"))
+      dispatch(setLoaded())
+      return rep.data
+    }).catch(err => {
+      console.error(err)
+      dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
+      dispatch(setLoaded())
+      return err
+    })
+  }
+}
 
 
 export const deleteLastPublishedCommentInStore = () => ({

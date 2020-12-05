@@ -91,6 +91,19 @@ const CardPreviewSmall = ({ card, size }) => {
     }
   }, [cardId, media_image]);
 
+  useEffect(() => {
+    if (!cardIsReady) {
+      console.log("timeout");
+      var thisTimeout = setTimeout(function () {
+        setIsError(true);
+      }, 5000);
+    }
+    if (cardIsReady) {
+      clearTimeout(thisTimeout);
+      console.log("clear");
+    }
+  }, [cardIsReady]);
+
   return (
     <div className={`CardPreviewSmall ${currentTheme}-theme`} data-slideid="1">
       <div

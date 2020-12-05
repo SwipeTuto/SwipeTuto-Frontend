@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // redux
-import { registerAction } from "../../../redux/user/user-actions";
+import { loginFacebookAction, loginGoogleAction, registerAction } from "../../../redux/user/user-actions";
 import { selectUserErrors } from "../../../redux/user/user-selectors";
 
 // helper
-import { loginGoogle } from "../../../services/userService";
+// import { loginGoogle } from "../../../services/userService";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
@@ -30,18 +30,27 @@ const Register = ({ title }) => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const userErrors = useSelector(selectUserErrors);
   const allInput = [...document.querySelectorAll(".FormInput")];
-  const currentTheme = useSelector(selectTheme)
+  const currentTheme = useSelector(selectTheme);
 
   const handleClick = (e) => {
     e.preventDefault();
     dispatch(registerAction(user));
   };
 
+  // const handleClickGoogle = (e) => {
+  //   loginGoogle();
+  // };
+  // const handleClickGit = (e) => {
+  //   // loginGit();
+  // };
+
   const handleClickGoogle = (e) => {
-    loginGoogle();
+    e.stopPropagation();
+    dispatch(loginGoogleAction());
   };
-  const handleClickGit = (e) => {
-    // loginGit();
+  const handleClickFacebook = (e) => {
+    e.stopPropagation();
+    dispatch(loginFacebookAction());
   };
 
   const getValue = (name, value) => {
@@ -51,9 +60,7 @@ const Register = ({ title }) => {
   };
 
   useEffect(() => {
-    const readyToSubmit = allInput.every((input) =>
-      input.classList.contains("valid-input")
-    );
+    const readyToSubmit = allInput.every((input) => input.classList.contains("valid-input"));
 
     if (readyToSubmit) {
       setSubmitOk(false);
@@ -70,16 +77,14 @@ const Register = ({ title }) => {
           <GoogleLogo />
           Continuer avec Google
         </CustomButton>
-        <CustomButton color="white" onClick={(e) => handleClickGit(e)}>
+        <CustomButton color="white" onClick={(e) => handleClickFacebook(e)}>
           <FacebookLogo />
           Continuer avec Facebook
         </CustomButton>
       </div>
       <p className="Login__ou">Ou :</p>
       <p className="Login__errors">
-        {userErrors &&
-          userErrors !== 400 &&
-          "Une erreur est survenue. Si l'erreur persiste, merci de nous le signaler."}
+        {userErrors && userErrors !== 400 && "Une erreur est survenue. Si l'erreur persiste, merci de nous le signaler."}
       </p>
       <form className="Register__form">
         <FormInput
@@ -98,7 +103,7 @@ const Register = ({ title }) => {
           name="email"
           required={true}
           getValue={getValue}
-        // firstValue={}
+          // firstValue={}
         />
         <FormInput
           idFor="mdp"
@@ -107,7 +112,7 @@ const Register = ({ title }) => {
           name="password"
           required={true}
           getValue={getValue}
-        // firstValue={}
+          // firstValue={}
         />
         <FormInput
           idFor="mdp2"
@@ -117,7 +122,7 @@ const Register = ({ title }) => {
           required={true}
           getValue={getValue}
           valueToCompare={password}
-        // firstValue={}
+          // firstValue={}
         />
 
         {/* <label htmlFor="mdp2" className="FormInput__label">
@@ -153,19 +158,13 @@ const Register = ({ title }) => {
           </p>
         } */}
 
-        <CustomButton
-          onClick={(e) => handleClick(e)}
-          color="light"
-          type="submit"
-          disabled={submitOk}
-        >
+        <CustomButton onClick={(e) => handleClick(e)} color="light" type="submit" disabled={submitOk}>
           Inscription
         </CustomButton>
       </form>
       <span className="horizontal-separation-primary-light"></span>
       <Link to="/connexion/login" className="LoginPage__link">
         <CustomButton>Déjà un compte ?</CustomButton>
-
       </Link>
     </div>
   );

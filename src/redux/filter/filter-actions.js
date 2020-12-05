@@ -1,6 +1,6 @@
 import { FilterActionTypes } from "./filter-types"
-import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded } from '../layout/layout-actions'
-import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
+import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded, openNotificationPopup, setRedirectUrl } from '../layout/layout-actions'
+import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById, createCardService, deleteCardService } from '../../services/cardsService'
 import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply, toggleSave, getCardCommentsNext } from "../../services/socialService"
 import { getUserFavoriesById } from "../../services/userService"
 import { initialSearchState } from "../../helper"
@@ -44,14 +44,25 @@ export const getCardByIdAction = cardId => {
     dispatch(setClickedCardLoading());
     return getCardById(cardId)
       .then(rep => {
+        const repObj = { ...rep };
+        // console.log(repObj)
+
+        if ((repObj.response && repObj.response.status >= 400) || repObj.status >= 400) {
+          dispatch(getCardByIdFailure(repObj.response.statusText))
+          dispatch(setClickedCardLoaded());
+          // console.log('ici')
+          return
+        }
+        // console.log(rep.data)
         dispatch(getCardByIdSuccess(rep.data))
         dispatch(setClickedCardLoaded())
-        return rep
+        // return rep
       })
-      .catch(err => {
-        dispatch(getCardByIdFailure(err.response))
-        dispatch(setClickedCardLoaded())
-      })
+    // .catch(err => {
+    //   console.log(err)
+    //   dispatch(getCardByIdFailure(err))
+    //   dispatch(setClickedCardLoaded())
+    // })
 
   }
 }
@@ -306,7 +317,7 @@ export const addReplyAction = (cardId, commentId, comment) => {
   return dispatch => {
     return addReply(commentId, comment)
       .then(rep => {
-        console.log(rep)
+        // console.log(rep)
         dispatch(addCommentSuccess(rep.data))
       })
       .catch(err => {
@@ -391,11 +402,11 @@ const deleteCommentSuccess = () => ({
 
 export const getUserFavoriesAction = userId => {
   return dispatch => {
-    console.log(userId)
+    // console.log(userId)
     dispatch(setCardsFetchedInStore(null))
     dispatch(setLoading());
     userId && getUserFavoriesById(userId).then(rep => {
-      console.log(rep)
+      // console.log(rep)
       dispatch(getUserFavoriesSuccess(rep.data))
       dispatch(setLoaded())
       return rep.data
@@ -416,6 +427,47 @@ export const getUserFavoriesSuccess = favories => ({
   type: FilterActionTypes.GET_FAVORIES_CARDS_SUCCESS,
   payload: favories
 })
+
+export const createCardAction = (cardObject) => {
+  return dispatch => {
+    // console.log(userId)
+    dispatch(setLoading());
+    dispatch(setRedirectUrl(false))
+    cardObject && createCardService(cardObject).then(rep => {
+      dispatch(openNotificationPopup("Carte créée avec succès !"))
+      dispatch(setLoaded())
+      dispatch(setCurrentSearch(initialSearchState))
+      dispatch(getCardAfterfilterAction(initialSearchState))
+      dispatch(setRedirectUrl(true))
+      return rep.data
+    }).catch(err => {
+
+      console.error(err)
+      dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
+      dispatch(setLoaded())
+      return err
+    })
+  }
+}
+
+export const deleteCardAction = (cardId, currentUserId, history) => {
+  return dispatch => {
+    // console.log(userId)
+    dispatch(setLoading());
+    cardId && deleteCardService(cardId).then(rep => {
+      dispatch(openNotificationPopup("Carte supprimée avec succès !"))
+      dispatch(setLoaded())
+      dispatch(getCardsByUserIdAction(currentUserId));
+      history.push("/account/user");
+      return rep.data
+    }).catch(err => {
+      console.error(err)
+      dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
+      dispatch(setLoaded())
+      return err
+    })
+  }
+}
 
 
 export const deleteLastPublishedCommentInStore = () => ({

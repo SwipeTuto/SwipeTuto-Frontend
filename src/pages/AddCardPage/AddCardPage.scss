@@ -6,6 +6,19 @@
   padding-top: 2rem;
   padding-bottom: 2rem;
 
+  &__loading {
+    width: max-content;
+    padding: 2rem;
+    border-radius: $card-radius;
+    @include large-shadow;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    background-color: $white;
+  }
+
   .title-1 {
     margin-bottom: 6rem;
     text-align: center;

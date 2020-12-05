@@ -1,5 +1,6 @@
 
 import React from "react";
+import { useSelector } from 'react-redux'
 import { Switch, Route, withRouter } from 'react-router-dom';
 import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from './pages/Homepage/HomePageNew';
@@ -16,8 +17,11 @@ import ConfidentialityPage from "./pages/ConfidentialityPage/ConfidentialityPage
 import CookiesPage from "./pages/CookiesPage/CookiesPage";
 import InfosPage from "./pages/InfosPage/InfosPage";
 import AddCardPage from "./pages/AddCardPage/AddCardPage";
+import { selectCurrentUser } from "./redux/user/user-selectors";
 
 const Routes = () => {
+
+  const currentUser = useSelector(selectCurrentUser)
 
   return (
     <Switch>
@@ -31,7 +35,11 @@ const Routes = () => {
       <Route path="/contact" component={ContactUsPage} />
       <Route path="/infos" component={InfosPage} />
       <Route path="/help" component={HelpPage} />
-      <Route path="/card_id=:card_id" component={SearchPage} />
+      {currentUser ? (
+        <Route path="/card_id=:card_id" component={SearchPage} />
+      ) : (
+          <Route path="/card_id=:card_id" component={HomePage} />
+        )}
       <Route path="/profile/user_id=:user_id" component={ProfilePage} />
       <ProtectedRoute path="/account" component={AccountPage} />
       <ProtectedRoute path="/add" component={AddCardPage} />

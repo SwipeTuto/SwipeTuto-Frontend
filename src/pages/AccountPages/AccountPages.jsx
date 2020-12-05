@@ -53,6 +53,7 @@ const AccountPage = (props) => {
           </div>
         </div>
         <Switch>
+          {/* <ProtectedRoute exact path="/account/user" component={() => <UserPage userIsSame={true} />} /> */}
           <ProtectedRoute exact path="/account/user" component={UserPage} />
           <ProtectedRoute exact path="/account/settings" component={SettingsPage} />
           <ProtectedRoute exact path="/account/saved" component={SavedPage} />

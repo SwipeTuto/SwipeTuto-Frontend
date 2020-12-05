@@ -2,6 +2,7 @@
 
 .rdw-editor-wrapper {
   height: max-content;
+
   max-width: 100%;
 }
 
@@ -15,4 +16,35 @@
 .rdw-image-wrapper,
 .rdw-embedded-wrapper {
   display: none;
+}
+
+.rdw-link-modal {
+  width: max-content;
+  height: max-content;
+  box-sizing: content-box;
+
+  & * {
+    flex-shrink: 0;
+  }
+}
+
+#openLinkInNewWindow {
+  width: min-content;
+}
+
+.rdw-link-modal-input {
+  margin: 0.2rem 0 0.6rem 0 !important;
+  width: 100% !important;
+}
+
+.rdw-link-modal-target-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.6rem 0;
+}
+
+.rdw-link-modal-label {
+  margin: 0;
 }

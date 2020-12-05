@@ -19,16 +19,16 @@ export const getUrlId = (url, query) => {
   return url && parseInt(url.split(`${query}=`)[1]);
 }
 
-var support = (function () {
-  if (!window.DOMParser) return false;
-  var parser = new DOMParser();
-  try {
-    parser.parseFromString('x', 'text/html');
-  } catch (err) {
-    return false;
-  }
-  return true;
-})();
+// var support = (function () {
+//   if (!window.DOMParser) return false;
+//   var parser = new DOMParser();
+//   try {
+//     parser.parseFromString('x', 'text/html');
+//   } catch (err) {
+//     return false;
+//   }
+//   return true;
+// })();
 
 export const stringToHTML = (str) => {
   if (typeof DOMParser !== 'undefined' && window.DOMParser.prototype.parseFromString) {

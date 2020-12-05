@@ -13,7 +13,7 @@ import { createCardAction } from "../../redux/filter/filter-actions";
 import { openNotificationPopup } from "../../redux/layout/layout-actions";
 import { selectIsLoaded } from "../../redux/layout/layout-selectors";
 import { selectCurrentUserId } from "../../redux/user/user-selectors";
-import { createCardService } from "../../services/cardsService";
+// import { createCardService } from "../../services/cardsService";
 
 import "./AddCardPage.scss";
 

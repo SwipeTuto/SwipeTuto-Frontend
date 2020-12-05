@@ -10,19 +10,19 @@ import { getCardAfterfilterAction, setCurrentSearch } from "../../redux/filter/f
 // import HeaderImage from "../../assets/logos/header_image.png";
 import { ReactComponent as CommunityIllustration } from "../../assets/images/illustrations/community_illustration.svg";
 
-import { selectCardsFetchedCards, selectCurrentSearch, selectTotalNumberOfResults } from "../../redux/filter/filter-selectors";
+import { selectCurrentSearch, selectTotalNumberOfResults } from "../../redux/filter/filter-selectors";
 import { selectTheme } from "../../redux/layout/layout-selectors";
 
 import "./HomePageNew.scss";
 import { selectIsLoaded } from "../../redux/layout/layout-selectors";
 
-import { initialSearchState, topicArray } from "../../helper";
+import { topicArray } from "../../helper";
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
 
 import Register from "../../components/LayoutComponents/Login/Register";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
 import HowItWorks from "../../components/LayoutComponents/HowItWorks/HowItWorks";
-import { setLoaded } from "../../redux/layout/layout-actions";
+// import { setLoaded } from "../../redux/layout/layout-actions";
 
 const HomePage = () => {
   // const isLoaded = useSelector(selectIsLoaded);
@@ -43,7 +43,6 @@ const HomePage = () => {
   // }, []);
 
   const handleTopicClick = (newTopic) => {
-    // console.log(newTopic);
     const currentSearchCopy = {
       ...currentSearch,
       searchTopic: newTopic,
@@ -54,7 +53,6 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    console.log(numOfResults === 0);
     if (numOfResults === 0) {
       setIsEmpty(true);
     } else {
@@ -62,9 +60,9 @@ const HomePage = () => {
     }
   }, [numOfResults]);
 
-  useEffect(() => {
-    console.log("isEmpty: ", isEmpty);
-  }, [isEmpty, numOfResults]);
+  // useEffect(() => {
+  //   console.log("isEmpty: ", isEmpty);
+  // }, [isEmpty, numOfResults]);
 
   return (
     <>

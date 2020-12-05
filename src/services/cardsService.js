@@ -79,16 +79,17 @@ export const createCardService = (cardObject) => {
   cardObject.image.map(rep => {
     // console.log('rep', rep)
     formData.append("image", rep.source);
+    return rep
   })
 
   formData.append("description", cardObject.description);
   formData.append("categorie", cardObject.categorie);
 
-  var config = {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  };
+  // var config = {
+  //   headers: {
+  //     "Content-Type": "multipart/form-data",
+  //   },
+  // };
 
   return client().post("card/create_card/", formData).then(rep => {
     // console.log(rep)

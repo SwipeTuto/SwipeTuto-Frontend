@@ -9,7 +9,7 @@ import { loginFacebookAction, loginGoogleAction, registerAction } from "../../..
 import { selectUserErrors } from "../../../redux/user/user-selectors";
 
 // helper
-import { loginGoogle } from "../../../services/userService";
+// import { loginGoogle } from "../../../services/userService";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";

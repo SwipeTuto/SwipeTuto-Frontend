@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 
 import "./ConnexionRedirect.scss";
@@ -35,9 +35,7 @@ const ConnexionRedirect = ({ handleClose }) => {
             handleClose();
           }}
         />
-        <h1 className="title title-1">
-          Vous devez vous connecter pour réaliser cette action.
-        </h1>
+        <h1 className="title title-1">Vous devez vous connecter pour réaliser cette action.</h1>
         <Login />
       </div>
     </div>

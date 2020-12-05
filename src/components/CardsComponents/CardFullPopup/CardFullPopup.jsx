@@ -22,12 +22,12 @@ import {
   getOtherCardsByAuthorNameAction,
   toggleSaveCardAction,
   deleteCardAction,
-  getCardsByUserIdAction,
+  // getCardsByUserIdAction,
 } from "../../../redux/filter/filter-actions";
 import {
   closePopupCard,
   openConnexionPopup,
-  openNotificationPopup,
+  // openNotificationPopup,
   setRedirectUrl,
   showFullscreen,
   showSignalPopup,
@@ -67,7 +67,7 @@ import "./CardFullPopup.scss";
 import { getCurrentUserAction } from "../../../redux/user/user-actions";
 import VerticalMenu from "../../LayoutComponents/VerticalMenu/VerticalMenu";
 import ShareMenu from "../../LayoutComponents/ShareMenu/ShareMenu";
-import { deleteCardService } from "../../../services/cardsService";
+// import { deleteCardService } from "../../../services/cardsService";
 import ConfirmationOverlay from "../../LayoutComponents/ConfirmationOverlay/ConfirmationOverlay";
 
 // Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
@@ -161,7 +161,6 @@ const CardFullPopup = ({ history, location }) => {
   };
 
   const handlePopupClose = () => {
-    console.log(location.pathname);
     if (location.pathname === "/") {
       window.history.pushState("", "", "/");
     } else if (location.pathname.includes("/account/")) {

@@ -488,84 +488,56 @@ const CardFullPopup = ({ history, location }) => {
                   <div
                     className="card-action-button__wrapper"
                     onClick={(e) => {
+                      handlePopupClose();
                       e.stopPropagation();
                     }}
                   >
-                    <CloseLogo
-                      className="card-action-button"
-                      onClick={(e) => {
-                        handlePopupClose();
-                      }}
-                    />
+                    <CloseLogo className="card-action-button" />
                   </div>
                   {cardIsLiked ? (
                     <div
                       className="card-action-button__wrapper"
                       onClick={(e) => {
+                        handleLikeClick();
                         e.stopPropagation();
                       }}
                     >
-                      <HeartFull
-                        className="card-action-button card-action-button__liked"
-                        onClick={(e) => {
-                          handleLikeClick();
-                        }}
-                      />
+                      <HeartFull className="card-action-button card-action-button__liked" />
                     </div>
                   ) : (
                     <div
                       className="card-action-button__wrapper"
                       onClick={(e) => {
+                        handleLikeClick();
                         e.stopPropagation();
                       }}
                     >
-                      <HeartEmpty
-                        className="card-action-button"
-                        onClick={(e) => {
-                          handleLikeClick();
-                        }}
-                      />
+                      <HeartEmpty className="card-action-button" />
                     </div>
                   )}
                   {cardIsSaved ? (
                     <div
                       className="card-action-button__wrapper"
                       onClick={(e) => {
+                        handleSaveClick();
                         e.stopPropagation();
                       }}
                     >
-                      <BookmarkFull
-                        className="card-action-button card-action-button__saved"
-                        onClick={(e) => {
-                          handleSaveClick();
-                        }}
-                      />
+                      <BookmarkFull className="card-action-button card-action-button__saved" />
                     </div>
                   ) : (
                     <div
                       className="card-action-button__wrapper"
                       onClick={(e) => {
+                        handleSaveClick();
                         e.stopPropagation();
                       }}
                     >
-                      <BookmarkEmpty
-                        className="card-action-button"
-                        onClick={(e) => {
-                          handleSaveClick();
-                        }}
-                      />
+                      <BookmarkEmpty className="card-action-button" />
                     </div>
                   )}
 
-                  {/* <div
-                className="card-action-button__wrapper"
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              > */}
-                  {/* <ShareMenu addclass="card-action-button__wrapper" /> */}
                   <ShareMenu addclass="card-action-button__wrapper" test="test" />
-                  {/* </div> */}
 
                   <div
                     className="card-action-button__wrapper"
@@ -574,20 +546,8 @@ const CardFullPopup = ({ history, location }) => {
                       dispatch(showFullscreen());
                     }}
                   >
-                    <FullscreenLogo
-                      className="card-action-button"
-                      id="card-action-button__fullscreen"
-                      // onClick={(e) => {
-                      //   dispatch(showFullscreen());
-                      // }}
-                    />
+                    <FullscreenLogo className="card-action-button" id="card-action-button__fullscreen" />
                   </div>
-                  {/* <div
-                className="card-action-button__wrapper"
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              > */}
 
                   <VerticalMenu addclass="card-action-button__wrapper">
                     {currentUserId === clickedCard.user.id ? (

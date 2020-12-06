@@ -2,4 +2,9 @@
 
 .FormInput {
   @include input-style;
+  color: currentColor;
+
+  &::placeholder {
+    color: inherit;
+  }
 }

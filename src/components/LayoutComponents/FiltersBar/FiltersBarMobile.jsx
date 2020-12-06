@@ -118,7 +118,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
     <>
       <div className="FiltersBarMobile">
         {filterMobileMenuOpen && (
-          <div className={`FiltersBarMobile__menu ${currentTheme}-theme`}>
+          <div className={`FiltersBarMobile__menu ${currentTheme}-theme-m`}>
             <div className="FiltersBarMobile__menu--top">
               <CloseLogo
                 onClick={() => handleCloseFilterMobileMenuCloseClick()}

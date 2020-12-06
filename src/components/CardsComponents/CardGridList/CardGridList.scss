@@ -2,7 +2,7 @@
 
 .CardGridList {
   width: 100%;
-  padding: 2rem;
+  padding: 2rem 4rem;
   // padding: $grid-component-padding;
   // position: relative;
 
@@ -11,7 +11,7 @@
     display: grid;
     max-width: 100%;
     width: 100%;
-    grid-gap: 1.5rem;
+    grid-gap: 2.5rem;
     // column-gap: 1rem;
 
     &--big {
@@ -23,7 +23,7 @@
   }
 
   .grid-item {
-    padding-bottom: 1.5rem;
+    padding-bottom: 2.5rem;
     width: 100%;
     max-width: 100%;
     // -webkit-column-break-inside: avoid;

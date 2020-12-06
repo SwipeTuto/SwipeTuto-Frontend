@@ -64,7 +64,7 @@ const SearchPage = ({ location }) => {
 
   return (
     <>
-      <div className={`SearchPage ${currentTheme}-theme`}>
+      <div className={`SearchPage ${currentTheme}-theme-d`}>
         <div className="SearchPage__wrapper">
           {/* <CurrentSearchWords /> */}
           <div className="SearchPage__filtersBarMobile">

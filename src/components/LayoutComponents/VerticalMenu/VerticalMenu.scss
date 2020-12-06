@@ -8,6 +8,12 @@
     align-items: center;
     justify-content: center;
 
+    &.dark-theme {
+      svg {
+        fill: $grey-dark;
+      }
+    }
+
     &:hover {
       cursor: pointer;
     }

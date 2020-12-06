@@ -25,6 +25,7 @@
 
   .Login {
     // padding: 0;
+    width: 60%;
 
     &__google {
       margin-bottom: 0.5rem;
@@ -62,6 +63,10 @@
     &__wrapper {
       border: none;
       margin: 0;
+    }
+
+    .Login {
+      width: 100%;
     }
   }
 }

@@ -2,12 +2,15 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import "./FormInput.scss";
 import { checkRegexInput, errorMessageToDisplay } from "../../helper";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../redux/layout/layout-selectors";
 
 const FormInput = ({ idFor, label, type, name, getValue, firstValue, required, placeholder, valueToCompare }) => {
   const [data, setData] = useState("");
   const [isValid, setIsValid] = useState("unset");
   const formInputEl = document.querySelector(`.FormInput[name=${name}]`);
   const errorEl = document.querySelector(`.input__message[data-inputfor=${name}]`);
+  const currentTheme = useSelector(selectTheme);
 
   const handleChange = useCallback(
     (e) => {
@@ -64,7 +67,7 @@ const FormInput = ({ idFor, label, type, name, getValue, firstValue, required, p
         name={name && name}
         value={data}
         id={idFor && idFor}
-        className={`FormInput ${isValid}-input`}
+        className={`FormInput ${isValid}-input ${currentTheme}-theme-m`}
         required={required && required}
         autoComplete="on"
         placeholder={placeholder}

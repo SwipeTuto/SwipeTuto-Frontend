@@ -73,7 +73,7 @@ const FiltersBar = ({ handleClickSize }) => {
     <div className="FiltersBar">
       <div className="FiltersBar__wrapper">
         <select
-          className={`FiltersBar__topic ${currentTheme}-theme`}
+          className={`FiltersBar__topic ${currentTheme}-theme-m`}
           onChange={(e) => handleTopicChange(e)}
           value={searchTopic === null ? "Tous" : searchTopic}
         >
@@ -102,7 +102,7 @@ const FiltersBar = ({ handleClickSize }) => {
               categoriesArray.map((category, index) => (
                 <div
                   onClick={() => handleCategoryChange(category.queryName)}
-                  className={`FiltersBar__options--item ${searchCategory === category.queryName && "active"}`}
+                  className={`FiltersBar__options--item ${searchTopic} ${searchCategory === category.queryName && "active"}`}
                   key={`category${category.queryName}${index}`}
                   data-category={category.queryName}
                 >
@@ -119,7 +119,13 @@ const FiltersBar = ({ handleClickSize }) => {
         {/* <p className="FiltersBar__numberOfResults">
             {`${totalNumberOfCardsSearched} résultats trouvés`}
           </p> */}
-        <select className={`${currentTheme}-theme`} name="cards-filter" id="cards-filter" onChange={(e) => handleOrderChange(e)} value={searchOrder}>
+        <select
+          className={`${currentTheme}-theme-m`}
+          name="cards-filter"
+          id="cards-filter"
+          onChange={(e) => handleOrderChange(e)}
+          value={searchOrder}
+        >
           {orderArray.map((order, index) => (
             <option key={`${order}${index}`} value={order.queryName}>
               {order.name}

@@ -66,7 +66,7 @@ const UserPage = ({ userIsSame, location }) => {
   }, [dispatch]);
 
   return (
-    <div className={`UserPage ${currentTheme}-theme`}>
+    <div className={`UserPage ${currentTheme}-theme-d`}>
       <div className="UserPage__cards">
         <h3 className="title title-3">Tutoriels de {userDatas && userDatas.username ? userDatas.username : "l'utilisateur "}</h3>
         {!isLoaded ? (

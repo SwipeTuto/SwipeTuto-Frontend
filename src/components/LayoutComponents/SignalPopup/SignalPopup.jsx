@@ -56,7 +56,7 @@ const SignalPopup = ({ card_id, user_id, comment_id }) => {
         handleClose();
       }}
     >
-      <div className={`SignalPopup__wrapper ${currentTheme}-theme`}>
+      <div className={`SignalPopup__wrapper ${currentTheme}-theme-m`}>
         <CloseLogo
           className="SignalPopup__close"
           onClick={(e) => {

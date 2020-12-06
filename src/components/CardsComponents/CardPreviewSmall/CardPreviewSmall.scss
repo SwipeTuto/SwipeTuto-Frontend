@@ -16,10 +16,11 @@
   break-inside: avoid;
   // margin-bottom: 1rem;
 
-  &.dark-theme {
+  &.dark-theme-m {
     @include card-shadow($themelight: false);
   }
-  &.light-theme {
+  &.light-theme-m {
+    background-color: $white;
     @include card-shadow($themelight: true);
   }
 
@@ -28,7 +29,7 @@
 
     width: 100%;
     margin: auto;
-    background-color: $black;
+    // background-color: $black;
     position: relative;
     display: flex;
     justify-content: center;
@@ -60,7 +61,6 @@
     }
 
     &--loading {
-      background-color: $grey-light;
       height: 200px;
       display: flex;
       justify-content: center;
@@ -128,6 +128,7 @@
     .UserNameAndAvatar {
       display: flex;
       text-overflow: ellipsis;
+      background-color: unset;
 
       &__avatar {
         width: 1.5rem;
@@ -140,7 +141,17 @@
   &__likes {
     display: flex;
     align-items: center;
-    color: $grey-dark;
+
+    &.dark-theme {
+      color: $grey-dark;
+      & svg {
+        fill: $grey-dark;
+      }
+    }
+
+    &.light-theme {
+      color: $grey-dark;
+    }
 
     &--logo {
       margin-left: 0.6rem;

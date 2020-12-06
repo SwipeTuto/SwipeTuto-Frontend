@@ -26,6 +26,7 @@ import { ReactComponent as HeartFull } from "../../../../assets/images/heart.svg
 import "./FirstLevelComment.scss";
 import { openConnexionPopup, showSignalPopup } from "../../../../redux/layout/layout-actions";
 import VerticalMenu from "../../VerticalMenu/VerticalMenu";
+import { selectTheme } from "../../../../redux/layout/layout-selectors";
 
 const FirstLevelComment = ({ comment, confirmCommentDelete, handleUpdate, handleCommentRespond }) => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const FirstLevelComment = ({ comment, confirmCommentDelete, handleUpdate, handle
   const commentLikers = useSelector(selectCommentLikers(commentId));
   const likesCount = comment.likes_count;
   const [commentIsLiked, setCommentIsLiked] = useState();
+  const currentTheme = useSelector(selectTheme);
 
   //! GESTION DELETE
   const [confirmPopupOpen, setConfirmPopupOpen] = useState({
@@ -112,7 +114,7 @@ const FirstLevelComment = ({ comment, confirmCommentDelete, handleUpdate, handle
           <UserAvatar user={commentAuthor} link={true} />
         </div>
         <div className="FirstLevelComment__wrapper">
-          <div className="FirstLevelComment__center">
+          <div className={`FirstLevelComment__center ${currentTheme}-theme-l`}>
             <VerticalMenu>
               {commentAuthor && commentAuthor.id && currentUser && currentUser.id && commentAuthor.id === currentUser.id ? (
                 <p data-commentid={commentId} onClick={(e) => handleCommentDelete(e)}>

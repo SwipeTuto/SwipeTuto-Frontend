@@ -45,7 +45,7 @@ const VerticalMenu = ({ addclass, type, children }) => {
       }}
     >
       <div
-        className="VerticalMenu__logo"
+        className={`VerticalMenu__logo ${currentTheme}-theme`}
         // onClick={(e) => {
         //   e.stopPropagation();
         //   checkIfConnected();
@@ -54,7 +54,7 @@ const VerticalMenu = ({ addclass, type, children }) => {
         {type && type === "share" ? <ShareLogo className="VerticalMenu__logo--logo" /> : <MenuLogo className="VerticalMenu__logo--logo" />}
       </div>
       {menuOpen && (
-        <div className={`VerticalMenu__menu ${currentTheme}-theme`}>
+        <div className={`VerticalMenu__menu ${currentTheme}-theme-l`}>
           {children && children.length ? (
             children.map((child, index) => {
               return (

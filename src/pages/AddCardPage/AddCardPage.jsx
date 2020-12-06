@@ -16,7 +16,7 @@ import { selectCurrentUserId } from "../../redux/user/user-selectors";
 // import { createCardService } from "../../services/cardsService";
 
 import "./AddCardPage.scss";
-import * as FilePond from 'filepond';
+
 const AddCardPage = () => {
   const currentuserId = useSelector(selectCurrentUserId);
   const [cardInfos, setCardInfos] = useState({
@@ -52,12 +52,7 @@ const AddCardPage = () => {
   }, []);
 
   useEffect(() => {
-    const pond = FilePond.create();
-pond.setOptions({
-    maxFiles: 10,
-    required: true
-});
-    pond.addFile(localDraftNewCardImage);
+
     setCategoriesLocalArray(getCategoriesArray(cardInfos.card_topic));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardInfos.card_topic]);
@@ -83,29 +78,7 @@ pond.setOptions({
     // const localObj = window.localStorage.getItem("draftNewCard");
   };
 
-  const getfiles = async () => {
-    const files = await filedrop.current.getFiles();
-    const imagesFiles = await files.map((obj) => obj);
-    
-    imagesFiles.map(rep => {
-      console.log(rep.source)
-      getBase64(rep.source).then(base64 => {
-        localStorage["fileBase64"] = base64;
-        console.debug("file stored",base64);
-      })
-    })
 
-  } 
-
-  const getBase64 = (file) => {
-    return new Promise((resolve,reject) => {
-       const reader = new FileReader();
-       reader.onload = () => resolve(reader.result);
-       reader.onerror = error => reject(error);
-       reader.readAsDataURL(file);
-    })
-  }
-  
 
   useEffect(() => {
     if (localDraftNewCard && localDraftNewCard.user !== currentuserId) {
@@ -141,10 +114,7 @@ pond.setOptions({
     try {
       const files = await filedrop.current.getFiles();
       const imagesFiles = await files.map((obj) => obj);
-      getBase64(imagesFiles.source).then(base64 => {
-        localStorage["fileBase64"] = base64;
-        console.debug("file stored",base64);
-      })
+
       const cardObject = {
         name: cardInfos.card_title,
         description: cardInfos.card_description,
@@ -199,9 +169,6 @@ pond.setOptions({
 
   return (
     <div className="AddCardPage">
-                    <CustomButton type="submit"  onClick={() => getfiles()}>
-                test
-              </CustomButton>
       {!isLoaded && (
         <div className="AddCardPage__loading">
           <Loading />

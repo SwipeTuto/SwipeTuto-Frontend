@@ -10,7 +10,7 @@ import UserPage from "../AccountPages/UserPage/UserPage";
 import { selectCurrentUser, selectUserErrors } from "../../redux/user/user-selectors";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { Link } from "react-router-dom";
-import { ReactComponent as AccountLogo } from "../../assets/images/person.svg";
+// import { ReactComponent as AccountLogo } from "../../assets/images/person.svg";
 import { getUrlId, initialSignalState } from "../../helper";
 import { selectTheme } from "../../redux/layout/layout-selectors";
 import VerticalMenu from "../../components/LayoutComponents/VerticalMenu/VerticalMenu";

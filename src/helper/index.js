@@ -19,11 +19,32 @@ export const getUrlId = (url, query) => {
   return url && parseInt(url.split(`${query}=`)[1]);
 }
 
+// var support = (function () {
+//   if (!window.DOMParser) return false;
+//   var parser = new DOMParser();
+//   try {
+//     parser.parseFromString('x', 'text/html');
+//   } catch (err) {
+//     return false;
+//   }
+//   return true;
+// })();
 
 export const stringToHTML = (str) => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(str, 'text/html');
-  return doc.body;
+  if (typeof DOMParser !== 'undefined' && window.DOMParser.prototype.parseFromString) {
+    const parser = new window.DOMParser();
+    const parsed = parser.parseFromString(str, 'text/html');
+    if (parsed && parsed.body) {
+      return parsed.body;
+    }
+  }
+
+  // DOMParser support is not present or non-standard
+  const newDoc = document.implementation.createHTMLDocument('processing doc');
+  const dom = newDoc.createElement('div');
+  dom.innerHTML = str;
+
+  return dom;
 }
 
 // Pour les mots / phrases trop longue, permet de couper. Params : phrase, nombre de caractères max, true/false pour couper les mots
@@ -451,7 +472,7 @@ export const getCategoriesArray = (topic) => {
 
 export const orderArray = [
   {
-    queryName: "-created",
+    queryName: "created",
     name: "Nouveau",
   },
   {
@@ -517,12 +538,12 @@ export const initialSignalState = {
 
 
 export const likeUpdate = (cardId) => {
-  console.log(cardId)
+  // console.log(cardId)
   const likedCardText = document.getElementById(`likesNumber${cardId}`);
   const heartEl = document.getElementById(`CardPreviewSmall__heart${cardId}`);
   const likesNumberPopupLogo = document.getElementById(`likesNumberPopupLogo${cardId}`)
   const likesNumberPopupNumber = document.getElementById(`likesNumberPopupNumber${cardId}`)
-  console.log(likesNumberPopupLogo, likesNumberPopupNumber)
+  // console.log(likesNumberPopupLogo, likesNumberPopupNumber)
   if (heartEl && heartEl.classList.contains("active") && likedCardText) {
     likedCardText.textContent = parseInt(likedCardText.textContent) - 1;
     heartEl.classList.remove("active");
@@ -534,11 +555,11 @@ export const likeUpdate = (cardId) => {
   if (likesNumberPopupLogo && likesNumberPopupLogo.classList.contains("active") && likesNumberPopupNumber) {
     likesNumberPopupNumber.textContent = parseInt(likesNumberPopupNumber.textContent) - 1;
     likesNumberPopupLogo.classList.remove("active");
-    console.log('remove class')
+    // console.log('remove class')
   } else if (likesNumberPopupLogo && likesNumberPopupNumber) {
     likesNumberPopupNumber.textContent = parseInt(likesNumberPopupNumber.textContent) + 1;
     likesNumberPopupLogo.classList.add("active");
-    console.log('add class')
+    // console.log('add class')
   }
 };
 

@@ -1,8 +1,6 @@
 @import "../../../variables.scss";
 
 .CardFullPopup {
-  display: none;
-  visibility: hidden;
   z-index: 50;
   scroll-behavior: smooth;
   font-size: 1.8rem;
@@ -16,6 +14,24 @@
   top: 0;
   left: 0;
   overflow-y: scroll;
+  position: fixed;
+
+  &__loading {
+    width: max-content;
+    padding: 2rem;
+    border-radius: $card-radius;
+    @include large-shadow;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    background-color: $white;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   &__allwrapper {
     width: 100%;
@@ -29,6 +45,7 @@
     display: grid;
     grid-template-columns: 1fr 80rem 1fr;
     scrollbar-width: none;
+    scroll-behavior: smooth;
 
     &::-webkit-scrollbar {
       display: none;
@@ -146,7 +163,51 @@
   }
 
   &__description {
-    line-height: 1.6;
+    body {
+      line-height: 1.6;
+      padding: 0;
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 3rem 0 1rem 0;
+      }
+
+      ul,
+      ol {
+        list-style: initial;
+        padding-left: 3rem;
+      }
+
+      blockquote {
+        font-style: italic;
+      }
+
+      blockquote,
+      pre {
+        margin: 2rem 0;
+        background-color: $grey-light;
+        padding: 1rem;
+        border-radius: $card-radius;
+      }
+
+      a,
+      a:visited {
+        // text-decoration: initial;
+        border-bottom: 1px solid transparent;
+        color: $primary-dark;
+        transition: all 0.2s ease;
+
+        &:hover,
+        &:active {
+          color: $primary-light;
+          border-bottom: 1px solid $primary-light;
+        }
+      }
+    }
   }
 
   &__meta {
@@ -295,6 +356,7 @@
     .CardFullPopup {
       &__wrapper {
         max-width: 90rem;
+        width: 90rem;
       }
 
       &__mobile {
@@ -323,6 +385,7 @@
         position: fixed;
         height: 100vh;
         width: max-content;
+
         // padding: 2rem;
       }
 

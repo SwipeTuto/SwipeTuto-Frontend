@@ -10,7 +10,7 @@ import { closePopupCard } from "../../../redux/layout/layout-actions";
 
 import "./UserNameAndAvatar.scss";
 
-const UserNameAndAvatar = ({ user, link }) => {
+const UserNameAndAvatar = ({ user, link, changeLink }) => {
   const dispatch = useDispatch();
   const userImage =
     user && user.avatar && user.avatar[0] && user.avatar[0].avatar
@@ -23,7 +23,7 @@ const UserNameAndAvatar = ({ user, link }) => {
     <>
       {link ? (
         <Link
-          to={`/profile/user_id=${user && user.id}`}
+          to={changeLink ? changeLink : `/profile/user_id=${user && user.id}`}
           className="UserNameAndAvatar"
           onClick={() => {
             dispatch(closePopupCard());
@@ -33,38 +33,25 @@ const UserNameAndAvatar = ({ user, link }) => {
         >
           <div className="UserNameAndAvatar__avatar">
             {userImage && !error ? (
-              <img
-                className="user_avatar--image"
-                src={userImage}
-                alt="user"
-                onError={() => setError(true)}
-              />
+              <img className="user_avatar--image" src={userImage} alt="user" onError={() => setError(true)} />
             ) : user && user.username ? (
               user && user.username && user.username.slice(0, 1)
             ) : (
               "S"
             )}
           </div>
-          <p className="UserNameAndAvatar__username">
-            {user && user.username ? user.username : "Utilisateur SwipeTuto"}
-          </p>
+          <p className="UserNameAndAvatar__username">{user && user.username ? user.username : "Utilisateur SwipeTuto"}</p>
         </Link>
       ) : (
         <>
           <div className="UserNameAndAvatar__avatar">
             {userImage ? (
-              <img
-                className="UserNameAndAvatar__avatar--image"
-                src={userImage}
-                alt="user"
-              />
+              <img className="UserNameAndAvatar__avatar--image" src={userImage} alt="user" />
             ) : (
               user && user.username && user.username.slice(0, 1)
             )}
           </div>
-          <p className="UserNameAndAvatar__username">
-            {user && user.username ? user.username : "Utilisateur SwipeTuto"}
-          </p>
+          <p className="UserNameAndAvatar__username">{user && user.username ? user.username : "Utilisateur SwipeTuto"}</p>
         </>
       )}
     </>

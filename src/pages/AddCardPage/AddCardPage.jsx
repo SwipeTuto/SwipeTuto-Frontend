@@ -7,13 +7,16 @@ import RichTextInput from "../../components/FormInputs/RichTextInput";
 // import JoditInput from "../../components/FormInputs/RichTextInput";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import DraggableUploadInput from "../../components/LayoutComponents/DraggableUploadInput/DraggableUploadInput";
+import Loading from "../../components/Loading/Loading";
 import { getCategoriesArray, topicArray } from "../../helper";
+import { createCardAction } from "../../redux/filter/filter-actions";
 import { openNotificationPopup } from "../../redux/layout/layout-actions";
+import { selectIsLoaded } from "../../redux/layout/layout-selectors";
 import { selectCurrentUserId } from "../../redux/user/user-selectors";
-import { createCardService } from "../../services/cardsService";
+// import { createCardService } from "../../services/cardsService";
 
 import "./AddCardPage.scss";
-
+import * as FilePond from 'filepond';
 const AddCardPage = () => {
   const currentuserId = useSelector(selectCurrentUserId);
   const [cardInfos, setCardInfos] = useState({
@@ -30,7 +33,9 @@ const AddCardPage = () => {
   const [emptyState, setEmptyState] = useState(false);
   const filedrop = useRef();
   const localDraftNewCard = JSON.parse(window.localStorage.getItem("draftNewCard"));
+  const localDraftNewCardImage = JSON.parse(window.localStorage.getItem("fileBase64"));
   const dispatch = useDispatch();
+  const isLoaded = useSelector(selectIsLoaded);
 
   useEffect(() => {
     if (imagesArrayNotEmpty && cardInfos.card_title !== "" && cardInfos.card_description !== "") {
@@ -47,6 +52,12 @@ const AddCardPage = () => {
   }, []);
 
   useEffect(() => {
+    const pond = FilePond.create();
+pond.setOptions({
+    maxFiles: 10,
+    required: true
+});
+    pond.addFile(localDraftNewCardImage);
     setCategoriesLocalArray(getCategoriesArray(cardInfos.card_topic));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardInfos.card_topic]);
@@ -71,6 +82,30 @@ const AddCardPage = () => {
     // setImagesArray(cards);
     // const localObj = window.localStorage.getItem("draftNewCard");
   };
+
+  const getfiles = async () => {
+    const files = await filedrop.current.getFiles();
+    const imagesFiles = await files.map((obj) => obj);
+    
+    imagesFiles.map(rep => {
+      console.log(rep.source)
+      getBase64(rep.source).then(base64 => {
+        localStorage["fileBase64"] = base64;
+        console.debug("file stored",base64);
+      })
+    })
+
+  } 
+
+  const getBase64 = (file) => {
+    return new Promise((resolve,reject) => {
+       const reader = new FileReader();
+       reader.onload = () => resolve(reader.result);
+       reader.onerror = error => reject(error);
+       reader.readAsDataURL(file);
+    })
+  }
+  
 
   useEffect(() => {
     if (localDraftNewCard && localDraftNewCard.user !== currentuserId) {
@@ -97,19 +132,19 @@ const AddCardPage = () => {
         user: currentuserId,
       })
     );
-    // console.log({
-    //   name: cardInfos.card_title,
-    //   description: cardInfos.card_description,
-    //   topic: cardInfos.card_topic,
-    //   categorie: cardInfos.card_category,
-    //   user: currentuserId,
-    // });
+
   }, [cardInfos.card_category, cardInfos.card_description, cardInfos.card_title, cardInfos.card_topic, currentuserId]);
+
+  
 
   const createCard = async () => {
     try {
       const files = await filedrop.current.getFiles();
       const imagesFiles = await files.map((obj) => obj);
+      getBase64(imagesFiles.source).then(base64 => {
+        localStorage["fileBase64"] = base64;
+        console.debug("file stored",base64);
+      })
       const cardObject = {
         name: cardInfos.card_title,
         description: cardInfos.card_description,
@@ -118,13 +153,12 @@ const AddCardPage = () => {
         user: currentuserId,
         image: await imagesFiles,
       };
-      createCardService(cardObject);
-      // createCardService(files);
+
+      dispatch(createCardAction(cardObject));
+
       await window.localStorage.removeItem("draftNewCard");
-      // console.log(cardObject);
       setIsValid(false);
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   const handleDeleteCard = async () => {
@@ -139,10 +173,6 @@ const AddCardPage = () => {
     setEmptyState(true);
     document.location.reload();
   };
-
-  // useEffect(() => {
-  //   console.log(cardInfos);
-  // }, [cardInfos]);
 
   useEffect(() => {
     if (emptyState) setEmptyState(false);
@@ -169,6 +199,17 @@ const AddCardPage = () => {
 
   return (
     <div className="AddCardPage">
+                    <CustomButton type="submit"  onClick={() => getfiles()}>
+                test
+              </CustomButton>
+      {!isLoaded && (
+        <div className="AddCardPage__loading">
+          <Loading />
+        </div>
+      )}
+      {/* <div className="AddCardPage__loading">
+        <Loading />
+      </div> */}
       <div className="AddCardPage__wrapper">
         <h1 className="title title-1">Ajouter une carte</h1>
         <form onSubmit={(e) => e.preventDefault()}>
@@ -177,7 +218,7 @@ const AddCardPage = () => {
             <p className="AddCardPage__description">
               Ajouter la / les image(s) de votre carte ici <sup>(*)</sup>.
             </p>
-            <DraggableUploadInput ref={filedrop} updateFiles={updateFiles} emptyState={emptyState} />
+            <DraggableUploadInput  ref={filedrop} updateFiles={updateFiles} emptyState={emptyState} />
           </section>
 
           <section className="AddCardPage__section">
@@ -199,19 +240,6 @@ const AddCardPage = () => {
               />
             </div>
             <div className="AddCardPage__inputZone">
-              {/* <FormTextarea
-                idFor="card_description"
-                label={
-                  <span>
-                    Description <sup>(*)</sup> :
-                  </span>
-                }
-                name="card_description"
-                type="text"
-                getValue={getValue}
-                required={true}
-                firstValue={cardInfos.card_description || ""}
-              /> */}
               <RichTextInput
                 label={<span>Description :</span>}
                 getDescriptionValue={getDescriptionValue}
@@ -267,8 +295,7 @@ const AddCardPage = () => {
             </div>
           </section>
           <div className="AddCardPage__action">
-            {!isValid && <p className="AddCardPage__error">Veuillez compléter tous les champs (*)
- avant de pouvoir publier votre carte.</p>}
+            {!isValid && <p className="AddCardPage__error">Veuillez compléter tous les champs (*) avant de pouvoir publier votre carte.</p>}
 
             <div className="AddCardPage__buttons">
               <CustomButton color="white" type="button" onClick={() => handleDeleteCard()}>

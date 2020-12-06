@@ -71,30 +71,25 @@ export const getOtherPageCard = linkToFetch => {
 
 
 export const createCardService = (cardObject) => {
-  console.log('cardObject', cardObject)
-  
-  var formData = new FormData();
-  formData.append("user",cardObject.user);
-  formData.append("topic",cardObject.topic);
-  formData.append("name",cardObject.name);
-  cardObject.image.map(rep => {
-    formData.append("image",rep.source);
-  })
-  
-  formData.append("description",cardObject.description);
-  formData.append("categorie",cardObject.categorie);
+  // console.log('cardObject', cardObject)
 
-  var config = {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  };
+  var formData = new FormData();
+  formData.append("user", cardObject.user);
+  formData.append("topic", cardObject.topic);
+  formData.append("name", cardObject.name);
+  cardObject.image.map(rep => {
+    formData.append("image", rep.source);
+    return rep
+  })
+
+  formData.append("description", cardObject.description);
+  formData.append("categorie", cardObject.categorie);
 
   return client().post("card/create_card/", formData).then(rep => {
-    console.log(rep)
+
     return rep
   }).catch(err => {
-    console.log(err)
+    console.error(err)
     return err
   })
 }
@@ -107,3 +102,4 @@ export const deleteCardService = (cardId) => {
     return err
   })
 };
+

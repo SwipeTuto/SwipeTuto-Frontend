@@ -19,6 +19,10 @@ const headersKeys = {
 }
 
 export const client = () => {
+  // return axios.create({
+  //   baseURL: 'https://swipetuto-back-dev.herokuapp.com/api/v1/',
+  //   headers: headersKeys
+  // });
   if (process.env.NODE_ENV === "development") {
     return axios.create({
       baseURL: 'http://localhost:8000/api/v1/',

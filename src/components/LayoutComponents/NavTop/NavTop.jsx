@@ -13,7 +13,7 @@ import {
 import { logoutAction } from "../../../redux/user/user-actions";
 
 import { selectTheme } from "../../../redux/layout/layout-selectors";
-import { setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
+import { getCardAfterfilterAction, setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
 import { getCategoriesArray, initialSearchState, topicArray } from "../../../helper/index";
@@ -84,7 +84,15 @@ const NavTop = (props) => {
     <div className={`NavTop ${currentTheme}-theme`}>
       <div className="NavTop__left">
         <Link className="NavTop__swipeTuto" to="/">
-          <img className="NavTop__swipeTuto--image" src={SwipeTutoSmallSmall} alt="" onClick={() => dispatch(setCurrentSearch(initialSearchState))} />
+          <img
+            className="NavTop__swipeTuto--image"
+            src={SwipeTutoSmallSmall}
+            alt=""
+            onClick={() => {
+              dispatch(setCurrentSearch(initialSearchState));
+              dispatch(getCardAfterfilterAction(initialSearchState));
+            }}
+          />
         </Link>
         {currentUser && <SearchForm />}
       </div>
@@ -130,7 +138,7 @@ const NavTop = (props) => {
         {currentUser ? (
           <>
             <div className="NavTop__avatar">
-              <UserNameAndAvatar user={currentUser} link={true} />
+              <UserNameAndAvatar user={currentUser} link={true} changeLink="/account/user" />
             </div>
             <div className="NavTop__addcard">
               <Link to="/add" className="NavTop__roundBtn">

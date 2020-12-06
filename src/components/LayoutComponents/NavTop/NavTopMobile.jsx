@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 // redux
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
-import { setCurrentSearch } from "../../../redux/filter/filter-actions";
+// import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 import { selectMobileNavOpen, selectFilterMobileMenuOpen, selectTheme } from "../../../redux/layout/layout-selectors";
 import { openMobileNav, closeMobileNav, openFilterMobileMenu, setLoaded } from "../../../redux/layout/layout-actions";
 import { logoutAction } from "../../../redux/user/user-actions";
@@ -32,7 +32,7 @@ import SwipeTutoSmallFull from "../../../assets/logos/Logo full border black sma
 import "./NavTopMobile.scss";
 import { useDarkMode } from "../../../hooks/useDarkMode";
 import ToggleButton from "../ToggleTheme/ToggleTheme";
-import { initialSearchState } from "../../../helper";
+// import { initialSearchState } from "../../../helper";
 
 const NavTopMobile = (props) => {
   const dispatch = useDispatch();

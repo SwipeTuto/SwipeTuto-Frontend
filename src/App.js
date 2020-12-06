@@ -7,21 +7,21 @@ import NavTop from "./components/LayoutComponents/NavTop/NavTop";
 import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile copy";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
-import { getCardByIdAction } from './redux/filter/filter-actions'
+import { deleteFilterErrorAction, getCardAfterfilterAction, getCardByIdAction } from './redux/filter/filter-actions'
 import { selectConnexionPopup, selectFirstLoadDone, selectIsLoaded, selectRedirectUrl, selectShowPopupCard, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
 import { setCurrentSearch } from "./redux/filter/filter-actions"
 
-import { urlParams, getUrlId } from "./helper/index"
+import { urlParams, getUrlId, initialSearchState } from "./helper/index"
 
 import './index.scss'
 import './App.scss';
-import { closeConnexionPopup, setFirstLoadDone, setRedirectUrl, showPopupCard } from "./redux/layout/layout-actions";
+import { closeConnexionPopup, closePopupCard, openNotificationPopup, setFirstLoadDone, setRedirectUrl, showPopupCard } from "./redux/layout/layout-actions";
 import { getUserByIdAction } from "./redux/user/user-actions";
 import SignalPopup from "./components/LayoutComponents/SignalPopup/SignalPopup";
 import CardFullPopup from "./components/CardsComponents/CardFullPopup/CardFullPopup";
 import SearchLinkRedirect from "./helper/SearchLinkRedirect";
 import ConnexionRedirect from "./components/LayoutComponents/ConnexionRedirect/ConnexionRedirect";
-import { selectCardsFetched, selectClickedCard, selectCurrentSearch } from "./redux/filter/filter-selectors";
+import { selectCardsFetched, selectClickedCard, selectCurrentSearch, selectFilterError } from "./redux/filter/filter-selectors";
 import { usePrevious } from "./hooks/usePrevious";
 // import { selectCurrentUser } from "./redux/user/user-selectors";
 import Routes from "./Routes"
@@ -49,6 +49,7 @@ function App(props) {
   // const location = useLocation()
   const popupCardIsOpen = useSelector(selectShowPopupCard);
   const appEl = useRef(null)
+  const filterError = useSelector(selectFilterError)
 
   useEffect(() => {
 
@@ -63,6 +64,8 @@ function App(props) {
         dispatch(setCurrentSearch(currentSearchCopy))
         dispatch(setRedirectUrl(true));
       }
+    } else if (firstLoadDone === false && locationPathname === "/") { // si page d'une carte ouverte
+      dispatch(getCardAfterfilterAction(initialSearchState))
     } else if (firstLoadDone === false && cardId) { // si page d'une carte ouverte
       dispatch(showPopupCard())
       dispatch(getCardByIdAction(cardId))
@@ -82,7 +85,7 @@ function App(props) {
     if (firstLoadDone === false) {
       dispatch(setFirstLoadDone())
     }
-  }, [cardId, category, currentSearch, dispatch, fetchedCards, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, search, topic, userId]);
+  }, [cardId, category, currentSearch, dispatch, fetchedCards, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, props.history, search, topic, userId]);
 
   useEffect(() => {
 
@@ -92,6 +95,18 @@ function App(props) {
     bodyEl.classList.add(`${currentTheme}-theme`);
 
   }, [currentTheme])
+
+  useEffect(() => {
+    if (filterError && clickedCard === null) {
+
+      dispatch(openNotificationPopup('Une erreur est survenue. Vous avez été redirigé.'))
+      dispatch(deleteFilterErrorAction())
+      dispatch(closePopupCard())
+      // window.history.pushState("", "", "/");
+      dispatch(setRedirectUrl(true))
+
+    }
+  }, [clickedCard, dispatch, filterError, redirectUrl])
 
   const redirectLink = SearchLinkRedirect();
 

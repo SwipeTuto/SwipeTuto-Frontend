@@ -131,6 +131,17 @@
           background-color: $grey;
         }
       }
+
+      &__arrow {
+        border: 1px solid $grey;
+        border-radius: 50%;
+        width: 5rem;
+        height: 5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+      }
     }
 
     & .CardSlider__nav {
@@ -140,6 +151,7 @@
       &:hover > *,
       &:active > * {
         stroke: $primary-light !important;
+        // stroke: $primary-light !important;
         transition: all 0.2s ease;
       }
     }

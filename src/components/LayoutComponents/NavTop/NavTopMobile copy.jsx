@@ -8,7 +8,7 @@ import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { selectMobileNavOpen, selectFilterMobileMenuOpen, selectTheme } from "../../../redux/layout/layout-selectors";
 import { openMobileNav, closeMobileNav, openFilterMobileMenu, setLoaded } from "../../../redux/layout/layout-actions";
 import { logoutAction } from "../../../redux/user/user-actions";
-import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
+// import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
@@ -45,8 +45,8 @@ const NavTopMobile = (props) => {
   const currentUser = useSelector(selectCurrentUser);
   const mobileNavOpen = useSelector(selectMobileNavOpen);
   // const searchWords = useSelector(selectSearchWords);
-  const currentSearch = useSelector(selectCurrentSearch);
-  const { searchWords, searchTopic, searchCategory, searchOrder } = currentSearch;
+  // const currentSearch = useSelector(selectCurrentSearch);
+  // const { searchWords, searchTopic, searchCategory, searchOrder } = currentSearch;
 
   useEffect(() => {
     const NavTopMobileMenu = document.querySelector(".NavTopMobile");

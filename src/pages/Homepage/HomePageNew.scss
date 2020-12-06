@@ -22,6 +22,14 @@
       margin-bottom: 6rem;
     }
   }
+
+  &__nocard {
+    padding: 2rem;
+
+    .title.title-2 {
+      text-align: center;
+    }
+  }
   &__topics {
     margin-top: 6rem;
     display: flex;
@@ -60,7 +68,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-image: linear-gradient(to top, $white, transparent);
+      background-image: linear-gradient(to top, $white, $white 40%, transparent);
       z-index: 2;
     }
   }

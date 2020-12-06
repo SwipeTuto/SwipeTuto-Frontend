@@ -26,11 +26,9 @@ const RessourcesPage = () => {
   };
 
   return (
-    <div className={`RessourcesPage ${currentTheme}-theme`}>
+    <div className={`RessourcesPage ${currentTheme}-theme-d`}>
       <div className="RessourcesPage__header">
-        <h1 className="title title-1">
-          Ressources utiles pour le développeur Web
-        </h1>
+        <h1 className="title title-1">Ressources utiles pour le développeur Web</h1>
         <div className="ressource-navigation">
           <div className="scroll-logo" onClick={handleScrollLeft}>
             <ChevronLeft />
@@ -38,11 +36,7 @@ const RessourcesPage = () => {
           <div className="ressource-navigation-scroll">
             {RESSOURCES_WEB.map((category) => {
               return (
-                <a
-                  key={category.id}
-                  href={`#${category.id}`}
-                  className="ressource-navigation__item"
-                >
+                <a key={category.id} href={`#${category.id}`} className="ressource-navigation__item">
                   {category.title}
                 </a>
               );
@@ -64,12 +58,7 @@ const RessourcesPage = () => {
             <p className="ressource-note">{category.note}</p>
             <ul className="ressource-liste">
               {category.ressources.map((ressource) => {
-                return (
-                  <CardPreviewSmallRessources
-                    ressource={ressource}
-                    key={ressource.nom}
-                  />
-                );
+                return <CardPreviewSmallRessources ressource={ressource} key={ressource.nom} />;
               })}
             </ul>
           </div>

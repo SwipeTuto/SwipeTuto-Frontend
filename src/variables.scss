@@ -1,28 +1,51 @@
 // VARIABLES
 // TESTS WEBDESIGN
-// $blue-swipetuto: #00e7fd;
+
 $red-error: #cf0030;
 $green-success: #00b109;
 $green-saved: #1be970;
-$red-like: #ff5d83;
+$red-like: #ff003c;
+
 $secondary-dark: #dba800;
 $secondary-light: #eec200;
 $primary-light: #ad0cc2;
 $primary-dark: #280849;
+
 $black: #2c2c2c;
-$white: #f6f6f6;
-// $black: #000000ff;
-// $white: #ffffffff;
-$grey: #cecece;
-$grey-lighter: #f1f1f1;
-$grey-light: #ebebeb;
+// $white: #f1f1f1;
+$white: #fff;
+$grey: #d4d4d4;
+$grey-lighter: #fdfdfd;
+$grey-light: #f1f1f1;
 $grey-dark: #636363;
 
-// $black-themedark: #202020;
-// $white-themedark: #ececec;
-// $grey-themedark: #494949;
-// $grey-light-themedark: #bebebe;
-// $grey-dark-themedark: #2c2c2c;
+$dark-dark: #18191a;
+$dark-medium: #242526;
+$dark-light: #4e4f50;
+
+$topicColors: (
+  "general": #00d3e2,
+  "bienetre": #1eee17,
+  "beaute": #cc24ff,
+  "cuisine": #f5df17,
+  "maison": #00e99b,
+  "technologie": #ff6060,
+);
+
+@function getTopicColor($topicName) {
+  @if (map-has-key($topicColors, $topicName)) {
+    @return map-get($topicColors, $topicName);
+  } @else {
+    @return map-get($topicColors, "general");
+  }
+}
+// @function getSecondaryColor($topicName) {
+//   @if (map-has-key($topicColors, $topicName#{-s})) {
+//     @return map-get($topicColors, $topicName#{-s});
+//   } @else {
+//     @return map-get($topicColors, "general-s");
+//   }
+// }
 
 $round-radius: 50%;
 $round-padding: 0.3rem;
@@ -61,9 +84,9 @@ $text-font: "Nunito", sans-serif;
 $title-font: "Montserrat", sans-serif;
 
 @mixin input-style {
-  background: $grey-lighter;
+  // background: $grey-lighter;
   // background: $white;
-  color: $black;
+  // color: $black;
   font-size: inherit;
   font-family: inherit;
   padding: $box-padding;
@@ -137,12 +160,12 @@ $title-font: "Montserrat", sans-serif;
   align-items: center;
   transition: all 0.2s ease;
   color: $white;
-  background-color: $secondary-dark;
+  // background-color: $secondary-dark;
   border-radius: $button-radius;
 
-  &:hover {
-    background-color: $secondary-light;
-  }
+  // &:hover {
+  //   background-color: $secondary-light;
+  // }
 }
 
 @mixin section-padding {
@@ -162,30 +185,53 @@ $title-font: "Montserrat", sans-serif;
   height: 1.5rem;
   width: 1.5rem;
 }
+@mixin medium-logo-size {
+  height: 2rem;
+  width: 2rem;
+}
 @mixin big-logo-size {
   height: 3rem;
   width: 3rem;
 }
 
-@mixin theme-colors($themelight: true) {
+@mixin theme-colors-dark($themelight: true) {
   @if $themelight {
     background-color: $white;
     color: $black;
   } @else {
-    background-color: $black;
+    background-color: $dark-dark;
     color: $white;
   }
 }
+@mixin theme-colors-medium($themelight: true) {
+  @if $themelight {
+    background-color: $grey-lighter;
+    color: $black;
+  } @else {
+    background-color: $dark-medium;
+    color: $white;
+  }
+}
+@mixin theme-colors-light($themelight: true) {
+  @if $themelight {
+    background-color: $grey-light;
+    color: $black;
+  } @else {
+    background-color: $dark-light;
+    color: $white;
+  }
+}
+
 @mixin card-shadow($themelight: true) {
   @if $themelight {
     box-shadow: 0 2px 2px rgba($grey, 0.6), 0 0 5px rgba($grey, 0.6);
   } @else {
-    box-shadow: 0 2px 2px rgba($grey-dark, 0.6), 0 0 5px rgba($grey-dark, 0.6);
+    box-shadow: 0 2px 2px rgba($dark-light, 0.6), 0 0 5px rgba($dark-medium, 0.6);
   }
 }
 
 @mixin large-shadow {
-  box-shadow: 0 0 20px rgba($black, 0.3);
+  box-shadow: 0 0 8px rgba($black, 0.6);
 }
 
 @mixin popup-style {
@@ -217,7 +263,7 @@ $title-font: "Montserrat", sans-serif;
   padding: 1.5rem;
   border-radius: $round-radius;
   cursor: pointer;
-  background-color: $white;
+  // background-color: $white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -269,6 +315,6 @@ $title-font: "Montserrat", sans-serif;
   border-radius: $card-radius;
   @include large-shadow;
   // @include card-shadow;
-  border: 0.5px solid $grey-light;
+  // border: 0.5px solid $grey-light;
   overflow: hidden;
 }

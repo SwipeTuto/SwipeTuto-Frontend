@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // import { base, coudinaryBase } from "../../../services/configService";
 
@@ -9,8 +9,9 @@ import { setNoClickedCard } from "../../../redux/filter/filter-actions";
 import { closePopupCard } from "../../../redux/layout/layout-actions";
 
 import "./UserNameAndAvatar.scss";
+import { selectTheme } from "../../../redux/layout/layout-selectors";
 
-const UserNameAndAvatar = ({ user, link, changeLink }) => {
+const UserNameAndAvatar = ({ user, link, changeLink, themed }) => {
   const dispatch = useDispatch();
   const userImage =
     user && user.avatar && user.avatar[0] && user.avatar[0].avatar
@@ -18,13 +19,14 @@ const UserNameAndAvatar = ({ user, link, changeLink }) => {
       : // ? `${base}${user.avatar[0].avatar}`
         null;
   const [error, setError] = useState(false);
+  const currentTheme = useSelector(selectTheme);
 
   return (
     <>
       {link ? (
         <Link
           to={changeLink ? changeLink : `/profile/user_id=${user && user.id}`}
-          className="UserNameAndAvatar"
+          className={`UserNameAndAvatar ${themed ? currentTheme + "-theme-l" : ""}`}
           onClick={() => {
             dispatch(closePopupCard());
             dispatch(setNoClickedCard());

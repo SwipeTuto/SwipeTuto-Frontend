@@ -4,17 +4,10 @@ import React, { useState, useEffect } from "react";
 import { withRouter, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-
 // redux
-import {
-  loginAction,
-  deleteUserErrors,
-  loginGoogleAction,
-  loginFacebookAction,
-} from "../../../redux/user/user-actions";
+import { loginAction, deleteUserErrors, loginGoogleAction, loginFacebookAction } from "../../../redux/user/user-actions";
 import { selectUserErrors } from "../../../redux/user/user-selectors";
 // helper
-
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
@@ -33,11 +26,10 @@ const Login = ({ title }) => {
   const [submitOk, setSubmitOk] = useState(false);
   const userErrors = useSelector(selectUserErrors);
   const allInput = [...document.querySelectorAll(".FormInput")];
-  const currentTheme = useSelector(selectTheme)
+  const currentTheme = useSelector(selectTheme);
 
   // scroll reset
   useEffect(() => {
-
     dispatch(deleteUserErrors());
   }, [dispatch]);
 
@@ -48,7 +40,6 @@ const Login = ({ title }) => {
   const handleClickFacebook = (e) => {
     e.stopPropagation();
     dispatch(loginFacebookAction());
-
   };
 
   const handleClick = (e) => {
@@ -64,9 +55,7 @@ const Login = ({ title }) => {
   };
 
   useEffect(() => {
-    const readyToSubmit = allInput.every((input) =>
-      input.classList.contains("valid-input")
-    );
+    const readyToSubmit = allInput.every((input) => input.classList.contains("valid-input"));
 
     if (readyToSubmit) {
       setSubmitOk(false);
@@ -76,10 +65,8 @@ const Login = ({ title }) => {
   }, [allInput, user]);
 
   return (
-    <div className={`Login ${currentTheme}-theme`}>
-      <h2 className="title title-2">
-        {title ? title : "Content de vous revoir !"}
-      </h2>
+    <div className={`Login ${currentTheme}-theme-d`}>
+      <h2 className="title title-2">{title ? title : "Content de vous revoir !"}</h2>
       <div className="Login__google">
         <CustomButton color="white" onClick={(e) => handleClickGoogle(e)}>
           <GoogleLogo />
@@ -89,7 +76,6 @@ const Login = ({ title }) => {
           <FacebookLogo />
           Continuer avec Facebook
         </CustomButton>
-
       </div>
       <p className="Login__ou">Ou :</p>
       <p className="error__message">
@@ -107,7 +93,7 @@ const Login = ({ title }) => {
           name="email"
           getValue={getValue}
           required={true}
-        // firstValue={savedEmail}
+          // firstValue={savedEmail}
         />
         <FormInput
           idFor="password"
@@ -116,15 +102,9 @@ const Login = ({ title }) => {
           name="password"
           getValue={getValue}
           required={true}
-        // firstValue={savedPassword}
+          // firstValue={savedPassword}
         />
-        <CustomButton
-          onClick={(e) => handleClick(e)}
-          id="login-button"
-          color="dark"
-          type="submit"
-          disabled={submitOk}
-        >
+        <CustomButton onClick={(e) => handleClick(e)} id="login-button" color="dark" type="submit" disabled={submitOk}>
           Connexion
         </CustomButton>
       </form>

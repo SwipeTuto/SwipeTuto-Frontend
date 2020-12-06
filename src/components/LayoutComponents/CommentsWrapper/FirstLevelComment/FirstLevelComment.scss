@@ -23,13 +23,10 @@
 
   &__center {
     position: relative;
-    border: 1px solid $grey;
-    box-shadow: $button-shadow;
     border-radius: $card-radius;
     display: flex;
     flex-direction: column;
     padding: 1.5rem 2rem;
-    color: $black;
 
     .UserUsername {
       display: inline-block;
@@ -43,6 +40,12 @@
 
     &--top {
       display: flex;
+    }
+
+    &.dark-theme-l {
+      .FirstLevelComment__date {
+        color: $grey;
+      }
     }
   }
   &__actions {

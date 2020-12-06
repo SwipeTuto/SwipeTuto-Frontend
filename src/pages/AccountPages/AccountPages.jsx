@@ -26,7 +26,7 @@ const AccountPage = (props) => {
   }
 
   return (
-    <div className={`AccountPage ${currentTheme}-theme`}>
+    <div className={`AccountPage ${currentTheme}-theme-d`}>
       <div className="AccountPage__wrapper">
         <div className="AccountPage__top">
           <UserHeader userIsSame={true} />

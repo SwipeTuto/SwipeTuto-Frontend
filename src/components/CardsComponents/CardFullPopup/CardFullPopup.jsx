@@ -258,11 +258,13 @@ const CardFullPopup = ({ history, location }) => {
     if (clickedCard.description) {
       cardDescrHTML = stringToHTML(clickedCard.description);
     }
+
     if (descrEl && cardDescrHTML) {
+      cardDescrHTML.classList.add(`${currentTheme}-theme-d`);
       descrEl.innerHTML = "";
       descrEl.appendChild(cardDescrHTML);
     }
-  }, [clickedCard.description, descrEl]);
+  }, [clickedCard.description, currentTheme, descrEl]);
 
   const newSignalObject = { ...initialSignalState, id_card: clickedCardId };
 
@@ -289,7 +291,7 @@ const CardFullPopup = ({ history, location }) => {
           }}
         >
           {!isFullscreen && (
-            <div className="CardFullPopup__mobile">
+            <div className={`CardFullPopup__mobile ${currentTheme}-theme-m`}>
               {clickedCardIsLoaded ? (
                 <>
                   {cardIsLiked ? (
@@ -380,10 +382,10 @@ const CardFullPopup = ({ history, location }) => {
 
           <div className={`CardFullPopup__allwrapper${isFullscreen ? "--fullscreen" : ""}`}>
             <div className="CardFullPopup__scroll-wrapper">
-              <div className={`CardFullPopup__wrapper ${currentTheme}-theme`} onClick={(e) => e.stopPropagation()}>
+              <div className={`CardFullPopup__wrapper ${currentTheme}-theme-d`} onClick={(e) => e.stopPropagation()}>
                 <div className="CardFullPopup__user CardFullPopup__section">
                   {/* <ShareButtons /> */}
-                  <UserNameAndAvatar user={clickedCard && clickedCard.user && clickedCard.user} link={true} />
+                  <UserNameAndAvatar  user={clickedCard && clickedCard.user && clickedCard.user} link={true} />
                 </div>
 
                 {clickedCardIsLoaded ? (
@@ -395,7 +397,7 @@ const CardFullPopup = ({ history, location }) => {
                     <h1 className="title title-1 CardFullPopup__title">{clickedCard && clickedCard.name}</h1>
 
                     <div className="CardFullPopup__meta CardFullPopup__section">
-                      <p className="CardFullPopup__meta-block CardFullPopup__meta--topic_category">
+                      <p className={`CardFullPopup__meta-block ${clickedCard.topic[0].name} active CardFullPopup__meta--topic_category`}>
                         {clickedCard &&
                           clickedCard.topic &&
                           clickedCard.topic[0] &&
@@ -408,8 +410,10 @@ const CardFullPopup = ({ history, location }) => {
                           clickedCard.categorie[0].name &&
                           renameQuery(clickedCard.categorie[0].name)}
                       </p>
-                      <p className="CardFullPopup__meta-block CardFullPopup__meta--date">Publié le {clickedCardDate}</p>
-                      <div className="CardFullPopup__meta-block  CardFullPopup__meta--stats">
+                      <p className={`CardFullPopup__meta-block ${clickedCard.topic[0].name} active CardFullPopup__meta--date`}>
+                        Publié le {clickedCardDate}
+                      </p>
+                      <div className={`CardFullPopup__meta-block ${clickedCard.topic[0].name} active  CardFullPopup__meta--stats`}>
                         <span className="CardFullPopup__meta--logo">
                           <EyeLogo />
                         </span>
@@ -436,7 +440,7 @@ const CardFullPopup = ({ history, location }) => {
                       </div>
                     </div>
 
-                    <div className="CardFullPopup__description CardFullPopup__section">
+                    <div className={`CardFullPopup__description CardFullPopup__section ${currentTheme}-theme-d`}>
                       <h2 className="title title-2">Description</h2>
                       {/* {clickedCard && <> {stringToHTML(clickedCard.description)}</>} */}
                     </div>
@@ -485,7 +489,7 @@ const CardFullPopup = ({ history, location }) => {
               {clickedCardIsLoaded ? (
                 <>
                   <div
-                    className="card-action-button__wrapper"
+                    className={`card-action-button__wrapper ${currentTheme}-theme`}
                     onClick={(e) => {
                       handlePopupClose();
                       e.stopPropagation();
@@ -495,7 +499,7 @@ const CardFullPopup = ({ history, location }) => {
                   </div>
                   {cardIsLiked ? (
                     <div
-                      className="card-action-button__wrapper"
+                      className={`card-action-button__wrapper ${currentTheme}-theme`}
                       onClick={(e) => {
                         handleLikeClick();
                         e.stopPropagation();
@@ -505,7 +509,7 @@ const CardFullPopup = ({ history, location }) => {
                     </div>
                   ) : (
                     <div
-                      className="card-action-button__wrapper"
+                      className={`card-action-button__wrapper ${currentTheme}-theme`}
                       onClick={(e) => {
                         handleLikeClick();
                         e.stopPropagation();
@@ -516,7 +520,7 @@ const CardFullPopup = ({ history, location }) => {
                   )}
                   {cardIsSaved ? (
                     <div
-                      className="card-action-button__wrapper"
+                      className={`card-action-button__wrapper ${currentTheme}-theme`}
                       onClick={(e) => {
                         handleSaveClick();
                         e.stopPropagation();
@@ -526,7 +530,7 @@ const CardFullPopup = ({ history, location }) => {
                     </div>
                   ) : (
                     <div
-                      className="card-action-button__wrapper"
+                      className={`card-action-button__wrapper ${currentTheme}-theme`}
                       onClick={(e) => {
                         handleSaveClick();
                         e.stopPropagation();
@@ -536,10 +540,10 @@ const CardFullPopup = ({ history, location }) => {
                     </div>
                   )}
 
-                  <ShareMenu addclass="card-action-button__wrapper" test="test" />
+                  <ShareMenu addclass={`card-action-button__wrapper ${currentTheme}-theme`} test="test" />
 
                   <div
-                    className="card-action-button__wrapper"
+                    className={`card-action-button__wrapper ${currentTheme}-theme`}
                     onClick={(e) => {
                       e.stopPropagation();
                       dispatch(showFullscreen());
@@ -548,7 +552,7 @@ const CardFullPopup = ({ history, location }) => {
                     <FullscreenLogo className="card-action-button" id="card-action-button__fullscreen" />
                   </div>
 
-                  <VerticalMenu addclass="card-action-button__wrapper">
+                  <VerticalMenu addclass={`card-action-button__wrapper ${currentTheme}-theme`}>
                     {currentUserId === clickedCard.user.id ? (
                       <p
                         onClick={(e) => {

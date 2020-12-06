@@ -1,3 +1,27 @@
+import STgeneralShort from "../assets/swipetuto/STvb_short.png";
+import STtechnologieShort from "../assets/swipetuto/STbr_short.png";
+import STbienetreShort from "../assets/swipetuto/STgy_short.png";
+import STcuisineShort from "../assets/swipetuto/SToy_short.png";
+import STmaisonShort from "../assets/swipetuto/STvboreal_short.png";
+import STbeauteShort from "../assets/swipetuto/STvp_short.png";
+
+export const getTopicShortImage = (topic) => {
+  switch (topic) {
+    case "technologie":
+      return STtechnologieShort;
+    case "cuisine":
+      return STcuisineShort;
+    case "maison":
+      return STmaisonShort;
+    case "beaute":
+      return STbeauteShort;
+    case "bienetre":
+      return STbienetreShort;
+    default:
+      return STgeneralShort;
+  }
+};
+
 export const urlParams = url => {
 
   var queryString = url.search ? url.search.split('?')[1] : window.location.search;
@@ -300,11 +324,11 @@ export const topicArray = [
     name: "Bien-être",
     // logo: NodeJSLogo,
   },
-  {
-    queryName: "autre",
-    name: "Autre",
-    // logo: NodeJSLogo,
-  },
+  // {
+  //   queryName: "autre",
+  //   name: "Autre",
+  //   // logo: NodeJSLogo,
+  // },
 
 ];
 

@@ -90,7 +90,7 @@ const SettingsPage = () => {
   };
 
   return (
-    <div className={`SettingsPage ${currentTheme}-theme`}>
+    <div className={`SettingsPage ${currentTheme}-theme-d`}>
       <h3 className="title title-3">Changer les informations du compte</h3>
       <div className="allForms">
         <form className="form__avatar form" onChange={handleAvatarUpdate}>

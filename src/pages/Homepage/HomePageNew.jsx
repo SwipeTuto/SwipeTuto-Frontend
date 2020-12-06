@@ -67,7 +67,7 @@ const HomePage = () => {
   return (
     <>
       {currentUser && <Redirect to={"/search"} />}
-      <div className={`HomePage ${currentTheme}-theme`}>
+      <div className={`HomePage ${currentTheme}-theme-d`}>
         <header className="HomePage__header">
           <h1 className="title title-1">Swipetuto</h1>
           <h2 className="title title-2">On apprend quoi aujourd'hui ?</h2>

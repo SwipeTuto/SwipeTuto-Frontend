@@ -6,10 +6,7 @@ import UserUsername from "../../../components/UserComponents/UserAvatar/UserUser
 import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
 import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg";
 
-import {
-  selectCurrentUser,
-  selectClickedUser,
-} from "../../../redux/user/user-selectors";
+import { selectCurrentUser, selectClickedUser } from "../../../redux/user/user-selectors";
 
 import "./UserHeader.scss";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
@@ -32,7 +29,7 @@ const UserHeader = ({ userIsSame, location }) => {
   }, [clickedUser, locationPath, currentUser]);
 
   return (
-    <div className={`UserHeader ${currentTheme}-theme`}>
+    <div className={`UserHeader ${currentTheme}-theme-d`}>
       <div className="UserHeader__userInfos">
         <div className="UserHeader__avatar">
           <UserAvatar user={userDatas} link={true} />
@@ -43,7 +40,7 @@ const UserHeader = ({ userIsSame, location }) => {
           </h1>
         </div>
         {userIsSame ? (
-          <div className="UserHeader__mobile">
+          <div className={`UserHeader__mobile ${currentTheme}-theme-d`}>
             <Link className="UserHeader__mobile--link" to="/account/user">
               <AccountLogo />
             </Link>
@@ -57,9 +54,7 @@ const UserHeader = ({ userIsSame, location }) => {
       </div>
       <div className="UserHeader__bio">
         <p className="UserHeader__bio--text">
-          {userDatas && userDatas.profile && userDatas.profile.description
-            ? userDatas.profile.description
-            : ""}
+          {userDatas && userDatas.profile && userDatas.profile.description ? userDatas.profile.description : ""}
         </p>
       </div>
     </div>

@@ -1,24 +1,24 @@
 @import "../../../variables.scss";
 
 .NavTop {
-  // height: $navtop-height;
-  // background-color: $white;
-  // background-color: currentColor;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1.5rem 2rem;
   z-index: 20;
-  border-bottom: 0.5px solid $grey-light;
-  // @include theme-colors($themelight: true);
-  // box-shadow: none;
-  // box-shadow: $light-shadow;
-  box-shadow: $button-shadow;
   font-size: 1.6rem;
   height: $navtop-height;
+
+  &.dark-theme-m {
+    border-bottom: 0.5px solid $dark-medium;
+  }
+  &.light-theme-m {
+    border-bottom: 0.5px solid $grey;
+    background-color: $white;
+  }
 
   &__left,
   &__center,
@@ -37,14 +37,6 @@
   &__link {
     @include nav-style;
 
-    &.active {
-      @include nav-active-style;
-
-      & svg {
-        stroke: $primary-light;
-      }
-    }
-
     &--category:hover ~ .NavTop__dropdown--category {
       opacity: 1;
       visibility: visible;
@@ -62,9 +54,7 @@
   }
 
   &__center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
 
     .NavTop__search {
       display: flex;
@@ -131,10 +121,11 @@
   }
 
   &__right {
-    margin-left: auto;
+    // margin-left: auto;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin-left: 2rem;
 
     & div:not(:first-child) {
       margin-left: 1rem;
@@ -143,7 +134,7 @@
     .NavTop__avatar {
       .UserNameAndAvatar {
         display: flex;
-        background-color: $grey-light;
+        // background-color: $grey-light;
         border-radius: $button-radius;
         padding: $round-padding;
 
@@ -156,7 +147,7 @@
         &__username {
           display: flex;
           align-items: center;
-          padding-right: 0.6rem;
+          padding-right: 1rem;
         }
       }
       // .user_avatar {
@@ -167,10 +158,16 @@
 
     .NavTop__linkConnexion {
       height: 100%;
+
+      .custom-button {
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
     }
   }
   &__roundBtn {
-    background-color: $grey-light;
+    // background-color: $grey-light;
+
     cursor: pointer;
     width: 3.5rem;
     height: 3.5rem;
@@ -181,20 +178,36 @@
     & > svg {
       @include big-logo-size;
     }
+
+    &.dark-theme-l {
+      & > svg {
+        fill: $white;
+        stroke: $white;
+
+        & * {
+          fill: $white !important;
+          stroke: $white !important;
+        }
+      }
+    }
   }
 
   &__swipeTuto {
-    margin-right: 1.5rem;
+    margin-right: 2.5rem;
     // height: 3.5rem;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &--image {
-      max-height: 100%;
+      max-height: 75%;
     }
   }
 
   &__userMenu {
     @include overlay-menu;
+    // background-color: $white;
     top: 100%;
     right: 2rem;
 
@@ -212,13 +225,31 @@
       }
     }
 
+    &.dark-theme-l {
+      .NavTop__userMenu--meta {
+        border-bottom: 1px solid $grey-dark;
+      }
+    }
+
+    &.light-theme-l {
+      background-color: $white;
+    }
+
     &--meta {
       border-bottom: 1px solid $grey-light;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .ToggleTheme {
+        margin: 1.5rem auto 0 auto;
+      }
     }
 
     &--meta,
     &--links {
-      padding: 2rem 3rem;
+      padding: 2rem 0;
+      margin: 0 3rem;
     }
 
     &--logo {
@@ -260,8 +291,12 @@
     visibility: hidden;
     z-index: -1;
     padding: 0 2rem;
-    box-shadow: $button-shadow;
+    // box-shadow: $button-shadow;
     transition: all 0.2s ease;
+
+    &.light-theme-l {
+      background-color: $white;
+    }
 
     &:hover {
       opacity: 1;
@@ -298,21 +333,52 @@
       font-size: 2.5rem;
       padding: 0.5rem 0;
       margin: 0 0 0.5rem 0;
-      border-bottom: 1px solid $grey;
+      border-bottom: 1px solid $dark-medium;
       display: inline-block;
       transition: all 0.2s ease;
 
-      &:hover {
-        color: $primary-light;
-      }
+      // &:hover {
+      //   color: $primary-light;
+      // }
     }
 
     &--category {
       display: inline-block;
       padding: 0.5rem 0;
-      &:hover {
-        color: $primary-light;
-      }
+      // &:hover {
+      //   color: $primary-light;
+      // }
+    }
+  }
+
+  .null-item {
+    &:hover {
+      color: getTopicColor(general);
+    }
+  }
+  .technologie-item {
+    &:hover {
+      color: getTopicColor(technologie);
+    }
+  }
+  .cuisine-item {
+    &:hover {
+      color: getTopicColor(cuisine);
+    }
+  }
+  .maison-item {
+    &:hover {
+      color: getTopicColor(maison);
+    }
+  }
+  .beaute-item {
+    &:hover {
+      color: getTopicColor(beaute);
+    }
+  }
+  .bienetre-item {
+    &:hover {
+      color: getTopicColor(bienetre);
     }
   }
 }

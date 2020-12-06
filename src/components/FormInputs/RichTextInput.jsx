@@ -5,12 +5,15 @@ import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./RichTextInput.scss";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../redux/layout/layout-selectors";
 
 const RichTextInput = ({ label, getDescriptionValue, firstValue }) => {
   const editorState = EditorState.createEmpty();
   const [content, setContent] = useState(editorState);
   const [contentInHTML, setContentInHTML] = useState();
   const editor = useRef(null);
+  const currentTheme = useSelector(selectTheme);
 
   useEffect(() => {
     if (firstValue) {
@@ -46,8 +49,9 @@ const RichTextInput = ({ label, getDescriptionValue, firstValue }) => {
         // blockRendererFn={myBlockRenderer}
         ref={editor}
         editorState={content}
-        wrapperClassName="demo-editor"
-        editorClassName="demo-editor"
+        wrapperClassName={`${currentTheme}-theme-m`}
+        editorClassName={`${currentTheme}-theme-m`}
+        toolbarClassName={`${currentTheme}-theme-l`}
         onEditorStateChange={onEditorStateChange}
         toolbar={{
           inline: { inDropdown: true },

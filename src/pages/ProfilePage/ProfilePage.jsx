@@ -48,7 +48,7 @@ const ProfilePage = ({ match, location }) => {
   };
 
   return (
-    <div className={`ProfilePage ${currentTheme}-theme`}>
+    <div className={`ProfilePage ${currentTheme}-theme-d`}>
       <div className="ProfilePage__wrapper">
         {userErrors ? (
           <div className="ProfilePage__error">

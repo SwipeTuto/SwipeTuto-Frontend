@@ -72,7 +72,7 @@ body {
   max-width: 100%;
   margin: 0 auto;
   touch-action: pan-x pan-y;
-  @include theme-colors($themelight: true);
+  @include theme-colors-dark($themelight: true);
 }
 
 // svg > * {
@@ -88,14 +88,6 @@ body {
 // .primary-medium-text {
 //   color: $primary-medium;
 // }
-
-.primary-lighter-text {
-  color: $primary-light;
-}
-
-.primary-dark-text {
-  color: $primary-dark;
-}
 
 .error__message {
   color: $red-error;
@@ -136,11 +128,78 @@ body {
   }
 }
 
-.dark-theme {
-  @include theme-colors($themelight: false);
+.dark-theme-l {
+  @include theme-colors-light($themelight: false);
 }
-.light-theme {
-  @include theme-colors($themelight: true);
+.light-theme-l {
+  @include theme-colors-light($themelight: true);
+}
+.dark-theme-m {
+  @include theme-colors-medium($themelight: false);
+}
+.light-theme-m {
+  @include theme-colors-medium($themelight: true);
+}
+.dark-theme-d {
+  @include theme-colors-dark($themelight: false);
+}
+.light-theme-d {
+  @include theme-colors-dark($themelight: true);
+}
+
+.null {
+  &.active {
+    background-color: getTopicColor(general);
+    color: $black;
+  }
+  &:hover {
+    color: getTopicColor(general);
+  }
+}
+.technologie {
+  &.active {
+    background-color: getTopicColor(technologie);
+    color: $black;
+  }
+  &:hover {
+    color: getTopicColor(technologie);
+  }
+}
+.cuisine {
+  &.active {
+    background-color: getTopicColor(cuisine);
+    color: $black;
+  }
+  &:hover {
+    color: getTopicColor(cuisine);
+  }
+}
+.maison {
+  &.active {
+    background-color: getTopicColor(maison);
+    color: $black;
+  }
+  &:hover {
+    color: getTopicColor(maison);
+  }
+}
+.beaute {
+  &.active {
+    background-color: getTopicColor(beaute);
+    color: $black;
+  }
+  &:hover {
+    color: getTopicColor(beaute);
+  }
+}
+.bienetre {
+  &.active {
+    background-color: getTopicColor(bienetre);
+    color: $black;
+  }
+  &:hover {
+    color: getTopicColor(bienetre);
+  }
 }
 
 @media screen and (max-width: $bp-tablet) {

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 import NavTop from "./components/LayoutComponents/NavTop/NavTop";
-import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile copy";
+import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
 import { deleteFilterErrorAction, getCardAfterfilterAction, getCardByIdAction } from './redux/filter/filter-actions'
@@ -92,7 +92,7 @@ function App(props) {
     const bodyEl = document.querySelector('body');
     bodyEl.classList.remove('light-theme');
     bodyEl.classList.remove('dark-theme');
-    bodyEl.classList.add(`${currentTheme}-theme`);
+    bodyEl.classList.add(`${currentTheme}-theme-d`);
 
   }, [currentTheme])
 

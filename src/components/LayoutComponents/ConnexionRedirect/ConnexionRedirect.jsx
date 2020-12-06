@@ -27,7 +27,7 @@ const ConnexionRedirect = ({ handleClose }) => {
         handleClose();
       }}
     >
-      <div className={`ConnexionRedirect__wrapper ${currentTheme}-theme`}>
+      <div className={`ConnexionRedirect__wrapper ${currentTheme}-theme-m`}>
         <CloseLogo
           className="ConnexionRedirect__close"
           onClick={(e) => {

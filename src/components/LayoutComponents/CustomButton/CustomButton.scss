@@ -2,6 +2,11 @@
 
 .custom-button {
   @include button-style;
+  background-color: $secondary-dark;
+
+  &:hover {
+    background-color: $secondary-light;
+  }
   height: 100%;
 
   &.dark {
@@ -29,6 +34,20 @@
     border: 1px solid $grey;
     background-color: $white;
     color: $black;
+    &.disabled-button {
+      background-color: $grey-dark, 20%;
+    }
+    &:hover {
+      // background-color: lighten($primary-light, 10%);
+      color: $primary-light;
+    }
+  }
+
+  &.transparent {
+    color: inherit;
+    border: 1px solid $grey;
+    background-color: transparent;
+    color: currentColor;
     &.disabled-button {
       background-color: $grey-dark, 20%;
     }

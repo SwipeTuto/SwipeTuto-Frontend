@@ -2,11 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  selectClickedCardSlides,
-  selectClickedCard,
-} from "../../../redux/filter/filter-selectors";
-import { selectFullscreen } from "../../../redux/layout/layout-selectors";
+import { selectClickedCardSlides, selectClickedCard } from "../../../redux/filter/filter-selectors";
+import { selectFullscreen, selectTheme } from "../../../redux/layout/layout-selectors";
 import { closeFullscreen } from "../../../redux/layout/layout-actions";
 
 import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
@@ -22,6 +19,7 @@ const CardSlider = () => {
   const clickedCard = useSelector(selectClickedCard);
   const isFullScreen = useSelector(selectFullscreen);
   const dispatch = useDispatch();
+  const currentTheme = useSelector(selectTheme);
 
   useEffect(() => {
     setLocalSlides(clickedCardSlides);
@@ -42,14 +40,8 @@ const CardSlider = () => {
   }, [glide, localSlides, isFullScreen]);
 
   return (
-    <div
-      className={`CardSlider ${isFullScreen ? "CardSlider--fullscreen" : ""}`}
-    >
-      <div
-        className={`CardSlider__close CardSlider__close--${
-          isFullScreen ? "active" : "hide"
-        }`}
-      >
+    <div className={`CardSlider ${isFullScreen ? "CardSlider--fullscreen" : ""}`}>
+      <div className={`CardSlider__close CardSlider__close--${isFullScreen ? "active" : "hide"}`}>
         <CloseLogo onClick={() => dispatch(closeFullscreen())} />
       </div>
       <div className="glide">
@@ -68,29 +60,16 @@ const CardSlider = () => {
           </ul>
         </div>
         <div className="glide__arrows" data-glide-el="controls">
-          <button
-            className="glide__arrow glide__arrow--left"
-            data-glide-dir="<"
-          >
+          <button className={`glide__arrow glide__arrow--left ${currentTheme}-theme`} data-glide-dir="<">
             <ChevronLeft className="CardSlider__nav" />
           </button>
-          <button
-            className="glide__arrow glide__arrow--right"
-            data-glide-dir=">"
-          >
+          <button className={`glide__arrow glide__arrow--right ${currentTheme}-theme`} data-glide-dir=">">
             <ChevronRight className="CardSlider__nav" />
           </button>
         </div>
         <div className="glide__bullets" data-glide-el="controls[nav]">
           {localSlides !== ["http://localhost:8000null"]
-            ? localSlides &&
-              localSlides.map((slide, index) => (
-                <button
-                  key={index}
-                  className="glide__bullet"
-                  data-glide-dir={`=${index}`}
-                ></button>
-              ))
+            ? localSlides && localSlides.map((slide, index) => <button key={index} className="glide__bullet" data-glide-dir={`=${index}`}></button>)
             : null}
         </div>
       </div>

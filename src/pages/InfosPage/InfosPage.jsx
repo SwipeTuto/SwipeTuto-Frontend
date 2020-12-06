@@ -14,7 +14,7 @@ const InfosPage = () => {
   }
 
   return (
-    <div className={`InfosPage ${currentTheme}-theme`}>
+    <div className={`InfosPage ${currentTheme}-theme-d`}>
       <h1 className="title title-1">Informations</h1>
       <h2 className="title title-2">Général</h2>
       <p>

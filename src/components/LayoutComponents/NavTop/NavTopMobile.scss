@@ -37,8 +37,9 @@
 
   &__swipeTuto {
     height: 100%;
-    margin-left: 1rem;
+    margin-left: 3rem;
     margin-right: auto;
+    // margin: 0 auto;
 
     img {
       height: 100%;
@@ -62,7 +63,7 @@
       height: 70%;
       width: auto;
       display: block;
-      box-shadow: $button-shadow;
+      // box-shadow: $button-shadow;
       cursor: pointer;
     }
   }
@@ -103,7 +104,7 @@
 
   .custom-button {
     margin: 2rem auto;
-    background-color: $secondary-light;
+    // background-color: $secondary-light;
     & > svg {
       @include big-logo-size;
       margin-right: 1rem;
@@ -113,10 +114,14 @@
   #mobileSearchButton {
     margin: 0;
     font-size: 2rem;
-    background-color: $white;
+
     & > svg {
       @include logo-size;
       margin-right: 1rem;
+
+      &.dark-theme {
+        fill: $white;
+      }
     }
   }
 

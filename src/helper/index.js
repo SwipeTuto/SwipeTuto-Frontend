@@ -324,11 +324,11 @@ export const topicArray = [
     name: "Bien-être",
     // logo: NodeJSLogo,
   },
-  {
-    queryName: "autre",
-    name: "Autre",
-    // logo: NodeJSLogo,
-  },
+  // {
+  //   queryName: "autre",
+  //   name: "Autre",
+  //   // logo: NodeJSLogo,
+  // },
 
 ];
 

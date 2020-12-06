@@ -9,11 +9,10 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    box-shadow: $light-shadow;
-    border: 1px solid $grey-light;
+    // box-shadow: $light-shadow;
+    border: 1px solid $grey;
     overflow: hidden;
-    background-color: $grey;
-    color: $black;
+    // color: $black;
     flex-shrink: 0;
 
     &--image {

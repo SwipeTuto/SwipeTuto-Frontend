@@ -21,9 +21,11 @@
     // flex-direction: column;
 
     & select {
-      border: 1px solid $grey;
       margin-right: 2rem;
-      box-shadow: $light-shadow;
+
+      &.light-theme-m {
+        border: 1px solid $grey;
+      }
     }
   }
 
@@ -105,8 +107,9 @@
     }
     &--item.active {
       // // background-color: $primary-light;
-      box-shadow: $light-shadow;
-      color: $white;
+      // box-shadow: $light-shadow;
+      color: $black;
+      font-weight: bold;
       border-radius: $button-radius;
     }
 

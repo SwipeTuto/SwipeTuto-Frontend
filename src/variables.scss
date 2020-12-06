@@ -4,7 +4,7 @@
 $red-error: #cf0030;
 $green-success: #00b109;
 $green-saved: #1be970;
-$red-like: #ff5d83;
+$red-like: #ff003c;
 
 $secondary-dark: #dba800;
 $secondary-light: #eec200;
@@ -12,39 +12,24 @@ $primary-light: #ad0cc2;
 $primary-dark: #280849;
 
 $black: #2c2c2c;
-$white: #f6f6f6;
-$grey: #cecece;
-$grey-lighter: #f1f1f1;
-$grey-light: #ebebeb;
+// $white: #f1f1f1;
+$white: #fff;
+$grey: #d4d4d4;
+$grey-lighter: #fdfdfd;
+$grey-light: #f1f1f1;
 $grey-dark: #636363;
 
-// $gen-p: #4d2c6f;
-// $gen-s: #14ebfa;
-// $bienetre-p: #285e2b;
-// $bienetre-s: #dffa15;
-// $beaute-p: #41275c;
-// $beaute-s: #f70d91;
-// $cuisine-p: #e53524;
-// $cuisine-s: #fada0a;
-// $maison-p: #6a2f85;
-// $maison-s: #0ef2a2;
-// $technologie-p: #000000;
-// $technologie-s: #ff3434;
+$dark-dark: #18191a;
+$dark-medium: #242526;
+$dark-light: #4e4f50;
 
 $topicColors: (
-  // "general": #4d2c6f,
   "general": #00d3e2,
-  "bienetre": #07d800,
-  // "bienetre": #dffa15,
-  // "beaute": #41275c,
-  "beaute": #8114b4,
-  // "beaute": #f70d91,
-  // "cuisine": #e53524,
-  "cuisine": #e7d000,
-  // "maison": #6a2f85,
+  "bienetre": #1eee17,
+  "beaute": #cc24ff,
+  "cuisine": #f5df17,
   "maison": #00e99b,
-  // "technologie": #000000,
-  "technologie": #ff3434
+  "technologie": #ff6060,
 );
 
 @function getTopicColor($topicName) {
@@ -99,9 +84,9 @@ $text-font: "Nunito", sans-serif;
 $title-font: "Montserrat", sans-serif;
 
 @mixin input-style {
-  background: $grey-lighter;
+  // background: $grey-lighter;
   // background: $white;
-  color: $black;
+  // color: $black;
   font-size: inherit;
   font-family: inherit;
   padding: $box-padding;
@@ -209,25 +194,44 @@ $title-font: "Montserrat", sans-serif;
   width: 3rem;
 }
 
-@mixin theme-colors($themelight: true) {
+@mixin theme-colors-dark($themelight: true) {
   @if $themelight {
     background-color: $white;
     color: $black;
   } @else {
-    background-color: $black;
+    background-color: $dark-dark;
     color: $white;
   }
 }
+@mixin theme-colors-medium($themelight: true) {
+  @if $themelight {
+    background-color: $grey-lighter;
+    color: $black;
+  } @else {
+    background-color: $dark-medium;
+    color: $white;
+  }
+}
+@mixin theme-colors-light($themelight: true) {
+  @if $themelight {
+    background-color: $grey-light;
+    color: $black;
+  } @else {
+    background-color: $dark-light;
+    color: $white;
+  }
+}
+
 @mixin card-shadow($themelight: true) {
   @if $themelight {
     box-shadow: 0 2px 2px rgba($grey, 0.6), 0 0 5px rgba($grey, 0.6);
   } @else {
-    box-shadow: 0 2px 2px rgba($grey-dark, 0.6), 0 0 5px rgba($grey-dark, 0.6);
+    box-shadow: 0 2px 2px rgba($dark-light, 0.6), 0 0 5px rgba($dark-medium, 0.6);
   }
 }
 
 @mixin large-shadow {
-  box-shadow: 0 0 20px rgba($black, 0.3);
+  box-shadow: 0 0 8px rgba($black, 0.6);
 }
 
 @mixin popup-style {
@@ -259,7 +263,7 @@ $title-font: "Montserrat", sans-serif;
   padding: 1.5rem;
   border-radius: $round-radius;
   cursor: pointer;
-  background-color: $white;
+  // background-color: $white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -311,6 +315,6 @@ $title-font: "Montserrat", sans-serif;
   border-radius: $card-radius;
   @include large-shadow;
   // @include card-shadow;
-  border: 0.5px solid $grey-light;
+  // border: 0.5px solid $grey-light;
   overflow: hidden;
 }

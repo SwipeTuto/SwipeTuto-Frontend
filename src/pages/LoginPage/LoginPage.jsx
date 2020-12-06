@@ -27,12 +27,12 @@ const LoginPage = () => {
   return (
     <>
       {currentUser && <Redirect to={"/search"} />}
-      <div className={`LoginPage ${currentTheme}-theme`}>
+      <div className={`LoginPage ${currentTheme}-theme-d`}>
         <div className="LoginPage__logo">
           <img className="LoginPage__logo--logo" src={SwipeTutoLargeLogo} alt="swipetuto" />
         </div>
 
-        <div className={`LoginPage__wrapper ${currentTheme}-theme`}>
+        <div className={`LoginPage__wrapper ${currentTheme}-theme-d`}>
           <Switch>
             <Route path="/connexion/login" component={Login} />
             <Route path="/connexion/signup" component={Register} />

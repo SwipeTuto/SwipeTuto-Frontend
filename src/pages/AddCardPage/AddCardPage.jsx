@@ -11,7 +11,7 @@ import Loading from "../../components/Loading/Loading";
 import { getCategoriesArray, topicArray } from "../../helper";
 import { createCardAction } from "../../redux/filter/filter-actions";
 import { openNotificationPopup } from "../../redux/layout/layout-actions";
-import { selectIsLoaded } from "../../redux/layout/layout-selectors";
+import { selectIsLoaded, selectTheme } from "../../redux/layout/layout-selectors";
 import { selectCurrentUserId } from "../../redux/user/user-selectors";
 // import { createCardService } from "../../services/cardsService";
 
@@ -25,7 +25,7 @@ const AddCardPage = () => {
     card_topic: null,
     card_category: null,
   });
-
+  const currentTheme = useSelector(selectTheme);
   const [categoriesLocalArray, setCategoriesLocalArray] = useState([]);
   // const [imagesArray, setImagesArray] = useState([]);
   const [imagesArrayNotEmpty, setImagesArrayNotEmpty] = useState(false);
@@ -172,7 +172,7 @@ const AddCardPage = () => {
   }, [dispatch]);
 
   return (
-    <div className="AddCardPage">
+    <div className={`AddCardPage ${currentTheme}-theme-d`}>
       {!isLoaded && (
         <div className="AddCardPage__loading">
           <Loading />

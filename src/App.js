@@ -92,7 +92,7 @@ function App(props) {
     const bodyEl = document.querySelector('body');
     bodyEl.classList.remove('light-theme');
     bodyEl.classList.remove('dark-theme');
-    bodyEl.classList.add(`${currentTheme}-theme`);
+    bodyEl.classList.add(`${currentTheme}-theme-d`);
 
   }, [currentTheme])
 

@@ -95,7 +95,7 @@ const NavTop = (props) => {
   };
 
   return (
-    <div className={`NavTop ${currentTheme}-theme`}>
+    <div className={`NavTop ${currentTheme}-theme-m`}>
       <div className="NavTop__left">
         <Link className="NavTop__swipeTuto" to="/">
           <img
@@ -119,11 +119,17 @@ const NavTop = (props) => {
               Explorer
               <DropDownLogo className="NavTop__link--logo" />
             </p>
-            <div className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme`}>
+            <div className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme-l`}>
               {topicArray &&
                 topicArray.map((topic, index) => (
                   <div className="NavTop__topicList" key={`topic${topic.name}${index}`}>
-                    <Link key={`topicList${index}`} to="/search" onClick={() => topicHandleClick(topic.queryName)} name={topic.queryName}>
+                    <Link
+                      key={`topicList${index}`}
+                      to="/search"
+                      onClick={() => topicHandleClick(topic.queryName)}
+                      name={topic.queryName}
+                      className={`${topic.queryName}-item`}
+                    >
                       <span className="NavTop__topicList--topic">{topic.name}</span>
                     </Link>
                     {getCategoriesArray(topic.queryName).map((category, index) => (
@@ -132,6 +138,7 @@ const NavTop = (props) => {
                         to="/search"
                         onClick={() => categoryHandleClick(topic.queryName, category.queryName)}
                         name={category.queryName}
+                        className={`${topic.queryName}-item`}
                       >
                         <span className="NavTop__topicList--category">{category.name}</span>
                       </Link>
@@ -153,15 +160,15 @@ const NavTop = (props) => {
         {currentUser ? (
           <>
             <div className="NavTop__avatar">
-              <UserNameAndAvatar user={currentUser} link={true} changeLink="/account/user" />
+              <UserNameAndAvatar user={currentUser} link={true} changeLink="/account/user" themed={true} />
             </div>
             <div className="NavTop__addcard">
-              <Link to="/add" className="NavTop__roundBtn">
+              <Link to="/add" className={`NavTop__roundBtn ${currentTheme}-theme-l`}>
                 <AddLogo />
               </Link>
             </div>
             <div
-              className="NavTop__dropdownUserMenu NavTop__roundBtn"
+              className={`NavTop__dropdownUserMenu NavTop__roundBtn ${currentTheme}-theme-l`}
               ref={dropdownBtn}
               onClick={() => {
                 if (navDropdownOpen) {
@@ -181,7 +188,7 @@ const NavTop = (props) => {
         )}
       </div>
       {navDropdownOpen ? (
-        <div className={`NavTop__userMenu ${currentTheme}-theme`} ref={dropdown}>
+        <div className={`NavTop__userMenu ${currentTheme}-theme-l`} ref={dropdown}>
           <div className="NavTop__userMenu--meta">
             <UserUsername user={currentUser} link={true} />
             <p className="NavTop__userMenu--text">{currentUser.email}</p>

@@ -70,7 +70,7 @@ const Register = ({ title }) => {
   }, [user, passwordConfirmation, allInput]);
 
   return (
-    <div className={`Register ${currentTheme}-theme`}>
+    <div className={`Register ${currentTheme}-theme-d`}>
       <h2 className="title title-2">{title ? title : "Bienvenue chez Swipetuto !"}</h2>
       <div className="Login__google">
         <CustomButton color="white" onClick={(e) => handleClickGoogle(e)}>

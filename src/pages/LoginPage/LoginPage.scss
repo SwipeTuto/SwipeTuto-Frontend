@@ -47,18 +47,6 @@
 
 @media screen and (max-width: $bp-tablet) {
   .LoginPage {
-    &__wrapper {
-      width: 65%;
-      // margin: 0rem;
-    }
-    &__logo {
-      width: 35%;
-    }
-  }
-}
-
-@media screen and (max-width: $bp-phone) {
-  .LoginPage {
     background-image: none;
     display: flex;
     justify-content: center;

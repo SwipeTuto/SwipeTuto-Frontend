@@ -103,9 +103,9 @@ const CardPreviewSmall = ({ card, size }) => {
   }, [cardIsReady]);
 
   return (
-    <div className={`CardPreviewSmall ${currentTheme}-theme`} data-slideid="1">
+    <div className={`CardPreviewSmall ${currentTheme}-theme-m`} data-slideid="1">
       <div
-        className={`CardPreviewSmall__image  ${cardIsReady ? "active" : "hide"}`}
+        className={`CardPreviewSmall__image  ${cardIsReady ? "active" : "hide"} ${currentTheme}-theme-l`}
         id={`CardPreviewSmall__image--${cardId}`}
         onClick={() => handleClickedCardClick()}
       >
@@ -117,7 +117,7 @@ const CardPreviewSmall = ({ card, size }) => {
       <div
         className={`CardPreviewSmall__image ${
           !cardIsReady ? "active" : "hide"
-        } CardPreviewSmall__image--loading CardPreviewSmall__image--loading-${size}`}
+        } CardPreviewSmall__image--loading CardPreviewSmall__image--loading-${size} ${currentTheme}-theme-l`}
         onClick={() => handleClickedCardClick()}
       >
         {isError ? <p>Image non disponible.</p> : <Loading />}
@@ -125,17 +125,20 @@ const CardPreviewSmall = ({ card, size }) => {
 
       <div className="CardPreviewSmall__details">
         <UserNameAndAvatar user={user} link={true} />
-        <div className="CardPreviewSmall__likes--logo">
-          <EyeLogo />
+
+        <div className={`CardPreviewSmall__likes ${currentTheme}-theme`}>
+          <div className={`CardPreviewSmall__likes--logo`}>
+            <EyeLogo />
+          </div>
+          <p className={`CardPreviewSmall__likes--number`}>{total_views ? convertNumber(total_views) : 0}</p>
         </div>
 
-        <p className="CardPreviewSmall__likes--number">{total_views ? convertNumber(total_views) : 0}</p>
-        <div className="CardPreviewSmall__likes" onClick={() => handleLikeClick()}>
-          <div className="CardPreviewSmall__likes--logo">
+        <div className={`CardPreviewSmall__likes ${currentTheme}-theme`} onClick={() => handleLikeClick()}>
+          <div className={`CardPreviewSmall__likes--logo`}>
             <HeartFull id={`CardPreviewSmall__heart${cardId}`} />
           </div>
 
-          <p className="CardPreviewSmall__likes--number" id={`likesNumber${cardId}`}>
+          <p className={`CardPreviewSmall__likes--number`} id={`likesNumber${cardId}`}>
             {number_of_likes ? convertNumber(number_of_likes) : 0}
           </p>
         </div>

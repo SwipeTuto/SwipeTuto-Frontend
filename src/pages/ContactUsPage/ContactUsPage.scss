@@ -12,14 +12,20 @@
   &__form {
     display: flex;
     flex-direction: column;
-    // background-color: grey;
-    // border: 1px solid $grey;
-    // @include card-shadow;
     border-radius: $button-radius;
     padding: 2rem;
     width: 50%;
     margin-top: 5rem;
 
+    .form__group {
+      margin-bottom: 2rem;
+
+      input,
+      select,
+      textarea {
+        margin-top: 1rem;
+      }
+    }
     .custom-button {
       margin-top: 3rem;
     }

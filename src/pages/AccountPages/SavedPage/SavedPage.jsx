@@ -27,7 +27,7 @@ const SavedPage = ({ location }) => {
   }, [dispatch, currentUserId]);
 
   return (
-    <div className={`SavedPage ${currentTheme}-theme`}>
+    <div className={`SavedPage ${currentTheme}-theme-d`}>
       <div className="SavedPage__cards">
         <h3 className="title title-3">Vos cartes sauvegardées :</h3>
         {!isLoaded ? (

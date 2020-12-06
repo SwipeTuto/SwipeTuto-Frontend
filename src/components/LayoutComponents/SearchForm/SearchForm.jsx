@@ -14,6 +14,7 @@ import { ReactComponent as CloseLogo } from "../../../assets/images/close-circle
 
 import "./SearchForm.scss";
 import { initialSearchState } from "../../../helper";
+import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 const SearchForm = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const SearchForm = () => {
   const [isFocus, setIsFocus] = useState(false);
   const searchWords = useSelector(selectSearchWords);
   const currentSearch = useSelector(selectCurrentSearch);
+  const currentTheme = useSelector(selectTheme);
 
   useEffect(() => {
     if (searchWords === null) {
@@ -47,7 +49,7 @@ const SearchForm = () => {
 
   return (
     <form className="SearchForm" onSubmit={(e) => handleSubmit(e)}>
-      <div className={`SearchForm__search ${isFocus ? "focus" : ""}`}>
+      <div className={`SearchForm__search ${isFocus ? "focus" : ""} ${currentTheme}-theme-l`}>
         {searchWords ? (
           <div className="SearchForm__button" onClick={() => handleSearchDelete()}>
             <CloseLogo className="SearchForm__button--logo" pointerEvents="none" />

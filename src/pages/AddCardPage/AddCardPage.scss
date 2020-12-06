@@ -31,7 +31,6 @@
 
   &__wrapper {
     padding: 6rem;
-    margin: 2rem;
     border: 1px solid $grey;
   }
 
@@ -93,11 +92,15 @@
 @media screen and (max-width: $bp-tablet) {
   .AddCardPage {
     padding: $grid-component-padding-tablet;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 }
 @media screen and (max-width: $bp-phone) {
   .AddCardPage {
     padding: 0;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 
     &__inputZone {
       flex-direction: column;

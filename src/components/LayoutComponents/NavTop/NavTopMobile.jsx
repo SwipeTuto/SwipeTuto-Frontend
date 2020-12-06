@@ -29,7 +29,8 @@ import { ReactComponent as AddLogo } from "../../../assets/images/add-circle.svg
 import { ReactComponent as LearnFlashLogo } from "../../../assets/images/flash.svg";
 import { ReactComponent as HomeLogo } from "../../../assets/images/home.svg";
 import SwipeTutoSmallLogo from "../../../assets/swipetuto/STvb_short.png";
-import SwipeTutoSmallFull from "../../../assets/swipetuto/STvb_big.png";
+import SwipeTutoSmallFullBlack from "../../../assets/swipetuto/STvb_big.png";
+import SwipeTutoSmallFullWhite from "../../../assets/swipetuto/STvb_big_light.png";
 
 import "./NavTopMobile.scss";
 import { useDarkMode } from "../../../hooks/useDarkMode";
@@ -83,7 +84,7 @@ const NavTopMobile = (props) => {
   };
 
   return (
-    <div className={`NavTopMobile ${mobileNavOpen ? "active" : ""} ${currentTheme}-theme`}>
+    <div className={`NavTopMobile ${mobileNavOpen ? "active" : ""} ${currentTheme}-theme-m`}>
       {filtersBarMobile && <FiltersBarMobile title="Recherche" showResults={false} />}
 
       <div className="NavTopMobile__top">
@@ -105,11 +106,11 @@ const NavTopMobile = (props) => {
           />
         )}
         <Link className="NavTopMobile__swipeTuto" to="/" onClick={() => handleNavClose()}>
-          <img src={SwipeTutoSmallLogo} alt="" />
+          <img src={SwipeTutoSmallLogo} alt="swipetuto logo" />
         </Link>
 
-        <CustomButton color="white" id="mobileSearchButton" onClick={handleFiltersMobileOpen}>
-          <SearchLogo />
+        <CustomButton color="transparent" id="mobileSearchButton" onClick={handleFiltersMobileOpen}>
+          <SearchLogo className={`${currentTheme}-theme`} />
           Recherche
         </CustomButton>
       </div>

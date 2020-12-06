@@ -9,6 +9,7 @@ import { selectCurrentUser } from "../../redux/user/user-selectors";
 import { sendEmailContact } from "../../services/backOfficeService.js";
 // import  CSRFToken  from "../../components/Cookies/CsrfToken"
 import { withRouter } from "react-router-dom";
+import { selectTheme } from "../../redux/layout/layout-selectors";
 
 const ContactUsPage = ({ history }) => {
   const [message, setMessage] = useState({
@@ -18,6 +19,7 @@ const ContactUsPage = ({ history }) => {
   });
   const currentUser = useSelector(selectCurrentUser);
   const currentUserEmail = currentUser && currentUser.email;
+  const currentTheme = useSelector(selectTheme);
 
   useEffect(() => {
     if (message.email === "") {
@@ -57,7 +59,7 @@ const ContactUsPage = ({ history }) => {
   };
 
   return (
-    <div className="ContactPage">
+    <div className={`ContactPage ${currentTheme}-theme-d`}>
       <h1 className="title title-1">Nous contacter</h1>
       <p>
         Vous souhaitez prendre contact avec nous ? Merci de préciser votre adresse mail pour que nous puissions vous répondre, ainsi que la catégorie

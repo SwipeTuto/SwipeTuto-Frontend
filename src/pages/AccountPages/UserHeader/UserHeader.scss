@@ -85,6 +85,12 @@
         @include big-logo-size;
       }
     }
+
+    &.dark-theme-d {
+      svg {
+        fill: $white;
+      }
+    }
   }
 }
 

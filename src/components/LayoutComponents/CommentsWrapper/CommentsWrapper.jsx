@@ -28,7 +28,7 @@ import {
 // import Loading from "../../Loading/Loading";
 import FirstLevelComment from "./FirstLevelComment/FirstLevelComment";
 import CustomButton from "../CustomButton/CustomButton";
-import CommentsInput from "../CommentsInput copy/CommentsInput";
+import CommentsInput from "../CommentsInput/CommentsInput";
 
 // assets
 // import { ReactComponent as ChatLogo } from "../../../assets/images/chatbubbles-outline.svg";
@@ -134,7 +134,7 @@ const CommentsWrapper = () => {
           </div>
           <div className="CommentsWrapper__nextButton">
             {nextCommentsLink && (
-              <CustomButton color="white" onClick={handleFetchNextLink}>
+              <CustomButton color="transparent" onClick={handleFetchNextLink}>
                 Commentaires plus anciens ...
               </CustomButton>
             )}

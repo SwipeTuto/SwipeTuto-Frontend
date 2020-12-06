@@ -78,6 +78,11 @@
     display: flex;
     & .custom-button:last-of-type {
       margin-left: 1.5rem;
+      background-color: $secondary-light;
+
+      &:disabled {
+        background-color: $grey-dark;
+      }
     }
   }
 

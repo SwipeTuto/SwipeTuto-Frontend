@@ -8,8 +8,7 @@
   // min-height: 90vh;
   display: flex;
   align-items: stretch;
-  background-image: linear-gradient(to right, transparent, $black),
-    url("../../assets/images/login-image.jpg");
+  background-image: linear-gradient(to right, transparent, $black), url("../../assets/images/login-image.jpg");
   background-size: cover;
 
   &__wrapper {
@@ -26,8 +25,12 @@
     align-items: center;
 
     &--logo {
-      max-width: 30rem;
+      max-width: 60rem;
       width: 60%;
+      padding: 2rem;
+      border-radius: $card-radius;
+      background-color: rgba($white, 0.7);
+      @include large-shadow;
     }
   }
 

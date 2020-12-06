@@ -37,14 +37,6 @@
   &__link {
     @include nav-style;
 
-    &.active {
-      @include nav-active-style;
-
-      & svg {
-        stroke: $primary-light;
-      }
-    }
-
     &--category:hover ~ .NavTop__dropdown--category {
       opacity: 1;
       visibility: visible;
@@ -62,9 +54,7 @@
   }
 
   &__center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
 
     .NavTop__search {
       display: flex;
@@ -131,10 +121,11 @@
   }
 
   &__right {
-    margin-left: auto;
+    // margin-left: auto;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin-left: 2rem;
 
     & div:not(:first-child) {
       margin-left: 1rem;
@@ -184,12 +175,15 @@
   }
 
   &__swipeTuto {
-    margin-right: 1.5rem;
+    margin-right: 2.5rem;
     // height: 3.5rem;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &--image {
-      max-height: 100%;
+      max-height: 75%;
     }
   }
 
@@ -214,6 +208,9 @@
 
     &--meta {
       border-bottom: 1px solid $grey-light;
+      .ToggleTheme {
+        margin-top: 1.5rem;
+      }
     }
 
     &--meta,

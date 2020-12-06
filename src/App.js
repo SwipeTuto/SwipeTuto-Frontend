@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 import NavTop from "./components/LayoutComponents/NavTop/NavTop";
-import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile copy";
+import NavTopMobile from "./components/LayoutComponents/NavTop/NavTopMobile";
 import Footer from "./components/LayoutComponents/Footer/Footer";
 
 import { deleteFilterErrorAction, getCardAfterfilterAction, getCardByIdAction } from './redux/filter/filter-actions'

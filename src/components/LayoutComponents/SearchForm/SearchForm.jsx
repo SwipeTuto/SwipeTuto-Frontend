@@ -18,6 +18,7 @@ import { initialSearchState } from "../../../helper";
 const SearchForm = () => {
   const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState("");
+  const [isFocus, setIsFocus] = useState(false);
   const searchWords = useSelector(selectSearchWords);
   const currentSearch = useSelector(selectCurrentSearch);
 
@@ -46,7 +47,7 @@ const SearchForm = () => {
 
   return (
     <form className="SearchForm" onSubmit={(e) => handleSubmit(e)}>
-      <div className="SearchForm__search">
+      <div className={`SearchForm__search ${isFocus ? "focus" : ""}`}>
         {searchWords ? (
           <div className="SearchForm__button" onClick={() => handleSearchDelete()}>
             <CloseLogo className="SearchForm__button--logo" pointerEvents="none" />
@@ -61,9 +62,11 @@ const SearchForm = () => {
           id="search"
           name="search"
           type="text"
-          placeholder="Recherche..."
+          placeholder="Recherche"
           onChange={(e) => handleChange(e)}
           value={searchInput || ""}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
         />
       </div>
     </form>

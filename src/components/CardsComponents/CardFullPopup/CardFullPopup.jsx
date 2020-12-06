@@ -395,7 +395,7 @@ const CardFullPopup = ({ history, location }) => {
                     <h1 className="title title-1 CardFullPopup__title">{clickedCard && clickedCard.name}</h1>
 
                     <div className="CardFullPopup__meta CardFullPopup__section">
-                      <p className="CardFullPopup__meta-block CardFullPopup__meta--topic_category">
+                      <p className={`CardFullPopup__meta-block ${clickedCard.topic[0].name} active CardFullPopup__meta--topic_category`}>
                         {clickedCard &&
                           clickedCard.topic &&
                           clickedCard.topic[0] &&
@@ -408,8 +408,10 @@ const CardFullPopup = ({ history, location }) => {
                           clickedCard.categorie[0].name &&
                           renameQuery(clickedCard.categorie[0].name)}
                       </p>
-                      <p className="CardFullPopup__meta-block CardFullPopup__meta--date">Publié le {clickedCardDate}</p>
-                      <div className="CardFullPopup__meta-block  CardFullPopup__meta--stats">
+                      <p className={`CardFullPopup__meta-block ${clickedCard.topic[0].name} active CardFullPopup__meta--date`}>
+                        Publié le {clickedCardDate}
+                      </p>
+                      <div className={`CardFullPopup__meta-block ${clickedCard.topic[0].name} active  CardFullPopup__meta--stats`}>
                         <span className="CardFullPopup__meta--logo">
                           <EyeLogo />
                         </span>

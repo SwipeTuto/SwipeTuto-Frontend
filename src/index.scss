@@ -89,14 +89,6 @@ body {
 //   color: $primary-medium;
 // }
 
-.primary-lighter-text {
-  color: $primary-light;
-}
-
-.primary-dark-text {
-  color: $primary-dark;
-}
-
 .error__message {
   color: $red-error;
   margin-bottom: 1rem;
@@ -141,6 +133,61 @@ body {
 }
 .light-theme {
   @include theme-colors($themelight: true);
+}
+
+.null {
+  &.active {
+    background-color: getTopicColor(general);
+    color: $white;
+  }
+  &:hover {
+    color: getTopicColor(general);
+  }
+}
+.technologie {
+  &.active {
+    background-color: getTopicColor(technologie);
+    color: $white;
+  }
+  &:hover {
+    color: getTopicColor(technologie);
+  }
+}
+.cuisine {
+  &.active {
+    background-color: getTopicColor(cuisine);
+    color: $white;
+  }
+  &:hover {
+    color: getTopicColor(cuisine);
+  }
+}
+.maison {
+  &.active {
+    background-color: getTopicColor(maison);
+    color: $white;
+  }
+  &:hover {
+    color: getTopicColor(maison);
+  }
+}
+.beaute {
+  &.active {
+    background-color: getTopicColor(beaute);
+    color: $white;
+  }
+  &:hover {
+    color: getTopicColor(beaute);
+  }
+}
+.bienetre {
+  &.active {
+    background-color: getTopicColor(bienetre);
+    color: $white;
+  }
+  &:hover {
+    color: getTopicColor(bienetre);
+  }
 }
 
 @media screen and (max-width: $bp-tablet) {

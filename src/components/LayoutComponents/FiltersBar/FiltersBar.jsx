@@ -102,7 +102,7 @@ const FiltersBar = ({ handleClickSize }) => {
               categoriesArray.map((category, index) => (
                 <div
                   onClick={() => handleCategoryChange(category.queryName)}
-                  className={`FiltersBar__options--item ${searchCategory === category.queryName && "active"}`}
+                  className={`FiltersBar__options--item ${searchTopic} ${searchCategory === category.queryName && "active"}`}
                   key={`category${category.queryName}${index}`}
                   data-category={category.queryName}
                 >

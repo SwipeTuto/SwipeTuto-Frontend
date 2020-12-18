@@ -160,7 +160,7 @@
   }
 
   &__mobile {
-    display: flex;
+    display: none;
     justify-content: space-between;
     position: absolute;
     bottom: 0;
@@ -177,11 +177,6 @@
           stroke: $white !important;
         }
       }
-    }
-
-    .card-action-button,
-    .VerticalMenu__logo--logo {
-      margin-left: 1rem;
     }
   }
 
@@ -228,6 +223,7 @@
         color: $black;
         padding: 1rem;
         border-radius: $card-radius;
+        white-space: normal;
       }
 
       a,
@@ -397,10 +393,6 @@
         width: 90rem;
       }
 
-      &__mobile {
-        display: none;
-      }
-
       &__wrapper,
       &__action-button {
         margin: 2rem 0;
@@ -445,6 +437,16 @@
 
   @media screen and (max-width: $bp-tablet) {
     .CardFullPopup {
+      &__mobile {
+        display: flex;
+        justify-content: center;
+
+        .card-action-button,
+        .VerticalMenu__logo--logo {
+          margin-left: 2rem;
+        }
+      }
+
       &__scroll-wrapper {
         display: block;
       }
@@ -461,6 +463,11 @@
         min-width: unset;
       }
     }
+    .VerticalMenu__menu {
+      top: unset;
+      right: unset;
+      bottom: 130%;
+    }
     .CardSlider {
       height: 100%;
     }
@@ -468,6 +475,10 @@
 
   @media screen and (max-width: $bp-phone) {
     .CardFullPopup {
+      &__mobile {
+        justify-content: space-between;
+      }
+
       &__wrapper {
         padding: $inner-component-padding-phone;
         padding-bottom: 5rem;
@@ -508,11 +519,6 @@
       &__commentaires {
         padding-bottom: 0;
       }
-    }
-    .VerticalMenu__menu {
-      top: unset;
-      right: unset;
-      bottom: 130%;
     }
   }
 

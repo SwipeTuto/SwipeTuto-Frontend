@@ -291,7 +291,7 @@ const CardFullPopup = ({ history, location }) => {
           }}
         >
           {!isFullscreen && (
-            <div className={`CardFullPopup__mobile ${currentTheme}-theme-m`}>
+            <div className={`CardFullPopup__mobile ${currentTheme}-theme-m`} onClick={(e) => e.stopPropagation()}>
               {clickedCardIsLoaded ? (
                 <>
                   {/* <ShareLogo

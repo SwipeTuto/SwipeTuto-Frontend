@@ -45,15 +45,15 @@
 
   .glide {
     position: relative;
-    height: 70vh;
-
-    &__track {
+    height: 70vh &__track {
       height: 100%;
       // background-color: $grey-lighter;
     }
 
     &__slides {
       height: 100%;
+      -ms-touch-action: pan-y;
+      touch-action: pan-y;
     }
 
     &__slide {

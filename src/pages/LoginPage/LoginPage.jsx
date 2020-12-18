@@ -11,6 +11,7 @@ import "./LoginPage.scss";
 import Register from "../../components/LayoutComponents/Login/Register";
 import { selectShowPopupCard, selectTheme } from "../../redux/layout/layout-selectors";
 import { closePopupCard } from "../../redux/layout/layout-actions";
+import STLogo from "../../assets/stlogos/swipetuto eclair bleu.png";
 
 // Props history, location, match, depuis react router dom
 const LoginPage = () => {
@@ -29,7 +30,7 @@ const LoginPage = () => {
       {currentUser && <Redirect to={"/search"} />}
       <div className={`LoginPage ${currentTheme}-theme-d`}>
         <div className="LoginPage__logo">
-          <img className="LoginPage__logo--logo" src={SwipeTutoLargeLogo} alt="swipetuto" />
+          <img className="LoginPage__logo--logo" src={STLogo} alt="swipetuto" />
         </div>
 
         <div className={`LoginPage__wrapper ${currentTheme}-theme-d`}>

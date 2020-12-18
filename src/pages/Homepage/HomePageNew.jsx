@@ -23,7 +23,8 @@ import Register from "../../components/LayoutComponents/Login/Register";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
 import HowItWorks from "../../components/LayoutComponents/HowItWorks/HowItWorks";
 // import { setLoaded } from "../../redux/layout/layout-actions";
-
+import STSmallLogoBlackmod from "../../assets/stlogos/logo seul blackmode.png";
+import STSmallLogo from "../../assets/stlogos/logo seul.png";
 const HomePage = () => {
   // const isLoaded = useSelector(selectIsLoaded);
   const currentTheme = useSelector(selectTheme);
@@ -69,7 +70,9 @@ const HomePage = () => {
       {currentUser && <Redirect to={"/search"} />}
       <div className={`HomePage ${currentTheme}-theme-d`}>
         <header className="HomePage__header">
-          <h1 className="title title-1">Swipetuto</h1>
+          <img src={currentTheme === "light" ? STSmallLogo : STSmallLogoBlackmod} alt="swipetuto logo" />
+
+          <h1 className="title title-1">SWIPETUTO</h1>
           <h2 className="title title-2">On apprend quoi aujourd'hui ?</h2>
           <div className="HomePage__topics">
             {topicArray.map((topic, index) => (
@@ -82,7 +85,7 @@ const HomePage = () => {
         <div className="HomePage__grid">
           {isLoaded && !isEmpty ? (
             <>
-              <div className="HomePage__grid--overlay"></div>
+              <div className={`HomePage__grid--overlay ${currentTheme}`}></div>
               <CardGridList loadFilter={true} allowInfiniteScroll={false} />
             </>
           ) : isLoaded && isEmpty ? (

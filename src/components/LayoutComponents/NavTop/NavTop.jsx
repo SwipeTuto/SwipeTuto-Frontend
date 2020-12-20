@@ -34,6 +34,8 @@ import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/
 import { ReactComponent as BookmarkLogo } from "../../../assets/images/bookmark.svg";
 import { ReactComponent as AddLogo } from "../../../assets/images/add.svg";
 import { ReactComponent as DropdownFullLogo } from "../../../assets/images/chevrons/caret-down.svg";
+import STSmallLogoBlackmod from "../../../assets/stlogos/logo seul blackmode.png";
+import STSmallLogo from "../../../assets/stlogos/logo seul.png";
 // import SwipeTutoSmallSmall from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
 
 import "./NavTop.scss";
@@ -97,10 +99,11 @@ const NavTop = (props) => {
   return (
     <div className={`NavTop ${currentTheme}-theme-m`}>
       <div className="NavTop__left">
-        <Link className="NavTop__swipeTuto" to="/">
+        <Link to="/" className="NavTop__swipeTuto">
           <img
             className="NavTop__swipeTuto--image"
-            src={getTopicShortImage(currentTopic)}
+            // src={getTopicShortImage(currentTopic)}
+            src={currentTheme === "light" ? STSmallLogo : STSmallLogoBlackmod}
             alt=""
             onClick={() => {
               dispatch(setCurrentSearch(initialSearchState));
@@ -183,7 +186,7 @@ const NavTop = (props) => {
           </>
         ) : (
           <Link className="NavTop__linkConnexion" to="/connexion/login">
-            <CustomButton color="dark">Connexion / Inscription</CustomButton>
+            <CustomButton color="dark">Connexion</CustomButton>
           </Link>
         )}
       </div>

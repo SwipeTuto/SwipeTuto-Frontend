@@ -291,44 +291,9 @@ const CardFullPopup = ({ history, location }) => {
           }}
         >
           {!isFullscreen && (
-            <div className={`CardFullPopup__mobile ${currentTheme}-theme-m`}>
+            <div className={`CardFullPopup__mobile ${currentTheme}-theme-m`} onClick={(e) => e.stopPropagation()}>
               {clickedCardIsLoaded ? (
                 <>
-                  {cardIsLiked ? (
-                    <HeartFull
-                      className="card-action-button card-action-button__liked"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleLikeClick();
-                      }}
-                    />
-                  ) : (
-                    <HeartEmpty
-                      className="card-action-button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleLikeClick();
-                      }}
-                    />
-                  )}
-                  {cardIsSaved ? (
-                    <BookmarkFull
-                      className="card-action-button card-action-button__saved"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleSaveClick();
-                      }}
-                    />
-                  ) : (
-                    <BookmarkEmpty
-                      className="card-action-button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleSaveClick();
-                      }}
-                    />
-                  )}
-
                   {/* <ShareLogo
                 className="card-action-button"
                 onClick={(e) => {
@@ -368,6 +333,42 @@ const CardFullPopup = ({ history, location }) => {
                     )}
                   </VerticalMenu>
 
+                  {cardIsSaved ? (
+                    <BookmarkFull
+                      className="card-action-button card-action-button__saved"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSaveClick();
+                      }}
+                    />
+                  ) : (
+                    <BookmarkEmpty
+                      className="card-action-button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSaveClick();
+                      }}
+                    />
+                  )}
+
+                  {cardIsLiked ? (
+                    <HeartFull
+                      className="card-action-button card-action-button__liked"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleLikeClick();
+                      }}
+                    />
+                  ) : (
+                    <HeartEmpty
+                      className="card-action-button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleLikeClick();
+                      }}
+                    />
+                  )}
+
                   <CloseLogo
                     className="card-action-button"
                     onClick={(e) => {
@@ -385,7 +386,7 @@ const CardFullPopup = ({ history, location }) => {
               <div className={`CardFullPopup__wrapper ${currentTheme}-theme-d`} onClick={(e) => e.stopPropagation()}>
                 <div className="CardFullPopup__user CardFullPopup__section">
                   {/* <ShareButtons /> */}
-                  <UserNameAndAvatar  user={clickedCard && clickedCard.user && clickedCard.user} link={true} />
+                  <UserNameAndAvatar user={clickedCard && clickedCard.user && clickedCard.user} link={true} />
                 </div>
 
                 {clickedCardIsLoaded ? (

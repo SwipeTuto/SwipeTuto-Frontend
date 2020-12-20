@@ -33,7 +33,7 @@ const Footer = ({ location }) => {
 
   return (
     <div className={`Footer ${hide ? "hide" : ""}`}>
-      <h2 className="title title-2">SwipeTuto</h2>
+      <h2 className="title title-2">SWIPETUTO</h2>
       <div className="Footer__links">
         <div className="Footer__links--group">
           <Link to="/">Accueil</Link>
@@ -67,7 +67,7 @@ const Footer = ({ location }) => {
         </Link>
       </div>
       <div className="Footer__credits">
-        SwipeTuto - &copy; SwipeTuto {currentYear}
+        SWIPETUTO - &copy; SWIPETUTO {currentYear}
         <ToggleButton toggleTheme={toggleTheme} theme={theme} />
       </div>
     </div>

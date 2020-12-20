@@ -79,13 +79,13 @@ $bp-small-phone: 540px;
 $bp-smallest: 360px;
 
 // Fonts
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Nunito&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik&family=Nunito&display=swap");
 $text-font: "Nunito", sans-serif;
-$title-font: "Montserrat", sans-serif;
+$title-font: "Rubik", sans-serif;
 
 @mixin input-style {
   // background: $grey-lighter;
-  // background: $white;
+  // background: $grey;
   // color: $black;
   font-size: inherit;
   font-family: inherit;

@@ -114,8 +114,8 @@ const AddCardPage = () => {
     try {
       const files = await filedrop.current.getFiles();
       const imagesFiles = await files.map((obj) => obj);
-
       const cardObject = {
+        state: 1,
         name: cardInfos.card_title,
         description: cardInfos.card_description,
         topic: cardInfos.card_topic,

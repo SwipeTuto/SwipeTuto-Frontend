@@ -77,6 +77,7 @@ export const createCardService = (cardObject) => {
   formData.append("user", cardObject.user);
   formData.append("topic", cardObject.topic);
   formData.append("name", cardObject.name);
+  formData.append("state", cardObject.state);
   cardObject.image.map(rep => {
     formData.append("image", rep.source);
     return rep

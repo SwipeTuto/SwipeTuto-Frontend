@@ -33,6 +33,7 @@ const AddCardPage = () => {
   const [emptyState, setEmptyState] = useState(false);
   const filedrop = useRef();
   const localDraftNewCard = JSON.parse(window.localStorage.getItem("draftNewCard"));
+  const localDraftNewCardImage = JSON.parse(window.localStorage.getItem("fileBase64"));
   const dispatch = useDispatch();
   const isLoaded = useSelector(selectIsLoaded);
 
@@ -51,6 +52,7 @@ const AddCardPage = () => {
   }, []);
 
   useEffect(() => {
+
     setCategoriesLocalArray(getCategoriesArray(cardInfos.card_topic));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardInfos.card_topic]);
@@ -75,6 +77,8 @@ const AddCardPage = () => {
     // setImagesArray(cards);
     // const localObj = window.localStorage.getItem("draftNewCard");
   };
+
+
 
   useEffect(() => {
     if (localDraftNewCard && localDraftNewCard.user !== currentuserId) {
@@ -101,20 +105,17 @@ const AddCardPage = () => {
         user: currentuserId,
       })
     );
-    // console.log({
-    //   name: cardInfos.card_title,
-    //   description: cardInfos.card_description,
-    //   topic: cardInfos.card_topic,
-    //   categorie: cardInfos.card_category,
-    //   user: currentuserId,
-    // });
+
   }, [cardInfos.card_category, cardInfos.card_description, cardInfos.card_title, cardInfos.card_topic, currentuserId]);
+
+  
 
   const createCard = async () => {
     try {
       const files = await filedrop.current.getFiles();
       const imagesFiles = await files.map((obj) => obj);
       const cardObject = {
+        state: 1,
         name: cardInfos.card_title,
         description: cardInfos.card_description,
         topic: cardInfos.card_topic,
@@ -122,11 +123,10 @@ const AddCardPage = () => {
         user: currentuserId,
         image: await imagesFiles,
       };
+
       dispatch(createCardAction(cardObject));
-      // createCardService(cardObject);
-      // createCardService(files);
+
       await window.localStorage.removeItem("draftNewCard");
-      // console.log(cardObject);
       setIsValid(false);
     } catch (err) {}
   };
@@ -143,10 +143,6 @@ const AddCardPage = () => {
     setEmptyState(true);
     document.location.reload();
   };
-
-  // useEffect(() => {
-  //   console.log(cardInfos);
-  // }, [cardInfos]);
 
   useEffect(() => {
     if (emptyState) setEmptyState(false);
@@ -189,7 +185,7 @@ const AddCardPage = () => {
             <p className="AddCardPage__description">
               Ajouter la / les image(s) de votre carte ici <sup>(*)</sup>.
             </p>
-            <DraggableUploadInput ref={filedrop} updateFiles={updateFiles} emptyState={emptyState} />
+            <DraggableUploadInput  ref={filedrop} updateFiles={updateFiles} emptyState={emptyState} />
           </section>
 
           <section className="AddCardPage__section">
@@ -211,19 +207,6 @@ const AddCardPage = () => {
               />
             </div>
             <div className="AddCardPage__inputZone">
-              {/* <FormTextarea
-                idFor="card_description"
-                label={
-                  <span>
-                    Description <sup>(*)</sup> :
-                  </span>
-                }
-                name="card_description"
-                type="text"
-                getValue={getValue}
-                required={true}
-                firstValue={cardInfos.card_description || ""}
-              /> */}
               <RichTextInput
                 label={<span>Description :</span>}
                 getDescriptionValue={getDescriptionValue}

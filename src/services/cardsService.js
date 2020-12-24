@@ -1,5 +1,6 @@
 import axios from "axios"
 import { client } from "../index";
+import history from "../helper/history"
 
 // export const getCards = () => {
 //   var config = {
@@ -76,8 +77,8 @@ export const createCardService = (cardObject) => {
   formData.append("user", cardObject.user);
   formData.append("topic", cardObject.topic);
   formData.append("name", cardObject.name);
+  formData.append("state", cardObject.state);
   cardObject.image.map(rep => {
-    // console.log('rep', rep)
     formData.append("image", rep.source);
     return rep
   })
@@ -85,14 +86,8 @@ export const createCardService = (cardObject) => {
   formData.append("description", cardObject.description);
   formData.append("categorie", cardObject.categorie);
 
-  // var config = {
-  //   headers: {
-  //     "Content-Type": "multipart/form-data",
-  //   },
-  // };
-
   return client().post("card/create_card/", formData).then(rep => {
-    // console.log(rep)
+
     return rep
   }).catch(err => {
     console.error(err)
@@ -103,9 +98,9 @@ export const deleteCardService = (cardId) => {
 
 
   return client().delete(`card/list/${cardId}`).then(rep => {
-
     return rep
   }).catch(err => {
     return err
   })
 };
+

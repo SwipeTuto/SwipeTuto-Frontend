@@ -9,7 +9,6 @@
   align-items: center;
   padding: 1.5rem 2rem;
   z-index: 20;
-  font-size: 1.6rem;
   height: $navtop-height;
 
   &.dark-theme-m {
@@ -36,6 +35,10 @@
 
   &__link {
     @include nav-style;
+
+    &--category {
+      cursor: pointer;
+    }
 
     &--category:hover ~ .NavTop__dropdown--category {
       opacity: 1;
@@ -256,6 +259,10 @@
       @include logo-size;
       margin-right: 1rem;
       fill: currentColor;
+
+      & * {
+        stroke: currentColor !important;
+      }
     }
 
     &--link {

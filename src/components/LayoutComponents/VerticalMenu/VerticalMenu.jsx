@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ReactComponent as MenuLogo } from "../../../assets/images/ellipsis-vertical.svg";
@@ -19,13 +19,19 @@ const VerticalMenu = ({ addclass, type, children }) => {
   const modal = useRef();
 
   // console.log(addclass);
-
-  document.addEventListener("click", function (event) {
+  const checkClickInside = (event) => {
     const isClickInside = modal.current && modal.current.contains(event.target);
 
     if (!isClickInside) {
       setMenuOpen(false);
     }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", checkClickInside);
+    return () => {
+      document.removeEventListener("click", checkClickInside);
+    };
   });
 
   const checkIfConnected = () => {

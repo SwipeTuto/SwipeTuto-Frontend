@@ -22,7 +22,7 @@ const UserNameAndAvatar = ({ user, link, changeLink, themed }) => {
   const currentTheme = useSelector(selectTheme);
 
   return (
-    <>
+    <div className="UserNameAndAvatar">
       {link ? (
         <Link
           to={changeLink ? changeLink : `/profile/user_id=${user && user.id}`}
@@ -56,7 +56,7 @@ const UserNameAndAvatar = ({ user, link, changeLink, themed }) => {
           <p className="UserNameAndAvatar__username">{user && user.username ? user.username : "Utilisateur SwipeTuto"}</p>
         </>
       )}
-    </>
+    </div>
   );
 };
 

@@ -182,7 +182,7 @@ const AddCardPage = () => {
         <Loading />
       </div> */}
       <div className="AddCardPage__wrapper">
-        <h1 className="title title-1">Ajouter une carte</h1>
+        <h2 className="title title-2">Ajouter une carte</h2>
         <form onSubmit={(e) => e.preventDefault()}>
           <section className="AddCardPage__section">
             <h2 className="title title-2">Images</h2>

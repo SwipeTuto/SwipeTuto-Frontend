@@ -1,9 +1,9 @@
 @import "../../variables.scss";
 
 .AddCardPage {
-  padding: $grid-component-padding;
+  // padding: $grid-component-padding;
   min-height: 100vh;
-  padding-top: 2rem;
+  // padding-top: 2rem;
   padding-bottom: 2rem;
 
   &__loading {
@@ -19,19 +19,9 @@
     background-color: $white;
   }
 
-  .title-1 {
-    margin-bottom: 6rem;
-    text-align: center;
-  }
-
   &__wrapper,
   &__section {
     border-radius: $card-radius;
-  }
-
-  &__wrapper {
-    padding: 6rem;
-    border: 1px solid $grey;
   }
 
   &__section {

@@ -10,10 +10,17 @@ import UserHeader from "./UserHeader/UserHeader";
 import { ReactComponent as SettingsLogo } from "../../assets/images/settings.svg";
 import { ReactComponent as AccountLogo } from "../../assets/images/person.svg";
 import { ReactComponent as BookmarkLogo } from "../../assets/images/bookmark.svg";
+import { ReactComponent as PencilLogo } from "../../assets/images/pencil.svg";
+import { ReactComponent as AddLogo } from "../../assets/images/add-circle.svg";
+import { ReactComponent as HelpLogo } from "../../assets/images/help-circle.svg";
+import { ReactComponent as ContactLogo } from "../../assets/images/mail.svg";
 
 import "./AccountPages.scss";
 import { selectTheme } from "../../redux/layout/layout-selectors";
 import SavedPage from "./SavedPage/SavedPage";
+import DraftsPage from "../DraftsPage/DraftsPage";
+import AddCardPage from "../AddCardPage/AddCardPage";
+import UserNameAndAvatar from "../../components/UserComponents/UserAvatar/UserNameAndAvatar";
 
 const AccountPage = (props) => {
   const currentUser = useSelector(selectCurrentUser);
@@ -27,36 +34,53 @@ const AccountPage = (props) => {
 
   return (
     <div className={`AccountPage ${currentTheme}-theme-d`}>
-      <div className="AccountPage__wrapper">
-        <div className="AccountPage__top">
-          <UserHeader userIsSame={true} />
-          <div className="AccountPage__navigation">
-            <h3 className="title title-3">Navigation</h3>
-            {currentUser ? (
-              <>
-                <NavLink to="/account/user">
-                  <AccountLogo />
-                  Compte
-                </NavLink>
-                <NavLink to="/account/saved">
-                  <BookmarkLogo />
-                  Sauvegardés
-                </NavLink>
-                <NavLink to="/account/settings">
-                  <SettingsLogo />
-                  Paramètres
-                </NavLink>
-              </>
-            ) : (
-              ""
-            )}
-          </div>
+      <div className={`AccountPage__navigation ${currentTheme}-theme-m`}>
+        <div className="AccountPage__navigation--items">
+          {currentUser ? (
+            <>
+              <UserNameAndAvatar user={currentUser} />
+              <NavLink to="/account/add">
+                <AddLogo />
+                Publier
+              </NavLink>
+              <NavLink to="/account/user">
+                <AccountLogo />
+                Profil
+              </NavLink>
+              <NavLink to="/account/saved">
+                <BookmarkLogo />
+                Sauvegardés
+              </NavLink>
+              <NavLink to="/account/drafts">
+                <PencilLogo />
+                Brouillons
+              </NavLink>
+              <NavLink to="/account/settings">
+                <SettingsLogo />
+                Paramètres
+              </NavLink>
+              <NavLink to="/help">
+                <HelpLogo />
+                Aide
+              </NavLink>
+              <NavLink to="/contact">
+                <ContactLogo />
+                Contact
+              </NavLink>
+            </>
+          ) : (
+            ""
+          )}
         </div>
+      </div>
+      <div className="AccountPage__page">
         <Switch>
-          {/* <ProtectedRoute exact path="/account/user" component={() => <UserPage userIsSame={true} />} /> */}
           <ProtectedRoute exact path="/account/user" component={UserPage} />
           <ProtectedRoute exact path="/account/settings" component={SettingsPage} />
           <ProtectedRoute exact path="/account/saved" component={SavedPage} />
+          <ProtectedRoute exact path="/account/drafts" component={DraftsPage} />
+          <ProtectedRoute exact path="/account/drafts" component={DraftsPage} />
+          <ProtectedRoute exact path="/account/add" component={AddCardPage} />
         </Switch>
       </div>
     </div>

@@ -24,7 +24,7 @@ import { useCallback } from "react";
 import { useColumnsNumber } from "../../../hooks/useColumnsNumber";
 import { getUrlId, initialSearchState, urlParams } from "../../../helper";
 
-const CardGridList = ({ loadFilter, allowInfiniteScroll, location }) => {
+const CardGridList = ({ loadFilter, allowInfiniteScroll, location, overrideColumnNum }) => {
   const dispatch = useDispatch();
   const nextPageLink = useSelector(selectPaginationNext);
   const fetchWithFilter = loadFilter !== undefined ? loadFilter : null;
@@ -129,6 +129,12 @@ const CardGridList = ({ loadFilter, allowInfiniteScroll, location }) => {
   window.onbeforeunload = function () {
     window.scrollTo(0, 0);
   };
+
+  useEffect(() => {
+    return () => {
+      window.onbeforeunload = null;
+    };
+  });
 
   return (
     <div className="CardGridList">

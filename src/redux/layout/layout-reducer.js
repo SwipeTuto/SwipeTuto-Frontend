@@ -33,13 +33,6 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
     case LayoutActionTypes.SHOW_POPUP_CARD:
-      // if (cardPopupElement) cardPopupElement.addEventListener('wheel', (e) => {
-      //   e.stopPropagation();
-      // })
-
-      // app.style.position = 'fixed';
-      // app.style.top = `-${scrollYWindow}px`;
-
       return {
         ...state,
         popupShown: true,

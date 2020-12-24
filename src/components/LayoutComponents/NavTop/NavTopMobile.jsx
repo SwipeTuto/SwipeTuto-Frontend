@@ -28,6 +28,7 @@ import { ReactComponent as BookmarkLogo } from "../../../assets/images/bookmark.
 import { ReactComponent as AddLogo } from "../../../assets/images/add-circle.svg";
 import { ReactComponent as LearnFlashLogo } from "../../../assets/images/flash.svg";
 import { ReactComponent as HomeLogo } from "../../../assets/images/home.svg";
+import { ReactComponent as PencilLogo } from "../../../assets/images/pencil.svg";
 import SwipeTutoSmallLogo from "../../../assets/swipetuto/STvb_short.png";
 import SwipeTutoSmallFullBlack from "../../../assets/swipetuto/STvb_big.png";
 import SwipeTutoSmallFullWhite from "../../../assets/swipetuto/STvb_big_light.png";
@@ -134,7 +135,7 @@ const NavTopMobile = (props) => {
           )}
         </div>
         {currentUser && (
-          <Link className="NavTopMobile__link" to="/add" onClick={() => handleNavClose()}>
+          <Link className="NavTopMobile__link" to="/account/add" onClick={() => handleNavClose()}>
             <CustomButton>
               <AddLogo className="NavTopMobile__logo" />
               Ajouter une carte
@@ -187,13 +188,17 @@ const NavTopMobile = (props) => {
           </p> */}
           {currentUser ? (
             <>
+              <Link className="NavTopMobile__link" to="/account/user" onClick={() => handleNavClose()}>
+                <AccountLogo className="NavTopMobile__logo" />
+                Compte
+              </Link>
               <Link className="NavTopMobile__link" to="/account/saved" onClick={() => handleNavClose()}>
                 <BookmarkLogo className="NavTopMobile__logo" />
                 Sauvegardés
               </Link>
-              <Link className="NavTopMobile__link" to="/account/user" onClick={() => handleNavClose()}>
-                <AccountLogo className="NavTopMobile__logo" />
-                Compte
+              <Link className="NavTopMobile__link" to="/account/drafts" onClick={() => handleNavClose()}>
+                <PencilLogo className="NavTopMobile__logo" />
+                Brouillons
               </Link>
               <Link className="NavTopMobile__link" to="/account/settings" onClick={() => handleNavClose()}>
                 <SettingsLogo className="NavTopMobile__logo" />

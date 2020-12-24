@@ -1,6 +1,6 @@
 // Présent dans App.js
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, Link } from "react-router-dom";
 
@@ -14,7 +14,7 @@ import {
 import { logoutAction } from "../../../redux/user/user-actions";
 
 import { selectTheme } from "../../../redux/layout/layout-selectors";
-import { getCardAfterfilterAction, setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
+import { deleteCurrentSearch, getCardAfterfilterAction, setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
 import { getCategoriesArray, getTopicShortImage, initialSearchState, topicArray } from "../../../helper/index";
@@ -34,6 +34,7 @@ import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/
 import { ReactComponent as BookmarkLogo } from "../../../assets/images/bookmark.svg";
 import { ReactComponent as AddLogo } from "../../../assets/images/add.svg";
 import { ReactComponent as DropdownFullLogo } from "../../../assets/images/chevrons/caret-down.svg";
+import { ReactComponent as PencilLogo } from "../../../assets/images/pencil.svg";
 import STSmallLogoBlackmod from "../../../assets/stlogos/logo seul blackmode.png";
 import STSmallLogo from "../../../assets/stlogos/logo seul.png";
 // import SwipeTutoSmallSmall from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
@@ -78,13 +79,20 @@ const NavTop = (props) => {
     dispatch(setCurrentSearch(currentSearchCopy));
   };
 
-  document.addEventListener("click", function (event) {
+  const checkClickInside = (event) => {
     const isClickInside = dropdown.current && dropdown.current.contains(event.target);
     const isClickOnBtn = dropdownBtn.current && dropdownBtn.current.contains(event.target);
 
     if (!isClickInside && !isClickOnBtn && navDropdownOpen) {
       setNavDropdownOpen(false);
     }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", checkClickInside);
+    return () => {
+      document.removeEventListener("click", checkClickInside);
+    };
   });
 
   const [theme, setTheme] = useDarkMode();
@@ -118,10 +126,24 @@ const NavTop = (props) => {
           </NavLink>
         ) : (
           <>
-            <p className="NavTop__link NavTop__link--category">
-              Explorer
+            <NavLink exact className="NavTop__link" to="/home">
+              Accueil
+            </NavLink>
+
+            <div className="NavTop__link NavTop__link--category">
+              <NavLink
+                exact
+                className="NavTop__link"
+                to="/search"
+                onClick={() => {
+                  dispatch(deleteCurrentSearch());
+                  dispatch(getCardAfterfilterAction(initialSearchState));
+                }}
+              >
+                Explorer
+              </NavLink>
               <DropDownLogo className="NavTop__link--logo" />
-            </p>
+            </div>
             <div className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme-l`}>
               {topicArray &&
                 topicArray.map((topic, index) => (
@@ -166,7 +188,7 @@ const NavTop = (props) => {
               <UserNameAndAvatar user={currentUser} link={true} changeLink="/account/user" themed={true} />
             </div>
             <div className="NavTop__addcard">
-              <Link to="/add" className={`NavTop__roundBtn ${currentTheme}-theme-l`}>
+              <Link to="/account/add" className={`NavTop__roundBtn ${currentTheme}-theme-l`}>
                 <AddLogo />
               </Link>
             </div>
@@ -202,13 +224,18 @@ const NavTop = (props) => {
               <AccountLogo className="NavTop__userMenu--logo" />
               Compte
             </Link>
-            <Link className="NavTop__userMenu--link" to="/account/settings" onClick={() => setNavDropdownOpen(false)}>
-              <SettingsLogo className="NavTop__userMenu--logo" />
-              Paramètres
-            </Link>
+
             <Link className="NavTop__userMenu--link" to="/account/saved" onClick={() => setNavDropdownOpen(false)}>
               <BookmarkLogo className="NavTop__userMenu--logo" />
               Sauvegardés
+            </Link>
+            <Link className="NavTop__userMenu--link" to="/account/drafts" onClick={() => setNavDropdownOpen(false)}>
+              <PencilLogo className="NavTop__userMenu--logo" />
+              Brouillons
+            </Link>
+            <Link className="NavTop__userMenu--link" to="/account/settings" onClick={() => setNavDropdownOpen(false)}>
+              <SettingsLogo className="NavTop__userMenu--logo" />
+              Paramètres
             </Link>
             <Link className="NavTop__userMenu--link" to="/help" onClick={() => setNavDropdownOpen(false)}>
               <HelpLogo className="NavTop__userMenu--logo" />

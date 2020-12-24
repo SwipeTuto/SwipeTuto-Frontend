@@ -19,7 +19,7 @@ const SavedPage = ({ location }) => {
   const isLoaded = useSelector(selectIsLoaded);
 
   useEffect(() => {
-    dispatch(setCardsSize("small"));
+    dispatch(setCardsSize("big"));
   });
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const SavedPage = ({ location }) => {
   return (
     <div className={`SavedPage ${currentTheme}-theme-d`}>
       <div className="SavedPage__cards">
-        <h3 className="title title-3">Vos cartes sauvegardées :</h3>
+        <h2 className="title title-2">Vos cartes sauvegardées :</h2>
         {!isLoaded ? (
           <Loading />
         ) : cards && cards.length > 0 ? (

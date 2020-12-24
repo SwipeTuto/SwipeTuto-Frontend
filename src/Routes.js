@@ -18,6 +18,8 @@ import CookiesPage from "./pages/CookiesPage/CookiesPage";
 import InfosPage from "./pages/InfosPage/InfosPage";
 import AddCardPage from "./pages/AddCardPage/AddCardPage";
 import { selectCurrentUser } from "./redux/user/user-selectors";
+import UserHomePage from "./pages/UserHomePage/UserHomePage";
+import DraftsPage from "./pages/DraftsPage/DraftsPage";
 
 const Routes = () => {
 
@@ -35,6 +37,8 @@ const Routes = () => {
       <Route path="/contact" component={ContactUsPage} />
       <Route path="/infos" component={InfosPage} />
       <Route path="/help" component={HelpPage} />
+      <ProtectedRoute path="/home" component={UserHomePage} />
+
       {currentUser ? (
         <Route path="/card_id=:card_id" component={SearchPage} />
       ) : (
@@ -42,7 +46,7 @@ const Routes = () => {
         )}
       <Route path="/profile/user_id=:user_id" component={ProfilePage} />
       <ProtectedRoute path="/account" component={AccountPage} />
-      <ProtectedRoute path="/add" component={AddCardPage} />
+
       <Route component={NotFoundPage} />
     </Switch>
   )

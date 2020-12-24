@@ -91,7 +91,7 @@ const SettingsPage = () => {
 
   return (
     <div className={`SettingsPage ${currentTheme}-theme-d`}>
-      <h3 className="title title-3">Changer les informations du compte</h3>
+      <h2 className="title title-2">Changer les informations du compte</h2>
       <div className="allForms">
         <form className="form__avatar form" onChange={handleAvatarUpdate}>
           <div className="form__avatar--left">
@@ -135,7 +135,7 @@ const SettingsPage = () => {
           <div className="form__bottom">
             <FormInput
               idFor="first_name"
-              label="Votre nom d'utilisateur :"
+              label="Votre prénom :"
               type="text"
               name="first_name"
               getValue={getValue}
@@ -156,7 +156,7 @@ const SettingsPage = () => {
           <div className="form__bottom">
             <FormInput
               idFor="last_name"
-              label="Votre nom d'utilisateur :"
+              label="Votre nom :"
               type="text"
               name="last_name"
               getValue={getValue}

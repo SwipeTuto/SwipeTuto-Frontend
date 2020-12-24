@@ -104,7 +104,6 @@
 
   .custom-button {
     margin: 2rem auto;
-    // background-color: $secondary-light;
     & > svg {
       @include big-logo-size;
       margin-right: 1rem;
@@ -132,6 +131,7 @@
 
     & * {
       fill: currentColor !important;
+      stroke: currentColor !important;
     }
   }
 

@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { selectCurrentUser, selectClickedUser } from "../../../redux/user/user-selectors";
-import { selectCardsFetchedCards } from "../../../redux/filter/filter-selectors";
+import {
+  selectCardsFetched,
+  selectCardsFetchedCards,
+  selectTotalNumberOfCardsSearched,
+  selectTotalNumberOfResults,
+} from "../../../redux/filter/filter-selectors";
 import Loading from "../../../components/Loading/Loading";
 
 import "./UserPage.scss";
@@ -12,6 +17,7 @@ import CardGridList from "../../../components/CardsComponents/CardGridList/CardG
 import { setCardsSize } from "../../../redux/layout/layout-actions";
 import { usePrevious } from "../../../hooks/usePrevious";
 import { getUrlId } from "../../../helper";
+import UserNameAndAvatar from "../../../components/UserComponents/UserAvatar/UserNameAndAvatar";
 
 const UserPage = ({ userIsSame, location }) => {
   const locationPath = location && location.pathname;
@@ -19,6 +25,7 @@ const UserPage = ({ userIsSame, location }) => {
   // user = current pour user actuel
   // user = other pour la visite d'un autre profil
   const isLoaded = useSelector(selectIsLoaded);
+  const totalCardsFetched = useSelector(selectTotalNumberOfResults);
   const cards = useSelector(selectCardsFetchedCards);
   const currentUser = useSelector(selectCurrentUser);
   const prevCurrentUserId = usePrevious(currentUser?.id) || null;
@@ -47,28 +54,27 @@ const UserPage = ({ userIsSame, location }) => {
       setUserDatas(currentUser);
       dispatch(getCardsByUserIdAction(currentUser.id));
     }
-    // console.log(userIsSame);
-    // if (userIsSame && currentUser && currentUser.id && locationPath && locationPath.includes("/account/user")) {
-    //   setUserDatas(currentUser);
-    //   dispatch(getCardsByUserIdAction(currentUser.id));
-    //   console.log("call", currentUser.id);
-    // } else if (!userIsSame && clickedUser && clickedUser.id) {
-    //   setUserDatas(clickedUser);
-    //   dispatch(getCardsByUserIdAction(clickedUser.id));
-    //   console.log("call", clickedUser.id);
-    // } else {
-    //   setUserDatas(null);
-    // }
   }, [clickedUser, currentUser, dispatch, locationPath, prevClickedUserId, prevCurrentUserId, userId]);
 
   useEffect(() => {
-    dispatch(setCardsSize("small"));
+    dispatch(setCardsSize("big"));
   }, [dispatch]);
 
   return (
     <div className={`UserPage ${currentTheme}-theme-d`}>
+      <div className="UserPage__header">
+        <UserNameAndAvatar user={userDatas} />
+        <p className="UserPage__header--cards">
+          {totalCardsFetched
+            ? totalCardsFetched < 2
+              ? totalCardsFetched + " Tutoriel publié"
+              : totalCardsFetched + " Tutoriels publiés"
+            : "Aucun tutoriel pour le moment"}
+        </p>
+        {userDatas?.profile?.description && <p className="UserPage__header--description">{userDatas.profile.description}</p>}
+      </div>
       <div className="UserPage__cards">
-        <h3 className="title title-3">Tutoriels de {userDatas && userDatas.username ? userDatas.username : "l'utilisateur "}</h3>
+        <h2 className="title title-2">Tutoriels de {userDatas && userDatas.username ? userDatas.username : "l'utilisateur "}</h2>
         {!isLoaded ? (
           <Loading />
         ) : userDatas && cards.length > 0 ? (

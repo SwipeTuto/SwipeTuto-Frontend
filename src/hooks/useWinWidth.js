@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
 
 export const useWinWidth = () => {
-  const [winWidth, setWinWidth] = useState();
+  const [winWidth, setWinWidth] = useState(Math.max(document.documentElement.clientWidth, window.innerWidth || 0));;
+
+  const checkSize = () => {
+    let width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    setWinWidth(width)
+  }
 
 
   useEffect(() => {
-    let width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-    window.addEventListener("resize", () => {
-      let width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-      setWinWidth(width)
-    })
-    setWinWidth(width)
+    window.addEventListener("resize", checkSize);
+    return () => {
+      window.removeEventListener("resize", checkSize)
+    }
   }, []);
 
   return winWidth

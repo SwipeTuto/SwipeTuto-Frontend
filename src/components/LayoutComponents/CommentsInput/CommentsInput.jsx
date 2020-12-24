@@ -36,7 +36,6 @@ const CommentsInput = ({ handleAddCommentClick, id, firstValue }) => {
   };
 
   useEffect(() => {
-    console.log(firstValue);
     if (firstValue) {
       setInputValue(firstValue);
     }

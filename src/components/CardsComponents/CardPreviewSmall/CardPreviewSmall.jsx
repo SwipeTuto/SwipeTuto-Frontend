@@ -71,8 +71,9 @@ const CardPreviewSmall = ({ card, size }) => {
   useEffect(() => {
     const elem = document.querySelector(`#CardPreviewSmall__image--${cardId}`);
     if (elem && elem.childNodes && [...elem.childNodes].some((child) => child.localName === "img")) return;
+    let img;
     if (elem) {
-      const img = document.createElement("img");
+      img = document.createElement("img");
       img.setAttribute("onContextMenu", (e) => e.preventDefault());
       elem.append(img);
       if (media_image[0] && media_image[0].image) {
@@ -89,6 +90,10 @@ const CardPreviewSmall = ({ card, size }) => {
         setIsError(true);
       }
     }
+    return () => {
+      img.onload = null;
+      img.onerror = null;
+    };
   }, [cardId, media_image]);
 
   useEffect(() => {

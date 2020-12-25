@@ -37,10 +37,6 @@ const UserPage = ({ userIsSame, location }) => {
   const userId = getUrlId(location.pathname, "user_id");
 
   useEffect(() => {
-    console.log(userIsSame);
-  }, [userIsSame]);
-
-  useEffect(() => {
     if (locationPath.includes("card_id")) return;
     if (userId && clickedUser && (prevClickedUserId === null || prevClickedUserId !== clickedUser.id)) {
       setUserDatas(clickedUser);

@@ -24,17 +24,18 @@
   }
 
   &__image {
-    background-color: $primary-dark;
+    background-color: $grey;
     margin-right: 2rem;
-    height: 10rem;
     width: 10rem;
+    height: 10rem;
     display: flex;
     justify-content: center;
     align-items: center;
 
     & img {
-      width: auto;
+      max-width: 100%;
       max-height: 100%;
+      object-fit: contain;
     }
   }
 

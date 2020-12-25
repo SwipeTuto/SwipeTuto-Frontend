@@ -79,7 +79,6 @@ const AccountPage = (props) => {
           <ProtectedRoute exact path="/account/settings" component={SettingsPage} />
           <ProtectedRoute exact path="/account/saved" component={SavedPage} />
           <ProtectedRoute exact path="/account/drafts" component={DraftsPage} />
-          <ProtectedRoute exact path="/account/drafts" component={DraftsPage} />
           <ProtectedRoute exact path="/account/add" component={AddCardPage} />
         </Switch>
       </div>

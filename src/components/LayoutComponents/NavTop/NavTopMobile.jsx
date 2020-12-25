@@ -157,20 +157,16 @@ const NavTopMobile = (props) => {
               Accueil
             </Link>
           )}
-          {/* <Link
-            className="NavTopMobile__link"
-            to="/ressources"
-            onClick={() => {
-              dispatch(closeMobileNav());
-            }}
-          >
-            Ressources
-          </Link> */}
+
+          {currentUser && (
+            <Link className="NavTopMobile__link" to="/home" onClick={() => handleNavClose()}>
+              <HomeLogo className="NavTopMobile__logo" />
+              Accueil
+            </Link>
+          )}
+
           <Link
             className="NavTopMobile__link"
-            // to={`/search?${searchWords ? `search=${searchWords}` : ""}${searchTopic ? `&topic=${searchTopic}` : ""}${
-            //   searchOrder ? `&order=${searchOrder}` : ""
-            // }${searchCategory ? `&category=${searchCategory}` : ""}`}
             to="/search"
             onClick={() => {
               dispatch(setCurrentSearch(initialSearchState));
@@ -181,11 +177,7 @@ const NavTopMobile = (props) => {
             <LearnFlashLogo className="NavTopMobile__logo" />
             Cartes
           </Link>
-          {/* 
-          <p className="NavTopMobile__link" onClick={handleFiltersMobileOpen}>
-            <SearchLogo className="NavTopMobile__logo" />
-            Recherche
-          </p> */}
+
           {currentUser ? (
             <>
               <Link className="NavTopMobile__link" to="/account/user" onClick={() => handleNavClose()}>

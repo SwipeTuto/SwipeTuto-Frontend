@@ -1,34 +1,135 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 import stlogo from "../../../assets/stlogos/logo seul.png";
 import "./DraftPreview.scss";
+import ConfirmationOverlay from "../../LayoutComponents/ConfirmationOverlay/ConfirmationOverlay";
+import { deleteCardAction } from "../../../redux/filter/filter-actions";
+import { selectCurrentUserId } from "../../../redux/user/user-selectors";
+import { withRouter } from "react-router-dom";
 
-const DraftPreview = ({ draftCard }) => {
+const DraftPreview = ({ draftCard, history }) => {
   const currentTheme = useSelector(selectTheme);
+  const dispatch = useDispatch();
+  const currentuserId = useSelector(selectCurrentUserId);
+  const [confirmDeletePopupOpen, setConfirmDeletePopupOpen] = useState({
+    open: false,
+    message: "",
+    id: null,
+  });
+  const [confirmPublishPopupOpen, setConfirmPublishPopupOpen] = useState({
+    open: false,
+    message: "",
+    id: null,
+  });
+
   // editer : ouverture dans addCard
 
   // supprimer : popup confirmation puis action state = 2
+  const handleDeleteDraft = (draftID) => {
+    setConfirmDeletePopupOpen({
+      open: true,
+      message: "Voulez-vous vraiment supprimer ce brouillon de façon définitive ?",
+      id: draftID,
+    });
+  };
+  const handleConfirmDeleteClick = async () => {
+    (await confirmDeletePopupOpen?.id) && dispatch(deleteCardAction(confirmDeletePopupOpen.id));
+    // ou passage state 2 ??
+    setConfirmDeletePopupOpen({
+      open: false,
+      message: "",
+      id: null,
+    });
+  };
+  const handleRejectDeleteClick = () => {
+    setConfirmDeletePopupOpen({
+      open: false,
+      message: "",
+      id: null,
+    });
+  };
 
   // publier : popup confirmation puis action state = 1
+  const handlePublishDraft = (draftID) => {
+    setConfirmPublishPopupOpen({
+      open: true,
+      message: "Voulez-vous vraiment publier ce brouillon ?",
+      id: draftID,
+    });
+  };
+  const handleConfirmPublishClick = async () => {
+    // action pour modifier carte : state passe à 1
+    // await confirmPublishPopupOpen?.id && dispatch()
+
+    setConfirmPublishPopupOpen({
+      open: false,
+      message: "",
+      id: null,
+    });
+  };
+  const handleRejectPublishClick = () => {
+    setConfirmPublishPopupOpen({
+      open: false,
+      message: "",
+      id: null,
+    });
+  };
+
+  // edition de la carte
+  const handleEditClick = async (draftCard) => {
+    await window.localStorage.setItem(
+      "draftNewCard",
+      JSON.stringify({
+        name: draftCard.name,
+        description: draftCard.description,
+        topic: draftCard.topic[0].name,
+        categorie: draftCard.categorie[0].name,
+        user: currentuserId,
+      })
+    );
+    history.push("/account/add");
+  };
 
   return (
-    <div className={`DraftPreview ${currentTheme}-theme-l`}>
-      <div className="DraftPreview__image">
-        <img src={draftCard?.media_image[0]?.image} alt="draft preview" />
-      </div>
-      <div className="DraftPreview__wrapper">
-        <div className="DraftPreview__title">
-          <h3 className="DraftPreview__title title title-3">{draftCard?.name}</h3>
+    <>
+      {confirmDeletePopupOpen && confirmDeletePopupOpen.open && confirmDeletePopupOpen.open === true && (
+        <ConfirmationOverlay
+          handleConfirmClick={handleConfirmDeleteClick}
+          handleRejectClick={handleRejectDeleteClick}
+          message={confirmDeletePopupOpen && confirmDeletePopupOpen.message}
+        />
+      )}
+      {confirmPublishPopupOpen && confirmPublishPopupOpen.open && confirmPublishPopupOpen.open === true && (
+        <ConfirmationOverlay
+          handleConfirmClick={handleConfirmPublishClick}
+          handleRejectClick={handleRejectPublishClick}
+          message={confirmPublishPopupOpen && confirmPublishPopupOpen.message}
+        />
+      )}
+      <div className={`DraftPreview ${currentTheme}-theme-l`} onClick={() => draftCard && handleEditClick(draftCard)}>
+        <div className="DraftPreview__image">
+          <img src={draftCard?.media_image[0]?.image} alt="draft preview" />
         </div>
-        <div className="DraftPreview__actions">
-          <button className="DraftPreview__button">Supprimer</button>
-          <button className="DraftPreview__button">Editer</button>
-          <button className="DraftPreview__button">Publier</button>
+        <div className="DraftPreview__wrapper">
+          <div className="DraftPreview__title">
+            <h3 className="DraftPreview__title title title-3">{draftCard?.name}</h3>
+          </div>
+          <div className="DraftPreview__actions" onClick={(e) => e.stopPropagation()}>
+            <button className="DraftPreview__button" onClick={() => handleDeleteDraft(draftCard?.id)}>
+              Supprimer
+            </button>
+            <button className="DraftPreview__button" onClick={() => draftCard && handleEditClick(draftCard)}>
+              Editer
+            </button>
+            <button className="DraftPreview__button" onClick={() => handlePublishDraft(draftCard?.id)}>
+              Publier
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default DraftPreview;
+export default withRouter(DraftPreview);

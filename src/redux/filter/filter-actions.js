@@ -457,8 +457,8 @@ export const deleteCardAction = (cardId, currentUserId, history) => {
     cardId && deleteCardService(cardId).then(rep => {
       dispatch(openNotificationPopup("Carte supprimée avec succès !"))
       dispatch(setLoaded())
-      dispatch(getCardsByUserIdAction(currentUserId));
-      history.push("/account/user");
+      currentUserId && dispatch(getCardsByUserIdAction(currentUserId));
+      history && history.push("/account/user");
       return rep.data
     }).catch(err => {
       console.error(err)

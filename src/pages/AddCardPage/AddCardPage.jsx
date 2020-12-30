@@ -52,7 +52,6 @@ const AddCardPage = () => {
   }, []);
 
   useEffect(() => {
-
     setCategoriesLocalArray(getCategoriesArray(cardInfos.card_topic));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardInfos.card_topic]);
@@ -77,8 +76,6 @@ const AddCardPage = () => {
     // setImagesArray(cards);
     // const localObj = window.localStorage.getItem("draftNewCard");
   };
-
-
 
   useEffect(() => {
     if (localDraftNewCard && localDraftNewCard.user !== currentuserId) {
@@ -105,17 +102,14 @@ const AddCardPage = () => {
         user: currentuserId,
       })
     );
-
   }, [cardInfos.card_category, cardInfos.card_description, cardInfos.card_title, cardInfos.card_topic, currentuserId]);
 
-  
-
-  const createCard = async () => {
+  const createCard = async (state) => {
     try {
       const files = await filedrop.current.getFiles();
       const imagesFiles = await files.map((obj) => obj);
       const cardObject = {
-        state: 1,
+        state: state,
         name: cardInfos.card_title,
         description: cardInfos.card_description,
         topic: cardInfos.card_topic,
@@ -185,7 +179,7 @@ const AddCardPage = () => {
             <p className="AddCardPage__description">
               Ajouter la / les image(s) de votre carte ici <sup>(*)</sup>.
             </p>
-            <DraggableUploadInput  ref={filedrop} updateFiles={updateFiles} emptyState={emptyState} />
+            <DraggableUploadInput ref={filedrop} updateFiles={updateFiles} emptyState={emptyState} />
           </section>
 
           <section className="AddCardPage__section">
@@ -266,9 +260,12 @@ const AddCardPage = () => {
 
             <div className="AddCardPage__buttons">
               <CustomButton color="white" type="button" onClick={() => handleDeleteCard()}>
-                Effacer la carte
+                Effacer les champs
               </CustomButton>
-              <CustomButton type="submit" disabled={!isValid} onClick={() => createCard()}>
+              <CustomButton color="white" type="button" onClick={() => createCard(0)}>
+                Enregistrer en brouillon
+              </CustomButton>
+              <CustomButton type="submit" disabled={!isValid} onClick={() => createCard(1)}>
                 Publier la carte
               </CustomButton>
             </div>

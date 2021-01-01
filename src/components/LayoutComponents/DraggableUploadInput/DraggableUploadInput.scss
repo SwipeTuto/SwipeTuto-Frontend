@@ -21,6 +21,26 @@
   .filepond--drop-label {
     background-color: $grey-lighter;
   }
+
+  .filepond--file {
+    height: 20rem;
+  }
+
+  .filepond--file-poster-wrapper {
+    height: 100%;
+  }
+
+  .filepond--file-poster {
+    height: 100%;
+
+    & img {
+      height: 100%;
+    }
+  }
+
+  .filepond--file-poster-overlay {
+    display: none;
+  }
 }
 
 @media screen and (max-width: $bp-phone) {

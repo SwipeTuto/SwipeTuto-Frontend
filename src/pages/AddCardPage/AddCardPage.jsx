@@ -1,3 +1,4 @@
+import FilepondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FormInput from "../../components/FormInputs/FormInput";
@@ -24,6 +25,7 @@ const AddCardPage = () => {
     card_description: "",
     card_topic: null,
     card_category: null,
+    card_images: [],
   });
   const currentTheme = useSelector(selectTheme);
   const [categoriesLocalArray, setCategoriesLocalArray] = useState([]);
@@ -73,8 +75,6 @@ const AddCardPage = () => {
 
   const updateFiles = (isFiles, cards) => {
     setImagesArrayNotEmpty(isFiles);
-    // setImagesArray(cards);
-    // const localObj = window.localStorage.getItem("draftNewCard");
   };
 
   useEffect(() => {
@@ -86,6 +86,7 @@ const AddCardPage = () => {
         card_description: localDraftNewCard.description,
         card_topic: localDraftNewCard.topic,
         card_category: localDraftNewCard.categorie,
+        card_images: localDraftNewCard.images,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -100,9 +101,10 @@ const AddCardPage = () => {
         topic: cardInfos.card_topic,
         categorie: cardInfos.card_category,
         user: currentuserId,
+        images: cardInfos.card_images,
       })
     );
-  }, [cardInfos.card_category, cardInfos.card_description, cardInfos.card_title, cardInfos.card_topic, currentuserId]);
+  }, [cardInfos.card_images, cardInfos.card_category, cardInfos.card_description, cardInfos.card_title, cardInfos.card_topic, currentuserId]);
 
   const createCard = async (state) => {
     try {
@@ -131,6 +133,7 @@ const AddCardPage = () => {
       card_description: "<p></p>",
       card_topic: null,
       card_category: null,
+      card_images: [],
     });
     await filedrop.current.removeFiles();
     window.localStorage.removeItem("draftNewCard");

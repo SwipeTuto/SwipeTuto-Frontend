@@ -160,6 +160,10 @@ const CardFullPopup = ({ history, location }) => {
     dispatch(setClickedCard(nextCard));
   };
 
+  const getImagesUrlArray = () => {
+    return clickedCard?.media_image?.map((imgObj) => imgObj.image);
+  };
+
   const handleCardModify = async () => {
     await window.localStorage.setItem(
       "draftNewCard",
@@ -169,6 +173,7 @@ const CardFullPopup = ({ history, location }) => {
         topic: clickedCard.topic[0].name,
         categorie: clickedCard.categorie[0].name,
         user: currentUserId,
+        images: getImagesUrlArray(),
       })
     );
     dispatch(closePopupCard());

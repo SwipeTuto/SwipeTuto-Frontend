@@ -224,6 +224,10 @@
         padding: 1rem;
         border-radius: $card-radius;
         white-space: normal;
+
+        & * {
+          color: $black;
+        }
       }
 
       a,

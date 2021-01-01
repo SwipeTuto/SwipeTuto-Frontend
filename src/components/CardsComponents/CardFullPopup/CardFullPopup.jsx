@@ -160,6 +160,21 @@ const CardFullPopup = ({ history, location }) => {
     dispatch(setClickedCard(nextCard));
   };
 
+  const handleCardModify = async () => {
+    await window.localStorage.setItem(
+      "draftNewCard",
+      JSON.stringify({
+        name: clickedCard.name,
+        description: clickedCard.description,
+        topic: clickedCard.topic[0].name,
+        categorie: clickedCard.categorie[0].name,
+        user: currentUserId,
+      })
+    );
+    dispatch(closePopupCard());
+    history.push("/account/add");
+  };
+
   const handlePopupClose = () => {
     if (location.pathname === "/") {
       window.history.pushState("", "", "/");
@@ -553,8 +568,16 @@ const CardFullPopup = ({ history, location }) => {
                     <FullscreenLogo className="card-action-button" id="card-action-button__fullscreen" />
                   </div>
 
-                  <VerticalMenu addclass={`card-action-button__wrapper ${currentTheme}-theme`}>
-                    {currentUserId === clickedCard.user.id ? (
+                  {currentUserId === clickedCard.user.id ? (
+                    <VerticalMenu addclass={`card-action-button__wrapper ${currentTheme}-theme`}>
+                      <p
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCardModify();
+                        }}
+                      >
+                        Modifier
+                      </p>
                       <p
                         onClick={(e) => {
                           e.stopPropagation();
@@ -563,7 +586,9 @@ const CardFullPopup = ({ history, location }) => {
                       >
                         Supprimer
                       </p>
-                    ) : (
+                    </VerticalMenu>
+                  ) : (
+                    <VerticalMenu addclass={`card-action-button__wrapper ${currentTheme}-theme`}>
                       <p
                         onClick={(e) => {
                           e.stopPropagation();
@@ -572,9 +597,8 @@ const CardFullPopup = ({ history, location }) => {
                       >
                         Signaler
                       </p>
-                    )}
-                  </VerticalMenu>
-                  {/* </div> */}
+                    </VerticalMenu>
+                  )}
                 </>
               ) : null}
             </div>

@@ -86,6 +86,7 @@ const DraftPreview = ({ draftCard, history }) => {
         topic: draftCard.topic[0].name,
         categorie: draftCard.categorie[0].name,
         user: currentuserId,
+        id: draftCard.id,
       })
     );
     history.push("/account/add");

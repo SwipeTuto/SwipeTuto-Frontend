@@ -36,7 +36,7 @@ const DraggableUploadInput = React.forwardRef((props, ref) => {
   }, [props.emptyState]);
 
   useEffect(() => {
-    if (localDraftCard.images) {
+    if (localDraftCard?.images) {
       let i = 0;
       const imgObjectArray = localDraftCard.images.map((url) => {
         i++;
@@ -50,7 +50,7 @@ const DraggableUploadInput = React.forwardRef((props, ref) => {
           },
         };
       });
-      console.log(imgObjectArray);
+      // console.log(imgObjectArray);
       setFiles(imgObjectArray);
 
       // localDraftCard.images.map((url) => {
@@ -87,7 +87,6 @@ const DraggableUploadInput = React.forwardRef((props, ref) => {
       load: "./load/",
     },
   };
-  console.log(ref.current);
 
   return (
     <div className="DraggableUploadInput">
@@ -137,6 +136,7 @@ const DraggableUploadInput = React.forwardRef((props, ref) => {
         labelMaxFileSize="La taille maximale du fichier est de {filesize}"
         allowFilePoster={true}
         filePosterMaxHeight="200px"
+        imagePreviewMaxHeight="200px"
       />
     </div>
   );

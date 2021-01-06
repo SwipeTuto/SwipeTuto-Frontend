@@ -1,24 +1,26 @@
 import FilepondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import FormInput from "../../components/FormInputs/FormInput";
-import FormSelect from "../../components/FormInputs/FormSelect";
+import { withRouter } from "react-router-dom";
+import FormInput from "../../../components/FormInputs/FormInput";
+import FormSelect from "../../../components/FormInputs/FormSelect";
 // import FormTextarea from "../../components/FormInputs/FormTextarea";
-import RichTextInput from "../../components/FormInputs/RichTextInput";
+import RichTextInput from "../../../components/FormInputs/RichTextInput";
 // import JoditInput from "../../components/FormInputs/RichTextInput";
-import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
-import DraggableUploadInput from "../../components/LayoutComponents/DraggableUploadInput/DraggableUploadInput";
-import Loading from "../../components/Loading/Loading";
-import { getCategoriesArray, topicArray } from "../../helper";
-import { createCardAction } from "../../redux/filter/filter-actions";
-import { openNotificationPopup } from "../../redux/layout/layout-actions";
-import { selectIsLoaded, selectTheme } from "../../redux/layout/layout-selectors";
-import { selectCurrentUserId } from "../../redux/user/user-selectors";
+import CustomButton from "../../../components/LayoutComponents/CustomButton/CustomButton";
+import DraggableUploadInput from "../../../components/LayoutComponents/DraggableUploadInput/DraggableUploadInput";
+import Loading from "../../../components/Loading/Loading";
+import { getCategoriesArray, topicArray } from "../../../helper";
+import { createCardAction, updateCardAction } from "../../../redux/filter/filter-actions";
+import { openNotificationPopup } from "../../../redux/layout/layout-actions";
+import { selectIsLoaded, selectTheme } from "../../../redux/layout/layout-selectors";
+import { selectCurrentUserId } from "../../../redux/user/user-selectors";
 // import { createCardService } from "../../services/cardsService";
 
 import "./AddCardPage.scss";
 
-const AddCardPage = () => {
+const AddCardPage = ({ type, history }) => {
+  // console.log(type);
   const currentuserId = useSelector(selectCurrentUserId);
   const [cardInfos, setCardInfos] = useState({
     card_title: "",
@@ -26,6 +28,7 @@ const AddCardPage = () => {
     card_topic: null,
     card_category: null,
     card_images: [],
+    card_id: null,
   });
   const currentTheme = useSelector(selectTheme);
   const [categoriesLocalArray, setCategoriesLocalArray] = useState([]);
@@ -35,7 +38,6 @@ const AddCardPage = () => {
   const [emptyState, setEmptyState] = useState(false);
   const filedrop = useRef();
   const localDraftNewCard = JSON.parse(window.localStorage.getItem("draftNewCard"));
-  const localDraftNewCardImage = JSON.parse(window.localStorage.getItem("fileBase64"));
   const dispatch = useDispatch();
   const isLoaded = useSelector(selectIsLoaded);
 
@@ -87,6 +89,7 @@ const AddCardPage = () => {
         card_topic: localDraftNewCard.topic,
         card_category: localDraftNewCard.categorie,
         card_images: localDraftNewCard.images,
+        card_id: localDraftNewCard.id,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -120,17 +123,44 @@ const AddCardPage = () => {
         image: await imagesFiles,
       };
 
-      dispatch(createCardAction(cardObject));
+      await dispatch(createCardAction(cardObject, state));
 
       await window.localStorage.removeItem("draftNewCard");
       setIsValid(false);
-    } catch (err) {}
+      if (state === 0) history.push("/account/drafts");
+    } catch (err) {
+      dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer."));
+    }
+  };
+
+  const updateCard = async (state) => {
+    try {
+      const files = await filedrop.current.getFiles();
+      const imagesFiles = await files.map((obj) => obj);
+      const cardObject = {
+        state: state,
+        name: cardInfos.card_title,
+        description: cardInfos.card_description,
+        topic: cardInfos.card_topic,
+        categorie: cardInfos.card_category,
+        user: currentuserId,
+        image: await imagesFiles,
+      };
+
+      // faire le update
+      dispatch(updateCardAction(cardInfos?.card_id, cardObject));
+
+      await window.localStorage.removeItem("draftNewCard");
+      setIsValid(false);
+    } catch (err) {
+      dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer."));
+    }
   };
 
   const handleDeleteCard = async () => {
     setCardInfos({
       card_title: "",
-      card_description: "<p></p>",
+      card_description: "",
       card_topic: null,
       card_category: null,
       card_images: [],
@@ -138,31 +168,12 @@ const AddCardPage = () => {
     await filedrop.current.removeFiles();
     window.localStorage.removeItem("draftNewCard");
     setEmptyState(true);
-    document.location.reload();
+    // document.location.reload();
   };
 
   useEffect(() => {
     if (emptyState) setEmptyState(false);
   }, [emptyState]);
-
-  useEffect(() => {
-    if (
-      localDraftNewCard &&
-      (localDraftNewCard.title ||
-        localDraftNewCard.categorie ||
-        (localDraftNewCard.description !== "<p></p>↵" && localDraftNewCard.description !== "<p></p>" && localDraftNewCard.description) ||
-        (localDraftNewCard.name && localDraftNewCard.name !== "") ||
-        localDraftNewCard.topic) &&
-      localDraftNewCard.user === currentuserId
-    ) {
-      dispatch(
-        openNotificationPopup(
-          'Un brouillon de carte a été trouvé. Merci de rajouter vos images pour compléter la carte, ou cliquer sur "Effacer la carte" pour vider tous les champs'
-        )
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
 
   return (
     <div className={`AddCardPage ${currentTheme}-theme-d`}>
@@ -207,7 +218,7 @@ const AddCardPage = () => {
               <RichTextInput
                 label={<span>Description :</span>}
                 getDescriptionValue={getDescriptionValue}
-                firstValue={(localDraftNewCard && localDraftNewCard.description) || "<p></p>"}
+                firstValue={(cardInfos && cardInfos.card_description) || ""}
               />
             </div>
           </section>
@@ -265,12 +276,25 @@ const AddCardPage = () => {
               <CustomButton color="white" type="button" onClick={() => handleDeleteCard()}>
                 Effacer les champs
               </CustomButton>
-              <CustomButton color="white" type="button" onClick={() => createCard(0)}>
-                Enregistrer en brouillon
-              </CustomButton>
-              <CustomButton type="submit" disabled={!isValid} onClick={() => createCard(1)}>
-                Publier la carte
-              </CustomButton>
+              {type && type === "modify" ? (
+                <>
+                  <CustomButton color="white" type="button" onClick={() => updateCard(0)}>
+                    Enregistrer en brouillon
+                  </CustomButton>
+                  <CustomButton type="submit" disabled={!isValid} onClick={() => updateCard(1)}>
+                    Mettre à jour la carte
+                  </CustomButton>
+                </>
+              ) : (
+                <>
+                  <CustomButton color="white" type="button" onClick={() => createCard(0)}>
+                    Enregistrer en brouillon
+                  </CustomButton>
+                  <CustomButton type="submit" disabled={!isValid} onClick={() => createCard(1)}>
+                    Publier la carte
+                  </CustomButton>
+                </>
+              )}
             </div>
           </div>
         </form>
@@ -279,4 +303,4 @@ const AddCardPage = () => {
   );
 };
 
-export default AddCardPage;
+export default withRouter(AddCardPage);

@@ -174,10 +174,12 @@ const CardFullPopup = ({ history, location }) => {
         categorie: clickedCard.categorie[0].name,
         user: currentUserId,
         images: getImagesUrlArray(),
+        id: clickedCard.id,
       })
     );
     dispatch(closePopupCard());
-    history.push("/account/add");
+    history.push("/account/modify");
+    console.log("call");
   };
 
   const handlePopupClose = () => {

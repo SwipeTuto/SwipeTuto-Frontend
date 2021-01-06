@@ -1,6 +1,6 @@
 import { FilterActionTypes } from "./filter-types"
 import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded, openNotificationPopup, setRedirectUrl } from '../layout/layout-actions'
-import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById, createCardService, deleteCardService } from '../../services/cardsService'
+import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById, createCardService, deleteCardService, updateCardService } from '../../services/cardsService'
 import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply, toggleSave, getCardCommentsNext } from "../../services/socialService"
 import { getUserFavoriesById } from "../../services/userService"
 import { initialSearchState } from "../../helper"
@@ -104,10 +104,10 @@ export const setCardsFetchedInStore = (cards) => ({
 
 
 // Fetch des cards à partir du nom de l'auteur
-export const getCardsByUserIdAction = userId => {
+export const getCardsByUserIdAction = (userId, cardState) => {
   return dispatch => {
     dispatch(setLoading())
-    return getCardsByUser(userId)
+    return getCardsByUser(userId, cardState)
       .then(rep => {
         dispatch(getCardsByUserIdSuccess(rep.data))
         dispatch(setLoaded())
@@ -428,17 +428,21 @@ export const getUserFavoriesSuccess = favories => ({
   payload: favories
 })
 
-export const createCardAction = (cardObject) => {
-  return dispatch => {
+export const createCardAction = (cardObject, cardState) => {
+  return async dispatch => {
     // console.log(userId)
     dispatch(setLoading());
     dispatch(setRedirectUrl(false))
     cardObject && createCardService(cardObject).then(rep => {
       dispatch(openNotificationPopup("Carte créée avec succès !"))
       dispatch(setLoaded())
-      dispatch(setCurrentSearch(initialSearchState))
-      dispatch(getCardAfterfilterAction(initialSearchState))
-      dispatch(setRedirectUrl(true))
+
+      if (cardState !== 0) {
+        dispatch(setCurrentSearch(initialSearchState))
+        dispatch(getCardAfterfilterAction(initialSearchState))
+        dispatch(setRedirectUrl(true))
+      }
+
       return rep.data
     }).catch(err => {
 
@@ -447,6 +451,33 @@ export const createCardAction = (cardObject) => {
       dispatch(setLoaded())
       return err
     })
+  }
+}
+
+// modify card action à faire sur le même modèle que create
+export const updateCardAction = async (cardId, updateObj) => {
+  return async dispatch => {
+    dispatch(setLoading());
+    dispatch(setRedirectUrl(false))
+    if (cardId && updateObj) {
+      await updateCardService(cardId, updateObj).then(rep => {
+        dispatch(openNotificationPopup("Carte modifiée avec succès !"))
+        dispatch(setLoaded())
+        dispatch(setCurrentSearch(initialSearchState))
+        dispatch(getCardAfterfilterAction(initialSearchState))
+        dispatch(setRedirectUrl(true))
+        return rep.data
+      }).catch(err => {
+
+        console.error(err)
+        dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
+        dispatch(setLoaded())
+        return err
+      })
+    } else {
+      dispatch(openNotificationPopup("Une erreur est survenue... Merci de réessayer ou de nous signaler le problème"))
+      dispatch(setLoaded())
+    }
   }
 }
 

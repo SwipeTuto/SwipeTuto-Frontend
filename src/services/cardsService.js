@@ -45,12 +45,8 @@ export const getCardAfterfilter = search => {
 
 
 export const getCardsByUser = (userid, cardState) => {
-  // console.log(userid, cardState)
-  return client().get(`card/user/${userid}/`, {
-    body: {
-      state: cardState || 1
-    }
-  }).then(rep => {
+  console.log(userid, cardState)
+  return client().get(`card/user/${userid}?state=${cardState}`).then(rep => {
     return rep
   }).catch(err => { return err })
 }
@@ -101,7 +97,7 @@ export const createCardService = (cardObject) => {
 }
 
 export const deleteCardService = (cardId) => {
-  return client().delete(`card/list/${cardId}`).then(rep => {
+  return client().delete(`card/list/${cardId}/`).then(rep => {
     return rep
   }).catch(err => {
     return err

@@ -85,7 +85,7 @@ const CardPreviewSmall = ({ card, size }) => {
           setCardIsReady(false);
           setIsError(true);
         };
-        img.src = `${media_image[0].image}`;
+        img.src = `${media_image[0].image_low ? media_image[0].image_low : media_image[0].image}`;
       } else {
         setIsError(true);
       }

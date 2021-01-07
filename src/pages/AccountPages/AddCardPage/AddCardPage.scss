@@ -1,4 +1,4 @@
-@import "../../variables.scss";
+@import "../../../variables.scss";
 
 .AddCardPage {
   // padding: $grid-component-padding;
@@ -65,13 +65,16 @@
 
   &__buttons {
     display: flex;
-    & .custom-button:last-of-type {
-      margin-left: 1.5rem;
-      background-color: $secondary-light;
+    & .custom-button:not(:last-of-type) {
+      margin-right: 1.5rem;
 
       &:disabled {
         background-color: $grey-dark;
       }
+    }
+
+    & .custom-button:last-of-type {
+      background-color: $secondary-light;
     }
   }
 

@@ -24,7 +24,7 @@ const AddCardPage = ({ type, history }) => {
   const currentuserId = useSelector(selectCurrentUserId);
   const [cardInfos, setCardInfos] = useState({
     card_title: "",
-    card_description: "",
+    card_description: "<p></p>",
     card_topic: null,
     card_category: null,
     card_images: [],

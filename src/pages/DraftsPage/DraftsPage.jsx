@@ -32,7 +32,7 @@ const DraftsPage = () => {
           fetchedCards && fetchedCards.filter((card) => card.state === 0).length === 0 ? (
             <p>Aucun brouillon pour le moment.</p>
           ) : (
-            fetchedCards.filter((card) => card.state === 0).map((draftCard) => <DraftPreview key={draftCard.id} draftCard={draftCard} />)
+            fetchedCards?.filter((card) => card.state === 0).map((draftCard) => <DraftPreview key={draftCard.id} draftCard={draftCard} />)
           )
         ) : (
           <Loading />

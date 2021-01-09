@@ -41,7 +41,7 @@ const AccountPage = (props) => {
           {currentUser ? (
             <>
               <UserNameAndAvatar user={currentUser} />
-              <NavLink to="/account/add">
+              <NavLink to="/account/add" onClick={() => window.localStorage.removeItem("draftNewCard")}>
                 <AddLogo />
                 Publier
               </NavLink>

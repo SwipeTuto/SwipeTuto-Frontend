@@ -40,6 +40,7 @@ const PreferencesPage = () => {
   useEffect(() => {
     // console.log(userPref);
     // action pour modif l'objet settings de user en back avec userPref
+    // api /me
   }, [userPref]);
 
   return (

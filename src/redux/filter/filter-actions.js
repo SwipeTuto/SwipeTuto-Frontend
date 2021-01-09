@@ -445,7 +445,6 @@ export const createCardAction = (cardObject, cardState) => {
 
       return rep.data
     }).catch(err => {
-
       console.error(err)
       dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
       dispatch(setLoaded())

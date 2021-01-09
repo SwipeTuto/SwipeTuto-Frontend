@@ -9,7 +9,7 @@ import { selectTheme } from "../../../redux/layout/layout-selectors";
 import FormInput from "../../../components/FormInputs/FormInput";
 import FormTextarea from "../../../components/FormInputs/FormTextarea";
 import { upDateAvatar } from "../../../services/userService";
-import { toggleThemeAction } from "../../../redux/layout/layout-actions";
+import { setCardsSize, toggleThemeAction } from "../../../redux/layout/layout-actions";
 
 const SettingsPage = () => {
   const dispatch = useDispatch();
@@ -115,7 +115,6 @@ const SettingsPage = () => {
       })
     );
     currentUserId && dispatch(getCurrentUserAction(currentUserId));
-    console.log("call");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userPref]);
 
@@ -165,6 +164,7 @@ const SettingsPage = () => {
                 value="small"
                 checked={userPref.card_size === "small" ? "checked" : null}
                 onClick={() => {
+                  dispatch(setCardsSize("small"));
                   setUserPref({ ...userPref, card_size: "small" });
                 }}
               />
@@ -176,6 +176,7 @@ const SettingsPage = () => {
                 value="big"
                 checked={userPref.card_size === "big" ? "checked" : null}
                 onClick={() => {
+                  dispatch(setCardsSize("big"));
                   setUserPref({ ...userPref, card_size: "big" });
                 }}
               />

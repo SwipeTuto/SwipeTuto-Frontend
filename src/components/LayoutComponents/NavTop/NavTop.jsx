@@ -187,7 +187,12 @@ const NavTop = (props) => {
             <div className="NavTop__avatar">
               <UserNameAndAvatar user={currentUser} link={true} changeLink="/account/user" themed={true} />
             </div>
-            <div className="NavTop__addcard">
+            <div
+              className="NavTop__addcard"
+              onClick={() => {
+                window.localStorage.removeItem("draftNewCard");
+              }}
+            >
               <Link to="/account/add" className={`NavTop__roundBtn ${currentTheme}-theme-l`}>
                 <AddLogo />
               </Link>

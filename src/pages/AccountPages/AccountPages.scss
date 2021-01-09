@@ -68,6 +68,13 @@
       }
     }
   }
+
+  &__item-border {
+    background-color: $grey;
+    height: 1px;
+    // width: 100%;
+    margin: 0 1rem;
+  }
   &__page {
     padding: 4rem 0;
     width: 70%;

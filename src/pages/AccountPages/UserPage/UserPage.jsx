@@ -73,7 +73,7 @@ const UserPage = ({ userIsSame, location }) => {
         <h2 className="title title-2">Tutoriels de {userDatas && userDatas.username ? userDatas.username : "l'utilisateur "}</h2>
         {!isLoaded ? (
           <Loading />
-        ) : userDatas && cards.length > 0 ? (
+        ) : userDatas && cards?.length > 0 ? (
           <CardGridList loadFilter={false} allowInfiniteScroll={true} />
         ) : (
           <p className="UserPage__nocards">Aucune carte pour le moment.</p>

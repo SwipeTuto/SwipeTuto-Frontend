@@ -6,6 +6,8 @@
   height: 12rem;
   padding: 1rem 2rem;
   display: flex;
+  cursor: pointer;
+  transition: all 0.2s ease;
 
   &__wrapper {
     flex-grow: 1;
@@ -42,5 +44,15 @@
   &__actions {
     display: flex;
     justify-content: flex-end;
+    width: min-content;
+    margin-left: auto;
+  }
+
+  &__button {
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: $secondary-dark;
+    }
   }
 }

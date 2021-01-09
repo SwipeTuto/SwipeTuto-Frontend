@@ -16,7 +16,7 @@ import ContactUsPage from './pages/ContactUsPage/ContactUsPage'
 import ConfidentialityPage from "./pages/ConfidentialityPage/ConfidentialityPage";
 import CookiesPage from "./pages/CookiesPage/CookiesPage";
 import InfosPage from "./pages/InfosPage/InfosPage";
-import AddCardPage from "./pages/AddCardPage/AddCardPage";
+import AddCardPage from "./pages/AccountPages/AddCardPage/AddCardPage";
 import { selectCurrentUser } from "./redux/user/user-selectors";
 import UserHomePage from "./pages/UserHomePage/UserHomePage";
 import DraftsPage from "./pages/DraftsPage/DraftsPage";

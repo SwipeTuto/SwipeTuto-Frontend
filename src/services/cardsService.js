@@ -46,7 +46,7 @@ export const getCardAfterfilter = search => {
 
 export const getCardsByUser = (userid, cardState) => {
   console.log(userid, cardState)
-  return client().get(`card/user/${userid}?state=${cardState}`).then(rep => {
+  return client().get(`card/user/${userid}${cardState ? "?state=" + cardState : ''}`).then(rep => {
     return rep
   }).catch(err => { return err })
 }

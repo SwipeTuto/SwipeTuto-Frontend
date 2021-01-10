@@ -6,22 +6,17 @@ import { NavLink, Link } from "react-router-dom";
 
 // redux
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
-import {
-  selectCurrentSearch,
-  selectSearchTopic,
-  // selectSearchTopic,
-} from "../../../redux/filter/filter-selectors";
+import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
 
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 import { deleteCurrentSearch, getCardAfterfilterAction, setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
-import { getCategoriesArray, getTopicShortImage, initialSearchState, topicArray } from "../../../helper/index";
+import { getCategoriesArray, initialSearchState, topicArray } from "../../../helper/index";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
-// import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 import SearchForm from "../SearchForm/SearchForm";
 import UserUsername from "../../UserComponents/UserAvatar/UserUsername";
 
@@ -37,11 +32,9 @@ import { ReactComponent as DropdownFullLogo } from "../../../assets/images/chevr
 import { ReactComponent as PencilLogo } from "../../../assets/images/pencil.svg";
 import STSmallLogoBlackmod from "../../../assets/stlogos/logo seul blackmode.png";
 import STSmallLogo from "../../../assets/stlogos/logo seul.png";
-// import SwipeTutoSmallSmall from "../../../assets/logos/Logo_small_border_black_smaller_100px.png";
 
 import "./NavTop.scss";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
-import { setLoading } from "../../../redux/layout/layout-actions";
 import ToggleButton from "../ToggleTheme/ToggleTheme";
 import { useDarkMode } from "../../../hooks/useDarkMode";
 
@@ -53,12 +46,9 @@ const NavTop = (props) => {
   const dropdown = useRef();
   const dropdownBtn = useRef();
   const [navDropdownOpen, setNavDropdownOpen] = useState(false);
-  const currentTopic = useSelector(selectSearchTopic);
 
   const topicHandleClick = async (topicQueryName) => {
-    // const topicName = e.target.name ? e.target.name : null;
     dispatch(setCardsFetchedInStore(null));
-
     const currentSearchCopy = {
       ...currentSearch,
       searchTopic: topicQueryName,
@@ -68,7 +58,6 @@ const NavTop = (props) => {
   };
 
   const categoryHandleClick = async (topicQueryName, categoryQueryName) => {
-    // const topicName = e.target.name ? e.target.name : null;
     dispatch(setCardsFetchedInStore(null));
 
     const currentSearchCopy = {
@@ -110,7 +99,6 @@ const NavTop = (props) => {
         <Link to="/" className="NavTop__swipeTuto">
           <img
             className="NavTop__swipeTuto--image"
-            // src={getTopicShortImage(currentTopic)}
             src={currentTheme === "light" ? STSmallLogo : STSmallLogoBlackmod}
             alt=""
             onClick={() => {
@@ -119,14 +107,13 @@ const NavTop = (props) => {
             }}
           />
         </Link>
-        {/* {currentUser && <SearchForm />} */}
         {!currentUser ? (
           <NavLink exact className="NavTop__link" to="/">
             Accueil
           </NavLink>
         ) : (
           <>
-            <NavLink exact className="NavTop__link" to="/home">
+            <NavLink exact className="NavTop__link" to="/">
               Accueil
             </NavLink>
 
@@ -174,13 +161,7 @@ const NavTop = (props) => {
           </>
         )}
       </div>
-      <div className="NavTop__center">
-        {currentUser && <SearchForm />}
-
-        {/* <NavLink className="NavTop__link" to="/ressources">
-          Ressources
-        </NavLink> */}
-      </div>
+      <div className="NavTop__center">{currentUser && <SearchForm />}</div>
       <div className="NavTop__right">
         {currentUser ? (
           <>
@@ -265,4 +246,4 @@ const NavTop = (props) => {
   );
 };
 
-export default NavTop;
+export default React.memo(NavTop);

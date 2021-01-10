@@ -463,10 +463,7 @@ const CardFullPopup = ({ history, location }) => {
                       </div>
                     </div>
 
-                    <div className={`CardFullPopup__description CardFullPopup__section ${currentTheme}-theme-d`}>
-                      <h2 className="title title-2">Description</h2>
-                      {/* {clickedCard && <> {stringToHTML(clickedCard.description)}</>} */}
-                    </div>
+                    <div className={`CardFullPopup__description CardFullPopup__section ${currentTheme}-theme-d`}></div>
 
                     <div className="CardFullPopup__commentaires CardFullPopup__section">
                       <h2 className="title title-2">Commentaires</h2>

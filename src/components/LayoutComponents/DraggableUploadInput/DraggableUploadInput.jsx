@@ -37,9 +37,7 @@ const DraggableUploadInput = React.forwardRef((props, ref) => {
 
   useEffect(() => {
     if (localDraftCard?.images) {
-      let i = 0;
       const imgObjectArray = localDraftCard.images.map((url) => {
-        i++;
         return {
           source: url,
           options: {
@@ -50,23 +48,7 @@ const DraggableUploadInput = React.forwardRef((props, ref) => {
           },
         };
       });
-      // console.log(imgObjectArray);
       setFiles(imgObjectArray);
-
-      // localDraftCard.images.map((url) => {
-      //   // console.log(typeof url);
-      //   const img = new Image();
-      //   img.src = url;
-      //   console.log(img);
-      //   img.onload = () => {
-      //     console.log(img);
-      //     ref.current
-      //       .addFile(url)
-      //       .then((file) => console.log(file))
-      //       .catch((err) => console.log(err));
-      //   };
-      //   return img;
-      // });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

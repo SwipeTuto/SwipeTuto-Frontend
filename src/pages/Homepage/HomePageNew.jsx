@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 
 // import CardPreviewSmall from "../../components/CardsComponents/CardPreviewSmall/CardPreviewSmall";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
@@ -20,7 +20,7 @@ import { topicArray } from "../../helper";
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
 
 import Register from "../../components/LayoutComponents/Login/Register";
-import { selectCurrentUser } from "../../redux/user/user-selectors";
+// import { selectCurrentUser } from "../../redux/user/user-selectors";
 import HowItWorks from "../../components/LayoutComponents/HowItWorks/HowItWorks";
 // import { setLoaded } from "../../redux/layout/layout-actions";
 import STSmallLogoBlackmod from "../../assets/stlogos/logo seul blackmode.png";
@@ -32,7 +32,7 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const currentSearch = useSelector(selectCurrentSearch);
   const isLoaded = useSelector(selectIsLoaded);
-  const currentUser = useSelector(selectCurrentUser);
+  // const currentUser = useSelector(selectCurrentUser);
   // const [cardsAreReady, setCardsAreReady] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
   // const cardsFetched = useSelector(selectCardsFetchedCards);
@@ -67,7 +67,7 @@ const HomePage = () => {
 
   return (
     <>
-      {currentUser && <Redirect to={"/search"} />}
+      {/* {currentUser && <Redirect to={"/home"} />} */}
       <div className={`HomePage ${currentTheme}-theme-d`}>
         <header className="HomePage__header">
           <img src={currentTheme === "light" ? STSmallLogo : STSmallLogoBlackmod} alt="swipetuto logo" />

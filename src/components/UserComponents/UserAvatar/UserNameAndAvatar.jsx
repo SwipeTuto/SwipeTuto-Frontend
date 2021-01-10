@@ -60,4 +60,4 @@ const UserNameAndAvatar = ({ user, link, changeLink, themed }) => {
   );
 };
 
-export default UserNameAndAvatar;
+export default React.memo(UserNameAndAvatar);

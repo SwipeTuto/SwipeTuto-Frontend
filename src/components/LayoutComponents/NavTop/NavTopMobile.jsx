@@ -4,11 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 
 // redux
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
-// import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 import { selectMobileNavOpen, selectFilterMobileMenuOpen, selectTheme } from "../../../redux/layout/layout-selectors";
 import { openMobileNav, closeMobileNav, openFilterMobileMenu, setLoaded } from "../../../redux/layout/layout-actions";
 import { logoutAction } from "../../../redux/user/user-actions";
-// import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
@@ -29,9 +27,6 @@ import { ReactComponent as AddLogo } from "../../../assets/images/add-circle.svg
 import { ReactComponent as LearnFlashLogo } from "../../../assets/images/flash.svg";
 import { ReactComponent as HomeLogo } from "../../../assets/images/home.svg";
 import { ReactComponent as PencilLogo } from "../../../assets/images/pencil.svg";
-import SwipeTutoSmallLogo from "../../../assets/swipetuto/STvb_short.png";
-import SwipeTutoSmallFullBlack from "../../../assets/swipetuto/STvb_big.png";
-import SwipeTutoSmallFullWhite from "../../../assets/swipetuto/STvb_big_light.png";
 
 import "./NavTopMobile.scss";
 import { useDarkMode } from "../../../hooks/useDarkMode";
@@ -159,7 +154,7 @@ const NavTopMobile = (props) => {
           )}
 
           {currentUser && (
-            <Link className="NavTopMobile__link" to="/home" onClick={() => handleNavClose()}>
+            <Link className="NavTopMobile__link" to="/" onClick={() => handleNavClose()}>
               <HomeLogo className="NavTopMobile__logo" />
               Accueil
             </Link>
@@ -229,4 +224,4 @@ const NavTopMobile = (props) => {
   );
 };
 
-export default withRouter(NavTopMobile);
+export default React.memo(withRouter(NavTopMobile));

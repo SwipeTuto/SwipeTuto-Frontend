@@ -119,6 +119,7 @@ const CommentsWrapper = () => {
       {commentsLoaded ? (
         <>
           <div className="CommentsWrapper__comments">
+            {localCommentsArray?.length === 0 && localLastPublishedArray?.length === 0 && <p>Aucun commentaire pour le moment ...</p>}
             {localCommentsArray &&
               localCommentsArray.map((comment) => (
                 <FirstLevelComment

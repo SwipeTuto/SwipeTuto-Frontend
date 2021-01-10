@@ -2,12 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { selectCurrentUser, selectClickedUser } from "../../../redux/user/user-selectors";
-import {
-  selectCardsFetched,
-  selectCardsFetchedCards,
-  selectTotalNumberOfCardsSearched,
-  selectTotalNumberOfResults,
-} from "../../../redux/filter/filter-selectors";
+import { selectCardsFetchedCards, selectTotalNumberOfResults } from "../../../redux/filter/filter-selectors";
 import Loading from "../../../components/Loading/Loading";
 
 import "./UserPage.scss";

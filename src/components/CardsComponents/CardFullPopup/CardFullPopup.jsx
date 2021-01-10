@@ -51,8 +51,8 @@ import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrap
 import { convertNumber, formattedDate, initialSignalState, likeUpdate, renameQuery, stringToHTML } from "../../../helper/index";
 
 // Assets
-import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevrons/chevron-back-circle.svg";
-import { ReactComponent as ChevronCircleRight } from "../../../assets/images/chevrons/chevron-forward-circle.svg";
+import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevron-back-circle.svg";
+import { ReactComponent as ChevronCircleRight } from "../../../assets/images/chevron-forward-circle.svg";
 import { ReactComponent as BookmarkEmpty } from "../../../assets/images/bookmark-outline.svg";
 import { ReactComponent as BookmarkFull } from "../../../assets/images/bookmark.svg";
 import { ReactComponent as HeartEmpty } from "../../../assets/images/heart-outline.svg";
@@ -463,10 +463,7 @@ const CardFullPopup = ({ history, location }) => {
                       </div>
                     </div>
 
-                    <div className={`CardFullPopup__description CardFullPopup__section ${currentTheme}-theme-d`}>
-                      <h2 className="title title-2">Description</h2>
-                      {/* {clickedCard && <> {stringToHTML(clickedCard.description)}</>} */}
-                    </div>
+                    <div className={`CardFullPopup__description CardFullPopup__section ${currentTheme}-theme-d`}></div>
 
                     <div className="CardFullPopup__commentaires CardFullPopup__section">
                       <h2 className="title title-2">Commentaires</h2>

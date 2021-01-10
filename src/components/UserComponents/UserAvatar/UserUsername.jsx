@@ -33,4 +33,4 @@ const UserUsername = ({ user, link, addActionOnClick }) => {
   );
 };
 
-export default UserUsername;
+export default React.memo(UserUsername);

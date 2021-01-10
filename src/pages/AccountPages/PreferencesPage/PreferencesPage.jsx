@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import FormInput from "../../../components/FormInputs/FormInput";
-import FormSelect from "../../../components/FormInputs/FormSelect";
-import CustomButton from "../../../components/LayoutComponents/CustomButton/CustomButton";
 import { getCategoriesArray, topicArray } from "../../../helper";
-import { toggleThemeAction } from "../../../redux/layout/layout-actions";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 import { getCurrentUserAction, updateUserInfosAction } from "../../../redux/user/user-actions";
 import { selectCurrentUser, selectCurrentUserId } from "../../../redux/user/user-selectors";
@@ -25,15 +21,6 @@ const PreferencesPage = () => {
   useEffect(() => {
     setCategoriesArray(getCategoriesArray(userPref.topicPref));
   }, [userPref.topicPref]);
-
-  // useEffect(() => {
-  //   if (currentUser && currentUser.settings) {
-  //     setUserPref({
-  //       topicPref: currentUser.settings?.topicPref,
-  //       categoryPref: currentUser.settings?.categoryPref,
-  //     });
-  //   }
-  // }, [currentUser]);
 
   useEffect(() => {
     dispatch(

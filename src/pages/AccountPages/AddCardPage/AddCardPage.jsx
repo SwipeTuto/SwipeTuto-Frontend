@@ -21,14 +21,15 @@ import "./AddCardPage.scss";
 
 const AddCardPage = ({ type, history }) => {
   // console.log(type);
+  const localDraftNewCard = JSON.parse(window.localStorage.getItem("draftNewCard"));
   const currentuserId = useSelector(selectCurrentUserId);
   const [cardInfos, setCardInfos] = useState({
-    card_title: "",
-    card_description: "<p></p>",
-    card_topic: null,
-    card_category: null,
-    card_images: [],
-    card_id: null,
+    card_title: localDraftNewCard?.name || "",
+    card_description: localDraftNewCard?.description || "",
+    card_topic: localDraftNewCard?.topic || null,
+    card_category: localDraftNewCard?.categorie || null,
+    card_images: localDraftNewCard?.images || [],
+    card_id: localDraftNewCard.id || null,
   });
   const currentTheme = useSelector(selectTheme);
   const [categoriesLocalArray, setCategoriesLocalArray] = useState([]);
@@ -37,7 +38,6 @@ const AddCardPage = ({ type, history }) => {
   const [isValid, setIsValid] = useState(false);
   const [emptyState, setEmptyState] = useState(false);
   const filedrop = useRef();
-  const localDraftNewCard = JSON.parse(window.localStorage.getItem("draftNewCard"));
   const dispatch = useDispatch();
   const isLoaded = useSelector(selectIsLoaded);
 
@@ -83,14 +83,14 @@ const AddCardPage = ({ type, history }) => {
     if (localDraftNewCard && localDraftNewCard.user !== currentuserId) {
       handleDeleteCard();
     } else if (localDraftNewCard) {
-      setCardInfos({
-        card_title: localDraftNewCard.name,
-        card_description: localDraftNewCard.description,
-        card_topic: localDraftNewCard.topic,
-        card_category: localDraftNewCard.categorie,
-        card_images: localDraftNewCard.images,
-        card_id: localDraftNewCard.id,
-      });
+      // setCardInfos({
+      //   card_title: localDraftNewCard.name,
+      //   card_description: localDraftNewCard.description,
+      //   card_topic: localDraftNewCard.topic,
+      //   card_category: localDraftNewCard.categorie,
+      //   card_images: localDraftNewCard.images,
+      //   card_id: localDraftNewCard.id,
+      // });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -130,6 +130,7 @@ const AddCardPage = ({ type, history }) => {
       if (state === 0) history.push("/account/drafts");
     } catch (err) {
       dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer."));
+      console.log(err);
     }
   };
 
@@ -148,12 +149,13 @@ const AddCardPage = ({ type, history }) => {
       };
 
       // faire le update
-      dispatch(updateCardAction(cardInfos?.card_id, cardObject));
+      await dispatch(updateCardAction(cardInfos?.card_id, cardObject));
 
       await window.localStorage.removeItem("draftNewCard");
       setIsValid(false);
     } catch (err) {
       dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer."));
+      console.log(err);
     }
   };
 
@@ -182,9 +184,6 @@ const AddCardPage = ({ type, history }) => {
           <Loading />
         </div>
       )}
-      {/* <div className="AddCardPage__loading">
-        <Loading />
-      </div> */}
       <div className="AddCardPage__wrapper">
         <h2 className="title title-2">Ajouter une carte</h2>
         <form onSubmit={(e) => e.preventDefault()}>

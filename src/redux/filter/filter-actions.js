@@ -433,7 +433,7 @@ export const createCardAction = (cardObject, cardState) => {
     // console.log(userId)
     dispatch(setLoading());
     dispatch(setRedirectUrl(false))
-    cardObject && createCardService(cardObject).then(rep => {
+    cardObject && await createCardService(cardObject).then(rep => {
       dispatch(openNotificationPopup("Carte créée avec succès !"))
       dispatch(setLoaded())
 
@@ -445,7 +445,6 @@ export const createCardAction = (cardObject, cardState) => {
 
       return rep.data
     }).catch(err => {
-
       console.error(err)
       dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
       dispatch(setLoaded())
@@ -455,7 +454,7 @@ export const createCardAction = (cardObject, cardState) => {
 }
 
 // modify card action à faire sur le même modèle que create
-export const updateCardAction = async (cardId, updateObj) => {
+export const updateCardAction = (cardId, updateObj) => {
   return async dispatch => {
     dispatch(setLoading());
     dispatch(setRedirectUrl(false))
@@ -482,14 +481,19 @@ export const updateCardAction = async (cardId, updateObj) => {
 }
 
 export const deleteCardAction = (cardId, currentUserId, history) => {
-  return dispatch => {
+  console.log(history)
+  return async dispatch => {
     // console.log(userId)
     dispatch(setLoading());
-    cardId && deleteCardService(cardId).then(rep => {
+    cardId && await deleteCardService(cardId).then(rep => {
       dispatch(openNotificationPopup("Carte supprimée avec succès !"))
       dispatch(setLoaded())
-      currentUserId && dispatch(getCardsByUserIdAction(currentUserId));
-      history && history.push("/account/user");
+      if (history.location.pathname === "/account/drafts") {
+        currentUserId && dispatch(getCardsByUserIdAction(currentUserId, 0));
+      } else {
+        currentUserId && dispatch(getCardsByUserIdAction(currentUserId));
+        history && history.push("/account/user");
+      }
       return rep.data
     }).catch(err => {
       console.error(err)

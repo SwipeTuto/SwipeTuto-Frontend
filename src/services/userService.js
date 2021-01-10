@@ -101,6 +101,7 @@ export const updateUserInfos = newUserInfos => {
     profile: {
       description: newUserInfos.profile && newUserInfos.profile.description
     },
+    settings: newUserInfos?.settings
   }
 
   return client().patch(`me/`, JSON.stringify(data)).then(user => {

@@ -15,7 +15,7 @@ import history from "./helper/history"
 const headersKeys = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
-  // 'authorization': authHeader()
+  'authorization': authHeader()
 }
 
 export const client = () => {

@@ -29,7 +29,7 @@ const AddCardPage = ({ type, history }) => {
     card_topic: localDraftNewCard?.topic || null,
     card_category: localDraftNewCard?.categorie || null,
     card_images: localDraftNewCard?.images || [],
-    card_id: localDraftNewCard.id || null,
+    card_id: localDraftNewCard?.id || null,
   });
   const currentTheme = useSelector(selectTheme);
   const [categoriesLocalArray, setCategoriesLocalArray] = useState([]);

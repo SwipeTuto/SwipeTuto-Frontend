@@ -1,5 +1,5 @@
 import React from "react";
-import { ReactComponent as GoTopLogo } from "../../../assets/images/chevrons/arrow-up-circle.svg";
+import { ReactComponent as GoTopLogo } from "../../../assets/images/arrow-up-circle.svg";
 import "./ScrollButton.scss";
 
 const ScrollButton = () => {
@@ -10,10 +10,7 @@ const ScrollButton = () => {
   const scrollFunction = () => {
     let goTopButton = document.querySelector(".ScrollButton");
 
-    if (
-      goTopButton &&
-      (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20)
-    ) {
+    if (goTopButton && (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20)) {
       goTopButton.style.display = "block";
     } else if (goTopButton) {
       goTopButton.style.display = "none";

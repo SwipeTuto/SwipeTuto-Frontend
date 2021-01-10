@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import UserHeader from "../AccountPages/UserHeader/UserHeader";
-
 import { getUserByIdAction } from "../../redux/user/user-actions";
 
 import "./ProfilePage.scss";
@@ -59,15 +56,17 @@ const ProfilePage = ({ match, location }) => {
           </div>
         ) : (
           <>
-            {!userIsSame && (
+            {userIsSame ? (
+              <Link to="/account/user">
+                <CustomButton color="dark">Gérer le compte</CustomButton>
+              </Link>
+            ) : (
               <VerticalMenu className="ProfilePage__link">
                 <p className="VerticalMenu__menu--item" onClick={() => dispatch(showSignalPopup(newSignalObject))}>
                   Signaler
                 </p>
               </VerticalMenu>
             )}
-
-            <UserHeader userIsSame={userIsSame} />
             <UserPage userIsSame={userIsSame} />
           </>
         )}

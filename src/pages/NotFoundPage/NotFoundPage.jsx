@@ -5,7 +5,7 @@ import "./NotFoundPage.scss";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { useDispatch } from "react-redux";
 import { showSignalPopup } from "../../redux/layout/layout-actions";
-import { ReactComponent as NotFoundImg } from "../../assets/images/not-found.svg";
+import { ReactComponent as NotFoundImg } from "../../assets/images/illustrations/not-found.svg";
 
 const NotFoundPage = ({ location }) => {
   const dispatch = useDispatch();

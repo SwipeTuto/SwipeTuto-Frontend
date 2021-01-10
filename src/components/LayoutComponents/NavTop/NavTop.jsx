@@ -25,10 +25,10 @@ import { ReactComponent as AccountLogo } from "../../../assets/images/person.svg
 import { ReactComponent as SettingsLogo } from "../../../assets/images/settings.svg";
 import { ReactComponent as HelpLogo } from "../../../assets/images/help-circle.svg";
 import { ReactComponent as LogOutLogo } from "../../../assets/images/log-out.svg";
-import { ReactComponent as DropDownLogo } from "../../../assets/images/chevrons/chevron-down.svg";
+import { ReactComponent as DropDownLogo } from "../../../assets/images/chevron-down.svg";
 import { ReactComponent as BookmarkLogo } from "../../../assets/images/bookmark.svg";
 import { ReactComponent as AddLogo } from "../../../assets/images/add.svg";
-import { ReactComponent as DropdownFullLogo } from "../../../assets/images/chevrons/caret-down.svg";
+import { ReactComponent as DropdownFullLogo } from "../../../assets/images/caret-down.svg";
 import { ReactComponent as PencilLogo } from "../../../assets/images/pencil.svg";
 import STSmallLogoBlackmod from "../../../assets/stlogos/logo seul blackmode.png";
 import STSmallLogo from "../../../assets/stlogos/logo seul.png";

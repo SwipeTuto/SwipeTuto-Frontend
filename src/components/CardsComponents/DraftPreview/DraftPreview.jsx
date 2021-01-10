@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
-import stlogo from "../../../assets/stlogos/logo seul.png";
 import "./DraftPreview.scss";
 import ConfirmationOverlay from "../../LayoutComponents/ConfirmationOverlay/ConfirmationOverlay";
 import { deleteCardAction, updateCardAction } from "../../../redux/filter/filter-actions";
 import { selectCurrentUserId } from "../../../redux/user/user-selectors";
 import { withRouter } from "react-router-dom";
 import { openNotificationPopup } from "../../../redux/layout/layout-actions";
+import { formattedDate } from "../../../helper";
 
 const DraftPreview = ({ draftCard, history }) => {
   const currentTheme = useSelector(selectTheme);
@@ -38,7 +38,6 @@ const DraftPreview = ({ draftCard, history }) => {
 
   const handleConfirmDeleteClick = async () => {
     (await confirmDeletePopupOpen?.id) && dispatch(deleteCardAction(confirmDeletePopupOpen.id, currentuserId, history));
-    // ou passage state 2 ??
     setConfirmDeletePopupOpen({
       open: false,
       message: "",
@@ -135,6 +134,7 @@ const DraftPreview = ({ draftCard, history }) => {
           <div className="DraftPreview__title">
             <h3 className="DraftPreview__title title title-3">{draftCard?.name}</h3>
           </div>
+          <p>{draftCard?.modified && formattedDate(draftCard.modified)}</p>
           <div className="DraftPreview__actions" onClick={(e) => e.stopPropagation()}>
             <button className="DraftPreview__button" onClick={() => handleDeleteDraft(draftCard?.id)}>
               Supprimer

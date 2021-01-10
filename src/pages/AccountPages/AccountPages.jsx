@@ -1,11 +1,10 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { NavLink, Switch } from "react-router-dom";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
 import SettingsPage from "./SettingsPage/SettingsPage";
 import UserPage from "./UserPage/UserPage";
-import UserHeader from "./UserHeader/UserHeader";
 
 import { ReactComponent as SettingsLogo } from "../../assets/images/settings.svg";
 import { ReactComponent as AccountLogo } from "../../assets/images/person.svg";
@@ -18,11 +17,14 @@ import { ReactComponent as PreferencesLogo } from "../../assets/images/color-pal
 
 import "./AccountPages.scss";
 import { selectTheme } from "../../redux/layout/layout-selectors";
-import SavedPage from "./SavedPage/SavedPage";
-import DraftsPage from "../DraftsPage/DraftsPage";
-import AddCardPage from "./AddCardPage/AddCardPage";
 import UserNameAndAvatar from "../../components/UserComponents/UserAvatar/UserNameAndAvatar";
-import PreferencesPage from "./PreferencesPage/PreferencesPage";
+import ErrorBoundary from "../../components/ErrorBoundary/ErrorBoundary";
+import PageLoading from "../../components/Loading/PageLoading";
+
+const SavedPage = lazy(() => import("./SavedPage/SavedPage"));
+const DraftsPage = lazy(() => import("../DraftsPage/DraftsPage"));
+const AddCardPage = lazy(() => import("./AddCardPage/AddCardPage"));
+const PreferencesPage = lazy(() => import("./PreferencesPage/PreferencesPage"));
 
 const AccountPage = (props) => {
   const currentUser = useSelector(selectCurrentUser);
@@ -82,13 +84,17 @@ const AccountPage = (props) => {
       </div>
       <div className="AccountPage__page">
         <Switch>
-          <ProtectedRoute exact path="/account/user" component={UserPage} />
-          <ProtectedRoute exact path="/account/settings" component={SettingsPage} />
-          <ProtectedRoute exact path="/account/preferences" component={PreferencesPage} />
-          <ProtectedRoute exact path="/account/saved" component={SavedPage} />
-          <ProtectedRoute exact path="/account/drafts" component={DraftsPage} />
-          <ProtectedRoute exact path="/account/modify" component={() => <AddCardPage type="modify" />} />
-          <ProtectedRoute exact path="/account/add" component={AddCardPage} />
+          <ErrorBoundary>
+            <Suspense fallback={<PageLoading />}>
+              <ProtectedRoute exact path="/account/user" component={UserPage} />
+              <ProtectedRoute exact path="/account/settings" component={SettingsPage} />
+              <ProtectedRoute exact path="/account/preferences" component={PreferencesPage} />
+              <ProtectedRoute exact path="/account/saved" component={SavedPage} />
+              <ProtectedRoute exact path="/account/drafts" component={DraftsPage} />
+              <ProtectedRoute exact path="/account/modify" component={() => <AddCardPage type="modify" />} />
+              <ProtectedRoute exact path="/account/add" component={AddCardPage} />
+            </Suspense>
+          </ErrorBoundary>
         </Switch>
       </div>
     </div>

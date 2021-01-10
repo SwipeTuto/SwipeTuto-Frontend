@@ -20,9 +20,15 @@
   }
 
   &__title {
-    margin-bottom: auto;
     text-overflow: ellipsis;
     overflow: hidden;
+  }
+
+  p {
+    font-size: 1.3rem;
+    text-align: left;
+    display: flex;
+    margin-bottom: auto;
   }
 
   &__image {

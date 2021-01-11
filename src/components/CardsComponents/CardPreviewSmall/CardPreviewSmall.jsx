@@ -151,4 +151,4 @@ const CardPreviewSmall = ({ card, size }) => {
     </div>
   );
 };
-export default CardPreviewSmall;
+export default React.memo(CardPreviewSmall);

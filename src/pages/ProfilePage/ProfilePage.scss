@@ -9,6 +9,12 @@
     padding: 4rem;
     position: relative;
 
+    a {
+      .custom-button {
+        margin-left: auto;
+      }
+    }
+
     .VerticalMenu {
       display: inline-block;
       // text-align: right;
@@ -16,7 +22,9 @@
       right: 0;
 
       &__logo {
-        @include big-logo-size;
+        svg {
+          @include medium-logo-size;
+        }
       }
     }
   }

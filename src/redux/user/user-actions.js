@@ -194,7 +194,6 @@ export const getCurrentUserAction = id => {
 export const updateUserInfosAction = userInfos => {
   return dispatch => {
     return (
-
       updateUserInfos(userInfos)
         .then(rep => {
           dispatch(updateUserInfosSuccess(rep.data.user))

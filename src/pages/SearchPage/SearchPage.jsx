@@ -46,14 +46,14 @@ const SearchPage = ({ location }) => {
     const newSize = e.target.dataset.gridsize;
     dispatch(setCardsSize(newSize));
     updateCardSize(newSize);
-    window.localStorage.setItem("cardSize", newSize);
+    // window.localStorage.setItem("cardSize", newSize);
   };
 
-  useEffect(() => {
-    const localCardSize = window.localStorage.getItem("cardSize") ? window.localStorage.getItem("cardSize") : "small";
-    dispatch(setCardsSize(localCardSize));
-    updateCardSize(localCardSize);
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const localCardSize = window.localStorage.getItem("cardSize") ? window.localStorage.getItem("cardSize") : "small";
+  //   dispatch(setCardsSize(localCardSize));
+  //   updateCardSize(localCardSize);
+  // }, [dispatch]);
 
   const updateCardSize = (newSize) => {
     const allGridSizeItems = [...document.querySelectorAll(".FiltersBar__size-logo")];

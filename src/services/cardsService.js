@@ -1,24 +1,5 @@
 import axios from "axios"
 import { client } from "../index";
-import history from "../helper/history"
-
-// export const getCards = () => {
-//   var config = {
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//   }
-//   console.log("call")
-
-//   return axios.get(`${baseURL}card/list`, config)
-//     .then(rep => {
-//       return rep
-//     })
-//     .catch(function (err) {
-//       return err
-//     })
-// }
-
 
 export const getCardById = cardId => {
   return client().get(`card/list/${cardId}/`).then(rep => {
@@ -45,7 +26,10 @@ export const getCardAfterfilter = search => {
 
 
 export const getCardsByUser = (userid, cardState) => {
+<<<<<<< HEAD
   console.log(userid, cardState)
+=======
+>>>>>>> develop
   return client().get(`card/user/${userid}${cardState === 0 ? "?state=0" : cardState === 2 ? "?state=2" : ''}`).then(rep => {
     return rep
   }).catch(err => { return err })

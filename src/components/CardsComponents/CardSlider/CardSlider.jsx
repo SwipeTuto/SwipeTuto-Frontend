@@ -6,8 +6,8 @@ import { selectClickedCardSlides, selectClickedCard } from "../../../redux/filte
 import { selectFullscreen, selectTheme } from "../../../redux/layout/layout-selectors";
 import { closeFullscreen } from "../../../redux/layout/layout-actions";
 
-import { ReactComponent as ChevronLeft } from "../../../assets/images/chevrons/chevron-back.svg";
-import { ReactComponent as ChevronRight } from "../../../assets/images/chevrons/chevron-forward.svg";
+import { ReactComponent as ChevronLeft } from "../../../assets/images/chevron-back.svg";
+import { ReactComponent as ChevronRight } from "../../../assets/images/chevron-forward.svg";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import Glide from "@glidejs/glide";
 

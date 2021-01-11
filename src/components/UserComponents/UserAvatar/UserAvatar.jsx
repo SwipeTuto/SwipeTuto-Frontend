@@ -49,4 +49,4 @@ const UserAvatar = ({ user, link, addActionOnClick }) => {
   );
 };
 
-export default UserAvatar;
+export default React.memo(UserAvatar);

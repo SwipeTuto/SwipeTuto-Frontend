@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
-import stlogo from "../../../assets/stlogos/logo seul.png";
 import "./DraftPreview.scss";
 import ConfirmationOverlay from "../../LayoutComponents/ConfirmationOverlay/ConfirmationOverlay";
-import { deleteCardAction } from "../../../redux/filter/filter-actions";
+import { deleteCardAction, updateCardAction } from "../../../redux/filter/filter-actions";
 import { selectCurrentUserId } from "../../../redux/user/user-selectors";
 import { withRouter } from "react-router-dom";
+import { openNotificationPopup } from "../../../redux/layout/layout-actions";
+import { formattedDate } from "../../../helper";
 
 const DraftPreview = ({ draftCard, history }) => {
   const currentTheme = useSelector(selectTheme);
@@ -27,15 +28,16 @@ const DraftPreview = ({ draftCard, history }) => {
 
   // supprimer : popup confirmation puis action state = 2
   const handleDeleteDraft = (draftID) => {
+    console.log(history.location);
     setConfirmDeletePopupOpen({
       open: true,
       message: "Voulez-vous vraiment supprimer ce brouillon de façon définitive ?",
       id: draftID,
     });
   };
+
   const handleConfirmDeleteClick = async () => {
-    (await confirmDeletePopupOpen?.id) && dispatch(deleteCardAction(confirmDeletePopupOpen.id));
-    // ou passage state 2 ??
+    (await confirmDeletePopupOpen?.id) && dispatch(deleteCardAction(confirmDeletePopupOpen.id, currentuserId, history));
     setConfirmDeletePopupOpen({
       open: false,
       message: "",
@@ -58,9 +60,19 @@ const DraftPreview = ({ draftCard, history }) => {
       id: draftID,
     });
   };
+
   const handleConfirmPublishClick = async () => {
-    // action pour modifier carte : state passe à 1
-    // await confirmPublishPopupOpen?.id && dispatch()
+    try {
+      const updateState = {
+        ...draftCard,
+        state: 1,
+      };
+      await dispatch(updateCardAction(draftCard.id, updateState));
+      await window.localStorage.removeItem("draftNewCard");
+    } catch (err) {
+      dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer."));
+      console.log(err);
+    }
 
     setConfirmPublishPopupOpen({
       open: false,
@@ -68,6 +80,7 @@ const DraftPreview = ({ draftCard, history }) => {
       id: null,
     });
   };
+
   const handleRejectPublishClick = () => {
     setConfirmPublishPopupOpen({
       open: false,
@@ -85,11 +98,16 @@ const DraftPreview = ({ draftCard, history }) => {
         description: draftCard.description,
         topic: draftCard.topic[0].name,
         categorie: draftCard.categorie[0].name,
+        images: getImagesUrlArray(),
         user: currentuserId,
         id: draftCard.id,
       })
     );
     history.push("/account/add");
+  };
+
+  const getImagesUrlArray = () => {
+    return draftCard?.media_image?.map((imgObj) => imgObj.image);
   };
 
   return (
@@ -116,6 +134,7 @@ const DraftPreview = ({ draftCard, history }) => {
           <div className="DraftPreview__title">
             <h3 className="DraftPreview__title title title-3">{draftCard?.name}</h3>
           </div>
+          <p>{draftCard?.modified && formattedDate(draftCard.modified)}</p>
           <div className="DraftPreview__actions" onClick={(e) => e.stopPropagation()}>
             <button className="DraftPreview__button" onClick={() => handleDeleteDraft(draftCard?.id)}>
               Supprimer

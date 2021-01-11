@@ -108,9 +108,9 @@ const CardPreviewSmall = ({ card, size }) => {
   }, [cardIsReady]);
 
   return (
-    <div className={`CardPreviewSmall ${currentTheme}-theme-m`} data-slideid="1">
+    <div className={`CardPreviewSmall`} data-slideid="1">
       <div
-        className={`CardPreviewSmall__image  ${cardIsReady ? "active" : "hide"} ${currentTheme}-theme-l`}
+        className={`CardPreviewSmall__image  ${cardIsReady ? "active" : "hide"}`}
         id={`CardPreviewSmall__image--${cardId}`}
         onClick={() => handleClickedCardClick()}
       >

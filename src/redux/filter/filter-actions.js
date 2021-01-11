@@ -105,6 +105,7 @@ export const setCardsFetchedInStore = (cards) => ({
 
 // Fetch des cards à partir du nom de l'auteur
 export const getCardsByUserIdAction = (userId, cardState) => {
+  console.log(userId)
   return dispatch => {
     dispatch(setLoading())
     return getCardsByUser(userId, cardState)

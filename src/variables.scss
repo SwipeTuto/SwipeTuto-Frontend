@@ -198,6 +198,7 @@ $title-font: "Rubik", sans-serif;
 @mixin theme-colors-dark($themelight: true) {
   @if $themelight {
     background-color: $white;
+    // background-color: $white;
     color: $black;
   } @else {
     background-color: $dark-dark;

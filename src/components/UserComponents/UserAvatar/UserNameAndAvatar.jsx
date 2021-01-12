@@ -14,8 +14,8 @@ import { selectTheme } from "../../../redux/layout/layout-selectors";
 const UserNameAndAvatar = ({ user, link, changeLink, themed }) => {
   const dispatch = useDispatch();
   const userImage =
-    user && user.avatar && user.avatar[0] && user.avatar[0].avatar
-      ? `${user.avatar[0].avatar}`
+    user && user.avatar && user.avatar[0] && user.avatar[0].url
+      ? `${user.avatar[0].url}`
       : // ? `${base}${user.avatar[0].avatar}`
         null;
   const [error, setError] = useState(false);

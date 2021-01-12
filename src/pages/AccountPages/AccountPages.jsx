@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { NavLink, Switch } from "react-router-dom";
 import ProtectedRoute from "../../components/ProtectedRoute";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
 import SettingsPage from "./SettingsPage/SettingsPage";
 import UserPage from "./UserPage/UserPage";
@@ -14,12 +14,14 @@ import { ReactComponent as AddLogo } from "../../assets/images/add-circle.svg";
 import { ReactComponent as HelpLogo } from "../../assets/images/help-circle.svg";
 import { ReactComponent as ContactLogo } from "../../assets/images/mail.svg";
 import { ReactComponent as PreferencesLogo } from "../../assets/images/color-palette.svg";
+import { ReactComponent as LogOutLogo } from "../../assets/images/log-out.svg";
 
 import "./AccountPages.scss";
 import { selectTheme } from "../../redux/layout/layout-selectors";
 import UserNameAndAvatar from "../../components/UserComponents/UserAvatar/UserNameAndAvatar";
 import ErrorBoundary from "../../components/ErrorBoundary/ErrorBoundary";
 import PageLoading from "../../components/Loading/PageLoading";
+import { logoutAction } from "../../redux/user/user-actions";
 
 const SavedPage = lazy(() => import("./SavedPage/SavedPage"));
 const DraftsPage = lazy(() => import("../DraftsPage/DraftsPage"));
@@ -29,6 +31,7 @@ const PreferencesPage = lazy(() => import("./PreferencesPage/PreferencesPage"));
 const AccountPage = (props) => {
   const currentUser = useSelector(selectCurrentUser);
   const currentTheme = useSelector(selectTheme);
+  const dispatch = useDispatch();
 
   // scroll reset
 
@@ -43,6 +46,7 @@ const AccountPage = (props) => {
           {currentUser ? (
             <>
               <UserNameAndAvatar user={currentUser} />
+              <div className="AccountPage__user-stats"></div>
               <NavLink to="/account/add" onClick={() => window.localStorage.removeItem("draftNewCard")}>
                 <AddLogo />
                 Publier
@@ -76,6 +80,16 @@ const AccountPage = (props) => {
                 <ContactLogo />
                 Contact
               </NavLink>
+
+              <p
+                className="AccountPage__logout"
+                onClick={() => {
+                  dispatch(logoutAction());
+                }}
+              >
+                <LogOutLogo />
+                Déconnexion
+              </p>
             </>
           ) : (
             ""

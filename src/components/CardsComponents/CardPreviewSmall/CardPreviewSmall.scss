@@ -16,13 +16,13 @@
   break-inside: avoid;
   // margin-bottom: 1rem;
 
-  &.dark-theme-m {
-    @include card-shadow($themelight: false);
-  }
-  &.light-theme-m {
-    background-color: $white;
-    @include card-shadow($themelight: true);
-  }
+  // &.dark-theme-m {
+  //   @include card-shadow($themelight: false);
+  // }
+  // &.light-theme-m {
+  //   background-color: $white;
+  //   @include card-shadow($themelight: true);
+  // }
 
   &__image {
     height: auto;
@@ -48,8 +48,9 @@
 
     & > img {
       width: 100%;
-      max-height: 350px;
+      max-height: 800px;
       object-fit: contain;
+      border-radius: $card-radius;
     }
 
     &:hover .CardPreviewSmall__hover {
@@ -117,7 +118,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.35rem 1rem;
+    padding: 1rem;
     font-size: 1.2rem;
 
     & > a {
@@ -127,12 +128,13 @@
 
     .UserNameAndAvatar {
       display: flex;
+      align-items: center;
       text-overflow: ellipsis;
       background-color: unset;
 
       &__avatar {
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 2rem;
+        height: 2rem;
         font-size: 0.6rem;
         margin-right: 0.6rem;
       }

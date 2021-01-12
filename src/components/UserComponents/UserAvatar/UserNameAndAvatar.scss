@@ -12,8 +12,9 @@
     // box-shadow: $light-shadow;
     border: 1px solid $grey;
     overflow: hidden;
-    // color: $black;
+    color: $black;
     flex-shrink: 0;
+    background-color: $grey-light;
 
     &--image {
       height: 100%;

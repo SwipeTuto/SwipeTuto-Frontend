@@ -67,6 +67,7 @@
 }
 @media screen and (max-width: $bp-phone) {
   .CardGridList {
+    padding: 2rem 1rem;
     &__wrapper {
       &--big {
         grid-template-columns: repeat(2, minmax(0px, 1fr));

@@ -61,11 +61,16 @@ const ProfilePage = ({ match, location }) => {
                 <CustomButton color="dark">Gérer le compte</CustomButton>
               </Link>
             ) : (
-              <VerticalMenu className="ProfilePage__link">
+              <>
+                <CustomButton color="dark" onClick={() => dispatch(showSignalPopup(newSignalObject))}>
+                  Signaler
+                </CustomButton>
+                {/* <VerticalMenu className="ProfilePage__link">
                 <p className="VerticalMenu__menu--item" onClick={() => dispatch(showSignalPopup(newSignalObject))}>
                   Signaler
                 </p>
-              </VerticalMenu>
+              </VerticalMenu> */}
+              </>
             )}
             <UserPage userIsSame={userIsSame} />
           </>

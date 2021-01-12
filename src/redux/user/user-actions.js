@@ -171,6 +171,10 @@ export const getUserByIdAction = id => {
   }
 }
 
+export const setNoClickedUser = () => ({
+  type: UserActionTypes.SET_NO_CLICKED_USER
+})
+
 export const getCurrentUserAction = id => {
   return dispatch => {
     dispatch(setUserLoading());

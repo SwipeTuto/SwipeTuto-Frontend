@@ -15,7 +15,7 @@ $black: #2c2c2c;
 // $white: #f1f1f1;
 $white: #fff;
 $grey: #d4d4d4;
-$grey-lighter: #fdfdfd;
+$grey-lighter: #f8f8f8;
 $grey-light: #f1f1f1;
 $grey-dark: #636363;
 
@@ -68,10 +68,11 @@ $inner-component-padding: 0 14vw;
 $grid-component-padding: 0 14vw;
 $inner-component-padding-tablet: 0 8vw;
 $grid-component-padding-tablet: 0 8vw;
-$inner-component-padding-phone: 0 2rem;
-$grid-component-padding-phone: 0 2rem;
+$inner-component-padding-phone: 0 1rem;
+$grid-component-padding-phone: 0 1rem;
 
 // Breakpoints
+$bp-huge: 1600px;
 $bp-big: 1260px;
 $bp-tablet: 960px;
 $bp-phone: 680px;

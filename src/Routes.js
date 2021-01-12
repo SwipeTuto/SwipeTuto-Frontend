@@ -48,7 +48,7 @@ const Routes = () => {
         <Switch>
           {/* <Route exact path="/" component={HomePage} /> */}
           <ProtectedRoute exact path="/search" component={SearchPage} />
-          <Route exact path="/connexion" component={LoginPage} />
+          <Route path="/connexion" component={LoginPage} />
           <Route exact path="/conditions" component={ConditionsOfUsagePage} />
           <Route exact path="/confidentiality" component={ConfidentialityPage} />
           <Route exact path="/cookies" component={CookiesPage} />

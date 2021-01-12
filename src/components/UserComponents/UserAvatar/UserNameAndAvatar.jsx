@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getUserByIdAction } from "../../../redux/user/user-actions";
 import { setNoClickedCard } from "../../../redux/filter/filter-actions";
-import { closePopupCard } from "../../../redux/layout/layout-actions";
+import { closePopupCard, setLoading } from "../../../redux/layout/layout-actions";
 
 import "./UserNameAndAvatar.scss";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
@@ -27,7 +27,8 @@ const UserNameAndAvatar = ({ user, link, changeLink, themed }) => {
         <Link
           to={changeLink ? changeLink : `/profile/user_id=${user && user.id}`}
           className={`UserNameAndAvatar ${themed ? currentTheme + "-theme-l" : ""}`}
-          onClick={() => {
+          onClick={async () => {
+            dispatch(setLoading());
             dispatch(closePopupCard());
             dispatch(setNoClickedCard());
             dispatch(getUserByIdAction(parseInt(user && user.id)));

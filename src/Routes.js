@@ -24,6 +24,7 @@ import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import PageLoading from "./components/Loading/PageLoading";
 // import AddCardPage from "./pages/AccountPages/AddCardPage/AddCardPage";
 
+const FirstConnexionPage = lazy(() => import('./pages/FirstConnexionPage/FirstConnexionPage'))
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'))
 const HomePage = lazy(() => import('./pages/Homepage/HomePageNew'))
 const SearchPage = lazy(() => import('./pages/SearchPage/SearchPage'))
@@ -55,6 +56,7 @@ const Routes = () => {
           <Route exact path="/contact" component={ContactUsPage} />
           <Route exact path="/infos" component={InfosPage} />
           <Route exact path="/help" component={HelpPage} />
+          <Route exact path="/first-connexion" component={FirstConnexionPage} />
           {/* <ProtectedRoute path="/home" component={UserHomePage} /> */}
           <Route path="/profile/user_id=:user_id" component={ProfilePage} />
           <ProtectedRoute path="/account" component={AccountPage} />

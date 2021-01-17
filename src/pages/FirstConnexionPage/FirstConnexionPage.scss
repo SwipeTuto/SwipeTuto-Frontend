@@ -1,0 +1,87 @@
+@import "../../variables.scss";
+
+.FirstConnexionPage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 25;
+  height: 100vh;
+  max-height: 100vh;
+  padding: 2rem;
+  // max-width: 100vw;
+  width: 100%;
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  h1 ~ p {
+    margin-bottom: 4rem;
+  }
+
+  &__form {
+    flex-grow: 1;
+    width: 60%;
+    max-width: 900px;
+    height: 75%;
+    max-height: 800px;
+    padding: 2rem 4rem;
+    border-radius: $card-radius;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-step {
+    flex-grow: 1;
+    overflow: auto;
+
+    &-scroll {
+      // overflow: auto;
+    }
+
+    h2 {
+      margin-bottom: 4rem;
+    }
+  }
+
+  &__input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3rem;
+    margin-top: 2rem;
+  }
+
+  &__formGroup {
+    cursor: pointer;
+
+    input {
+      margin-right: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    input,
+    label {
+      cursor: pointer;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    p {
+      font-size: 1.4rem;
+      margin: 0 2rem;
+    }
+
+    .custom-button {
+      height: auto;
+    }
+  }
+
+  &__nav,
+  &__input {
+    justify-self: flex-end;
+  }
+}

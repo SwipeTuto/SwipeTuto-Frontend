@@ -26,7 +26,6 @@ import { usePrevious } from "./hooks/usePrevious";
 // import { selectCurrentUser } from "./redux/user/user-selectors";
 import Routes from "./Routes"
 import NotificationPopup from "./components/LayoutComponents/NotificationPopup/NotificationPopup";
-import FirstConnexionForm from "./components/FirstConnexionForm/FirstConnexionForm";
 // import { auth } from "./services/firebaseService"
 
 function App(props) {
@@ -146,7 +145,6 @@ function App(props) {
       {redirectUrl && <Redirect to={redirectLink} />}
       {connexionPopup ? <ConnexionRedirect handleClose={handleClose} /> : null}
       <div ref={appEl} className={`App ${currentTheme}-theme ${popupCardIsOpen ? "noscroll" : ""}`}>
-        <FirstConnexionForm />
         <NotificationPopup />
         <NavTop />
         <NavTopMobile />

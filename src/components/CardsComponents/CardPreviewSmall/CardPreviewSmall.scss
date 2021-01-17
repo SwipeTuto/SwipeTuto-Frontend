@@ -39,6 +39,7 @@
     &.active {
       visibility: visible;
       display: block;
+      color: $black;
     }
 
     &.hide {

@@ -11,7 +11,7 @@
     display: grid;
     max-width: 100%;
     width: 100%;
-    grid-gap: 5rem;
+    grid-gap: 4rem;
     // column-gap: 1rem;
 
     &--big {
@@ -23,7 +23,7 @@
   }
 
   .grid-item {
-    padding-bottom: 6rem;
+    padding-bottom: 4rem;
     width: 100%;
     max-width: 100%;
     // -webkit-column-break-inside: avoid;

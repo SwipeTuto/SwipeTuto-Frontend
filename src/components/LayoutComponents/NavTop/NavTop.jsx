@@ -13,7 +13,9 @@ import { selectTheme } from "../../../redux/layout/layout-selectors";
 import { deleteCurrentSearch, getCardAfterfilterAction, setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
-import { getCategoriesArray, initialSearchState, topicArray } from "../../../helper/index";
+import { initialSearchState } from "../../../helper/constants";
+import { getCategoriesArray } from "../../../helper/functions/getCategoriesArray";
+import { topicArray } from "../../../helper/functions/getTopicsArray";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";

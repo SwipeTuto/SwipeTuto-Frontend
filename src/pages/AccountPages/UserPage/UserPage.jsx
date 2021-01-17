@@ -9,7 +9,7 @@ import { selectIsLoaded, selectTheme, selectUserLoaded } from "../../../redux/la
 import { getCardsByUserIdAction } from "../../../redux/filter/filter-actions";
 import CardGridList from "../../../components/CardsComponents/CardGridList/CardGridList";
 import { usePrevious } from "../../../hooks/usePrevious";
-import { getUrlId } from "../../../helper";
+import { getUrlId } from "../../../helper/functions/getURLParams";
 import UserNameAndAvatar from "../../../components/UserComponents/UserAvatar/UserNameAndAvatar";
 import { setNoClickedUser } from "../../../redux/user/user-actions";
 

@@ -7,7 +7,8 @@ import { selectCommentLikers } from "../../../../redux/filter/filter-selectors";
 import { toggleCommentLikeAction } from "../../../../redux/filter/filter-actions";
 
 // helper
-import { commentsFormattedDate, initialSignalState } from "../../../../helper/index";
+import { initialSignalState } from "../../../../helper/constants";
+import { commentsFormattedDate } from "../../../../helper/functions/formateDate";
 
 // components
 import UserAvatar from "../../../UserComponents/UserAvatar/UserAvatar";

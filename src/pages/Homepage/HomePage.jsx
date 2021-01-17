@@ -7,7 +7,7 @@ import { ReactComponent as CommunityIllustration } from "../../assets/images/ill
 import { selectCurrentSearch, selectTotalNumberOfResults } from "../../redux/filter/filter-selectors";
 import { selectTheme } from "../../redux/layout/layout-selectors";
 import { selectIsLoaded } from "../../redux/layout/layout-selectors";
-import { topicArray } from "../../helper";
+import { topicArray } from "../../helper/functions/getTopicsArray";
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
 import Register from "../../components/LayoutComponents/Login/Register";
 import HowItWorks from "../../components/LayoutComponents/HowItWorks/HowItWorks";

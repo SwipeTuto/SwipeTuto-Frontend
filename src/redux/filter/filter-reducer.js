@@ -1,5 +1,5 @@
 import { FilterActionTypes } from './filter-types'
-import { initialSearchState } from '../../helper/index'
+import { initialSearchState } from '../../helper/constants'
 
 const INITIAL_STATE = {
   currentSearch: initialSearchState,

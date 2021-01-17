@@ -11,7 +11,8 @@ import { deleteFilterErrorAction, getCardAfterfilterAction, getCardByIdAction } 
 import { selectConnexionPopup, selectFirstLoadDone, selectIsLoaded, selectRedirectUrl, selectShowPopupCard, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
 import { setCurrentSearch } from "./redux/filter/filter-actions"
 
-import { urlParams, getUrlId, initialSearchState } from "./helper/index"
+import { initialSearchState } from "./helper/constants"
+import { urlParams, getUrlId } from "./helper/functions/getURLParams"
 
 import './index.scss'
 import './App.scss';

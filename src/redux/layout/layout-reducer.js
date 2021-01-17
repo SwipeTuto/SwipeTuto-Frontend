@@ -1,4 +1,4 @@
-import { initialSignalState } from '../../helper';
+import { initialSignalState } from '../../helper/constants';
 import { LayoutActionTypes } from './layout-types'
 
 const INITIAL_STATE = {

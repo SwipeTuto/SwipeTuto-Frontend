@@ -3,7 +3,7 @@ import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, set
 import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById, createCardService, deleteCardService, updateCardService } from '../../services/cardsService'
 import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply, toggleSave, getCardCommentsNext } from "../../services/socialService"
 import { getUserFavoriesById } from "../../services/userService"
-import { initialSearchState } from "../../helper"
+import { initialSearchState } from "../../helper/constants"
 
 const getCardAfterfilterSuccess = cards => ({
   type: FilterActionTypes.GET_CARDS_FILTER_SUCCESS,

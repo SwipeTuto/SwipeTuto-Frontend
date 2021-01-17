@@ -1,6 +1,6 @@
 import { UserActionTypes } from './user-types'
 import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin } from '../../services/userService'
-import history from "../../helper/history"
+import history from "../../helper/functions/createBrowserHistory"
 import { setUserLoading, setUserLoaded } from '../layout/layout-actions';
 
 

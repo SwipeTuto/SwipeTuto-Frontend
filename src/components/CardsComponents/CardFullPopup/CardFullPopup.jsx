@@ -21,13 +21,7 @@ import {
   toggleSaveCardAction,
   deleteCardAction,
 } from "../../../redux/filter/filter-actions";
-import {
-  closePopupCard,
-  openConnexionPopup,
-  setRedirectUrl,
-  showFullscreen,
-  showSignalPopup,
-} from "../../../redux/layout/layout-actions";
+import { closePopupCard, openConnexionPopup, setRedirectUrl, showFullscreen, showSignalPopup } from "../../../redux/layout/layout-actions";
 import {
   selectFullscreen,
   selectTheme,
@@ -43,7 +37,12 @@ import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar
 import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrapper";
 
 // Services & helpers
-import { convertNumber, formattedDate, initialSignalState, likeUpdate, renameQuery, stringToHTML } from "../../../helper/index";
+import { initialSignalState } from "../../../helper/constants";
+import { likeUpdate } from "../../../helper/functions/likeUpdate";
+import { convertNumber } from "../../../helper/functions/convertNumber";
+import { renameQuery } from "../../../helper/functions/renameQuery";
+import { formattedDate } from "../../../helper/functions/formateDate";
+import { stringToHTML } from "../../../helper/functions/stringToHTML";
 
 // Assets
 import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevron-back-circle.svg";
@@ -350,7 +349,7 @@ const CardFullPopup = ({ history, location }) => {
             <div className="CardFullPopup__scroll-wrapper">
               <div className={`CardFullPopup__wrapper ${currentTheme}-theme-d`} onClick={(e) => e.stopPropagation()}>
                 <div className="CardFullPopup__user CardFullPopup__section">
-                  <UserNameAndAvatar user={clickedCard && clickedCard.user && clickedCard.user} link={true} />
+                  <UserNameAndAvatar user={clickedCard && clickedCard.user} link={true} />
                 </div>
 
                 {clickedCardIsLoaded ? (
@@ -362,23 +361,14 @@ const CardFullPopup = ({ history, location }) => {
                     <h1 className="title title-1 CardFullPopup__title">{clickedCard && clickedCard.name}</h1>
 
                     <div className="CardFullPopup__meta CardFullPopup__section">
-                      <p className={`CardFullPopup__meta-block ${clickedCard.topic[0].name} active CardFullPopup__meta--topic_category`}>
-                        {clickedCard &&
-                          clickedCard.topic &&
-                          clickedCard.topic[0] &&
-                          clickedCard.topic[0].name &&
-                          renameQuery(clickedCard.topic[0].name)}{" "}
-                        /{" "}
-                        {clickedCard &&
-                          clickedCard.categorie &&
-                          clickedCard.categorie[0] &&
-                          clickedCard.categorie[0].name &&
-                          renameQuery(clickedCard.categorie[0].name)}
+                      <p className={`CardFullPopup__meta-block ${clickedCard?.topic[0]?.name} active CardFullPopup__meta--topic_category`}>
+                        {clickedCard?.topic[0]?.name ? renameQuery(clickedCard.topic[0].name) : "Tous"} /{" "}
+                        {clickedCard?.categorie[0]?.name ? renameQuery(clickedCard.categorie[0].name) : "Tous"}
                       </p>
-                      <p className={`CardFullPopup__meta-block ${clickedCard.topic[0].name} active CardFullPopup__meta--date`}>
+                      <p className={`CardFullPopup__meta-block ${clickedCard?.topic[0]?.name} active CardFullPopup__meta--date`}>
                         Publié le {clickedCardDate}
                       </p>
-                      <div className={`CardFullPopup__meta-block ${clickedCard.topic[0].name} active  CardFullPopup__meta--stats`}>
+                      <div className={`CardFullPopup__meta-block ${clickedCard?.topic[0]?.name} active  CardFullPopup__meta--stats`}>
                         <span className="CardFullPopup__meta--logo">
                           <EyeLogo />
                         </span>

@@ -7,7 +7,9 @@ import { selectSearchCategory, selectSearchOrder, selectCurrentSearch, selectSea
 import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
-import { getCategoriesArray, orderArray, topicArray } from "../../../helper/index";
+import { orderArray } from "../../../helper/functions/getQueryOrder";
+import { getCategoriesArray } from "../../../helper/functions/getCategoriesArray";
+import { topicArray } from "../../../helper/functions/getTopicsArray";
 
 import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
 import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";

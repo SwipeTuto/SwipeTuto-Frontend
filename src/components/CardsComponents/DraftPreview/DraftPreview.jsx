@@ -7,7 +7,7 @@ import { deleteCardAction, updateCardAction } from "../../../redux/filter/filter
 import { selectCurrentUserId } from "../../../redux/user/user-selectors";
 import { withRouter } from "react-router-dom";
 import { openNotificationPopup } from "../../../redux/layout/layout-actions";
-import { formattedDate } from "../../../helper";
+import { formattedDate } from "../../../helper/functions/formateDate";
 
 const DraftPreview = ({ draftCard, history }) => {
   const currentTheme = useSelector(selectTheme);

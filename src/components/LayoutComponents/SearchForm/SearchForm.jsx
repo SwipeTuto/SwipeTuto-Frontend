@@ -11,7 +11,7 @@ import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg"
 import { ReactComponent as CloseLogo } from "../../../assets/images/close-circle.svg";
 
 import "./SearchForm.scss";
-import { initialSearchState } from "../../../helper";
+import { initialSearchState } from "../../../helper/constants";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 const SearchForm = () => {

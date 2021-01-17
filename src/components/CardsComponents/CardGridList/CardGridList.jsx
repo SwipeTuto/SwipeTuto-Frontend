@@ -22,7 +22,8 @@ import "./CardGridList.scss";
 import { getCardAfterfilterAction, getOtherPageAction } from "../../../redux/filter/filter-actions";
 import { useCallback } from "react";
 import { useColumnsNumber } from "../../../hooks/useColumnsNumber";
-import { getUrlId, initialSearchState, urlParams } from "../../../helper";
+import { initialSearchState } from "../../../helper/constants";
+import { getUrlId, urlParams } from "../../../helper/functions/getURLParams";
 
 const CardGridList = ({ loadFilter, allowInfiniteScroll, location, overrideColumnNum }) => {
   const dispatch = useDispatch();

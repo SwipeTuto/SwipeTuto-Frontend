@@ -1,5 +1,5 @@
 import React from "react";
-import { topicArray } from "../../helper";
+import { topicArray } from "../../helper/functions/getTopicsArray";
 
 const CFormFavourites = () => {
   return (

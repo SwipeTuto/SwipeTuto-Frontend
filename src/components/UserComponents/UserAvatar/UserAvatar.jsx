@@ -1,19 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserByIdAction } from "../../../redux/user/user-actions";
 import { setNoClickedCard } from "../../../redux/filter/filter-actions";
 import { closePopupCard } from "../../../redux/layout/layout-actions";
 
 import "./UserAvatar.scss";
+import { selectCurrentUser } from "../../../redux/user/user-selectors";
 
 const UserAvatar = ({ user, link, addActionOnClick }) => {
   const dispatch = useDispatch();
-  const userImage = user && user.avatar && user.avatar[0] && user.avatar[0].avatar ? `${user.avatar[0].avatar}` : null;
+  const userImage = user && user.avatar && user.avatar[0] && user.avatar[0].url ? `${user.avatar[0].url}` : null;
   const [error, setError] = useState(false);
+  const currentUser = useSelector(selectCurrentUser);
+  let [isLinked, setIsLinked] = useState(link);
+
+  useEffect(() => {
+    if (!currentUser) setIsLinked(false);
+  }, [currentUser]);
+
   return (
     <>
-      {link ? (
+      {isLinked ? (
         <Link
           to={`/profile/user_id=${user && user.id}`}
           className="UserNameAndAvatar"

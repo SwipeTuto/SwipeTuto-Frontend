@@ -8,7 +8,9 @@ import { selectCurrentUser, selectCurrentUserId } from "../../../redux/user/user
 
 // service & helper
 // import { base } from "../../../services/configService";
-import { convertNumber, likeUpdate, truncate } from "../../../helper/index";
+import { likeUpdate } from "../../../helper/functions/likeUpdate";
+import { convertNumber } from "../../../helper/functions/convertNumber";
+import { truncate } from "../../../helper/functions/truncateString";
 
 // assets
 // import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";

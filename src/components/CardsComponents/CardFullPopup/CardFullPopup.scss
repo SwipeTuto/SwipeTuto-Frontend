@@ -250,6 +250,7 @@
     flex-wrap: wrap;
 
     &-block {
+      background-color: $grey-dark;
       @include button-style;
       white-space: nowrap;
       cursor: default;

@@ -7,7 +7,8 @@ import UserPage from "../AccountPages/UserPage/UserPage";
 import { selectCurrentUser, selectUserErrors } from "../../redux/user/user-selectors";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { Link } from "react-router-dom";
-import { getUrlId, initialSignalState } from "../../helper";
+import { initialSignalState } from "../../helper/constants";
+import { getUrlId } from "../../helper/functions/getURLParams";
 import { selectTheme } from "../../redux/layout/layout-selectors";
 import { showSignalPopup } from "../../redux/layout/layout-actions";
 

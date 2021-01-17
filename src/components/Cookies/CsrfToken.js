@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCookie } from "../../helper/getCookie"
+import { getCookie } from "../../helper/functions/getCookie"
 
 var csrftoken = getCookie('csrftoken');
 const CSRFToken = () => {

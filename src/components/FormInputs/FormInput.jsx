@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import "./FormInput.scss";
-import { checkRegexInput, errorMessageToDisplay } from "../../helper";
+import { checkRegexInput, errorMessageToDisplay } from "../../helper/functions/inputsHandler";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../redux/layout/layout-selectors";
 

@@ -1,4 +1,3 @@
-// Présent dans App.js dans une Route ("/search")
 import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -46,14 +45,7 @@ const SearchPage = ({ location }) => {
     const newSize = e.target.dataset.gridsize;
     dispatch(setCardsSize(newSize));
     updateCardSize(newSize);
-    // window.localStorage.setItem("cardSize", newSize);
   };
-
-  // useEffect(() => {
-  //   const localCardSize = window.localStorage.getItem("cardSize") ? window.localStorage.getItem("cardSize") : "small";
-  //   dispatch(setCardsSize(localCardSize));
-  //   updateCardSize(localCardSize);
-  // }, [dispatch]);
 
   const updateCardSize = (newSize) => {
     const allGridSizeItems = [...document.querySelectorAll(".FiltersBar__size-logo")];
@@ -66,7 +58,6 @@ const SearchPage = ({ location }) => {
     <>
       <div className={`SearchPage ${currentTheme}-theme-d`}>
         <div className="SearchPage__wrapper">
-          {/* <CurrentSearchWords /> */}
           <div className="SearchPage__filtersBarMobile">
             <p className="SearchPage__searchResults">{totalNumberOfCardsSearched ? totalNumberOfCardsSearched : 0} Résultats</p>
           </div>

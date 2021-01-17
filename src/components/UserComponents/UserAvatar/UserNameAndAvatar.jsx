@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
-// import { base, coudinaryBase } from "../../../services/configService";
-
 import { getUserByIdAction } from "../../../redux/user/user-actions";
 import { setNoClickedCard } from "../../../redux/filter/filter-actions";
 import { closePopupCard, setLoading } from "../../../redux/layout/layout-actions";
@@ -13,11 +10,7 @@ import { selectTheme } from "../../../redux/layout/layout-selectors";
 
 const UserNameAndAvatar = ({ user, link, changeLink, themed }) => {
   const dispatch = useDispatch();
-  const userImage =
-    user && user.avatar && user.avatar[0] && user.avatar[0].avatar
-      ? `${user.avatar[0].avatar}`
-      : // ? `${base}${user.avatar[0].avatar}`
-        null;
+  const userImage = user && user.avatar && user.avatar[0] && user.avatar[0].avatar ? `${user.avatar[0].avatar}` : null;
   const [error, setError] = useState(false);
   const currentTheme = useSelector(selectTheme);
 

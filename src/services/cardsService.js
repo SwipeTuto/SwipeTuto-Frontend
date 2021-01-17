@@ -52,8 +52,6 @@ export const getOtherPageCard = linkToFetch => {
 
 
 export const createCardService = (cardObject) => {
-  // console.log('cardObject', cardObject)
-
   var formData = new FormData();
   formData.append("user", cardObject.user);
   formData.append("topic", cardObject.topic);

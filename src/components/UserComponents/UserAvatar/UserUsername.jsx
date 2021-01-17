@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
 import { getUserByIdAction } from "../../../redux/user/user-actions";
 import { setNoClickedCard } from "../../../redux/filter/filter-actions";
 import { closePopupCard } from "../../../redux/layout/layout-actions";

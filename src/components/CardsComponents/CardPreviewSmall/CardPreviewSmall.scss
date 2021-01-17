@@ -3,26 +3,14 @@
 .CardPreviewSmall {
   height: auto;
   width: 100%;
-  // max-height: 25rem;
-  // background-color: $white;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-
   border-radius: $card-radius;
   display: flex;
   flex-direction: column;
   transition: all 0.2s ease;
   break-inside: avoid;
-  // margin-bottom: 1rem;
-
-  // &.dark-theme-m {
-  //   @include card-shadow($themelight: false);
-  // }
-  // &.light-theme-m {
-  //   background-color: $white;
-  //   @include card-shadow($themelight: true);
-  // }
 
   &__image {
     height: auto;
@@ -172,11 +160,6 @@
           stroke: $red-like !important;
         }
       }
-      // @include logo-size;
-      // // fill: $primary-light;
-      // & * {
-      //   stroke: currentColor !important;
-      // }
     }
   }
 }

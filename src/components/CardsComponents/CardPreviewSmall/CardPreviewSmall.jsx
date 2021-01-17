@@ -21,6 +21,7 @@ import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar
 import "./CardPreviewSmall.scss";
 import Loading from "../../Loading/Loading";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
+import { userHasLiked } from "../../../helper/functions/userHasLiked";
 
 const CardPreviewSmall = ({ card, size }) => {
   const { media_image, user, name, number_of_likes, likes, total_views } = card;
@@ -34,21 +35,13 @@ const CardPreviewSmall = ({ card, size }) => {
   const [isError, setIsError] = useState(false);
   const [firstCheck, setFirstCheck] = useState(true);
 
-  const userHasLiked = useCallback(() => {
-    if (currentUser && currentUser.id) {
-      return likes && likes.some((likers) => likers === currentUser.id);
-    } else {
-      return false;
-    }
-  }, [currentUser, likes]);
-
   useEffect(() => {
     const heartEl = document.getElementById(`CardPreviewSmall__heart${cardId}`);
-    if (userHasLiked() && firstCheck) {
+    if (userHasLiked(currentUserId, likes) && firstCheck) {
       heartEl && heartEl.classList.add("active");
     }
     setFirstCheck(false);
-  }, [cardId, firstCheck, userHasLiked]);
+  }, [cardId, currentUserId, firstCheck, likes]);
 
   const handleClickedCardClick = async () => {
     dispatch(showPopupCard());

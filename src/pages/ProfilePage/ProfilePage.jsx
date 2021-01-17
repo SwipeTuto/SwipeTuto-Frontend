@@ -7,10 +7,8 @@ import UserPage from "../AccountPages/UserPage/UserPage";
 import { selectCurrentUser, selectUserErrors } from "../../redux/user/user-selectors";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { Link } from "react-router-dom";
-// import { ReactComponent as AccountLogo } from "../../assets/images/person.svg";
 import { getUrlId, initialSignalState } from "../../helper";
 import { selectTheme } from "../../redux/layout/layout-selectors";
-import VerticalMenu from "../../components/LayoutComponents/VerticalMenu/VerticalMenu";
 import { showSignalPopup } from "../../redux/layout/layout-actions";
 
 const ProfilePage = ({ match, location }) => {
@@ -20,13 +18,6 @@ const ProfilePage = ({ match, location }) => {
   const userErrors = useSelector(selectUserErrors);
   const [userIsSame, setUserIsSame] = useState(false);
   const userId = getUrlId(location.pathname, "user_id") || null;
-
-  // scroll reset
-  useEffect(() => {
-    if (window.scrollY) {
-      window.scroll(0, 0);
-    }
-  }, [location.pathname]);
 
   useEffect(() => {
     if (userId) {
@@ -65,11 +56,6 @@ const ProfilePage = ({ match, location }) => {
                 <CustomButton color="dark" onClick={() => dispatch(showSignalPopup(newSignalObject))}>
                   Signaler
                 </CustomButton>
-                {/* <VerticalMenu className="ProfilePage__link">
-                <p className="VerticalMenu__menu--item" onClick={() => dispatch(showSignalPopup(newSignalObject))}>
-                  Signaler
-                </p>
-              </VerticalMenu> */}
               </>
             )}
             <UserPage userIsSame={userIsSame} />

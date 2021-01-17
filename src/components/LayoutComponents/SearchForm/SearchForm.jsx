@@ -6,8 +6,6 @@ import { selectCurrentSearch, selectSearchWords } from "../../../redux/filter/fi
 import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 import { closeMobileNav } from "../../../redux/layout/layout-actions";
 
-// components
-
 // assets
 import { ReactComponent as SearchLogo } from "../../../assets/images/search.svg";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close-circle.svg";

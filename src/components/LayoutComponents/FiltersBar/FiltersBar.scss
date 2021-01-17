@@ -2,23 +2,16 @@
 
 .FiltersBar {
   width: 100%;
-  // margin: 2rem auto;
-  // padding: $grid-component-padding;
   padding: 6rem 4rem 1rem 4rem;
-  // padding-bottom: 4rem;
   font-size: 1.8rem;
-  // border-bottom: 1px solid $grey;
-  // border-top: 1px solid $grey;
 
   .scroll-logo {
     display: none;
   }
 
   &__wrapper {
-    // max-width: 75rem;
     margin: 0 auto;
     display: flex;
-    // flex-direction: column;
 
     & select {
       margin-right: 2rem;
@@ -31,7 +24,6 @@
 
   &__size-logo {
     display: block;
-    // background-color: red;
     height: 2.5rem;
     width: 2.5rem;
     cursor: pointer;
@@ -97,30 +89,15 @@
       padding: 0.3rem 2rem;
       transition: all 0.2s ease;
 
-      // &:hover {
-      //   color: $primary-light;
-      // }
-
       &:not(:first-of-type) {
         margin-left: 0.6rem;
       }
     }
     &--item.active {
-      // // background-color: $primary-light;
-      // box-shadow: $light-shadow;
       color: $black;
       font-weight: bold;
       border-radius: $button-radius;
     }
-
-    // &__options {
-    //   display: flex;
-    //   flex-grow: 1;
-    //   margin: 0 2rem;
-    //   justify-content: center;
-    //   align-items: center;
-
-    //   }
   }
 }
 @media screen and (max-width: $bp-tablet) {

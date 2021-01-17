@@ -124,7 +124,6 @@
   }
 
   &__right {
-    // margin-left: auto;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -137,7 +136,6 @@
     .NavTop__avatar {
       .UserNameAndAvatar {
         display: flex;
-        // background-color: $grey-light;
         border-radius: $button-radius;
         padding: $round-padding;
 
@@ -153,10 +151,6 @@
           padding-right: 1rem;
         }
       }
-      // .user_avatar {
-      //   height: 3rem;
-      //   width: 3rem;
-      // }
     }
 
     .NavTop__linkConnexion {
@@ -169,8 +163,6 @@
     }
   }
   &__roundBtn {
-    // background-color: $grey-light;
-
     cursor: pointer;
     width: 3.5rem;
     height: 3.5rem;
@@ -197,7 +189,6 @@
 
   &__swipeTuto {
     margin-right: 2.5rem;
-    // height: 3.5rem;
     height: 100%;
     display: flex;
     align-items: center;
@@ -210,7 +201,6 @@
 
   &__userMenu {
     @include overlay-menu;
-    // background-color: $white;
     top: 100%;
     right: 2rem;
 
@@ -288,17 +278,12 @@
     top: 100%;
     left: 0;
     width: 100%;
-    // background-color: $white;
     border-bottom: 1px solid $grey-light;
-    // border-top: 0.5px solid $grey;
     display: flex;
-    // justify-content: flex-start;
-    // align-items: center;
     opacity: 0;
     visibility: hidden;
     z-index: -1;
     padding: 0 2rem;
-    // box-shadow: $button-shadow;
     transition: all 0.2s ease;
 
     &.light-theme-l {
@@ -309,21 +294,6 @@
       opacity: 1;
       visibility: visible;
     }
-
-    // &--logo {
-    //   height: 3.5rem;
-    //   box-sizing: content-box;
-    //   // width: auto;
-    //   padding: 2rem 1.5rem;
-    //   cursor: pointer;
-    //   transition: all 0.2s ease;
-
-    //   &:hover {
-    //     box-shadow: inset $button-shadow;
-    //     // background-color: $white;
-    //     background-color: inherit;
-    //   }
-    // }
   }
 
   &__topicList {
@@ -343,18 +313,11 @@
       border-bottom: 1px solid $dark-medium;
       display: inline-block;
       transition: all 0.2s ease;
-
-      // &:hover {
-      //   color: $primary-light;
-      // }
     }
 
     &--category {
       display: inline-block;
       padding: 0.5rem 0;
-      // &:hover {
-      //   color: $primary-light;
-      // }
     }
   }
 

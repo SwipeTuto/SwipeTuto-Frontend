@@ -2,7 +2,6 @@
 
 .ConnexionRedirect {
   @include popup-style;
-  // overflow: scroll;
 
   h1,
   h3,
@@ -24,7 +23,6 @@
   }
 
   .Login {
-    // padding: 0;
     width: 60%;
 
     &__google {

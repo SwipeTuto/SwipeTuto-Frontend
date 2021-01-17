@@ -1,5 +1,3 @@
-// Popup qui s'ouvre au clic sur une card. Contient CardSliderFull et aussi toutes les infos de la card cliquée
-
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -22,12 +20,10 @@ import {
   getOtherCardsByAuthorNameAction,
   toggleSaveCardAction,
   deleteCardAction,
-  // getCardsByUserIdAction,
 } from "../../../redux/filter/filter-actions";
 import {
   closePopupCard,
   openConnexionPopup,
-  // openNotificationPopup,
   setRedirectUrl,
   showFullscreen,
   showSignalPopup,
@@ -45,7 +41,6 @@ import CardSlider from "../CardSlider/CardSlider";
 import Loading from "../../Loading/Loading";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrapper";
-// import ShareButtons from "../../LayoutComponents/ShareButtons/ShareButtons";
 
 // Services & helpers
 import { convertNumber, formattedDate, initialSignalState, likeUpdate, renameQuery, stringToHTML } from "../../../helper/index";
@@ -60,18 +55,15 @@ import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as FullscreenLogo } from "../../../assets/images/expand.svg";
 import { ReactComponent as EyeLogo } from "../../../assets/images/eye.svg";
-// import { ReactComponent as ShareLogo } from "../../../assets/images/share-social.svg";
 
 // SCSS
 import "./CardFullPopup.scss";
 import { getCurrentUserAction } from "../../../redux/user/user-actions";
 import VerticalMenu from "../../LayoutComponents/VerticalMenu/VerticalMenu";
 import ShareMenu from "../../LayoutComponents/ShareMenu/ShareMenu";
-// import { deleteCardService } from "../../../services/cardsService";
 import ConfirmationOverlay from "../../LayoutComponents/ConfirmationOverlay/ConfirmationOverlay";
+import { userHasLiked } from "../../../helper/functions/userHasLiked";
 
-// Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
-// handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
 const CardFullPopup = ({ history, location }) => {
   const isFullScreen = useSelector(selectFullscreen);
   const currentTheme = useSelector(selectTheme);
@@ -107,14 +99,6 @@ const CardFullPopup = ({ history, location }) => {
     setIndexOfCurrentCard(currentCardId);
   }, [cardsArray, clickedCard, clickedCardId]);
 
-  const userHasLiked = useCallback(() => {
-    if (currentUser && currentUser.id) {
-      return cardLikers && cardLikers.some((likers) => likers === currentUser.id);
-    } else {
-      return false;
-    }
-  }, [cardLikers, currentUser]);
-
   const userHasSaved = useCallback(() => {
     if (currentUser && currentUser.id) {
       return currentUserSavedCards && currentUserSavedCards.some((cardsId) => cardsId === clickedCardId);
@@ -124,14 +108,13 @@ const CardFullPopup = ({ history, location }) => {
   }, [clickedCardId, currentUser, currentUserSavedCards]);
 
   useEffect(() => {
-    setCardIsLiked(userHasLiked());
-  }, [cardLikers, currentUser, userHasLiked]);
+    setCardIsLiked(userHasLiked(currentUserId, cardLikers));
+  }, [cardLikers, currentUserId]);
 
   useEffect(() => {
     setCardIsSaved(userHasSaved());
   }, [currentUser, userHasSaved]);
 
-  // scroll reset
   useEffect(() => {
     if (clickedCard && clickedCard.user && clickedCard.user.id) {
       dispatch(getOtherCardsByAuthorNameAction(clickedCard.user.id));
@@ -201,39 +184,11 @@ const CardFullPopup = ({ history, location }) => {
     dispatch(setNoClickedCard());
     dispatch(closePopupCard());
     dispatch(getCurrentUserAction(currentUserId));
-
-    // if (document.getElementsByClassName("HomePage")[0]) {
-    //   window.history.pushState("", "", "/");
-    // } else if (document.getElementsByClassName("SavedPage")[0]) {
-    //   window.history.pushState("", "", "/account/saved");
-    // } else {
-    //   dispatch(setRedirectUrl(true));
-
-    //   window.history.pushState(
-    //     "",
-    //     "",
-    //     history.location.pathname + history.location.search
-    //   );
-    //   if (!cardsFetched) {
-    //     dispatch(getCardAfterfilterAction(currentSearch));
-    //   }
-    // }
-
-    // const currentClickedCard = clickedCard
-    //   ? document.querySelector(".CardFullPopup")
-    //   : null;
-
-    // if (!currentClickedCard) {
-    //   return;
-    // } else {
-    //   dispatch(setNoClickedCard());
-    // }
   };
 
   // LIKE
   const handleLikeClick = () => {
     if (!currentUser) {
-      // setConnectRedirect(true);
       dispatch(openConnexionPopup());
     } else {
       dispatch(toggleLikeCardAction(clickedCardId, currentUserId));
@@ -245,7 +200,6 @@ const CardFullPopup = ({ history, location }) => {
   // SAVE
   const handleSaveClick = () => {
     if (!currentUser) {
-      // setConnectRedirect(true);
       dispatch(openConnexionPopup());
     } else {
       dispatch(toggleSaveCardAction(clickedCardId));
@@ -257,10 +211,6 @@ const CardFullPopup = ({ history, location }) => {
     await dispatch(deleteCardAction(clickedCardId, currentUserId, history));
     setConfirmPopupOpen({ ...confirmPopupOpen, open: false });
     dispatch(closePopupCard());
-    // dispatch(getCardsByUserIdAction(currentUserId));
-    // history.push("/account/user");
-
-    // A VOIR pour fermer popup et rediriger
   };
 
   const handleRejectClick = () => {
@@ -307,7 +257,6 @@ const CardFullPopup = ({ history, location }) => {
       {popupCardIsOpen && (
         <div
           className="CardFullPopup"
-          // className={`CardFullPopup ${popupCardIsOpen ? "noscroll" : ""}`}
           onClick={() => {
             handlePopupClose();
           }}
@@ -316,12 +265,6 @@ const CardFullPopup = ({ history, location }) => {
             <div className={`CardFullPopup__mobile ${currentTheme}-theme-m`} onClick={(e) => e.stopPropagation()}>
               {clickedCardIsLoaded ? (
                 <>
-                  {/* <ShareLogo
-                className="card-action-button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              /> */}
                   <ShareMenu />
 
                   <FullscreenLogo
@@ -407,7 +350,6 @@ const CardFullPopup = ({ history, location }) => {
             <div className="CardFullPopup__scroll-wrapper">
               <div className={`CardFullPopup__wrapper ${currentTheme}-theme-d`} onClick={(e) => e.stopPropagation()}>
                 <div className="CardFullPopup__user CardFullPopup__section">
-                  {/* <ShareButtons /> */}
                   <UserNameAndAvatar user={clickedCard && clickedCard.user && clickedCard.user} link={true} />
                 </div>
 

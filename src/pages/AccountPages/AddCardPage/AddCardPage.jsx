@@ -44,19 +44,12 @@ const AddCardPage = ({ type, history }) => {
   }, [cardInfos, cardInfos.card_description, cardInfos.card_title, imagesArrayNotEmpty, isValid]);
 
   useEffect(() => {
-    if (window.scrollY) {
-      window.scroll(0, 0);
-    }
-  }, []);
-
-  useEffect(() => {
     setCategoriesLocalArray(getCategoriesArray(cardInfos.card_topic));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardInfos.card_topic]);
 
   const getValue = (name, value) => {
     if (!name) return;
-    // setEmptyState(false);
     const cardInfosCopy = { ...cardInfos, [name]: value };
     setCardInfos(cardInfosCopy);
   };

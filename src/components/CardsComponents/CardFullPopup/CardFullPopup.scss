@@ -35,7 +35,6 @@
 
   &__allwrapper {
     width: 100%;
-    // transform: translateX(0);
   }
 
   &__scroll-wrapper {
@@ -60,7 +59,6 @@
     margin: 0;
     width: 100%;
     border-radius: 0;
-    // border: 0.5px solid $grey;
 
     .loading {
       width: 100%;
@@ -232,7 +230,6 @@
 
       a,
       a:visited {
-        // text-decoration: initial;
         border-bottom: 1px solid transparent;
         color: $secondary-dark;
         transition: all 0.2s ease;
@@ -255,7 +252,6 @@
     &-block {
       @include button-style;
       white-space: nowrap;
-      // background-color: $primary-dark;
       cursor: default;
       font-size: 1.4rem;
       margin: 0.5rem;
@@ -263,7 +259,6 @@
 
       &:hover {
         color: $black;
-        // background-color: unset;
       }
     }
 
@@ -281,11 +276,6 @@
 
       & svg {
         @include logo-size;
-        // fill: $white;
-
-        // & > path {
-        //   stroke: $white !important;
-        // }
       }
     }
 
@@ -316,7 +306,6 @@
   }
 
   &__commentaires {
-    // border-top: 1px solid $grey;
     padding-bottom: 0;
   }
 
@@ -388,8 +377,6 @@
     }
   }
 
-  // MEDIA QUERIES
-
   @media screen and (min-width: $bp-big) {
     .CardFullPopup {
       &__wrapper {
@@ -411,16 +398,11 @@
       }
 
       &__allwrapper {
-        // display: flex;
-        // margin: 0 auto;
         display: grid;
         grid-template-columns: 8rem 1fr 8rem;
-        // transform: translateX(8rem);
         position: fixed;
         height: 100vh;
         width: max-content;
-
-        // padding: 2rem;
       }
 
       &__scroll-wrapper {
@@ -525,9 +507,4 @@
       }
     }
   }
-
-  // @media screen and (max-width: $bp-small-phone) {
-  //   .CardFullPopup {
-  //   }
-  // }
 }

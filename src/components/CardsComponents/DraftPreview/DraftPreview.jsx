@@ -24,9 +24,6 @@ const DraftPreview = ({ draftCard, history }) => {
     id: null,
   });
 
-  // editer : ouverture dans addCard
-
-  // supprimer : popup confirmation puis action state = 2
   const handleDeleteDraft = (draftID) => {
     console.log(history.location);
     setConfirmDeletePopupOpen({
@@ -38,11 +35,7 @@ const DraftPreview = ({ draftCard, history }) => {
 
   const handleConfirmDeleteClick = async () => {
     (await confirmDeletePopupOpen?.id) && dispatch(deleteCardAction(confirmDeletePopupOpen.id, currentuserId, history));
-    setConfirmDeletePopupOpen({
-      open: false,
-      message: "",
-      id: null,
-    });
+    handleRejectDeleteClick();
   };
   const handleRejectDeleteClick = () => {
     setConfirmDeletePopupOpen({
@@ -52,7 +45,6 @@ const DraftPreview = ({ draftCard, history }) => {
     });
   };
 
-  // publier : popup confirmation puis action state = 1
   const handlePublishDraft = (draftID) => {
     setConfirmPublishPopupOpen({
       open: true,
@@ -74,11 +66,7 @@ const DraftPreview = ({ draftCard, history }) => {
       console.log(err);
     }
 
-    setConfirmPublishPopupOpen({
-      open: false,
-      message: "",
-      id: null,
-    });
+    handleRejectPublishClick();
   };
 
   const handleRejectPublishClick = () => {
@@ -89,7 +77,6 @@ const DraftPreview = ({ draftCard, history }) => {
     });
   };
 
-  // edition de la carte
   const handleEditClick = async (draftCard) => {
     await window.localStorage.setItem(
       "draftNewCard",

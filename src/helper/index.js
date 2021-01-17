@@ -19,16 +19,6 @@ export const getUrlId = (url, query) => {
   return url && parseInt(url.split(`${query}=`)[1]);
 }
 
-// var support = (function () {
-//   if (!window.DOMParser) return false;
-//   var parser = new DOMParser();
-//   try {
-//     parser.parseFromString('x', 'text/html');
-//   } catch (err) {
-//     return false;
-//   }
-//   return true;
-// })();
 
 export const stringToHTML = (str) => {
   if (typeof DOMParser !== 'undefined' && window.DOMParser.prototype.parseFromString) {
@@ -273,39 +263,27 @@ export const topicArray = [
   {
     queryName: null,
     name: "Tous",
-    // logo: allLogo,
   },
   {
     queryName: "technologie",
     name: "Technologie",
-    // logo: HTMLLogo,
   },
   {
     queryName: "cuisine",
     name: "Cuisine",
-    // logo: CSSLogo,
   },
   {
     queryName: "maison",
     name: "Maison",
-    // logo: JavascriptLogo,
   },
   {
     queryName: "beaute",
     name: "Beauté",
-    // logo: ReactJSLogo,
   },
   {
     queryName: "bienetre",
     name: "Bien-être",
-    // logo: NodeJSLogo,
-  },
-  // {
-  //   queryName: "autre",
-  //   name: "Autre",
-  //   // logo: NodeJSLogo,
-  // },
-
+  }
 ];
 
 export const getCategoriesArray = (topic) => {
@@ -538,12 +516,10 @@ export const initialSignalState = {
 
 
 export const likeUpdate = (cardId) => {
-  // console.log(cardId)
   const likedCardText = document.getElementById(`likesNumber${cardId}`);
   const heartEl = document.getElementById(`CardPreviewSmall__heart${cardId}`);
   const likesNumberPopupLogo = document.getElementById(`likesNumberPopupLogo${cardId}`)
   const likesNumberPopupNumber = document.getElementById(`likesNumberPopupNumber${cardId}`)
-  // console.log(likesNumberPopupLogo, likesNumberPopupNumber)
   if (heartEl && heartEl.classList.contains("active") && likedCardText) {
     likedCardText.textContent = parseInt(likedCardText.textContent) - 1;
     heartEl.classList.remove("active");
@@ -553,26 +529,10 @@ export const likeUpdate = (cardId) => {
   }
 
   if (likesNumberPopupLogo && likesNumberPopupLogo.classList.contains("active") && likesNumberPopupNumber) {
-    likesNumberPopupNumber.textContent = parseInt(likesNumberPopupNumber.textContent) - 1;
-    likesNumberPopupLogo.classList.remove("active");
-    // console.log('remove class')
-  } else if (likesNumberPopupLogo && likesNumberPopupNumber) {
     likesNumberPopupNumber.textContent = parseInt(likesNumberPopupNumber.textContent) + 1;
+    likesNumberPopupLogo.classList.remove("active");
+  } else if (likesNumberPopupLogo && likesNumberPopupNumber) {
+    likesNumberPopupNumber.textContent = parseInt(likesNumberPopupNumber.textContent) - 1;
     likesNumberPopupLogo.classList.add("active");
-    // console.log('add class')
   }
 };
-
-
-
-// function removeBlockFromBlockMap(editorState: EditorState, blockKey: string) {
-//   var contentState = editorState.getCurrentContent();
-//   var blockMap = contentState.getBlockMap();
-//   var newBlockMap = blockMap.remove(blockKey)
-//   var newContentState = contentState.merge({
-//     blockMap: newBlockMap
-//   })
-//   export { removeBlockFromBlockMap as Draft.Model.ImmutableData.ContentState }
-//   var newEditorState = EditorState.push(editorState, newContentState, 'remove-range')
-//   return newEditorState
-// }

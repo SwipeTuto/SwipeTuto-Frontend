@@ -18,7 +18,6 @@ const VerticalMenu = ({ addclass, type, children }) => {
   const dispatch = useDispatch();
   const modal = useRef();
 
-  // console.log(addclass);
   const checkClickInside = (event) => {
     const isClickInside = modal.current && modal.current.contains(event.target);
 
@@ -50,13 +49,7 @@ const VerticalMenu = ({ addclass, type, children }) => {
         checkIfConnected();
       }}
     >
-      <div
-        className={`VerticalMenu__logo ${currentTheme}-theme`}
-        // onClick={(e) => {
-        //   e.stopPropagation();
-        //   checkIfConnected();
-        // }}
-      >
+      <div className={`VerticalMenu__logo ${currentTheme}-theme`}>
         {type && type === "share" ? <ShareLogo className="VerticalMenu__logo--logo" /> : <MenuLogo className="VerticalMenu__logo--logo" />}
       </div>
       {menuOpen && (

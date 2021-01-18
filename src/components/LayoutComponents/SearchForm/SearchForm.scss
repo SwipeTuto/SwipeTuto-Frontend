@@ -2,7 +2,6 @@
 
 .SearchForm {
   height: 100%;
-  // width: max-content;
   margin-right: auto;
 
   display: flex;
@@ -83,7 +82,6 @@
 
     &--delete {
       height: 100%;
-      // width: min-content;
       display: block;
       cursor: pointer;
 
@@ -109,7 +107,6 @@
         &--input {
           max-width: 100%;
           width: 70%;
-          // font-size: 2rem;
 
           &:focus {
             width: 100%;

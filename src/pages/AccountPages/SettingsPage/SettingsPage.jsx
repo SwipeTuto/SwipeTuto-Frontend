@@ -94,15 +94,6 @@ const SettingsPage = () => {
     handleChange(name, value);
   };
 
-  // useEffect(() => {
-  //   if (currentUser && currentUser.settings) {
-  //     setUserPref({
-  //       color_theme: currentUser?.settings?.color_theme,
-  //       card_size: currentUser.settings?.card_size,
-  //     });
-  //   }
-  // }, [currentUser]);
-
   useEffect(() => {
     dispatch(
       updateUserInfosAction({

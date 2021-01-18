@@ -8,12 +8,9 @@ export const closePopupCard = () => ({
   type: LayoutActionTypes.CLOSE_POPUP_CARD,
 });
 
-
-
 export const closeFullscreen = () => ({
   type: LayoutActionTypes.CLOSE_FULLSCREEN,
 })
-
 
 export const showFullscreen = () => ({
   type: LayoutActionTypes.SHOW_FULLSCREEN,

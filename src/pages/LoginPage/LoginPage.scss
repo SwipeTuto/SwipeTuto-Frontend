@@ -2,14 +2,15 @@
 
 .LoginPage {
   overflow: hidden;
-  // height: max-content;
   overflow: auto;
   width: 100%;
-  // min-height: 90vh;
   display: flex;
   align-items: stretch;
-  background-image: linear-gradient(to right, transparent, $black), url("../../assets/images/illustrations/login-image.jpg");
   background-size: cover;
+
+  .Login {
+    border: 1px solid $grey;
+  }
 
   &__wrapper {
     width: 40%;

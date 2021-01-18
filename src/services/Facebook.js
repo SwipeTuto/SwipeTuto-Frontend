@@ -11,8 +11,6 @@ export default class Facebook extends Component {
   };
 
   responseFacebook = response => {
-    // console.log(response);
-
     this.setState({
       isLoggedIn: true,
       userID: response.userID,
@@ -21,8 +19,6 @@ export default class Facebook extends Component {
       picture: response.picture.data.url
     });
   };
-
-  // componentClicked = () => console.log("clicked");
 
   render() {
     let fbContent;
@@ -48,7 +44,6 @@ export default class Facebook extends Component {
           appId="782336752315375"
           autoLoad={true}
           fields="name,email,picture"
-          // onClick={this.componentClicked}
           callback={this.responseFacebook}
         />
       );

@@ -2,7 +2,6 @@
 
 .NavTopMobile {
   display: none;
-  // background-color: $white;
   width: 100%;
   align-items: center;
   padding: 1rem;
@@ -37,7 +36,6 @@
 
   &__swipeTuto {
     height: 100%;
-    // margin: 0 auto;
 
     img {
       height: 4rem;
@@ -61,13 +59,11 @@
       height: 70%;
       width: auto;
       display: block;
-      // box-shadow: $button-shadow;
       cursor: pointer;
     }
   }
 
   &__open {
-    // background-color: $white;
     max-width: 100%;
     height: 0;
     min-height: 100vh;
@@ -145,7 +141,6 @@
     &--meta {
       text-align: center;
       white-space: normal;
-      // word-break: break-all;
     }
 
     &--info {
@@ -177,41 +172,5 @@
   .NavTopMobile {
     display: block;
     font-size: 3rem;
-    &__menu,
-    &__user {
-      // padding-bottom: 4rem;
-    }
-  }
-}
-@media screen and (max-width: $bp-phone) {
-  .NavTopMobile {
-    // &__menu,
-    // &__user {
-    //   width: 80%;
-    // }
-  }
-}
-@media screen and (max-width: $bp-small-phone) {
-  .NavTopMobile {
-    // &__menu,
-    // &__user {
-    //   width: 100%;
-    // }
-  }
-}
-@media screen and (max-width: $bp-smallest) {
-  .NavTopMobile {
-    // &__menu,
-    // &__user {
-    //   font-size: 2rem;
-    // }
-
-    // &__user {
-    //   &--infos {
-    //     .user_avatar {
-    //       display: none;
-    //     }
-    //   }
-    // }
   }
 }

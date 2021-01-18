@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import "./FormInput.scss";
-import { checkRegexInput, errorMessageToDisplay } from "../../helper";
+import { checkRegexInput, errorMessageToDisplay } from "../../helper/functions/inputsHandler";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../redux/layout/layout-selectors";
 
@@ -26,7 +26,6 @@ const FormInput = ({ idFor, label, type, name, getValue, firstValue, required, p
         if (formInputEl) formInputEl.classList.remove("invalid-input");
       } else {
         if (name === "passwordConfirm") {
-          // console.log(valueToCompare, newValue);
           if (valueToCompare === newValue) {
             setIsValid("valid");
             if (errorEl) errorEl.textContent = "";

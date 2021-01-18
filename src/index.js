@@ -5,12 +5,12 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import store from './redux/store';
-import { authHeader } from "./helper/auth-header"
+import { authHeader } from "./helper/functions/auth-header"
 
 import { Router } from 'react-router-dom'
 import './index.scss';
 
-import history from "./helper/history"
+import history from "./helper/functions/createBrowserHistory"
 // AXIOS SETTINGS
 const headersKeys = {
   'Accept': 'application/json',

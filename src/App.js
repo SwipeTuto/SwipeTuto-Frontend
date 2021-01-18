@@ -103,6 +103,13 @@ function App(props) {
     }
   }, [clickedCard, dispatch, filterError, redirectUrl])
 
+  useEffect(() => {
+    const firstloader = document.getElementById('firstloader');
+    if (firstloader) {
+      firstloader.remove()
+    }
+  }, [])
+
   const redirectLink = SearchLinkRedirect();
 
   const handleClose = () => {

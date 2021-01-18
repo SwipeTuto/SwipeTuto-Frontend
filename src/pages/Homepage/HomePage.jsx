@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense, lazy } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import Loading from "../../components/Loading/Loading";
@@ -9,11 +9,13 @@ import { selectTheme } from "../../redux/layout/layout-selectors";
 import { selectIsLoaded } from "../../redux/layout/layout-selectors";
 import { topicArray } from "../../helper/functions/getTopicsArray";
 import CardGridList from "../../components/CardsComponents/CardGridList/CardGridList";
-import Register from "../../components/LayoutComponents/Login/Register";
+// import Register from "../../components/LayoutComponents/Login/Register";
 import HowItWorks from "../../components/LayoutComponents/HowItWorks/HowItWorks";
 import STSmallLogoBlackmod from "../../assets/stlogos/logo seul blackmode.png";
 import STSmallLogo from "../../assets/stlogos/logo seul.png";
 import "./HomePage.scss";
+
+const Register = lazy(() => import("../../components/LayoutComponents/Login/Register"));
 
 const HomePage = () => {
   const currentTheme = useSelector(selectTheme);
@@ -76,8 +78,10 @@ const HomePage = () => {
         <div className="HomePage__login">
           <h2 className="title title-2">Inscrivez-vous pour en découvrir bien plus :</h2>
           <div className="HomePage__login--box">
-            <CommunityIllustration className="HomePage__login--illustration" />
-            <Register />
+            <Suspense fallback={<div />}>
+              <CommunityIllustration className="HomePage__login--illustration" />
+              <Register />
+            </Suspense>
           </div>
         </div>
       </div>

@@ -61,7 +61,7 @@ function App(props) {
         dispatch(setCurrentSearch(currentSearchCopy))
         dispatch(setRedirectUrl(true));
       }
-    } else if (firstLoadDone === false && locationPathname === "/") { // si page d'accueil
+    } else if (firstLoadDone === false && (locationPathname === "/")) { // si page d'accueil
       dispatch(getCardAfterfilterAction(initialSearchState))
     } else if (firstLoadDone === false && cardId) { // si page d'une carte ouverte
       dispatch(showPopupCard())

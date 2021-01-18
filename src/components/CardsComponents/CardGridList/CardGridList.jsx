@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense, lazy } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { usePrevious } from "../../../hooks/usePrevious";
@@ -13,7 +13,7 @@ import {
 import { selectCardsSize, selectFirstLoadDone, selectIsLoaded, selectShowPopupCard } from "../../../redux/layout/layout-selectors";
 
 // components
-import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
+// import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
 import PageLoading from "../../Loading/PageLoading";
 import ScrollButton from "../../LayoutComponents/ScrollButton/ScrollButton";
 
@@ -24,6 +24,8 @@ import { useCallback } from "react";
 import { useColumnsNumber } from "../../../hooks/useColumnsNumber";
 import { initialSearchState } from "../../../helper/constants";
 import { getUrlId, urlParams } from "../../../helper/functions/getURLParams";
+
+const CardPreviewSmall = lazy(() => import("../CardPreviewSmall/CardPreviewSmall"));
 
 const CardGridList = ({ loadFilter, allowInfiniteScroll, location, overrideColumnNum }) => {
   const dispatch = useDispatch();
@@ -147,7 +149,7 @@ const CardGridList = ({ loadFilter, allowInfiniteScroll, location, overrideColum
                       column.map((card) => {
                         return (
                           <div className={`grid-item grid-item--${cardsSize}`} key={card.id} data-key={card.id}>
-                            {card && <CardPreviewSmall size={cardsSize} card={card} />}
+                            <Suspense fallback={<div />}>{card && <CardPreviewSmall size={cardsSize} card={card} />}</Suspense>
                           </div>
                         );
                       })}

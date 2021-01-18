@@ -126,16 +126,9 @@ const CardGridList = ({ loadFilter, allowInfiniteScroll, location, overrideColum
     [isLoaded, dispatch, nextPageLink, options]
   );
 
-  // reset du scroll avant de quitter la page
-  window.onbeforeunload = function () {
-    window.scrollTo(0, 0);
-  };
-
   useEffect(() => {
-    return () => {
-      window.onbeforeunload = null;
-    };
-  });
+    return () => window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="CardGridList">

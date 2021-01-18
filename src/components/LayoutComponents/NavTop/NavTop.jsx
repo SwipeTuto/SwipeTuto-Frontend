@@ -98,7 +98,7 @@ const NavTop = (props) => {
   return (
     <div className={`NavTop ${currentTheme}-theme-m`}>
       <div className="NavTop__left">
-        <Link to="/" className="NavTop__swipeTuto">
+        <Link to="/" className="NavTop__swipeTuto" name="homepage">
           <img
             className="NavTop__swipeTuto--image"
             src={currentTheme === "light" ? STSmallLogo : STSmallLogoBlackmod}

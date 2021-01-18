@@ -131,14 +131,14 @@
     align-items: center;
 
     &.dark-theme {
-      color: $grey-dark;
+      // color: $;
       & svg {
         fill: $grey-dark;
       }
     }
 
     &.light-theme {
-      color: $grey-dark;
+      // color: $grey-dark;
     }
 
     &--logo {

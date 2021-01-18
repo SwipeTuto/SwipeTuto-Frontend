@@ -70,6 +70,7 @@ const CardPreviewSmall = ({ card, size }) => {
     if (elem) {
       img = document.createElement("img");
       img.setAttribute("onContextMenu", (e) => e.preventDefault());
+      img.setAttribute("alt", "slide du tutoriel");
       elem.append(img);
       if (media_image[0] && media_image[0].image) {
         img.onload = () => {

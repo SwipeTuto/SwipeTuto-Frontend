@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // redux
@@ -8,7 +8,9 @@ import { selectCurrentUser, selectCurrentUserId } from "../../../redux/user/user
 
 // service & helper
 // import { base } from "../../../services/configService";
-import { convertNumber, likeUpdate, truncate } from "../../../helper/index";
+import { likeUpdate } from "../../../helper/functions/likeUpdate";
+import { convertNumber } from "../../../helper/functions/convertNumber";
+import { truncate } from "../../../helper/functions/truncateString";
 
 // assets
 // import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
@@ -21,6 +23,7 @@ import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar
 import "./CardPreviewSmall.scss";
 import Loading from "../../Loading/Loading";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
+import { userHasLiked } from "../../../helper/functions/userHasLiked";
 
 const CardPreviewSmall = ({ card, size }) => {
   const { media_image, user, name, number_of_likes, likes, total_views } = card;
@@ -34,21 +37,13 @@ const CardPreviewSmall = ({ card, size }) => {
   const [isError, setIsError] = useState(false);
   const [firstCheck, setFirstCheck] = useState(true);
 
-  const userHasLiked = useCallback(() => {
-    if (currentUser && currentUser.id) {
-      return likes && likes.some((likers) => likers === currentUser.id);
-    } else {
-      return false;
-    }
-  }, [currentUser, likes]);
-
   useEffect(() => {
     const heartEl = document.getElementById(`CardPreviewSmall__heart${cardId}`);
-    if (userHasLiked() && firstCheck) {
+    if (userHasLiked(currentUserId, likes) && firstCheck) {
       heartEl && heartEl.classList.add("active");
     }
     setFirstCheck(false);
-  }, [cardId, firstCheck, userHasLiked]);
+  }, [cardId, currentUserId, firstCheck, likes]);
 
   const handleClickedCardClick = async () => {
     dispatch(showPopupCard());
@@ -75,6 +70,7 @@ const CardPreviewSmall = ({ card, size }) => {
     if (elem) {
       img = document.createElement("img");
       img.setAttribute("onContextMenu", (e) => e.preventDefault());
+      img.setAttribute("alt", "slide du tutoriel");
       elem.append(img);
       if (media_image[0] && media_image[0].image) {
         img.onload = () => {

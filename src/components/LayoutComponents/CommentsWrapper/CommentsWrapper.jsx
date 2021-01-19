@@ -1,43 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { Link } from "react-router-dom";
-
-// redux
 import {
-  // selectClickedCardCommentsNumber,
   selectClickedCardCommentsArray,
   selectClickedCardId,
-  // selectFilterError,
   selectClickedCardCommentsNextLink,
   selectLastPublishedComment,
 } from "../../../redux/filter/filter-selectors";
 import {
   addCommentAction,
-  // deleteFilterErrorAction,
   getCardCommentsAction,
   deleteCommentAction,
   fetchNewComments,
   deleteLastPublishedCommentInStore,
 } from "../../../redux/filter/filter-actions";
-// import { selectCurrentUser } from "../../../redux/user/user-selectors";
-
-// services & helper
-// import { getCardCommentsNext } from "../../../services/socialService";
-
-// components
-// import Loading from "../../Loading/Loading";
 import FirstLevelComment from "./FirstLevelComment/FirstLevelComment";
 import CustomButton from "../CustomButton/CustomButton";
 import CommentsInput from "../CommentsInput/CommentsInput";
-
-// assets
-// import { ReactComponent as ChatLogo } from "../../../assets/images/chatbubbles-outline.svg";
-// import { usePrevious } from "../../../hooks/usePrevious";
-
 import "./CommentsWrapper.scss";
 import { selectCommentsLoaded } from "../../../redux/layout/layout-selectors";
-// import { selectCommentsLoaded } from "../../../redux/layout/layout-selectors";
-// import { openConnexionPopup } from "../../../redux/layout/layout-actions";
 
 const CommentsWrapper = () => {
   const dispatch = useDispatch();
@@ -47,7 +27,6 @@ const CommentsWrapper = () => {
   const lastPublishedComment = useSelector(selectLastPublishedComment);
   const [localLastPublishedArray, setLocalLastPublishedArray] = useState([]);
   const [localCommentsArray, setLocalCommentsArray] = useState([]);
-  // const [shouldUpdate, setShouldUpdate] = useState(false);
   const [firstValue, setNewFirstValue] = useState("");
   const commentsLoaded = useSelector(selectCommentsLoaded);
 
@@ -100,11 +79,6 @@ const CommentsWrapper = () => {
     }
   };
 
-  // const handleUpdate = () => {
-  //   console.log("call");
-  //   // setShouldUpdate(false);
-  // };
-
   const handleCommentRespond = (commentAuthor) => {
     const newFirstValue = `@${commentAuthor.username} `;
     const commentInput = document.querySelector("#commentInput");
@@ -126,7 +100,6 @@ const CommentsWrapper = () => {
                   key={comment.id}
                   comment={comment}
                   confirmCommentDelete={confirmCommentDelete}
-                  // handleUpdate={handleUpdate}
                   handleCommentRespond={() => {
                     handleCommentRespond(comment.author);
                   }}
@@ -146,7 +119,6 @@ const CommentsWrapper = () => {
                 key={comment.id}
                 comment={comment}
                 confirmCommentDelete={confirmCommentDelete}
-                // handleUpdate={handleUpdate}
                 handleCommentRespond={() => {
                   handleCommentRespond(comment.author);
                 }}

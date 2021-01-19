@@ -13,7 +13,9 @@ import { selectTheme } from "../../../redux/layout/layout-selectors";
 import { deleteCurrentSearch, getCardAfterfilterAction, setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
-import { getCategoriesArray, initialSearchState, topicArray } from "../../../helper/index";
+import { initialSearchState } from "../../../helper/constants";
+import { getCategoriesArray } from "../../../helper/functions/getCategoriesArray";
+import { topicArray } from "../../../helper/functions/getTopicsArray";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
@@ -96,7 +98,7 @@ const NavTop = (props) => {
   return (
     <div className={`NavTop ${currentTheme}-theme-m`}>
       <div className="NavTop__left">
-        <Link to="/" className="NavTop__swipeTuto">
+        <Link to="/" className="NavTop__swipeTuto" name="homepage">
           <img
             className="NavTop__swipeTuto--image"
             src={currentTheme === "light" ? STSmallLogo : STSmallLogoBlackmod}

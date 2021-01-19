@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import CustomButton from "../CustomButton/CustomButton";
-// import { ReactComponent as SendLogo } from "../../../assets/images/send.svg";
-
 import "./CommentsInput.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";

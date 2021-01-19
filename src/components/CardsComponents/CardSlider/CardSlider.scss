@@ -19,11 +19,6 @@
       @include big-logo-size;
     }
 
-    // &:hover {
-    //   fill: $primary-light;
-    //   transition: all 0.2s ease;
-    // }
-
     &--active {
       display: flex;
     }
@@ -47,7 +42,6 @@
     position: relative;
     height: 70vh &__track {
       height: 100%;
-      // background-color: $grey-lighter;
     }
 
     &__slides {
@@ -66,7 +60,6 @@
 
       & > img {
         max-height: 100%;
-        // width: auto;
         max-width: 100%;
       }
     }
@@ -118,8 +111,6 @@
     justify-content: center;
     align-items: center;
     background-color: $dark-dark;
-    // height: 100vh;
-    // width: 100vw;
     z-index: 60;
     margin-bottom: 0rem;
 
@@ -167,7 +158,6 @@
       &:hover > *,
       &:active > * {
         stroke: $primary-light !important;
-        // stroke: $primary-light !important;
         transition: all 0.2s ease;
       }
     }

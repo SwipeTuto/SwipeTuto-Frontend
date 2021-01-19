@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategoriesArray, topicArray } from "../../../helper";
+import { getCategoriesArray } from "../../../helper/functions/getCategoriesArray";
+import { topicArray } from "../../../helper/functions/getTopicsArray";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 import { getCurrentUserAction, updateUserInfosAction } from "../../../redux/user/user-actions";
 import { selectCurrentUser, selectCurrentUserId } from "../../../redux/user/user-selectors";

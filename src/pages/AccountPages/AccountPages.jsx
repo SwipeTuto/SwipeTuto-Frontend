@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
 import SettingsPage from "./SettingsPage/SettingsPage";
 import UserPage from "./UserPage/UserPage";
-
 import { ReactComponent as SettingsLogo } from "../../assets/images/settings.svg";
 import { ReactComponent as AccountLogo } from "../../assets/images/person.svg";
 import { ReactComponent as BookmarkLogo } from "../../assets/images/bookmark.svg";
@@ -15,7 +14,6 @@ import { ReactComponent as HelpLogo } from "../../assets/images/help-circle.svg"
 import { ReactComponent as ContactLogo } from "../../assets/images/mail.svg";
 import { ReactComponent as PreferencesLogo } from "../../assets/images/color-palette.svg";
 import { ReactComponent as LogOutLogo } from "../../assets/images/log-out.svg";
-
 import "./AccountPages.scss";
 import { selectTheme } from "../../redux/layout/layout-selectors";
 import UserNameAndAvatar from "../../components/UserComponents/UserAvatar/UserNameAndAvatar";
@@ -32,12 +30,6 @@ const AccountPage = (props) => {
   const currentUser = useSelector(selectCurrentUser);
   const currentTheme = useSelector(selectTheme);
   const dispatch = useDispatch();
-
-  // scroll reset
-
-  if (window.scrollY) {
-    window.scroll(0, 0);
-  }
 
   return (
     <div className={`AccountPage ${currentTheme}-theme-d`}>

@@ -1,32 +1,29 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // redux
 import { selectCurrentUser } from "../../../../redux/user/user-selectors";
 import { selectCommentLikers } from "../../../../redux/filter/filter-selectors";
 import { toggleCommentLikeAction } from "../../../../redux/filter/filter-actions";
-// import { getReplies, getNextReplies } from "../../../../services/socialService";
 
 // helper
-import { commentsFormattedDate, initialSignalState } from "../../../../helper/index";
+import { initialSignalState } from "../../../../helper/constants";
+import { commentsFormattedDate } from "../../../../helper/functions/formateDate";
 
 // components
 import UserAvatar from "../../../UserComponents/UserAvatar/UserAvatar";
 import UserUsername from "../../../UserComponents/UserAvatar/UserUsername";
-// import CommentsInput from "../../CommentsInput copy/CommentsInput";
 import ConfirmationOverlay from "../../ConfirmationOverlay/ConfirmationOverlay";
-// import SecondLevelComment from "../SecondLevelComment/SecondLevelComment";
 
 // assets
-// import { ReactComponent as ChatLogo } from "../../../../assets/images/chatbubbles-outline.svg";
 import { ReactComponent as HeartEmpty } from "../../../../assets/images/heart-outline.svg";
 import { ReactComponent as HeartFull } from "../../../../assets/images/heart.svg";
-// import { ReactComponent as CloseLogo } from "../../../../assets/images/close.svg";
 
 import "./FirstLevelComment.scss";
 import { openConnexionPopup, showSignalPopup } from "../../../../redux/layout/layout-actions";
 import VerticalMenu from "../../VerticalMenu/VerticalMenu";
 import { selectTheme } from "../../../../redux/layout/layout-selectors";
+import { userHasLiked } from "../../../../helper/functions/userHasLiked";
 
 const FirstLevelComment = ({ comment, confirmCommentDelete, handleUpdate, handleCommentRespond }) => {
   const dispatch = useDispatch();
@@ -67,18 +64,9 @@ const FirstLevelComment = ({ comment, confirmCommentDelete, handleUpdate, handle
     setConfirmPopupOpen({ open: false, message: "", id: null });
   };
 
-  //! FIRST LEVEL COMMENT ELEMENT
-  const userHasLiked = useCallback(() => {
-    if (currentUser && currentUser.id) {
-      return commentLikers && commentLikers.some((likers) => likers === currentUser.id);
-    } else {
-      return false;
-    }
-  }, [commentLikers, currentUser]);
-
   useEffect(() => {
-    setCommentIsLiked(userHasLiked());
-  }, [commentLikers, currentUser, userHasLiked]);
+    setCommentIsLiked(userHasLiked(currentUser?.id, commentLikers));
+  }, [commentLikers, currentUser]);
 
   const handleCommentLike = (commentId) => {
     if (!currentUser) {

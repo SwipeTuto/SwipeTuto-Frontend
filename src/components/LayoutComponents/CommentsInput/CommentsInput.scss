@@ -4,8 +4,8 @@
 .CommentsInputReply {
   margin: 2rem 0;
   padding: 2rem 0;
-  display: flex;
-  align-items: flex-end;
+  // display: flex;
+  // align-items: flex-end;
   border-top: 1px solid $grey;
   border-bottom: 1px solid $grey;
   color: $black;
@@ -15,7 +15,6 @@
       width: 100%;
       resize: none;
       @include input-style;
-      margin: 1rem 0;
 
       &:focus {
         background-color: $white;
@@ -25,15 +24,67 @@
         }
       }
     }
+    &--sendPC {
+      display: block;
+    }
+
+    &--sendMobile {
+      display: none;
+    }
   }
-  .custom-button {
-    margin: 0 0 1rem 1rem;
+
+  button.custom-button {
+    margin: 1rem 0 1rem auto;
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .CommentsInput,
+  .CommentsInputReply {
+    display: flex;
+    align-items: flex-end;
+
+    &__newComment {
+      &--sendPC {
+        display: none;
+      }
+
+      &--sendMobile {
+        flex-shrink: 0;
+        display: block;
+        border-radius: 50%;
+        position: relative;
+        @include big-logo-size;
+
+        & > svg {
+          @include logo-size;
+          position: absolute;
+          transform-origin: center;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          fill: $white;
+        }
+      }
+    }
+
+    button.custom-button {
+      margin: 0 0 0 0.6rem;
+    }
   }
 }
 @media screen and (max-width: $bp-phone) {
   .CommentsInput,
   .CommentsInputReply {
-    display: flex;
-    flex-direction: column;
+    &__newComment {
+      &--sendMobile {
+        height: 5rem;
+        width: 5rem;
+
+        & > svg {
+          @include big-logo-size;
+        }
+      }
+    }
   }
 }

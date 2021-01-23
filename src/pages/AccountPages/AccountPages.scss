@@ -2,35 +2,23 @@
 
 .AccountPage {
   min-height: 100vh;
-  padding: $grid-component-padding;
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  grid-auto-rows: max-content;
-  // gap: 1rem;
   background-color: $grey;
 
-  // .title.title-1 {
-  //   margin-bottom: 4rem;
-  // }
-
-  // & > div {
-  //   padding: 2rem 4rem;
-  //   box-shadow: $card-shadow-2;
-  // }
-
   &__wrapper {
-    // background-color: $white;
     width: 100%;
     min-height: 100vh;
+    padding: 2rem;
+  }
+
+  &__top {
+    padding: $grid-component-padding;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    padding: 4rem;
+    justify-content: space-between;
   }
 
   &__navigation {
-    // background-color: $white;
     padding: 4rem;
-    width: 100%;
     height: min-content;
     display: flex;
     flex-direction: column;
@@ -65,23 +53,15 @@
 
 @media screen and (max-width: $bp-tablet) {
   .AccountPage {
-    padding: $inner-component-padding-tablet;
     grid-template-columns: 1fr;
+
+    &__top {
+      padding: 0 2rem;
+    }
 
     &__navigation {
       display: none;
     }
-
-    // &__mobile {
-    //   display: block;
-    // }
-
-    // &__userWelcome:first-of-type {
-    //   font-size: 2rem;
-    // }
-    // &__userWelcome:last-of-type {
-    //   font-size: 1.4rem;
-    // }
   }
 }
 @media screen and (max-width: $bp-phone) {
@@ -94,16 +74,5 @@
       padding-top: 2rem;
       padding-bottom: 2rem;
     }
-
-    // &__avatar {
-    //   height: 4rem;
-    //   width: 4rem;
-    // }
-    // &__userWelcome:first-of-type {
-    //   font-size: inherit;
-    // }
-    // &__userWelcome:last-of-type {
-    //   font-size: 1.2rem;
-    // }
   }
 }

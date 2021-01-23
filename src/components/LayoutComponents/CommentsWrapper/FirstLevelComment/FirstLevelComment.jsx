@@ -16,12 +16,14 @@ import {
 import { getReplies, getNextReplies } from "../../../../services/socialService";
 
 // helper
-import { commentsFormattedDate } from "../../../../helper/index";
+import {
+  commentsFormattedDate,
+  initialSignalState,
+} from "../../../../helper/index";
 
 // components
 import UserAvatar from "../../../UserComponents/UserAvatar/UserAvatar";
 import UserUsername from "../../../UserComponents/UserAvatar/UserUsername";
-import ConnexionRedirect from "../../ConnexionRedirect/ConnexionRedirect";
 import CommentsInput from "../../CommentsInput/CommentsInput";
 import ConfirmationOverlay from "../../ConfirmationOverlay/ConfirmationOverlay";
 import SecondLevelComment from "../SecondLevelComment/SecondLevelComment";
@@ -30,10 +32,14 @@ import SecondLevelComment from "../SecondLevelComment/SecondLevelComment";
 import { ReactComponent as ChatLogo } from "../../../../assets/images/chatbubbles-outline.svg";
 import { ReactComponent as HeartEmpty } from "../../../../assets/images/heart-outline.svg";
 import { ReactComponent as HeartFull } from "../../../../assets/images/heart.svg";
-import { ReactComponent as MobileMenu } from "../../../../assets/images/ellipsis-vertical.svg";
 import { ReactComponent as CloseLogo } from "../../../../assets/images/close.svg";
 
 import "./FirstLevelComment.scss";
+import {
+  openConnexionPopup,
+  showSignalPopup,
+} from "../../../../redux/layout/layout-actions";
+import VerticalMenu from "../../VerticalMenu/VerticalMenu";
 
 const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
   const dispatch = useDispatch();
@@ -46,9 +52,7 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
   const replyCount = comment.reply_count;
   const likesCount = comment.likes_count;
   const [commentIsLiked, setCommentIsLiked] = useState();
-  const [connectRedirect, setConnectRedirect] = useState(false);
   const [localRepliesArray, setLocalRepliesArray] = useState([]);
-  const [mobileMenu, setMobileMenu] = useState(false);
   const [repliesBlockVisible, setRepliesBlockVisible] = useState(false);
   const [replyInputShow, setReplyInputShow] = useState(false);
   const [newComment, setNewComment] = useState("");
@@ -57,6 +61,7 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
   const [localLastPublishedComments, setLocalLastPublishedComments] = useState(
     []
   );
+
   const [confirmPopupOpen, setConfirmPopupOpen] = useState({
     open: false,
     message: "",
@@ -110,31 +115,40 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
 
   const handleCommentLike = (commentId) => {
     if (!currentUser) {
-      setConnectRedirect(true);
+      dispatch(openConnexionPopup());
     } else {
       dispatch(toggleCommentLikeAction(commentId));
-      const likeElMobile = document.querySelector(
-        `.FirstLevelComment__mobile--likes-number[data-likes="${commentId}"]`
-      );
+      // const likeElMobile = document.querySelector(
+      //   `.FirstLevelComment__mobile--likes-number[data-likes="${commentId}"]`
+      // );
       const likeEl = document.querySelector(
-        `.FirstLevelComment__aside--likes-number[data-likes="${commentId}"]`
+        `.FirstLevelComment__action--likes-number[data-likes="${commentId}"]`
       );
       if (commentIsLiked) {
-        likeElMobile.textContent = parseInt(likeElMobile.textContent) - 1;
+        // likeElMobile.textContent = parseInt(likeElMobile.textContent) - 1;
         likeEl.textContent = parseInt(likeEl.textContent) - 1;
       } else {
-        likeElMobile.textContent = parseInt(likeElMobile.textContent) + 1;
+        // likeElMobile.textContent = parseInt(likeElMobile.textContent) + 1;
         likeEl.textContent = parseInt(likeEl.textContent) + 1;
       }
       setCommentIsLiked(!commentIsLiked);
     }
-    setMobileMenu(false);
   };
 
   // juste toggle affichage input réponse
   const handleCommentRespond = () => {
-    setNewComment("@" + commentAuthor.username + " ");
-    setMobileMenu(false);
+    const inputToScrollTo = [
+      ...document.getElementsByClassName("CommentsInput__newComment--input"),
+    ][1];
+    const userNameEl = document.createElement("span");
+    userNameEl.classList.add("primary-lighter-text");
+    const textNode = document.createTextNode(`@${commentAuthor.username} `);
+    userNameEl.appendChild(textNode);
+    // console.log(userNameEl);
+    // console.log(inputToScrollTo);
+    // trouver comment mettre la mention en couleur
+    setNewComment(`@${commentAuthor.username} `);
+
     setReplyInputShow(true);
   };
 
@@ -144,7 +158,7 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
         ...document.getElementsByClassName("CommentsInput__newComment--input"),
       ][1];
       const cardFullPopupEl = [
-        ...document.getElementsByClassName("CardFullPopup active"),
+        ...document.getElementsByClassName("CardFullPopup"),
       ][0];
       cardFullPopupEl.scrollTo(0, inputToScrollTo.offsetTop - 100);
       inputToScrollTo.focus();
@@ -156,7 +170,6 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
   }, [replyInputShow]);
 
   const handleReplyInputClose = () => {
-    setMobileMenu(false);
     setReplyInputShow(false);
   };
 
@@ -164,7 +177,8 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
   const handleAddCommentClick = async (e) => {
     e.preventDefault();
     if (!currentUser) {
-      setConnectRedirect(true);
+      dispatch(openConnexionPopup());
+      // setConnectRedirect(true);
     } else {
       await dispatch(addReplyAction(clickedCardId, commentId, newComment));
       // await handleRepliesFetch();
@@ -179,18 +193,13 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
   };
 
   const handleCommentDelete = (e) => {
-    if (!currentUser) setConnectRedirect(true);
+    if (!currentUser) dispatch(openConnexionPopup());
     const commentId = e.target.dataset.commentid;
     setConfirmPopupOpen({
       open: true,
       message: "Voulez-vous vraiment supprimer ce commentaire ?",
       id: commentId,
     });
-    setMobileMenu(false);
-  };
-
-  const handleClose = () => {
-    setConnectRedirect(false);
   };
 
   const handleConfirmClick = () => {
@@ -265,9 +274,10 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
     setRepliesBlockVisible(true);
   };
 
+  const newSignalObject = { ...initialSignalState, id_comment: commentId };
+
   return (
     <>
-      {connectRedirect && <ConnexionRedirect handleClose={handleClose} />}
       {confirmPopupOpen &&
         confirmPopupOpen.open &&
         confirmPopupOpen.open === true && (
@@ -281,58 +291,33 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
       <div className="FirstLevelComment">
         <div className=" FirstLevelComment__author">
           <UserAvatar user={commentAuthor} link={true} />
-          <div className="FirstLevelComment__mobile-stats">
-            <div className="FirstLevelComment__mobile--likes">
-              <p
-                className="FirstLevelComment__mobile--likes-number"
-                data-likes={commentId}
-              >
-                {likesCount ? likesCount : 0}
-              </p>
-              {commentIsLiked ? (
-                <HeartFull className=" FirstLevelComment__mobile--logo comment-logo__liked" />
-              ) : (
-                <HeartEmpty className=" FirstLevelComment__mobile--logo" />
-              )}
-            </div>
-
-            {/* <div className="FirstLevelComment__mobile--comments">
-              <p className="FirstLevelComment__mobile--comments-number">
-                {replyCount && replyCount}
-              </p>
-              <ChatLogo className=" FirstLevelComment__mobile--logo" />
-            </div> */}
-          </div>
         </div>
         <div className="FirstLevelComment__wrapper">
           <div className="FirstLevelComment__center">
-            <UserUsername user={commentAuthor} link={true} />
+            <div className="FirstLevelComment__center--top">
+              <UserUsername user={commentAuthor} link={true} />
+              <VerticalMenu>
+                {commentAuthor &&
+                commentAuthor.id &&
+                currentUser &&
+                currentUser.id &&
+                commentAuthor.id === currentUser.id ? (
+                  <p
+                    data-commentid={commentId}
+                    onClick={(e) => handleCommentDelete(e)}
+                  >
+                    Supprimer
+                  </p>
+                ) : (
+                  <p onClick={() => dispatch(showSignalPopup(newSignalObject))}>
+                    Signaler
+                  </p>
+                )}
+              </VerticalMenu>
+            </div>
             <p className="FirstLevelComment__comment">
               {comment && comment.text}
             </p>
-            <div className="FirstLevelComment__mobile-menu">
-              <MobileMenu
-                className="FirstLevelComment__mobile-menu--logo"
-                onClick={() => setMobileMenu(!mobileMenu)}
-              />
-              {mobileMenu && (
-                <div className="FirstLevelComment__mobile-menu--panel">
-                  {commentAuthor &&
-                    commentAuthor.id &&
-                    currentUser &&
-                    currentUser.id &&
-                    commentAuthor.id === currentUser.id && (
-                      <p
-                        className="FirstLevelComment__mobile-action"
-                        data-commentid={commentId}
-                        onClick={(e) => handleCommentDelete(e)}
-                      >
-                        Supprimer
-                      </p>
-                    )}
-                </div>
-              )}
-            </div>
           </div>
           <div className="FirstLevelComment__actions">
             <p className="FirstLevelComment__date">
@@ -350,40 +335,17 @@ const FirstLevelComment = ({ comment, confirmCommentDelete }) => {
             >
               Répondre
             </p>
-            {commentAuthor &&
-              commentAuthor.id &&
-              currentUser &&
-              currentUser.id &&
-              commentAuthor.id === currentUser.id && (
-                <p
-                  className="FirstLevelComment__action"
-                  data-commentid={commentId}
-                  onClick={(e) => handleCommentDelete(e)}
-                >
-                  Supprimer
-                </p>
-              )}
-          </div>
-        </div>
-        <div className=" FirstLevelComment__aside">
-          <div className="FirstLevelComment__aside--likes">
-            {commentIsLiked ? (
-              <HeartFull className=" FirstLevelComment__aside--logo comment-logo__liked" />
-            ) : (
-              <HeartEmpty className=" FirstLevelComment__aside--logo" />
-            )}
             <p
-              className="FirstLevelComment__aside--likes-number"
+              className="FirstLevelComment__action--likes-number"
               data-likes={commentId}
             >
               {likesCount ? likesCount : 0}
             </p>
-          </div>
-          <div className="FirstLevelComment__aside--comments">
-            <ChatLogo className=" FirstLevelComment__aside--logo" />
-            <p className="FirstLevelComment__aside--comments-number">
-              {replyCount && replyCount}
-            </p>
+            {commentIsLiked ? (
+              <HeartFull className=" FirstLevelComment__action--logo comment-logo__liked" />
+            ) : (
+              <HeartEmpty className=" FirstLevelComment__action--logo" />
+            )}
           </div>
         </div>
       </div>

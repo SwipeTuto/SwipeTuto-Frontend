@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 
@@ -11,17 +10,12 @@ import {
   selectSearchCategory,
 } from "../../redux/filter/filter-selectors";
 import { topicArray, categoryArray } from "../../helper/index";
-import {
-  deleteCurrentSearch,
-  setCurrentSearch,
-} from "../../redux/filter/filter-actions";
-import SearchLinkRedirect from "../../helper/SearchLinkRedirect";
+import { deleteCurrentSearch } from "../../redux/filter/filter-actions";
 
 import "./CurrentSearchWords.scss";
 
 const CurrentSearchWords = ({ history }) => {
   const dispatch = useDispatch();
-  const [redirection, setRedirection] = useState(false);
 
   const searchTopic = useSelector(selectSearchTopic);
   const searchCategory = useSelector(selectSearchCategory);
@@ -32,8 +26,6 @@ const CurrentSearchWords = ({ history }) => {
     const itemToDelete = () =>
       e.target.dataset.searchitem ? e.target.dataset.searchitem : null;
     dispatch(deleteCurrentSearch(itemToDelete()));
-    dispatch(setCurrentSearch("searchPage", 1));
-    setRedirection(true);
   };
 
   const paramsArray = [
@@ -41,10 +33,6 @@ const CurrentSearchWords = ({ history }) => {
     { name: "searchTopic", value: searchTopic },
     { name: "searchCategory", value: searchCategory },
   ];
-
-  useEffect(() => {
-    setRedirection(false);
-  }, []);
 
   const getParamName = (param) => {
     switch (param.name) {
@@ -66,12 +54,9 @@ const CurrentSearchWords = ({ history }) => {
         return param.value;
     }
   };
-  const redirectLink = SearchLinkRedirect();
 
   return (
     <>
-      {redirection && <Redirect to={redirectLink} />}
-
       {(searchWords || searchTopic || searchCategory) && (
         <div className="currentSearch">
           {paramsArray &&

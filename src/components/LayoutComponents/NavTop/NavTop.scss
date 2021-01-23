@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   padding: 1rem 2rem;
-  z-index: 100000;
+  z-index: 20;
   // border-bottom: 0.5px solid $grey;
   @include theme-colors($themelight: true);
 
@@ -154,16 +154,9 @@
   }
 
   &__userMenu {
-    position: absolute;
+    @include overlay-menu;
     top: 100%;
     right: 2rem;
-    display: flex;
-    flex-direction: column;
-    // background-color: $white;
-    border-radius: 0 0 $box-radius $box-radius;
-    box-shadow: $card-shadow;
-    border: 0.5px solid $grey-light;
-    overflow: hidden;
 
     p {
       width: 100%;
@@ -214,7 +207,6 @@
 
   &__dropdown {
     position: absolute;
-    z-index: 1000;
     top: 100%;
     left: 0;
     width: 100%;

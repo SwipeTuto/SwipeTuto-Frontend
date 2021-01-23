@@ -1,6 +1,6 @@
 // Présent dans App.js dans une Route ("/")
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,7 +14,6 @@ import { selectUserErrors } from "../../../redux/user/user-selectors";
 
 // helper
 import { loginGit } from "../../../services/userService";
-import { checkRegexInput, errorMessageToDisplay } from "../../../helper/index";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
@@ -23,11 +22,15 @@ import CustomButton from "../CustomButton/CustomButton";
 import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google.svg";
 import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
 
+import "./LoginAndRegister.scss";
+import FormInput from "../../FormInputs/FormInput";
+
 const Login = ({ history }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({ username: "", password: "" });
   const [submitOk, setSubmitOk] = useState(false);
   const userErrors = useSelector(selectUserErrors);
+  const allInput = [...document.querySelectorAll(".FormInput")];
 
   // scroll reset
   useEffect(() => {
@@ -38,45 +41,12 @@ const Login = ({ history }) => {
   }, [dispatch]);
 
   const handleClickGoogle = (e) => {
-    // loginGoogle();
+    e.stopPropagation();
     dispatch(loginGoogleAction());
   };
   const handleClickGit = (e) => {
     loginGit();
   };
-
-  const handleChange = useCallback(
-    (e) => {
-      const { name, value } = e.target;
-
-      const currentInput = document.querySelector(
-        `.LoginPage input[name=${name}]`
-      );
-      const errorMessage = document.querySelector(
-        `.LoginPage .input__message[data-inputfor=${name}`
-      );
-
-      currentInput.classList.remove("valid-input");
-      currentInput.classList.add("invalid-input");
-
-      if (value) {
-        let inputIsOk = checkRegexInput(name, value); //test valeur avec regex, true or false
-
-        if (!inputIsOk) {
-          currentInput.classList.remove("valid-input");
-          currentInput.classList.add("invalid-input");
-          errorMessage.classList.add("error__message");
-          errorMessage.textContent = errorMessageToDisplay(name);
-        } else {
-          errorMessage.classList.remove("error__message");
-          currentInput.classList.remove("invalid-input");
-          currentInput.classList.add("valid-input");
-        }
-      }
-      setUser({ ...user, [name]: value });
-    },
-    [user]
-  );
 
   const handleClick = (e) => {
     const { email, password } = user;
@@ -86,10 +56,11 @@ const Login = ({ history }) => {
     }
   };
 
+  const getValue = (name, value) => {
+    setUser({ ...user, [name]: value });
+  };
+
   useEffect(() => {
-    const allInput = [
-      ...document.querySelectorAll(".LoginPage .login__form--input"),
-    ];
     const readyToSubmit = allInput.every((input) =>
       input.classList.contains("valid-input")
     );
@@ -99,12 +70,12 @@ const Login = ({ history }) => {
     } else {
       setSubmitOk(true);
     }
-  }, [user, handleChange]);
+  }, [allInput, user]);
 
   return (
-    <div className="login">
+    <div className="Login">
       <h1 className="title title-1">Se connecter</h1>
-      <div className="login__google">
+      <div className="Login__google">
         <CustomButton color="white" onClick={(e) => handleClickGoogle(e)}>
           <GoogleLogo />
           Google
@@ -118,38 +89,28 @@ const Login = ({ history }) => {
         {userErrors
           ? userErrors === 400
             ? "Le compte n'a pas pu être trouvé. Merci de vérifier votre email et votre mot de passe."
-            : "Une erreur est survenue avec ce compte. Si l'erreur persiste, merci de nous le signaler."
+            : "Une erreur est survenue avec ce compte. Avez-vous les bons identifiants ? Si l'erreur persiste, merci de nous le signaler."
           : ""}
       </p>
-      <form className="login__form">
-        <label htmlFor="pseudo" className="login__form--label">
-          {" "}
-          Email :{" "}
-        </label>
-        <input
-          onChange={(e) => handleChange(e)}
+      <form className="Login__form">
+        <FormInput
+          idFor="email"
+          label="Votre email :"
           type="email"
           name="email"
-          value={user.email || ""}
-          id="email_login"
-          className="login__form--input invalid-input"
-          required
+          getValue={getValue}
+          required={true}
+          // firstValue={savedEmail}
         />
-        <p className="input__message" data-inputfor="email"></p>
-        <label htmlFor="mdp" className="login__form--label">
-          {" "}
-          Mot de passe :{" "}
-        </label>
-        <input
-          onChange={(e) => handleChange(e)}
-          value={user.password}
+        <FormInput
+          idFor="password"
+          label="Votre mot de passe :"
           type="password"
           name="password"
-          id="mdp_login"
-          className="login__form--input invalid-input"
-          required
+          getValue={getValue}
+          required={true}
+          // firstValue={savedPassword}
         />
-        <p className="input__message" data-inputfor="password"></p>
         <CustomButton
           onClick={(e) => handleClick(e)}
           id="login-button"

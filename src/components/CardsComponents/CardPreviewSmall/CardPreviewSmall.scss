@@ -1,9 +1,9 @@
 @import "../../../variables.scss";
 
 .CardPreviewSmall {
-  height: 100%;
-  // max-height: 25rem;
+  height: auto;
   width: 100%;
+  // max-height: 25rem;
   // background-color: $white;
   cursor: pointer;
   position: relative;
@@ -14,23 +14,33 @@
   flex-direction: column;
   transition: all 0.2s ease;
   break-inside: avoid;
-  margin-bottom: 1rem;
+  // margin-bottom: 1rem;
 
   &__image {
-    height: 100%;
-    width: auto;
-    // background-color: $white;
+    height: auto;
+
+    width: 100%;
+    margin: auto;
+    background-color: $black;
     position: relative;
     display: flex;
     justify-content: center;
     overflow: hidden;
+    object-fit: contain;
+
+    &.active {
+      visibility: visible;
+      display: block;
+    }
+
+    &.hide {
+      visibility: hidden;
+      display: none;
+    }
 
     & > img {
-      // height: auto;
-      // width: 100%;
       width: 100%;
-      max-width: 100%;
-      // max-height: 100%;
+      max-height: 350px;
       object-fit: contain;
     }
 
@@ -40,6 +50,14 @@
       & p {
         visibility: visible;
       }
+    }
+
+    &--loading {
+      background-color: $grey-light;
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 
@@ -78,6 +96,8 @@
   }
 
   &__details {
+    max-width: 100%;
+    margin-top: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -91,6 +111,7 @@
 
     .UserNameAndAvatar {
       display: flex;
+      text-overflow: ellipsis;
 
       &__avatar {
         width: 1.5rem;
@@ -105,13 +126,24 @@
     align-items: center;
 
     &--logo {
-      @include logo-size;
-      fill: $red-like;
-      // fill: $primary-light;
       margin-right: 0.3rem;
-      & * {
-        stroke: currentColor !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      & > svg {
+        @include logo-size;
+
+        &.active * {
+          fill: $red-like !important;
+          stroke: $red-like !important;
+        }
       }
+      // @include logo-size;
+      // // fill: $primary-light;
+      // & * {
+      //   stroke: currentColor !important;
+      // }
     }
   }
 }

@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
-import { getInitials } from "../../../helper/index";
 // import { base, coudinaryBase } from "../../../services/configService";
 
 import { getUserByIdAction } from "../../../redux/user/user-actions";
@@ -18,6 +16,7 @@ const UserAvatar = ({ user, link }) => {
       ? `${user.avatar[0].avatar}`
       : // ? `${base}${user.avatar[0].avatar}`
         null;
+  const [error, setError] = useState(false);
   return (
     <>
       {link ? (
@@ -31,27 +30,28 @@ const UserAvatar = ({ user, link }) => {
           }}
         >
           <div className="user_avatar">
-            {userImage ? (
-              <img className="user_avatar--image" src={userImage} alt="user" />
-            ) : user && user.first_name && user && user.last_name ? (
-              getInitials(user.first_name, user.last_name)
-            ) : user && user.first_name ? (
-              user.first_name.slice(0, 1).toUpperCase()
+            {userImage && !error ? (
+              <img
+                className="user_avatar--image"
+                src={userImage}
+                alt="user"
+                onError={() => setError(true)}
+              />
             ) : (
-              "S"
+              user && user.username && user.username.slice(0, 1)
             )}
           </div>
         </Link>
       ) : (
         <div className="user_avatar">
           {userImage ? (
-            <img className="user_avatar--image" src={userImage} alt="user" />
-          ) : user && user.first_name && user && user.last_name ? (
-            getInitials(user.first_name, user.last_name)
-          ) : user && user.first_name ? (
-            user.first_name.slice(0, 1).toUpperCase()
+            <img
+              className="UserNameAndAvatar__avatar--image"
+              src={userImage}
+              alt="user"
+            />
           ) : (
-            "S"
+            user && user.username && user.username.slice(0, 1)
           )}
         </div>
       )}

@@ -1,0 +1,32 @@
+@import "../../../variables.scss";
+
+.VerticalMenu {
+  position: relative;
+
+  &__logo {
+    &:hover {
+      cursor: pointer;
+    }
+    &--logo {
+      @include logo-size;
+    }
+  }
+
+  &__menu {
+    @include overlay-menu;
+    padding: 1rem;
+    position: absolute;
+    right: 0;
+    z-index: 30;
+
+    &--item:not(:last-of-type) {
+      margin-bottom: 0.6rem;
+    }
+
+    &--item:hover {
+      cursor: pointer;
+      color: $primary-light;
+      transition: all 0.2s ease;
+    }
+  }
+}

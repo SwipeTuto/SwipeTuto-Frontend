@@ -37,7 +37,8 @@
     height: 100%;
 
     @include input-style;
-    // padding: 0.3rem;
+    flex-direction: row;
+    margin-bottom: 0rem;
     border: none;
 
     &--input {

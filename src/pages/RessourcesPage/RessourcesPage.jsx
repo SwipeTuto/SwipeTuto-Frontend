@@ -1,9 +1,8 @@
 import React from "react";
-
-import { ReactComponent as GoTopLogo } from "../../assets/images/chevrons/arrow-up-circle.svg";
 import { ReactComponent as ChevronLeft } from "../../assets/images/chevrons/chevron-back.svg";
 import { ReactComponent as ChevronRight } from "../../assets/images/chevrons/chevron-forward.svg";
 import CardPreviewSmallRessources from "../../components/CardPreviewSmallRessources/CardPreviewSmallRessources";
+import ScrollButton from "../../components/LayoutComponents/ScrollButton/ScrollButton";
 
 import "./RessourcesPage.scss";
 import { RESSOURCES_WEB } from "./RESSOURCES_WEB";
@@ -19,32 +18,10 @@ const RessourcesPage = () => {
     window.scroll(0, 0);
   }
 
-  window.onscroll = function () {
-    scrollFunction();
-  };
-
-  const scrollFunction = () => {
-    let goTopButton = document.querySelector(".goTop__button");
-
-    if (
-      goTopButton &&
-      (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20)
-    ) {
-      goTopButton.style.display = "block";
-    } else if (goTopButton) {
-      goTopButton.style.display = "none";
-    }
-  };
-
-  const handleGoTopButton = () => {
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-  };
-
-  const handleScollRight = () => {
+  const handleScrollRight = () => {
     linkBar.scrollBy(50, 0);
   };
-  const handleScollLeft = () => {
+  const handleScrollLeft = () => {
     linkBar.scrollBy(-50, 0);
   };
 
@@ -55,7 +32,7 @@ const RessourcesPage = () => {
           Ressources utiles pour le développeur Web
         </h1>
         <div className="ressource-navigation">
-          <div className="scroll-logo" onClick={handleScollLeft}>
+          <div className="scroll-logo" onClick={handleScrollLeft}>
             <ChevronLeft />
           </div>
           <div className="ressource-navigation-scroll">
@@ -72,7 +49,7 @@ const RessourcesPage = () => {
             })}
           </div>
 
-          <div className="scroll-logo" onClick={handleScollRight}>
+          <div className="scroll-logo" onClick={handleScrollRight}>
             <ChevronRight />
           </div>
         </div>
@@ -99,7 +76,7 @@ const RessourcesPage = () => {
         );
       })}
 
-      <GoTopLogo className="goTop__button" onClick={handleGoTopButton} />
+      <ScrollButton />
     </div>
   );
 };

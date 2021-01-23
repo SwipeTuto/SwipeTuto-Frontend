@@ -1,6 +1,6 @@
 // Présent dans App.js dans une Route ("/")
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,7 +10,6 @@ import { selectUserErrors } from "../../../redux/user/user-selectors";
 
 // helper
 import { loginGoogle, loginGit } from "../../../services/userService";
-import { checkRegexInput, errorMessageToDisplay } from "../../../helper/index";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
@@ -18,6 +17,8 @@ import CustomButton from "../CustomButton/CustomButton";
 // assets
 import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google.svg";
 import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
+import "./LoginAndRegister.scss";
+import FormInput from "../../FormInputs/FormInput";
 
 // Props history, location, match, depuis react router dom
 const Register = (props) => {
@@ -27,47 +28,13 @@ const Register = (props) => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const userErrors = useSelector(selectUserErrors);
+  const allInput = [...document.querySelectorAll(".FormInput")];
 
   // scroll reset
-  useEffect(() => {
-    if (window.scrollY) {
-      window.scroll(0, 0);
-    }
-  }, []);
 
-  const handleChange = useCallback(
-    (e) => {
-      const { name, value } = e.target;
-
-      const currentInput = document.querySelector(
-        `.LoginPage input[name=${name}]`
-      );
-      const errorMessage = document.querySelector(
-        `.LoginPage .input__message[data-inputfor=${name}`
-      );
-
-      currentInput.classList.remove("valid-input");
-      currentInput.classList.add("invalid-input");
-
-      if (value) {
-        let inputIsOk = checkRegexInput(name, value); //test valeur avec regex, true or false
-
-        if (!inputIsOk) {
-          currentInput.classList.remove("valid-input");
-          currentInput.classList.add("invalid-input");
-          errorMessage.classList.add("error__message");
-          errorMessage.textContent = errorMessageToDisplay(name);
-        } else {
-          currentInput.classList.remove("invalid-input");
-          currentInput.classList.add("valid-input");
-          errorMessage.classList.remove("error__message");
-          errorMessage.style.display = "none";
-        }
-      }
-      setUser({ ...user, [name]: value });
-    },
-    [user]
-  );
+  if (window.scrollY) {
+    window.scroll(0, 0);
+  }
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -81,8 +48,13 @@ const Register = (props) => {
     loginGit();
   };
 
+  const getValue = (name, value) => {
+    if (name === password) setPassword(value);
+    if (name === passwordConfirmation) setPasswordConfirmation(value);
+    setUser({ ...user, [name]: value });
+  };
+
   useEffect(() => {
-    const allInput = [...document.querySelectorAll(".signup__form--input")];
     const readyToSubmit = allInput.every((input) =>
       input.classList.contains("valid-input")
     );
@@ -92,12 +64,12 @@ const Register = (props) => {
     } else {
       setSubmitOk(true);
     }
-  }, [user, handleChange, passwordConfirmation]);
+  }, [user, passwordConfirmation, allInput]);
 
   return (
-    <div className="signup">
+    <div className="Register">
       <h1 className="title title-1">S'inscrire</h1>
-      <div className="login__google">
+      <div className="Login__google">
         <CustomButton color="white" onClick={(e) => handleClickGoogle(e)}>
           <GoogleLogo />
           Google
@@ -107,56 +79,50 @@ const Register = (props) => {
           Git
         </CustomButton>
       </div>
-      <p className="login__errors">
+      <p className="Login__errors">
         {userErrors &&
           userErrors !== 400 &&
           "Une erreur est survenue. Si l'erreur persiste, merci de nous le signaler."}
       </p>
-      <form className="signup__form">
-        <label htmlFor="nom" className="signup__form--label">
-          Pseudo :
-        </label>
-        <input
-          onChange={(e) => handleChange(e)}
-          name="username"
-          value={user.username || ""}
+      <form className="Register__form">
+        <FormInput
+          idFor="nom"
+          label="Votre nom d'utilisateur :"
           type="text"
-          id="nom"
-          className="signup__form--input invalid-input"
-          required
+          name="username"
+          getValue={getValue}
+          required={true}
+          firstValue={user.username || ""}
         />
-        <p className="input__message" data-inputfor="username"></p>
-        <label htmlFor="email" className="signup__form--label">
-          Email :
-        </label>
-        <input
-          name="email"
-          value={user.email || ""}
-          onChange={(e) => handleChange(e)}
+        <FormInput
+          idFor="email"
+          label="Votre email :"
           type="email"
-          id="email_register"
-          className="signup__form--input invalid-input"
-          required
+          name="email"
+          required={true}
+          getValue={getValue}
+          // firstValue={}
         />
-        <p className="input__message" data-inputfor="email"></p>
-        <label htmlFor="mdp" className="signup__form--label">
-          Mot de passe :
-        </label>
-        <input
-          name="password"
-          value={user.password || ""}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            handleChange(e);
-          }}
+        <FormInput
+          idFor="mdp"
+          label="Votre mot de passe :"
           type="password"
-          id="mdp_register"
-          className="signup__form--input invalid-input"
-          required
+          name="password"
+          required={true}
+          getValue={getValue}
+          // firstValue={}
+        />
+        <FormInput
+          idFor="mdp2"
+          label="Confirmer votre mot de passe :"
+          type="password"
+          name="passwordConfirm"
+          required={true}
+          getValue={getValue}
+          // firstValue={}
         />
 
-        <p className="input__message" data-inputfor="password"></p>
-        <label htmlFor="mdp2" className="signup__form--label">
+        <label htmlFor="mdp2" className="FormInput__label">
           Confirmez le Mot de passe :
         </label>
         <input
@@ -166,19 +132,28 @@ const Register = (props) => {
             setPasswordConfirmation(e.target.value);
           }}
           type="password"
-          id="mdp_register_confirm"
-          className={`signup__form--input ${
-            passwordConfirmation !== password || passwordConfirmation === ""
+          id="mdp2"
+          className={`FormInput ${
+            !passwordConfirmation
+              ? "unset-input"
+              : passwordConfirmation !== password || passwordConfirmation === ""
               ? "invalid-input"
               : "valid-input"
           }`}
           required
         />
-        {passwordConfirmation !== password && (
-          <p className="input__message" data-inputfor="passwordConfirm">
+        {
+          <p
+            className={`${
+              passwordConfirmation !== password
+                ? "input__message error__message"
+                : "input__message-hide"
+            }`}
+            data-inputfor="passwordConfirm"
+          >
             Ce mot de passe ne correspond pas à celui mentionné précédemment.
           </p>
-        )}
+        }
 
         <CustomButton
           onClick={(e) => handleClick(e)}

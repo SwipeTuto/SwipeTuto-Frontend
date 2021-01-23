@@ -4,10 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import CardPreviewSmall from "../../components/CardsComponents/CardPreviewSmall/CardPreviewSmall";
-import CardFullPopup from "../../components/CardsComponents/CardFullPopup/CardFullPopup";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import Loading from "../../components/Loading/Loading";
-import { getCardsAction } from "../../redux/filter/filter-actions";
+import { getCardAfterfilterAction } from "../../redux/filter/filter-actions";
 import HeaderImage from "../../assets/logos/header_image.png";
 
 import { ReactComponent as QuestionIllustration } from "../../assets/images/illustrations/illustration-question.svg";
@@ -16,11 +15,13 @@ import { ReactComponent as SuccessIllustration } from "../../assets/images/illus
 
 import { selectCardsFetchedCards } from "../../redux/filter/filter-selectors";
 import { selectTheme } from "../../redux/layout/layout-selectors";
+import { showSignalPopup } from "../../redux/layout/layout-actions";
 import { deleteCurrentSearch } from "../../redux/filter/filter-actions";
 
 import "./HomePage.scss";
 import { selectIsLoaded } from "../../redux/layout/layout-selectors";
 import SearchLinkRedirect from "../../helper/SearchLinkRedirect";
+import { initialSearchState } from "../../helper";
 
 const HomePage = () => {
   const isLoaded = useSelector(selectIsLoaded);
@@ -29,17 +30,33 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCardsAction());
+    // let isCancelled = false;
+
+    // if (!isCancelled) {
+    dispatch(getCardAfterfilterAction(initialSearchState));
+    // }
+
+    // return () => {
+    //   isCancelled = true;
+    // };
   }, [dispatch]);
 
   // scroll reset
-  if (window.scrollY) {
-    window.scroll(0, 0);
-  }
+  // if (window.scrollY) {
+  //   window.scroll(0, 0);
+  // }
+
+  useEffect(() => {
+    if (window.scrollY) {
+      window.scroll(0, 0);
+    }
+  }, []);
 
   const handleRedirectClick = () => {
     dispatch(deleteCurrentSearch());
-    dispatch(getCardsAction());
+    if (window.scrollY) {
+      window.scroll(0, 0);
+    }
   };
 
   const redirectLink = SearchLinkRedirect();
@@ -67,6 +84,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+
       <div className="HomePage__lastCards section">
         <h1 className="title title-1">Nos dernières cartes</h1>
         <div className="HomePage__grid ">
@@ -76,11 +94,12 @@ const HomePage = () => {
             cards &&
             cards
               .slice(0, 8)
-              .map((card) => <CardPreviewSmall card={card} key={card.id} />)
+              .map(
+                (card) => card && <CardPreviewSmall card={card} key={card.id} />
+              )
           )}
         </div>
       </div>
-      <CardFullPopup />
 
       <div className="About section">
         <div className="about-section section-1">
@@ -127,7 +146,9 @@ const HomePage = () => {
       <div className="About__cta section">
         <h1 className="title title-1">Alors qu'attendez-vous ?</h1>
         <Link to={redirectLink}>
-          <CustomButton color="pink">Voir les cartes</CustomButton>
+          <CustomButton onClick={() => handleRedirectClick()}>
+            Voir les cartes
+          </CustomButton>
         </Link>
       </div>
 

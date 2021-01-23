@@ -1,13 +1,10 @@
 // Bar avec les items pour filtrer les slides
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // redux
-import {
-  selectCurrentSearch,
-  selectSearchPage,
-} from "../../../redux/filter/filter-selectors";
+import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
 import {
   setCurrentSearch,
   deleteCurrentSearch,
@@ -27,7 +24,6 @@ import {
 } from "../../../helper/index";
 
 // components
-import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
 import CustomButton from "../CustomButton/CustomButton";
 
 // assets
@@ -39,12 +35,9 @@ import "./FiltersBarMobile.scss";
 
 const FiltersBarMobile = ({ title, showResults }) => {
   const dispatch = useDispatch();
-  // paramètres de recherche :
   const filterMobileMenuOpen = useSelector(selectFilterMobileMenuOpen);
   const currentSearch = useSelector(selectCurrentSearch);
   const currentTheme = useSelector(selectTheme);
-  const currentSearchPageNumber = useSelector(selectSearchPage);
-  const [redirection, setRedirection] = useState(false);
   const [newSearch, setNewSearch] = useState({});
 
   const [inputShowed, setInputShowed] = useState({
@@ -54,9 +47,8 @@ const FiltersBarMobile = ({ title, showResults }) => {
   });
 
   useEffect(() => {
-    setRedirection(false);
     setNewSearch(currentSearch);
-  }, [currentSearch]);
+  }, [currentSearch, dispatch]);
 
   const handleSearchChange = (e) => {
     const type = e.target.name;
@@ -80,7 +72,6 @@ const FiltersBarMobile = ({ title, showResults }) => {
   const handleDeleteCurrentSearch = () => {
     dispatch(deleteCurrentSearch());
     dispatch(closeFilterMobileMenu());
-    setRedirection(true);
   };
 
   const toggleShowInput = (item) => {
@@ -97,21 +88,19 @@ const FiltersBarMobile = ({ title, showResults }) => {
   };
 
   const handleFormSubmit = (e) => {
-    setRedirection(true);
     e.preventDefault();
-    dispatch(setCurrentSearch("searchWords", newSearch.searchWords));
-    dispatch(setCurrentSearch("searchTopic", newSearch.searchTopic));
-    dispatch(setCurrentSearch("searchOrder", newSearch.searchOrder));
-    dispatch(setCurrentSearch("searchCategory", newSearch.searchCategory));
-    dispatch(setCurrentSearch("searchPage", 1));
+    const currentSearchCopy = {
+      searchWords: newSearch.searchWords,
+      searchTopic: newSearch.searchTopic,
+      searchOrder: newSearch.searchOrder,
+      searchCategory: newSearch.searchCategory,
+    };
+    dispatch(setCurrentSearch(currentSearchCopy));
     dispatch(closeFilterMobileMenu());
   };
 
-  const redirectLink = SearchLinkRedirect();
-
   return (
     <>
-      {redirection && <Redirect to={redirectLink} />}
       <div className="FiltersBarMobile">
         {filterMobileMenuOpen && (
           <div className={`FiltersBarMobile__menu ${currentTheme}-theme`}>
@@ -122,10 +111,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
             </div>
             <div className="FiltersBarMobile__search">
               <h1 className="title title-1">Votre recherche :</h1>
-              <form
-                className="FiltersBarMobile__form"
-                onSubmit={(e) => handleFormSubmit(e)}
-              >
+              <form className="FiltersBarMobile__form">
                 <div className="FiltersBarMobile__form--group">
                   <h2 className="title title-2">
                     <label htmlFor="wordsFilter">Termes de recherche :</label>
@@ -256,29 +242,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
                     </p>
                   )}
                 </div>
-                <Link
-                  to={`/search?${
-                    newSearch.searchWords
-                      ? `search=${newSearch.searchWords}&`
-                      : ""
-                  }${
-                    newSearch.searchTopic
-                      ? `topic=${newSearch.searchTopic}&`
-                      : ""
-                  }${
-                    newSearch.searchOrder
-                      ? `order=${newSearch.searchOrder}&`
-                      : ""
-                  }${
-                    newSearch.searchCategory
-                      ? `category=${newSearch.searchCategory}&`
-                      : ""
-                  }${
-                    currentSearchPageNumber
-                      ? `page=${currentSearchPageNumber}`
-                      : ""
-                  }`}
-                ></Link>
+
                 <div className="FiltersBarMobile__form--buttons">
                   <CustomButton
                     color="white"
@@ -286,9 +250,34 @@ const FiltersBarMobile = ({ title, showResults }) => {
                   >
                     Réinitialiser
                   </CustomButton>
-                  <CustomButton type="submit" color="dark">
-                    Rechercher
-                  </CustomButton>
+                  <Link
+                    to={`/search?${
+                      newSearch.searchWords
+                        ? `search=${newSearch.searchWords}`
+                        : ""
+                    }${
+                      newSearch.searchTopic
+                        ? `&topic=${newSearch.searchTopic}`
+                        : ""
+                    }${
+                      newSearch.searchOrder
+                        ? `&order=${newSearch.searchOrder}`
+                        : ""
+                    }${
+                      newSearch.searchCategory
+                        ? `&category=${newSearch.searchCategory}`
+                        : ""
+                    }`}
+                  >
+                    {" "}
+                    <CustomButton
+                      type="submit"
+                      color="dark"
+                      onClick={(e) => handleFormSubmit(e)}
+                    >
+                      Rechercher
+                    </CustomButton>
+                  </Link>
                 </div>
               </form>
             </div>

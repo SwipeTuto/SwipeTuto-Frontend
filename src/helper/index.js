@@ -32,7 +32,6 @@ export const getUrlId = (url, query) => {
 }
 
 
-
 // Pour les mots / phrases trop longue, permet de couper. Params : phrase, nombre de caractères max, true/false pour couper les mots
 export const truncate = (str, n, useWordBoundary) => {
   if (str.length <= n) {
@@ -142,8 +141,9 @@ export const strongPasswordRegex = RegExp(/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[
 export const passwordRegexErrorMessage = "Le mot de passe doit contenir au moins 8 caratcères, dont une lettre minuscule, une lettre majuscule et un nombre.";
 const passwordConfirmMessage = "Le mot de passe ne correspond pas à celui ajouté précédemment."
 
-export const descriptionRegex = RegExp(/(.*?) {0,250}$/); // lettres entre 0 et 250 caractères
+// export const descriptionRegex = RegExp(/(.*?){0,250}$/); // lettres entre 0 et 250 caractères
 const descriptionErrorMessage = "Entrez une description valide, entre 0 et 250 caractères."
+const commentErrorMessage = "Veuillez rédiger un commentaire pour l'envoyer."
 
 export const errorMessageToDisplay = (name) => {
   switch (name) {
@@ -163,6 +163,9 @@ export const errorMessageToDisplay = (name) => {
       return urlRegexErrorMessage;
     case "description":
       return descriptionErrorMessage
+    case "comment":
+    case "response":
+      return commentErrorMessage
     default:
       return;
   }
@@ -178,12 +181,17 @@ export const checkRegexInput = (name, value) => {
       return nameRegex.test(value);
     case "password":
       return strongPasswordRegex.test(value);
+    case "passwordConfirm":
+      return strongPasswordRegex.test(value);
     case "email":
       return emailRegex.test(value);
     case "url":
       return urlRegex.test(value);
     case "description":
-      return true;
+      return (value.length >= 0 && value.length <= 250);
+    case "comment":
+    case "response":
+      return (value.length > 0);
     default:
       return;
   }
@@ -306,4 +314,23 @@ export const initialSearchState = {
   searchOrder: "-created",
   searchPage: 1,
 }
+export const initialSignalState = {
+  id_card: null,
+  id_user: null,
+  id_comment: null,
+}
 
+
+export const likeUpdate = (cardId) => {
+  const likedCardText = document.getElementById(`likesNumber${cardId}`);
+  const heartEl = document.getElementById(`CardPreviewSmall__heart${cardId}`);
+  if (heartEl && heartEl.classList.contains("active") && likedCardText) {
+    likedCardText.textContent = parseInt(likedCardText.textContent) - 1;
+    heartEl.classList.remove("active");
+    return;
+  } else if (heartEl && likedCardText) {
+    likedCardText.textContent = parseInt(likedCardText.textContent) + 1;
+    heartEl.classList.add("active");
+    return
+  }
+};

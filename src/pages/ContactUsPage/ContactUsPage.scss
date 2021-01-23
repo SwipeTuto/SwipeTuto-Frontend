@@ -1,1 +1,27 @@
 @import "../../variables.scss";
+
+.ContactPage {
+  padding: $inner-component-padding;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+
+  p {
+    margin: 1rem 0;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    // background-color: grey;
+    // border: 1px solid $grey;
+    box-shadow: $card-shadow;
+    border-radius: $box-radius;
+    padding: 2rem;
+    width: 50%;
+    margin-top: 5rem;
+
+    .custom-button {
+      margin-top: 3rem;
+    }
+  }
+}

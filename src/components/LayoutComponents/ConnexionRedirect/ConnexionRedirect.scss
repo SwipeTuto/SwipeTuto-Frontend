@@ -1,22 +1,12 @@
 @import "../../../variables.scss";
 
 .ConnexionRedirect {
-  z-index: 100000000000;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-
-  background-color: rgba($black, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include popup-style;
 
   h1,
   h3,
   .custom-button {
-    margin: 0.5rem 2rem;
+    margin: 0.5rem 2rem 2rem 2rem;
     text-align: center;
   }
 
@@ -27,24 +17,39 @@
     flex-direction: column;
     align-items: center;
     max-width: 70rem;
-    padding: 1rem;
+    padding: 1rem 2rem;
     margin: 2rem auto;
+  }
+
+  .Login {
+    padding: 0;
+
+    .title.title-1 {
+      margin-bottom: 0.5rem;
+    }
+
+    &__google {
+      margin-bottom: 0.5rem;
+    }
+
+    .custom-button {
+      margin: 0.5rem auto;
+    }
+
+    .horizontal-separation-primary-light {
+      display: none;
+    }
   }
 
   &__close {
     @include big-logo-size;
     align-self: flex-end;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
     cursor: pointer;
 
     &:hover {
       fill: $primary-light;
     }
-  }
-
-  .custom-button:last-child {
-    margin-bottom: 1.5rem;
-    font-size: 2rem;
   }
 
   h3.title.title-3 {

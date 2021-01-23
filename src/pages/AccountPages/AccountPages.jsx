@@ -13,12 +13,14 @@ import { ReactComponent as BookmarkLogo } from "../../assets/images/bookmark.svg
 
 import "./AccountPages.scss";
 import { selectTheme } from "../../redux/layout/layout-selectors";
+import SavedPage from "./SavedPage/SavedPage";
 
 const AccountPage = (props) => {
   const currentUser = useSelector(selectCurrentUser);
   const currentTheme = useSelector(selectTheme);
 
   // scroll reset
+
   if (window.scrollY) {
     window.scroll(0, 0);
   }
@@ -26,7 +28,30 @@ const AccountPage = (props) => {
   return (
     <div className={`AccountPage ${currentTheme}-theme`}>
       <div className="AccountPage__wrapper">
-        <UserHeader user="current" />
+        <div className="AccountPage__top">
+          <UserHeader user="current" />
+          <div className="AccountPage__navigation">
+            <h2 className="title title-2">Navigation</h2>
+            {currentUser ? (
+              <>
+                <NavLink to="/account/user">
+                  <AccountLogo />
+                  Compte
+                </NavLink>
+                <NavLink to="/account/saved">
+                  <BookmarkLogo />
+                  Sauvegardés
+                </NavLink>
+                <NavLink to="/account/settings">
+                  <SettingsLogo />
+                  Paramètres
+                </NavLink>
+              </>
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
         <Switch>
           <ProtectedRoute exact path="/account/user" component={UserPage} />
           <ProtectedRoute
@@ -34,29 +59,8 @@ const AccountPage = (props) => {
             path="/account/settings"
             component={SettingsPage}
           />
-          <ProtectedRoute exact path="/account/saved" component={UserPage} />
+          <ProtectedRoute exact path="/account/saved" component={SavedPage} />
         </Switch>
-      </div>
-      <div className="AccountPage__navigation">
-        <h2 className="title title-2">Navigation</h2>
-        {currentUser ? (
-          <>
-            <NavLink to="/account/user">
-              <AccountLogo />
-              Compte
-            </NavLink>
-            <NavLink to="/account/saved">
-              <BookmarkLogo />
-              Sauvegardés
-            </NavLink>
-            <NavLink to="/account/settings">
-              <SettingsLogo />
-              Paramètres
-            </NavLink>
-          </>
-        ) : (
-          ""
-        )}
       </div>
     </div>
   );

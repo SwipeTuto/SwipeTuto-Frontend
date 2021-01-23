@@ -1,15 +1,24 @@
+import { initialSignalState } from '../../helper';
 import { LayoutActionTypes } from './layout-types'
 
 const INITIAL_STATE = {
+  firstLoadDone: false,
   popupShown: false,
+  signalPopupOpen: false,
+  signalInfos: initialSignalState,
   fullscreen: false,
   showUserNav: false,
   mobileNavOpen: false,
   filterMobileMenuOpen: false,
   isLoaded: false,
+  cardsSize: 'small',
+  otherPageCardsLoaded: true,
   clickedCardIsLoaded: false,
   imageIsLoaded: false,
+  userIsLoaded: false,
   commentsAreLoaded: false,
+  redirectUrl: false,
+  connexionPopup: false,
   theme: "light"
 };
 
@@ -21,7 +30,7 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
     case LayoutActionTypes.SHOW_POPUP_CARD:
-      cardPopupElement.addEventListener('wheel', (e) => {
+      if (cardPopupElement) cardPopupElement.addEventListener('wheel', (e) => {
         e.stopPropagation();
       })
 
@@ -32,6 +41,11 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         popupShown: true,
       };
+    case LayoutActionTypes.FIRST_LOAD_DONE:
+      return {
+        ...state,
+        firstLoadDone: true,
+      };
     case LayoutActionTypes.CLOSE_POPUP_CARD:
       app.style.position = '';
       app.style.top = '';
@@ -41,7 +55,7 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         popupShown: false,
       };
     case LayoutActionTypes.SHOW_FULLSCREEN:
-      cardPopupElement.style.overflow = "hidden";
+      if (cardPopupElement) cardPopupElement.style.overflow = "hidden";
       return {
         ...state,
         fullscreen: true,
@@ -51,6 +65,11 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         fullscreen: false,
+      };
+    case LayoutActionTypes.SET_CARDS_SIZE:
+      return {
+        ...state,
+        cardsSize: action.payload,
       };
     case LayoutActionTypes.TOGGLE_USER_NAV:
       return {
@@ -107,6 +126,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         clickedCardIsLoaded: true,
       }
+    case LayoutActionTypes.SET_USER_LOADING:
+      return {
+        ...state,
+        userIsLoaded: false,
+      }
+    case LayoutActionTypes.SET_USER_LOADED:
+      return {
+        ...state,
+        userIsLoaded: true,
+      }
     case LayoutActionTypes.SET_COMMENTS_LOADING:
       return {
         ...state,
@@ -127,11 +156,47 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         imageIsLoaded: true,
       }
+    case LayoutActionTypes.SHOW_SIGNAL_POPUP:
+      return {
+        ...state,
+        signalPopupOpen: true,
+        signalInfos: action.payload
+      }
+    case LayoutActionTypes.CLOSE_SIGNAL_POPUP:
+      return {
+        ...state,
+        signalPopupOpen: false,
+        signalInfos: initialSignalState
+      }
+    case LayoutActionTypes.OPEN_CONNEXION_POPUP:
+      return {
+        ...state,
+        connexionPopup: true,
+      }
+    case LayoutActionTypes.CLOSE_CONNEXION_POPUP:
+      return {
+        ...state,
+        connexionPopup: false,
+      }
+    case LayoutActionTypes.OTHER_PAGE_CARDS_LOADING:
+      return {
+        ...state,
+        otherPageCardsLoaded: false,
+      }
+    case LayoutActionTypes.OTHER_PAGE_CARDS_LOADED:
+      return {
+        ...state,
+        otherPageCardsLoaded: true,
+      }
     case LayoutActionTypes.TOGGLE_THEME:
-      // const localTheme = window.localStorage.getItem('theme');
       return {
         ...state,
         theme: action.payload,
+      }
+    case LayoutActionTypes.REDIRECT_URL:
+      return {
+        ...state,
+        redirectUrl: action.payload,
       }
     default:
       return state;

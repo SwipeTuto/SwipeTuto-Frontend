@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect'
-import { base } from "../../services/configService";
 
 export const selectFilter = state => state.filter;
 
@@ -26,6 +25,10 @@ export const selectSearchOrder = createSelector(
 export const selectCardsFetched = createSelector(
   [selectFilter],
   filter => filter.cardsFetched && filter.cardsFetched
+)
+export const selectLastCardsFetched = createSelector(
+  [selectFilter],
+  filter => filter.lastCardsFetched && filter.lastCardsFetched
 )
 export const selectNewPageCards = createSelector(
   [selectFilter],

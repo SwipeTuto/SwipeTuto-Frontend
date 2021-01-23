@@ -6,7 +6,7 @@
   width: 100%;
   align-items: center;
   padding: 1rem;
-  z-index: 100000;
+  z-index: 20;
 
   &.active {
     height: 100vh;
@@ -139,7 +139,7 @@
 
   &__search {
     margin-left: 3rem;
-    margin-bottom: 1rem;
+    // margin-bottom: 1rem;
     font-size: 2.5rem;
     border-left: 3px solid $primary-light;
 

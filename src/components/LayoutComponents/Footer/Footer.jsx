@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, withRouter } from "react-router-dom";
 import { useDarkMode } from "../../../hooks/useDarkMode";
 
 import { ReactComponent as LogoFacebook } from "../../../assets/images/logo-facebook.svg";
@@ -10,10 +10,11 @@ import { ReactComponent as LogoInstagram } from "../../../assets/images/logo-ins
 import "./Footer.scss";
 import ToggleButton from "../ToggleTheme/ToggleTheme";
 
-const Footer = () => {
+const Footer = ({ location }) => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const [theme, setTheme] = useDarkMode();
+  const [hide, setHide] = useState(false);
   const toggleTheme = () => {
     if (theme === "light") {
       setTheme("dark");
@@ -22,8 +23,16 @@ const Footer = () => {
     }
   };
 
+  useEffect(() => {
+    if (location.pathname === "/search") {
+      setHide(true);
+    } else {
+      setHide(false);
+    }
+  }, [location]);
+
   return (
-    <div className="Footer">
+    <div className={`Footer ${hide ? "hide" : ""}`}>
       <h2 className="title title-2">SwipeTuto</h2>
       <div className="Footer__links">
         <div className="Footer__links--group">
@@ -34,7 +43,7 @@ const Footer = () => {
         <div className="Footer__links--group">
           <Link to="/infos">A propos</Link>
           <Link to="/help">Aide</Link>
-          <Link to="/contact-us">Contact</Link>
+          <Link to="/contact">Contact</Link>
         </div>
         <div className="Footer__links--group">
           <Link to="/confidentiality">Confidientialité</Link>
@@ -64,4 +73,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default withRouter(Footer);

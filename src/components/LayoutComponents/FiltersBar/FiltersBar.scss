@@ -92,19 +92,12 @@
       &:not(:first-of-type) {
         margin-left: 0.6rem;
       }
+
+      &.active {
+        color: $black;
+        font-weight: bold;
+        border-radius: $button-radius;
+      }
     }
-    &--item.active {
-      color: $black;
-      font-weight: bold;
-      border-radius: $button-radius;
-    }
-  }
-}
-@media screen and (max-width: $bp-tablet) {
-  .FiltersBar {
-  }
-}
-@media screen and (max-width: $bp-phone) {
-  .FiltersBar {
   }
 }

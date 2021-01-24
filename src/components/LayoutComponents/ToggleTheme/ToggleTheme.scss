@@ -2,6 +2,8 @@
 
 .ToggleTheme {
   color: inherit;
+  display: flex;
+  align-items: center;
 
   &__logo {
     @include logo-size;

@@ -80,38 +80,40 @@ const NavTopMobile = (props) => {
   };
 
   return (
-    <div className={`NavTopMobile ${mobileNavOpen ? "active" : ""} ${currentTheme}-theme-m`}>
-      {filtersBarMobile && <FiltersBarMobile title="Recherche" showResults={false} />}
+    <>
+      <div className={`NavTopMobile ${mobileNavOpen ? "active" : ""} ${currentTheme}-theme-m`}>
+        {filtersBarMobile && <FiltersBarMobile title="Recherche" showResults={false} />}
 
-      <div className="NavTopMobile__top">
-        {mobileNavOpen ? (
-          <CloseLogo
-            className="NavTopMobile__toggle"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleNavClose();
-            }}
-          />
-        ) : (
-          <MenuLogo
-            className="NavTopMobile__toggle"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleNavOpen();
-            }}
-          />
-        )}
+        <div className="NavTopMobile__top">
+          {mobileNavOpen ? (
+            <CloseLogo
+              className="NavTopMobile__toggle"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNavClose();
+              }}
+            />
+          ) : (
+            <MenuLogo
+              className="NavTopMobile__toggle"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNavOpen();
+              }}
+            />
+          )}
 
-        <CustomButton color="transparent" id="mobileSearchButton" onClick={handleFiltersMobileOpen}>
-          <SearchLogo className={`${currentTheme}-theme`} />
-          Recherche
-        </CustomButton>
+          <CustomButton color="transparent" id="mobileSearchButton" onClick={handleFiltersMobileOpen}>
+            <SearchLogo className={`${currentTheme}-theme`} />
+            Recherche
+          </CustomButton>
 
-        <Link className="NavTopMobile__swipeTuto" to="/" onClick={() => handleNavClose()}>
-          <img src={currentTheme === "light" ? STSmallLogo : STSmallLogoBlackmod} alt="swipetuto logo" />
-        </Link>
+          <Link className="NavTopMobile__swipeTuto" to="/" onClick={() => handleNavClose()}>
+            <img src={currentTheme === "light" ? STSmallLogo : STSmallLogoBlackmod} alt="swipetuto logo" />
+          </Link>
+        </div>
       </div>
-      <div className={`NavTopMobile__open ${mobileNavOpen ? "active" : ""}`}>
+      <div className={`NavTopMobile__open ${mobileNavOpen ? "active" : ""} ${currentTheme}-theme-m`}>
         <div className="NavTopMobile__user">
           {currentUser ? (
             <>
@@ -210,13 +212,13 @@ const NavTopMobile = (props) => {
         </div>
         {!currentUser && (
           <Link className="NavTopMobile__linkConnexion" to="/connexion/login" onClick={() => handleNavClose()}>
-            <CustomButton color="dark">Connexion</CustomButton>
+            <CustomButton>Connexion</CustomButton>
           </Link>
         )}
 
         <ToggleButton toggleTheme={toggleTheme} theme={theme} />
       </div>
-    </div>
+    </>
   );
 };
 

@@ -2,12 +2,67 @@
 
 .PreferencesPage {
   label {
-    margin-left: 0.6rem;
+    margin-left: 1rem;
     margin-right: 2rem;
     cursor: pointer;
   }
 
   input {
     cursor: pointer;
+  }
+
+  &__form {
+    flex-direction: column;
+    align-items: flex-start !important;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1;
+    width: 75%;
+    min-width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+    color: $white;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      // background-color: rgba($black, 0.8);
+      background-image: linear-gradient(120deg, $black 35%, transparent);
+      border-radius: $card-radius;
+      height: 100%;
+      width: 100%;
+    }
+
+    form {
+      z-index: 2;
+    }
+  }
+
+  &__topic {
+    &--input {
+      font-size: 3rem;
+      margin-bottom: 3rem;
+    }
+  }
+
+  &__category {
+    display: flex;
+    flex-direction: column;
+
+    &--input {
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .PreferencesPage {
+    &__form {
+      width: 100%;
+    }
   }
 }

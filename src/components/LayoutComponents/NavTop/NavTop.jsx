@@ -134,31 +134,46 @@ const NavTop = (props) => {
               <DropDownLogo className="NavTop__link--logo" />
             </div>
             <div className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme-l`}>
+              <Link
+                to="/search"
+                onClick={() => topicHandleClick(null)}
+                name={null}
+                className={`null-item NavTop__topicList--topic NavTop__topic NavTop__topic--firstItem`}
+                style={{ backgroundImage: `url(${require("../../../assets/images/illustrations/" + null + ".jpg")}) ` }}
+              >
+                <span>Toutes les cartes</span>
+              </Link>
               {topicArray &&
-                topicArray.map((topic, index) => (
-                  <div className="NavTop__topicList" key={`topic${topic.name}${index}`}>
-                    <Link
-                      key={`topicList${index}`}
-                      to="/search"
-                      onClick={() => topicHandleClick(topic.queryName)}
-                      name={topic.queryName}
-                      className={`${topic.queryName}-item`}
-                    >
-                      <span className="NavTop__topicList--topic">{topic.name}</span>
-                    </Link>
-                    {getCategoriesArray(topic.queryName).map((category, index) => (
-                      <Link
-                        key={`category${index}${category.name}`}
-                        to="/search"
-                        onClick={() => categoryHandleClick(topic.queryName, category.queryName)}
-                        name={category.queryName}
-                        className={`${topic.queryName}-item`}
-                      >
-                        <span className="NavTop__topicList--category">{category.name}</span>
-                      </Link>
-                    ))}
-                  </div>
-                ))}
+                topicArray.map(
+                  (topic, index) =>
+                    topic.queryName !== null && (
+                      <div className="NavTop__topicList" key={`topic${topic.name}${index}`}>
+                        <Link
+                          key={`topicList${index}`}
+                          to="/search"
+                          onClick={() => topicHandleClick(topic.queryName)}
+                          name={topic.queryName}
+                          className={`${topic.queryName}-item NavTop__topicList--topic NavTop__topic`}
+                          style={{ backgroundImage: `url(${require("../../../assets/images/illustrations/" + topic.queryName + ".jpg")}) ` }}
+                        >
+                          <span>{topic.name}</span>
+                        </Link>
+                        <div className="NavTop__categories">
+                          {getCategoriesArray(topic.queryName).map((category, index) => (
+                            <Link
+                              key={`category${index}${category.name}`}
+                              to="/search"
+                              onClick={() => categoryHandleClick(topic.queryName, category.queryName)}
+                              name={category.queryName}
+                              className={`${topic.queryName}-item`}
+                            >
+                              <span className="NavTop__topicList--category">{category.name}</span>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )
+                )}
             </div>
           </>
         )}

@@ -12,10 +12,11 @@ export const likeUpdate = (cardId) => {
   }
 
   if (likesNumberPopupLogo && likesNumberPopupLogo.classList.contains("active") && likesNumberPopupNumber) {
-    likesNumberPopupNumber.textContent = parseInt(likesNumberPopupNumber.textContent) + 1;
-    likesNumberPopupLogo.classList.remove("active");
-  } else if (likesNumberPopupLogo && likesNumberPopupNumber) {
     likesNumberPopupNumber.textContent = parseInt(likesNumberPopupNumber.textContent) - 1;
+    likesNumberPopupLogo.classList.remove("active");
+    return
+  } else if (likesNumberPopupLogo && likesNumberPopupNumber) {
+    likesNumberPopupNumber.textContent = parseInt(likesNumberPopupNumber.textContent) + 1;
     likesNumberPopupLogo.classList.add("active");
   }
 };

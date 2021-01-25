@@ -88,16 +88,6 @@
     }
   }
 
-  &__category--stamp {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    font-size: 1.3rem;
-    padding: 0.3rem 1rem;
-    background-color: $primary-light;
-    color: $white;
-  }
-
   &__details {
     max-width: 100%;
     margin-top: auto;
@@ -131,14 +121,9 @@
     align-items: center;
 
     &.dark-theme {
-      // color: $;
       & svg {
         fill: $grey-dark;
       }
-    }
-
-    &.light-theme {
-      // color: $grey-dark;
     }
 
     &--logo {

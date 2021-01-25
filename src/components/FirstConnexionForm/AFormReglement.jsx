@@ -2,7 +2,7 @@ import React from "react";
 
 import "./AFormReglement.scss";
 
-const AFormReglement = () => {
+const AFormReglement = ({ allowGoNext, stepIsOk }) => {
   return (
     <div className="AFormReglement form-step">
       <h2>Merci de lire puis d'accepter le règlement :</h2>

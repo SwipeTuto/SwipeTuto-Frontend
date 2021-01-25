@@ -379,14 +379,14 @@ const CardFullPopup = ({ history, location }) => {
 
                         <div className="CardFullPopup__like-btn" onClick={() => handleLikeClick()}>
                           <span
-                            className={`CardFullPopup__meta--logo ${userHasLiked() ? "active" : ""}`}
+                            className={`CardFullPopup__meta--logo ${userHasLiked(currentUserId, cardLikers) ? "active" : ""}`}
                             id={`likesNumberPopupLogo${clickedCard.id}`}
                           >
                             {cardIsLiked ? <HeartFull /> : <HeartEmpty />}
                           </span>
 
                           <span
-                            className={`CardFullPopup__meta--number ${userHasLiked() ? "active" : ""}`}
+                            className={`CardFullPopup__meta--number ${userHasLiked(currentUserId, cardLikers) ? "active" : ""}`}
                             id={`likesNumberPopupNumber${clickedCard.id}`}
                           >
                             {clickedCard && clickedCard.number_of_likes ? convertNumber(clickedCard.number_of_likes) : 0}

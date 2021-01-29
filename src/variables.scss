@@ -1,0 +1,283 @@
+$red-error: #cf0030;
+$green-success: #00b109;
+$green-saved: #1be970;
+$red-like: #ff003c;
+
+$secondary-dark: #dba800;
+$secondary-light: #eec200;
+$primary-light: #ad0cc2;
+$primary-dark: #440088;
+
+$black: #2c2c2c;
+$white: #fff;
+$grey: #d4d4d4;
+$grey-lighter: #f8f8f8;
+$grey-light: #f1f1f1;
+$grey-dark: #636363;
+
+$dark-dark: #18191a;
+$dark-medium: #242526;
+$dark-light: #4e4f50;
+
+$topicColors: (
+  "general": #00d3e2,
+  "bienetre": #1eee17,
+  "beaute": #cc24ff,
+  "cuisine": #f5df17,
+  "maison": #00e99b,
+  "technologie": #ff6060,
+);
+
+@function getTopicColor($topicName) {
+  @if (map-has-key($topicColors, $topicName)) {
+    @return map-get($topicColors, $topicName);
+  } @else {
+    @return map-get($topicColors, "general");
+  }
+}
+
+$round-radius: 50%;
+$round-padding: 0.3rem;
+$card-radius: 8px;
+$box-padding: 0.6rem 2rem;
+$button-radius: 40px;
+
+$navtop-height: 6rem;
+$navtop-mobile-height: 4rem;
+
+$button-shadow: 0 2px 2px rgba($grey, 0.6);
+$light-shadow: 0 1px 3px $grey-lighter;
+
+$inner-component-padding: 0 14vw;
+$grid-component-padding: 0 14vw;
+$inner-component-padding-tablet: 0 8vw;
+$grid-component-padding-tablet: 0 8vw;
+$inner-component-padding-phone: 0 1rem;
+$grid-component-padding-phone: 0 1rem;
+
+// Breakpoints
+$bp-huge: 1600px;
+$bp-big: 1260px;
+$bp-tablet: 960px;
+$bp-phone: 680px;
+$bp-small-phone: 540px;
+$bp-smallest: 360px;
+
+// Fonts
+@import url("https://fonts.googleapis.com/css2?family=Rubik&family=Nunito&display=swap");
+$text-font: "Nunito", sans-serif;
+$title-font: "Rubik", sans-serif;
+
+@mixin input-style {
+  font-size: inherit;
+  font-family: inherit;
+  padding: $box-padding;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+  margin-bottom: 1rem;
+  border-bottom: 3px solid $grey;
+  border-radius: 0;
+  width: 100%;
+
+  &:focus {
+    & input {
+      border-radius: 0;
+
+      &::placeholder {
+        color: $grey;
+      }
+    }
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px $grey-lighter inset;
+  }
+
+  &:focus.valid-input {
+    border-bottom: 3px solid $green-success;
+  }
+
+  &.invalid-input,
+  &:focus.invalid-input {
+    border-bottom: 3px solid $red-error;
+  }
+
+  .FormInput__label {
+    margin-bottom: 0.5rem;
+  }
+
+  .input__message {
+    display: block;
+  }
+
+  &:focus {
+    &::placeholder {
+      visibility: hidden;
+    }
+  }
+}
+
+@mixin button-style {
+  padding: $box-padding;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+  color: $white;
+  border-radius: $button-radius;
+}
+
+@mixin section-padding {
+  padding-top: 15rem;
+  padding-bottom: 15rem;
+}
+@mixin section-big-padding {
+  padding-top: 25rem;
+  padding-bottom: 25rem;
+}
+@mixin section-small-padding {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@mixin logo-size {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+@mixin medium-logo-size {
+  height: 2rem;
+  width: 2rem;
+}
+@mixin big-logo-size {
+  height: 3rem;
+  width: 3rem;
+}
+
+@mixin theme-colors-dark($themelight: true) {
+  @if $themelight {
+    background-color: $white;
+    color: $black;
+  } @else {
+    background-color: $dark-dark;
+    color: $white;
+  }
+}
+@mixin theme-colors-medium($themelight: true) {
+  @if $themelight {
+    background-color: $grey-lighter;
+    color: $black;
+  } @else {
+    background-color: $dark-medium;
+    color: $white;
+  }
+}
+@mixin theme-colors-light($themelight: true) {
+  @if $themelight {
+    background-color: $grey-light;
+    color: $black;
+  } @else {
+    background-color: $dark-light;
+    color: $white;
+  }
+}
+
+@mixin card-shadow($themelight: true) {
+  @if $themelight {
+    box-shadow: 0 2px 2px rgba($grey, 0.6), 0 0 5px rgba($grey, 0.6);
+  } @else {
+    box-shadow: 0 2px 2px rgba($dark-light, 0.6), 0 0 5px rgba($dark-medium, 0.6);
+  }
+}
+
+@mixin large-shadow {
+  box-shadow: 0 0 8px rgba($black, 0.6);
+}
+
+@mixin popup-style {
+  z-index: 90;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgba($black, 0.8);
+}
+
+@mixin thin-scrollbar {
+  ::-webkit-scrollbar {
+    background-color: $grey-light;
+    height: 0.5rem;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: $grey;
+    height: 1rem;
+    width: 1rem;
+  }
+}
+
+@mixin button-round {
+  transition: all 0.2s ease;
+  padding: 1.5rem;
+  border-radius: $round-radius;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: none;
+  }
+}
+
+@mixin nav-style {
+  padding: $box-padding;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+  &:hover {
+    color: $primary-light;
+  }
+}
+
+@mixin nav-active-style {
+  padding: $box-padding;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+  color: $primary-light;
+}
+
+.horizontal-separation {
+  &-primary-light {
+    width: 60%;
+    height: 1px;
+    background-color: $primary-light;
+  }
+
+  &-primary-dark {
+    width: 60%;
+    height: 1px;
+    background-color: $primary-dark;
+  }
+}
+
+@mixin overlay-menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  border-radius: $card-radius;
+  @include large-shadow;
+  overflow: hidden;
+}

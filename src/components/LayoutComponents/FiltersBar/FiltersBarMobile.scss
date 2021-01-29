@@ -1,0 +1,147 @@
+@import "../../../variables.scss";
+
+.FiltersBarMobile {
+  margin: 0.2rem 0 1.5rem 0;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  &__searchResult {
+    font-size: 1.4rem;
+  }
+
+  .custom-button {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+
+    & > svg {
+      @include logo-size;
+      margin-right: 1rem;
+
+      & * {
+        fill: currentColor !important;
+      }
+    }
+  }
+
+  &__search {
+    .title.title-1 {
+      font-size: 3rem;
+      text-align: center;
+      margin: 2rem 0;
+    }
+  }
+
+  &__menu {
+    padding: 1rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    overflow-y: scroll;
+    visibility: visible;
+    z-index: 30;
+
+    &--top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+
+      & > svg {
+        @include big-logo-size;
+
+        & * {
+          fill: currentColor !important;
+        }
+      }
+    }
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &--buttons {
+      margin: 4rem auto 8rem auto;
+      display: flex;
+
+      .custom-button:last-child {
+        margin-left: 1rem;
+      }
+    }
+
+    &--text {
+      @include input-style;
+      width: 100%;
+      display: inline-block;
+    }
+    &--group {
+      width: 90%;
+      margin: 0 auto;
+      border: 1px solid $grey-light;
+      padding: 1rem;
+
+      & div {
+        display: flex;
+        align-items: center;
+
+        & svg {
+          @include big-logo-size;
+          stroke: $black;
+          margin-left: auto;
+          margin-left: 1rem;
+          display: inline-block;
+
+          & * {
+            fill: currentColor !important;
+          }
+        }
+      }
+
+      & > h2 {
+        width: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      & svg {
+        @include logo-size;
+        stroke: $black;
+        margin-left: auto;
+
+        & * {
+          fill: currentColor !important;
+        }
+      }
+    }
+
+    &--input {
+      label {
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  .custom-button {
+    font-size: 2rem;
+  }
+
+  &__currentSearch {
+    color: $primary-light;
+    font-size: 1.5rem;
+  }
+}
+@media screen and (max-width: $bp-tablet) {
+  .FiltersBarMobile {
+  }
+}
+@media screen and (max-width: $bp-phone) {
+  .FiltersBarMobile {
+  }
+}

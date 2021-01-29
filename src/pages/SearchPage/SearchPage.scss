@@ -1,0 +1,37 @@
+@import "../../variables.scss";
+
+.SearchPage {
+  min-height: 100vh;
+
+  .FiltersBar {
+    display: block;
+  }
+
+  &__filtersBarMobile {
+    display: none;
+    padding: 0 1rem;
+    font-size: 1.3rem;
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  @media screen and (max-width: $bp-tablet) {
+    .SearchPage {
+      min-height: 100vh;
+
+      &__filtersBarMobile {
+        display: block;
+      }
+    }
+    .FiltersBar {
+      display: none;
+    }
+  }
+  @media screen and (max-width: $bp-phone) {
+    .currentSearch {
+      display: none;
+    }
+  }
+  @media screen and (max-width: $bp-small-phone) {
+  }
+}

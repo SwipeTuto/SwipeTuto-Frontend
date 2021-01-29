@@ -1,0 +1,105 @@
+@import "../../../variables.scss";
+
+.Login,
+.Register {
+  display: flex;
+  flex-direction: column;
+  padding: 4rem;
+  border-radius: $button-radius;
+
+  .title.title-2 {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+
+    &--input {
+      @include input-style;
+    }
+  }
+
+  &__ou {
+    text-align: center;
+    margin: 2rem 0;
+    font-weight: bold;
+  }
+
+  .horizontal-separation-primary-light {
+    margin: 2rem auto;
+    width: 80%;
+  }
+
+  &__google {
+    .title.title-1 {
+      margin-bottom: 0;
+    }
+  }
+
+  .custom-button {
+    margin: 0 auto;
+
+    &:not(:last-of-type) {
+      margin-bottom: 1rem;
+    }
+
+    &[type="submit"] {
+      margin-top: 2rem;
+      width: 100%;
+    }
+
+    & > svg {
+      height: 1.5rem;
+      width: 1.5rem;
+      margin-right: 1rem;
+    }
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .LoginPage {
+    &--wrapper {
+      width: 55%;
+    }
+    &__message {
+      width: 45%;
+
+      &--logo {
+        width: 6rem;
+      }
+
+      .title.title-1 {
+        font-size: 2rem;
+      }
+    }
+    .login,
+    .signup {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: $bp-phone) {
+  .LoginPage {
+    background-image: none;
+    &--wrapper {
+      width: 100%;
+    }
+    &__message {
+      display: none;
+    }
+
+    .login,
+    .signup {
+      .title.title-1 {
+        font-size: 3rem;
+      }
+    }
+  }
+}
+@media screen and (max-width: $bp-small-phone) {
+  .LoginPage {
+  }
+}

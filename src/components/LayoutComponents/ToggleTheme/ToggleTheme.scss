@@ -1,0 +1,11 @@
+@import "../../../variables.scss";
+
+.ToggleTheme {
+  color: inherit;
+
+  &__logo {
+    @include logo-size;
+    fill: currentColor;
+    margin-left: 0.6rem;
+  }
+}

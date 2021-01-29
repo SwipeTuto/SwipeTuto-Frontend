@@ -1,0 +1,71 @@
+@import "../../../variables.scss";
+
+.SettingsPage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  label {
+    margin-left: 0.6rem;
+    margin-right: 2rem;
+    cursor: pointer;
+  }
+
+  input {
+    cursor: pointer;
+  }
+
+  .allForms {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form {
+    display: flex;
+    padding: 2rem;
+    border: 1px solid $grey;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: $card-radius;
+    @include card-shadow;
+
+    &:not(:last-of-type) {
+      margin-bottom: 6rem;
+    }
+
+    &__bottom {
+      display: flex;
+      flex-direction: column;
+      width: 70%;
+    }
+  }
+  .FormInput__label {
+    margin-bottom: 2rem;
+  }
+
+  input#avatar {
+    margin-top: 2rem;
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .SettingsPage {
+    padding: 0 2rem;
+  }
+}
+@media screen and (max-width: $bp-phone) {
+  .SettingsPage {
+    .form {
+      flex-direction: column;
+
+      &__bottom {
+        width: 100%;
+      }
+
+      .custom-button {
+        margin-top: 1rem;
+        margin-left: auto;
+      }
+    }
+  }
+}

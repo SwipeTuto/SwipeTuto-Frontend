@@ -1,0 +1,67 @@
+@import "../../variables.scss";
+
+.ProfilePage {
+  padding: $grid-component-padding;
+
+  &__wrapper {
+    min-height: 70vh;
+    padding: 4rem;
+    position: relative;
+
+    .custom-button {
+      margin-left: auto;
+    }
+
+    .VerticalMenu {
+      display: inline-block;
+      position: absolute;
+      right: 0;
+
+      &__logo {
+        svg {
+          @include medium-logo-size;
+        }
+      }
+    }
+  }
+
+  &__error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .title.title-3 {
+      margin: 3rem 0;
+    }
+  }
+
+  &__link {
+    text-align: right;
+
+    & a {
+      display: inline-block;
+
+      & svg {
+        fill: $white;
+        @include logo-size;
+        margin-right: 1rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .ProfilePage {
+    padding: $inner-component-padding-tablet;
+
+    &__wrapper {
+      padding: 0;
+    }
+  }
+}
+@media screen and (max-width: $bp-phone) {
+  .ProfilePage {
+    padding: $inner-component-padding-phone;
+  }
+}

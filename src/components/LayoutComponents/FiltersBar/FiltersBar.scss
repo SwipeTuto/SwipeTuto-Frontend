@@ -1,0 +1,110 @@
+@import "../../../variables.scss";
+
+.FiltersBar {
+  width: 100%;
+  padding: 6rem 4rem 1rem 4rem;
+  font-size: 1.8rem;
+
+  .scroll-logo {
+    display: none;
+  }
+
+  &__wrapper {
+    margin: 0 auto;
+    display: flex;
+
+    & select {
+      margin-right: 2rem;
+
+      &.light-theme-m {
+        border: 1px solid $grey;
+      }
+    }
+  }
+
+  &__size-logo {
+    display: block;
+    height: 2.5rem;
+    width: 2.5rem;
+    cursor: pointer;
+    fill: $grey-dark;
+    margin: auto 0 auto 0.5rem;
+    transition: all 0.2s ease;
+
+    &:first-of-type {
+      margin-right: 1rem;
+    }
+
+    .grid-size-logo {
+      width: 100%;
+      height: 100%;
+    }
+
+    &.active {
+      fill: $grey;
+    }
+
+    &:not(.active):hover {
+      fill: $grey;
+    }
+  }
+
+  &__options {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    margin: 0 2rem;
+    position: relative;
+    overflow: auto;
+    white-space: nowrap;
+
+    @include thin-scrollbar;
+
+    &--links {
+      padding: 0.6rem;
+      overflow: auto;
+      white-space: nowrap;
+    }
+
+    .scroll-logo {
+      display: block;
+
+      &:first-of-type {
+        margin-right: 1rem;
+      }
+
+      &:last-of-type {
+        margin-left: 1rem;
+      }
+
+      & > svg {
+        height: 3rem;
+        width: 3rem;
+      }
+    }
+    &--item {
+      cursor: pointer;
+      display: inline-block;
+      height: 100%;
+      padding: 0.3rem 2rem;
+      transition: all 0.2s ease;
+
+      &:not(:first-of-type) {
+        margin-left: 0.6rem;
+      }
+    }
+    &--item.active {
+      color: $black;
+      font-weight: bold;
+      border-radius: $button-radius;
+    }
+  }
+}
+@media screen and (max-width: $bp-tablet) {
+  .FiltersBar {
+  }
+}
+@media screen and (max-width: $bp-phone) {
+  .FiltersBar {
+  }
+}

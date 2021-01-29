@@ -1,0 +1,40 @@
+@import "../../variables.scss";
+
+.ContactPage {
+  padding: $inner-component-padding;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+
+  p {
+    margin: 1rem 0;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    border-radius: $button-radius;
+    padding: 2rem;
+    width: 50%;
+    margin-top: 5rem;
+
+    .form__group {
+      margin-bottom: 2rem;
+
+      input,
+      select,
+      textarea {
+        margin-top: 1rem;
+      }
+    }
+    .custom-button {
+      margin-top: 3rem;
+    }
+  }
+
+  &__feedback {
+    margin: 2rem auto;
+    text-align: center;
+    font-weight: bold;
+    color: $primary-light;
+  }
+}

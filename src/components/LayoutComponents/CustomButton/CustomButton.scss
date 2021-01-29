@@ -1,0 +1,64 @@
+@import "../../../variables.scss";
+
+.custom-button {
+  @include button-style;
+  background-color: $secondary-dark;
+
+  &:hover {
+    background-color: $secondary-light;
+  }
+  height: 100%;
+
+  &.dark {
+    background-color: $primary-dark;
+    &.disabled-button {
+      background-color: lighten($primary-dark, 20%);
+    }
+    &:hover {
+      background-color: lighten($primary-dark, 10%);
+    }
+  }
+
+  &.light {
+    background-color: $primary-light;
+    &.disabled-button {
+      background-color: lighten($primary-light, 20%);
+    }
+    &:hover {
+      background-color: lighten($primary-light, 10%);
+    }
+  }
+
+  &.white {
+    color: inherit;
+    border: 1px solid $grey;
+    background-color: $white;
+    color: $black;
+    &.disabled-button {
+      background-color: $grey-dark, 20%;
+    }
+    &:hover {
+      color: $primary-light;
+    }
+  }
+
+  &.transparent {
+    color: inherit;
+    border: 1px solid $grey;
+    background-color: transparent;
+    color: currentColor;
+    &.disabled-button {
+      background-color: $grey-dark, 20%;
+    }
+    &:hover {
+      color: $primary-light;
+    }
+  }
+
+  &:disabled {
+    background-color: $grey-dark;
+    &:hover {
+      background-color: $grey-dark;
+    }
+  }
+}

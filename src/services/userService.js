@@ -105,7 +105,6 @@ export const updateUserInfos = newUserInfos => {
   }
 
   return client().patch(`me/`, JSON.stringify(data)).then(user => {
-    // console.log('user', user)
     localStorage.setItem('user', JSON.stringify(user.data))
     return user
   });
@@ -122,7 +121,6 @@ export const getUserById = id => {
 
 export const upDateAvatar = avatar => {
   return client().put(`avatar/`, avatar).then(rep => {
-    // console.log('rep-avatar', rep)
     return rep
   })
 }
@@ -146,6 +144,22 @@ export const signalContent = signal => {
   }
 
   return client().post(`backoffice/signalement/`, JSON.stringify(data)).then(rep => {
+    return rep
+  }).catch(err => { return err })
+}
+
+export const updatePrefService = (topicName, queryName) => {
+  const data = {
+    // "category_preference": [
+    // {
+    "name": queryName,
+    "topic": topicName
+  }
+  //   ]
+  // }
+  console.log(data)
+
+  return client().patch(`update/preference/`, JSON.stringify(data)).then(rep => {
     return rep
   }).catch(err => { return err })
 }

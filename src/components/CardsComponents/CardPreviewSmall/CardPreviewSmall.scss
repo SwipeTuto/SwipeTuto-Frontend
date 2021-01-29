@@ -3,42 +3,28 @@
 .CardPreviewSmall {
   height: auto;
   width: 100%;
-  // max-height: 25rem;
-  // background-color: $white;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-
   border-radius: $card-radius;
   display: flex;
   flex-direction: column;
   transition: all 0.2s ease;
   break-inside: avoid;
-  // margin-bottom: 1rem;
-
-  // &.dark-theme-m {
-  //   @include card-shadow($themelight: false);
-  // }
-  // &.light-theme-m {
-  //   background-color: $white;
-  //   @include card-shadow($themelight: true);
-  // }
 
   &__image {
-    height: auto;
-
+    height: min-content;
     width: 100%;
     margin: auto;
-    // background-color: $black;
+    background-color: $grey-light;
+    border-radius: $card-radius;
+    max-height: 800px;
     position: relative;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-    object-fit: contain;
 
     &.active {
       visibility: visible;
       display: block;
+      color: $black;
     }
 
     &.hide {
@@ -48,13 +34,13 @@
 
     & > img {
       width: 100%;
-      max-height: 800px;
-      object-fit: contain;
+      height: auto;
+      display: block;
       border-radius: $card-radius;
     }
 
     &:hover .CardPreviewSmall__hover {
-      top: 0;
+      bottom: 0;
 
       & p {
         visibility: visible;
@@ -85,31 +71,21 @@
   &__hover {
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(to bottom, transparent 0%, rgba($black, 0.85));
+    background-image: linear-gradient(to bottom, rgba($black, 0.85) 0%, transparent 100%);
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     text-align: center;
     justify-content: center;
     color: $white;
-    padding: 0 1.2rem 1rem 1.2rem;
+    padding: 2rem 1.2rem;
     position: absolute;
-    top: 100%;
+    bottom: 100%;
     left: 0;
     transition: all 0.2s ease;
 
     & p {
       visibility: hidden;
     }
-  }
-
-  &__category--stamp {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    font-size: 1.3rem;
-    padding: 0.3rem 1rem;
-    background-color: $primary-light;
-    color: $white;
   }
 
   &__details {
@@ -145,14 +121,9 @@
     align-items: center;
 
     &.dark-theme {
-      color: $grey-dark;
       & svg {
         fill: $grey-dark;
       }
-    }
-
-    &.light-theme {
-      color: $grey-dark;
     }
 
     &--logo {
@@ -171,11 +142,6 @@
           stroke: $red-like !important;
         }
       }
-      // @include logo-size;
-      // // fill: $primary-light;
-      // & * {
-      //   stroke: currentColor !important;
-      // }
     }
   }
 }

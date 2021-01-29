@@ -4,14 +4,12 @@ import { withRouter } from "react-router-dom";
 import { selectCurrentUser, selectClickedUser } from "../../../redux/user/user-selectors";
 import { selectCardsFetchedCards, selectTotalNumberOfResults } from "../../../redux/filter/filter-selectors";
 import Loading from "../../../components/Loading/Loading";
-
 import "./UserPage.scss";
 import { selectIsLoaded, selectTheme, selectUserLoaded } from "../../../redux/layout/layout-selectors";
 import { getCardsByUserIdAction } from "../../../redux/filter/filter-actions";
 import CardGridList from "../../../components/CardsComponents/CardGridList/CardGridList";
-import { setCardsSize } from "../../../redux/layout/layout-actions";
 import { usePrevious } from "../../../hooks/usePrevious";
-import { getUrlId } from "../../../helper";
+import { getUrlId } from "../../../helper/functions/getURLParams";
 import UserNameAndAvatar from "../../../components/UserComponents/UserAvatar/UserNameAndAvatar";
 import { setNoClickedUser } from "../../../redux/user/user-actions";
 

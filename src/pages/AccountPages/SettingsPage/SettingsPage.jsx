@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import CustomButton from "../../../components/LayoutComponents/CustomButton/CustomButton";
 
 import "./SettingsPage.scss";
-import { selectCurrentUser, selectCurrentUserId } from "../../../redux/user/user-selectors";
+import { selectCurrentUser, selectCurrentUserId, selectCurrentUserSettings } from "../../../redux/user/user-selectors";
 import { getCurrentUserAction, updateUserInfosAction } from "../../../redux/user/user-actions";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 import FormInput from "../../../components/FormInputs/FormInput";
@@ -16,6 +16,9 @@ const SettingsPage = () => {
   const currentUser = useSelector(selectCurrentUser);
   const currentUserId = useSelector(selectCurrentUserId);
   const currentTheme = useSelector(selectTheme);
+  const currentUserSettings = useSelector(selectCurrentUserSettings);
+  // const [cardSizePref, setCardSizePref] = useState(null);
+  // const [themePref, setThemePref] = useState(null);
   const [newUserInfos, setNewUserInfos] = useState(currentUser);
   const [sendNewInfos, setSendNewInfos] = useState(false);
   const [inputValid, setInputValid] = useState({
@@ -25,10 +28,19 @@ const SettingsPage = () => {
     avatar: false,
     description: false,
   });
-  const [userPref, setUserPref] = useState({
-    color_theme: currentUser?.settings?.color_theme || "light",
-    card_size: currentUser?.settings?.card_size || "small",
-  });
+  const [userPref, setUserPref] = useState(null);
+
+  useEffect(() => {
+    if (currentUserSettings) {
+      setUserPref({
+        color_theme: currentUser?.settings?.color_theme || "light",
+        card_size: currentUser?.settings?.card_size || "small",
+      });
+      // setCardSizePref(currentUserSettings.card_size);
+      // setThemePref(currentUserSettings.color_theme);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (sendNewInfos) {
@@ -94,23 +106,14 @@ const SettingsPage = () => {
     handleChange(name, value);
   };
 
-  // useEffect(() => {
-  //   if (currentUser && currentUser.settings) {
-  //     setUserPref({
-  //       color_theme: currentUser?.settings?.color_theme,
-  //       card_size: currentUser.settings?.card_size,
-  //     });
-  //   }
-  // }, [currentUser]);
-
   useEffect(() => {
     dispatch(
       updateUserInfosAction({
         ...currentUser,
         settings: {
           ...currentUser.settings,
-          color_theme: userPref.color_theme,
-          card_size: userPref.card_size,
+          color_theme: userPref?.color_theme,
+          card_size: userPref?.card_size,
         },
       })
     );
@@ -131,9 +134,9 @@ const SettingsPage = () => {
                 id="light-theme"
                 name="color-theme"
                 value="light"
-                checked={userPref.color_theme === "light" ? "checked" : null}
-                onClick={() => {
-                  dispatch(toggleThemeAction("light"));
+                checked={userPref?.color_theme === "light"}
+                onChange={() => {
+                  // dispatch(toggleThemeAction("light"));
                   setUserPref({ ...userPref, color_theme: "light" });
                 }}
               />
@@ -143,9 +146,9 @@ const SettingsPage = () => {
                 id="dark-theme"
                 name="color-theme"
                 value="dark"
-                checked={userPref.color_theme === "dark" ? "checked" : null}
-                onClick={() => {
-                  dispatch(toggleThemeAction("dark"));
+                checked={userPref?.color_theme === "dark"}
+                onChange={() => {
+                  // dispatch(toggleThemeAction("dark"));
                   setUserPref({ ...userPref, color_theme: "dark" });
                 }}
               />
@@ -162,9 +165,9 @@ const SettingsPage = () => {
                 id="small-cards"
                 name="card-size"
                 value="small"
-                checked={userPref.card_size === "small" ? "checked" : null}
-                onClick={() => {
-                  dispatch(setCardsSize("small"));
+                checked={userPref?.card_size === "small"}
+                onChange={() => {
+                  // dispatch(setCardsSize("small"));
                   setUserPref({ ...userPref, card_size: "small" });
                 }}
               />
@@ -174,9 +177,9 @@ const SettingsPage = () => {
                 id="big-cards"
                 name="card-size"
                 value="big"
-                checked={userPref.card_size === "big" ? "checked" : null}
-                onClick={() => {
-                  dispatch(setCardsSize("big"));
+                checked={userPref?.card_size === "big"}
+                onChange={() => {
+                  // dispatch(setCardsSize("big"));
                   setUserPref({ ...userPref, card_size: "big" });
                 }}
               />

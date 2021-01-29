@@ -31,7 +31,7 @@ export const getLikers = cardId => {
 
 export const addComment = (cardId, comment) => {
   var data = { "text": comment }
-  return client().post(`card/add_comment/${cardId}/`, data).then(rep => {
+  return client().post(`card/add/comment/${cardId}/`, data).then(rep => {
     return rep
   })
 }
@@ -66,7 +66,7 @@ export const getNextReplies = url => {
 
 
 export const getCardComments = cardId => {
-  return client().get(`card/list_comment/${cardId}/`).then(rep => {
+  return client().get(`card/list/comment/${cardId}/`).then(rep => {
     return rep
   })
 }
@@ -90,7 +90,7 @@ export const getCardCommentsNext = url => {
 
 
 export const deleteComment = commentId => {
-  return client().delete(`card/manage_comment/${commentId}/`).then(rep => {
+  return client().delete(`card/manage/comment/${commentId}/`).then(rep => {
     return rep
   })
 }
@@ -98,7 +98,7 @@ export const deleteComment = commentId => {
 
 export const modifyComment = (commentId, newComment) => {
   var data = { "text": newComment }
-  return client().patch(`card/manage_comment/${commentId}/`, data).then(rep => {
+  return client().patch(`card/manage/comment/${commentId}/`, data).then(rep => {
     return rep
   })
 }
@@ -106,7 +106,6 @@ export const modifyComment = (commentId, newComment) => {
 
 // PAS MODIFIER AVEC LA NOUVELLE CONFIG DE AXIOS !!!!!!!
 export const getCardCommentsOtherPage = (url) => {
-  // console.log(url)
   var config = {
     headers: {
       'Content-Type': 'application/json',

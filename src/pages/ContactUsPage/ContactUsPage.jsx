@@ -7,7 +7,6 @@ import CustomButton from "../../components/LayoutComponents/CustomButton/CustomB
 import "./ContactUsPage.scss";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
 import { sendEmailContact } from "../../services/backOfficeService.js";
-// import  CSRFToken  from "../../components/Cookies/CsrfToken"
 import { withRouter } from "react-router-dom";
 import { selectTheme } from "../../redux/layout/layout-selectors";
 
@@ -27,26 +26,16 @@ const ContactUsPage = ({ history }) => {
     }
   }, [currentUserEmail, message]);
 
-  if (window.scrollY) {
-    window.scroll(0, 0);
-  }
-
   const getValue = (name, value) => {
-    // console.log(name, value);
     const messageCopy = { ...message, [name]: value };
     setMessage(messageCopy);
   };
-
-  // useEffect(() => {
-  //   console.log(message);
-  // }, [message]);
 
   const handleMessageSubmit = (e) => {
     const feedbackEl = document.querySelector(".ContactPage__feedback");
     e.preventDefault();
     sendEmailContact(message).then((rep) => {
       if (rep && rep.status && rep.status >= 200 && rep.status < 300) {
-        // console.log("VICTOIRE");
         feedbackEl.textContent = "Votre message a bien été envoyé, merci. Vous allez être redirigé.";
         setTimeout(() => {
           history.push("/search", history.location);

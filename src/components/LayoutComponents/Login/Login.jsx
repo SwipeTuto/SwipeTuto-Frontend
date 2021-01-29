@@ -28,7 +28,6 @@ const Login = ({ title }) => {
   const allInput = [...document.querySelectorAll(".FormInput")];
   const currentTheme = useSelector(selectTheme);
 
-  // scroll reset
   useEffect(() => {
     dispatch(deleteUserErrors());
   }, [dispatch]);
@@ -86,24 +85,8 @@ const Login = ({ title }) => {
           : ""}
       </p>
       <form className="Login__form">
-        <FormInput
-          idFor="email"
-          label="Votre email :"
-          type="email"
-          name="email"
-          getValue={getValue}
-          required={true}
-          // firstValue={savedEmail}
-        />
-        <FormInput
-          idFor="password"
-          label="Votre mot de passe :"
-          type="password"
-          name="password"
-          getValue={getValue}
-          required={true}
-          // firstValue={savedPassword}
-        />
+        <FormInput idFor="email" label="Votre email :" type="email" name="email" getValue={getValue} required={true} />
+        <FormInput idFor="password" label="Votre mot de passe :" type="password" name="password" getValue={getValue} required={true} />
         <CustomButton onClick={(e) => handleClick(e)} id="login-button" color="dark" type="submit" disabled={submitOk}>
           Connexion
         </CustomButton>

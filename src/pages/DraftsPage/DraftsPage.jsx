@@ -37,12 +37,6 @@ const DraftsPage = () => {
         ) : (
           <Loading />
         )}
-        {/* {isLoaded ? (
-          fetchedCards &&
-          fetchedCards.filter((card) => card.state === 0).map((draftCard) => <DraftPreview key={draftCard.id} draftCard={draftCard} />)
-        ) : (
-          <Loading />
-        )} */}
       </div>
     </div>
   );

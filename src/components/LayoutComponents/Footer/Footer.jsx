@@ -37,8 +37,6 @@ const Footer = ({ location }) => {
       <div className="Footer__links">
         <div className="Footer__links--group">
           <Link to="/">Accueil</Link>
-          {/* <Link to="/ressources">Ressources</Link> */}
-          {/* <Link to="/ressources">Ressources</Link> */}
           <Link to="/search">Cartes</Link>
         </div>
         <div className="Footer__links--group">
@@ -68,7 +66,7 @@ const Footer = ({ location }) => {
       </div>
       <div className="Footer__credits">
         SWIPETUTO - &copy; SWIPETUTO {currentYear}
-        <ToggleButton toggleTheme={toggleTheme} theme={theme} />
+        <ToggleButton />
       </div>
     </div>
   );

@@ -150,13 +150,13 @@ export const signalContent = signal => {
 
 export const updatePrefService = (topicName, queryName) => {
   const data = {
-    // "category_preference": [
-    // {
-    "name": queryName,
-    "topic": topicName
+    "category_preference": [
+    {
+    "name": topicName,
+    "topic": queryName
   }
-  //   ]
-  // }
+    ]
+  }
   console.log(data)
 
   return client().patch(`update/preference/`, JSON.stringify(data)).then(rep => {

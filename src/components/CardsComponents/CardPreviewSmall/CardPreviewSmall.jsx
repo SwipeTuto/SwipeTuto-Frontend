@@ -96,7 +96,7 @@ const CardPreviewSmall = ({ card, size }) => {
     if (!cardIsReady) {
       var thisTimeout = setTimeout(function () {
         setIsError(true);
-      }, 5000);
+      }, 10000);
     }
     if (cardIsReady) {
       clearTimeout(thisTimeout);

@@ -47,26 +47,26 @@ const CardGridList = ({ loadFilter, allowInfiniteScroll, location, overrideColum
   const [topic, category, ordering, search] = urlParams(location);
   const userId = getUrlId(location.pathname, "user_id");
 
-  useEffect(() => {
-    if (prevCurrentSearch && prevCurrentSearch !== currentSearch && fetchWithFilter === true && firstLoadDone) {
-      dispatch(getCardAfterfilterAction(currentSearch));
-    } else if (firstLoadDone === false && cardPopupShown === false && !urlCardId && !topic && !category && !ordering && !search && !userId) {
-      dispatch(getCardAfterfilterAction(initialSearchState));
-    }
-  }, [
-    cardPopupShown,
-    category,
-    currentSearch,
-    dispatch,
-    fetchWithFilter,
-    firstLoadDone,
-    ordering,
-    prevCurrentSearch,
-    search,
-    topic,
-    urlCardId,
-    userId,
-  ]);
+  // useEffect(() => {
+  //   if (prevCurrentSearch && prevCurrentSearch !== currentSearch && fetchWithFilter === true && firstLoadDone) {
+  //     // dispatch(getCardAfterfilterAction(currentSearch));
+  //   } else if (firstLoadDone === false && cardPopupShown === false && !urlCardId && !topic && !category && !ordering && !search && !userId) {
+  //     // dispatch(getCardAfterfilterAction(initialSearchState));
+  //   }
+  // }, [
+  //   cardPopupShown,
+  //   category,
+  //   currentSearch,
+  //   dispatch,
+  //   fetchWithFilter,
+  //   firstLoadDone,
+  //   ordering,
+  //   prevCurrentSearch,
+  //   search,
+  //   topic,
+  //   urlCardId,
+  //   userId,
+  // ]);
 
   // gestion de l'ordre des cartes par colonne
   const reorderCards = useCallback(

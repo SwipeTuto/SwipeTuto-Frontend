@@ -1,0 +1,19 @@
+@import "../../../variables.scss";
+
+.user_avatar {
+  border-radius: 50%;
+  height: 4rem;
+  overflow: hidden;
+  width: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid $grey;
+  font-size: 3rem;
+
+  &--image {
+    height: 100%;
+    width: auto;
+  }
+}

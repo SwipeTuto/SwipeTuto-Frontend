@@ -1,0 +1,105 @@
+@import "../../variables.scss";
+
+.AccountPage {
+  display: flex;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  &__navigation {
+    padding: 0 4rem;
+    display: flex;
+    flex-direction: column;
+    width: 22%;
+    flex-shrink: 0;
+
+    & .UserNameAndAvatar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 4rem;
+      margin-top: 4rem;
+      flex: unset;
+
+      &__avatar {
+        width: 12rem;
+        height: 12rem;
+        margin-bottom: 1rem;
+      }
+    }
+
+    &--items {
+      position: sticky;
+      top: $navtop-height;
+
+      & a,
+      & p.AccountPage__logout {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        margin: 1.5rem 1rem;
+        font-size: 1.8rem;
+        border-radius: $button-radius;
+        transition: all 0.2s ease;
+
+        &.active {
+          background-color: $secondary-dark;
+          color: $black;
+
+          &:hover {
+            color: $black;
+          }
+        }
+
+        &:hover {
+          color: $secondary-dark;
+        }
+
+        & > svg {
+          @include medium-logo-size;
+          margin-right: 2rem;
+
+          & * {
+            fill: currentColor !important;
+            stroke: currentColor !important;
+          }
+        }
+      }
+    }
+  }
+  p.AccountPage__logout {
+    margin-top: 4rem;
+  }
+
+  &__item-border {
+    background-color: $grey;
+    height: 1px;
+    // width: 100%;
+    margin: 0 1rem;
+  }
+  &__page {
+    padding: 4rem 0;
+    width: 70%;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .AccountPage {
+    &__navigation {
+      display: none;
+    }
+  }
+}
+@media screen and (max-width: $bp-phone) {
+  .AccountPage {
+    &__page {
+      width: 100%;
+      padding: 4rem 1rem;
+    }
+  }
+}

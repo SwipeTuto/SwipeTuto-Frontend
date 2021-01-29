@@ -1,0 +1,25 @@
+@import "../../../variables.scss";
+
+.HowItWorks {
+  margin: 4rem auto;
+  font-size: 2rem;
+  line-height: 1.6;
+  width: 60%;
+
+  ul {
+    list-style: initial;
+    padding-left: 4rem;
+  }
+
+  p,
+  ul {
+    margin: 3rem 0;
+  }
+
+  p:last-of-type {
+    font-size: 4rem;
+    font-weight: bold;
+    color: $primary-light;
+    text-align: center;
+  }
+}

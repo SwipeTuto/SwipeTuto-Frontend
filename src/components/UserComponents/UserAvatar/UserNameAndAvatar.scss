@@ -1,0 +1,29 @@
+@import "../../../variables.scss";
+
+.UserNameAndAvatar {
+  flex: 1;
+  min-width: 0;
+
+  &__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    // box-shadow: $light-shadow;
+    border: 1px solid $grey;
+    overflow: hidden;
+    color: $black;
+    flex-shrink: 0;
+    background-color: $grey-light;
+
+    &--image {
+      height: 100%;
+    }
+  }
+
+  &__username {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

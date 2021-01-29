@@ -1,0 +1,74 @@
+@import "../../variables.scss";
+
+.LoginPage {
+  overflow: hidden;
+  // height: max-content;
+  overflow: auto;
+  width: 100%;
+  // min-height: 90vh;
+  display: flex;
+  align-items: stretch;
+  background-image: linear-gradient(to right, transparent, $black), url("../../assets/images/illustrations/login-image.jpg");
+  background-size: cover;
+
+  &__wrapper {
+    width: 40%;
+    max-width: 50rem;
+    margin: 5rem;
+    background-color: transparent !important;
+  }
+
+  &__logo {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &--logo {
+      max-width: 60rem;
+      width: 60%;
+      padding: 2rem;
+      border-radius: $card-radius;
+      background-color: rgba($white, 1);
+      @include large-shadow;
+    }
+  }
+
+  &__link {
+    text-align: center;
+    margin: 0 auto;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: $secondary-dark;
+    }
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .LoginPage {
+    background-image: none;
+    display: flex;
+    justify-content: center;
+
+    &__wrapper {
+      width: 100%;
+    }
+    &__logo {
+      display: none;
+    }
+  }
+}
+@media screen and (max-width: $bp-small-phone) {
+  .LoginPage {
+    &__wrapper {
+      margin: 1rem;
+    }
+
+    .Login,
+    .Register {
+      padding: 0;
+      border: none;
+    }
+  }
+}

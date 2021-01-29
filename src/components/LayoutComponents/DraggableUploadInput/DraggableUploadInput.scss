@@ -1,0 +1,56 @@
+@import "../../../variables.scss";
+
+.DraggableUploadInput {
+  .filepond--root :not(text) {
+    font-size: 1.8rem;
+  }
+
+  .filepond--item {
+    width: calc(33.33% - 0.5em);
+  }
+
+  .filepond--list-scroller {
+    max-height: 100%;
+    overflow: auto;
+  }
+
+  .filepond--file-action-button {
+    cursor: pointer;
+  }
+
+  .filepond--drop-label {
+    background-color: $grey-lighter;
+  }
+
+  .filepond--file {
+    height: 20rem;
+  }
+
+  .filepond--file-poster-wrapper {
+    height: 100%;
+  }
+
+  .filepond--file-poster {
+    height: 100%;
+
+    & img {
+      height: 100%;
+    }
+  }
+
+  .filepond--file-poster-overlay {
+    display: none;
+  }
+}
+
+@media screen and (max-width: $bp-phone) {
+  .DraggableUploadInput {
+    .filepond--root :not(text) {
+      font-size: 1.5rem;
+    }
+
+    .filepond--item {
+      width: 100%;
+    }
+  }
+}

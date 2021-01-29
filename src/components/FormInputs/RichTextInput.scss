@@ -1,0 +1,68 @@
+@import "../../variables.scss";
+
+.rdw-editor-wrapper {
+  height: max-content;
+  max-width: 100%;
+
+  // &.dark-theme-m {
+  //   border-bottom: 1px solid $grey;
+  // }
+  // &.light-theme-m {
+  //   border-bottom: 1px solid $grey;
+  // }
+}
+
+.rdw-editor-main {
+  // background-color: $grey-lighter;
+  min-height: 20rem;
+  cursor: text;
+  padding: 0 1rem;
+
+  & pre {
+    color: $black;
+  }
+}
+
+.rdw-image-wrapper,
+.rdw-embedded-wrapper {
+  display: none;
+}
+
+.rdw-editor-toolbar {
+  border: none;
+
+  &.dark-theme-l {
+    background-color: $dark-light;
+  }
+}
+
+.rdw-link-modal {
+  width: max-content;
+  height: max-content;
+  box-sizing: content-box;
+
+  & * {
+    flex-shrink: 0;
+  }
+}
+
+#openLinkInNewWindow {
+  width: min-content;
+}
+
+.rdw-link-modal-input {
+  margin: 0.2rem 0 0.6rem 0 !important;
+  width: 100% !important;
+}
+
+.rdw-link-modal-target-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.6rem 0;
+}
+
+.rdw-link-modal-label {
+  margin: 0;
+}

@@ -1,0 +1,53 @@
+@import "../../variables.scss";
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &__dots {
+    display: flex;
+    height: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__dot {
+    border-radius: 50%;
+    height: 1rem;
+    width: 1rem;
+
+    animation-name: wave;
+    animation-duration: 0.7s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+    &:not(:last-of-type) {
+      margin-right: 0.6rem;
+    }
+
+    &:nth-of-type(2) {
+      animation-delay: 0.1s;
+    }
+    &:nth-of-type(3) {
+      animation-delay: 0.2s;
+    }
+  }
+
+  @keyframes wave {
+    0% {
+      transform: translateY(0);
+      background-color: $primary-light;
+    }
+
+    50% {
+      transform: translateY(1rem);
+      background-color: $primary-dark;
+    }
+
+    100% {
+      transform: translateY(0);
+      background-color: $primary-light;
+    }
+  }
+}

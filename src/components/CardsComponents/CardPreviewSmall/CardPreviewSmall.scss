@@ -1,0 +1,202 @@
+@import "../../../variables.scss";
+
+.CardPreviewSmall {
+  height: auto;
+  width: 100%;
+  // max-height: 25rem;
+  // background-color: $white;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  border-radius: $card-radius;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+  break-inside: avoid;
+  // margin-bottom: 1rem;
+
+  // &.dark-theme-m {
+  //   @include card-shadow($themelight: false);
+  // }
+  // &.light-theme-m {
+  //   background-color: $white;
+  //   @include card-shadow($themelight: true);
+  // }
+
+  &__image {
+    height: auto;
+
+    width: 100%;
+    margin: auto;
+    // background-color: $black;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    object-fit: contain;
+
+    &.active {
+      visibility: visible;
+      display: block;
+    }
+
+    &.hide {
+      visibility: hidden;
+      display: none;
+    }
+
+    & > img {
+      width: 100%;
+      max-height: 800px;
+      object-fit: contain;
+      border-radius: $card-radius;
+    }
+
+    &:hover .CardPreviewSmall__hover {
+      top: 0;
+
+      & p {
+        visibility: visible;
+      }
+    }
+
+    &--loading {
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      & .loading {
+        height: 100%;
+      }
+
+      & p {
+        display: block;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+
+  &__hover {
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, transparent 0%, rgba($black, 0.85));
+    display: flex;
+    align-items: flex-end;
+    text-align: center;
+    justify-content: center;
+    color: $white;
+    padding: 0 1.2rem 1rem 1.2rem;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transition: all 0.2s ease;
+
+    & p {
+      visibility: hidden;
+    }
+  }
+
+  &__category--stamp {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.3rem;
+    padding: 0.3rem 1rem;
+    background-color: $primary-light;
+    color: $white;
+  }
+
+  &__details {
+    max-width: 100%;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    font-size: 1.2rem;
+
+    & > a {
+      display: flex;
+      align-items: center;
+    }
+
+    .UserNameAndAvatar {
+      display: flex;
+      align-items: center;
+      text-overflow: ellipsis;
+      background-color: unset;
+
+      &__avatar {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.6rem;
+        margin-right: 0.6rem;
+      }
+    }
+  }
+  &__likes {
+    display: flex;
+    align-items: center;
+
+    &.dark-theme {
+      color: $grey-dark;
+      & svg {
+        fill: $grey-dark;
+      }
+    }
+
+    &.light-theme {
+      color: $grey-dark;
+    }
+
+    &--logo {
+      margin-left: 0.6rem;
+      margin-right: 0.3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      & > svg {
+        @include logo-size;
+        fill: $grey;
+
+        &.active * {
+          fill: $red-like !important;
+          stroke: $red-like !important;
+        }
+      }
+      // @include logo-size;
+      // // fill: $primary-light;
+      // & * {
+      //   stroke: currentColor !important;
+      // }
+    }
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .CardPreviewSmall {
+    &__hover {
+      font-size: 1.2rem;
+    }
+    &__details {
+      p {
+        white-space: nowrap;
+        text-overflow: fade clip;
+      }
+    }
+  }
+}
+@media screen and (max-width: $bp-phone) {
+  .CardPreviewSmall {
+    &__hover {
+      font-size: 0.8rem;
+    }
+  }
+}

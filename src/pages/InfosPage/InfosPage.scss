@@ -1,0 +1,14 @@
+@import "../../variables.scss";
+
+.InfosPage {
+  padding: $inner-component-padding;
+
+  h1 {
+    text-align: center;
+    font-size: 3rem;
+  }
+
+  p {
+    padding-bottom: 3rem;
+  }
+}

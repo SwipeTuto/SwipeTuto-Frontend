@@ -1,0 +1,239 @@
+@import "./variables.scss";
+
+// RESET GENERAL
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+
+  // scroll-behavior: smooth;
+}
+
+button,
+input,
+textarea,
+select {
+  border: none;
+  outline: none;
+  font-family: inherit;
+  background-color: inherit;
+  padding: $box-padding;
+  font-size: inherit;
+  color: currentColor;
+  border-radius: $button-radius;
+  overflow: hidden;
+}
+
+label {
+  margin-bottom: 0.5rem;
+}
+
+button::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: $black;
+}
+
+textarea {
+  resize: none;
+  min-height: 10rem;
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
+// select {
+//   // background-color: $white;
+//   border: 0.5px solid $grey-light;
+//   border-radius: $box-radius;
+// }
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  font-family: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  margin: 0;
+  font-size: 1.8rem;
+  font-family: $text-font;
+  padding: $navtop-height 0 0 0;
+  max-width: 100%;
+  margin: 0 auto;
+  touch-action: pan-x pan-y;
+  @include theme-colors-dark($themelight: true);
+}
+
+// svg > * {
+//   fill: currentColor !important;
+//   stroke: currentColor !important;
+// }
+
+.section {
+  @include section-padding;
+}
+
+// Components spécifiques
+// .primary-medium-text {
+//   color: $primary-medium;
+// }
+
+.error__message {
+  color: $red-error;
+  margin-bottom: 1rem;
+}
+
+// .blue-text {
+//   color: $blue-dark;
+// }
+
+// .yellow-text {
+//   color: $yellow-dark;
+// }
+// .pink-text {
+//   color: $pink-dark;
+// }
+
+.title {
+  font-family: $title-font;
+  &-1 {
+    margin-bottom: 1.4rem;
+    font-size: 3.6rem;
+  }
+
+  &-2 {
+    margin-bottom: 1.2rem;
+    font-size: 2.6rem;
+  }
+
+  &-3 {
+    margin-bottom: 1rem;
+    font-size: 2.2rem;
+  }
+
+  &-4 {
+    margin-bottom: 0.8rem;
+    font-size: 1.8rem;
+  }
+}
+
+.dark-theme-l {
+  @include theme-colors-light($themelight: false);
+}
+.light-theme-l {
+  @include theme-colors-light($themelight: true);
+}
+.dark-theme-m {
+  @include theme-colors-medium($themelight: false);
+}
+.light-theme-m {
+  @include theme-colors-medium($themelight: true);
+}
+.dark-theme-d {
+  @include theme-colors-dark($themelight: false);
+}
+.light-theme-d {
+  @include theme-colors-dark($themelight: true);
+}
+
+.null {
+  &.active {
+    background-color: getTopicColor(general);
+    color: $black;
+  }
+  &:hover {
+    color: getTopicColor(general);
+  }
+}
+.technologie {
+  &.active {
+    background-color: getTopicColor(technologie);
+    color: $black;
+  }
+  &:hover {
+    color: getTopicColor(technologie);
+  }
+}
+.cuisine {
+  &.active {
+    background-color: getTopicColor(cuisine);
+    color: $black;
+  }
+  &:hover {
+    color: getTopicColor(cuisine);
+  }
+}
+.maison {
+  &.active {
+    background-color: getTopicColor(maison);
+    color: $black;
+  }
+  &:hover {
+    color: getTopicColor(maison);
+  }
+}
+.beaute {
+  &.active {
+    background-color: getTopicColor(beaute);
+    color: $black;
+  }
+  &:hover {
+    color: getTopicColor(beaute);
+  }
+}
+.bienetre {
+  &.active {
+    background-color: getTopicColor(bienetre);
+    color: $black;
+  }
+  &:hover {
+    color: getTopicColor(bienetre);
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  body {
+    padding: 0;
+  }
+}
+@media screen and (max-width: $bp-phone) {
+  body {
+    font-size: 1.8rem;
+  }
+  .title {
+    &-1 {
+      margin-bottom: 5rem;
+      font-size: 4rem;
+    }
+
+    &-2 {
+      margin-bottom: 2.5rem;
+      font-size: 2.6rem;
+    }
+
+    &-3 {
+      margin-bottom: 2rem;
+      font-size: 2.3rem;
+    }
+
+    &-4 {
+      margin-bottom: 1.6rem;
+      font-size: 2.1rem;
+    }
+  }
+
+  .section {
+    @include section-small-padding;
+  }
+}

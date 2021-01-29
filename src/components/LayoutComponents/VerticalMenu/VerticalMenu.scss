@@ -1,0 +1,43 @@
+@import "../../../variables.scss";
+
+.VerticalMenu {
+  position: relative;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.dark-theme {
+      svg {
+        fill: $grey-dark;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+    &--logo {
+      @include logo-size;
+    }
+  }
+
+  &__menu {
+    @include overlay-menu;
+    padding: 1rem;
+    position: absolute;
+    right: 80%;
+    top: 80%;
+    z-index: 30;
+
+    &--item:not(:last-of-type) {
+      margin-bottom: 0.6rem;
+    }
+
+    &--item:hover {
+      cursor: pointer;
+      color: $primary-light;
+      transition: all 0.2s ease;
+    }
+  }
+}

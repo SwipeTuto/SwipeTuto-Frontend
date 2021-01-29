@@ -1,0 +1,64 @@
+@import "../../../variables.scss";
+
+.DraftPreview {
+  border-radius: $card-radius;
+  margin-bottom: 2rem;
+  height: 12rem;
+  padding: 1rem 2rem;
+  display: flex;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &__wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  &__title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  p {
+    font-size: 1.3rem;
+    text-align: left;
+    display: flex;
+    margin-bottom: auto;
+  }
+
+  &__image {
+    background-color: $grey;
+    margin-right: 2rem;
+    width: 10rem;
+    height: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    width: min-content;
+    margin-left: auto;
+  }
+
+  &__button {
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: $secondary-dark;
+    }
+  }
+}

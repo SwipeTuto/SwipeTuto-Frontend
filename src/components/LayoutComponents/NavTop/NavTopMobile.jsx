@@ -141,7 +141,7 @@ const NavTopMobile = (props) => {
               className="NavTopMobile__link"
               onClick={() => {
                 dispatch(setCurrentSearch(initialSearchState));
-                dispatch(getCardAfterfilterAction(initialSearchState));
+                // dispatch(getCardAfterfilterAction(initialSearchState));
                 dispatch(closeMobileNav());
               }}
               to="/"
@@ -163,7 +163,7 @@ const NavTopMobile = (props) => {
             to="/search"
             onClick={() => {
               dispatch(setCurrentSearch(initialSearchState));
-              dispatch(getCardAfterfilterAction(initialSearchState));
+              // dispatch(getCardAfterfilterAction(initialSearchState));
               dispatch(closeMobileNav());
             }}
           >
@@ -216,7 +216,7 @@ const NavTopMobile = (props) => {
           </Link>
         )}
 
-        <ToggleButton toggleTheme={toggleTheme} theme={theme} />
+        <ToggleButton />
       </div>
     </>
   );

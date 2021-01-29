@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense, lazy } from "react";
+import React, { useEffect, Suspense, lazy, useCallback } from "react";
 import { withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 // import FiltersBar from "../../components/LayoutComponents/FiltersBar/FiltersBar";
@@ -29,14 +29,23 @@ const SearchPage = ({ location }) => {
     }
   };
 
-  useEffect(() => {
-    if (fetchedCards === null) {
-      dispatch(setCurrentSearch({ ...currentSearch, searchOrder: "likes" }));
-      dispatch(getCardAfterfilterAction(initialSearchState));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, fetchedCards]);
+  // useEffect(() => {
+  //   if (fetchedCards === null) {
+  //     dispatch(setCurrentSearch({ ...currentSearch, searchOrder: "likes" }));
+  //     // dispatch(getCardAfterfilterAction(initialSearchState));
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [dispatch, fetchedCards]);
   // ! NE PAS AJOUTER currentSearch EN DEPENDENCIES DU USEEFFECT
+
+  const fetchedFilteredCards = useCallback(() => {
+    dispatch(getCardAfterfilterAction(currentSearch));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentSearch]);
+
+  useEffect(() => {
+    if (currentSearch) fetchedFilteredCards(currentSearch);
+  }, [currentSearch, fetchedFilteredCards]);
 
   useEffect(() => {
     if (window.scrollY) {

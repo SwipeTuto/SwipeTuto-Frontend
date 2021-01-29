@@ -25,7 +25,6 @@ const DraftPreview = ({ draftCard, history }) => {
   });
 
   const handleDeleteDraft = (draftID) => {
-    console.log(history.location);
     setConfirmDeletePopupOpen({
       open: true,
       message: "Voulez-vous vraiment supprimer ce brouillon de façon définitive ?",

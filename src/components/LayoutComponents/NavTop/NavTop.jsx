@@ -31,6 +31,7 @@ import { ReactComponent as DropDownLogo } from "../../../assets/images/chevron-d
 import { ReactComponent as BookmarkLogo } from "../../../assets/images/bookmark.svg";
 import { ReactComponent as AddLogo } from "../../../assets/images/add.svg";
 import { ReactComponent as DropdownFullLogo } from "../../../assets/images/caret-down.svg";
+import { ReactComponent as PreferencesLogo } from "../../../assets/images/color-palette.svg";
 import { ReactComponent as PencilLogo } from "../../../assets/images/pencil.svg";
 import STSmallLogoBlackmod from "../../../assets/stlogos/logo seul blackmode.png";
 import STSmallLogo from "../../../assets/stlogos/logo seul.png";
@@ -38,7 +39,6 @@ import STSmallLogo from "../../../assets/stlogos/logo seul.png";
 import "./NavTop.scss";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 import ToggleButton from "../ToggleTheme/ToggleTheme";
-import { useDarkMode } from "../../../hooks/useDarkMode";
 
 const NavTop = (props) => {
   const dispatch = useDispatch();
@@ -48,6 +48,7 @@ const NavTop = (props) => {
   const dropdown = useRef();
   const dropdownBtn = useRef();
   const [navDropdownOpen, setNavDropdownOpen] = useState(false);
+  const topicMenu = useRef(null);
 
   const topicHandleClick = async (topicQueryName) => {
     dispatch(setCardsFetchedInStore(null));
@@ -79,21 +80,22 @@ const NavTop = (props) => {
     }
   };
 
+  const closeTopicDropdown = () => {
+    topicMenu.current.style.opacity = "0";
+    topicMenu.current.style.visibility = "hidden";
+  };
+
+  const openTopicDropdown = () => {
+    topicMenu.current.style.opacity = "1";
+    topicMenu.current.style.visibility = "visible";
+  };
+
   useEffect(() => {
     document.addEventListener("click", checkClickInside);
     return () => {
       document.removeEventListener("click", checkClickInside);
     };
   });
-
-  const [theme, setTheme] = useDarkMode();
-  const toggleTheme = () => {
-    if (theme === "light") {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  };
 
   return (
     <div className={`NavTop ${currentTheme}-theme-m`}>
@@ -105,7 +107,7 @@ const NavTop = (props) => {
             alt=""
             onClick={() => {
               dispatch(setCurrentSearch(initialSearchState));
-              dispatch(getCardAfterfilterAction(initialSearchState));
+              // dispatch(getCardAfterfilterAction(initialSearchState));
             }}
           />
         </Link>
@@ -126,14 +128,32 @@ const NavTop = (props) => {
                 to="/search"
                 onClick={() => {
                   dispatch(deleteCurrentSearch());
-                  dispatch(getCardAfterfilterAction(initialSearchState));
+                  // dispatch(getCardAfterfilterAction(initialSearchState));
+                }}
+                onMouseEnter={(e) => {
+                  openTopicDropdown();
+                }}
+                onMouseLeave={(e) => {
+                  closeTopicDropdown();
                 }}
               >
                 Explorer
               </NavLink>
               <DropDownLogo className="NavTop__link--logo" />
             </div>
-            <div className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme-l`}>
+            <div
+              className={`NavTop__dropdown NavTop__dropdown--category ${currentTheme}-theme-l`}
+              ref={topicMenu}
+              onMouseEnter={(e) => {
+                openTopicDropdown();
+              }}
+              onMouseLeave={(e) => {
+                closeTopicDropdown();
+              }}
+              onClick={(e) => {
+                closeTopicDropdown();
+              }}
+            >
               <Link
                 to="/search"
                 onClick={() => topicHandleClick(null)}
@@ -159,17 +179,20 @@ const NavTop = (props) => {
                           <span>{topic.name}</span>
                         </Link>
                         <div className="NavTop__categories">
-                          {getCategoriesArray(topic.queryName).map((category, index) => (
-                            <Link
-                              key={`category${index}${category.name}`}
-                              to="/search"
-                              onClick={() => categoryHandleClick(topic.queryName, category.queryName)}
-                              name={category.queryName}
-                              className={`${topic.queryName}-item`}
-                            >
-                              <span className="NavTop__topicList--category">{category.name}</span>
-                            </Link>
-                          ))}
+                          {getCategoriesArray(topic.queryName).map(
+                            (category, index) =>
+                              category.name !== "Tous" && (
+                                <Link
+                                  key={`category${index}${category.name}`}
+                                  to="/search"
+                                  onClick={() => categoryHandleClick(topic.queryName, category.queryName)}
+                                  name={category.queryName}
+                                  className={`${topic.queryName}-item`}
+                                >
+                                  <span className="NavTop__topicList--category">{category.name}</span>
+                                </Link>
+                              )
+                          )}
                         </div>
                       </div>
                     )
@@ -220,7 +243,7 @@ const NavTop = (props) => {
           <div className="NavTop__userMenu--meta">
             <UserUsername user={currentUser} link={true} />
             <p className="NavTop__userMenu--text">{currentUser.email}</p>
-            <ToggleButton toggleTheme={toggleTheme} theme={theme} />
+            <ToggleButton />
           </div>
           <div className="NavTop__userMenu--links">
             <Link className="NavTop__userMenu--link" to="/account/user" onClick={() => setNavDropdownOpen(false)}>
@@ -238,6 +261,10 @@ const NavTop = (props) => {
             </Link>
             <Link className="NavTop__userMenu--link" to="/account/settings" onClick={() => setNavDropdownOpen(false)}>
               <SettingsLogo className="NavTop__userMenu--logo" />
+              Paramètres
+            </Link>
+            <Link className="NavTop__userMenu--link" to="/account/preferences" onClick={() => setNavDropdownOpen(false)}>
+              <PreferencesLogo className="NavTop__userMenu--logo" />
               Paramètres
             </Link>
             <Link className="NavTop__userMenu--link" to="/help" onClick={() => setNavDropdownOpen(false)}>

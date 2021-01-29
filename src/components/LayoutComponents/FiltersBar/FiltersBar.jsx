@@ -15,12 +15,13 @@ import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg
 import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";
 
 import "./FiltersBar.scss";
-import { selectTheme } from "../../../redux/layout/layout-selectors";
+import { selectCardsSize, selectTheme } from "../../../redux/layout/layout-selectors";
 
 const FiltersBar = ({ handleClickSize }) => {
   const dispatch = useDispatch();
   const currentTheme = useSelector(selectTheme);
   const currentSearch = useSelector(selectCurrentSearch);
+  const currentCardSize = useSelector(selectCardsSize);
   const searchCategory = useSelector(selectSearchCategory);
   const searchTopic = useSelector(selectSearchTopic);
   const searchOrder = useSelector(selectSearchOrder);
@@ -98,11 +99,15 @@ const FiltersBar = ({ handleClickSize }) => {
             </option>
           ))}
         </select>
-        <div className="FiltersBar__size-logo active" data-gridsize="small" onClick={(e) => handleClickSize(e)}>
+        <div
+          className={`FiltersBar__size-logo ${currentCardSize === "small" ? "active" : ""}`}
+          data-gridsize="small"
+          onClick={(e) => handleClickSize(e)}
+        >
           <GridSmallLogo className="grid-size-logo" pointerEvents="none" />
         </div>
 
-        <div className="FiltersBar__size-logo " data-gridsize="big" onClick={(e) => handleClickSize(e)}>
+        <div className={`FiltersBar__size-logo ${currentCardSize === "big" ? "active" : ""}`} data-gridsize="big" onClick={(e) => handleClickSize(e)}>
           <GridLargeLogo className="grid-size-logo" pointerEvents="none" />
         </div>
       </div>

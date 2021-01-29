@@ -32,8 +32,7 @@ import "./NavTopMobile.scss";
 import { useDarkMode } from "../../../hooks/useDarkMode";
 import ToggleButton from "../ToggleTheme/ToggleTheme";
 import { getCardAfterfilterAction, setCurrentSearch } from "../../../redux/filter/filter-actions";
-import { initialSearchState } from "../../../helper";
-// import { initialSearchState } from "../../../helper";
+import { initialSearchState } from "../../../helper/constants";
 import STSmallLogoBlackmod from "../../../assets/stlogos/logo seul blackmode.png";
 import STSmallLogo from "../../../assets/stlogos/logo seul.png";
 import STBlackmod from "../../../assets/stlogos/swipetuto eclair bleu blackmode.png";
@@ -45,9 +44,6 @@ const NavTopMobile = (props) => {
   const currentTheme = useSelector(selectTheme);
   const currentUser = useSelector(selectCurrentUser);
   const mobileNavOpen = useSelector(selectMobileNavOpen);
-  // const searchWords = useSelector(selectSearchWords);
-  // const currentSearch = useSelector(selectCurrentSearch);
-  // const { searchWords, searchTopic, searchCategory, searchOrder } = currentSearch;
 
   useEffect(() => {
     const NavTopMobileMenu = document.querySelector(".NavTopMobile");

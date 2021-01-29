@@ -1,6 +1,6 @@
 // Slider pour la CardFullPopup et aussi pour le mode plein écran
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense, lazy } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectClickedCardSlides, selectClickedCard } from "../../../redux/filter/filter-selectors";
 import { selectFullscreen, selectTheme } from "../../../redux/layout/layout-selectors";

@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter, Link } from "react-router-dom";
-
 import "./NotFoundPage.scss";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { useDispatch } from "react-redux";

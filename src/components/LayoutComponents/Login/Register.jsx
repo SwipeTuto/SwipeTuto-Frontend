@@ -8,9 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginFacebookAction, loginGoogleAction, registerAction } from "../../../redux/user/user-actions";
 import { selectUserErrors } from "../../../redux/user/user-selectors";
 
-// helper
-// import { loginGoogle } from "../../../services/userService";
-
 // components
 import CustomButton from "../CustomButton/CustomButton";
 
@@ -21,7 +18,6 @@ import "./LoginAndRegister.scss";
 import FormInput from "../../FormInputs/FormInput";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 
-// Props history, location, match, depuis react router dom
 const Register = ({ title }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({});
@@ -36,13 +32,6 @@ const Register = ({ title }) => {
     e.preventDefault();
     dispatch(registerAction(user));
   };
-
-  // const handleClickGoogle = (e) => {
-  //   loginGoogle();
-  // };
-  // const handleClickGit = (e) => {
-  //   // loginGit();
-  // };
 
   const handleClickGoogle = (e) => {
     e.stopPropagation();
@@ -96,24 +85,8 @@ const Register = ({ title }) => {
           required={true}
           firstValue={user.username || ""}
         />
-        <FormInput
-          idFor="email"
-          label="Votre email :"
-          type="email"
-          name="email"
-          required={true}
-          getValue={getValue}
-          // firstValue={}
-        />
-        <FormInput
-          idFor="mdp"
-          label="Votre mot de passe :"
-          type="password"
-          name="password"
-          required={true}
-          getValue={getValue}
-          // firstValue={}
-        />
+        <FormInput idFor="email" label="Votre email :" type="email" name="email" required={true} getValue={getValue} />
+        <FormInput idFor="mdp" label="Votre mot de passe :" type="password" name="password" required={true} getValue={getValue} />
         <FormInput
           idFor="mdp2"
           label="Confirmer votre mot de passe :"
@@ -122,42 +95,7 @@ const Register = ({ title }) => {
           required={true}
           getValue={getValue}
           valueToCompare={password}
-          // firstValue={}
         />
-
-        {/* <label htmlFor="mdp2" className="FormInput__label">
-          Confirmez le Mot de passe :
-        </label>
-        <input
-          name="passwordConfirm"
-          value={passwordConfirmation || ""}
-          onChange={(e) => {
-            setPasswordConfirmation(e.target.value);
-          }}
-          type="password"
-          id="mdp2"
-          className={`FormInput ${
-            !passwordConfirmation
-              ? "unset-input"
-              : passwordConfirmation !== password || passwordConfirmation === ""
-              ? "invalid-input"
-              : "valid-input"
-          }`}
-          required
-        />
-        {
-          <p
-            className={`${
-              passwordConfirmation !== password
-                ? "input__message error__message"
-                : "input__message-hide"
-            }`}
-            data-inputfor="passwordConfirm"
-          >
-            Ce mot de passe ne correspond pas à celui mentionné précédemment.
-          </p>
-        } */}
-
         <CustomButton onClick={(e) => handleClick(e)} color="light" type="submit" disabled={submitOk}>
           Inscription
         </CustomButton>

@@ -4,9 +4,6 @@
 .CommentsInputReply {
   margin: 6rem 0 0 0;
   padding: 6rem 0;
-  // display: flex;
-  // align-items: flex-end;
-  // border-top: 1px solid $grey;
   border-bottom: 1px solid $grey;
 
   textarea.FormInput {
@@ -21,9 +18,6 @@
 @media screen and (max-width: $bp-tablet) {
   .CommentsInput,
   .CommentsInputReply {
-    // display: flex;
-    // align-items: flex-end;
-
     &__newComment {
       &--sendPC {
         display: none;

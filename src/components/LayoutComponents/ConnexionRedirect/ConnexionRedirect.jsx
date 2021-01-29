@@ -9,14 +9,6 @@ import Login from "../../LayoutComponents/Login/Login";
 const ConnexionRedirect = ({ handleClose }) => {
   const currentTheme = useSelector(selectTheme);
   const popupEl = useRef(null);
-  // scroll reset
-  // if (window.scrollY) {
-  //   window.scroll(0, 0);
-  // }
-
-  // useEffect(() => {
-  //   console.log(popupEl.current.offsetTop);
-  // }, [popupEl]);
 
   return (
     <div

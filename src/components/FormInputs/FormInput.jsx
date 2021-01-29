@@ -1,24 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import "./FormInput.scss";
-import { checkRegexInput, errorMessageToDisplay } from "../../helper";
+import { checkRegexInput, errorMessageToDisplay } from "../../helper/functions/inputsHandler";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../redux/layout/layout-selectors";
 
-const FormInput = ({
-  idFor,
-  label,
-  type,
-  name,
-  getValue,
-  firstValue,
-  required,
-  placeholder,
-}) => {
+const FormInput = ({ idFor, label, type, name, getValue, firstValue, required, placeholder, valueToCompare }) => {
   const [data, setData] = useState("");
   const [isValid, setIsValid] = useState("unset");
   const formInputEl = document.querySelector(`.FormInput[name=${name}]`);
-  const errorEl = document.querySelector(
-    `.input__message[data-inputfor=${name}]`
-  );
+  const errorEl = document.querySelector(`.input__message[data-inputfor=${name}]`);
+  const currentTheme = useSelector(selectTheme);
 
   const handleChange = useCallback(
     (e) => {
@@ -27,27 +19,39 @@ const FormInput = ({
       setData(newValue);
 
       if (newValue === "") {
+        getValue(name, "");
         setIsValid("unset");
         if (errorEl) errorEl.textContent = "";
         if (formInputEl) formInputEl.classList.remove("valid-input");
         if (formInputEl) formInputEl.classList.remove("invalid-input");
       } else {
-        let inputIsOk = checkRegexInput(name, newValue);
-        if (inputIsOk === true) {
-          setIsValid("valid");
-          if (errorEl) errorEl.textContent = "";
-          getValue(name, newValue);
+        if (name === "passwordConfirm") {
+          if (valueToCompare === newValue) {
+            setIsValid("valid");
+            if (errorEl) errorEl.textContent = "";
+            getValue(name, newValue);
+          } else {
+            setIsValid("invalid");
+            if (errorEl) errorEl.textContent = errorMessageToDisplay(name);
+          }
         } else {
-          setIsValid("invalid");
-          if (errorEl) errorEl.textContent = errorMessageToDisplay(name);
+          let inputIsOk = checkRegexInput(name, newValue);
+          if (inputIsOk === true) {
+            setIsValid("valid");
+            if (errorEl) errorEl.textContent = "";
+            getValue(name, newValue);
+          } else {
+            setIsValid("invalid");
+            if (errorEl) errorEl.textContent = errorMessageToDisplay(name);
+          }
         }
       }
     },
-    [errorEl, formInputEl, getValue, name]
+    [errorEl, formInputEl, getValue, name, valueToCompare]
   );
 
   useEffect(() => {
-    if (firstValue) setData(firstValue);
+    if (firstValue || firstValue === "") setData(firstValue);
   }, [firstValue]);
 
   return (
@@ -62,16 +66,13 @@ const FormInput = ({
         name={name && name}
         value={data}
         id={idFor && idFor}
-        className={`FormInput ${isValid}-input`}
+        className={`FormInput ${isValid}-input ${currentTheme}-theme-m`}
         required={required && required}
         autoComplete="on"
         placeholder={placeholder}
       />
 
-      <p
-        className="input__message error__message"
-        data-inputfor={name && name}
-      ></p>
+      <p className="input__message error__message" data-inputfor={name && name}></p>
     </>
   );
 };

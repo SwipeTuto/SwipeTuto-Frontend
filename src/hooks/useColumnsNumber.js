@@ -25,16 +25,16 @@ export const useColumnsNumber = () => {
       case winWidth < 960 && cardsSize === "small":
         setColNumber(3);
         break;
-      case winWidth <= 1300 && cardsSize === "big":
+      case winWidth < 1600 && cardsSize === "big":
         setColNumber(3);
         break;
-      case winWidth <= 1300 && cardsSize === "small":
+      case winWidth < 1600 && cardsSize === "small":
         setColNumber(4);
         break;
-      case winWidth > 1300 && cardsSize === "big":
+      case winWidth >= 1600 && cardsSize === "big":
         setColNumber(4);
         break;
-      case winWidth > 1300 && cardsSize === "small":
+      case winWidth >= 1600 && cardsSize === "small":
         setColNumber(6);
         break;
 

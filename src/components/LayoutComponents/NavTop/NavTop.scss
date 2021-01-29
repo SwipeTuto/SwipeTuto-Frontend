@@ -1,19 +1,23 @@
 @import "../../../variables.scss";
 
 .NavTop {
-  height: $navtop-height;
-  // background-color: $white;
-  // background-color: currentColor;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1.5rem 2rem;
   z-index: 20;
-  // border-bottom: 0.5px solid $grey;
-  @include theme-colors($themelight: true);
+  height: $navtop-height;
+
+  &.dark-theme-m {
+    border-bottom: 0.5px solid $dark-medium;
+  }
+  &.light-theme-m {
+    border-bottom: 0.5px solid $grey;
+    background-color: $white;
+  }
 
   &__left,
   &__center,
@@ -32,12 +36,8 @@
   &__link {
     @include nav-style;
 
-    &.active {
-      @include nav-active-style;
-
-      & svg {
-        stroke: $primary-light;
-      }
+    &--category {
+      cursor: pointer;
     }
 
     &--category:hover ~ .NavTop__dropdown--category {
@@ -57,10 +57,7 @@
   }
 
   &__center {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    width: 100%;
 
     .NavTop__search {
       display: flex;
@@ -127,29 +124,78 @@
   }
 
   &__right {
-    flex-grow: 0;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin-left: 2rem;
+
+    & div:not(:first-child) {
+      margin-left: 1rem;
+    }
 
     .NavTop__avatar {
-      .user_avatar {
-        height: 3rem;
-        width: 3rem;
+      .UserNameAndAvatar {
+        display: flex;
+        border-radius: $button-radius;
+        padding: $round-padding;
+
+        &__avatar {
+          margin-right: 1rem;
+          height: 3rem;
+          width: 3rem;
+        }
+
+        &__username {
+          display: flex;
+          align-items: center;
+          padding-right: 1rem;
+        }
       }
     }
 
     .NavTop__linkConnexion {
       height: 100%;
+
+      .custom-button {
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+    }
+  }
+  &__roundBtn {
+    cursor: pointer;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: $round-radius;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & > svg {
+      @include big-logo-size;
+    }
+
+    &.dark-theme-l {
+      & > svg {
+        fill: $white;
+        stroke: $white;
+
+        & * {
+          fill: $white !important;
+          stroke: $white !important;
+        }
+      }
     }
   }
 
   &__swipeTuto {
-    margin-right: 3rem;
-    height: 80%;
+    margin-right: 2.5rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    & > img {
-      height: 100%;
+    &--image {
+      max-height: 100%;
     }
   }
 
@@ -172,19 +218,41 @@
       }
     }
 
+    &.dark-theme-l {
+      .NavTop__userMenu--meta {
+        border-bottom: 1px solid $grey-dark;
+      }
+    }
+
+    &.light-theme-l {
+      background-color: $white;
+    }
+
     &--meta {
       border-bottom: 1px solid $grey-light;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .ToggleTheme {
+        margin: 1.5rem auto 0 auto;
+      }
     }
 
     &--meta,
     &--links {
-      padding: 2rem 3rem;
+      padding: 2rem 0;
+      margin: 0 3rem;
     }
 
     &--logo {
       @include logo-size;
       margin-right: 1rem;
       fill: currentColor;
+
+      & * {
+        stroke: currentColor !important;
+      }
     }
 
     &--link {
@@ -210,36 +278,77 @@
     top: 100%;
     left: 0;
     width: 100%;
-    // background-color: $white;
-    border-bottom: 0.5px solid $grey;
-    border-top: 0.5px solid $grey;
+    border-bottom: 1px solid $grey-light;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
     opacity: 0;
     visibility: hidden;
     z-index: -1;
     padding: 0 2rem;
     transition: all 0.2s ease;
 
+    &.light-theme-l {
+      background-color: $white;
+    }
+
     &:hover {
       opacity: 1;
       visibility: visible;
     }
+  }
 
-    &--logo {
-      height: 3.5rem;
-      box-sizing: content-box;
-      // width: auto;
-      padding: 2rem 1.5rem;
-      cursor: pointer;
+  &__topicList {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+
+    &:not(:last-of-type) {
+      margin-right: 4rem;
+    }
+
+    &--topic {
+      font-size: 2.5rem;
+      padding: 0.5rem 0;
+      margin: 0 0 0.5rem 0;
+      border-bottom: 1px solid $dark-medium;
+      display: inline-block;
       transition: all 0.2s ease;
+    }
 
-      &:hover {
-        box-shadow: inset $button-shadow;
-        // background-color: $white;
-        background-color: inherit;
-      }
+    &--category {
+      display: inline-block;
+      padding: 0.5rem 0;
+    }
+  }
+
+  .null-item {
+    &:hover {
+      color: getTopicColor(general);
+    }
+  }
+  .technologie-item {
+    &:hover {
+      color: getTopicColor(technologie);
+    }
+  }
+  .cuisine-item {
+    &:hover {
+      color: getTopicColor(cuisine);
+    }
+  }
+  .maison-item {
+    &:hover {
+      color: getTopicColor(maison);
+    }
+  }
+  .beaute-item {
+    &:hover {
+      color: getTopicColor(beaute);
+    }
+  }
+  .bienetre-item {
+    &:hover {
+      color: getTopicColor(bienetre);
     }
   }
 }

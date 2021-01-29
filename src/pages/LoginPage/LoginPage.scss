@@ -2,43 +2,36 @@
 
 .LoginPage {
   overflow: hidden;
-  // height: max-content;
   overflow: auto;
   width: 100%;
   display: flex;
   align-items: stretch;
-  background-image: url("../../assets/images/login-image.jpg");
   background-size: cover;
 
-  &--wrapper {
-    padding-top: 3rem;
-    background-color: $white;
-    z-index: 1;
-    width: 35%;
-    height: 100%;
-    min-height: 100vh;
+  .Login {
+    border: 1px solid $grey;
   }
 
-  &__message {
-    width: 65%;
-    color: $white;
-    background-color: rgba($black, 0.6);
+  &__wrapper {
+    width: 40%;
+    max-width: 50rem;
+    margin: 5rem;
+    background-color: transparent !important;
+  }
+
+  &__logo {
+    width: 60%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 
     &--logo {
-      width: 8rem;
-      margin-bottom: 2rem;
-
-      & > img {
-        width: 100%;
-      }
-    }
-
-    .title.title-1 {
-      font-size: 4rem;
+      max-width: 60rem;
+      width: 60%;
+      padding: 2rem;
+      border-radius: $card-radius;
+      background-color: rgba($white, 1);
+      @include large-shadow;
     }
   }
 
@@ -55,42 +48,28 @@
 
 @media screen and (max-width: $bp-tablet) {
   .LoginPage {
-    &--wrapper {
-      width: 55%;
-    }
-    &__message {
-      width: 45%;
+    background-image: none;
+    display: flex;
+    justify-content: center;
 
-      &--logo {
-        width: 6rem;
-      }
-
-      .title.title-1 {
-        font-size: 2rem;
-      }
-    }
-    .login,
-    .signup {
+    &__wrapper {
       width: 100%;
+    }
+    &__logo {
+      display: none;
     }
   }
 }
-
-@media screen and (max-width: $bp-phone) {
+@media screen and (max-width: $bp-small-phone) {
   .LoginPage {
-    background-image: none;
-    &--wrapper {
-      width: 100%;
-    }
-    &__message {
-      display: none;
+    &__wrapper {
+      margin: 1rem;
     }
 
-    .login,
-    .signup {
-      .title.title-1 {
-        font-size: 3rem;
-      }
+    .Login,
+    .Register {
+      padding: 0;
+      border: none;
     }
   }
 }

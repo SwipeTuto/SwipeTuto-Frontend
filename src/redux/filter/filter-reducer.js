@@ -1,5 +1,5 @@
 import { FilterActionTypes } from './filter-types'
-import { initialSearchState } from '../../helper/index'
+import { initialSearchState } from '../../helper/constants'
 
 const INITIAL_STATE = {
   currentSearch: initialSearchState,
@@ -14,9 +14,6 @@ const INITIAL_STATE = {
 
 const FilterReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-
-    // case FilterActionTypes.DELETE_CARDS_IN_STORE:
-    //   return { ...state, cardsFetched: "" };
     case FilterActionTypes.DELETE_FILTER_ERROR:
       return { ...state, errors: null };
     case FilterActionTypes.GET_CARDS_FILTER_SUCCESS:
@@ -31,10 +28,6 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       }
     case FilterActionTypes.SET_CURRENT_SEARCH:
       return {
-        // ...state, currentSearch: {
-        //   ...state.currentSearch,
-        //   [action.payload.item]: action.payload.value,
-        // }
         ...state, currentSearch: action.payload
       }
     case FilterActionTypes.DELETE_CURRENT_SEARCH:
@@ -97,8 +90,11 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, totalNumberOfCardsSearched: 0 };
 
     case FilterActionTypes.SET_CARDS_FETCHED_IN_STORE:
-      return { ...state, cardsFetched: action.payload.data };
-
+      if (action && action.payload && action.payload.data) {
+        return { ...state, cardsFetched: action.payload.data };
+      } else {
+        return { ...state, cardsFetched: null };
+      }
     case FilterActionTypes.GET_OTHER_PAGE_ACTION_SUCCESS:
       const flattenArray = state.cardsFetched.results.concat(action.payload.results)
       return {
@@ -111,13 +107,8 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
           results: flattenArray
         }
       };
-
     case FilterActionTypes.GET_OTHER_PAGE_ACTION_FAILURE:
       return { ...state, errors: action.payload };
-
-    // case FilterActionTypes.SET_CARDS_GRID_PAGE:
-    //   return { ...state, currentSearch: { ...state.currentSearch, searchPage: action.payload } };
-
     case FilterActionTypes.SET_CLICKED_CARD:
       return {
         ...state,
@@ -168,11 +159,8 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, clickedCardComments: action.payload, lastPublishedComment: null, errors: null }
     case FilterActionTypes.GET_CARD_COMMENTS_ERROR:
       return { ...state, errors: action.payload }
-    // case FilterActionTypes.GET_COMMENT_REPLIES_SUCCESS:
-    //   return { ...state, clickedCardComments: action.payload, lastPublishedComment: null, errors: null }
-    // case FilterActionTypes.GET_COMMENT_REPLIES_ERROR:
-    //   return { ...state, errors: action.payload }
-
+    case FilterActionTypes.DELETE_LAST_PUBLISHED_COMMENT_IN_STORE:
+      return { ...state, lastPublishedComment: null }
     default:
       return state;
   }

@@ -1,15 +1,9 @@
 @import "../../../variables.scss";
 
 .CardFullPopup {
-  display: none;
-  visibility: hidden;
   z-index: 50;
   scroll-behavior: smooth;
-
-  &::-webkit-scrollbar {
-    // display: none;
-  }
-
+  font-size: 1.8rem;
   display: flex;
   justify-content: center;
   visibility: visible;
@@ -20,17 +14,51 @@
   top: 0;
   left: 0;
   overflow-y: scroll;
+  position: fixed;
+
+  &__loading {
+    width: max-content;
+    padding: 2rem;
+    border-radius: $card-radius;
+    @include large-shadow;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    background-color: $white;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__allwrapper {
+    width: 100%;
+  }
+
+  &__scroll-wrapper {
+    height: 100%;
+    overflow-y: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 80rem 1fr;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 
   &__wrapper {
-    max-width: 70rem;
-    width: 70rem;
-    position: relative;
-    height: max-content;
-    border: $box-radius;
-    // background-color: $white;
-    padding: 1rem 2rem;
-    margin: 2rem auto;
-    border: 0.5px solid $grey;
+    grid-column: 2/3;
+    padding: 3rem 6rem;
+    padding-top: 8rem;
+    max-width: 100%;
+    margin: 0;
+    width: 100%;
+    border-radius: 0;
 
     .loading {
       width: 100%;
@@ -38,63 +66,113 @@
     }
   }
 
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+  &__section {
+    padding: 6rem 0;
+    margin: 0 4rem;
   }
 
   &__user {
     display: flex;
     align-items: center;
     text-overflow: ellipsis;
+    margin: 0 0 3rem 0;
+    padding: 0;
 
     .UserNameAndAvatar {
       display: flex;
       align-items: center;
+
       &__avatar {
-        height: 3rem;
-        width: 3rem;
+        height: 6rem;
+        width: 6rem;
       }
       &__username {
         margin-left: 1rem;
-        font-size: 2rem;
+        font-size: 2.5rem;
+        font-weight: bold;
       }
     }
   }
 
   &__action-button {
-    width: max-content;
-    height: max-content;
-    display: flex;
-    flex-shrink: 0;
+    display: none;
+  }
 
-    .card-action-button {
-      @include big-logo-size;
-      margin-left: 0.6rem;
-      cursor: pointer;
-      & * {
-        stroke: currentColor !important;
+  .VerticalMenu {
+    &__logo {
+      &--logo {
+        @include big-logo-size;
       }
-      &:last-of-type {
-        fill: currentColor;
+    }
+  }
+
+  .card-action-button {
+    @include big-logo-size;
+    display: block;
+
+    & & * {
+      stroke: currentColor !important;
+    }
+
+    &__wrapper {
+      @include button-round;
+
+      &.dark-theme {
+        background-color: $dark-dark;
+        & svg {
+          fill: $white;
+          stroke: $white;
+
+          & * {
+            stroke: $white !important;
+          }
+        }
+      }
+      &.light-theme {
+        background-color: $white;
+        & svg {
+          fill: $black;
+          stroke: $black;
+
+          & * {
+            stroke: $black !important;
+          }
+        }
+      }
+      &:not(:last-of-type) {
+        margin-bottom: 1.5rem;
       }
 
-      &__liked {
-        fill: $red-like;
-        // fill: $primary-light;
-      }
-
-      &__saved {
-        fill: $green-saved;
-        // fill: $primary-light;
+      &:first-child {
+        margin-bottom: 4rem;
       }
     }
 
-    .VerticalMenu {
-      &__logo {
-        &--logo {
-          @include big-logo-size;
+    &__liked {
+      fill: $red-like !important;
+    }
+
+    &__saved {
+      fill: $green-saved !important;
+    }
+  }
+
+  &__mobile {
+    display: none;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    z-index: 80;
+    width: 100%;
+    padding: 1.5rem;
+    box-shadow: 2px 0px 3px $grey-dark;
+
+    &.dark-theme-m {
+      svg {
+        fill: $white;
+
+        & * {
+          stroke: $white !important;
         }
       }
     }
@@ -102,52 +180,117 @@
 
   &__title.title.title-1 {
     text-align: center;
-    margin: 2rem 0;
+    margin-bottom: 2rem;
     font-size: 4rem;
   }
+  & .title.title.title-2 {
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+  }
 
-  &__section {
-    margin-bottom: 6rem;
-    width: 75%;
-    margin-left: auto;
-    margin-right: auto;
+  &__description {
+    body {
+      line-height: 1.6;
+      padding: 0;
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 3rem 0 1rem 0;
+      }
+
+      ul,
+      ol {
+        list-style: initial;
+        padding-left: 3rem;
+      }
+
+      blockquote {
+        font-style: italic;
+      }
+
+      blockquote {
+        margin: 3rem 0;
+      }
+      pre {
+        margin: 2rem 0;
+        background-color: $grey;
+        color: $black;
+        padding: 1rem;
+        border-radius: $card-radius;
+        white-space: normal;
+
+        & * {
+          color: $black;
+        }
+      }
+
+      a,
+      a:visited {
+        border-bottom: 1px solid transparent;
+        color: $secondary-dark;
+        transition: all 0.2s ease;
+
+        &:hover,
+        &:active {
+          color: $primary-light;
+          border-bottom: 1px solid $primary-light;
+        }
+      }
+    }
   }
 
   &__meta {
     display: flex;
     justify-content: center;
+    padding: 0;
+    flex-wrap: wrap;
 
-    &--published-date {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+    &-block {
+      background-color: $grey-dark;
+      @include button-style;
+      white-space: nowrap;
+      cursor: default;
+      font-size: 1.4rem;
+      margin: 0.5rem;
+      font-weight: bold;
 
-    &--category-stamp {
-      font-size: 1.3rem;
-      padding: 0.3rem 1rem;
-      background-color: $primary-dark;
-      color: white;
-      margin-bottom: 1rem;
-    }
-
-    &--tags {
-      text-align: center;
-
-      &--container {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        padding: 0 2rem;
-
-        .tag {
-          // @include big-tag-style;
-          background-color: $primary-dark;
-          margin: 0.3rem;
-        }
+      &:hover {
+        color: $black;
       }
     }
+
+    &--logo {
+      @include logo-size;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &.active {
+        & svg {
+          fill: $red-like;
+        }
+      }
+
+      & svg {
+        @include logo-size;
+      }
+    }
+
+    &--number {
+      margin-left: 0.6rem;
+    }
+  }
+
+  &__like-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 1rem;
   }
 
   &__empty-image {
@@ -163,22 +306,21 @@
     text-align: center;
   }
 
-  &__autres-posts {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+  &__commentaires {
+    padding-bottom: 0;
+  }
 
+  &__autres-posts {
     .autres-posts {
       &--grid {
+        width: 100%;
         display: grid;
-        grid-template-columns: repeat(4, max-content);
+        grid-template-columns: repeat(auto-fit, 15rem);
         grid-gap: 1rem;
       }
     }
 
     .autres-posts--preview {
-      width: 8rem;
-      height: 8rem;
       cursor: pointer;
 
       & > img {
@@ -188,20 +330,18 @@
   }
 
   &__slider {
-    min-height: 500px;
-    min-width: 500px;
+    min-height: 400px;
+    min-width: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .nav__chevron {
-    display: block;
+    display: none;
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    // height: 5rem;
-    // width: 5rem;
     @include big-logo-size;
     cursor: pointer;
     fill: rgba($grey, 0.7);
@@ -220,42 +360,124 @@
     }
   }
 
-  @media screen and (max-width: $bp-tablet) {
+  &.noscroll {
+    position: fixed;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .FirstLevelComment .VerticalMenu {
+    height: 2.5rem;
+    width: 2.5rem;
+    &__logo {
+      &--logo {
+        @include logo-size;
+      }
+    }
+  }
+
+  @media screen and (min-width: $bp-big) {
     .CardFullPopup {
       &__wrapper {
-        margin: 0;
-        max-width: 100%;
-        width: 100%;
+        max-width: 90rem;
+        width: 90rem;
       }
 
-      &__section {
-        width: 100%;
+      &__wrapper,
+      &__action-button {
+        margin: 2rem 0;
       }
 
-      &__title {
-        font-size: 4rem;
+      &__action-button {
+        grid-column: 3/4;
+        display: flex;
+        flex-direction: column;
+        box-sizing: content-box;
+        margin-left: 2rem;
+      }
+
+      &__allwrapper {
+        display: grid;
+        grid-template-columns: 8rem 1fr 8rem;
+        position: fixed;
+        height: 100vh;
+        width: max-content;
+      }
+
+      &__scroll-wrapper {
+        grid-column: 2/3;
+        display: block;
+      }
+
+      &__wrapper {
+        max-width: 90rem;
+        border-radius: $card-radius;
+        padding: 3rem 6rem;
+      }
+    }
+    .nav__chevron {
+      display: block;
+    }
+  }
+
+  @media screen and (max-width: $bp-tablet) {
+    .CardFullPopup {
+      &__mobile {
+        display: flex;
+        justify-content: center;
+
+        .card-action-button,
+        .VerticalMenu__logo--logo {
+          margin-left: 2rem;
+        }
+      }
+
+      &__scroll-wrapper {
+        display: block;
+      }
+
+      &__wrapper {
+        padding: 7rem 10rem;
       }
 
       &__slider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         min-height: unset;
         min-width: unset;
       }
     }
-    .nav__chevron {
-      display: none;
+    .VerticalMenu__menu {
+      top: unset;
+      right: unset;
+      bottom: 130%;
+    }
+    .CardSlider {
+      height: 100%;
     }
   }
 
   @media screen and (max-width: $bp-phone) {
     .CardFullPopup {
-      &__wrapper {
-        padding: $inner-component-padding-phone;
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
+      &__mobile {
+        justify-content: space-between;
       }
 
-      &__commentaires {
-        margin: 0;
+      &__wrapper {
+        padding: $inner-component-padding-phone;
+        padding-bottom: 5rem;
+      }
+
+      &__user {
+        .UserNameAndAvatar {
+          &__avatar {
+            height: 4rem;
+            width: 4rem;
+          }
+        }
       }
 
       &__autres-posts {
@@ -274,14 +496,16 @@
         }
       }
 
-      &__title.title.title-1 {
-        font-size: 2.5rem;
+      &__section {
+        padding: 3rem 0;
+        margin: 0;
       }
-    }
-  }
-
-  @media screen and (max-width: $bp-small-phone) {
-    .CardFullPopup {
+      &__section:first-of-type {
+        padding: 1.5rem 0;
+      }
+      &__commentaires {
+        padding-bottom: 0;
+      }
     }
   }
 }

@@ -1,50 +1,57 @@
 @import "../../../../variables.scss";
 
-.FirstLevelComment {
-  margin-bottom: 1rem;
+.FirstLevelComment,
+.SecondLevelComment {
+  margin-bottom: 3rem;
   display: flex;
+  width: 100%;
 
   &__wrapper {
+    margin-left: 2rem;
     flex-grow: 1;
-    margin: 0 1rem;
   }
 
   &__author {
-    width: 4rem;
-    height: 4rem;
+    .UserNameAndAvatar {
+      .user_avatar {
+        width: 6rem;
+        height: 6rem;
+      }
+    }
   }
 
   &__center {
+    position: relative;
+    border-radius: $card-radius;
     display: flex;
     flex-direction: column;
-    padding: 1rem;
-    background-color: $grey-light;
-    color: $black;
-    border-radius: $box-radius;
-    border: 0.5px solid $grey;
+    padding: 1.5rem 2rem;
 
     .UserUsername {
       display: inline-block;
-      align-self: flex-start;
+      align-self: flex-end;
+      margin-bottom: 1rem;
     }
 
     .UserUsername__username {
-      // color: $primary-light;
       font-weight: bold;
-      margin-bottom: 0.6rem;
-      display: inline-block;
     }
 
     &--top {
       display: flex;
-      justify-content: space-between;
+    }
+
+    &.dark-theme-l {
+      .FirstLevelComment__date {
+        color: $grey;
+      }
     }
   }
   &__actions {
-    margin-top: 0.2rem;
+    margin: 1rem 1rem 0 3rem;
     display: flex;
     align-items: center;
-    font-size: 1rem;
+    font-size: 1.4rem;
   }
 
   &__action {
@@ -59,14 +66,11 @@
       margin-left: 1.5rem;
     }
 
-    &--likes-number {
-      margin-left: auto;
-    }
-
     &--logo {
       @include logo-size;
       margin-left: 0.3rem;
       justify-self: flex-start;
+
       & * {
         stroke: currentColor !important;
       }
@@ -77,9 +81,30 @@
     }
   }
 
+  &__date {
+    font-size: 1.2rem;
+    margin-left: 1rem;
+  }
+
+  &__comment {
+    word-wrap: anywhere;
+  }
+
+  .VerticalMenu {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    margin-left: auto;
+    width: 4rem;
+    height: 4rem;
+
+    &__logo {
+      height: 100%;
+    }
+  }
+
   &__replies {
     &--message {
-      // text-align: center;
       margin-bottom: 3rem;
       margin-left: 5rem;
       cursor: pointer;
@@ -89,19 +114,22 @@
     }
 
     &--input {
-      margin: 0 0 0 5rem;
-      display: flex;
-      align-items: flex-start;
+      display: none;
 
-      form.CommentsInputReply {
-        width: 100%;
+      &.active {
+        margin: 0 0 0 5rem;
+        display: flex;
+        align-items: flex-start;
+
+        form.CommentsInputReply {
+          width: 100%;
+        }
       }
     }
   }
 
   &__close-logo {
     @include big-logo-size;
-    // margin-left: 1rem;
     margin-top: 1rem;
     display: inline-block;
     width: 5rem;
@@ -113,42 +141,33 @@
       fill: $primary-light;
     }
   }
+}
 
-  @media screen and (max-width: $bp-tablet) {
-    .FirstLevelComment {
-      &__wrapper {
-        margin: 0 0.5rem;
-        font-size: 1.6rem;
-      }
+.SecondLevelComment {
+  margin-left: 4rem;
+}
 
-      &__center {
-        .UserUsername__username {
-          // margin-bottom: 0.3rem;
-        }
-      }
-    }
+@media screen and (max-width: $bp-tablet) {
+  .FirstLevelComment {
   }
-
-  @media screen and (max-width: $bp-phone) {
-    .FirstLevelComment {
-      &__center {
-        position: relative;
-      }
-
-      &__author {
-        display: flex;
-        flex-direction: column;
-        height: max-content;
-
+}
+@media screen and (max-width: $bp-phone) {
+  .FirstLevelComment {
+    &__author {
+      .UserNameAndAvatar {
         .user_avatar {
-          height: 3.5rem;
-          width: 3.5rem;
-          margin: 0 auto;
+          width: 4rem;
+          height: 4rem;
         }
       }
     }
+
+    &__wrapper {
+      margin-left: 1rem;
+    }
   }
 
-  @media screen and (max-width: $bp-small-phone) {
+  .SecondLevelComment {
+    margin-left: 3rem;
   }
 }

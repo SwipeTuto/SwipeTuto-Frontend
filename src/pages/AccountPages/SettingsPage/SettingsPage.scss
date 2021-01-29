@@ -4,21 +4,16 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: $grid-component-padding;
 
-  // input:not([type="file"]),
-  // textarea {
-  //   @include input-style;
-  // }
+  label {
+    margin-left: 0.6rem;
+    margin-right: 2rem;
+    cursor: pointer;
+  }
 
-  // input[name="mdp1"] {
-  //   margin-bottom: 2rem;
-  // }
-
-  // textarea {
-  //   resize: none;
-  //   min-height: 10rem;
-  // }
+  input {
+    cursor: pointer;
+  }
 
   .allForms {
     display: flex;
@@ -28,9 +23,15 @@
   .form {
     display: flex;
     padding: 2rem;
-    border-bottom: 1px solid $grey-dark;
+    border: 1px solid $grey;
     justify-content: space-between;
     align-items: center;
+    border-radius: $card-radius;
+    @include card-shadow;
+
+    &:not(:last-of-type) {
+      margin-bottom: 6rem;
+    }
 
     &__bottom {
       display: flex;
@@ -38,7 +39,13 @@
       width: 70%;
     }
   }
-  // }
+  .FormInput__label {
+    margin-bottom: 2rem;
+  }
+
+  input#avatar {
+    margin-top: 2rem;
+  }
 }
 
 @media screen and (max-width: $bp-tablet) {

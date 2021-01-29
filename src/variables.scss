@@ -1,41 +1,52 @@
-// VARIABLES
-// TESTS WEBDESIGN
-// $blue-swipetuto: #00e7fd;
 $red-error: #cf0030;
 $green-success: #00b109;
 $green-saved: #1be970;
-$red-like: #ff5d83;
-$secondary-dark: #edb603ff;
-$secondary-light: #fed523ff;
+$red-like: #ff003c;
+
+$secondary-dark: #dba800;
+$secondary-light: #eec200;
 $primary-light: #ad0cc2;
-$primary-dark: #280849;
-$black: #202020;
-$white: #f6f6f6;
-// $black: #000000ff;
-// $white: #ffffffff;
-$grey: #b6b6b6;
-$grey-light: #ececec;
+$primary-dark: #440088;
+
+$black: #2c2c2c;
+$white: #fff;
+$grey: #d4d4d4;
+$grey-lighter: #f8f8f8;
+$grey-light: #f1f1f1;
 $grey-dark: #636363;
 
-// $black-themedark: #202020;
-// $white-themedark: #ececec;
-// $grey-themedark: #494949;
-// $grey-light-themedark: #bebebe;
-// $grey-dark-themedark: #2c2c2c;
+$dark-dark: #18191a;
+$dark-medium: #242526;
+$dark-light: #4e4f50;
 
-$box-radius: 5px;
-$box-padding: 0.8rem 1.2rem;
-$button-radius: 3rem;
+$topicColors: (
+  "general": #00d3e2,
+  "bienetre": #1eee17,
+  "beaute": #cc24ff,
+  "cuisine": #f5df17,
+  "maison": #00e99b,
+  "technologie": #ff6060,
+);
 
-$navtop-height: 5rem;
+@function getTopicColor($topicName) {
+  @if (map-has-key($topicColors, $topicName)) {
+    @return map-get($topicColors, $topicName);
+  } @else {
+    @return map-get($topicColors, "general");
+  }
+}
+
+$round-radius: 50%;
+$round-padding: 0.3rem;
+$card-radius: 8px;
+$box-padding: 0.6rem 2rem;
+$button-radius: 40px;
+
+$navtop-height: 6rem;
 $navtop-mobile-height: 4rem;
 
-$button-shadow: 0 2px 3px rgba($grey, 0.4);
-$card-shadow: 0 2px 3px rgba($grey, 0.4);
-// $card-shadow-2: 0 0px 3px rgba($grey, 0.2);
-// $button-shadow-dark: 0 2px 3px $grey-themedark;
-// $card-shadow-dark: 0 2px 3px $grey-themedark;
-// $card-shadow-2-dark: 0 0px 8px rgba($grey-themedark, 0.4);
+$button-shadow: 0 2px 2px rgba($grey, 0.6);
+$light-shadow: 0 1px 3px $grey-lighter;
 
 $inner-component-padding: 0 14vw;
 $grid-component-padding: 0 14vw;
@@ -45,20 +56,19 @@ $inner-component-padding-phone: 0 1rem;
 $grid-component-padding-phone: 0 1rem;
 
 // Breakpoints
-$bp-big: 1300px;
+$bp-huge: 1600px;
+$bp-big: 1260px;
 $bp-tablet: 960px;
 $bp-phone: 680px;
 $bp-small-phone: 540px;
 $bp-smallest: 360px;
 
 // Fonts
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Nunito&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik&family=Nunito&display=swap");
 $text-font: "Nunito", sans-serif;
-$title-font: "Montserrat", sans-serif;
+$title-font: "Rubik", sans-serif;
 
 @mixin input-style {
-  background: $grey-light;
-  color: $black;
   font-size: inherit;
   font-family: inherit;
   padding: $box-padding;
@@ -68,24 +78,34 @@ $title-font: "Montserrat", sans-serif;
   align-items: center;
   transition: all 0.2s ease;
   margin-bottom: 1rem;
-  border-left: 3px solid $grey;
+  border-bottom: 3px solid $grey;
+  border-radius: 0;
   width: 100%;
 
   &:focus {
-    background-color: $white;
-    border-top: 1px solid $grey-light;
-    border-right: 1px solid $grey-light;
-    border-bottom: 1px solid $grey-light;
+    & input {
+      border-radius: 0;
+
+      &::placeholder {
+        color: $grey;
+      }
+    }
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px $grey-lighter inset;
   }
 
   &:focus.valid-input {
-    border-left: 3px solid $green-success;
+    border-bottom: 3px solid $green-success;
   }
 
   &.invalid-input,
   &:focus.invalid-input {
-    // border: 0.5px solid $red-error;
-    border-left: 3px solid $red-error;
+    border-bottom: 3px solid $red-error;
   }
 
   .FormInput__label {
@@ -95,10 +115,6 @@ $title-font: "Montserrat", sans-serif;
   .input__message {
     display: block;
   }
-
-  // & + .input__message-hide {
-  //   display: none;
-  // }
 
   &:focus {
     &::placeholder {
@@ -115,11 +131,7 @@ $title-font: "Montserrat", sans-serif;
   align-items: center;
   transition: all 0.2s ease;
   color: $white;
-  background-color: $secondary-dark;
-
-  &:hover {
-    background-color: $secondary-light;
-  }
+  border-radius: $button-radius;
 }
 
 @mixin section-padding {
@@ -139,19 +151,53 @@ $title-font: "Montserrat", sans-serif;
   height: 1.5rem;
   width: 1.5rem;
 }
+@mixin medium-logo-size {
+  height: 2rem;
+  width: 2rem;
+}
 @mixin big-logo-size {
   height: 3rem;
   width: 3rem;
 }
 
-@mixin theme-colors($themelight: true) {
+@mixin theme-colors-dark($themelight: true) {
   @if $themelight {
     background-color: $white;
     color: $black;
   } @else {
-    background-color: $black;
+    background-color: $dark-dark;
     color: $white;
   }
+}
+@mixin theme-colors-medium($themelight: true) {
+  @if $themelight {
+    background-color: $grey-lighter;
+    color: $black;
+  } @else {
+    background-color: $dark-medium;
+    color: $white;
+  }
+}
+@mixin theme-colors-light($themelight: true) {
+  @if $themelight {
+    background-color: $grey-light;
+    color: $black;
+  } @else {
+    background-color: $dark-light;
+    color: $white;
+  }
+}
+
+@mixin card-shadow($themelight: true) {
+  @if $themelight {
+    box-shadow: 0 2px 2px rgba($grey, 0.6), 0 0 5px rgba($grey, 0.6);
+  } @else {
+    box-shadow: 0 2px 2px rgba($dark-light, 0.6), 0 0 5px rgba($dark-medium, 0.6);
+  }
+}
+
+@mixin large-shadow {
+  box-shadow: 0 0 8px rgba($black, 0.6);
 }
 
 @mixin popup-style {
@@ -163,21 +209,35 @@ $title-font: "Montserrat", sans-serif;
   height: 100vh;
   overflow: auto;
   background-color: rgba($black, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-// @mixin button-active-style {
-//   padding: $box-padding;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   transition: all 0.2s ease;
-//   box-shadow: 0 2px 3px $grey;
-//   color: $white;
-//   background-color: $secondary-light;
-// }
+@mixin thin-scrollbar {
+  ::-webkit-scrollbar {
+    background-color: $grey-light;
+    height: 0.5rem;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: $grey;
+    height: 1rem;
+    width: 1rem;
+  }
+}
+
+@mixin button-round {
+  transition: all 0.2s ease;
+  padding: 1.5rem;
+  border-radius: $round-radius;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: none;
+  }
+}
 
 @mixin nav-style {
   padding: $box-padding;
@@ -217,8 +277,7 @@ $title-font: "Montserrat", sans-serif;
   position: absolute;
   display: flex;
   flex-direction: column;
-  border-radius: 0 0 $box-radius $box-radius;
-  box-shadow: $card-shadow;
-  border: 0.5px solid $grey-light;
+  border-radius: $card-radius;
+  @include large-shadow;
   overflow: hidden;
 }

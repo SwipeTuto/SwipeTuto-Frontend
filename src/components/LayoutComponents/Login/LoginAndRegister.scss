@@ -4,11 +4,12 @@
 .Register {
   display: flex;
   flex-direction: column;
-  padding: 2rem 4rem;
+  padding: 4rem;
+  border-radius: $button-radius;
 
-  .title.title-1 {
+  .title.title-2 {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
   }
 
   &__form {
@@ -20,31 +21,33 @@
     }
   }
 
+  &__ou {
+    text-align: center;
+    margin: 2rem 0;
+    font-weight: bold;
+  }
+
   .horizontal-separation-primary-light {
-    margin: 3rem auto;
+    margin: 2rem auto;
     width: 80%;
   }
 
   &__google {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
-
     .title.title-1 {
       margin-bottom: 0;
     }
   }
 
   .custom-button {
-    display: flex;
-    align-items: center;
+    margin: 0 auto;
+
     &:not(:last-of-type) {
-      margin-right: 1rem;
+      margin-bottom: 1rem;
     }
 
     &[type="submit"] {
       margin-top: 2rem;
+      width: 100%;
     }
 
     & > svg {

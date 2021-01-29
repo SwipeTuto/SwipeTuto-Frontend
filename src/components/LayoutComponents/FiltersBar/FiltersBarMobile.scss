@@ -36,7 +36,6 @@
 
   &__menu {
     padding: 1rem;
-    // background-color: $white;
     position: absolute;
     top: 0;
     left: 0;
@@ -127,6 +126,10 @@
         margin-left: 1rem;
       }
     }
+  }
+
+  .custom-button {
+    font-size: 2rem;
   }
 
   &__currentSearch {

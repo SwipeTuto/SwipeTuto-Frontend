@@ -8,10 +8,7 @@ import "./SavedPage.scss";
 import { setCardsSize } from "../../../redux/layout/layout-actions";
 import { selectCardsFetchedCards } from "../../../redux/filter/filter-selectors";
 import { withRouter } from "react-router-dom";
-import {
-  selectIsLoaded,
-  selectTheme,
-} from "../../../redux/layout/layout-selectors";
+import { selectIsLoaded, selectTheme } from "../../../redux/layout/layout-selectors";
 import Loading from "../../../components/Loading/Loading";
 
 const SavedPage = ({ location }) => {
@@ -22,7 +19,7 @@ const SavedPage = ({ location }) => {
   const isLoaded = useSelector(selectIsLoaded);
 
   useEffect(() => {
-    dispatch(setCardsSize("small"));
+    dispatch(setCardsSize("big"));
   });
 
   useEffect(() => {
@@ -30,13 +27,13 @@ const SavedPage = ({ location }) => {
   }, [dispatch, currentUserId]);
 
   return (
-    <div className={`SavedPage ${currentTheme}-theme`}>
+    <div className={`SavedPage ${currentTheme}-theme-d`}>
       <div className="SavedPage__cards">
-        <h1 className="title title-1">Vos cartes sauvegardées :</h1>
+        <h2 className="title title-2">Vos cartes sauvegardées :</h2>
         {!isLoaded ? (
           <Loading />
-        ) : cards.length > 0 ? (
-          <CardGridList loadFilter={false} />
+        ) : cards && cards.length > 0 ? (
+          <CardGridList loadFilter={false} allowInfiniteScroll={true} />
         ) : (
           <p className="SavedPage__nocards">Aucune carte pour le moment.</p>
         )}

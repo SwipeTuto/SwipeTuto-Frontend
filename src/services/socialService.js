@@ -30,7 +30,7 @@ export const getLikers = cardId => {
 
 
 export const addComment = (cardId, comment) => {
-  var data = {"text": comment }
+  var data = { "text": comment }
   return client().post(`card/add_comment/${cardId}/`, data).then(rep => {
     return rep
   })
@@ -38,7 +38,7 @@ export const addComment = (cardId, comment) => {
 
 
 export const addReply = (commentId, comment) => {
-  var data = {"text": comment }
+  var data = { "text": comment }
   return client().post(`card/add_reply_comment/${commentId}/`, data).then(rep => {
     return rep
   })
@@ -59,7 +59,7 @@ export const getNextReplies = url => {
       'Content-Type': 'application/json',
     }
   }
-  return axios.get( url, config).then(rep => {
+  return axios.get(url, config).then(rep => {
     return rep
   })
 }
@@ -106,14 +106,13 @@ export const modifyComment = (commentId, newComment) => {
 
 // PAS MODIFIER AVEC LA NOUVELLE CONFIG DE AXIOS !!!!!!!
 export const getCardCommentsOtherPage = (url) => {
-  console.log(url)
   var config = {
     headers: {
       'Content-Type': 'application/json',
     }
   }
   return axios.get(`${url}`, config).then(rep => {
-      return rep
-    })
+    return rep
+  })
 }
 

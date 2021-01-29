@@ -1,64 +1,94 @@
 @import "../../variables.scss";
 
 .AccountPage {
-  min-height: 100vh;
-  background-color: $grey;
+  display: flex;
 
-  &__wrapper {
-    width: 100%;
-    min-height: 100vh;
-    padding: 2rem;
-  }
-
-  &__top {
-    padding: $grid-component-padding;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  h2 {
+    text-align: center;
+    margin-bottom: 3rem;
   }
 
   &__navigation {
-    padding: 4rem;
-    height: min-content;
+    padding: 0 4rem;
     display: flex;
     flex-direction: column;
+    width: 22%;
+    flex-shrink: 0;
 
-    & a {
+    & .UserNameAndAvatar {
       display: flex;
+      flex-direction: column;
       align-items: center;
+      margin-bottom: 4rem;
+      margin-top: 4rem;
+      flex: unset;
 
-      &:not(:last-child) {
+      &__avatar {
+        width: 12rem;
+        height: 12rem;
         margin-bottom: 1rem;
       }
+    }
 
-      & > svg {
-        @include logo-size;
-        margin-right: 1rem;
+    &--items {
+      position: sticky;
+      top: $navtop-height;
 
-        & * {
-          fill: currentColor !important;
+      & a,
+      & p.AccountPage__logout {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        margin: 1.5rem 1rem;
+        font-size: 1.8rem;
+        border-radius: $button-radius;
+        transition: all 0.2s ease;
+
+        &.active {
+          background-color: $secondary-dark;
+          color: $black;
+
+          &:hover {
+            color: $black;
+          }
+        }
+
+        &:hover {
+          color: $secondary-dark;
+        }
+
+        & > svg {
+          @include medium-logo-size;
+          margin-right: 2rem;
+
+          & * {
+            fill: currentColor !important;
+            stroke: currentColor !important;
+          }
         }
       }
     }
-
-    & .active {
-      color: $primary-light;
-    }
+  }
+  p.AccountPage__logout {
+    margin-top: 4rem;
   }
 
-  &__user-cards {
-    width: 100%;
+  &__item-border {
+    background-color: $grey;
+    height: 1px;
+    margin: 0 1rem;
+  }
+  &__page {
+    padding: 4rem 0;
+    width: 70%;
+    max-width: 1000px;
+    margin: 0 auto;
   }
 }
 
 @media screen and (max-width: $bp-tablet) {
   .AccountPage {
-    grid-template-columns: 1fr;
-
-    &__top {
-      padding: 0 2rem;
-    }
-
     &__navigation {
       display: none;
     }
@@ -66,13 +96,9 @@
 }
 @media screen and (max-width: $bp-phone) {
   .AccountPage {
-    padding: 0;
-    grid-template-columns: 1fr;
-
-    &__wrapper {
-      padding: $inner-component-padding-phone;
-      padding-top: 2rem;
-      padding-bottom: 2rem;
+    &__page {
+      width: 100%;
+      padding: 4rem 1rem;
     }
   }
 }

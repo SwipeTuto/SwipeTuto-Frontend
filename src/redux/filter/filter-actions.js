@@ -1,9 +1,9 @@
 import { FilterActionTypes } from "./filter-types"
-import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded } from '../layout/layout-actions'
-import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById } from '../../services/cardsService'
+import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded, openNotificationPopup, setRedirectUrl } from '../layout/layout-actions'
+import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById, createCardService, deleteCardService, updateCardService } from '../../services/cardsService'
 import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply, toggleSave, getCardCommentsNext } from "../../services/socialService"
 import { getUserFavoriesById } from "../../services/userService"
-import { initialSearchState } from "../../helper"
+import { initialSearchState } from "../../helper/constants"
 
 const getCardAfterfilterSuccess = cards => ({
   type: FilterActionTypes.GET_CARDS_FILTER_SUCCESS,
@@ -44,15 +44,15 @@ export const getCardByIdAction = cardId => {
     dispatch(setClickedCardLoading());
     return getCardById(cardId)
       .then(rep => {
+        const repObj = { ...rep };
+        if ((repObj.response && repObj.response.status >= 400) || repObj.status >= 400) {
+          dispatch(getCardByIdFailure(repObj.response.statusText))
+          dispatch(setClickedCardLoaded());
+          return
+        }
         dispatch(getCardByIdSuccess(rep.data))
         dispatch(setClickedCardLoaded())
-        return rep
       })
-      .catch(err => {
-        dispatch(getCardByIdFailure(err.response))
-        dispatch(setClickedCardLoaded())
-      })
-
   }
 }
 
@@ -93,10 +93,11 @@ export const setCardsFetchedInStore = (cards) => ({
 
 
 // Fetch des cards à partir du nom de l'auteur
-export const getCardsByUserIdAction = userId => {
+export const getCardsByUserIdAction = (userId, cardState) => {
+  console.log(userId)
   return dispatch => {
     dispatch(setLoading())
-    return getCardsByUser(userId)
+    return getCardsByUser(userId, cardState)
       .then(rep => {
         dispatch(getCardsByUserIdSuccess(rep.data))
         dispatch(setLoaded())
@@ -147,7 +148,6 @@ const getOtherCardsByAuthorNameFailure = err => ({
 // Fetch des données d'une autre page
 export const getOtherPageAction = (navLink) => {
   return dispatch => {
-    // dispatch(otherPageLoading())
     dispatch(setLoading())
     return getOtherPageCard(navLink)
       .then(rep => {
@@ -306,7 +306,6 @@ export const addReplyAction = (cardId, commentId, comment) => {
   return dispatch => {
     return addReply(commentId, comment)
       .then(rep => {
-        console.log(rep)
         dispatch(addCommentSuccess(rep.data))
       })
       .catch(err => {
@@ -321,11 +320,11 @@ export const getCardCommentsAction = (cardId) => {
     return getCardComments(cardId)
       .then(rep => {
         dispatch(getCardCommentsSuccess(rep.data))
-        dispatch(setCommentsLoaded()) // stop loader
+        dispatch(setCommentsLoaded())
       })
       .catch(err => {
         dispatch(getCardCommentsError(err))
-        dispatch(setCommentsLoaded()) // stop loader
+        dispatch(setCommentsLoaded())
       })
   }
 };
@@ -340,32 +339,6 @@ const getCardCommentsSuccess = (comments) => ({
   type: FilterActionTypes.GET_CARD_COMMENTS_SUCCESS,
   payload: comments
 })
-// export const getCommentRepliesAction = (commentId) => {
-//   return dispatch => {
-//     // dispatch(setCommentsLoading())
-//     return getReplies(commentId)
-//       .then(rep => {
-//         console.log(rep)
-//         dispatch(getCommentRepliesSuccess(rep.data))
-//         // dispatch(setCommentsLoaded()) // stop loader
-//       })
-//       .catch(err => {
-//         dispatch(getCommentRepliesError(err))
-//         // dispatch(setCommentsLoaded()) // stop loader
-//       })
-//   }
-// };
-
-
-// const getCommentRepliesError = error => ({
-//   type: FilterActionTypes.GET_COMMENT_REPLIES_ERROR,
-//   payload: error
-// })
-
-// const getCommentRepliesSuccess = (comments) => ({
-//   type: FilterActionTypes.GET_COMMENT_REPLIES_SUCCESS,
-//   payload: comments
-// })
 
 
 export const deleteCommentAction = (commentId) => {
@@ -391,12 +364,14 @@ const deleteCommentSuccess = () => ({
 
 export const getUserFavoriesAction = userId => {
   return dispatch => {
+    dispatch(setCardsFetchedInStore(null))
     dispatch(setLoading());
-    getUserFavoriesById(userId).then(rep => {
+    userId && getUserFavoriesById(userId).then(rep => {
       dispatch(getUserFavoriesSuccess(rep.data))
       dispatch(setLoaded())
       return rep.data
     }).catch(err => {
+      console.log(err)
       dispatch(getUserFavoriesError(err))
       dispatch(setLoaded())
       return err
@@ -412,3 +387,83 @@ export const getUserFavoriesSuccess = favories => ({
   type: FilterActionTypes.GET_FAVORIES_CARDS_SUCCESS,
   payload: favories
 })
+
+export const createCardAction = (cardObject, cardState) => {
+  return async dispatch => {
+    dispatch(setLoading());
+    dispatch(setRedirectUrl(false))
+    cardObject && await createCardService(cardObject).then(rep => {
+      dispatch(openNotificationPopup("Carte créée avec succès !"))
+      dispatch(setLoaded())
+
+      if (cardState !== 0) {
+        dispatch(setCurrentSearch(initialSearchState))
+        dispatch(getCardAfterfilterAction(initialSearchState))
+        dispatch(setRedirectUrl(true))
+      }
+
+      return rep.data
+    }).catch(err => {
+      console.error(err)
+      dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
+      dispatch(setLoaded())
+      return err
+    })
+  }
+}
+
+// modify card action à faire sur le même modèle que create
+export const updateCardAction = (cardId, updateObj) => {
+  return async dispatch => {
+    dispatch(setLoading());
+    dispatch(setRedirectUrl(false))
+    if (cardId && updateObj) {
+      await updateCardService(cardId, updateObj).then(rep => {
+        dispatch(openNotificationPopup("Carte modifiée avec succès !"))
+        dispatch(setLoaded())
+        dispatch(setCurrentSearch(initialSearchState))
+        dispatch(getCardAfterfilterAction(initialSearchState))
+        dispatch(setRedirectUrl(true))
+        return rep.data
+      }).catch(err => {
+
+        console.error(err)
+        dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
+        dispatch(setLoaded())
+        return err
+      })
+    } else {
+      dispatch(openNotificationPopup("Une erreur est survenue... Merci de réessayer ou de nous signaler le problème"))
+      dispatch(setLoaded())
+    }
+  }
+}
+
+export const deleteCardAction = (cardId, currentUserId, history) => {
+  console.log(history)
+  return async dispatch => {
+    dispatch(setLoading());
+    cardId && await deleteCardService(cardId).then(rep => {
+      dispatch(openNotificationPopup("Carte supprimée avec succès !"))
+      dispatch(setLoaded())
+      if (history.location.pathname === "/account/drafts") {
+        currentUserId && dispatch(getCardsByUserIdAction(currentUserId, 0));
+      } else {
+        currentUserId && dispatch(getCardsByUserIdAction(currentUserId));
+        history && history.push("/account/user");
+      }
+      return rep.data
+    }).catch(err => {
+      console.error(err)
+      dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
+      dispatch(setLoaded())
+      return err
+    })
+  }
+}
+
+
+export const deleteLastPublishedCommentInStore = () => ({
+  type: FilterActionTypes.DELETE_LAST_PUBLISHED_COMMENT_IN_STORE,
+})
+

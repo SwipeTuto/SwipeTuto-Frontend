@@ -5,38 +5,30 @@ import { withRouter, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // redux
-import {
-  loginAction,
-  deleteUserErrors,
-  loginGoogleAction,
-} from "../../../redux/user/user-actions";
+import { loginAction, deleteUserErrors, loginGoogleAction, loginFacebookAction } from "../../../redux/user/user-actions";
 import { selectUserErrors } from "../../../redux/user/user-selectors";
-
 // helper
-import { loginGit } from "../../../services/userService";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";
 
 // assets
 import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google.svg";
-import { ReactComponent as GithubLogo } from "../../../assets/images/logo-github.svg";
+import { ReactComponent as FacebookLogo } from "../../../assets/images/logo-facebook.svg";
 
 import "./LoginAndRegister.scss";
 import FormInput from "../../FormInputs/FormInput";
+import { selectTheme } from "../../../redux/layout/layout-selectors";
 
-const Login = ({ history }) => {
+const Login = ({ title }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({ username: "", password: "" });
   const [submitOk, setSubmitOk] = useState(false);
   const userErrors = useSelector(selectUserErrors);
   const allInput = [...document.querySelectorAll(".FormInput")];
+  const currentTheme = useSelector(selectTheme);
 
-  // scroll reset
   useEffect(() => {
-    if (window.scrollY) {
-      window.scroll(0, 0);
-    }
     dispatch(deleteUserErrors());
   }, [dispatch]);
 
@@ -44,8 +36,9 @@ const Login = ({ history }) => {
     e.stopPropagation();
     dispatch(loginGoogleAction());
   };
-  const handleClickGit = (e) => {
-    loginGit();
+  const handleClickFacebook = (e) => {
+    e.stopPropagation();
+    dispatch(loginFacebookAction());
   };
 
   const handleClick = (e) => {
@@ -61,9 +54,7 @@ const Login = ({ history }) => {
   };
 
   useEffect(() => {
-    const readyToSubmit = allInput.every((input) =>
-      input.classList.contains("valid-input")
-    );
+    const readyToSubmit = allInput.every((input) => input.classList.contains("valid-input"));
 
     if (readyToSubmit) {
       setSubmitOk(false);
@@ -73,18 +64,19 @@ const Login = ({ history }) => {
   }, [allInput, user]);
 
   return (
-    <div className="Login">
-      <h1 className="title title-1">Se connecter</h1>
+    <div className={`Login ${currentTheme}-theme-d`}>
+      <h2 className="title title-2">{title ? title : "Content de vous revoir !"}</h2>
       <div className="Login__google">
         <CustomButton color="white" onClick={(e) => handleClickGoogle(e)}>
           <GoogleLogo />
-          Google
+          Continuer avec Google
         </CustomButton>
-        <CustomButton color="white" onClick={(e) => handleClickGit(e)}>
-          <GithubLogo />
-          Git
+        <CustomButton color="white" onClick={(e) => handleClickFacebook(e)}>
+          <FacebookLogo />
+          Continuer avec Facebook
         </CustomButton>
       </div>
+      <p className="Login__ou">Ou :</p>
       <p className="error__message">
         {userErrors
           ? userErrors === 400
@@ -93,31 +85,9 @@ const Login = ({ history }) => {
           : ""}
       </p>
       <form className="Login__form">
-        <FormInput
-          idFor="email"
-          label="Votre email :"
-          type="email"
-          name="email"
-          getValue={getValue}
-          required={true}
-          // firstValue={savedEmail}
-        />
-        <FormInput
-          idFor="password"
-          label="Votre mot de passe :"
-          type="password"
-          name="password"
-          getValue={getValue}
-          required={true}
-          // firstValue={savedPassword}
-        />
-        <CustomButton
-          onClick={(e) => handleClick(e)}
-          id="login-button"
-          color="dark"
-          type="submit"
-          disabled={submitOk}
-        >
+        <FormInput idFor="email" label="Votre email :" type="email" name="email" getValue={getValue} required={true} />
+        <FormInput idFor="password" label="Votre mot de passe :" type="password" name="password" getValue={getValue} required={true} />
+        <CustomButton onClick={(e) => handleClick(e)} id="login-button" color="dark" type="submit" disabled={submitOk}>
           Connexion
         </CustomButton>
       </form>

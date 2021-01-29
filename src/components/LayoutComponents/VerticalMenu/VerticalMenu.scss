@@ -4,6 +4,16 @@
   position: relative;
 
   &__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.dark-theme {
+      svg {
+        fill: $grey-dark;
+      }
+    }
+
     &:hover {
       cursor: pointer;
     }
@@ -16,7 +26,8 @@
     @include overlay-menu;
     padding: 1rem;
     position: absolute;
-    right: 0;
+    right: 80%;
+    top: 80%;
     z-index: 30;
 
     &--item:not(:last-of-type) {

@@ -3,24 +3,24 @@
 
 .CardSlider {
   width: 100%;
+  margin-bottom: 4rem;
 
   &__close {
     cursor: pointer;
-    @include big-logo-size;
-    fill: $white;
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    bottom: 2rem;
+    right: 4rem;
     z-index: 70;
-    background-color: $grey-dark;
+    @include button-round;
+    background-color: $grey-light;
+    padding: 0.6rem;
 
-    &:hover {
-      fill: $primary-light;
-      transition: all 0.2s ease;
+    & svg {
+      @include big-logo-size;
     }
 
     &--active {
-      display: block;
+      display: flex;
     }
 
     &--hide {
@@ -40,24 +40,27 @@
 
   .glide {
     position: relative;
-    height: 75vh;
-
-    &__track {
+    height: 70vh &__track {
       height: 100%;
     }
 
     &__slides {
       height: 100%;
+      -ms-touch-action: pan-y;
+      touch-action: pan-y;
     }
 
     &__slide {
       display: block;
       text-align: center;
       height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       & > img {
-        height: 100%;
-        width: auto;
+        max-height: 100%;
+        max-width: 100%;
       }
     }
 
@@ -68,6 +71,14 @@
       width: 100%;
       display: flex;
       justify-content: space-between;
+    }
+
+    &__arrow {
+      &.dark-theme {
+        & svg * {
+          stroke: $grey !important;
+        }
+      }
     }
 
     &__bullets {
@@ -81,7 +92,7 @@
       background-color: $grey;
 
       &--active {
-        background-color: $grey-dark;
+        background-color: $secondary-light;
       }
 
       &:not(:last-of-type) {
@@ -94,10 +105,14 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: $black;
-    height: 100vh;
-    width: 100vw;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $dark-dark;
     z-index: 60;
+    margin-bottom: 0rem;
 
     & .glide {
       height: 100%;
@@ -123,6 +138,17 @@
           background-color: $grey;
         }
       }
+
+      &__arrow {
+        border: 1px solid $grey;
+        border-radius: 50%;
+        width: 5rem;
+        height: 5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+      }
     }
 
     & .CardSlider__nav {
@@ -141,20 +167,14 @@
 @media screen and (max-width: $bp-tablet) {
   .CardSlider {
     .glide {
-      width: 100%;
-      height: auto;
-
-      &__slide {
-        width: 100%;
-
-        & > img {
-          width: 100%;
-          height: auto;
-        }
-      }
       &__arrows {
         display: none;
       }
+    }
+
+    &__close {
+      bottom: 1rem;
+      right: 1rem;
     }
 
     &--fullscreen {
@@ -168,6 +188,22 @@
           display: flex;
           justify-content: center;
           align-items: center;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $bp-phone) {
+    .CardSlider {
+      .glide {
+        height: auto;
+        max-height: 70vh;
+
+        &__slide {
+          & > img {
+            width: 100%;
+            height: auto;
+          }
         }
       }
     }

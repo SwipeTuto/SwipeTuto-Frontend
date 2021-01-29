@@ -1,8 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../redux/layout/layout-selectors";
 
-// ajouter un lien vers la page termes d'utilisation
+import "./HelpPage.scss";
+
 const HelpPage = () => {
-  return <div>HelpPage</div>;
+  const currentTheme = useSelector(selectTheme);
+  return <div className={`HelpPage ${currentTheme}-theme-d`}>HelpPage</div>;
 };
 
 export default HelpPage;

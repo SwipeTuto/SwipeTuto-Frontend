@@ -2,45 +2,37 @@
 
 .FiltersBar {
   width: 100%;
-  // margin: 2rem auto;
-  padding: $grid-component-padding;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding: 6rem 4rem 1rem 4rem;
+  font-size: 1.8rem;
 
   .scroll-logo {
     display: none;
   }
 
   &__wrapper {
-    // max-width: 75rem;
     margin: 0 auto;
     display: flex;
-    flex-direction: column;
-  }
 
-  &__up {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid $grey;
-  }
+    & select {
+      margin-right: 2rem;
 
-  &__down {
-    display: flex;
-    align-items: center;
+      &.light-theme-m {
+        border: 1px solid $grey;
+      }
+    }
   }
 
   &__size-logo {
     display: block;
-    // background-color: red;
-    height: 2rem;
-    width: 2rem;
-    margin: 1rem 1rem 0 0;
+    height: 2.5rem;
+    width: 2.5rem;
     cursor: pointer;
     fill: $grey-dark;
+    margin: auto 0 auto 0.5rem;
     transition: all 0.2s ease;
 
     &:first-of-type {
-      margin-left: auto;
+      margin-right: 1rem;
     }
 
     .grid-size-logo {
@@ -59,80 +51,60 @@
 
   &__options {
     display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    margin: 0 2rem;
+    position: relative;
+    overflow: auto;
+    white-space: nowrap;
 
+    @include thin-scrollbar;
+
+    &--links {
+      padding: 0.6rem;
+      overflow: auto;
+      white-space: nowrap;
+    }
+
+    .scroll-logo {
+      display: block;
+
+      &:first-of-type {
+        margin-right: 1rem;
+      }
+
+      &:last-of-type {
+        margin-left: 1rem;
+      }
+
+      & > svg {
+        height: 3rem;
+        width: 3rem;
+      }
+    }
     &--item {
       cursor: pointer;
       display: inline-block;
       height: 100%;
-      padding: 0.6rem;
+      padding: 0.3rem 2rem;
       transition: all 0.2s ease;
-
-      &:hover {
-        color: $primary-light;
-      }
 
       &:not(:first-of-type) {
         margin-left: 0.6rem;
       }
     }
-
     &--item.active {
-      background-color: $primary-light;
-      color: $white;
-      border-radius: $box-radius $box-radius 0 0;
+      color: $black;
+      font-weight: bold;
+      border-radius: $button-radius;
     }
   }
 }
 @media screen and (max-width: $bp-tablet) {
   .FiltersBar {
-    width: 100%;
-    padding: 0 2rem;
-    margin-bottom: 2rem;
-    // margin: 1rem auto 0 auto;
-
-    &__options {
-      margin-left: 3rem;
-      position: relative;
-      overflow: auto;
-      white-space: nowrap;
-
-      &--links {
-        overflow: auto;
-        white-space: nowrap;
-      }
-
-      .scroll-logo {
-        display: block;
-
-        &:first-of-type {
-          margin-right: 1rem;
-        }
-
-        &:last-of-type {
-          margin-left: 1rem;
-        }
-
-        & > svg {
-          height: 3rem;
-          width: 3rem;
-        }
-      }
-    }
   }
 }
 @media screen and (max-width: $bp-phone) {
   .FiltersBar {
-    &__options {
-      margin-left: 0;
-    }
-
-    &__up {
-      flex-direction: column;
-
-      select {
-        align-self: center;
-        margin-bottom: 1rem;
-      }
-    }
   }
 }

@@ -1,8 +1,8 @@
 import { UserActionTypes } from './user-types'
-import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, loginGit } from '../../services/userService'
-import history from "../../helper/history"
+import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin } from '../../services/userService'
+import history from "../../helper/functions/createBrowserHistory"
 import { setUserLoading, setUserLoaded } from '../layout/layout-actions';
-import { baseURL } from '../../services/configService';
+
 
 export const deleteUserErrors = () => ({
   type: UserActionTypes.DELETE_USER_ERRORS,
@@ -26,13 +26,14 @@ export const loginAction = (username, password) => {
           if (currentUrl) {
             window.location.href = currentUrl;
           } else {
-            window.location.href = baseURL;
+            return
           }
         }
       })
 
   }
 }
+
 export const loginGoogleAction = () => {
   const currentUrl = window.location.href;
   return dispatch => {
@@ -47,7 +48,7 @@ export const loginGoogleAction = () => {
               if (currentUrl) {
                 window.location.href = currentUrl;
               } else {
-                window.location.href = baseURL;
+                return
               }
             }
           })
@@ -55,12 +56,13 @@ export const loginGoogleAction = () => {
 
   }
 }
-export const loginGitAction = () => {
+
+export const loginFacebookAction = () => {
   const currentUrl = window.location.href;
   return dispatch => {
-    return loginGit()
+    return LoginProviderFacebook()
       .then(rep => {
-        login(rep)
+        FacebookLogin(rep)
           .then(rep => {
             dispatch(deleteUserErrors())
             if (!rep.data) {
@@ -69,12 +71,11 @@ export const loginGitAction = () => {
               if (currentUrl) {
                 window.location.href = currentUrl;
               } else {
-                window.location.href = baseURL;
+                return
               }
             }
           })
       })
-
   }
 }
 
@@ -111,7 +112,7 @@ export const registerAction = users => {
     register(users)
       .then(user => {
         dispatch(registerSuccess(user.data.user));
-        history.push('/', history.location)
+        history.push('/search', history.location)
         history.go()
       })
       .catch(err => {
@@ -170,11 +171,14 @@ export const getUserByIdAction = id => {
   }
 }
 
+export const setNoClickedUser = () => ({
+  type: UserActionTypes.SET_NO_CLICKED_USER
+})
+
 export const getCurrentUserAction = id => {
   return dispatch => {
     dispatch(setUserLoading());
     getUserById(id).then(rep => {
-      // console.log(rep.data.user)
       dispatch(setCurrentUser(rep.data.user))
       dispatch(setUserLoaded())
       dispatch(deleteUserErrors())
@@ -193,7 +197,6 @@ export const getCurrentUserAction = id => {
 export const updateUserInfosAction = userInfos => {
   return dispatch => {
     return (
-
       updateUserInfos(userInfos)
         .then(rep => {
           dispatch(updateUserInfosSuccess(rep.data.user))

@@ -11,10 +11,6 @@ export const selectFullscreen = createSelector(
   layout => layout.fullscreen
 )
 
-export const selectUserNav = createSelector(
-  [selectLayout],
-  layout => layout.showUserNav
-)
 
 export const selectMobileNavOpen = createSelector(
   [selectLayout],
@@ -76,4 +72,8 @@ export const selectFirstLoadDone = createSelector(
 export const selectUserLoaded = createSelector(
   [selectLayout],
   layout => layout.firstLoadDone
+);
+export const selectNotificationPopupOpen = createSelector(
+  [selectLayout],
+  layout => layout.notificationPopupOpen
 );

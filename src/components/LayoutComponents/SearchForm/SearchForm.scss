@@ -2,21 +2,27 @@
 
 .SearchForm {
   height: 100%;
-  // max-height: 3rem;
+  margin-right: auto;
 
   display: flex;
   align-items: center;
-  margin-right: 1.2rem;
 
   &__search--input {
-    padding: none;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+    cursor: pointer;
   }
 
   &__button {
     height: 100%;
     max-height: 100%;
-    fill: $primary-dark;
+    margin-right: 1rem;
+    fill: currentColor;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transition: fill 0.2s ease;
 
     &:hover {
@@ -26,37 +32,56 @@
 
     &--logo {
       display: block;
-      @include logo-size;
+      @include medium-logo-size;
       max-height: 100%;
     }
   }
 
   &__search {
-    display: flex;
+    @include input-style;
     overflow: hidden;
     height: 100%;
-
-    @include input-style;
+    justify-content: flex-start;
     flex-direction: row;
     margin-bottom: 0rem;
     border: none;
+    border-radius: $button-radius;
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: all 0.3s ease;
+
+    &.light-theme-l {
+      background-color: $white;
+    }
+    &.dark-theme-l {
+      background-color: $dark-medium;
+    }
 
     &--input {
-      width: 12rem;
-      transition: all 0.3s ease;
+      &::placeholder {
+        color: inherit;
+      }
 
       &:focus {
-        width: 15rem;
-
         &::placeholder {
           color: transparent;
         }
       }
     }
 
+    &.focus {
+      color: $black;
+
+      &.light-theme-l {
+        background-color: $grey-light;
+      }
+      &.dark-theme-l {
+        background-color: $grey-light;
+      }
+    }
+
     &--delete {
       height: 100%;
-      // width: min-content;
       display: block;
       cursor: pointer;
 
@@ -82,7 +107,6 @@
         &--input {
           max-width: 100%;
           width: 70%;
-          // font-size: 2rem;
 
           &:focus {
             width: 100%;

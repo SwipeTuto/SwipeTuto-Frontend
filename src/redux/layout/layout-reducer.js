@@ -1,4 +1,4 @@
-import { initialSignalState } from '../../helper';
+import { initialSignalState } from '../../helper/constants';
 import { LayoutActionTypes } from './layout-types'
 
 const INITIAL_STATE = {
@@ -7,8 +7,11 @@ const INITIAL_STATE = {
   signalPopupOpen: false,
   signalInfos: initialSignalState,
   fullscreen: false,
-  showUserNav: false,
   mobileNavOpen: false,
+  notificationPopupOpen: {
+    open: false,
+    notification: ""
+  },
   filterMobileMenuOpen: false,
   isLoaded: false,
   cardsSize: 'small',
@@ -25,18 +28,9 @@ const INITIAL_STATE = {
 const layoutReducer = (state = INITIAL_STATE, action) => {
   const app = document.getElementsByClassName("App")[0];
   const cardPopupElement = document.getElementsByClassName("CardFullPopup")[0];
-  const scrollYWindow = window.scrollY;
-  const scrollY = app && app.style.top;
 
   switch (action.type) {
     case LayoutActionTypes.SHOW_POPUP_CARD:
-      if (cardPopupElement) cardPopupElement.addEventListener('wheel', (e) => {
-        e.stopPropagation();
-      })
-
-      app.style.position = 'fixed';
-      app.style.top = `-${scrollYWindow}px`;
-
       return {
         ...state,
         popupShown: true,
@@ -47,9 +41,6 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         firstLoadDone: true,
       };
     case LayoutActionTypes.CLOSE_POPUP_CARD:
-      app.style.position = '';
-      app.style.top = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
       return {
         ...state,
         popupShown: false,
@@ -70,11 +61,6 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cardsSize: action.payload,
-      };
-    case LayoutActionTypes.TOGGLE_USER_NAV:
-      return {
-        ...state,
-        showUserNav: !state.showUserNav,
       };
     case LayoutActionTypes.OPEN_MOBILE_NAV:
       app.style.position = "fixed";
@@ -187,6 +173,22 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         otherPageCardsLoaded: true,
+      }
+    case LayoutActionTypes.OPEN_NOTIFICATION_POPUP:
+      return {
+        ...state,
+        notificationPopupOpen: {
+          open: true,
+          notification: action.payload
+        },
+      }
+    case LayoutActionTypes.CLOSE_NOTIFICATION_POPUP:
+      return {
+        ...state,
+        notificationPopupOpen: {
+          open: false,
+          notification: ""
+        },
       }
     case LayoutActionTypes.TOGGLE_THEME:
       return {

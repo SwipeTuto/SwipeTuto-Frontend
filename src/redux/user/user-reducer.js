@@ -29,6 +29,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         errors: action.payload,
       };
+    case UserActionTypes.SET_NO_CLICKED_USER:
+      return {
+        ...state,
+        clickedUser: null,
+      };
 
 
     case UserActionTypes.LOGIN_SUCCESS:

@@ -1,22 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CustomButton from "../CustomButton/CustomButton";
-import { ReactComponent as SendLogo } from "../../../assets/images/send.svg";
-
 import "./CommentsInput.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
 import { openConnexionPopup } from "../../../redux/layout/layout-actions";
-import FormInput from "../../FormInputs/FormInput";
+import FormTextarea from "../../FormInputs/FormTextarea";
 
-const CommentsInput = ({
-  className,
-  newComment,
-  handleInputValueChange,
-  handleAddCommentClick,
-  placeholderText,
-}) => {
+const CommentsInput = ({ handleAddCommentClick, id, firstValue }) => {
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
+  const [inputValue, setInputValue] = useState("");
 
   const checkIfUser = () => {
     if (!currentUser) {
@@ -26,35 +19,40 @@ const CommentsInput = ({
     }
   };
 
-  // console.log(newComment.comment.length);
+  const getValue = (name, value) => {
+    setInputValue(value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!currentUser) {
+      dispatch(openConnexionPopup());
+    } else {
+      handleAddCommentClick(inputValue);
+      setInputValue("");
+    }
+  };
+
+  useEffect(() => {
+    if (firstValue) {
+      setInputValue(firstValue);
+    }
+  }, [firstValue]);
 
   return (
-    <form className={className ? className : "CommentsInput"}>
-      <FormInput
+    <form className="CommentsInput" onSubmit={(e) => handleSubmit(e)}>
+      <FormTextarea
+        idFor={id}
         name="comment"
         placeholder="Ajouter un commentaire..."
-        className="CommentsInput__newComment--input"
         type="text"
-        getValue={handleInputValueChange}
+        getValue={getValue}
         onFocus={() => checkIfUser()}
         required={true}
+        value={inputValue}
+        firstValue={inputValue}
       />
-      <CustomButton
-        color="dark"
-        disabled={newComment && newComment.comment === "" ? "disabled" : ""}
-        onClick={(e) => handleAddCommentClick(e)}
-        className="custom-button CommentsInput__newComment--sendPC"
-      >
-        Envoyer
-      </CustomButton>
-      <CustomButton
-        color="dark"
-        disabled={newComment && newComment.comment === "" ? "disabled" : ""}
-        onClick={(e) => handleAddCommentClick(e)}
-        className="custom-button CommentsInput__newComment--sendMobile"
-      >
-        <SendLogo />
-      </CustomButton>
+      <CustomButton color="dark">Envoyer</CustomButton>
     </form>
   );
 };

@@ -32,7 +32,7 @@ const HomePage = () => {
       searchOrder: "likes",
     };
     dispatch(setCurrentSearch(currentSearchCopy));
-    dispatch(getCardAfterfilterAction(currentSearchCopy));
+    // dispatch(getCardAfterfilterAction(currentSearchCopy));
   };
 
   useEffect(() => {

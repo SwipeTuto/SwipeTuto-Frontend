@@ -7,19 +7,24 @@ import CFormFavourites from "../../components/FirstConnexionForm/CFormFavourites
 
 import "./FirstConnexionPage.scss";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
+import { Link } from "react-router-dom";
 
 const FirstConnexionPage = () => {
   const [step, setStep] = useState(1);
+  const [stepIsOk, setStepIsOk] = useState(false);
   const currentTheme = useSelector(selectTheme);
 
   const handleNextStep = () => {
     setStep(step + 1);
+    if (step + 1 === 3) return;
+    setStepIsOk(false);
   };
   const handlePreviousStep = () => {
     setStep(step - 1);
   };
   const handleValidate = () => {
     setStep(step - 1);
+    // action validate update state user et redirect vers homepage ou search
   };
 
   return (
@@ -38,33 +43,41 @@ const FirstConnexionPage = () => {
           {step === 1 ? (
             <>
               <div className="FirstConnexionPage__formGroup">
-                <input type="radio" name="AForm" value="reglement-accepted" id="AForm-accept" />
+                <input type="radio" name="AForm" value="reglement-accepted" onChange={() => setStepIsOk(true)} id="AForm-accept" />
                 <label htmlFor="AForm-accept">Je reconnais avoir lu et accepté le règlement.</label>
               </div>
               <div className="FirstConnexionPage__formGroup">
-                <input type="radio" name="AForm" value="reglement-denied" id="AForm-deny" />
+                <input type="radio" name="AForm" value="reglement-denied" id="AForm-deny" onChange={() => setStepIsOk(false)} />
                 <label htmlFor="AForm-deny">Je n'accepte pas le règlement.</label>
               </div>
             </>
           ) : step === 2 ? (
             <>
               <div className="FirstConnexionPage__formGroup">
-                <input type="radio" name="BForm" value="reglement-accepted" id="BForm-accept" />
+                <input type="radio" name="BForm" value="reglement-accepted" id="BForm-accept" onChange={() => setStepIsOk(true)} />
                 <label htmlFor="BForm-accept">Je reconnais avoir lu et accepté la politique de confidentialité et de gestion des données.</label>
               </div>
               <div className="FirstConnexionPage__formGroup">
-                <input type="radio" name="BForm" value="reglement-denied" id="BForm-deny" />
+                <input type="radio" name="BForm" value="reglement-denied" id="BForm-deny" onChange={() => setStepIsOk(false)} />
                 <label htmlFor="BForm-deny">Je n'accepte pas la politique de confidentialité et de gestion des données.</label>
               </div>
             </>
           ) : (
             ""
           )}
+          {!stepIsOk ? <p className="error__message">Vous devez accepter pour continuer.</p> : <p>&nbsp;</p>}
         </div>
         <div className="FirstConnexionPage__nav">
           {step > 1 && <CustomButton onClick={() => handlePreviousStep()}>&larr; Précédent</CustomButton>}
           <p>Etape {step} sur 3</p>
-          {step < 3 && <CustomButton onClick={() => handleNextStep()}>Suivant &rarr;</CustomButton>}
+          {step < 3 &&
+            (stepIsOk ? (
+              <CustomButton onClick={() => handleNextStep()}>Suivant &rarr;</CustomButton>
+            ) : (
+              <CustomButton color="light">
+                <Link to="/">Quitter l'inscription</Link>
+              </CustomButton>
+            ))}
           {step === 3 && <CustomButton onClick={() => handleValidate()}>Valider</CustomButton>}
         </div>
       </div>

@@ -66,7 +66,7 @@ const Footer = ({ location }) => {
       </div>
       <div className="Footer__credits">
         SWIPETUTO - &copy; SWIPETUTO {currentYear}
-        <ToggleButton toggleTheme={toggleTheme} theme={theme} />
+        <ToggleButton />
       </div>
     </div>
   );

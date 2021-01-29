@@ -147,3 +147,19 @@ export const signalContent = signal => {
     return rep
   }).catch(err => { return err })
 }
+
+export const updatePrefService = (topicName, queryName) => {
+  const data = {
+    // "category_preference": [
+    // {
+    "name": queryName,
+    "topic": topicName
+  }
+  //   ]
+  // }
+  console.log(data)
+
+  return client().patch(`update/preference/`, JSON.stringify(data)).then(rep => {
+    return rep
+  }).catch(err => { return err })
+}

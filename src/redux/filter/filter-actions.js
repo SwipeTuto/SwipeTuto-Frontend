@@ -1,6 +1,6 @@
 import { FilterActionTypes } from "./filter-types"
 import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded, openNotificationPopup, setRedirectUrl } from '../layout/layout-actions'
-import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById, createCardService, deleteCardService, updateCardService } from '../../services/cardsService'
+import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById, createCardService, deleteCardService, updateCardService, getCardPrefUser } from '../../services/cardsService'
 import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply, toggleSave, getCardCommentsNext } from "../../services/socialService"
 import { getUserFavoriesById } from "../../services/userService"
 import { initialSearchState } from "../../helper/constants"
@@ -18,6 +18,22 @@ export const getCardAfterfilterAction = (search) => {
   return dispatch => {
     dispatch(setLoading());
     return getCardAfterfilter(search)
+      .then(rep => {
+        dispatch(getCardAfterfilterSuccess(rep.data))
+        dispatch(setLoaded())
+        return rep
+      })
+      .catch(err => {
+        dispatch(getCardAfterfilterFailure(err.response))
+        dispatch(setLoaded())
+      })
+  }
+}
+
+export const getCardPrefUserAction = () => {
+  return dispatch => {
+    dispatch(setLoading());
+    return getCardPrefUser()
       .then(rep => {
         dispatch(getCardAfterfilterSuccess(rep.data))
         dispatch(setLoaded())
@@ -94,7 +110,6 @@ export const setCardsFetchedInStore = (cards) => ({
 
 // Fetch des cards à partir du nom de l'auteur
 export const getCardsByUserIdAction = (userId, cardState) => {
-  console.log(userId)
   return dispatch => {
     dispatch(setLoading())
     return getCardsByUser(userId, cardState)
@@ -398,7 +413,7 @@ export const createCardAction = (cardObject, cardState) => {
 
       if (cardState !== 0) {
         dispatch(setCurrentSearch(initialSearchState))
-        dispatch(getCardAfterfilterAction(initialSearchState))
+        // dispatch(getCardAfterfilterAction(initialSearchState))
         dispatch(setRedirectUrl(true))
       }
 
@@ -421,7 +436,7 @@ export const updateCardAction = (cardId, updateObj) => {
       await updateCardService(cardId, updateObj).then(rep => {
         dispatch(openNotificationPopup("Carte modifiée avec succès !"))
         dispatch(setLoaded())
-        dispatch(setCurrentSearch(initialSearchState))
+        // dispatch(setCurrentSearch(initialSearchState))
         dispatch(getCardAfterfilterAction(initialSearchState))
         dispatch(setRedirectUrl(true))
         return rep.data
@@ -440,7 +455,6 @@ export const updateCardAction = (cardId, updateObj) => {
 }
 
 export const deleteCardAction = (cardId, currentUserId, history) => {
-  console.log(history)
   return async dispatch => {
     dispatch(setLoading());
     cardId && await deleteCardService(cardId).then(rep => {

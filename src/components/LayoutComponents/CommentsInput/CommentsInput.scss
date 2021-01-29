@@ -15,53 +15,10 @@
   }
 }
 
-@media screen and (max-width: $bp-tablet) {
-  .CommentsInput,
-  .CommentsInputReply {
-    &__newComment {
-      &--sendPC {
-        display: none;
-      }
-
-      &--sendMobile {
-        flex-shrink: 0;
-        display: block;
-        border-radius: 50%;
-        position: relative;
-        @include big-logo-size;
-
-        & > svg {
-          @include logo-size;
-          position: absolute;
-          transform-origin: center;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          fill: $white;
-        }
-      }
-    }
-
-    button.custom-button {
-      margin-left: auto;
-    }
-  }
-}
 @media screen and (max-width: $bp-phone) {
   .CommentsInput,
   .CommentsInputReply {
     margin: 3rem 0 0 0;
     padding: 3rem 0;
-
-    &__newComment {
-      &--sendMobile {
-        height: 5rem;
-        width: 5rem;
-
-        & > svg {
-          @include big-logo-size;
-        }
-      }
-    }
   }
 }

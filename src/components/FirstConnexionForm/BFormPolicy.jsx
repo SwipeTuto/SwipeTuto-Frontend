@@ -1,6 +1,6 @@
 import React from "react";
 
-const BFormPolicy = () => {
+const BFormPolicy = ({ allowGoNext, stepIsOk }) => {
   return (
     <div className="BFormPolicyt form-step">
       <h2>Merci de lire puis d'accepter la politique de confidentialité et de gestion des données :</h2>

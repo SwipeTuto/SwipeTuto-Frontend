@@ -6,12 +6,17 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import store from './redux/store';
 import { authHeader } from "./helper/functions/auth-header"
+import { getCookie } from "./helper/functions/getCookie"
 
 import { Router } from 'react-router-dom'
 import './index.scss';
 
 import history from "./helper/functions/createBrowserHistory"
 // AXIOS SETTINGS
+// var csrftoken = getCookie('csrftoken');
+
+
+// console.log('csrftoken',csrftoken)
 const headersKeys = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',

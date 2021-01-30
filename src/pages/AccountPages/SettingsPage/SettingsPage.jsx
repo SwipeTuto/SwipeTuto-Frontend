@@ -98,7 +98,7 @@ const SettingsPage = () => {
   const handleSubmitInput = (e) => {
     e.preventDefault();
     dispatch(updateUserInfosAction(newUserInfos));
-    currentUserId && dispatch(getCurrentUserAction(currentUserId));
+    dispatch(getCurrentUserAction());
     setSendNewInfos(true);
   };
 
@@ -117,7 +117,7 @@ const SettingsPage = () => {
         },
       })
     );
-    currentUserId && dispatch(getCurrentUserAction(currentUserId));
+    dispatch(getCurrentUserAction());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userPref]);
 

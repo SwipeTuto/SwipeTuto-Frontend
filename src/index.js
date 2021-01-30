@@ -13,10 +13,10 @@ import './index.scss';
 
 import history from "./helper/functions/createBrowserHistory"
 // AXIOS SETTINGS
-var csrftoken = getCookie('csrftoken');
+// var csrftoken = getCookie('csrftoken');
 
 
-console.log('csrftoken',csrftoken)
+// console.log('csrftoken',csrftoken)
 const headersKeys = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',

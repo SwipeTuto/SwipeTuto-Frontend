@@ -1,7 +1,7 @@
 import { UserActionTypes } from './user-types'
-import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin } from '../../services/userService'
+import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin, updatePrefService, getCurrentUser } from '../../services/userService'
 import history from "../../helper/functions/createBrowserHistory"
-import { setUserLoading, setUserLoaded } from '../layout/layout-actions';
+import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationPopup } from '../layout/layout-actions';
 
 
 export const deleteUserErrors = () => ({
@@ -175,10 +175,10 @@ export const setNoClickedUser = () => ({
   type: UserActionTypes.SET_NO_CLICKED_USER
 })
 
-export const getCurrentUserAction = id => {
+export const getCurrentUserAction = () => {
   return dispatch => {
     dispatch(setUserLoading());
-    getUserById(id).then(rep => {
+    getCurrentUser().then(rep => {
       dispatch(setCurrentUser(rep.data.user))
       dispatch(setUserLoaded())
       dispatch(deleteUserErrors())
@@ -219,4 +219,34 @@ export const updateUserInfosError = error => ({
 export const updateUserInfosSuccess = userInfos => ({
   type: UserActionTypes.UPDATE_USER_INFOS_SUCCESS,
   payload: userInfos
+})
+
+export const updateUserPrefAction = (topicName, categoryName) => {
+  return dispatch => {
+    dispatch(setUserLoading())
+    return (
+      updatePrefService(topicName, categoryName)
+        .then(rep => {
+          dispatch(updateUserProfileSuccess(rep.data.profile))
+          dispatch(setUserLoaded())
+          return rep
+        }).catch(err => {
+          dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
+          dispatch(updateUserProfileError(err))
+          dispatch(setUserLoaded())
+          return err
+        })
+    )
+
+  }
+}
+
+
+export const updateUserProfileError = error => ({
+  type: UserActionTypes.UPDATE_USER_PROFILE_FAILURE,
+  payload: error
+})
+export const updateUserProfileSuccess = userProfile => ({
+  type: UserActionTypes.UPDATE_USER_PROFILE_SUCCESS,
+  payload: userProfile
 })

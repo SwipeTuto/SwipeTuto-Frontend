@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectTheme } from "../../redux/layout/layout-selectors";
 import AFormReglement from "../../components/FirstConnexionForm/AFormReglement";
 import BFormPolicy from "../../components/FirstConnexionForm/BFormPolicy";
@@ -7,9 +7,11 @@ import CFormFavourites from "../../components/FirstConnexionForm/CFormFavourites
 
 import "./FirstConnexionPage.scss";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { logoutAction, rulesAcceptedAction } from "../../redux/user/user-actions";
 
-const FirstConnexionPage = () => {
+const FirstConnexionPage = ({ history }) => {
+  const dispatch = useDispatch();
   const [step, setStep] = useState(1);
   const [stepIsOk, setStepIsOk] = useState(false);
   const currentTheme = useSelector(selectTheme);
@@ -21,10 +23,16 @@ const FirstConnexionPage = () => {
   };
   const handlePreviousStep = () => {
     setStep(step - 1);
+    setStepIsOk(false);
   };
   const handleValidate = () => {
-    setStep(step - 1);
     // action validate update state user et redirect vers homepage ou search
+    dispatch(rulesAcceptedAction());
+    history.push("/");
+  };
+
+  const handleQuit = () => {
+    dispatch(logoutAction());
   };
 
   return (
@@ -43,7 +51,7 @@ const FirstConnexionPage = () => {
           {step === 1 ? (
             <>
               <div className="FirstConnexionPage__formGroup">
-                <input type="radio" name="AForm" value="reglement-accepted" onChange={() => setStepIsOk(true)} id="AForm-accept" />
+                <input type="radio" name="AForm" value="reglement-accepted" onChange={() => setStepIsOk(true)} id="AForm-accept" checked={stepIsOk} />
                 <label htmlFor="AForm-accept">Je reconnais avoir lu et accepté le règlement.</label>
               </div>
               <div className="FirstConnexionPage__formGroup">
@@ -54,7 +62,7 @@ const FirstConnexionPage = () => {
           ) : step === 2 ? (
             <>
               <div className="FirstConnexionPage__formGroup">
-                <input type="radio" name="BForm" value="reglement-accepted" id="BForm-accept" onChange={() => setStepIsOk(true)} />
+                <input type="radio" name="BForm" value="reglement-accepted" id="BForm-accept" onChange={() => setStepIsOk(true)} checked={stepIsOk} />
                 <label htmlFor="BForm-accept">Je reconnais avoir lu et accepté la politique de confidentialité et de gestion des données.</label>
               </div>
               <div className="FirstConnexionPage__formGroup">
@@ -74,8 +82,8 @@ const FirstConnexionPage = () => {
             (stepIsOk ? (
               <CustomButton onClick={() => handleNextStep()}>Suivant &rarr;</CustomButton>
             ) : (
-              <CustomButton color="light">
-                <Link to="/">Quitter l'inscription</Link>
+              <CustomButton color="light" onClick={() => handleQuit()}>
+                Quitter l'inscription
               </CustomButton>
             ))}
           {step === 3 && <CustomButton onClick={() => handleValidate()}>Valider</CustomButton>}
@@ -85,4 +93,4 @@ const FirstConnexionPage = () => {
   );
 };
 
-export default FirstConnexionPage;
+export default withRouter(FirstConnexionPage);

@@ -4,6 +4,21 @@ import history from "../../helper/functions/createBrowserHistory"
 import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationPopup } from '../layout/layout-actions';
 
 
+export const rulesAcceptedAction = () => {
+  return dispatch => {
+    console.log('le user a accepté les conditions')
+    // updateUserInfos()
+    //   .then(rep => {
+    //     console.log(rep)
+    //   })
+    //   .catch(err => {
+    //     // ENVOYER MAIL POUR SIGNALER PB AVEC LE COMPTE
+    //     dispatch(openNotificationPopup('Une erreur est survenue. Nous faisons le nécessaire pour résoudre le problème.'))
+    //   })
+  }
+}
+
+
 export const deleteUserErrors = () => ({
   type: UserActionTypes.DELETE_USER_ERRORS,
 });

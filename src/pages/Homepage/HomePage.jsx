@@ -2,7 +2,7 @@ import React, { useEffect, useState, Suspense, lazy } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import Loading from "../../components/Loading/Loading";
-import { getCardAfterfilterAction, setCurrentSearch } from "../../redux/filter/filter-actions";
+import { setCurrentSearch } from "../../redux/filter/filter-actions";
 import { ReactComponent as CommunityIllustration } from "../../assets/images/illustrations/community_illustration.svg";
 import { selectCurrentSearch, selectTotalNumberOfResults } from "../../redux/filter/filter-selectors";
 import { selectTheme } from "../../redux/layout/layout-selectors";
@@ -32,7 +32,6 @@ const HomePage = () => {
       searchOrder: "likes",
     };
     dispatch(setCurrentSearch(currentSearchCopy));
-    // dispatch(getCardAfterfilterAction(currentSearchCopy));
   };
 
   useEffect(() => {

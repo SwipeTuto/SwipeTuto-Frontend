@@ -16,7 +16,6 @@ import {
   setClickedCard,
   setNoClickedCard,
   toggleLikeCardAction,
-  getCardAfterfilterAction,
   getOtherCardsByAuthorNameAction,
   toggleSaveCardAction,
   deleteCardAction,
@@ -174,13 +173,7 @@ const CardFullPopup = ({ history, location }) => {
     } else if (location.pathname.includes("/profile/")) {
       history.push(location.pathname);
     } else {
-      // dispatch(setRedirectUrl(true));
-
-      // window.history.pushState("", "", history.location.pathname + history.location.search);
       history.push(redirectUrl);
-      // if (!cardsFetched) {
-      // dispatch(getCardAfterfilterAction(currentSearch));
-      // }
     }
 
     dispatch(setNoClickedCard());

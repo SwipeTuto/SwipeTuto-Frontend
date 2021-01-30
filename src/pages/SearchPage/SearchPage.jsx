@@ -7,8 +7,7 @@ import { selectTheme } from "../../redux/layout/layout-selectors";
 import { selectCardsFetched, selectCurrentSearch, selectTotalNumberOfResults } from "../../redux/filter/filter-selectors";
 import "./SearchPage.scss";
 import { setCardsSize } from "../../redux/layout/layout-actions";
-import { getCardAfterfilterAction, setCurrentSearch } from "../../redux/filter/filter-actions";
-import { initialSearchState } from "../../helper/constants";
+import { getCardAfterfilterAction } from "../../redux/filter/filter-actions";
 
 const FiltersBar = lazy(() => import("../../components/LayoutComponents/FiltersBar/FiltersBar"));
 const CardGridList = lazy(() => import("../../components/CardsComponents/CardGridList/CardGridList"));
@@ -16,7 +15,6 @@ const CardGridList = lazy(() => import("../../components/CardsComponents/CardGri
 const SearchPage = ({ location }) => {
   const currentTheme = useSelector(selectTheme);
   const dispatch = useDispatch();
-  const fetchedCards = useSelector(selectCardsFetched);
   const currentSearch = useSelector(selectCurrentSearch);
 
   const totalNumberOfResults = useSelector(selectTotalNumberOfResults);
@@ -28,15 +26,6 @@ const SearchPage = ({ location }) => {
       return results;
     }
   };
-
-  // useEffect(() => {
-  //   if (fetchedCards === null) {
-  //     dispatch(setCurrentSearch({ ...currentSearch, searchOrder: "likes" }));
-  //     // dispatch(getCardAfterfilterAction(initialSearchState));
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [dispatch, fetchedCards]);
-  // ! NE PAS AJOUTER currentSearch EN DEPENDENCIES DU USEEFFECT
 
   const fetchedFilteredCards = useCallback(() => {
     dispatch(getCardAfterfilterAction(currentSearch));

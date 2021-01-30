@@ -10,7 +10,7 @@ import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
 
 import { selectTheme } from "../../../redux/layout/layout-selectors";
-import { deleteCurrentSearch, getCardAfterfilterAction, setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
+import { deleteCurrentSearch, setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
 import { initialSearchState } from "../../../helper/constants";
@@ -107,7 +107,6 @@ const NavTop = (props) => {
             alt=""
             onClick={() => {
               dispatch(setCurrentSearch(initialSearchState));
-              // dispatch(getCardAfterfilterAction(initialSearchState));
             }}
           />
         </Link>
@@ -128,7 +127,6 @@ const NavTop = (props) => {
                 to="/search"
                 onClick={() => {
                   dispatch(deleteCurrentSearch());
-                  // dispatch(getCardAfterfilterAction(initialSearchState));
                 }}
                 onMouseEnter={(e) => {
                   openTopicDropdown();

@@ -154,6 +154,7 @@ export const updatePrefService = (topicName, queryName) => {
     {
     "name": topicName,
     "topic": queryName
+
   }
     ]
   }

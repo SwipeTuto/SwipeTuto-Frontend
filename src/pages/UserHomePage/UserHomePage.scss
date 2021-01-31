@@ -13,13 +13,18 @@
 
   &__side {
     width: 33%;
-    padding: 2rem 6rem;
+    max-width: 400px;
+    padding: 2rem 4rem;
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    &--stats {
-      margin-top: 2rem;
+    &--news {
+      margin-top: 4rem;
+      margin-bottom: 1rem;
+      width: 100%;
+      flex-grow: 2;
+      overflow-y: scroll;
     }
 
     p:last-of-type {
@@ -33,11 +38,8 @@
     }
   }
 
+  &__side--news,
   &__center {
-    overflow: auto;
-    flex-grow: 2;
-    padding: 2rem 6vw;
-
     &::-webkit-scrollbar {
       background-color: transparent;
       width: 0.2rem;
@@ -47,12 +49,52 @@
       background-color: $grey;
       width: 0.5rem;
     }
+  }
+
+  &__center {
+    overflow: auto;
+    flex-grow: 2;
+    padding: 2rem;
 
     .CardGridList {
-      // width: 55%;
+      padding: 0;
+      max-width: 1200px;
       margin: 0 auto;
       &__wrapper {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .UserHomePage {
+    &__side {
+      padding: 1rem;
+    }
+
+    &__center {
+      padding: 2rem;
+
+      .CardGridList {
+        &__wrapper {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: $bp-phone) {
+  .UserHomePage {
+    &__side {
+      display: none;
+    }
+
+    &__center {
+      .CardGridList {
+        &__wrapper {
+          grid-template-columns: 1fr;
+        }
       }
     }
   }

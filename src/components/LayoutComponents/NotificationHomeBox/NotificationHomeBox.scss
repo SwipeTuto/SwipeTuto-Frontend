@@ -1,0 +1,25 @@
+@import "../../../variables.scss";
+
+.NotificationHomeBox {
+  position: relative;
+  border-radius: $card-radius;
+  width: 100%;
+  max-width: 100%;
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $secondary-light;
+  }
+
+  svg {
+    @include medium-logo-size;
+    fill: currentColor;
+    margin-right: 2rem;
+  }
+}

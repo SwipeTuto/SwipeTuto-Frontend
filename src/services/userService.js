@@ -127,7 +127,6 @@ export const upDateAvatar = avatar => {
 
 
 export const getUserFavoriesById = userId => {
-
   return client().get(`get-favorie/${userId}/`).then(rep => {
     return rep
   })

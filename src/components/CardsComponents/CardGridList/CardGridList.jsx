@@ -26,7 +26,7 @@ import { getUrlId, urlParams } from "../../../helper/functions/getURLParams";
 
 const CardPreviewSmall = lazy(() => import("../CardPreviewSmall/CardPreviewSmall"));
 
-const CardGridList = ({ loadFilter, allowInfiniteScroll, location, overrideColumnNum }) => {
+const CardGridList = ({ allowInfiniteScroll, location, overrideColumnNum }) => {
   const dispatch = useDispatch();
   const nextPageLink = useSelector(selectPaginationNext);
   const cards = useSelector(selectCardsFetchedCards);
@@ -72,12 +72,14 @@ const CardGridList = ({ loadFilter, allowInfiniteScroll, location, overrideColum
 
   // update du array local de cartes si + de fetch
   useEffect(() => {
-    if (prevNumberOfColumns !== numberOfColumns) {
+    if (overrideColumnNum && overrideColumnNum !== prevNumberOfColumns) {
+      reorderCards(cards, overrideColumnNum, true);
+    } else if (prevNumberOfColumns !== numberOfColumns) {
       reorderCards(cards, numberOfColumns, true);
     } else {
       reorderCards(cards, numberOfColumns, false);
     }
-  }, [numberOfColumns, reorderCards, cards, prevNumberOfColumns]);
+  }, [numberOfColumns, reorderCards, cards, prevNumberOfColumns, overrideColumnNum]);
 
   // gestion du infinite scroll : call automatique au back à un certain niveau de scroll
   const options = {

@@ -62,7 +62,7 @@ const HomePage = () => {
           {isLoaded && !isEmpty ? (
             <>
               <div className={`HomePage__grid--overlay ${currentTheme}`}></div>
-              <CardGridList loadFilter={true} allowInfiniteScroll={false} />
+              <CardGridList allowInfiniteScroll={false} />
             </>
           ) : isLoaded && isEmpty ? (
             <div className="HomePage__nocard">

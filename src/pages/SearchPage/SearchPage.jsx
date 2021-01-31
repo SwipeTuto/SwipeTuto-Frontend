@@ -66,7 +66,7 @@ const SearchPage = ({ location }) => {
           </div>
           <Suspense fallback={<div />}>
             <FiltersBar handleClickSize={handleClickSize} />
-            <CardGridList loadFilter={true} allowInfiniteScroll={true} />
+            <CardGridList allowInfiniteScroll={true} />
           </Suspense>
         </div>
       </div>

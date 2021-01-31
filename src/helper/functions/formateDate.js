@@ -47,3 +47,9 @@ export const formattedDate = (date) => {
   const year = dateDate.getFullYear();
   return `${day}/${month}/${year}`;
 };
+
+export const getTodayCompleteDate = () => {
+  const options = { day: 'numeric', month: 'long' };
+  const today = new Date(Date.now());
+  return today.toLocaleDateString('fr-FR', options)
+}

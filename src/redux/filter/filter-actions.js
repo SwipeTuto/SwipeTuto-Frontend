@@ -413,7 +413,6 @@ export const createCardAction = (cardObject, cardState) => {
 
       if (cardState !== 0) {
         dispatch(setCurrentSearch(initialSearchState))
-        // dispatch(getCardAfterfilterAction(initialSearchState))
         dispatch(setRedirectUrl(true))
       }
 
@@ -437,7 +436,7 @@ export const updateCardAction = (cardId, updateObj) => {
         dispatch(openNotificationPopup("Carte modifiée avec succès !"))
         dispatch(setLoaded())
         // dispatch(setCurrentSearch(initialSearchState))
-        dispatch(getCardAfterfilterAction(initialSearchState))
+        dispatch((initialSearchState))
         dispatch(setRedirectUrl(true))
         return rep.data
       }).catch(err => {

@@ -73,7 +73,6 @@ export const createCardService = (cardObject) => {
   formData.append("categorie", cardObject.categorie);
 
   return client().post("card/create/", formData).then(rep => {
-
     return rep
   }).catch(err => {
     console.error(err)

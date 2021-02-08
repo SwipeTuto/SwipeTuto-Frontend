@@ -1,6 +1,6 @@
 import { auth, provider, providerFacebook } from '../services/firebaseService';
 import { client } from "../index"
-
+import axios from "axios";
 
 export const login = idToken => {
   var data = { 'token_id': idToken }
@@ -167,3 +167,45 @@ export const updatePrefService = (topicName, categoryName) => {
     return rep
   }).catch(err => { return err })
 }
+
+
+
+// PERMET D ENVOYER LE MAIL POUR LE RESET
+export const resetPassowrd = () => {
+  
+  // return axios.post("https://swipetuto-back-dev.herokuapp/dj-rest-auth/password/reset/").then(rep =>{
+  //   return rep
+  // })
+  if (process.env.NODE_ENV === "development") {
+    return axios.post("https://localhost:8000/dj-rest-auth/password/reset/").then(rep => {
+      return rep
+    })
+  } else if (process.env.NODE_ENV === "production") {
+    return axios.post("https://swipetuto-back-dev.herokuapp/dj-rest-auth/password/reset/").then(rep =>{
+      return rep
+    })
+  }
+}
+
+// UNE FOIS LE DEMANDE DE RESET EFFECTUE UTILISER CETTE API
+export const resetConfirmPassowrd = password => {
+  const data = {
+    "new_password1": "ICI PASSWORD",
+    "new_password2" : "ICI CONFIRME",
+    "token": "TOKEN FROM URL",
+    "uid": "UID FROM URL"
+  }
+  // return axios.post("https://swipetuto-back-dev.herokuapp/dj-rest-auth/password/reset/confirm/", data).then(rep =>{
+  //   return rep
+  // })
+  if (process.env.NODE_ENV === "development") {
+    return axios.post("https://localhost:8000/dj-rest-auth/password/reset/confirm/", data).then(rep => {
+      return rep
+    })
+  } else if (process.env.NODE_ENV === "production") {
+    return axios.post("https://swipetuto-back-dev.herokuapp/dj-rest-auth/password/reset/confirm/", data).then(rep =>{
+      return rep
+    })
+  }
+}
+

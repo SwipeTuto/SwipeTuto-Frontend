@@ -25,6 +25,7 @@ const SavedPage = lazy(() => import("./SavedPage/SavedPage"));
 const DraftsPage = lazy(() => import("../DraftsPage/DraftsPage"));
 const AddCardPage = lazy(() => import("./AddCardPage/AddCardPage"));
 const PreferencesPage = lazy(() => import("./PreferencesPage/PreferencesPage"));
+const ChangePasswordPage = lazy(() => import("./ChangePasswordPage/ChangePasswordPage"));
 
 const AccountPage = (props) => {
   const currentUser = useSelector(selectCurrentUser);
@@ -99,6 +100,7 @@ const AccountPage = (props) => {
               <ProtectedRoute exact path="/account/drafts" component={DraftsPage} />
               <ProtectedRoute exact path="/account/modify" component={() => <AddCardPage type="modify" />} />
               <ProtectedRoute exact path="/account/add" component={AddCardPage} />
+              <ProtectedRoute exact path="/account/password/reset/confirm/:uidb64/:token" component={ChangePasswordPage} />
             </Suspense>
           </ErrorBoundary>
         </Switch>

@@ -29,6 +29,7 @@ export const errorMessageToDisplay = (name) => {
     case "last_name":
       return lastnameRegexErrorMessage;
     case "password":
+    case "oldPassword":
       return passwordRegexErrorMessage;
     case "passwordConfirm":
       return passwordConfirmMessage;
@@ -59,6 +60,7 @@ export const checkRegexInput = (name, value) => {
     case "last_name":
       return nameRegex.test(value);
     case "password":
+    case "oldPassword":
       return strongPasswordRegex.test(value);
     case "passwordConfirm":
       return strongPasswordRegex.test(value);

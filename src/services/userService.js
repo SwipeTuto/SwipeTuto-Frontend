@@ -110,6 +110,12 @@ export const updateUserInfos = newUserInfos => {
   });
 }
 
+export const getCurrentUser = () => {
+  return client().get(`me/`).then(rep => {
+    return rep
+  })
+}
+
 
 // Récupérer user par son id
 export const getUserById = id => {
@@ -143,6 +149,21 @@ export const signalContent = signal => {
   }
 
   return client().post(`backoffice/signalement/`, JSON.stringify(data)).then(rep => {
+    return rep
+  }).catch(err => { return err })
+}
+
+export const updatePrefService = (topicName, categoryName) => {
+  const data = {
+    "category_preference": [
+      {
+        "name": categoryName,
+        "topic": topicName
+      }
+    ]
+  }
+
+  return client().patch(`update/preference/`, JSON.stringify(data)).then(rep => {
     return rep
   }).catch(err => { return err })
 }

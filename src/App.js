@@ -9,6 +9,7 @@ import Footer from "./components/LayoutComponents/Footer/Footer";
 
 import { deleteFilterErrorAction, getCardAfterfilterAction, getCardByIdAction } from './redux/filter/filter-actions'
 import { selectConnexionPopup, selectFirstLoadDone, selectIsLoaded, selectRedirectUrl, selectShowPopupCard, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
+import { selectCurrentUser, selectCurrentUserSettings } from "./redux/user/user-selectors"
 import { setCurrentSearch } from "./redux/filter/filter-actions"
 
 import { initialSearchState } from "./helper/constants"
@@ -16,7 +17,7 @@ import { urlParams, getUrlId } from "./helper/functions/getURLParams"
 
 import './index.scss'
 import './App.scss';
-import { closeConnexionPopup, closePopupCard, openNotificationPopup, setFirstLoadDone, setRedirectUrl, showPopupCard } from "./redux/layout/layout-actions";
+import { closeConnexionPopup, closePopupCard, openNotificationPopup, setCardsSize, setFirstLoadDone, setRedirectUrl, showPopupCard, toggleThemeAction } from "./redux/layout/layout-actions";
 import { getUserByIdAction } from "./redux/user/user-actions";
 import SignalPopup from "./components/LayoutComponents/SignalPopup/SignalPopup";
 import CardFullPopup from "./components/CardsComponents/CardFullPopup/CardFullPopup";
@@ -33,6 +34,8 @@ function App(props) {
   const dispatch = useDispatch();
   const [topic, category, ordering, search] = urlParams(props.location)
   const userId = getUrlId(props.location.pathname, "user_id")
+  const currentUser = useSelector(selectCurrentUser);
+  const currentUserSettings = useSelector(selectCurrentUserSettings)
   const cardId = getUrlId(props.location.pathname, "card_id")
   const isLoaded = useSelector(selectIsLoaded)
   const signalPopup = useSelector(selectSignalPopupOpen)
@@ -61,7 +64,7 @@ function App(props) {
         dispatch(setCurrentSearch(currentSearchCopy))
         dispatch(setRedirectUrl(true));
       }
-    } else if (firstLoadDone === false && (locationPathname === "/")) { // si page d'accueil
+    } else if (firstLoadDone === false && !currentUser && (locationPathname === "/")) { // si page d'accueil
       dispatch(getCardAfterfilterAction(initialSearchState))
     } else if (firstLoadDone === false && cardId) { // si page d'une carte ouverte
       dispatch(showPopupCard())
@@ -81,7 +84,7 @@ function App(props) {
     if (firstLoadDone === false) {
       dispatch(setFirstLoadDone())
     }
-  }, [cardId, category, currentSearch, dispatch, fetchedCards, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, props.history, search, topic, userId]);
+  }, [cardId, category, currentSearch, currentUser, dispatch, fetchedCards, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, props.history, search, topic, userId]);
 
   useEffect(() => {
 
@@ -139,6 +142,13 @@ function App(props) {
       window.scroll(0, 0);
     }
   }, [props.location.pathname]);
+
+  useEffect(() => {
+    if (currentUserSettings) {
+      currentUserSettings.color_theme && (currentUserSettings.color_theme === "light" || currentUserSettings.color_theme === "dark") && dispatch(toggleThemeAction(currentUserSettings.color_theme))
+      currentUserSettings.card_size && (currentUserSettings.card_size === "small" || currentUserSettings.card_size === "big") && dispatch(setCardsSize(currentUserSettings.card_size))
+    }
+  }, [currentUserSettings, dispatch])
 
 
   return (

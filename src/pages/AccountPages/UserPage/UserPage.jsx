@@ -22,9 +22,9 @@ const UserPage = ({ userIsSame, location }) => {
   const totalCardsFetched = useSelector(selectTotalNumberOfResults);
   const cards = useSelector(selectCardsFetchedCards);
   const currentUser = useSelector(selectCurrentUser);
-  const prevCurrentUserId = usePrevious(currentUser?.id) || null;
+  // const prevCurrentUserId = usePrevious(currentUser?.id) || null;
   const clickedUser = useSelector(selectClickedUser);
-  const prevClickedUserId = usePrevious(clickedUser?.id) || null;
+  // const prevClickedUserId = usePrevious(clickedUser?.id) || null;
   const currentTheme = useSelector(selectTheme);
   const [userDatas, setUserDatas] = useState();
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ const UserPage = ({ userIsSame, location }) => {
       dispatch(getCardsByUserIdAction(currentUser.id));
       dispatch(setNoClickedUser());
     }
-  }, [clickedUser, currentUser, dispatch, locationPath, prevClickedUserId, prevCurrentUserId, userId]);
+  }, [clickedUser, currentUser, dispatch, locationPath, userId]);
 
   return (
     <div className={`UserPage ${currentTheme}-theme-d`}>
@@ -65,7 +65,7 @@ const UserPage = ({ userIsSame, location }) => {
         {!isLoaded ? (
           <Loading />
         ) : userDatas && cards?.length > 0 ? (
-          <CardGridList loadFilter={false} allowInfiniteScroll={true} />
+          <CardGridList allowInfiniteScroll={true} />
         ) : (
           <p className="UserPage__nocards">Aucune carte pour le moment.</p>
         )}

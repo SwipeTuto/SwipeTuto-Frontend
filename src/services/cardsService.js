@@ -19,7 +19,14 @@ export const getCardAfterfilter = search => {
     }
   }
 
-  return client().get("card/filter/", data).then(rep => {
+  return client().get("card/list/", data).then(rep => {
+    return rep
+  }).catch(err => { return err })
+}
+
+export const getCardPrefUser = () => {
+  return client().get("card/user/").then(rep => {
+    console.log(rep)
     return rep
   }).catch(err => { return err })
 }
@@ -65,7 +72,7 @@ export const createCardService = (cardObject) => {
   formData.append("description", cardObject.description);
   formData.append("categorie", cardObject.categorie);
 
-  return client().post("card/create_card/", formData).then(rep => {
+  return client().post("card/create/", formData).then(rep => {
 
     return rep
   }).catch(err => {
@@ -83,9 +90,6 @@ export const deleteCardService = (cardId) => {
 };
 
 export const updateCardService = (cardId, updateObj) => {
-
-  console.log(updateObj)
-
   var formData = new FormData();
   updateObj.user && formData.append("user", updateObj.user);
   updateObj.topic && formData.append("topic", updateObj.topic);
@@ -99,10 +103,8 @@ export const updateCardService = (cardId, updateObj) => {
   updateObj.description && formData.append("description", updateObj.description);
   updateObj.categorie && formData.append("categorie", updateObj.categorie);
 
-  console.log(formData)
-
-  return client().patch(`card/update_card/${cardId}`, formData).then(rep => {
-    console.log(rep)
+  return client().patch(`card/update/card/${cardId}`, formData).then(rep => {
+    // console.log(rep)
     return rep
   }).catch(err => {
     console.log(err)

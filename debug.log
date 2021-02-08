@@ -4,3 +4,4 @@
 [0812/121359.645:ERROR:exception_snapshot_win.cc(98)] thread ID 4836 not found in process
 [1011/193705.857:ERROR:directory_reader_win.cc(43)] FindFirstFile: Le chemin d’accès spécifié est introuvable. (0x3)
 [0123/111508.508:ERROR:directory_reader_win.cc(43)] FindFirstFile: Le chemin d’accès spécifié est introuvable. (0x3)
+[0130/143012.584:ERROR:directory_reader_win.cc(43)] FindFirstFile: Le chemin d’accès spécifié est introuvable. (0x3)

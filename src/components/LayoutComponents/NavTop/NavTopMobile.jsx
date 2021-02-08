@@ -31,7 +31,7 @@ import { ReactComponent as PencilLogo } from "../../../assets/images/pencil.svg"
 import "./NavTopMobile.scss";
 import { useDarkMode } from "../../../hooks/useDarkMode";
 import ToggleButton from "../ToggleTheme/ToggleTheme";
-import { getCardAfterfilterAction, setCurrentSearch } from "../../../redux/filter/filter-actions";
+import { setCurrentSearch } from "../../../redux/filter/filter-actions";
 import { initialSearchState } from "../../../helper/constants";
 import STSmallLogoBlackmod from "../../../assets/stlogos/logo seul blackmode.png";
 import STSmallLogo from "../../../assets/stlogos/logo seul.png";
@@ -141,7 +141,6 @@ const NavTopMobile = (props) => {
               className="NavTopMobile__link"
               onClick={() => {
                 dispatch(setCurrentSearch(initialSearchState));
-                dispatch(getCardAfterfilterAction(initialSearchState));
                 dispatch(closeMobileNav());
               }}
               to="/"
@@ -163,7 +162,6 @@ const NavTopMobile = (props) => {
             to="/search"
             onClick={() => {
               dispatch(setCurrentSearch(initialSearchState));
-              dispatch(getCardAfterfilterAction(initialSearchState));
               dispatch(closeMobileNav());
             }}
           >
@@ -216,7 +214,7 @@ const NavTopMobile = (props) => {
           </Link>
         )}
 
-        <ToggleButton toggleTheme={toggleTheme} theme={theme} />
+        <ToggleButton />
       </div>
     </>
   );

@@ -2,8 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // redux
-import { setClickedCard, getCardByIdAction, toggleLikeCardAction } from "../../../redux/filter/filter-actions";
-import { openConnexionPopup, showPopupCard } from "../../../redux/layout/layout-actions";
+import {
+  setClickedCard,
+  getCardByIdAction,
+  toggleLikeCardAction,
+  toggleSaveCardAction,
+  deleteCardAction,
+} from "../../../redux/filter/filter-actions";
+import { openConnexionPopup, showPopupCard, showSignalPopup } from "../../../redux/layout/layout-actions";
 import { selectCurrentUser, selectCurrentUserId } from "../../../redux/user/user-selectors";
 
 // service & helper
@@ -24,6 +30,8 @@ import "./CardPreviewSmall.scss";
 import Loading from "../../Loading/Loading";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 import { userHasLiked } from "../../../helper/functions/userHasLiked";
+import VerticalMenu from "../../LayoutComponents/VerticalMenu/VerticalMenu";
+import { initialSignalState } from "../../../helper/constants";
 
 const CardPreviewSmall = ({ card, size }) => {
   const { media_image, user, name, number_of_likes, likes, total_views } = card;
@@ -77,9 +85,10 @@ const CardPreviewSmall = ({ card, size }) => {
           setCardIsReady(true);
           setIsError(false);
         };
-        img.onerror = () => {
+        img.onerror = (err) => {
           setCardIsReady(false);
           setIsError(true);
+          console.log(err);
         };
         img.src = `${media_image[0].image_low ? media_image[0].image_low : media_image[0].image}`;
       } else {
@@ -96,32 +105,50 @@ const CardPreviewSmall = ({ card, size }) => {
     if (!cardIsReady) {
       var thisTimeout = setTimeout(function () {
         setIsError(true);
-      }, 5000);
+      }, 10000);
     }
     if (cardIsReady) {
       clearTimeout(thisTimeout);
     }
   }, [cardIsReady]);
 
+  const newSignalObject = { ...initialSignalState, id_card: cardId };
+
   return (
     <div className={`CardPreviewSmall`} data-slideid="1">
-      <div
-        className={`CardPreviewSmall__image  ${cardIsReady ? "active" : "hide"}`}
-        id={`CardPreviewSmall__image--${cardId}`}
-        onClick={() => handleClickedCardClick()}
-      >
-        <div className="CardPreviewSmall__hover">
-          <p>{name && truncate(name, 60, false)}</p>
+      <div className="CardPreviewSmall__media">
+        <div
+          className={`CardPreviewSmall__image  ${cardIsReady ? "active" : "hide"}`}
+          id={`CardPreviewSmall__image--${cardId}`}
+          onClick={() => handleClickedCardClick()}
+        >
+          <div className="CardPreviewSmall__hover">
+            <p>{name && truncate(name, 60, false)}</p>
+            {currentUserId !== card.user.id ? (
+              <VerticalMenu>
+                <p
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    dispatch(showSignalPopup(newSignalObject));
+                  }}
+                >
+                  Signaler
+                </p>
+              </VerticalMenu>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
-      </div>
 
-      <div
-        className={`CardPreviewSmall__image ${
-          !cardIsReady ? "active" : "hide"
-        } CardPreviewSmall__image--loading CardPreviewSmall__image--loading-${size} ${currentTheme}-theme-l`}
-        onClick={() => handleClickedCardClick()}
-      >
-        {isError ? <p>Image non disponible.</p> : <Loading />}
+        <div
+          className={`CardPreviewSmall__image ${
+            !cardIsReady ? "active" : "hide"
+          } CardPreviewSmall__image--loading CardPreviewSmall__image--loading-${size} ${currentTheme}-theme-l`}
+          onClick={() => handleClickedCardClick()}
+        >
+          {isError ? <p>Image non disponible.</p> : <Loading />}
+        </div>
       </div>
 
       <div className="CardPreviewSmall__details">

@@ -16,7 +16,6 @@ import {
   setClickedCard,
   setNoClickedCard,
   toggleLikeCardAction,
-  getCardAfterfilterAction,
   getOtherCardsByAuthorNameAction,
   toggleSaveCardAction,
   deleteCardAction,
@@ -62,6 +61,7 @@ import VerticalMenu from "../../LayoutComponents/VerticalMenu/VerticalMenu";
 import ShareMenu from "../../LayoutComponents/ShareMenu/ShareMenu";
 import ConfirmationOverlay from "../../LayoutComponents/ConfirmationOverlay/ConfirmationOverlay";
 import { userHasLiked } from "../../../helper/functions/userHasLiked";
+import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
 
 const CardFullPopup = ({ history, location }) => {
   const isFullScreen = useSelector(selectFullscreen);
@@ -146,6 +146,8 @@ const CardFullPopup = ({ history, location }) => {
     return clickedCard?.media_image?.map((imgObj) => imgObj.image);
   };
 
+  const redirectUrl = SearchLinkRedirect();
+
   const handleCardModify = async () => {
     await window.localStorage.setItem(
       "draftNewCard",
@@ -161,28 +163,22 @@ const CardFullPopup = ({ history, location }) => {
     );
     dispatch(closePopupCard());
     history.push("/account/modify");
-    console.log("call");
   };
 
   const handlePopupClose = () => {
     if (location.pathname === "/") {
-      window.history.pushState("", "", "/");
+      history.push("/");
     } else if (location.pathname.includes("/account/")) {
-      window.history.pushState("", "", location.pathname);
+      history.push(location.pathname);
     } else if (location.pathname.includes("/profile/")) {
-      window.history.pushState("", "", location.pathname);
+      history.push(location.pathname);
     } else {
-      dispatch(setRedirectUrl(true));
-
-      window.history.pushState("", "", history.location.pathname + history.location.search);
-      if (!cardsFetched) {
-        dispatch(getCardAfterfilterAction(currentSearch));
-      }
+      history.push(redirectUrl);
     }
 
     dispatch(setNoClickedCard());
     dispatch(closePopupCard());
-    dispatch(getCurrentUserAction(currentUserId));
+    // dispatch(getCurrentUserAction(currentUserId));
   };
 
   // LIKE

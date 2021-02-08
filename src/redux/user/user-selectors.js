@@ -21,3 +21,11 @@ export const selectUserFavories = createSelector(
   [selectCurrentUser],
   currentUser => currentUser && currentUser.favories
 );
+export const selectCurrentUserSettings = createSelector(
+  [selectCurrentUser],
+  currentUser => currentUser && currentUser.settings
+);
+export const selectCurrentUserCategoriesPreferences = createSelector(
+  [selectCurrentUser],
+  currentUser => currentUser?.profile?.category_favorie?.map(item => item?.name)
+);

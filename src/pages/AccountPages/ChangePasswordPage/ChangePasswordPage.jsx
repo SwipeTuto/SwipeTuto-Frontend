@@ -85,4 +85,3 @@ const ChangePasswordPage = () => {
 };
 
 export default ChangePasswordPage;
-// {{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}

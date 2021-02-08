@@ -11,6 +11,7 @@ export const sendEmailContact = data => {
   return client().post(`backoffice/contact/`, bodyFormData, config).then(rep => {
     return rep
 
+    
   }).catch(err => {
     console.log(err.message)
     return err

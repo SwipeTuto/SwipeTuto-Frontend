@@ -100,7 +100,7 @@ const AccountPage = (props) => {
               <ProtectedRoute exact path="/account/drafts" component={DraftsPage} />
               <ProtectedRoute exact path="/account/modify" component={() => <AddCardPage type="modify" />} />
               <ProtectedRoute exact path="/account/add" component={AddCardPage} />
-              <ProtectedRoute exact path="/account/change-password" component={ChangePasswordPage} />
+              <ProtectedRoute exact path="/account/password/reset/confirm/:uidb64/:token" component={ChangePasswordPage} />
             </Suspense>
           </ErrorBoundary>
         </Switch>

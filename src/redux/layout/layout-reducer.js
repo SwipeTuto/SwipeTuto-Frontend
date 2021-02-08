@@ -13,13 +13,13 @@ const INITIAL_STATE = {
     notification: ""
   },
   filterMobileMenuOpen: false,
-  isLoaded: false,
+  isLoaded: true,
   cardsSize: 'small',
   otherPageCardsLoaded: true,
-  clickedCardIsLoaded: false,
-  imageIsLoaded: false,
-  userIsLoaded: false,
-  commentsAreLoaded: false,
+  clickedCardIsLoaded: true,
+  imageIsLoaded: true,
+  userIsLoaded: true,
+  commentsAreLoaded: true,
   redirectUrl: false,
   connexionPopup: false,
   theme: "light"

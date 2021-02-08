@@ -1,6 +1,6 @@
 import { auth, provider, providerFacebook } from '../services/firebaseService';
 import { client } from "../index"
-
+import axios from "axios";
 
 export const login = idToken => {
   var data = { 'token_id': idToken }
@@ -133,7 +133,6 @@ export const upDateAvatar = avatar => {
 
 
 export const getUserFavoriesById = userId => {
-
   return client().get(`get-favorie/${userId}/`).then(rep => {
     return rep
   })
@@ -168,3 +167,36 @@ export const updatePrefService = (topicName, categoryName) => {
     return rep
   }).catch(err => { return err })
 }
+
+
+
+// PERMET D'ENVOYER LE MAIL POUR LE RESET
+export const resetPassowrd = (userEmail) => {
+  const data = {
+    email: userEmail
+  }
+  return client().post("dj-rest-auth/password/reset/", data).then(rep => {
+    console.log(rep)
+    return rep
+  }).catch(err => {
+    console.log(err)
+    return err
+  })
+}
+
+
+// UNE FOIS LA DEMANDE DE RESET EFFECTUEE, UTILISER CETTE API
+export const resetConfirmPassowrd = userNewPasswordObj => {
+  // const data = {
+  //   "new_password1": "ICI PASSWORD",
+  //   "new_password2": "ICI CONFIRME",
+  //   "token": "TOKEN FROM URL",
+  //   "uid": "UID FROM URL"
+  // }
+  console.log(userNewPasswordObj);
+
+  return client().post("dj-rest-auth/password/reset/confirm/", userNewPasswordObj).then(rep => {
+    return rep
+  })
+}
+

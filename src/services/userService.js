@@ -170,24 +170,32 @@ export const updatePrefService = (topicName, categoryName) => {
 
 
 
-// PERMET D ENVOYER LE MAIL POUR LE RESET
-export const resetPassowrd = () => {
-    return client().post("dj-rest-auth/password/reset/").then(rep => {
-      return rep
-    }).catch(err => { return err })
-  }
-
-
-// UNE FOIS LE DEMANDE DE RESET EFFECTUE UTILISER CETTE API
-export const resetConfirmPassowrd = password => {
+// PERMET D'ENVOYER LE MAIL POUR LE RESET
+export const resetPassowrd = (userEmail) => {
   const data = {
-    "new_password1": "ICI PASSWORD",
-    "new_password2" : "ICI CONFIRME",
-    "token": "TOKEN FROM URL",
-    "uid": "UID FROM URL"
+    email: userEmail
   }
+  return client().post("dj-rest-auth/password/reset/", data).then(rep => {
+    console.log(rep)
+    return rep
+  }).catch(err => {
+    console.log(err)
+    return err
+  })
+}
 
-  return client().post("dj-rest-auth/password/reset/confirm/", data).then(rep => {
+
+// UNE FOIS LA DEMANDE DE RESET EFFECTUEE, UTILISER CETTE API
+export const resetConfirmPassowrd = userNewPasswordObj => {
+  // const data = {
+  //   "new_password1": "ICI PASSWORD",
+  //   "new_password2": "ICI CONFIRME",
+  //   "token": "TOKEN FROM URL",
+  //   "uid": "UID FROM URL"
+  // }
+  console.log(userNewPasswordObj);
+
+  return client().post("dj-rest-auth/password/reset/confirm/", userNewPasswordObj).then(rep => {
     return rep
   })
 }

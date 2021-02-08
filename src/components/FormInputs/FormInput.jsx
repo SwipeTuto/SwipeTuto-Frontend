@@ -26,25 +26,28 @@ const FormInput = ({ idFor, label, type, name, getValue, firstValue, required, p
         if (formInputEl) formInputEl.classList.remove("invalid-input");
       } else {
         if (name === "passwordConfirm") {
+          // console.log(valueToCompare, newValue);
           if (valueToCompare === newValue) {
             setIsValid("valid");
             if (errorEl) errorEl.textContent = "";
-            getValue(name, newValue);
+            // getValue(name, newValue);
           } else {
             setIsValid("invalid");
             if (errorEl) errorEl.textContent = errorMessageToDisplay(name);
+            // getValue(name, newValue);
           }
         } else {
           let inputIsOk = checkRegexInput(name, newValue);
           if (inputIsOk === true) {
             setIsValid("valid");
             if (errorEl) errorEl.textContent = "";
-            getValue(name, newValue);
+            // getValue(name, newValue);
           } else {
             setIsValid("invalid");
             if (errorEl) errorEl.textContent = errorMessageToDisplay(name);
           }
         }
+        getValue(name, newValue);
       }
     },
     [errorEl, formInputEl, getValue, name, valueToCompare]

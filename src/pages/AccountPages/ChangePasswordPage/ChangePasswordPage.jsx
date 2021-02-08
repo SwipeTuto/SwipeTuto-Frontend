@@ -16,27 +16,16 @@ const ChangePasswordPage = () => {
   const getValue = (name, value) => {
     if (name === "oldPassword") setOldPassword(value);
     if (name === "password") setPassword(value);
-    if (name === "passwordConfirmation") setPasswordConfirmation(value);
+    if (name === "passwordConfirm") setPasswordConfirmation(value);
   };
-
-  useEffect(() => {
-    console.log(oldPassword, password, passwordConfirmation);
-  }, [oldPassword, password, passwordConfirmation]);
-  useEffect(() => {
-    console.log(submitOk);
-  }, [submitOk]);
 
   useEffect(() => {
     const readyToSubmit = allInput.every((input) => input.classList.contains("valid-input"));
 
-    console.log(readyToSubmit);
-
     if (readyToSubmit && readyToSubmit === true) {
-      setSubmitOk(false);
-      console.log("CALL READY");
-    } else {
       setSubmitOk(true);
-      console.log("CALL NOT READY");
+    } else {
+      setSubmitOk(false);
     }
   }, [password, oldPassword, passwordConfirmation, allInput]);
 
@@ -56,18 +45,18 @@ const ChangePasswordPage = () => {
       <h2 className="title title-2">Changez votre mot de passe</h2>
       <div className="ChangePasswordPage__form-wrapper">
         <form className="ChangePasswordPage__form">
-          <FormInput idFor="mdp" label="Votre mot de passe :" type="password" name="oldPassword" required={true} getValue={getValue} />
-          <FormInput idFor="mdp" label="Votre mot de passe :" type="password" name="password" required={true} getValue={getValue} />
+          <FormInput idFor="oldMdp" label="Votre ancien mot de passe :" type="password" name="oldPassword" required={true} getValue={getValue} />
+          <FormInput idFor="mdp" label="Votre nouveau mot de passe :" type="password" name="password" required={true} getValue={getValue} />
           <FormInput
             idFor="mdp2"
-            label="Confirmer votre mot de passe :"
+            label="Confirmer votre nouveau mot de passe :"
             type="password"
             name="passwordConfirm"
             required={true}
             getValue={getValue}
             valueToCompare={password}
           />
-          <CustomButton onClick={(e) => handleClick(e)} color="light" type="submit" disabled={submitOk}>
+          <CustomButton onClick={(e) => handleClick(e)} color="light" type="submit" disabled={submitOk === true ? "" : "disabled"}>
             Changer le mot de passe
           </CustomButton>
         </form>

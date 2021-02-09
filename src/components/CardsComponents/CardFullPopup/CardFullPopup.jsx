@@ -152,13 +152,13 @@ const CardFullPopup = ({ history, location }) => {
     await window.localStorage.setItem(
       "draftNewCard",
       JSON.stringify({
-        name: clickedCard.name,
-        description: clickedCard.description,
-        topic: clickedCard.topic[0].name,
-        categorie: clickedCard.categorie[0].name,
+        name: clickedCard?.name,
+        description: clickedCard?.description,
+        topic: clickedCard?.topic[0]?.name,
+        categorie: clickedCard?.categorie[0]?.name,
         user: currentUserId,
         images: getImagesUrlArray(),
-        id: clickedCard.id,
+        id: clickedCard?.id,
       })
     );
     dispatch(closePopupCard());

@@ -127,6 +127,11 @@ const AddCardPage = ({ type, history }) => {
 
       // faire le update
       await dispatch(updateCardAction(cardInfos?.card_id, cardObject));
+      if (state === 0) {
+        history.push("/account/drafts");
+      } else {
+        history.push("/search");
+      }
 
       await window.localStorage.removeItem("draftNewCard");
       setIsValid(false);
@@ -254,10 +259,10 @@ const AddCardPage = ({ type, history }) => {
               {type && type === "modify" ? (
                 <>
                   <CustomButton color="white" type="button" onClick={() => updateCard(0)}>
-                    Enregistrer en brouillon
+                    Mettre à jour et enregistrer en brouillon
                   </CustomButton>
                   <CustomButton type="submit" disabled={!isValid} onClick={() => updateCard(1)}>
-                    Mettre à jour la carte
+                    Mettre à jour et publier la carte
                   </CustomButton>
                 </>
               ) : (

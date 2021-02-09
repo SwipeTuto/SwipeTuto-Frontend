@@ -80,16 +80,16 @@ const DraftPreview = ({ draftCard, history }) => {
     await window.localStorage.setItem(
       "draftNewCard",
       JSON.stringify({
-        name: draftCard.name,
-        description: draftCard.description,
-        topic: draftCard.topic[0].name,
-        categorie: draftCard.categorie[0].name,
+        name: draftCard?.name,
+        description: draftCard?.description,
+        topic: draftCard?.topic[0]?.name,
+        categorie: draftCard?.categorie[0]?.name,
         images: getImagesUrlArray(),
         user: currentuserId,
-        id: draftCard.id,
+        id: draftCard?.id,
       })
     );
-    history.push("/account/add");
+    history.push("/account/modify");
   };
 
   const getImagesUrlArray = () => {

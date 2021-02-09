@@ -404,6 +404,7 @@ export const getUserFavoriesSuccess = favories => ({
 })
 
 export const createCardAction = (cardObject, cardState) => {
+  console.log(cardObject, cardState)
   return async dispatch => {
     dispatch(setLoading());
     dispatch(setRedirectUrl(false))
@@ -428,6 +429,7 @@ export const createCardAction = (cardObject, cardState) => {
 
 // modify card action à faire sur le même modèle que create
 export const updateCardAction = (cardId, updateObj) => {
+  console.log(cardId, updateObj)
   return async dispatch => {
     dispatch(setLoading());
     dispatch(setRedirectUrl(false))
@@ -435,9 +437,8 @@ export const updateCardAction = (cardId, updateObj) => {
       await updateCardService(cardId, updateObj).then(rep => {
         dispatch(openNotificationPopup("Carte modifiée avec succès !"))
         dispatch(setLoaded())
-        // dispatch(setCurrentSearch(initialSearchState))
-        dispatch((initialSearchState))
-        dispatch(setRedirectUrl(true))
+        dispatch(setCurrentSearch(initialSearchState))
+        // dispatch(setRedirectUrl(true))
         return rep.data
       }).catch(err => {
 

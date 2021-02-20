@@ -3,13 +3,14 @@
 
 .CardSlider {
   width: 100%;
+  height: 100%;
   margin-bottom: 4rem;
 
   &__close {
     cursor: pointer;
     position: absolute;
-    bottom: 2rem;
-    right: 4rem;
+    top: 1rem;
+    right: 1rem;
     z-index: 70;
     @include button-round;
     background-color: $grey-light;
@@ -40,6 +41,11 @@
 
   .glide {
     position: relative;
+    height: 100%;
+
+    &__track {
+      height: 100%;
+    }
 
     &__slides {
       height: 100%;
@@ -58,6 +64,7 @@
       & > img {
         max-height: 100%;
         max-width: 100%;
+        // height: 100%;
       }
     }
 
@@ -136,6 +143,10 @@
         }
       }
 
+      &__arrows {
+        padding: 0 1rem;
+      }
+
       &__arrow {
         border: 1px solid $grey;
         border-radius: 50%;
@@ -167,11 +178,6 @@
       &__arrows {
         display: none;
       }
-    }
-
-    &__close {
-      bottom: 1rem;
-      right: 1rem;
     }
 
     &--fullscreen {

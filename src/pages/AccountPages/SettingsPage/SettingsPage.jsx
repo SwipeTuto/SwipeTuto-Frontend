@@ -121,11 +121,16 @@ const SettingsPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userPref]);
 
-  const handleResetPassword = () => {
+  const handleResetPassword = async () => {
     if (currentUser.email) {
-      resetPassowrd(currentUser.email);
+      try {
+        await resetPassowrd(currentUser.email);
+        return dispatch(openNotificationPopup("info", "Un email vous a été envoyé pour changer de mot de passe !"));
+      } catch (err) {
+        return;
+      }
     } else {
-      dispatch(openNotificationPopup("error","Une erreur est survenue. Merci de réessayer plus tard ou de signaler le problème."));
+      dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer plus tard ou de signaler le problème."));
     }
   };
 

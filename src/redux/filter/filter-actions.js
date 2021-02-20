@@ -457,22 +457,26 @@ export const updateCardAction = (cardId, updateObj) => {
 export const deleteCardAction = (cardId, currentUserId, history) => {
   return async dispatch => {
     dispatch(setLoading());
-    cardId && await deleteCardService(cardId).then(rep => {
-      dispatch(openNotificationPopup("success", "Carte supprimée avec succès !"))
-      dispatch(setLoaded())
-      if (history.location.pathname === "/account/drafts") {
-        currentUserId && dispatch(getCardsByUserIdAction(currentUserId, 0));
+    if (cardId) {
+      const test = await deleteCardService(cardId)
+      if (test && { ...test }.isAxiosError) {
+        console.error("erreur suppression carte")
+        dispatch(openNotificationPopup("error", 'Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
+        dispatch(setLoaded())
+        return
       } else {
-        currentUserId && dispatch(getCardsByUserIdAction(currentUserId));
-        history && history.push("/account/user");
+
+        dispatch(openNotificationPopup("success", "Carte supprimée avec succès !"))
+        dispatch(setLoaded())
+        if (history.location.pathname === "/account/drafts") {
+          currentUserId && dispatch(getCardsByUserIdAction(currentUserId, 0));
+        } else {
+          currentUserId && dispatch(getCardsByUserIdAction(currentUserId));
+          history && history.push("/account/user");
+        }
+        console.log("OK suppression")
       }
-      return rep.data
-    }).catch(err => {
-      console.error(err)
-      dispatch(openNotificationPopup("error", 'Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
-      dispatch(setLoaded())
-      return err
-    })
+    }
   }
 }
 

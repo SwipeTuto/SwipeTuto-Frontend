@@ -176,7 +176,7 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         otherPageCardsLoaded: true,
       }
     case LayoutActionTypes.OPEN_NOTIFICATION_POPUP:
-      console.log(action.payload)
+      // console.log(action.payload)
       return {
         ...state,
         notificationPopupOpen: {

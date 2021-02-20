@@ -118,6 +118,10 @@
     padding: 2rem 0;
     display: flex;
     align-items: center;
+
+    &:last-child {
+      margin-bottom: 10rem;
+    }
   }
 
   .custom-button {
@@ -185,7 +189,6 @@
 }
 
 @media screen and (max-width: $bp-tablet) {
-
   .NavTopMobile {
     display: block;
     font-size: 3rem;

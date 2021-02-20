@@ -425,20 +425,15 @@
       }
 
       &__slider {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         min-height: unset;
         min-width: unset;
+        // height: 60vh;
       }
     }
     .VerticalMenu__menu {
       top: unset;
       right: unset;
       bottom: 130%;
-    }
-    .CardSlider {
-      height: 100%;
     }
     .nav__chevron {
       display: none;

@@ -2,7 +2,11 @@
 
 .UserPage {
   &__header {
-    margin-bottom: 6rem;
+    margin-bottom: 2rem;
+
+    & .custom-button {
+      margin: 2rem auto 4rem auto;
+    }
 
     & .UserNameAndAvatar {
       display: flex;
@@ -30,8 +34,12 @@
 
     &--cards {
       font-size: 2.4rem;
-      margin-bottom: 3rem;
+      // margin-bottom: 3rem;
     }
+  }
+
+  &__cards {
+    text-align: center;
   }
 
   &__nocards {

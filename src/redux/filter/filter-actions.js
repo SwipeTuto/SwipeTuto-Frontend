@@ -16,6 +16,7 @@ const getCardAfterfilterFailure = err => ({
 
 export const getCardAfterfilterAction = (search) => {
   return dispatch => {
+    dispatch(setCardsFetchedInStore(""))
     dispatch(setLoading());
     return getCardAfterfilter(search)
       .then(rep => {
@@ -32,6 +33,7 @@ export const getCardAfterfilterAction = (search) => {
 
 export const getCardPrefUserAction = () => {
   return dispatch => {
+    dispatch(setCardsFetchedInStore(""))
     dispatch(setLoading());
     return getCardPrefUser()
       .then(rep => {
@@ -111,6 +113,7 @@ export const setCardsFetchedInStore = (cards) => ({
 // Fetch des cards à partir du nom de l'auteur
 export const getCardsByUserIdAction = (userId, cardState) => {
   return dispatch => {
+    dispatch(setCardsFetchedInStore(""))
     dispatch(setLoading())
     return getCardsByUser(userId, cardState)
       .then(rep => {
@@ -379,7 +382,7 @@ const deleteCommentSuccess = () => ({
 
 export const getUserFavoriesAction = userId => {
   return dispatch => {
-    dispatch(setCardsFetchedInStore(null))
+    dispatch(setCardsFetchedInStore(""))
     dispatch(setLoading());
     userId && getUserFavoriesById(userId).then(rep => {
       dispatch(getUserFavoriesSuccess(rep.data))
@@ -407,6 +410,7 @@ export const createCardAction = (cardObject, cardState) => {
   console.log(cardObject, cardState)
   return async dispatch => {
     dispatch(setLoading());
+    dispatch(setCardsFetchedInStore(""))
     dispatch(setRedirectUrl(false))
     cardObject && await createCardService(cardObject).then(rep => {
       dispatch(openNotificationPopup("success", "Carte créée avec succès !"))
@@ -432,6 +436,7 @@ export const updateCardAction = (cardId, updateObj) => {
   console.log(cardId, updateObj)
   return async dispatch => {
     dispatch(setLoading());
+    dispatch(setCardsFetchedInStore(""))
     dispatch(setRedirectUrl(false))
     if (cardId && updateObj) {
       await updateCardService(cardId, updateObj).then(rep => {

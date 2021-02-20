@@ -7,7 +7,7 @@ import "./PageLoading.scss";
 const PageLoading = () => {
   const currentTheme = useSelector(selectTheme);
   return (
-    <div className={`PageLoading ${currentTheme}-theme-m`}>
+    <div className={`PageLoading ${currentTheme}-theme-d`}>
       <div className="loading">
         <div className="loading__dots">
           <div className="loading__dot"></div>

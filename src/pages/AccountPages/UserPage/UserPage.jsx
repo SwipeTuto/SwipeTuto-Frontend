@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { selectCurrentUser, selectClickedUser } from "../../../redux/user/user-selectors";
 import { selectCardsFetchedCards, selectTotalNumberOfResults } from "../../../redux/filter/filter-selectors";
 import Loading from "../../../components/Loading/Loading";
@@ -12,6 +12,7 @@ import { usePrevious } from "../../../hooks/usePrevious";
 import { getUrlId } from "../../../helper/functions/getURLParams";
 import UserNameAndAvatar from "../../../components/UserComponents/UserAvatar/UserNameAndAvatar";
 import { setNoClickedUser } from "../../../redux/user/user-actions";
+import CustomButton from "../../../components/LayoutComponents/CustomButton/CustomButton";
 
 const UserPage = ({ userIsSame, location }) => {
   const locationPath = location && location.pathname;
@@ -44,10 +45,21 @@ const UserPage = ({ userIsSame, location }) => {
     }
   }, [clickedUser, currentUser, dispatch, locationPath, userId]);
 
+  const handleFollowUser = () => {};
+
   return (
     <div className={`UserPage ${currentTheme}-theme-d`}>
       <div className="UserPage__header">
         {userIsLoaded ? <UserNameAndAvatar user={userDatas} /> : <Loading />}
+        {location?.pathname === "/account/user" ? (
+          <Link to="/account/settings">
+            <CustomButton color="dark">Modifier le profil</CustomButton>
+          </Link>
+        ) : (
+          <CustomButton onClick={handleFollowUser} color="dark">
+            S'abonner
+          </CustomButton>
+        )}
         {isLoaded && (
           <p className="UserPage__header--cards">
             {totalCardsFetched

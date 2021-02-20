@@ -30,12 +30,13 @@
     z-index: 30;
 
     &--item * {
-      padding: 1rem;
-    }
-
-    &--item:not(:last-of-type) {
+      padding: 0.6rem;
       margin-bottom: 0.6rem;
     }
+
+    // &--item:not(:last-of-type) {
+    //   margin-bottom: 0.6rem;
+    // }
 
     &--item:hover {
       cursor: pointer;

@@ -409,7 +409,7 @@ export const createCardAction = (cardObject, cardState) => {
     dispatch(setLoading());
     dispatch(setRedirectUrl(false))
     cardObject && await createCardService(cardObject).then(rep => {
-      dispatch(openNotificationPopup("Carte créée avec succès !"))
+      dispatch(openNotificationPopup("success", "Carte créée avec succès !"))
       dispatch(setLoaded())
 
       if (cardState !== 0) {
@@ -420,7 +420,7 @@ export const createCardAction = (cardObject, cardState) => {
       return rep.data
     }).catch(err => {
       console.error(err)
-      dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
+      dispatch(openNotificationPopup("error", 'Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
       dispatch(setLoaded())
       return err
     })
@@ -435,7 +435,7 @@ export const updateCardAction = (cardId, updateObj) => {
     dispatch(setRedirectUrl(false))
     if (cardId && updateObj) {
       await updateCardService(cardId, updateObj).then(rep => {
-        dispatch(openNotificationPopup("Carte modifiée avec succès !"))
+        dispatch(openNotificationPopup("success", "Carte modifiée avec succès !"))
         dispatch(setLoaded())
         dispatch(setCurrentSearch(initialSearchState))
         // dispatch(setRedirectUrl(true))
@@ -443,12 +443,12 @@ export const updateCardAction = (cardId, updateObj) => {
       }).catch(err => {
 
         console.error(err)
-        dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
+        dispatch(openNotificationPopup("error", 'Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
         dispatch(setLoaded())
         return err
       })
     } else {
-      dispatch(openNotificationPopup("Une erreur est survenue... Merci de réessayer ou de nous signaler le problème"))
+      dispatch(openNotificationPopup("error", "Une erreur est survenue... Merci de réessayer ou de nous signaler le problème"))
       dispatch(setLoaded())
     }
   }
@@ -458,7 +458,7 @@ export const deleteCardAction = (cardId, currentUserId, history) => {
   return async dispatch => {
     dispatch(setLoading());
     cardId && await deleteCardService(cardId).then(rep => {
-      dispatch(openNotificationPopup("Carte supprimée avec succès !"))
+      dispatch(openNotificationPopup("success", "Carte supprimée avec succès !"))
       dispatch(setLoaded())
       if (history.location.pathname === "/account/drafts") {
         currentUserId && dispatch(getCardsByUserIdAction(currentUserId, 0));
@@ -469,7 +469,7 @@ export const deleteCardAction = (cardId, currentUserId, history) => {
       return rep.data
     }).catch(err => {
       console.error(err)
-      dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
+      dispatch(openNotificationPopup("error", 'Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
       dispatch(setLoaded())
       return err
     })

@@ -125,7 +125,7 @@ const SettingsPage = () => {
     if (currentUser.email) {
       resetPassowrd(currentUser.email);
     } else {
-      dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer plus tard ou de signaler le problème."));
+      dispatch(openNotificationPopup("error","Une erreur est survenue. Merci de réessayer plus tard ou de signaler le problème."));
     }
   };
 

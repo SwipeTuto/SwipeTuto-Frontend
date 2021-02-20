@@ -246,7 +246,7 @@ export const updateUserPrefAction = (topicName, categoryName) => {
           dispatch(setUserLoaded())
           return rep
         }).catch(err => {
-          dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
+          dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
           dispatch(updateUserProfileError(err))
           dispatch(setUserLoaded())
           return err

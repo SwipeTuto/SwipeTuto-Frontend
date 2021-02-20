@@ -61,7 +61,7 @@ const DraftPreview = ({ draftCard, history }) => {
       await dispatch(updateCardAction(draftCard.id, updateState));
       await window.localStorage.removeItem("draftNewCard");
     } catch (err) {
-      dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer."));
+      dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer."));
       console.log(err);
     }
 

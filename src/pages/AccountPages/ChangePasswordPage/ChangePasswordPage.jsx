@@ -53,7 +53,7 @@ const ChangePasswordPage = ({ match }) => {
       // console.log(userNewPasswordObj);
       resetConfirmPassowrd(userNewPasswordObj);
     } else {
-      dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer plus tard ou de signaler le problème."));
+      dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer plus tard ou de signaler le problème."));
     }
 
     // return axios

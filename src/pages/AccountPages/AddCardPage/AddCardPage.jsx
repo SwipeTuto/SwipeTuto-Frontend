@@ -106,7 +106,7 @@ const AddCardPage = ({ type, history }) => {
       setIsValid(false);
       if (state === 0) history.push("/account/drafts");
     } catch (err) {
-      dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer."));
+      dispatch(openNotificationPopup("error","Une erreur est survenue. Merci de réessayer."));
       console.log(err);
     }
   };
@@ -136,7 +136,7 @@ const AddCardPage = ({ type, history }) => {
       await window.localStorage.removeItem("draftNewCard");
       setIsValid(false);
     } catch (err) {
-      dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer."));
+      dispatch(openNotificationPopup("error","Une erreur est survenue. Merci de réessayer."));
       console.log(err);
     }
   };

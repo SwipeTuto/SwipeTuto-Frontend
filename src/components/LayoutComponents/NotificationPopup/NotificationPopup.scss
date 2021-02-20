@@ -6,7 +6,7 @@
   left: 50%;
   top: -200rem;
   transform: translateX(-50%);
-  background-color: $secondary-light;
+
   color: $white;
   border-radius: $card-radius;
   width: 50vw;
@@ -16,6 +16,18 @@
   @include large-shadow;
   text-align: center;
   transition: all 1s ease;
+
+  &-info {
+    background-color: $secondary-light;
+  }
+
+  &-success {
+    background-color: $green-success;
+  }
+
+  &-error {
+    background-color: $red-error;
+  }
 
   &.active {
     top: 3rem;

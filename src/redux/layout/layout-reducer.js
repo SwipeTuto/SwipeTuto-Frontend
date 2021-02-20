@@ -10,7 +10,8 @@ const INITIAL_STATE = {
   mobileNavOpen: false,
   notificationPopupOpen: {
     open: false,
-    notification: ""
+    notification: "",
+    type: ""
   },
   filterMobileMenuOpen: false,
   isLoaded: true,
@@ -175,11 +176,13 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         otherPageCardsLoaded: true,
       }
     case LayoutActionTypes.OPEN_NOTIFICATION_POPUP:
+      console.log(action.payload)
       return {
         ...state,
         notificationPopupOpen: {
           open: true,
-          notification: action.payload
+          notification: action?.payload?.notification,
+          type: action?.payload?.type
         },
       }
     case LayoutActionTypes.CLOSE_NOTIFICATION_POPUP:
@@ -187,7 +190,8 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         notificationPopupOpen: {
           open: false,
-          notification: ""
+          notification: "",
+          type: ""
         },
       }
     case LayoutActionTypes.TOGGLE_THEME:

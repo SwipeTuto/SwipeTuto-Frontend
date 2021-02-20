@@ -14,7 +14,7 @@ import { selectCardsSize, selectFirstLoadDone, selectIsLoaded, selectShowPopupCa
 
 // components
 // import CardPreviewSmall from "../CardPreviewSmall/CardPreviewSmall";
-import PageLoading from "../../Loading/PageLoading";
+import Loading from "../../Loading/Loading";
 import ScrollButton from "../../LayoutComponents/ScrollButton/ScrollButton";
 
 // scss
@@ -132,7 +132,7 @@ const CardGridList = ({ allowInfiniteScroll, location, overrideColumnNum }) => {
         )}
       </div>
 
-      {!isLoaded && <PageLoading />}
+      {!isLoaded && <Loading />}
       {cards && nextPageLink && allowInfiniteScroll && <div className="bottom-grid" ref={bottomGrid}></div>}
       <ScrollButton />
     </div>

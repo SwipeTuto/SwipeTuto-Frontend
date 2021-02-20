@@ -458,9 +458,8 @@ export const deleteCardAction = (cardId, currentUserId, history) => {
   return async dispatch => {
     dispatch(setLoading());
     if (cardId) {
-      const test = await deleteCardService(cardId)
-      if (test && { ...test }.isAxiosError) {
-        console.error("erreur suppression carte")
+      const res = await deleteCardService(cardId)
+      if (res && { ...res }.isAxiosError) {
         dispatch(openNotificationPopup("error", 'Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
         dispatch(setLoaded())
         return
@@ -474,7 +473,6 @@ export const deleteCardAction = (cardId, currentUserId, history) => {
           currentUserId && dispatch(getCardsByUserIdAction(currentUserId));
           history && history.push("/account/user");
         }
-        console.log("OK suppression")
       }
     }
   }

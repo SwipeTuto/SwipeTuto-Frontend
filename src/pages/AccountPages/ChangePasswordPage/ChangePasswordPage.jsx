@@ -8,6 +8,8 @@ import { withRouter } from "react-router-dom";
 import { resetConfirmPassowrd } from "../../../services/userService";
 import { openNotificationPopup } from "../../../redux/layout/layout-actions";
 
+import "./ChangePasswordPage.scss";
+
 // path pour accéder au component : /account/change-password
 const ChangePasswordPage = ({ match }) => {
   const dispatch = useDispatch();
@@ -53,7 +55,7 @@ const ChangePasswordPage = ({ match }) => {
       // console.log(userNewPasswordObj);
       resetConfirmPassowrd(userNewPasswordObj);
     } else {
-      dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer plus tard ou de signaler le problème."));
+      dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer plus tard ou de signaler le problème."));
     }
 
     // return axios

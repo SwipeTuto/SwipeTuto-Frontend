@@ -108,7 +108,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
     <>
       <div className="FiltersBarMobile">
         {filterMobileMenuOpen && (
-          <div className={`FiltersBarMobile__menu ${currentTheme}-theme-m`}>
+          <div className={`FiltersBarMobile__menu ${currentTheme}-theme-d`}>
             <div className="FiltersBarMobile__menu--top">
               <CloseLogo onClick={() => handleCloseFilterMobileMenuCloseClick()} />
             </div>
@@ -124,7 +124,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
                     <input
                       id="wordsFilter"
                       type="text"
-                      className="FiltersBarMobile__form--text"
+                      className={`FiltersBarMobile__form--text ${currentTheme}-theme-m`}
                       onChange={(e) => handleSearchWordChange(e)}
                       value={newSearch.searchWords || ""}
                     />
@@ -139,7 +139,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
                     topicArray.map((topic, index) => (
                       <div className="FiltersBarMobile__form--input" key={index}>
                         <input
-                          className="FiltersBarMobile__input-radio"
+                          className={`FiltersBarMobile__input-radio ${currentTheme}-theme-m`}
                           type="radio"
                           id={"topic" + index}
                           name="searchTopic"
@@ -165,7 +165,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
                     categoriesArray.map((category, index) => (
                       <div className="FiltersBarMobile__form--input" key={index}>
                         <input
-                          className="FiltersBarMobile__input-radio"
+                          className={`FiltersBarMobile__input-radio ${currentTheme}-theme-m`}
                           type="radio"
                           id={"category" + index}
                           name="searchCategory"
@@ -192,7 +192,7 @@ const FiltersBarMobile = ({ title, showResults }) => {
                     orderArray.map((order, index) => (
                       <div className="FiltersBarMobile__form--input" key={index}>
                         <input
-                          className="FiltersBarMobile__input-radio"
+                          className={`FiltersBarMobile__input-radio ${currentTheme}-theme-m`}
                           type="radio"
                           id={"order" + index}
                           name="searchOrder"

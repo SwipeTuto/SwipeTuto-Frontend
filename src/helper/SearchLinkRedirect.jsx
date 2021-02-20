@@ -21,3 +21,7 @@ const SearchLinkRedirect = () => {
 };
 
 export default SearchLinkRedirect;
+
+
+
+

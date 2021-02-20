@@ -176,10 +176,10 @@ export const resetPassowrd = (userEmail) => {
     email: userEmail
   }
   return client().post("dj-rest-auth/password/reset/", data).then(rep => {
-    console.log(rep)
+    // console.log(rep)
     return rep
   }).catch(err => {
-    console.log(err)
+    // console.log(err)
     return err
   })
 }
@@ -193,7 +193,7 @@ export const resetConfirmPassowrd = userNewPasswordObj => {
   //   "token": "TOKEN FROM URL",
   //   "uid": "UID FROM URL"
   // }
-  console.log(userNewPasswordObj);
+  // console.log(userNewPasswordObj);
 
   return client().post("dj-rest-auth/password/reset/confirm/", userNewPasswordObj).then(rep => {
     return rep

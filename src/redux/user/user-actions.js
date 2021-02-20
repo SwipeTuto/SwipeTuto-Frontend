@@ -1,5 +1,5 @@
 import { UserActionTypes } from './user-types'
-import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin, updatePrefService, getCurrentUser } from '../../services/userService'
+import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin, updatePrefService, getCurrentUser, resetConfirmPassowrd } from '../../services/userService'
 import history from "../../helper/functions/createBrowserHistory"
 import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationPopup } from '../layout/layout-actions';
 
@@ -246,7 +246,7 @@ export const updateUserPrefAction = (topicName, categoryName) => {
           dispatch(setUserLoaded())
           return rep
         }).catch(err => {
-          dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
+          dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
           dispatch(updateUserProfileError(err))
           dispatch(setUserLoaded())
           return err
@@ -265,3 +265,20 @@ export const updateUserProfileSuccess = userProfile => ({
   type: UserActionTypes.UPDATE_USER_PROFILE_SUCCESS,
   payload: userProfile
 })
+
+
+
+export const updateUserPasswordAction = (userNewPasswordObj) => {
+  return async dispatch => {
+    dispatch(setLoading())
+    const res = await resetConfirmPassowrd(userNewPasswordObj)
+    if (res && { ...res }.isAxiosError) {
+      dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
+      return
+    } else {
+      dispatch(openNotificationPopup('success', "Votre mot de passe a été modifié avec succès !"))
+      history.push("/account/user")
+    }
+    dispatch(setLoaded())
+  }
+}

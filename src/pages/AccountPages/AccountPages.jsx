@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from "react";
-import { NavLink, Switch } from "react-router-dom";
+import { NavLink, Route, Switch, withRouter } from "react-router-dom";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
@@ -40,7 +40,11 @@ const AccountPage = (props) => {
             <>
               <UserNameAndAvatar user={currentUser} />
               <div className="AccountPage__user-stats"></div>
-              <NavLink to="/account/add" onClick={() => window.localStorage.removeItem("draftNewCard")}>
+              <NavLink
+                to="/account/add"
+                onClick={() => window.localStorage.removeItem("draftNewCard")}
+                className={props.location.pathname === "/account/modify" ? "active" : ""}
+              >
                 <AddLogo />
                 Publier
               </NavLink>
@@ -93,6 +97,7 @@ const AccountPage = (props) => {
         <Switch>
           <ErrorBoundary>
             <Suspense fallback={<PageLoading />}>
+              <Route path="/account/changepw" component={ChangePasswordPage} />
               <ProtectedRoute exact path="/account/user" component={UserPage} />
               <ProtectedRoute exact path="/account/settings" component={SettingsPage} />
               <ProtectedRoute exact path="/account/preferences" component={PreferencesPage} />
@@ -109,4 +114,4 @@ const AccountPage = (props) => {
   );
 };
 
-export default AccountPage;
+export default withRouter(AccountPage);

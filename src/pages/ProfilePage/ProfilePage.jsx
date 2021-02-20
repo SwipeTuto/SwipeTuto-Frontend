@@ -22,14 +22,14 @@ const ProfilePage = ({ match, location }) => {
 
   useEffect(() => {
     if (userId) {
-      getUserByIdAction(userId);
+      dispatch(getUserByIdAction(parseInt(userId)));
       if (currentUser && userId === currentUser.id) {
         setUserIsSame(true);
       } else {
         setUserIsSame(false);
       }
     }
-  }, [currentUser, userId]);
+  }, [currentUser, dispatch, userId]);
 
   const newSignalObject = {
     ...initialSignalState,
@@ -50,11 +50,11 @@ const ProfilePage = ({ match, location }) => {
           <>
             {userIsSame ? (
               <Link to="/account/user">
-                <CustomButton color="dark">Gérer le compte</CustomButton>
+                <CustomButton color="transparent">Gérer le compte</CustomButton>
               </Link>
             ) : (
               <>
-                <CustomButton color="dark" onClick={() => dispatch(showSignalPopup(newSignalObject))}>
+                <CustomButton color="transparent" onClick={() => dispatch(showSignalPopup(newSignalObject))}>
                   Signaler
                 </CustomButton>
               </>

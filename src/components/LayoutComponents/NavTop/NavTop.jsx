@@ -263,7 +263,7 @@ const NavTop = (props) => {
             </Link>
             <Link className="NavTop__userMenu--link" to="/account/preferences" onClick={() => setNavDropdownOpen(false)}>
               <PreferencesLogo className="NavTop__userMenu--logo" />
-              Paramètres
+              Préférences
             </Link>
             <Link className="NavTop__userMenu--link" to="/help" onClick={() => setNavDropdownOpen(false)}>
               <HelpLogo className="NavTop__userMenu--logo" />

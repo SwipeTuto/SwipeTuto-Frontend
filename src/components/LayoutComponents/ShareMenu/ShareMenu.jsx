@@ -11,16 +11,16 @@ import { copyToClipboard } from "../../../helper/functions/copyToClipboard";
 import { useDispatch } from "react-redux";
 import { openNotificationPopup } from "../../../redux/layout/layout-actions";
 
-const ShareMenu = ({ addclass, test }) => {
+const ShareMenu = ({ addclass }) => {
   var history = createBrowserHistory();
   const dispatch = useDispatch();
 
   const handleClipboardCopy = async (text) => {
     const isCopied = await copyToClipboard(text);
     if (isCopied) {
-      dispatch(openNotificationPopup("URL Copié dans le presse-papier !"));
+      dispatch(openNotificationPopup("info", "URL Copié dans le presse-papier !"));
     } else {
-      dispatch(openNotificationPopup("La copie automatique à échouée ..."));
+      dispatch(openNotificationPopup("error", "La copie automatique à échouée ..."));
     }
   };
 

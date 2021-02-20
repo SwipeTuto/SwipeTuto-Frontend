@@ -38,7 +38,9 @@
     grid-template-columns: 8rem 1fr 8rem;
     position: fixed;
     height: 100vh;
-    width: max-content;
+    // width: max-content;
+    width: 70vw;
+    max-width: 1200px;
   }
 
   &__scroll-wrapper {
@@ -51,6 +53,7 @@
     scroll-behavior: smooth;
     grid-column: 2/3;
     display: block;
+    border-radius: $card-radius;
 
     &::-webkit-scrollbar {
       display: none;
@@ -59,11 +62,10 @@
 
   &__wrapper {
     // grid-column: 2/3;
-    margin: 0;
     width: 100%;
     // border-radius: 0;
-    margin: 2rem 0;
-    max-width: 90rem;
+    margin: 2rem auto;
+    // max-width: 90rem;
     border-radius: $card-radius;
     padding: 3rem 6rem;
 
@@ -347,6 +349,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 70vh;
   }
 
   .nav__chevron {
@@ -422,20 +425,15 @@
       }
 
       &__slider {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         min-height: unset;
         min-width: unset;
+        // height: 60vh;
       }
     }
     .VerticalMenu__menu {
       top: unset;
       right: unset;
       bottom: 130%;
-    }
-    .CardSlider {
-      height: 100%;
     }
     .nav__chevron {
       display: none;

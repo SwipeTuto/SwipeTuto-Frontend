@@ -167,20 +167,7 @@
 @media screen and (max-width: $bp-tablet) {
   .CardPreviewSmall {
     &__hover {
-      font-size: 1.2rem;
-    }
-    &__details {
-      p {
-        white-space: nowrap;
-        text-overflow: fade clip;
-      }
-    }
-  }
-}
-@media screen and (max-width: $bp-phone) {
-  .CardPreviewSmall {
-    &__hover {
-      font-size: 0.8rem;
+      display: none;
     }
   }
 }

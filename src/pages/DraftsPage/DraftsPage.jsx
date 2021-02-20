@@ -20,9 +20,9 @@ const DraftsPage = () => {
     if (currentUser && currentUser.id) dispatch(getCardsByUserIdAction(currentUser.id, 0));
   }, [currentUser, dispatch]);
 
-  useEffect(() => {
-    dispatch(setCardsSize("big"));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(setCardsSize("big"));
+  // }, [dispatch]);
 
   return (
     <div className={`DraftsPage ${currentTheme}-theme-d`}>

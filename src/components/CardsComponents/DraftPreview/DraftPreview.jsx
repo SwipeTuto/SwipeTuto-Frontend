@@ -7,7 +7,7 @@ import { deleteCardAction, updateCardAction } from "../../../redux/filter/filter
 import { selectCurrentUserId } from "../../../redux/user/user-selectors";
 import { withRouter } from "react-router-dom";
 import { openNotificationPopup } from "../../../redux/layout/layout-actions";
-import { formattedDate } from "../../../helper";
+import { formattedDate } from "../../../helper/functions/formateDate";
 
 const DraftPreview = ({ draftCard, history }) => {
   const currentTheme = useSelector(selectTheme);
@@ -24,11 +24,7 @@ const DraftPreview = ({ draftCard, history }) => {
     id: null,
   });
 
-  // editer : ouverture dans addCard
-
-  // supprimer : popup confirmation puis action state = 2
   const handleDeleteDraft = (draftID) => {
-    console.log(history.location);
     setConfirmDeletePopupOpen({
       open: true,
       message: "Voulez-vous vraiment supprimer ce brouillon de façon définitive ?",
@@ -38,11 +34,7 @@ const DraftPreview = ({ draftCard, history }) => {
 
   const handleConfirmDeleteClick = async () => {
     (await confirmDeletePopupOpen?.id) && dispatch(deleteCardAction(confirmDeletePopupOpen.id, currentuserId, history));
-    setConfirmDeletePopupOpen({
-      open: false,
-      message: "",
-      id: null,
-    });
+    handleRejectDeleteClick();
   };
   const handleRejectDeleteClick = () => {
     setConfirmDeletePopupOpen({
@@ -52,7 +44,6 @@ const DraftPreview = ({ draftCard, history }) => {
     });
   };
 
-  // publier : popup confirmation puis action state = 1
   const handlePublishDraft = (draftID) => {
     setConfirmPublishPopupOpen({
       open: true,
@@ -74,11 +65,7 @@ const DraftPreview = ({ draftCard, history }) => {
       console.log(err);
     }
 
-    setConfirmPublishPopupOpen({
-      open: false,
-      message: "",
-      id: null,
-    });
+    handleRejectPublishClick();
   };
 
   const handleRejectPublishClick = () => {
@@ -89,7 +76,6 @@ const DraftPreview = ({ draftCard, history }) => {
     });
   };
 
-  // edition de la carte
   const handleEditClick = async (draftCard) => {
     await window.localStorage.setItem(
       "draftNewCard",

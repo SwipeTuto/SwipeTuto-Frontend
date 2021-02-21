@@ -46,7 +46,6 @@ const RichTextInput = ({ label, getDescriptionValue, firstValue }) => {
     <>
       <label className="FormInput__label">{label && label}</label>
       <Editor
-        // blockRendererFn={myBlockRenderer}
         ref={editor}
         editorState={content}
         wrapperClassName={`${currentTheme}-theme-m`}

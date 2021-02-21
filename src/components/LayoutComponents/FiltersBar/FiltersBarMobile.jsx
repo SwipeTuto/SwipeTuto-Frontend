@@ -9,7 +9,10 @@ import { selectFilterMobileMenuOpen, selectTheme } from "../../../redux/layout/l
 import { closeFilterMobileMenu, openConnexionPopup } from "../../../redux/layout/layout-actions";
 
 // helper
-import { topicArray, getNameFromQueryName, orderArray, getCategoriesArray } from "../../../helper/index";
+import { getNameFromQueryName } from "../../../helper/functions/getNameFromQueryName";
+import { orderArray } from "../../../helper/functions/getQueryOrder";
+import { getCategoriesArray } from "../../../helper/functions/getCategoriesArray";
+import { topicArray } from "../../../helper/functions/getTopicsArray";
 
 // components
 import CustomButton from "../CustomButton/CustomButton";

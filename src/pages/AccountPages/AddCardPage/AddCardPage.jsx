@@ -7,7 +7,8 @@ import RichTextInput from "../../../components/FormInputs/RichTextInput";
 import CustomButton from "../../../components/LayoutComponents/CustomButton/CustomButton";
 import DraggableUploadInput from "../../../components/LayoutComponents/DraggableUploadInput/DraggableUploadInput";
 import Loading from "../../../components/Loading/Loading";
-import { getCategoriesArray, topicArray } from "../../../helper";
+import { getCategoriesArray } from "../../../helper/functions/getCategoriesArray";
+import { topicArray } from "../../../helper/functions/getTopicsArray";
 import { createCardAction, updateCardAction } from "../../../redux/filter/filter-actions";
 import { openNotificationPopup } from "../../../redux/layout/layout-actions";
 import { selectIsLoaded, selectTheme } from "../../../redux/layout/layout-selectors";
@@ -44,19 +45,12 @@ const AddCardPage = ({ type, history }) => {
   }, [cardInfos, cardInfos.card_description, cardInfos.card_title, imagesArrayNotEmpty, isValid]);
 
   useEffect(() => {
-    if (window.scrollY) {
-      window.scroll(0, 0);
-    }
-  }, []);
-
-  useEffect(() => {
     setCategoriesLocalArray(getCategoriesArray(cardInfos.card_topic));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardInfos.card_topic]);
 
   const getValue = (name, value) => {
     if (!name) return;
-    // setEmptyState(false);
     const cardInfosCopy = { ...cardInfos, [name]: value };
     setCardInfos(cardInfosCopy);
   };

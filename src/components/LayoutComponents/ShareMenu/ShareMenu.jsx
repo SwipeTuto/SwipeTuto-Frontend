@@ -7,7 +7,7 @@ import { createBrowserHistory } from "history";
 import VerticalMenu from "../VerticalMenu/VerticalMenu";
 import { ReactComponent as CopyLogo } from "../../../assets/images/copy.svg";
 import "./ShareMenu.scss";
-import { copyToClipboard } from "../../../helper";
+import { copyToClipboard } from "../../../helper/functions/copyToClipboard";
 import { useDispatch } from "react-redux";
 import { openNotificationPopup } from "../../../redux/layout/layout-actions";
 

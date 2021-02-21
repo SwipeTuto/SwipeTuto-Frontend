@@ -34,18 +34,23 @@
   }
 
   &__allwrapper {
-    width: 100%;
-    // transform: translateX(0);
+    display: grid;
+    grid-template-columns: 8rem 1fr 8rem;
+    position: fixed;
+    height: 100vh;
+    width: max-content;
   }
 
   &__scroll-wrapper {
     height: 100%;
     overflow-y: auto;
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 80rem 1fr;
+    // display: grid;
+    // grid-template-columns: 1fr 80rem 1fr;
     scrollbar-width: none;
     scroll-behavior: smooth;
+    grid-column: 2/3;
+    display: block;
 
     &::-webkit-scrollbar {
       display: none;
@@ -53,14 +58,14 @@
   }
 
   &__wrapper {
-    grid-column: 2/3;
-    padding: 3rem 6rem;
-    padding-top: 8rem;
-    max-width: 100%;
+    // grid-column: 2/3;
     margin: 0;
     width: 100%;
-    border-radius: 0;
-    // border: 0.5px solid $grey;
+    // border-radius: 0;
+    margin: 2rem 0;
+    max-width: 90rem;
+    border-radius: $card-radius;
+    padding: 3rem 6rem;
 
     .loading {
       width: 100%;
@@ -97,7 +102,12 @@
   }
 
   &__action-button {
-    display: none;
+    grid-column: 3/4;
+    display: flex;
+    flex-direction: column;
+    box-sizing: content-box;
+    margin-left: 2rem;
+    margin-top: 2rem;
   }
 
   .VerticalMenu {
@@ -162,7 +172,7 @@
   &__mobile {
     display: none;
     justify-content: space-between;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     z-index: 80;
     width: 100%;
@@ -232,7 +242,6 @@
 
       a,
       a:visited {
-        // text-decoration: initial;
         border-bottom: 1px solid transparent;
         color: $secondary-dark;
         transition: all 0.2s ease;
@@ -253,9 +262,9 @@
     flex-wrap: wrap;
 
     &-block {
+      background-color: $grey-dark;
       @include button-style;
       white-space: nowrap;
-      // background-color: $primary-dark;
       cursor: default;
       font-size: 1.4rem;
       margin: 0.5rem;
@@ -263,7 +272,6 @@
 
       &:hover {
         color: $black;
-        // background-color: unset;
       }
     }
 
@@ -281,11 +289,6 @@
 
       & svg {
         @include logo-size;
-        // fill: $white;
-
-        // & > path {
-        //   stroke: $white !important;
-        // }
       }
     }
 
@@ -316,7 +319,6 @@
   }
 
   &__commentaires {
-    // border-top: 1px solid $grey;
     padding-bottom: 0;
   }
 
@@ -348,7 +350,7 @@
   }
 
   .nav__chevron {
-    display: none;
+    display: block;
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
@@ -388,57 +390,6 @@
     }
   }
 
-  // MEDIA QUERIES
-
-  @media screen and (min-width: $bp-big) {
-    .CardFullPopup {
-      &__wrapper {
-        max-width: 90rem;
-        width: 90rem;
-      }
-
-      &__wrapper,
-      &__action-button {
-        margin: 2rem 0;
-      }
-
-      &__action-button {
-        grid-column: 3/4;
-        display: flex;
-        flex-direction: column;
-        box-sizing: content-box;
-        margin-left: 2rem;
-      }
-
-      &__allwrapper {
-        // display: flex;
-        // margin: 0 auto;
-        display: grid;
-        grid-template-columns: 8rem 1fr 8rem;
-        // transform: translateX(8rem);
-        position: fixed;
-        height: 100vh;
-        width: max-content;
-
-        // padding: 2rem;
-      }
-
-      &__scroll-wrapper {
-        grid-column: 2/3;
-        display: block;
-      }
-
-      &__wrapper {
-        max-width: 90rem;
-        border-radius: $card-radius;
-        padding: 3rem 6rem;
-      }
-    }
-    .nav__chevron {
-      display: block;
-    }
-  }
-
   @media screen and (max-width: $bp-tablet) {
     .CardFullPopup {
       &__mobile {
@@ -451,12 +402,23 @@
         }
       }
 
+      &__action-button {
+        display: none;
+      }
+
+      &__allwrapper {
+        display: block;
+        width: 100%;
+      }
+
       &__scroll-wrapper {
         display: block;
       }
 
       &__wrapper {
         padding: 7rem 10rem;
+        margin: 0;
+        max-width: 100%;
       }
 
       &__slider {
@@ -474,6 +436,9 @@
     }
     .CardSlider {
       height: 100%;
+    }
+    .nav__chevron {
+      display: none;
     }
   }
 
@@ -525,9 +490,4 @@
       }
     }
   }
-
-  // @media screen and (max-width: $bp-small-phone) {
-  //   .CardFullPopup {
-  //   }
-  // }
 }

@@ -32,8 +32,7 @@ import "./NavTopMobile.scss";
 import { useDarkMode } from "../../../hooks/useDarkMode";
 import ToggleButton from "../ToggleTheme/ToggleTheme";
 import { getCardAfterfilterAction, setCurrentSearch } from "../../../redux/filter/filter-actions";
-import { initialSearchState } from "../../../helper";
-// import { initialSearchState } from "../../../helper";
+import { initialSearchState } from "../../../helper/constants";
 import STSmallLogoBlackmod from "../../../assets/stlogos/logo seul blackmode.png";
 import STSmallLogo from "../../../assets/stlogos/logo seul.png";
 import STBlackmod from "../../../assets/stlogos/swipetuto eclair bleu blackmode.png";
@@ -45,9 +44,6 @@ const NavTopMobile = (props) => {
   const currentTheme = useSelector(selectTheme);
   const currentUser = useSelector(selectCurrentUser);
   const mobileNavOpen = useSelector(selectMobileNavOpen);
-  // const searchWords = useSelector(selectSearchWords);
-  // const currentSearch = useSelector(selectCurrentSearch);
-  // const { searchWords, searchTopic, searchCategory, searchOrder } = currentSearch;
 
   useEffect(() => {
     const NavTopMobileMenu = document.querySelector(".NavTopMobile");
@@ -84,38 +80,40 @@ const NavTopMobile = (props) => {
   };
 
   return (
-    <div className={`NavTopMobile ${mobileNavOpen ? "active" : ""} ${currentTheme}-theme-m`}>
-      {filtersBarMobile && <FiltersBarMobile title="Recherche" showResults={false} />}
+    <>
+      <div className={`NavTopMobile ${mobileNavOpen ? "active" : ""} ${currentTheme}-theme-m`}>
+        {filtersBarMobile && <FiltersBarMobile title="Recherche" showResults={false} />}
 
-      <div className="NavTopMobile__top">
-        {mobileNavOpen ? (
-          <CloseLogo
-            className="NavTopMobile__toggle"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleNavClose();
-            }}
-          />
-        ) : (
-          <MenuLogo
-            className="NavTopMobile__toggle"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleNavOpen();
-            }}
-          />
-        )}
+        <div className="NavTopMobile__top">
+          {mobileNavOpen ? (
+            <CloseLogo
+              className="NavTopMobile__toggle"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNavClose();
+              }}
+            />
+          ) : (
+            <MenuLogo
+              className="NavTopMobile__toggle"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNavOpen();
+              }}
+            />
+          )}
 
-        <CustomButton color="transparent" id="mobileSearchButton" onClick={handleFiltersMobileOpen}>
-          <SearchLogo className={`${currentTheme}-theme`} />
-          Recherche
-        </CustomButton>
+          <CustomButton color="transparent" id="mobileSearchButton" onClick={handleFiltersMobileOpen}>
+            <SearchLogo className={`${currentTheme}-theme`} />
+            Recherche
+          </CustomButton>
 
-        <Link className="NavTopMobile__swipeTuto" to="/" onClick={() => handleNavClose()}>
-          <img src={currentTheme === "light" ? STSmallLogo : STSmallLogoBlackmod} alt="swipetuto logo" />
-        </Link>
+          <Link className="NavTopMobile__swipeTuto" to="/" onClick={() => handleNavClose()}>
+            <img src={currentTheme === "light" ? STSmallLogo : STSmallLogoBlackmod} alt="swipetuto logo" />
+          </Link>
+        </div>
       </div>
-      <div className={`NavTopMobile__open ${mobileNavOpen ? "active" : ""}`}>
+      <div className={`NavTopMobile__open ${mobileNavOpen ? "active" : ""} ${currentTheme}-theme-m`}>
         <div className="NavTopMobile__user">
           {currentUser ? (
             <>
@@ -143,7 +141,7 @@ const NavTopMobile = (props) => {
               className="NavTopMobile__link"
               onClick={() => {
                 dispatch(setCurrentSearch(initialSearchState));
-                dispatch(getCardAfterfilterAction(initialSearchState));
+                // dispatch(getCardAfterfilterAction(initialSearchState));
                 dispatch(closeMobileNav());
               }}
               to="/"
@@ -165,7 +163,7 @@ const NavTopMobile = (props) => {
             to="/search"
             onClick={() => {
               dispatch(setCurrentSearch(initialSearchState));
-              dispatch(getCardAfterfilterAction(initialSearchState));
+              // dispatch(getCardAfterfilterAction(initialSearchState));
               dispatch(closeMobileNav());
             }}
           >
@@ -214,13 +212,13 @@ const NavTopMobile = (props) => {
         </div>
         {!currentUser && (
           <Link className="NavTopMobile__linkConnexion" to="/connexion/login" onClick={() => handleNavClose()}>
-            <CustomButton color="dark">Connexion</CustomButton>
+            <CustomButton>Connexion</CustomButton>
           </Link>
         )}
 
-        <ToggleButton toggleTheme={toggleTheme} theme={theme} />
+        <ToggleButton />
       </div>
-    </div>
+    </>
   );
 };
 

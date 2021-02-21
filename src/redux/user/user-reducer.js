@@ -29,6 +29,25 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         errors: action.payload,
       };
+    case UserActionTypes.UPDATE_USER_PROFILE_SUCCESS:
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          profile: action.payload
+        },
+        errors: null
+      };
+    case UserActionTypes.UPDATE_USER_PROFILE_FAILURE:
+      return {
+        ...state,
+        errors: action.payload,
+      };
+    case UserActionTypes.SET_NO_CLICKED_USER:
+      return {
+        ...state,
+        clickedUser: null,
+      };
 
 
     case UserActionTypes.LOGIN_SUCCESS:

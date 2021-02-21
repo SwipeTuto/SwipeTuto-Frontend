@@ -71,7 +71,7 @@ export const selectFirstLoadDone = createSelector(
 );
 export const selectUserLoaded = createSelector(
   [selectLayout],
-  layout => layout.firstLoadDone
+  layout => layout.userIsLoaded
 );
 export const selectNotificationPopupOpen = createSelector(
   [selectLayout],

@@ -12,8 +12,8 @@
       flex: unset;
 
       &__avatar {
-        width: 10rem;
-        height: 10rem;
+        width: 15rem;
+        height: 15rem;
         margin-bottom: 1rem;
       }
     }
@@ -36,7 +36,6 @@
 
   &__nocards {
     grid-column: 1/-1;
-    // text-align: center;
     margin: 3rem auto;
     font-size: 2rem;
   }

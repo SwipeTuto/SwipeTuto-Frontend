@@ -5,8 +5,6 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-
-  // scroll-behavior: smooth;
 }
 
 button,
@@ -44,12 +42,6 @@ select {
   cursor: pointer;
 }
 
-// select {
-//   // background-color: $white;
-//   border: 0.5px solid $grey-light;
-//   border-radius: $box-radius;
-// }
-
 ul {
   list-style: none;
 }
@@ -75,35 +67,14 @@ body {
   @include theme-colors-dark($themelight: true);
 }
 
-// svg > * {
-//   fill: currentColor !important;
-//   stroke: currentColor !important;
-// }
-
 .section {
   @include section-padding;
 }
-
-// Components spécifiques
-// .primary-medium-text {
-//   color: $primary-medium;
-// }
 
 .error__message {
   color: $red-error;
   margin-bottom: 1rem;
 }
-
-// .blue-text {
-//   color: $blue-dark;
-// }
-
-// .yellow-text {
-//   color: $yellow-dark;
-// }
-// .pink-text {
-//   color: $pink-dark;
-// }
 
 .title {
   font-family: $title-font;

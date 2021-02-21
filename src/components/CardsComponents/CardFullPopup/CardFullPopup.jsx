@@ -1,5 +1,3 @@
-// Popup qui s'ouvre au clic sur une card. Contient CardSliderFull et aussi toutes les infos de la card cliquée
-
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -22,16 +20,8 @@ import {
   getOtherCardsByAuthorNameAction,
   toggleSaveCardAction,
   deleteCardAction,
-  // getCardsByUserIdAction,
 } from "../../../redux/filter/filter-actions";
-import {
-  closePopupCard,
-  openConnexionPopup,
-  // openNotificationPopup,
-  setRedirectUrl,
-  showFullscreen,
-  showSignalPopup,
-} from "../../../redux/layout/layout-actions";
+import { closePopupCard, openConnexionPopup, setRedirectUrl, showFullscreen, showSignalPopup } from "../../../redux/layout/layout-actions";
 import {
   selectFullscreen,
   selectTheme,
@@ -45,10 +35,14 @@ import CardSlider from "../CardSlider/CardSlider";
 import Loading from "../../Loading/Loading";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 import CommentsWrapper from "../../LayoutComponents/CommentsWrapper/CommentsWrapper";
-// import ShareButtons from "../../LayoutComponents/ShareButtons/ShareButtons";
 
 // Services & helpers
-import { convertNumber, formattedDate, initialSignalState, likeUpdate, renameQuery, stringToHTML } from "../../../helper/index";
+import { initialSignalState } from "../../../helper/constants";
+import { likeUpdate } from "../../../helper/functions/likeUpdate";
+import { convertNumber } from "../../../helper/functions/convertNumber";
+import { renameQuery } from "../../../helper/functions/renameQuery";
+import { formattedDate } from "../../../helper/functions/formateDate";
+import { stringToHTML } from "../../../helper/functions/stringToHTML";
 
 // Assets
 import { ReactComponent as ChevronCircleLeft } from "../../../assets/images/chevron-back-circle.svg";
@@ -60,18 +54,16 @@ import { ReactComponent as HeartFull } from "../../../assets/images/heart.svg";
 import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 import { ReactComponent as FullscreenLogo } from "../../../assets/images/expand.svg";
 import { ReactComponent as EyeLogo } from "../../../assets/images/eye.svg";
-// import { ReactComponent as ShareLogo } from "../../../assets/images/share-social.svg";
 
 // SCSS
 import "./CardFullPopup.scss";
 import { getCurrentUserAction } from "../../../redux/user/user-actions";
 import VerticalMenu from "../../LayoutComponents/VerticalMenu/VerticalMenu";
 import ShareMenu from "../../LayoutComponents/ShareMenu/ShareMenu";
-// import { deleteCardService } from "../../../services/cardsService";
 import ConfirmationOverlay from "../../LayoutComponents/ConfirmationOverlay/ConfirmationOverlay";
+import { userHasLiked } from "../../../helper/functions/userHasLiked";
+import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
 
-// Faire qqch avec clickedCard ! correspond à la etaget dans SearchPage, la card parente clickée où on aura accès à data-slideid
-// handleCloseCardFullPopupClick vient de searchPage et permet de fermer la popup au click à coté de la popup
 const CardFullPopup = ({ history, location }) => {
   const isFullScreen = useSelector(selectFullscreen);
   const currentTheme = useSelector(selectTheme);
@@ -107,14 +99,6 @@ const CardFullPopup = ({ history, location }) => {
     setIndexOfCurrentCard(currentCardId);
   }, [cardsArray, clickedCard, clickedCardId]);
 
-  const userHasLiked = useCallback(() => {
-    if (currentUser && currentUser.id) {
-      return cardLikers && cardLikers.some((likers) => likers === currentUser.id);
-    } else {
-      return false;
-    }
-  }, [cardLikers, currentUser]);
-
   const userHasSaved = useCallback(() => {
     if (currentUser && currentUser.id) {
       return currentUserSavedCards && currentUserSavedCards.some((cardsId) => cardsId === clickedCardId);
@@ -124,14 +108,13 @@ const CardFullPopup = ({ history, location }) => {
   }, [clickedCardId, currentUser, currentUserSavedCards]);
 
   useEffect(() => {
-    setCardIsLiked(userHasLiked());
-  }, [cardLikers, currentUser, userHasLiked]);
+    setCardIsLiked(userHasLiked(currentUserId, cardLikers));
+  }, [cardLikers, currentUserId]);
 
   useEffect(() => {
     setCardIsSaved(userHasSaved());
   }, [currentUser, userHasSaved]);
 
-  // scroll reset
   useEffect(() => {
     if (clickedCard && clickedCard.user && clickedCard.user.id) {
       dispatch(getOtherCardsByAuthorNameAction(clickedCard.user.id));
@@ -164,6 +147,8 @@ const CardFullPopup = ({ history, location }) => {
     return clickedCard?.media_image?.map((imgObj) => imgObj.image);
   };
 
+  const redirectUrl = SearchLinkRedirect();
+
   const handleCardModify = async () => {
     await window.localStorage.setItem(
       "draftNewCard",
@@ -179,61 +164,33 @@ const CardFullPopup = ({ history, location }) => {
     );
     dispatch(closePopupCard());
     history.push("/account/modify");
-    console.log("call");
   };
 
   const handlePopupClose = () => {
     if (location.pathname === "/") {
-      window.history.pushState("", "", "/");
+      history.push("/");
     } else if (location.pathname.includes("/account/")) {
-      window.history.pushState("", "", location.pathname);
+      history.push(location.pathname);
     } else if (location.pathname.includes("/profile/")) {
-      window.history.pushState("", "", location.pathname);
+      history.push(location.pathname);
     } else {
-      dispatch(setRedirectUrl(true));
+      // dispatch(setRedirectUrl(true));
 
-      window.history.pushState("", "", history.location.pathname + history.location.search);
-      if (!cardsFetched) {
-        dispatch(getCardAfterfilterAction(currentSearch));
-      }
+      // window.history.pushState("", "", history.location.pathname + history.location.search);
+      history.push(redirectUrl);
+      // if (!cardsFetched) {
+      // dispatch(getCardAfterfilterAction(currentSearch));
+      // }
     }
 
     dispatch(setNoClickedCard());
     dispatch(closePopupCard());
-    dispatch(getCurrentUserAction(currentUserId));
-
-    // if (document.getElementsByClassName("HomePage")[0]) {
-    //   window.history.pushState("", "", "/");
-    // } else if (document.getElementsByClassName("SavedPage")[0]) {
-    //   window.history.pushState("", "", "/account/saved");
-    // } else {
-    //   dispatch(setRedirectUrl(true));
-
-    //   window.history.pushState(
-    //     "",
-    //     "",
-    //     history.location.pathname + history.location.search
-    //   );
-    //   if (!cardsFetched) {
-    //     dispatch(getCardAfterfilterAction(currentSearch));
-    //   }
-    // }
-
-    // const currentClickedCard = clickedCard
-    //   ? document.querySelector(".CardFullPopup")
-    //   : null;
-
-    // if (!currentClickedCard) {
-    //   return;
-    // } else {
-    //   dispatch(setNoClickedCard());
-    // }
+    // dispatch(getCurrentUserAction(currentUserId));
   };
 
   // LIKE
   const handleLikeClick = () => {
     if (!currentUser) {
-      // setConnectRedirect(true);
       dispatch(openConnexionPopup());
     } else {
       dispatch(toggleLikeCardAction(clickedCardId, currentUserId));
@@ -245,7 +202,6 @@ const CardFullPopup = ({ history, location }) => {
   // SAVE
   const handleSaveClick = () => {
     if (!currentUser) {
-      // setConnectRedirect(true);
       dispatch(openConnexionPopup());
     } else {
       dispatch(toggleSaveCardAction(clickedCardId));
@@ -257,10 +213,6 @@ const CardFullPopup = ({ history, location }) => {
     await dispatch(deleteCardAction(clickedCardId, currentUserId, history));
     setConfirmPopupOpen({ ...confirmPopupOpen, open: false });
     dispatch(closePopupCard());
-    // dispatch(getCardsByUserIdAction(currentUserId));
-    // history.push("/account/user");
-
-    // A VOIR pour fermer popup et rediriger
   };
 
   const handleRejectClick = () => {
@@ -307,7 +259,6 @@ const CardFullPopup = ({ history, location }) => {
       {popupCardIsOpen && (
         <div
           className="CardFullPopup"
-          // className={`CardFullPopup ${popupCardIsOpen ? "noscroll" : ""}`}
           onClick={() => {
             handlePopupClose();
           }}
@@ -316,12 +267,6 @@ const CardFullPopup = ({ history, location }) => {
             <div className={`CardFullPopup__mobile ${currentTheme}-theme-m`} onClick={(e) => e.stopPropagation()}>
               {clickedCardIsLoaded ? (
                 <>
-                  {/* <ShareLogo
-                className="card-action-button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              /> */}
                   <ShareMenu />
 
                   <FullscreenLogo
@@ -407,8 +352,7 @@ const CardFullPopup = ({ history, location }) => {
             <div className="CardFullPopup__scroll-wrapper">
               <div className={`CardFullPopup__wrapper ${currentTheme}-theme-d`} onClick={(e) => e.stopPropagation()}>
                 <div className="CardFullPopup__user CardFullPopup__section">
-                  {/* <ShareButtons /> */}
-                  <UserNameAndAvatar user={clickedCard && clickedCard.user && clickedCard.user} link={true} />
+                  <UserNameAndAvatar user={clickedCard && clickedCard.user} link={true} />
                 </div>
 
                 {clickedCardIsLoaded ? (
@@ -420,23 +364,14 @@ const CardFullPopup = ({ history, location }) => {
                     <h1 className="title title-1 CardFullPopup__title">{clickedCard && clickedCard.name}</h1>
 
                     <div className="CardFullPopup__meta CardFullPopup__section">
-                      <p className={`CardFullPopup__meta-block ${clickedCard.topic[0].name} active CardFullPopup__meta--topic_category`}>
-                        {clickedCard &&
-                          clickedCard.topic &&
-                          clickedCard.topic[0] &&
-                          clickedCard.topic[0].name &&
-                          renameQuery(clickedCard.topic[0].name)}{" "}
-                        /{" "}
-                        {clickedCard &&
-                          clickedCard.categorie &&
-                          clickedCard.categorie[0] &&
-                          clickedCard.categorie[0].name &&
-                          renameQuery(clickedCard.categorie[0].name)}
+                      <p className={`CardFullPopup__meta-block ${clickedCard?.topic[0]?.name} active CardFullPopup__meta--topic_category`}>
+                        {clickedCard?.topic[0]?.name ? renameQuery(clickedCard.topic[0].name) : "Tous"} /{" "}
+                        {clickedCard?.categorie[0]?.name ? renameQuery(clickedCard.categorie[0].name) : "Tous"}
                       </p>
-                      <p className={`CardFullPopup__meta-block ${clickedCard.topic[0].name} active CardFullPopup__meta--date`}>
+                      <p className={`CardFullPopup__meta-block ${clickedCard?.topic[0]?.name} active CardFullPopup__meta--date`}>
                         Publié le {clickedCardDate}
                       </p>
-                      <div className={`CardFullPopup__meta-block ${clickedCard.topic[0].name} active  CardFullPopup__meta--stats`}>
+                      <div className={`CardFullPopup__meta-block ${clickedCard?.topic[0]?.name} active  CardFullPopup__meta--stats`}>
                         <span className="CardFullPopup__meta--logo">
                           <EyeLogo />
                         </span>
@@ -447,14 +382,14 @@ const CardFullPopup = ({ history, location }) => {
 
                         <div className="CardFullPopup__like-btn" onClick={() => handleLikeClick()}>
                           <span
-                            className={`CardFullPopup__meta--logo ${userHasLiked() ? "active" : ""}`}
+                            className={`CardFullPopup__meta--logo ${userHasLiked(currentUserId, cardLikers) ? "active" : ""}`}
                             id={`likesNumberPopupLogo${clickedCard.id}`}
                           >
                             {cardIsLiked ? <HeartFull /> : <HeartEmpty />}
                           </span>
 
                           <span
-                            className={`CardFullPopup__meta--number ${userHasLiked() ? "active" : ""}`}
+                            className={`CardFullPopup__meta--number ${userHasLiked(currentUserId, cardLikers) ? "active" : ""}`}
                             id={`likesNumberPopupNumber${clickedCard.id}`}
                           >
                             {clickedCard && clickedCard.number_of_likes ? convertNumber(clickedCard.number_of_likes) : 0}

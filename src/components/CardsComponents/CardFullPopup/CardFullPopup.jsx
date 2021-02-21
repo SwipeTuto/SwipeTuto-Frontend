@@ -142,28 +142,29 @@ const CardFullPopup = ({ history, location }) => {
     dispatch(setClickedCard(nextCard));
   };
 
-  // const getImagesUrlArray = () => {
-  //   return clickedCard?.media_image?.map((imgObj) => imgObj.image);
-  // };
+  const getImagesUrlArray = () => {
+    return clickedCard?.media_image?.map((imgObj) => imgObj.image);
+  };
 
   const redirectUrl = SearchLinkRedirect();
 
-  // const handleCardModify = async () => {
-  //   await window.localStorage.setItem(
-  //     "draftNewCard",
-  //     JSON.stringify({
-  //       name: clickedCard?.name,
-  //       description: clickedCard?.description,
-  //       topic: clickedCard?.topic[0]?.name,
-  //       categorie: clickedCard?.categorie[0]?.name,
-  //       user: currentUserId,
-  //       images: getImagesUrlArray(),
-  //       id: clickedCard?.id,
-  //     })
-  //   );
-  //   dispatch(closePopupCard());
-  //   history.push("/account/modify");
-  // };
+  const handleCardModify = async () => {
+    await window.localStorage.setItem(
+      "draftNewCard",
+      JSON.stringify({
+        name: clickedCard?.name,
+        state: clickedCard?.state,
+        description: clickedCard?.description,
+        topic: clickedCard?.topic[0]?.name,
+        categorie: clickedCard?.categorie[0]?.name,
+        user: currentUserId,
+        images: getImagesUrlArray(),
+        id: clickedCard?.id,
+      })
+    );
+    dispatch(closePopupCard());
+    history.push("/account/modify");
+  };
 
   const handlePopupClose = () => {
     if (location.pathname === "/") {
@@ -273,14 +274,24 @@ const CardFullPopup = ({ history, location }) => {
 
                   <VerticalMenu>
                     {currentUserId === clickedCard.user.id ? (
-                      <p
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleCardDelete();
-                        }}
-                      >
-                        Supprimer
-                      </p>
+                      <>
+                        <p
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleCardModify();
+                          }}
+                        >
+                          Modifier
+                        </p>
+                        <p
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleCardDelete();
+                          }}
+                        >
+                          Supprimer
+                        </p>
+                      </>
                     ) : (
                       <p
                         onClick={(e) => {
@@ -503,6 +514,14 @@ const CardFullPopup = ({ history, location }) => {
 
                   {currentUserId === clickedCard.user.id ? (
                     <VerticalMenu addclass={`card-action-button__wrapper ${currentTheme}-theme`}>
+                      <p
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCardModify();
+                        }}
+                      >
+                        Modifier
+                      </p>
                       <p
                         onClick={(e) => {
                           e.stopPropagation();

@@ -33,6 +33,7 @@ import { ReactComponent as AddLogo } from "../../../assets/images/add.svg";
 import { ReactComponent as DropdownFullLogo } from "../../../assets/images/caret-down.svg";
 import { ReactComponent as PreferencesLogo } from "../../../assets/images/color-palette.svg";
 import { ReactComponent as PencilLogo } from "../../../assets/images/pencil.svg";
+import { ReactComponent as NotifLogo } from "../../../assets/images/notifications.svg";
 import STSmallLogoBlackmod from "../../../assets/stlogos/logo seul blackmode.png";
 import STSmallLogo from "../../../assets/stlogos/logo seul.png";
 
@@ -215,6 +216,14 @@ const NavTop = (props) => {
               <Link to="/account/add" className={`NavTop__roundBtn ${currentTheme}-theme-l`}>
                 <AddLogo />
               </Link>
+            </div>
+            <div
+              className={`NavTop__roundBtn ${currentTheme}-theme-l`}
+              // onClick={() => {
+              //   window.localStorage.removeItem("draftNewCard");
+              // }}
+            >
+              <NotifLogo />
             </div>
             <div
               className={`NavTop__dropdownUserMenu NavTop__roundBtn ${currentTheme}-theme-l`}

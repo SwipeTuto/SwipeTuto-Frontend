@@ -462,6 +462,7 @@ export const updateCardAction = (cardId, updateObj) => {
 export const deleteCardAction = (cardId, currentUserId, history) => {
   return async dispatch => {
     dispatch(setLoading());
+
     if (cardId) {
       const res = await deleteCardService(cardId)
       if (res && { ...res }.isAxiosError) {

@@ -9,3 +9,6 @@ export const coudinaryBase = "https://res.cloudinary.com/hiimurmrd/image/upload/
 export const BASEMEDIA = "https://swipetuto-back-dev.herokuapp.com/media/"
 export const baseURL = "https://swipetuto-back-dev.herokuapp.com/api/v1/"
 export const base = "https://swipetuto-back-dev.herokuapp."
+
+export const APIv1 = "api/v1/"
+

@@ -27,7 +27,7 @@ const UserUsername = ({ user, link, addActionOnClick }) => {
             addActionOnClick && addActionOnClick();
             dispatch(closePopupCard());
             dispatch(setNoClickedCard());
-            dispatch(getUserByIdAction(parseInt(user && user.id)));
+            // dispatch(getUserByIdAction(parseInt(user && user.id)));
           }}
         >
           <p className="UserUsername__username">{user && user.username ? user.username : "Utilisateur SwipeTuto"}</p>

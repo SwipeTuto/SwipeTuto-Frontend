@@ -10,7 +10,7 @@ import { selectCurrentSearch } from "../../../redux/filter/filter-selectors";
 import { logoutAction } from "../../../redux/user/user-actions";
 
 import { selectTheme } from "../../../redux/layout/layout-selectors";
-import { deleteCurrentSearch, getCardAfterfilterAction, setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
+import { deleteCurrentSearch, setCardsFetchedInStore, setCurrentSearch } from "../../../redux/filter/filter-actions";
 
 // helper
 import { initialSearchState } from "../../../helper/constants";
@@ -107,7 +107,6 @@ const NavTop = (props) => {
             alt=""
             onClick={() => {
               dispatch(setCurrentSearch(initialSearchState));
-              // dispatch(getCardAfterfilterAction(initialSearchState));
             }}
           />
         </Link>
@@ -128,7 +127,6 @@ const NavTop = (props) => {
                 to="/search"
                 onClick={() => {
                   dispatch(deleteCurrentSearch());
-                  // dispatch(getCardAfterfilterAction(initialSearchState));
                 }}
                 onMouseEnter={(e) => {
                   openTopicDropdown();
@@ -265,7 +263,7 @@ const NavTop = (props) => {
             </Link>
             <Link className="NavTop__userMenu--link" to="/account/preferences" onClick={() => setNavDropdownOpen(false)}>
               <PreferencesLogo className="NavTop__userMenu--logo" />
-              Paramètres
+              Préférences
             </Link>
             <Link className="NavTop__userMenu--link" to="/help" onClick={() => setNavDropdownOpen(false)}>
               <HelpLogo className="NavTop__userMenu--logo" />

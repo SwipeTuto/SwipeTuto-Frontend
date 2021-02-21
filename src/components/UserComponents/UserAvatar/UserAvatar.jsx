@@ -29,7 +29,7 @@ const UserAvatar = ({ user, link, addActionOnClick }) => {
             addActionOnClick && addActionOnClick();
             dispatch(closePopupCard());
             dispatch(setNoClickedCard());
-            dispatch(getUserByIdAction(parseInt(user && user.id)));
+            // dispatch(getUserByIdAction(parseInt(user && user.id)));
           }}
         >
           <div className="user_avatar">

@@ -30,7 +30,7 @@ const UserNameAndAvatar = ({ user, link, changeLink, themed }) => {
             dispatch(setLoading());
             dispatch(closePopupCard());
             dispatch(setNoClickedCard());
-            dispatch(getUserByIdAction(parseInt(user && user.id)));
+            // dispatch(getUserByIdAction(parseInt(user && user.id)));
           }}
         >
           <div className="UserNameAndAvatar__avatar">

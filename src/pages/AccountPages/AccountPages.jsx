@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from "react";
-import { NavLink, Switch } from "react-router-dom";
+import { NavLink, Route, Switch, withRouter } from "react-router-dom";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
@@ -25,6 +25,7 @@ const SavedPage = lazy(() => import("./SavedPage/SavedPage"));
 const DraftsPage = lazy(() => import("../DraftsPage/DraftsPage"));
 const AddCardPage = lazy(() => import("./AddCardPage/AddCardPage"));
 const PreferencesPage = lazy(() => import("./PreferencesPage/PreferencesPage"));
+const ChangePasswordPage = lazy(() => import("./ChangePasswordPage/ChangePasswordPage"));
 
 const AccountPage = (props) => {
   const currentUser = useSelector(selectCurrentUser);
@@ -39,7 +40,11 @@ const AccountPage = (props) => {
             <>
               <UserNameAndAvatar user={currentUser} />
               <div className="AccountPage__user-stats"></div>
-              <NavLink to="/account/add" onClick={() => window.localStorage.removeItem("draftNewCard")}>
+              <NavLink
+                to="/account/add"
+                onClick={() => window.localStorage.removeItem("draftNewCard")}
+                className={props.location.pathname === "/account/modify" ? "active" : ""}
+              >
                 <AddLogo />
                 Publier
               </NavLink>
@@ -92,6 +97,7 @@ const AccountPage = (props) => {
         <Switch>
           <ErrorBoundary>
             <Suspense fallback={<PageLoading />}>
+              <Route path="/account/changepw" component={ChangePasswordPage} />
               <ProtectedRoute exact path="/account/user" component={UserPage} />
               <ProtectedRoute exact path="/account/settings" component={SettingsPage} />
               <ProtectedRoute exact path="/account/preferences" component={PreferencesPage} />
@@ -99,6 +105,7 @@ const AccountPage = (props) => {
               <ProtectedRoute exact path="/account/drafts" component={DraftsPage} />
               <ProtectedRoute exact path="/account/modify" component={() => <AddCardPage type="modify" />} />
               <ProtectedRoute exact path="/account/add" component={AddCardPage} />
+              <ProtectedRoute exact path="/account/password/reset/confirm/:uidb64/:token" component={ChangePasswordPage} />
             </Suspense>
           </ErrorBoundary>
         </Switch>
@@ -107,4 +114,4 @@ const AccountPage = (props) => {
   );
 };
 
-export default AccountPage;
+export default withRouter(AccountPage);

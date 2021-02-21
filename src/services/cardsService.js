@@ -103,7 +103,7 @@ export const updateCardService = (cardId, updateObj) => {
   updateObj.description && formData.append("description", updateObj.description);
   updateObj.categorie && formData.append("categorie", updateObj.categorie);
 
-  return client().patch(`card/update/card/${cardId}`, formData).then(rep => {
+  return client().patch(`card/update/${cardId}`, formData).then(rep => {
     // console.log(rep)
     return rep
   }).catch(err => {

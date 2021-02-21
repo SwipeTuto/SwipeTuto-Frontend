@@ -212,12 +212,12 @@ $title-font: "Rubik", sans-serif;
 }
 
 @mixin thin-scrollbar {
-  ::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     background-color: $grey-light;
     height: 0.5rem;
   }
 
-  ::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar-thumb {
     background-color: $grey;
     height: 1rem;
     width: 1rem;

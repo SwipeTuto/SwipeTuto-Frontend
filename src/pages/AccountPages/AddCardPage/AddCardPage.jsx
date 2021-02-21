@@ -22,7 +22,7 @@ const AddCardPage = ({ type, history }) => {
   const [cardInfos, setCardInfos] = useState({
     card_title: localDraftNewCard?.name || "",
     card_description: localDraftNewCard?.description || "",
-    card_topic: localDraftNewCard?.topic || null,
+    card_topic: localDraftNewCard?.topic || "technologie",
     card_category: localDraftNewCard?.categorie || null,
     card_images: localDraftNewCard?.images || [],
     card_id: localDraftNewCard?.id || null,
@@ -106,7 +106,7 @@ const AddCardPage = ({ type, history }) => {
       setIsValid(false);
       if (state === 0) history.push("/account/drafts");
     } catch (err) {
-      dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer."));
+      dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer."));
       console.log(err);
     }
   };
@@ -127,11 +127,16 @@ const AddCardPage = ({ type, history }) => {
 
       // faire le update
       await dispatch(updateCardAction(cardInfos?.card_id, cardObject));
+      if (state === 0) {
+        history.push("/account/drafts");
+      } else {
+        history.push("/search");
+      }
 
       await window.localStorage.removeItem("draftNewCard");
       setIsValid(false);
     } catch (err) {
-      dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer."));
+      dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer."));
       console.log(err);
     }
   };
@@ -216,11 +221,14 @@ const AddCardPage = ({ type, history }) => {
                 firstValue={cardInfos.card_topic || null}
               >
                 {topicArray &&
-                  topicArray.map((topic, index) => (
-                    <option value={topic.queryName} key={`topicAdd${topic.name}${index}`}>
-                      {topic.name}
-                    </option>
-                  ))}
+                  topicArray.map(
+                    (topic, index) =>
+                      topic.queryName !== null && (
+                        <option value={topic.queryName} key={`topicAdd${topic.name}${index}`}>
+                          {topic.name}
+                        </option>
+                      )
+                  )}
               </FormSelect>
             </div>
             <div className="AddCardPage__inputZone">
@@ -236,11 +244,14 @@ const AddCardPage = ({ type, history }) => {
                 firstValue={cardInfos.card_category || null}
               >
                 {categoriesLocalArray &&
-                  categoriesLocalArray.map((category, index) => (
-                    <option value={category.queryName} key={`categoryAdd${category.name}${index}`}>
-                      {category.name}
-                    </option>
-                  ))}
+                  categoriesLocalArray.map(
+                    (category, index) =>
+                      category.queryName !== null && (
+                        <option value={category.queryName} key={`categoryAdd${category.name}${index}`}>
+                          {category.name}
+                        </option>
+                      )
+                  )}
               </FormSelect>
             </div>
           </section>
@@ -254,10 +265,10 @@ const AddCardPage = ({ type, history }) => {
               {type && type === "modify" ? (
                 <>
                   <CustomButton color="white" type="button" onClick={() => updateCard(0)}>
-                    Enregistrer en brouillon
+                    Mettre à jour et enregistrer en brouillon
                   </CustomButton>
                   <CustomButton type="submit" disabled={!isValid} onClick={() => updateCard(1)}>
-                    Mettre à jour la carte
+                    Mettre à jour et publier la carte
                   </CustomButton>
                 </>
               ) : (

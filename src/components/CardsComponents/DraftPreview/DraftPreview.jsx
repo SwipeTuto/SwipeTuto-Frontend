@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 import "./DraftPreview.scss";
 import ConfirmationOverlay from "../../LayoutComponents/ConfirmationOverlay/ConfirmationOverlay";
-import { deleteCardAction, updateCardAction } from "../../../redux/filter/filter-actions";
+import { deleteCardAction, getCardsByUserIdAction, updateCardAction } from "../../../redux/filter/filter-actions";
 import { selectCurrentUserId } from "../../../redux/user/user-selectors";
 import { withRouter } from "react-router-dom";
 import { openNotificationPopup } from "../../../redux/layout/layout-actions";
@@ -59,9 +59,10 @@ const DraftPreview = ({ draftCard, history }) => {
         state: 1,
       };
       await dispatch(updateCardAction(draftCard.id, updateState));
+      dispatch(getCardsByUserIdAction(currentuserId, 0));
       await window.localStorage.removeItem("draftNewCard");
     } catch (err) {
-      dispatch(openNotificationPopup("Une erreur est survenue. Merci de réessayer."));
+      dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer."));
       console.log(err);
     }
 
@@ -80,16 +81,16 @@ const DraftPreview = ({ draftCard, history }) => {
     await window.localStorage.setItem(
       "draftNewCard",
       JSON.stringify({
-        name: draftCard.name,
-        description: draftCard.description,
-        topic: draftCard.topic[0].name,
-        categorie: draftCard.categorie[0].name,
+        name: draftCard?.name,
+        description: draftCard?.description,
+        topic: draftCard?.topic[0]?.name,
+        categorie: draftCard?.categorie[0]?.name,
         images: getImagesUrlArray(),
         user: currentuserId,
-        id: draftCard.id,
+        id: draftCard?.id,
       })
     );
-    history.push("/account/add");
+    history.push("/account/modify");
   };
 
   const getImagesUrlArray = () => {

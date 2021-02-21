@@ -40,7 +40,7 @@
     }
 
     &:hover .CardPreviewSmall__hover {
-      bottom: 0;
+      top: 0;
 
       & p {
         visibility: visible;
@@ -68,23 +68,41 @@
     }
   }
 
+  &__media {
+    overflow: hidden;
+  }
+
   &__hover {
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(to bottom, rgba($black, 0.85) 0%, transparent 100%);
+    background-image: linear-gradient(to top, $black 0%, rgba($black, 0.8) 25%, transparent 100%);
     display: flex;
-    align-items: flex-start;
+    align-items: flex-end;
     text-align: center;
     justify-content: center;
     color: $white;
     padding: 2rem 1.2rem;
     position: absolute;
-    bottom: 100%;
+    top: 100%;
     left: 0;
     transition: all 0.2s ease;
 
     & p {
       visibility: hidden;
+    }
+
+    .VerticalMenu {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+
+      svg {
+        box-sizing: content-box;
+        @include medium-logo-size;
+        border-radius: $round-radius;
+        padding: 1rem;
+        background-color: $white;
+      }
     }
   }
 
@@ -149,20 +167,7 @@
 @media screen and (max-width: $bp-tablet) {
   .CardPreviewSmall {
     &__hover {
-      font-size: 1.2rem;
-    }
-    &__details {
-      p {
-        white-space: nowrap;
-        text-overflow: fade clip;
-      }
-    }
-  }
-}
-@media screen and (max-width: $bp-phone) {
-  .CardPreviewSmall {
-    &__hover {
-      font-size: 0.8rem;
+      display: none;
     }
   }
 }

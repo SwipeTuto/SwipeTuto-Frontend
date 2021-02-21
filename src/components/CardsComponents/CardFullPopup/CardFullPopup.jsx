@@ -16,7 +16,6 @@ import {
   setClickedCard,
   setNoClickedCard,
   toggleLikeCardAction,
-  getCardAfterfilterAction,
   getOtherCardsByAuthorNameAction,
   toggleSaveCardAction,
   deleteCardAction,
@@ -143,28 +142,28 @@ const CardFullPopup = ({ history, location }) => {
     dispatch(setClickedCard(nextCard));
   };
 
-  const getImagesUrlArray = () => {
-    return clickedCard?.media_image?.map((imgObj) => imgObj.image);
-  };
+  // const getImagesUrlArray = () => {
+  //   return clickedCard?.media_image?.map((imgObj) => imgObj.image);
+  // };
 
   const redirectUrl = SearchLinkRedirect();
 
-  const handleCardModify = async () => {
-    await window.localStorage.setItem(
-      "draftNewCard",
-      JSON.stringify({
-        name: clickedCard.name,
-        description: clickedCard.description,
-        topic: clickedCard.topic[0].name,
-        categorie: clickedCard.categorie[0].name,
-        user: currentUserId,
-        images: getImagesUrlArray(),
-        id: clickedCard.id,
-      })
-    );
-    dispatch(closePopupCard());
-    history.push("/account/modify");
-  };
+  // const handleCardModify = async () => {
+  //   await window.localStorage.setItem(
+  //     "draftNewCard",
+  //     JSON.stringify({
+  //       name: clickedCard?.name,
+  //       description: clickedCard?.description,
+  //       topic: clickedCard?.topic[0]?.name,
+  //       categorie: clickedCard?.categorie[0]?.name,
+  //       user: currentUserId,
+  //       images: getImagesUrlArray(),
+  //       id: clickedCard?.id,
+  //     })
+  //   );
+  //   dispatch(closePopupCard());
+  //   history.push("/account/modify");
+  // };
 
   const handlePopupClose = () => {
     if (location.pathname === "/") {
@@ -174,13 +173,7 @@ const CardFullPopup = ({ history, location }) => {
     } else if (location.pathname.includes("/profile/")) {
       history.push(location.pathname);
     } else {
-      // dispatch(setRedirectUrl(true));
-
-      // window.history.pushState("", "", history.location.pathname + history.location.search);
       history.push(redirectUrl);
-      // if (!cardsFetched) {
-      // dispatch(getCardAfterfilterAction(currentSearch));
-      // }
     }
 
     dispatch(setNoClickedCard());
@@ -349,6 +342,7 @@ const CardFullPopup = ({ history, location }) => {
           )}
 
           <div className={`CardFullPopup__allwrapper${isFullscreen ? "--fullscreen" : ""}`}>
+            {/* <div className={`CardFullPopup__scroll-wrapper ${currentTheme}-theme-d`}> */}
             <div className="CardFullPopup__scroll-wrapper">
               <div className={`CardFullPopup__wrapper ${currentTheme}-theme-d`} onClick={(e) => e.stopPropagation()}>
                 <div className="CardFullPopup__user CardFullPopup__section">
@@ -509,14 +503,6 @@ const CardFullPopup = ({ history, location }) => {
 
                   {currentUserId === clickedCard.user.id ? (
                     <VerticalMenu addclass={`card-action-button__wrapper ${currentTheme}-theme`}>
-                      <p
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleCardModify();
-                        }}
-                      >
-                        Modifier
-                      </p>
                       <p
                         onClick={(e) => {
                           e.stopPropagation();

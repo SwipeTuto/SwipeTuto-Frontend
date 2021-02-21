@@ -8,8 +8,8 @@ import { getCurrentUserAction, updateUserInfosAction } from "../../../redux/user
 import { selectTheme } from "../../../redux/layout/layout-selectors";
 import FormInput from "../../../components/FormInputs/FormInput";
 import FormTextarea from "../../../components/FormInputs/FormTextarea";
-import { upDateAvatar } from "../../../services/userService";
-import { setCardsSize, toggleThemeAction } from "../../../redux/layout/layout-actions";
+import { resetPassowrd, upDateAvatar } from "../../../services/userService";
+import { openNotificationPopup, setCardsSize, toggleThemeAction } from "../../../redux/layout/layout-actions";
 
 const SettingsPage = () => {
   const dispatch = useDispatch();
@@ -120,6 +120,19 @@ const SettingsPage = () => {
     dispatch(getCurrentUserAction());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userPref]);
+
+  const handleResetPassword = async () => {
+    if (currentUser.email) {
+      try {
+        await resetPassowrd(currentUser.email);
+        return dispatch(openNotificationPopup("info", "Un email vous a été envoyé pour changer de mot de passe !"));
+      } catch (err) {
+        return;
+      }
+    } else {
+      dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer plus tard ou de signaler le problème."));
+    }
+  };
 
   return (
     <div className={`SettingsPage ${currentTheme}-theme-d`}>
@@ -288,6 +301,15 @@ const SettingsPage = () => {
             Valider
           </CustomButton>
         </form>
+        <div className="form__reset-password form">
+          <div className="form__bottom">
+            <p>Vous souhaitez changer votre mot de passe ?</p>
+            <p>Cliquez sur le bouton ci-contre. Vous recevrez une invitation par mail à votre adresse {currentUser?.email}</p>
+          </div>
+          <CustomButton name="reset_password" onClick={() => handleResetPassword()} color="dark">
+            Changer de mot de passe
+          </CustomButton>
+        </div>
       </div>
     </div>
   );

@@ -16,6 +16,7 @@ const getCardAfterfilterFailure = err => ({
 
 export const getCardAfterfilterAction = (search) => {
   return dispatch => {
+    dispatch(setCardsFetchedInStore(""))
     dispatch(setLoading());
     return getCardAfterfilter(search)
       .then(rep => {
@@ -32,6 +33,7 @@ export const getCardAfterfilterAction = (search) => {
 
 export const getCardPrefUserAction = () => {
   return dispatch => {
+    dispatch(setCardsFetchedInStore(""))
     dispatch(setLoading());
     return getCardPrefUser()
       .then(rep => {
@@ -111,6 +113,7 @@ export const setCardsFetchedInStore = (cards) => ({
 // Fetch des cards à partir du nom de l'auteur
 export const getCardsByUserIdAction = (userId, cardState) => {
   return dispatch => {
+    dispatch(setCardsFetchedInStore(""))
     dispatch(setLoading())
     return getCardsByUser(userId, cardState)
       .then(rep => {
@@ -379,7 +382,7 @@ const deleteCommentSuccess = () => ({
 
 export const getUserFavoriesAction = userId => {
   return dispatch => {
-    dispatch(setCardsFetchedInStore(null))
+    dispatch(setCardsFetchedInStore(""))
     dispatch(setLoading());
     userId && getUserFavoriesById(userId).then(rep => {
       dispatch(getUserFavoriesSuccess(rep.data))
@@ -404,23 +407,24 @@ export const getUserFavoriesSuccess = favories => ({
 })
 
 export const createCardAction = (cardObject, cardState) => {
+  console.log(cardObject, cardState)
   return async dispatch => {
     dispatch(setLoading());
+    dispatch(setCardsFetchedInStore(""))
     dispatch(setRedirectUrl(false))
     cardObject && await createCardService(cardObject).then(rep => {
-      dispatch(openNotificationPopup("Carte créée avec succès !"))
+      dispatch(openNotificationPopup("success", "Carte créée avec succès !"))
       dispatch(setLoaded())
 
       if (cardState !== 0) {
         dispatch(setCurrentSearch(initialSearchState))
-        // dispatch(getCardAfterfilterAction(initialSearchState))
         dispatch(setRedirectUrl(true))
       }
 
       return rep.data
     }).catch(err => {
       console.error(err)
-      dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
+      dispatch(openNotificationPopup("error", 'Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
       dispatch(setLoaded())
       return err
     })
@@ -429,26 +433,27 @@ export const createCardAction = (cardObject, cardState) => {
 
 // modify card action à faire sur le même modèle que create
 export const updateCardAction = (cardId, updateObj) => {
+  console.log(cardId, updateObj)
   return async dispatch => {
     dispatch(setLoading());
+    dispatch(setCardsFetchedInStore(""))
     dispatch(setRedirectUrl(false))
     if (cardId && updateObj) {
       await updateCardService(cardId, updateObj).then(rep => {
-        dispatch(openNotificationPopup("Carte modifiée avec succès !"))
+        dispatch(openNotificationPopup("success", "Carte modifiée avec succès !"))
         dispatch(setLoaded())
-        // dispatch(setCurrentSearch(initialSearchState))
-        dispatch(getCardAfterfilterAction(initialSearchState))
-        dispatch(setRedirectUrl(true))
+        dispatch(setCurrentSearch(initialSearchState))
+        // dispatch(setRedirectUrl(true))
         return rep.data
       }).catch(err => {
 
         console.error(err)
-        dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
+        dispatch(openNotificationPopup("error", 'Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
         dispatch(setLoaded())
         return err
       })
     } else {
-      dispatch(openNotificationPopup("Une erreur est survenue... Merci de réessayer ou de nous signaler le problème"))
+      dispatch(openNotificationPopup("error", "Une erreur est survenue... Merci de réessayer ou de nous signaler le problème"))
       dispatch(setLoaded())
     }
   }
@@ -457,22 +462,24 @@ export const updateCardAction = (cardId, updateObj) => {
 export const deleteCardAction = (cardId, currentUserId, history) => {
   return async dispatch => {
     dispatch(setLoading());
-    cardId && await deleteCardService(cardId).then(rep => {
-      dispatch(openNotificationPopup("Carte supprimée avec succès !"))
-      dispatch(setLoaded())
-      if (history.location.pathname === "/account/drafts") {
-        currentUserId && dispatch(getCardsByUserIdAction(currentUserId, 0));
+    if (cardId) {
+      const res = await deleteCardService(cardId)
+      if (res && { ...res }.isAxiosError) {
+        dispatch(openNotificationPopup("error", 'Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
+        dispatch(setLoaded())
+        return
       } else {
-        currentUserId && dispatch(getCardsByUserIdAction(currentUserId));
-        history && history.push("/account/user");
+
+        dispatch(openNotificationPopup("success", "Carte supprimée avec succès !"))
+        dispatch(setLoaded())
+        if (history.location.pathname === "/account/drafts") {
+          currentUserId && dispatch(getCardsByUserIdAction(currentUserId, 0));
+        } else {
+          currentUserId && dispatch(getCardsByUserIdAction(currentUserId));
+          history && history.push("/account/user");
+        }
       }
-      return rep.data
-    }).catch(err => {
-      console.error(err)
-      dispatch(openNotificationPopup('Une erreur est survenue... Merci de réessayer ou de nous signaler le problème'))
-      dispatch(setLoaded())
-      return err
-    })
+    }
   }
 }
 

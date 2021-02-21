@@ -6,6 +6,7 @@ import { selectNotificationPopupOpen } from "../../../redux/layout/layout-select
 import "./NotificationPopup.scss";
 
 const NotificationPopup = ({ notification }) => {
+  // type = "error", "success" or "info"
   const notificationPopup = useSelector(selectNotificationPopupOpen);
   const [isActive, setIsActive] = useState(false);
   const dispatch = useDispatch();
@@ -20,7 +21,11 @@ const NotificationPopup = ({ notification }) => {
     }
   }, [dispatch, notificationPopup]);
 
-  return <div className={`NotificationPopup ${isActive ? "active" : ""}`}>{notificationPopup && notificationPopup.notification}</div>;
+  return (
+    <div className={`NotificationPopup NotificationPopup-${notificationPopup?.type} ${isActive ? "active" : ""}`}>
+      {notificationPopup && notificationPopup.notification}
+    </div>
+  );
 };
 
 export default NotificationPopup;

@@ -9,19 +9,13 @@ import { ReactComponent as LogoInstagram } from "../../../assets/images/logo-ins
 
 import "./Footer.scss";
 import ToggleButton from "../ToggleTheme/ToggleTheme";
+import { selectIsLoaded } from "../../../redux/layout/layout-selectors";
+import { useSelector } from "react-redux";
 
 const Footer = ({ location }) => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
-  const [theme, setTheme] = useDarkMode();
   const [hide, setHide] = useState(false);
-  const toggleTheme = () => {
-    if (theme === "light") {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  };
 
   useEffect(() => {
     if (location.pathname === "/search") {

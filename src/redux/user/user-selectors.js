@@ -29,3 +29,12 @@ export const selectCurrentUserCategoriesPreferences = createSelector(
   [selectCurrentUser],
   currentUser => currentUser?.profile?.category_favorie?.map(item => item?.name)
 );
+
+export const selectCurrentUserFollowers = createSelector(
+  [selectCurrentUser],
+  currentUser => currentUser && currentUser.followers
+);
+export const selectCurrentUserFollowersCount = createSelector(
+  [selectCurrentUser],
+  currentUser => currentUser && currentUser.followers_count
+);

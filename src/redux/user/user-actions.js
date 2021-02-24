@@ -1,5 +1,6 @@
 import { UserActionTypes } from './user-types'
 import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin, updatePrefService, getCurrentUser, resetConfirmPassowrd } from '../../services/userService'
+import { followUserByID } from '../../services/socialService'
 import history from "../../helper/functions/createBrowserHistory"
 import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationPopup } from '../layout/layout-actions';
 
@@ -280,5 +281,25 @@ export const updateUserPasswordAction = (userNewPasswordObj) => {
       history.push("/account/user")
     }
     dispatch(setLoaded())
+  }
+}
+
+
+export const followUserByIDAction = (userIDtoFollow) => {
+  return dispatch => {
+    dispatch(setUserLoading())
+    return (
+      followUserByID(userIDtoFollow)
+        .then(rep => {
+          // dispatch()
+          dispatch(setUserLoaded())
+          return rep
+        }).catch(err => {
+          dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
+          dispatch(setUserLoaded())
+          return err
+        })
+    )
+
   }
 }

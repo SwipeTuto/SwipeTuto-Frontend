@@ -21,6 +21,7 @@ const INITIAL_STATE = {
   clickedCardIsLoaded: true,
   imageIsLoaded: true,
   userIsLoaded: true,
+  buttonIsLoaded: true,
   commentsAreLoaded: true,
   redirectUrl: false,
   connexionPopup: false,
@@ -159,6 +160,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         imageIsLoaded: true,
+      }
+    case LayoutActionTypes.BUTTON_LOADING:
+      return {
+        ...state,
+        buttonIsLoaded: false,
+      }
+    case LayoutActionTypes.BUTTON_LOADED:
+      return {
+        ...state,
+        buttonIsLoaded: true,
       }
     case LayoutActionTypes.SHOW_SIGNAL_POPUP:
       return {

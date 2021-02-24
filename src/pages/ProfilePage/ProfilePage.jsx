@@ -7,10 +7,8 @@ import UserPage from "../AccountPages/UserPage/UserPage";
 import { selectCurrentUser, selectUserErrors } from "../../redux/user/user-selectors";
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { Link } from "react-router-dom";
-import { initialSignalState } from "../../helper/constants";
 import { getUrlId } from "../../helper/functions/getURLParams";
 import { selectTheme } from "../../redux/layout/layout-selectors";
-import { showSignalPopup } from "../../redux/layout/layout-actions";
 
 const ProfilePage = ({ match, location }) => {
   const dispatch = useDispatch();
@@ -31,11 +29,6 @@ const ProfilePage = ({ match, location }) => {
     }
   }, [currentUser, dispatch, userId]);
 
-  const newSignalObject = {
-    ...initialSignalState,
-    id_user: parseInt(userId),
-  };
-
   return (
     <div className={`ProfilePage ${currentTheme}-theme-d`}>
       <div className="ProfilePage__wrapper">
@@ -47,20 +40,7 @@ const ProfilePage = ({ match, location }) => {
             </Link>
           </div>
         ) : (
-          <>
-            {userIsSame ? (
-              <Link to="/account/user">
-                <CustomButton color="transparent">Gérer le compte</CustomButton>
-              </Link>
-            ) : (
-              <>
-                <CustomButton color="transparent" onClick={() => dispatch(showSignalPopup(newSignalObject))}>
-                  Signaler
-                </CustomButton>
-              </>
-            )}
-            <UserPage userIsSame={userIsSame} />
-          </>
+          <UserPage userIsSame={userIsSame} />
         )}
       </div>
     </div>

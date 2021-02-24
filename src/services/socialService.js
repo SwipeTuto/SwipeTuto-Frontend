@@ -116,3 +116,15 @@ export const getCardCommentsOtherPage = (url) => {
   })
 }
 
+
+export const followUserByID = (url) => {
+  // var config = {
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   }
+  // }
+  // return axios.get(`${url}`, config).then(rep => {
+  //   return rep
+  // })
+}
+

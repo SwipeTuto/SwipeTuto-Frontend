@@ -52,7 +52,6 @@ function App(props) {
   const filterError = useSelector(selectFilterError)
 
   useEffect(() => {
-
     if (firstLoadDone === false && locationPathname === "/search") { // si params url
       if (topic || category || ordering || search) {
         const currentSearchCopy = {
@@ -98,7 +97,7 @@ function App(props) {
   useEffect(() => {
     if (filterError && clickedCard === null) {
 
-      dispatch(openNotificationPopup("error",'Une erreur est survenue. Vous avez été redirigé.'))
+      dispatch(openNotificationPopup("error", 'Une erreur est survenue. Vous avez été redirigé.'))
       dispatch(deleteFilterErrorAction())
       dispatch(closePopupCard())
       dispatch(setRedirectUrl(true))

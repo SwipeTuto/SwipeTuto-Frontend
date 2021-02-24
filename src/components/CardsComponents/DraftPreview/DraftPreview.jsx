@@ -82,6 +82,7 @@ const DraftPreview = ({ draftCard, history }) => {
       "draftNewCard",
       JSON.stringify({
         name: draftCard?.name,
+        state: draftCard?.state,
         description: draftCard?.description,
         topic: draftCard?.topic[0]?.name,
         categorie: draftCard?.categorie[0]?.name,

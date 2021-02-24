@@ -162,6 +162,35 @@
       }
     }
   }
+
+  &__notifs {
+    position: relative;
+    &--stamp {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-40%, -125%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: $round-radius;
+      height: 1.6rem;
+      width: 1.6rem;
+      font-size: 1rem;
+      background-color: $secondary-dark;
+    }
+
+    &--dropdown {
+      @include overlay-menu;
+      @include thin-scrollbar;
+      top: 100%;
+      right: 2rem;
+      overflow: unset;
+      overflow-y: scroll;
+      height: calc(100vh - #{$navtop-height + 1rem});
+    }
+  }
+
   &__roundBtn {
     cursor: pointer;
     width: 3.5rem;
@@ -172,6 +201,12 @@
     align-items: center;
     & > svg {
       @include big-logo-size;
+    }
+
+    &.NavTop__notifs {
+      & > svg {
+        @include medium-logo-size;
+      }
     }
 
     &.dark-theme-l {

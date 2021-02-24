@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   signalInfos: initialSignalState,
   fullscreen: false,
   mobileNavOpen: false,
+  mobileNotifDropdownOpen: false,
   notificationPopupOpen: {
     open: false,
     notification: "",
@@ -69,7 +70,8 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         mobileNavOpen: true,
-        filterMobileMenuOpen: false
+        filterMobileMenuOpen: false,
+        mobileNotifDropdownOpen: false,
       };
     case LayoutActionTypes.CLOSE_MOBILE_NAV:
       app.style.position = "static";
@@ -77,6 +79,21 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         mobileNavOpen: false,
+      };
+    case LayoutActionTypes.OPEN_NOTIF_DROPDOWN_MENU:
+
+      app.style.position = "fixed";
+      app.style.overflow = "hidden";
+      return {
+        ...state,
+        mobileNotifDropdownOpen: true,
+      };
+    case LayoutActionTypes.CLOSE_NOTIF_DROPDOWN_MENU:
+      app.style.position = "static";
+      app.style.overflow = "visible";
+      return {
+        ...state,
+        mobileNotifDropdownOpen: false,
       };
     case LayoutActionTypes.OPEN_FILTER_MOBILE_MENU:
       app.style.position = "fixed";

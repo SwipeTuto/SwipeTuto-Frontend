@@ -34,6 +34,12 @@ export const openFilterMobileMenu = () => ({
 export const closeFilterMobileMenu = () => ({
   type: LayoutActionTypes.CLOSE_FILTER_MOBILE_MENU,
 })
+export const openNotifDropdownMobile = () => ({
+  type: LayoutActionTypes.OPEN_NOTIF_DROPDOWN_MENU,
+})
+export const closeNotifDropdownMobile = () => ({
+  type: LayoutActionTypes.CLOSE_NOTIF_DROPDOWN_MENU,
+})
 export const openConnexionPopup = () => ({
   type: LayoutActionTypes.OPEN_CONNEXION_POPUP,
 })

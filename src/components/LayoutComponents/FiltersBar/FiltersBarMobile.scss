@@ -49,6 +49,10 @@
       align-items: center;
       margin-bottom: 2rem;
 
+      .NavTop__roundBtn {
+        margin-left: auto;
+      }
+
       & > svg {
         @include big-logo-size;
 

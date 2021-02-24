@@ -77,3 +77,7 @@ export const selectNotificationPopupOpen = createSelector(
   [selectLayout],
   layout => layout.notificationPopupOpen
 );
+export const selectMobileNotifDropdownOpen = createSelector(
+  [selectLayout],
+  layout => layout.mobileNotifDropdownOpen
+);

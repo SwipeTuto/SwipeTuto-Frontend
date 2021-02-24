@@ -75,6 +75,9 @@
       background-color: $secondary-light;
     }
   }
+  .custom-button[data-btn="goback"] {
+    margin: 2rem auto;
+  }
 
   &__error {
     margin-bottom: 2rem;

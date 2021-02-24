@@ -42,14 +42,25 @@ const AddCardPage = ({ type, history }) => {
     message: "",
     id: null,
   });
+  const [confirmQuitPopupOpen, setConfirmQuitPopupOpen] = useState({
+    open: false,
+    message: "",
+    id: null,
+  });
 
   useEffect(() => {
-    if (imagesArrayNotEmpty && cardInfos.card_title !== "" && cardInfos.card_topic !== "" && cardInfos.card_id) {
-      setIsValid(true);
+    console.log(type);
+    if (imagesArrayNotEmpty && cardInfos.card_title !== "" && cardInfos.card_topic !== "") {
+      if (type === "modify" && cardInfos.card_id) {
+        setIsValid(true);
+        return;
+      } else if (type === "add") {
+        setIsValid(true);
+      }
     } else {
       setIsValid(false);
     }
-  }, [cardInfos, cardInfos.card_description, cardInfos.card_title, imagesArrayNotEmpty, isValid]);
+  }, [cardInfos, cardInfos.card_description, cardInfos.card_title, imagesArrayNotEmpty, isValid, type]);
 
   useEffect(() => {
     setCategoriesLocalArray(getCategoriesArray(cardInfos.card_topic));
@@ -75,6 +86,7 @@ const AddCardPage = ({ type, history }) => {
 
   const updateFiles = (isFiles, cards) => {
     setImagesArrayNotEmpty(isFiles);
+    console.log(isFiles);
   };
 
   useEffect(() => {
@@ -186,6 +198,27 @@ const AddCardPage = ({ type, history }) => {
     });
   };
 
+  const handleBackClick = () => {
+    setConfirmQuitPopupOpen({
+      open: true,
+      message: "Voulez-vous vraiment quitter sans sauvegarder ?",
+      id: null,
+    });
+  };
+
+  const handleQuitConfirmClick = async () => {
+    await window.localStorage.removeItem("draftNewCard");
+    history.push("/account/user");
+  };
+
+  const handleQuitRejectClick = () => {
+    setConfirmQuitPopupOpen({
+      open: false,
+      message: "",
+      id: null,
+    });
+  };
+
   const handleDeleteFields = async () => {
     setCardInfos({
       card_title: "",
@@ -210,6 +243,13 @@ const AddCardPage = ({ type, history }) => {
           handleConfirmClick={handleConfirmDeleteClick}
           handleRejectClick={handleRejectDeleteClick}
           message={confirmDeletePopupOpen && confirmDeletePopupOpen.message}
+        />
+      )}
+      {confirmQuitPopupOpen && confirmQuitPopupOpen.open && confirmQuitPopupOpen.open === true && (
+        <ConfirmationOverlay
+          handleConfirmClick={handleQuitConfirmClick}
+          handleRejectClick={handleQuitRejectClick}
+          message={confirmQuitPopupOpen && confirmQuitPopupOpen.message}
         />
       )}
       <div className={`AddCardPage ${currentTheme}-theme-d`}>
@@ -349,9 +389,14 @@ const AddCardPage = ({ type, history }) => {
                     )}
                   </>
                 ) : (
-                  <p>La carte ne peut pas être publiée. Veuillez remplir tous les champs correctement. Si l'erreur persiste, merci de le signaler.</p>
+                  <p className="error__message ">
+                    La carte ne peut pas être publiée. Veuillez remplir tous les champs correctement. Si l'erreur persiste, merci de le signaler.
+                  </p>
                 )}
               </div>
+              <CustomButton data-btn="goback" type="button" color="transparent" onClick={() => handleBackClick()}>
+                &larr; Retour
+              </CustomButton>
             </div>
           </form>
         </div>

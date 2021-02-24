@@ -40,15 +40,20 @@ import STSmallLogo from "../../../assets/stlogos/logo seul.png";
 import "./NavTop.scss";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 import ToggleButton from "../ToggleTheme/ToggleTheme";
+import NotificationHomeBox from "../NotificationHomeBox/NotificationHomeBox";
+import { fakeNotif } from "../../../helper/fakeNotifs";
 
 const NavTop = (props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const currentTheme = useSelector(selectTheme);
   const currentSearch = useSelector(selectCurrentSearch);
-  const dropdown = useRef();
-  const dropdownBtn = useRef();
+  const userDropdown = useRef();
+  const userDropdownBtn = useRef();
+  const notifDropdownBtn = useRef();
+  const notifDropdown = useRef();
   const [navDropdownOpen, setNavDropdownOpen] = useState(false);
+  const [notifDropdownOpen, setNotifDropdownOpen] = useState(false);
   const topicMenu = useRef(null);
 
   const topicHandleClick = async (topicQueryName) => {
@@ -73,11 +78,16 @@ const NavTop = (props) => {
   };
 
   const checkClickInside = (event) => {
-    const isClickInside = dropdown.current && dropdown.current.contains(event.target);
-    const isClickOnBtn = dropdownBtn.current && dropdownBtn.current.contains(event.target);
+    const isClickInsideUserNav = userDropdown.current && userDropdown.current.contains(event.target);
+    const isClickOnBtnUserNav = userDropdownBtn.current && userDropdownBtn.current.contains(event.target);
+    const isClickInsideNotifDropdown = notifDropdown.current && notifDropdown.current.contains(event.target);
+    const isClickOnNotifsBtn = notifDropdownBtn.current && notifDropdownBtn.current.contains(event.target);
 
-    if (!isClickInside && !isClickOnBtn && navDropdownOpen) {
+    if (!isClickInsideUserNav && !isClickOnBtnUserNav && navDropdownOpen) {
       setNavDropdownOpen(false);
+    }
+    if (!isClickInsideNotifDropdown && !isClickOnNotifsBtn && notifDropdownOpen) {
+      setNotifDropdownOpen(false);
     }
   };
 
@@ -218,16 +228,22 @@ const NavTop = (props) => {
               </Link>
             </div>
             <div
-              className={`NavTop__roundBtn ${currentTheme}-theme-l`}
-              // onClick={() => {
-              //   window.localStorage.removeItem("draftNewCard");
-              // }}
+              className={`NavTop__roundBtn NavTop__notifs ${currentTheme}-theme-l`}
+              ref={notifDropdownBtn}
+              onClick={() => {
+                if (notifDropdownOpen) {
+                  setNotifDropdownOpen(false);
+                } else {
+                  setNotifDropdownOpen(true);
+                }
+              }}
             >
               <NotifLogo />
+              <div className="NavTop__notifs--stamp">4</div>
             </div>
             <div
               className={`NavTop__dropdownUserMenu NavTop__roundBtn ${currentTheme}-theme-l`}
-              ref={dropdownBtn}
+              ref={userDropdownBtn}
               onClick={() => {
                 if (navDropdownOpen) {
                   setNavDropdownOpen(false);
@@ -245,8 +261,15 @@ const NavTop = (props) => {
           </Link>
         )}
       </div>
-      {navDropdownOpen ? (
-        <div className={`NavTop__userMenu ${currentTheme}-theme-l`} ref={dropdown}>
+      {notifDropdownOpen && (
+        <div className={`NavTop__notifs--dropdown ${currentTheme}-theme-l`} ref={notifDropdown}>
+          {fakeNotif.map((notif, index) => (
+            <NotificationHomeBox notification={notif} key={index} />
+          ))}
+        </div>
+      )}
+      {navDropdownOpen && (
+        <div className={`NavTop__userMenu ${currentTheme}-theme-l`} ref={userDropdown}>
           <div className="NavTop__userMenu--meta">
             <UserUsername user={currentUser} link={true} />
             <p className="NavTop__userMenu--text">{currentUser.email}</p>
@@ -292,7 +315,7 @@ const NavTop = (props) => {
             </Link>
           </div>
         </div>
-      ) : null}
+      )}
     </div>
   );
 };

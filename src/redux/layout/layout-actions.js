@@ -89,6 +89,12 @@ export const setCommentsLoaded = () => ({
 export const setImageLoading = () => ({
   type: LayoutActionTypes.SET_IMAGE_LOADING,
 })
+export const setFollowersLoaded = () => ({
+  type: LayoutActionTypes.FOLLOWERS_LOADED,
+})
+export const setFollowersLoading = () => ({
+  type: LayoutActionTypes.FOLLOWERS_LOADING,
+})
 
 export const setImageLoaded = () => ({
   type: LayoutActionTypes.SET_IMAGE_LOADED,
@@ -120,4 +126,11 @@ export const openNotificationPopup = (type, notification) => ({
 })
 export const closeNotificationPopup = () => ({
   type: LayoutActionTypes.CLOSE_NOTIFICATION_POPUP,
+})
+
+export const openFollowersListPopup = () => ({
+  type: LayoutActionTypes.OPEN_FOLLOWERS_LIST_POPUP
+})
+export const closeFollowersListPopup = () => ({
+  type: LayoutActionTypes.CLOSE_FOLLOWERS_LIST_POPUP,
 })

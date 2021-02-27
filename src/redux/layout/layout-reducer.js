@@ -25,6 +25,8 @@ const INITIAL_STATE = {
   commentsAreLoaded: true,
   redirectUrl: false,
   connexionPopup: false,
+  followersListOpen: false,
+  followersLoaded: true,
   theme: "light"
 };
 
@@ -171,6 +173,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         buttonIsLoaded: true,
       }
+    case LayoutActionTypes.FOLLOWERS_LOADING:
+      return {
+        ...state,
+        followersLoaded: false,
+      }
+    case LayoutActionTypes.FOLLOWERS_LOADED:
+      return {
+        ...state,
+        followersLoaded: true,
+      }
     case LayoutActionTypes.SHOW_SIGNAL_POPUP:
       return {
         ...state,
@@ -231,6 +243,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         redirectUrl: action.payload,
+      }
+    case LayoutActionTypes.OPEN_FOLLOWERS_LIST_POPUP:
+      return {
+        ...state,
+        followersListOpen: true,
+      }
+    case LayoutActionTypes.CLOSE_FOLLOWERS_LIST_POPUP:
+      return {
+        ...state,
+        followersListOpen: false,
       }
     default:
       return state;

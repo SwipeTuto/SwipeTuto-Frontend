@@ -1,8 +1,8 @@
 import { UserActionTypes } from './user-types'
 import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin, updatePrefService, getCurrentUser, resetConfirmPassowrd } from '../../services/userService'
-import { followUserByID } from '../../services/socialService'
+import { getUserFollowersList, toggleFollowByUserID } from '../../services/socialService'
 import history from "../../helper/functions/createBrowserHistory"
-import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationPopup } from '../layout/layout-actions';
+import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationPopup, setButtonLoading, setButtonLoaded, setFollowersLoading, setFollowersLoaded } from '../layout/layout-actions';
 
 
 export const rulesAcceptedAction = () => {
@@ -285,21 +285,38 @@ export const updateUserPasswordAction = (userNewPasswordObj) => {
 }
 
 
-export const followUserByIDAction = (userIDtoFollow) => {
+export const toggleFollowByUserIDAction = (userIDtoFollow) => {
   return dispatch => {
-    dispatch(setUserLoading())
+    dispatch(setButtonLoading())
     return (
-      followUserByID(userIDtoFollow)
+      toggleFollowByUserID(userIDtoFollow)
         .then(rep => {
           // dispatch()
-          dispatch(setUserLoaded())
+          dispatch(setButtonLoaded())
           return rep
         }).catch(err => {
           dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
-          dispatch(setUserLoaded())
+          dispatch(setButtonLoaded())
           return err
         })
     )
-
+  }
+}
+export const getUserFollowersListAction = (userID) => {
+  return dispatch => {
+    dispatch(setFollowersLoading())
+    return (
+      getUserFollowersList(userID)
+        .then(rep => {
+          // dispatch()
+          console.log(rep)
+          dispatch(setFollowersLoaded())
+          return rep
+        }).catch(err => {
+          dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
+          dispatch(setFollowersLoaded())
+          return err
+        })
+    )
   }
 }

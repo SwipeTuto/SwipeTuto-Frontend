@@ -17,11 +17,6 @@
     & .custom-button {
       height: auto;
       margin-right: 2rem;
-
-      &:last-of-type {
-        margin-left: auto;
-        margin-right: 0;
-      }
     }
   }
 
@@ -31,14 +26,21 @@
   }
 
   &__stats {
-    // font-size: 2.4rem;
     margin-bottom: 2rem;
     display: flex;
     justify-content: flex-end;
 
-    & p:not(:last-child)::after {
+    &--followers {
+      cursor: pointer;
+    }
+
+    &--stat:not(:last-of-type)::after {
       content: "\007C";
       margin: 0 1.5rem;
+    }
+
+    &--stat:last-of-type {
+      margin-right: 2rem;
     }
   }
 
@@ -53,6 +55,15 @@
     h2.title.title-2 {
       text-align: left;
       margin-bottom: 1.5rem;
+    }
+  }
+}
+
+@media screen and (max-width: $bp-phone) {
+  .UserHeader {
+    & .user_avatar {
+      width: 8rem;
+      height: 8rem;
     }
   }
 }

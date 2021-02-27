@@ -117,14 +117,24 @@ export const getCardCommentsOtherPage = (url) => {
 }
 
 
-export const followUserByID = (url) => {
-  // var config = {
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   }
-  // }
-  // return axios.get(`${url}`, config).then(rep => {
-  //   return rep
-  // })
+export const toggleFollowByUserID = (userIDtoFollow) => {
+  var config = {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }
+  return client().get(`toggle/${userIDtoFollow}`, config).then(rep => {
+    return rep
+  }).catch(err => err)
 }
 
+export const getUserFollowersList = (userID) => {
+  var config = {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }
+  return client().get(`list-followers/${userID}`, config).then(rep => {
+    return rep
+  }).catch(err => err)
+}

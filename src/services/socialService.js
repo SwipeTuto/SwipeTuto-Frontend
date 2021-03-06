@@ -139,12 +139,13 @@ export const getUserFollowersList = (userID) => {
   }).catch(err => err)
 }
 export const getUserFollowingsList = (userID) => {
+  console.log('call get followings list')
   var config = {
     headers: {
       'Content-Type': 'application/json',
     }
   }
-  return client().get(`list-followings/${userID}`, config).then(rep => {
+  return client().get(`list-following/`, config).then(rep => {
     return rep
   }).catch(err => err)
 }

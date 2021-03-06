@@ -12,9 +12,9 @@ const FollowButton = ({ userIDtoFollow }) => {
   const dispatch = useDispatch();
   const buttonLoaded = useSelector(selectButtonLoaded);
   const followers = useSelector(selectCurrentUserFollowers);
-  const currentUserID = useSelector(selectCurrentUserId);
+  // const currentUserID = useSelector(selectCurrentUserId);
   const handleToggleFollowUser = () => {
-    dispatch(toggleFollowByUserIDAction(userIDtoFollow, currentUserID));
+    dispatch(toggleFollowByUserIDAction(userIDtoFollow));
   };
 
   return (

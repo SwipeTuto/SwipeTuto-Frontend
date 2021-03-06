@@ -293,13 +293,17 @@ export const updateUserPasswordAction = (userNewPasswordObj) => {
 }
 
 
-export const toggleFollowByUserIDAction = (userIDtoFollow, currentUserID) => {
+export const toggleFollowByUserIDAction = (userIDtoFollow) => {
   return dispatch => {
     dispatch(setButtonLoading())
     return (
       toggleFollowByUserID(userIDtoFollow)
-        .then(rep => {
-          // dispatch(getUserFollowingsListAction(currentUserID, 'current'))
+        .then(async (rep) => {
+          // await getCurrentUser().then(rep => {
+          //   console.log(rep)
+          //   dispatch(setCurrentUserFollowings(rep?.data?.user?.followings))
+          // })
+          dispatch(getCurrentUserAction())
           dispatch(setButtonLoaded())
           return rep
         }).catch(err => {
@@ -318,7 +322,9 @@ export const getUserFollowingsListAction = (userID, type) => {
         .then(rep => {
           console.log(rep)
           if (type && type === "current") {
-            dispatch(setCurrentUserFollowings(rep))
+            dispatch(setCurrentUserFollowings(rep?.data?.results))
+            dispatch(setFollowingsLoaded())
+            return rep
           }
           dispatch(setFollowingsLoaded())
           return rep

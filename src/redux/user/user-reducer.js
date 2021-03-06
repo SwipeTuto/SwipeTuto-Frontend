@@ -71,10 +71,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case UserActionTypes.GET_CLICKED_USER_ERROR:
       return { ...state, errors: action.payload };
     case UserActionTypes.SET_CURRENT_USER_FOLLOWINGS:
+      console.log(action.payload)
       return {
         ...state,
         currentUser: {
-          ...currentUser,
+          ...state.currentUser,
           followings: [...action.payload]
         }
       };

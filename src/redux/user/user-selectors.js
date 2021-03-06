@@ -38,3 +38,7 @@ export const selectCurrentUserFollowersCount = createSelector(
   [selectCurrentUser],
   currentUser => currentUser && currentUser.followers_count
 );
+export const selectCurrentUserReglement = createSelector(
+  [selectCurrentUser],
+  currentUser => currentUser && currentUser.reglement
+);

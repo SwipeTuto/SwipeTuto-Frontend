@@ -16,7 +16,8 @@ import { ReactComponent as GoogleLogo } from "../../../assets/images/logo-google
 import { ReactComponent as FacebookLogo } from "../../../assets/images/logo-facebook.svg";
 import "./LoginAndRegister.scss";
 import FormInput from "../../FormInputs/FormInput";
-import { selectTheme } from "../../../redux/layout/layout-selectors";
+import { selectButtonLoaded, selectTheme } from "../../../redux/layout/layout-selectors";
+import ButtonLoading from "../../Loading/ButtonLoading";
 
 const Register = ({ title }) => {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ const Register = ({ title }) => {
   const userErrors = useSelector(selectUserErrors);
   const allInput = [...document.querySelectorAll(".FormInput")];
   const currentTheme = useSelector(selectTheme);
+  const btnLoaded = useSelector(selectButtonLoaded);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -97,7 +99,7 @@ const Register = ({ title }) => {
           valueToCompare={password}
         />
         <CustomButton onClick={(e) => handleClick(e)} color="light" type="submit" disabled={submitOk}>
-          Inscription
+          {btnLoaded ? "Inscription" : <ButtonLoading />}
         </CustomButton>
       </form>
       <span className="horizontal-separation-primary-light"></span>

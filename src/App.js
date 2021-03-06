@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter, Redirect, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -161,6 +161,11 @@ function App(props) {
         {signalPopup && <SignalPopup />}
         {clickedCard && <CardFullPopup />}
         <Routes />
+        {locationPathname !== "/feedback_beta" && (
+          <Link className="App__feedback" to="/feedback_beta">
+            Donnez votre avis sur cette version Beta de Swipetuto !
+          </Link>
+        )}
         <Footer />
 
       </div>

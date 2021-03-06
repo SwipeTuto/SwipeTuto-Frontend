@@ -14,6 +14,7 @@ import HowItWorks from "../../components/LayoutComponents/HowItWorks/HowItWorks"
 import STSmallLogoBlackmod from "../../assets/stlogos/logo seul blackmode.png";
 import STSmallLogo from "../../assets/stlogos/logo seul.png";
 import "./HomePage.scss";
+import { Link } from "react-router-dom";
 
 const Register = lazy(() => import("../../components/LayoutComponents/Login/Register"));
 

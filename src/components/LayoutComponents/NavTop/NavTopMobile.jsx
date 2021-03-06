@@ -243,6 +243,9 @@ const NavTopMobile = (props) => {
           ) : (
             <></>
           )}
+          <Link onClick={() => handleNavClose()} to="/feedback_beta">
+            Donnez votre avis
+          </Link>
         </div>
         {!currentUser && (
           <Link className="NavTopMobile__linkConnexion" to="/connexion/login" onClick={() => handleNavClose()}>

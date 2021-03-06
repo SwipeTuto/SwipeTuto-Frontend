@@ -32,17 +32,20 @@ export const setCurrentUser = (user) => ({
 export const loginAction = (username, password) => {
   const currentUrl = window.location.href;
   return dispatch => {
+    dispatch(setButtonLoading())
     return loginManuel(username, password)
       .then(user => {
         dispatch(deleteUserErrors())
         if (!user.data) {
           dispatch(loginErrors("Erreur avec votre compte. Merci d'en essayer un autre."))
           localStorage.removeItem('user')
+          dispatch(setButtonLoaded())
         } else {
           if (currentUrl) {
             window.location.href = currentUrl;
+            dispatch(setButtonLoaded())
           } else {
-            return
+            return dispatch(setButtonLoaded())
           }
         }
       })
@@ -76,6 +79,7 @@ export const loginGoogleAction = () => {
 export const loginFacebookAction = () => {
   const currentUrl = window.location.href;
   return dispatch => {
+
     return LoginProviderFacebook()
       .then(rep => {
         FacebookLogin(rep)
@@ -125,14 +129,17 @@ export const setOtherUser = (otherUser) => ({
 // REGISTER
 export const registerAction = users => {
   return dispatch => {
+    dispatch(setButtonLoading())
     register(users)
       .then(user => {
         dispatch(registerSuccess(user.data.user));
+        dispatch(setButtonLoaded())
         history.push('/search', history.location)
         history.go()
       })
       .catch(err => {
         dispatch(registerErrors(err.response))
+        dispatch(setButtonLoaded())
       })
   }
 }

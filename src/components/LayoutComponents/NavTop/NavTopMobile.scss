@@ -121,6 +121,7 @@
   &__menu {
     display: flex;
     flex-direction: column;
+    padding-bottom: 10rem;
   }
 
   &__menu-logo {
@@ -134,9 +135,9 @@
     display: flex;
     align-items: center;
 
-    &:last-child {
-      margin-bottom: 10rem;
-    }
+    // &:last-child {
+    //   margin-bottom: 10rem;
+    // }
   }
 
   .custom-button {

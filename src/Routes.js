@@ -6,6 +6,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { selectCurrentUser } from "./redux/user/user-selectors";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import PageLoading from "./components/Loading/PageLoading";
+import FeedbackBetaPage from "./pages/FeedbackBetaPage/FeedbackBetaPage";
 const FirstConnexionPage = lazy(() => import('./pages/FirstConnexionPage/FirstConnexionPage'))
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'))
 const HomePage = lazy(() => import('./pages/Homepage/HomePage'))
@@ -41,6 +42,7 @@ const Routes = () => {
           <Route path="/profile/user_id=:user_id" component={ProfilePage} />
           <ProtectedRoute path="/account" component={AccountPage} />
           <Route path="/card_id=:card_id" component={SearchPage} />
+          <Route path="/feedback_beta" component={FeedbackBetaPage} />
 
           {currentUser ? (
 

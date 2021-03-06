@@ -32,6 +32,7 @@ const Footer = ({ location }) => {
         <div className="Footer__links--group">
           <Link to="/">Accueil</Link>
           <Link to="/search">Cartes</Link>
+          <Link to="/feedback_beta">Donner un feedback sur la version beta</Link>
         </div>
         <div className="Footer__links--group">
           <Link to="/infos">A propos</Link>

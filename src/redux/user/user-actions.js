@@ -1,8 +1,8 @@
 import { UserActionTypes } from './user-types'
 import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin, updatePrefService, getCurrentUser, resetConfirmPassowrd } from '../../services/userService'
-import { getUserFollowersList, toggleFollowByUserID } from '../../services/socialService'
+import { getUserFollowersList, toggleFollowByUserID, getUserFollowingsList } from '../../services/socialService'
 import history from "../../helper/functions/createBrowserHistory"
-import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationPopup, setButtonLoading, setButtonLoaded, setFollowersLoading, setFollowersLoaded } from '../layout/layout-actions';
+import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationPopup, setButtonLoading, setButtonLoaded, setFollowersLoading, setFollowersLoaded, setFollowingsLoading, setFollowingsLoaded } from '../layout/layout-actions';
 
 
 export const rulesAcceptedAction = () => {
@@ -180,6 +180,7 @@ const getClickedUserError = error => ({
 
 export const getUserByIdAction = id => {
   return dispatch => {
+    dispatch(setNoClickedUser)
     dispatch(setUserLoading());
     getUserById(id).then(rep => {
       dispatch(setClickedUser(rep.data))
@@ -292,13 +293,13 @@ export const updateUserPasswordAction = (userNewPasswordObj) => {
 }
 
 
-export const toggleFollowByUserIDAction = (userIDtoFollow) => {
+export const toggleFollowByUserIDAction = (userIDtoFollow, currentUserID) => {
   return dispatch => {
     dispatch(setButtonLoading())
     return (
       toggleFollowByUserID(userIDtoFollow)
         .then(rep => {
-          // dispatch()
+          // dispatch(getUserFollowingsListAction(currentUserID, 'current'))
           dispatch(setButtonLoaded())
           return rep
         }).catch(err => {
@@ -309,6 +310,37 @@ export const toggleFollowByUserIDAction = (userIDtoFollow) => {
     )
   }
 }
+export const getUserFollowingsListAction = (userID, type) => {
+  return dispatch => {
+    dispatch(setFollowingsLoading())
+    return (
+      getUserFollowingsList(userID)
+        .then(rep => {
+          console.log(rep)
+          if (type && type === "current") {
+            dispatch(setCurrentUserFollowings(rep))
+          }
+          dispatch(setFollowingsLoaded())
+          return rep
+        }).catch(err => {
+          dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
+          dispatch(setFollowingsLoaded())
+          return err
+        })
+    )
+  }
+}
+
+export const setCurrentUserFollowings = followings => ({
+  type: UserActionTypes.SET_CURRENT_USER_FOLLOWINGS,
+  payload: followings
+})
+export const setSelectedUserFollowings = followings => ({
+  type: UserActionTypes.SET_SELECTED_USER_FOLLOWINGS,
+  payload: followings
+})
+
+
 export const getUserFollowersListAction = (userID) => {
   return dispatch => {
     dispatch(setFollowersLoading())
@@ -327,3 +359,4 @@ export const getUserFollowersListAction = (userID) => {
     )
   }
 }
+

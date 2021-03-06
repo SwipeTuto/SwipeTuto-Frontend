@@ -95,6 +95,12 @@ export const setFollowersLoaded = () => ({
 export const setFollowersLoading = () => ({
   type: LayoutActionTypes.FOLLOWERS_LOADING,
 })
+export const setFollowingsLoaded = () => ({
+  type: LayoutActionTypes.FOLLOWINGS_LOADED,
+})
+export const setFollowingsLoading = () => ({
+  type: LayoutActionTypes.FOLLOWINGS_LOADING,
+})
 
 export const setImageLoaded = () => ({
   type: LayoutActionTypes.SET_IMAGE_LOADED,

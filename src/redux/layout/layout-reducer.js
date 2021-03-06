@@ -27,6 +27,7 @@ const INITIAL_STATE = {
   connexionPopup: false,
   followersListOpen: false,
   followersLoaded: true,
+  followingsLoaded: true,
   theme: "light"
 };
 
@@ -182,6 +183,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         followersLoaded: true,
+      }
+    case LayoutActionTypes.FOLLOWINGS_LOADING:
+      return {
+        ...state,
+        followingsLoaded: false,
+      }
+    case LayoutActionTypes.FOLLOWINGS_LOADED:
+      return {
+        ...state,
+        followingsLoaded: true,
       }
     case LayoutActionTypes.SHOW_SIGNAL_POPUP:
       return {

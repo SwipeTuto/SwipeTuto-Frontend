@@ -123,7 +123,7 @@ export const toggleFollowByUserID = (userIDtoFollow) => {
       'Content-Type': 'application/json',
     }
   }
-  return client().get(`toggle/${userIDtoFollow}`, config).then(rep => {
+  return client().get(`toggle/${userIDtoFollow}/`, config).then(rep => {
     return rep
   }).catch(err => err)
 }
@@ -135,6 +135,16 @@ export const getUserFollowersList = (userID) => {
     }
   }
   return client().get(`list-followers/${userID}`, config).then(rep => {
+    return rep
+  }).catch(err => err)
+}
+export const getUserFollowingsList = (userID) => {
+  var config = {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }
+  return client().get(`list-followings/${userID}`, config).then(rep => {
     return rep
   }).catch(err => err)
 }

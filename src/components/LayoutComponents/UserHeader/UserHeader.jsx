@@ -35,10 +35,10 @@ const UserHeader = ({ location }) => {
   useEffect(() => {
     if ((userId && userId === currentUser?.id) || (locationPath === "/account/user" && currentUser.id)) {
       setUserDatas(currentUser);
-      dispatch(setNoClickedUser());
+      // dispatch(setNoClickedUser());
     } else if (userId && userId !== currentUser?.id && clickedUser?.id) {
       setUserDatas(clickedUser);
-      dispatch(setNoClickedUser());
+      // dispatch(setNoClickedUser());
     }
   }, [clickedUser, currentUser, dispatch, locationPath, userDatas, userId]);
 

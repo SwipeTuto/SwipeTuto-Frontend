@@ -93,3 +93,7 @@ export const selectFollowersLoaded = createSelector(
   [selectLayout],
   layout => layout.followersLoaded
 );
+export const selectFollowingsLoaded = createSelector(
+  [selectLayout],
+  layout => layout.followingsLoaded
+);

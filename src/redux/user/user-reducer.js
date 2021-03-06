@@ -5,6 +5,7 @@ let currentUser = JSON.parse(localStorage.getItem('user'));
 const INITIAL_STATE = {
   currentUser: currentUser ? currentUser.user : null,
   clickedUser: null,
+  selectedUserFollowings: null,
   token: currentUser ? currentUser.token : null,
   errors: null,
 };
@@ -69,6 +70,16 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return { ...state, clickedUser: action.payload, errors: null };
     case UserActionTypes.GET_CLICKED_USER_ERROR:
       return { ...state, errors: action.payload };
+    case UserActionTypes.SET_CURRENT_USER_FOLLOWINGS:
+      return {
+        ...state,
+        currentUser: {
+          ...currentUser,
+          followings: [...action.payload]
+        }
+      };
+    case UserActionTypes.SET_SELECTED_USER_FOLLOWINGS:
+      return { ...state, selectedUserFollowings: action.payload };
 
     default:
       return state;

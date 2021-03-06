@@ -32,7 +32,7 @@ export const selectCurrentUserCategoriesPreferences = createSelector(
 
 export const selectCurrentUserFollowers = createSelector(
   [selectCurrentUser],
-  currentUser => currentUser && currentUser.followers
+  currentUser => currentUser && currentUser.followings
 );
 export const selectCurrentUserFollowersCount = createSelector(
   [selectCurrentUser],

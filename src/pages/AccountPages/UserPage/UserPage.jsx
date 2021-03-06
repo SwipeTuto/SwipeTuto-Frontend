@@ -41,11 +41,11 @@ const UserPage = ({ userIsSame, location }) => {
     if (locationPath.includes("/profile") && clickedUser?.id) {
       setUserDatas(clickedUser);
       dispatch(getCardsByUserIdAction(clickedUser.id));
-      dispatch(setNoClickedUser());
+      // dispatch(setNoClickedUser());
     } else if (locationPath === "/account/user" && currentUser?.id) {
       setUserDatas(currentUser);
       dispatch(getCardsByUserIdAction(currentUser.id));
-      dispatch(setNoClickedUser());
+      // dispatch(setNoClickedUser());
     }
   }, [clickedUser, currentUser, dispatch, locationPath, userId]);
 

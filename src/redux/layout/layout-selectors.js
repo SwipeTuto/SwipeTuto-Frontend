@@ -89,6 +89,10 @@ export const selectFollowersListOpen = createSelector(
   [selectLayout],
   layout => layout.followersListOpen
 );
+export const selectFollowingsListOpen = createSelector(
+  [selectLayout],
+  layout => layout.followingsListOpen
+);
 export const selectFollowersLoaded = createSelector(
   [selectLayout],
   layout => layout.followersLoaded

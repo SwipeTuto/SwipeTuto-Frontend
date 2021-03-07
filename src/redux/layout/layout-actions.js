@@ -140,3 +140,9 @@ export const openFollowersListPopup = () => ({
 export const closeFollowersListPopup = () => ({
   type: LayoutActionTypes.CLOSE_FOLLOWERS_LIST_POPUP,
 })
+export const openFollowingsListPopup = () => ({
+  type: LayoutActionTypes.OPEN_FOLLOWINGS_LIST_POPUP
+})
+export const closeFollowingsListPopup = () => ({
+  type: LayoutActionTypes.CLOSE_FOLLOWINGS_LIST_POPUP,
+})

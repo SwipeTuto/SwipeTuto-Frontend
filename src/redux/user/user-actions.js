@@ -317,47 +317,48 @@ export const toggleFollowByUserIDAction = (userIDtoFollow) => {
     )
   }
 }
-export const getUserFollowingsListAction = (userID, type) => {
-  return dispatch => {
-    dispatch(setFollowingsLoading())
-    return (
-      getUserFollowingsList(userID)
-        .then(rep => {
-          console.log(rep)
-          if (type && type === "current") {
-            // dispatch(updateCurrentUserFollows(rep?.data?.results))
-            dispatch(setFollowingsLoaded())
-            return rep
-          }
-          dispatch(setFollowingsLoaded())
-          return rep
-        }).catch(err => {
-          dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
-          dispatch(setFollowingsLoaded())
-          return err
-        })
-    )
-  }
-}
 
 export const updateCurrentUserFollows = (type, data) => ({
   type: UserActionTypes.UPDATE_CURRENTUSER_FOLLOWS,
   payload: { type, data }
 })
-export const setSelectedUserFollowings = followings => ({
-  type: UserActionTypes.SET_SELECTED_USER_FOLLOWINGS,
+
+
+export const getUserFollowingsListAction = (userID, type) => {
+  return dispatch => {
+    dispatch(setFollowingsLoading())
+    dispatch(setFollowingsList([]))
+    return (
+      getUserFollowingsList(userID)
+        .then(rep => {
+          console.log(rep)
+          dispatch(setFollowingsList(rep?.data?.results))
+          dispatch(setFollowingsLoaded())
+          return rep
+        }).catch(err => {
+          dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
+          dispatch(setFollowingsLoaded())
+          return err
+        })
+    )
+  }
+}
+export const setFollowingsList = followings => ({
+  type: UserActionTypes.SET_FOLLOWINGS_LIST,
   payload: followings
 })
+
 
 
 export const getUserFollowersListAction = (userID) => {
   return dispatch => {
     dispatch(setFollowersLoading())
+    dispatch(setFollowersList([]))
     return (
       getUserFollowersList(userID)
         .then(rep => {
-          // dispatch()
           console.log(rep)
+          dispatch(setFollowersList(rep?.data?.results))
           dispatch(setFollowersLoaded())
           return rep
         }).catch(err => {
@@ -368,4 +369,9 @@ export const getUserFollowersListAction = (userID) => {
     )
   }
 }
+
+export const setFollowersList = followers => ({
+  type: UserActionTypes.SET_FOLLOWERS_LIST,
+  payload: followers
+})
 

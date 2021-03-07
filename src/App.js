@@ -168,9 +168,14 @@ function App(props) {
         {clickedCard && <CardFullPopup />}
         <Routes />
         {locationPathname !== "/feedback_beta" && (
-          <Link className="App__feedback" to="/feedback_beta">
-            Donnez votre avis sur cette version Beta de Swipetuto !
+          <div className="App__beta">
+            <Link className="App__feedback" to="/feedback_beta">
+              Donnez votre avis sur cette version Beta de Swipetuto !
           </Link>
+            <Link className="App__feedback" to="/next">
+              Et découvrez nos futures fonctionnalités ici <span role="img" aria-label="wink emoji" >😉</span>
+            </Link>
+          </div>
         )}
         <Footer />
 

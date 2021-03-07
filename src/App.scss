@@ -4,19 +4,28 @@
   height: 100%;
   min-height: 100vh;
 
-  &__feedback {
-    text-align: center;
-    text-decoration: underline;
-    color: $white;
+  &__beta {
     background-color: $primary-dark;
     display: block;
     padding: 2rem 0;
-    font-weight: bold;
-    font-size: 2.2rem;
-    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    &:hover {
-      color: $secondary-light;
+    & a {
+      font-weight: bold;
+      text-decoration: underline;
+      color: $white;
+      font-size: 1.8rem;
+      transition: all 0.2s ease;
+
+      &:first-of-type {
+        margin-bottom: 1rem;
+      }
+
+      &:hover {
+        color: $secondary-light;
+      }
     }
   }
 }

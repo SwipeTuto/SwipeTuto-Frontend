@@ -26,6 +26,7 @@ const INITIAL_STATE = {
   redirectUrl: false,
   connexionPopup: false,
   followersListOpen: false,
+  followingsListOpen: false,
   followersLoaded: true,
   followingsLoaded: true,
   theme: "light"
@@ -264,6 +265,16 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         followersListOpen: false,
+      }
+    case LayoutActionTypes.OPEN_FOLLOWINGS_LIST_POPUP:
+      return {
+        ...state,
+        followingsListOpen: true,
+      }
+    case LayoutActionTypes.CLOSE_FOLLOWINGS_LIST_POPUP:
+      return {
+        ...state,
+        followingsListOpen: false,
       }
     default:
       return state;

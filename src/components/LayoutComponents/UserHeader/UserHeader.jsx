@@ -5,8 +5,20 @@ import { initialSignalState } from "../../../helper/constants";
 import { getUrlId } from "../../../helper/functions/getURLParams";
 import { getCardsByUserIdAction } from "../../../redux/filter/filter-actions";
 import { selectTotalNumberOfResults } from "../../../redux/filter/filter-selectors";
-import { closeFollowersListPopup, openFollowersListPopup, showSignalPopup } from "../../../redux/layout/layout-actions";
-import { selectFollowersListOpen, selectIsLoaded, selectTheme, selectUserLoaded } from "../../../redux/layout/layout-selectors";
+import {
+  closeFollowersListPopup,
+  closeFollowingsListPopup,
+  openFollowersListPopup,
+  openFollowingsListPopup,
+  showSignalPopup,
+} from "../../../redux/layout/layout-actions";
+import {
+  selectFollowersListOpen,
+  selectFollowingsListOpen,
+  selectIsLoaded,
+  selectTheme,
+  selectUserLoaded,
+} from "../../../redux/layout/layout-selectors";
 import { setNoClickedUser } from "../../../redux/user/user-actions";
 import {
   selectClickedUser,
@@ -19,6 +31,7 @@ import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 import CustomButton from "../CustomButton/CustomButton";
 import FollowButton from "../FollowButton/FollowButton";
 import FollowersList from "../FollowersList/FollowersList";
+import FollowingsList from "../FollowingsList/FollowingsList";
 import VerticalMenu from "../VerticalMenu/VerticalMenu";
 
 import "./UserHeader.scss";
@@ -36,6 +49,7 @@ const UserHeader = ({ location }) => {
   const currentTheme = useSelector(selectTheme);
   const userId = getUrlId(location.pathname, "user_id");
   const followersListOpen = useSelector(selectFollowersListOpen);
+  const followingsListOpen = useSelector(selectFollowingsListOpen);
   const followingsCount = useSelector(selectCurrentUserFollowingsCount);
 
   useEffect(() => {
@@ -54,16 +68,26 @@ const UserHeader = ({ location }) => {
   };
 
   const handleShowFollowers = () => {
+    dispatch(closeFollowingsListPopup());
     if (followersListOpen) {
       dispatch(closeFollowersListPopup());
     } else {
       dispatch(openFollowersListPopup());
     }
   };
+  const handleShowFollowings = () => {
+    dispatch(closeFollowersListPopup());
+    if (followingsListOpen) {
+      dispatch(closeFollowingsListPopup());
+    } else {
+      dispatch(openFollowingsListPopup());
+    }
+  };
 
   return (
     <>
       {followersListOpen && <FollowersList />}
+      {followingsListOpen && <FollowingsList />}
       <div className={`UserHeader ${currentTheme}-theme-m`}>
         {userIsLoaded && (
           <div className="UserHeader__stats">
@@ -78,7 +102,7 @@ const UserHeader = ({ location }) => {
             <p className="UserHeader__stats--stat UserHeader__stats--followers" onClick={() => handleShowFollowers()}>
               {followersCount || 0} abonnés
             </p>
-            <p className="UserHeader__stats--stat UserHeader__stats--followings" onClick={() => handleShowFollowers()}>
+            <p className="UserHeader__stats--stat UserHeader__stats--followings" onClick={() => handleShowFollowings()}>
               {followingsCount || 0} abonnements
             </p>
             <VerticalMenu>

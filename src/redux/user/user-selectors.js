@@ -58,3 +58,11 @@ export const selectCurrentUserFollowingsCount = createSelector(
   [selectFollows],
   follows => follows && follows.followings_count
 );
+export const selectCurrentUserFollowingsList = createSelector(
+  [selectUser],
+  user => user && user.followings_list
+);
+export const selectCurrentUserFollowersList = createSelector(
+  [selectUser],
+  user => user && user.followers_list
+);

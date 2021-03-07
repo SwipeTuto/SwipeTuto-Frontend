@@ -11,6 +11,8 @@ const INITIAL_STATE = {
     followings_count: 0,
     followers_count: 0
   },
+  followers_list: [],
+  followings_list: [],
   selectedUserFollowings: null,
   token: currentUser ? currentUser.token : null,
   errors: null,
@@ -85,8 +87,10 @@ const userReducer = (state = INITIAL_STATE, action) => {
           [type]: data
         }
       };
-    case UserActionTypes.SET_SELECTED_USER_FOLLOWINGS:
-      return { ...state, selectedUserFollowings: action.payload };
+    case UserActionTypes.SET_FOLLOWERS_LIST:
+      return { ...state, followers_list: action.payload };
+    case UserActionTypes.SET_FOLLOWINGS_LIST:
+      return { ...state, followings_list: action.payload };
 
     default:
       return state;

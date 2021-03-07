@@ -34,7 +34,15 @@ const UserAvatar = ({ user, link, addActionOnClick }) => {
         >
           <div className="user_avatar">
             {userImage && !error ? (
-              <img className="user_avatar--image" src={userImage} alt="user" onError={() => setError(true)} />
+              <img
+                className="user_avatar--image"
+                src={userImage}
+                alt="user"
+                onError={(e) => {
+                  console.log(e);
+                  setError(true);
+                }}
+              />
             ) : user && user.username ? (
               user && user.username && user.username.slice(0, 1)
             ) : (

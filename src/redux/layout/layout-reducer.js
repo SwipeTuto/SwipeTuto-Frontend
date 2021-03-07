@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   signalInfos: initialSignalState,
   fullscreen: false,
   mobileNavOpen: false,
+  mobileNotifDropdownOpen: false,
   notificationPopupOpen: {
     open: false,
     notification: "",
@@ -20,9 +21,14 @@ const INITIAL_STATE = {
   clickedCardIsLoaded: true,
   imageIsLoaded: true,
   userIsLoaded: true,
+  buttonIsLoaded: true,
   commentsAreLoaded: true,
   redirectUrl: false,
   connexionPopup: false,
+  followersListOpen: false,
+  followingsListOpen: false,
+  followersLoaded: true,
+  followingsLoaded: true,
   theme: "light"
 };
 
@@ -69,7 +75,8 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         mobileNavOpen: true,
-        filterMobileMenuOpen: false
+        filterMobileMenuOpen: false,
+        mobileNotifDropdownOpen: false,
       };
     case LayoutActionTypes.CLOSE_MOBILE_NAV:
       app.style.position = "static";
@@ -77,6 +84,21 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         mobileNavOpen: false,
+      };
+    case LayoutActionTypes.OPEN_NOTIF_DROPDOWN_MENU:
+
+      app.style.position = "fixed";
+      app.style.overflow = "hidden";
+      return {
+        ...state,
+        mobileNotifDropdownOpen: true,
+      };
+    case LayoutActionTypes.CLOSE_NOTIF_DROPDOWN_MENU:
+      app.style.position = "static";
+      app.style.overflow = "visible";
+      return {
+        ...state,
+        mobileNotifDropdownOpen: false,
       };
     case LayoutActionTypes.OPEN_FILTER_MOBILE_MENU:
       app.style.position = "fixed";
@@ -143,6 +165,36 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         ...state,
         imageIsLoaded: true,
       }
+    case LayoutActionTypes.BUTTON_LOADING:
+      return {
+        ...state,
+        buttonIsLoaded: false,
+      }
+    case LayoutActionTypes.BUTTON_LOADED:
+      return {
+        ...state,
+        buttonIsLoaded: true,
+      }
+    case LayoutActionTypes.FOLLOWERS_LOADING:
+      return {
+        ...state,
+        followersLoaded: false,
+      }
+    case LayoutActionTypes.FOLLOWERS_LOADED:
+      return {
+        ...state,
+        followersLoaded: true,
+      }
+    case LayoutActionTypes.FOLLOWINGS_LOADING:
+      return {
+        ...state,
+        followingsLoaded: false,
+      }
+    case LayoutActionTypes.FOLLOWINGS_LOADED:
+      return {
+        ...state,
+        followingsLoaded: true,
+      }
     case LayoutActionTypes.SHOW_SIGNAL_POPUP:
       return {
         ...state,
@@ -203,6 +255,26 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         redirectUrl: action.payload,
+      }
+    case LayoutActionTypes.OPEN_FOLLOWERS_LIST_POPUP:
+      return {
+        ...state,
+        followersListOpen: true,
+      }
+    case LayoutActionTypes.CLOSE_FOLLOWERS_LIST_POPUP:
+      return {
+        ...state,
+        followersListOpen: false,
+      }
+    case LayoutActionTypes.OPEN_FOLLOWINGS_LIST_POPUP:
+      return {
+        ...state,
+        followingsListOpen: true,
+      }
+    case LayoutActionTypes.CLOSE_FOLLOWINGS_LIST_POPUP:
+      return {
+        ...state,
+        followingsListOpen: false,
       }
     default:
       return state;

@@ -1,0 +1,70 @@
+@import "../../../variables.scss";
+
+.UserHeader {
+  margin-bottom: 10rem;
+  padding: 2rem 2rem 4rem 2rem;
+  border-radius: $button-radius;
+
+  &__bottom {
+    display: flex;
+  }
+
+  &__buttons {
+    display: flex;
+    margin-top: auto;
+    width: 100%;
+
+    & .custom-button {
+      height: auto;
+      margin-right: 2rem;
+    }
+  }
+
+  & .user_avatar {
+    width: 15rem;
+    height: 15rem;
+  }
+
+  &__stats {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: flex-end;
+
+    &--followers,
+    &--followings {
+      cursor: pointer;
+    }
+
+    &--stat:not(:last-of-type)::after {
+      content: "\007C";
+      margin: 0 1.5rem;
+    }
+
+    &--stat:last-of-type {
+      margin-right: 2rem;
+    }
+  }
+
+  &__right {
+    width: auto;
+    margin-left: 4rem;
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    h2.title.title-2 {
+      text-align: left;
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
+@media screen and (max-width: $bp-phone) {
+  .UserHeader {
+    & .user_avatar {
+      width: 8rem;
+      height: 8rem;
+    }
+  }
+}

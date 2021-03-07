@@ -28,6 +28,7 @@
   &__toggle {
     width: 3.5rem;
     height: 3.5rem;
+    margin-right: auto;
 
     & * {
       stroke: currentColor !important;
@@ -37,10 +38,24 @@
 
   &__swipeTuto {
     height: 100%;
+    justify-self: right;
 
     img {
       height: 4rem;
       width: auto;
+    }
+  }
+
+  &__notifs {
+    margin: 0 1.5rem;
+    &--dropdown {
+      position: absolute;
+      top: calc(#{$navtop-mobile-height} + 2rem);
+      width: 100vw;
+      height: calc(100vh - (#{$navtop-mobile-height} + 2rem));
+      z-index: 18;
+      padding: 2rem;
+      overflow-y: scroll;
     }
   }
 
@@ -106,6 +121,7 @@
   &__menu {
     display: flex;
     flex-direction: column;
+    padding-bottom: 10rem;
   }
 
   &__menu-logo {
@@ -119,9 +135,9 @@
     display: flex;
     align-items: center;
 
-    &:last-child {
-      margin-bottom: 10rem;
-    }
+    // &:last-child {
+    //   margin-bottom: 10rem;
+    // }
   }
 
   .custom-button {
@@ -133,12 +149,14 @@
   }
 
   #mobileSearchButton {
-    margin: 0 auto;
-    font-size: 2rem;
+    // margin: 0 auto;
+    margin: 0;
+    margin-left: auto;
+    // font-size: 2rem;
 
     & > svg {
-      @include logo-size;
-      margin-right: 1rem;
+      @include medium-logo-size;
+      // margin-right: 1rem;
 
       &.dark-theme {
         fill: $white;

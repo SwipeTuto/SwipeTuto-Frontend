@@ -9,6 +9,7 @@
   width: 4rem;
   cursor: pointer;
   fill: $grey-dark;
+  z-index: 1000;
   transition: all 0.2s ease;
 
   &:hover {

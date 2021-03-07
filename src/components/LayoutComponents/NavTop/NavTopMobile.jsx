@@ -1,11 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { withRouter, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 // redux
 import { selectCurrentUser } from "../../../redux/user/user-selectors";
-import { selectMobileNavOpen, selectFilterMobileMenuOpen, selectTheme } from "../../../redux/layout/layout-selectors";
-import { openMobileNav, closeMobileNav, openFilterMobileMenu, setLoaded } from "../../../redux/layout/layout-actions";
+import { selectMobileNavOpen, selectFilterMobileMenuOpen, selectTheme, selectMobileNotifDropdownOpen } from "../../../redux/layout/layout-selectors";
+import {
+  openMobileNav,
+  closeMobileNav,
+  openFilterMobileMenu,
+  setLoaded,
+  closeNotifDropdownMobile,
+  openNotifDropdownMobile,
+} from "../../../redux/layout/layout-actions";
 import { logoutAction } from "../../../redux/user/user-actions";
 
 // components
@@ -27,6 +34,7 @@ import { ReactComponent as AddLogo } from "../../../assets/images/add-circle.svg
 import { ReactComponent as LearnFlashLogo } from "../../../assets/images/flash.svg";
 import { ReactComponent as HomeLogo } from "../../../assets/images/home.svg";
 import { ReactComponent as PencilLogo } from "../../../assets/images/pencil.svg";
+import { ReactComponent as NotifLogo } from "../../../assets/images/notifications.svg";
 
 import "./NavTopMobile.scss";
 import { useDarkMode } from "../../../hooks/useDarkMode";
@@ -37,6 +45,8 @@ import STSmallLogoBlackmod from "../../../assets/stlogos/logo seul blackmode.png
 import STSmallLogo from "../../../assets/stlogos/logo seul.png";
 import STBlackmod from "../../../assets/stlogos/swipetuto eclair bleu blackmode.png";
 import ST from "../../../assets/stlogos/swipetuto eclair bleu.png";
+import { fakeNotif } from "../../../helper/fakeNotifs";
+import NotificationHomeBox from "../NotificationHomeBox/NotificationHomeBox";
 
 const NavTopMobile = (props) => {
   const dispatch = useDispatch();
@@ -44,6 +54,9 @@ const NavTopMobile = (props) => {
   const currentTheme = useSelector(selectTheme);
   const currentUser = useSelector(selectCurrentUser);
   const mobileNavOpen = useSelector(selectMobileNavOpen);
+  const notifDropdownBtn = useRef();
+  const notifDropdown = useRef();
+  const notifDropdownOpen = useSelector(selectMobileNotifDropdownOpen);
 
   useEffect(() => {
     const NavTopMobileMenu = document.querySelector(".NavTopMobile");
@@ -70,15 +83,6 @@ const NavTopMobile = (props) => {
     dispatch(openFilterMobileMenu());
   };
 
-  const [theme, setTheme] = useDarkMode();
-  const toggleTheme = () => {
-    if (theme === "light") {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  };
-
   return (
     <>
       <div className={`NavTopMobile ${mobileNavOpen ? "active" : ""} ${currentTheme}-theme-m`}>
@@ -103,16 +107,48 @@ const NavTopMobile = (props) => {
             />
           )}
 
-          <CustomButton color="transparent" id="mobileSearchButton" onClick={handleFiltersMobileOpen}>
-            <SearchLogo className={`${currentTheme}-theme`} />
-            Recherche
-          </CustomButton>
+          {currentUser && (
+            <>
+              <div
+                className={`NavTop__roundBtn NavTop__searchBtn NavTopMobile__searchBtn ${currentTheme}-theme-l`}
+                id="mobileSearchButton"
+                onClick={handleFiltersMobileOpen}
+              >
+                <SearchLogo className={`${currentTheme}-theme`} />
+              </div>
+
+              <div
+                className={`NavTop__roundBtn NavTop__notifs NavTopMobile__notifs ${currentTheme}-theme-l`}
+                ref={notifDropdownBtn}
+                onClick={() => {
+                  if (notifDropdownOpen === true) {
+                    dispatch(closeNotifDropdownMobile());
+                  } else if (notifDropdownOpen === false) {
+                    dispatch(openNotifDropdownMobile());
+                  }
+                }}
+              >
+                <NotifLogo />
+                <div className="NavTop__notifs--stamp">4</div>
+              </div>
+            </>
+          )}
 
           <Link className="NavTopMobile__swipeTuto" to="/" onClick={() => handleNavClose()}>
             <img src={currentTheme === "light" ? STSmallLogo : STSmallLogoBlackmod} alt="swipetuto logo" />
           </Link>
         </div>
       </div>
+
+      {notifDropdownOpen && currentUser && (
+        <div className={`NavTopMobile__notifs--dropdown ${currentTheme}-theme-l`} ref={notifDropdown}>
+          <h2 className="title title-2">Notifications</h2>
+          {fakeNotif.map((notif, index) => (
+            <NotificationHomeBox notification={notif} key={index} />
+          ))}
+        </div>
+      )}
+
       <div className={`NavTopMobile__open ${mobileNavOpen ? "active" : ""} ${currentTheme}-theme-m`}>
         <div className="NavTopMobile__user">
           {currentUser ? (
@@ -207,6 +243,9 @@ const NavTopMobile = (props) => {
           ) : (
             <></>
           )}
+          <Link onClick={() => handleNavClose()} to="/feedback_beta">
+            Donnez votre avis
+          </Link>
         </div>
         {!currentUser && (
           <Link className="NavTopMobile__linkConnexion" to="/connexion/login" onClick={() => handleNavClose()}>

@@ -18,7 +18,8 @@ import { ReactComponent as FacebookLogo } from "../../../assets/images/logo-face
 
 import "./LoginAndRegister.scss";
 import FormInput from "../../FormInputs/FormInput";
-import { selectTheme } from "../../../redux/layout/layout-selectors";
+import { selectButtonLoaded, selectTheme } from "../../../redux/layout/layout-selectors";
+import ButtonLoading from "../../Loading/ButtonLoading";
 
 const Login = ({ title }) => {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ const Login = ({ title }) => {
   const userErrors = useSelector(selectUserErrors);
   const allInput = [...document.querySelectorAll(".FormInput")];
   const currentTheme = useSelector(selectTheme);
+  const btnLoaded = useSelector(selectButtonLoaded);
 
   useEffect(() => {
     dispatch(deleteUserErrors());
@@ -88,7 +90,7 @@ const Login = ({ title }) => {
         <FormInput idFor="email" label="Votre email :" type="email" name="email" getValue={getValue} required={true} />
         <FormInput idFor="password" label="Votre mot de passe :" type="password" name="password" getValue={getValue} required={true} />
         <CustomButton onClick={(e) => handleClick(e)} id="login-button" color="dark" type="submit" disabled={submitOk}>
-          Connexion
+          {btnLoaded ? "Connexion" : <ButtonLoading />}
         </CustomButton>
       </form>
 

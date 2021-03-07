@@ -5,6 +5,15 @@ let currentUser = JSON.parse(localStorage.getItem('user'));
 const INITIAL_STATE = {
   currentUser: currentUser ? currentUser.user : null,
   clickedUser: null,
+  follows: {
+    followed_by: [],
+    followings: [],
+    followings_count: 0,
+    followers_count: 0
+  },
+  followers_list: [],
+  followings_list: [],
+  selectedUserFollowings: null,
   token: currentUser ? currentUser.token : null,
   errors: null,
 };
@@ -69,6 +78,19 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return { ...state, clickedUser: action.payload, errors: null };
     case UserActionTypes.GET_CLICKED_USER_ERROR:
       return { ...state, errors: action.payload };
+    case UserActionTypes.UPDATE_CURRENTUSER_FOLLOWS:
+      const { type, data } = action.payload
+      return {
+        ...state,
+        follows: {
+          ...state.follows,
+          [type]: data
+        }
+      };
+    case UserActionTypes.SET_FOLLOWERS_LIST:
+      return { ...state, followers_list: action.payload };
+    case UserActionTypes.SET_FOLLOWINGS_LIST:
+      return { ...state, followings_list: action.payload };
 
     default:
       return state;

@@ -86,6 +86,7 @@
     text-overflow: ellipsis;
     margin: 0 0 3rem 0;
     padding: 0;
+    flex-wrap: wrap;
 
     .UserNameAndAvatar {
       display: flex;
@@ -452,11 +453,20 @@
       }
 
       &__user {
+        // display: block;
+
         .UserNameAndAvatar {
           &__avatar {
             height: 4rem;
             width: 4rem;
           }
+        }
+
+        button.custom-button {
+          display: block;
+          // margin-top: 2rem;
+          margin-left: 5rem;
+          font-size: 1.4rem;
         }
       }
 

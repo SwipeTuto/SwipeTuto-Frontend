@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
-import { selectCurrentUser, selectClickedUser } from "../../../redux/user/user-selectors";
+import { selectCurrentUser, selectClickedUser, selectCurrentUserFollowersCount } from "../../../redux/user/user-selectors";
 import { selectCardsFetchedCards, selectTotalNumberOfResults } from "../../../redux/filter/filter-selectors";
 import Loading from "../../../components/Loading/Loading";
 import "./UserPage.scss";
@@ -13,6 +13,9 @@ import { getUrlId } from "../../../helper/functions/getURLParams";
 import UserNameAndAvatar from "../../../components/UserComponents/UserAvatar/UserNameAndAvatar";
 import { setNoClickedUser } from "../../../redux/user/user-actions";
 import CustomButton from "../../../components/LayoutComponents/CustomButton/CustomButton";
+import FollowButton from "../../../components/LayoutComponents/FollowButton/FollowButton";
+import UserAvatar from "../../../components/UserComponents/UserAvatar/UserAvatar";
+import UserHeader from "../../../components/LayoutComponents/UserHeader/UserHeader";
 
 const UserPage = ({ userIsSame, location }) => {
   const locationPath = location && location.pathname;
@@ -31,47 +34,24 @@ const UserPage = ({ userIsSame, location }) => {
   const dispatch = useDispatch();
   const userId = getUrlId(location.pathname, "user_id");
   const userIsLoaded = useSelector(selectUserLoaded);
+  const followersCount = useSelector(selectCurrentUserFollowersCount);
 
   useEffect(() => {
     if (locationPath.includes("card_id")) return;
     if (locationPath.includes("/profile") && clickedUser?.id) {
       setUserDatas(clickedUser);
       dispatch(getCardsByUserIdAction(clickedUser.id));
-      dispatch(setNoClickedUser());
+      // dispatch(setNoClickedUser());
     } else if (locationPath === "/account/user" && currentUser?.id) {
       setUserDatas(currentUser);
       dispatch(getCardsByUserIdAction(currentUser.id));
-      dispatch(setNoClickedUser());
+      // dispatch(setNoClickedUser());
     }
   }, [clickedUser, currentUser, dispatch, locationPath, userId]);
 
-  const handleFollowUser = () => {};
-
   return (
     <div className={`UserPage ${currentTheme}-theme-d`}>
-      <div className="UserPage__header">
-        {userIsLoaded ? <UserNameAndAvatar user={userDatas} /> : <Loading />}
-        {location?.pathname === "/account/user" ? (
-          <Link to="/account/settings">
-            <CustomButton color="dark">Modifier le profil</CustomButton>
-          </Link>
-        ) : (
-          <CustomButton onClick={handleFollowUser} color="dark">
-            S'abonner
-          </CustomButton>
-        )}
-        {isLoaded && (
-          <p className="UserPage__header--cards">
-            {totalCardsFetched
-              ? totalCardsFetched < 2
-                ? totalCardsFetched + " Tutoriel publié"
-                : totalCardsFetched + " Tutoriels publiés"
-              : "Aucun tutoriel pour le moment"}
-          </p>
-        )}
-
-        {userIsLoaded && userDatas?.profile?.description && <p className="UserPage__header--description">{userDatas.profile.description}</p>}
-      </div>
+      <UserHeader />
       <div className="UserPage__cards">
         <h2 className="title title-2">Tutoriels de {userDatas && userDatas.username ? userDatas.username : "l'utilisateur "}</h2>
         {!isLoaded ? (

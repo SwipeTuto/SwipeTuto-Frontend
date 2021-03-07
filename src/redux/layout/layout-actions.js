@@ -34,6 +34,12 @@ export const openFilterMobileMenu = () => ({
 export const closeFilterMobileMenu = () => ({
   type: LayoutActionTypes.CLOSE_FILTER_MOBILE_MENU,
 })
+export const openNotifDropdownMobile = () => ({
+  type: LayoutActionTypes.OPEN_NOTIF_DROPDOWN_MENU,
+})
+export const closeNotifDropdownMobile = () => ({
+  type: LayoutActionTypes.CLOSE_NOTIF_DROPDOWN_MENU,
+})
 export const openConnexionPopup = () => ({
   type: LayoutActionTypes.OPEN_CONNEXION_POPUP,
 })
@@ -51,6 +57,13 @@ export const setLoading = () => ({
 
 export const setLoaded = () => ({
   type: LayoutActionTypes.SET_LOADED,
+})
+export const setButtonLoading = () => ({
+  type: LayoutActionTypes.BUTTON_LOADING,
+})
+
+export const setButtonLoaded = () => ({
+  type: LayoutActionTypes.BUTTON_LOADED,
 })
 export const setClickedCardLoading = () => ({
   type: LayoutActionTypes.SET_CLICKED_CARD_LOADING,
@@ -75,6 +88,18 @@ export const setCommentsLoaded = () => ({
 })
 export const setImageLoading = () => ({
   type: LayoutActionTypes.SET_IMAGE_LOADING,
+})
+export const setFollowersLoaded = () => ({
+  type: LayoutActionTypes.FOLLOWERS_LOADED,
+})
+export const setFollowersLoading = () => ({
+  type: LayoutActionTypes.FOLLOWERS_LOADING,
+})
+export const setFollowingsLoaded = () => ({
+  type: LayoutActionTypes.FOLLOWINGS_LOADED,
+})
+export const setFollowingsLoading = () => ({
+  type: LayoutActionTypes.FOLLOWINGS_LOADING,
 })
 
 export const setImageLoaded = () => ({
@@ -107,4 +132,17 @@ export const openNotificationPopup = (type, notification) => ({
 })
 export const closeNotificationPopup = () => ({
   type: LayoutActionTypes.CLOSE_NOTIFICATION_POPUP,
+})
+
+export const openFollowersListPopup = () => ({
+  type: LayoutActionTypes.OPEN_FOLLOWERS_LIST_POPUP
+})
+export const closeFollowersListPopup = () => ({
+  type: LayoutActionTypes.CLOSE_FOLLOWERS_LIST_POPUP,
+})
+export const openFollowingsListPopup = () => ({
+  type: LayoutActionTypes.OPEN_FOLLOWINGS_LIST_POPUP
+})
+export const closeFollowingsListPopup = () => ({
+  type: LayoutActionTypes.CLOSE_FOLLOWINGS_LIST_POPUP,
 })

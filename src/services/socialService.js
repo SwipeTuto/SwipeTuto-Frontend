@@ -116,3 +116,39 @@ export const getCardCommentsOtherPage = (url) => {
   })
 }
 
+
+export const toggleFollowByUserID = (userIDtoFollow) => {
+  var config = {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }
+  return client().get(`toggle/${userIDtoFollow}/`, config).then(rep => {
+    return rep
+  }).catch(err => err)
+}
+
+export const getUserFollowersList = (userID) => {
+  var config = {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }
+  return client().get(`list-followers/`, config).then(rep => {
+    return rep
+  }).catch(err => err)
+  // return client().get(`list-followers/${userID}`, config).then(rep => {
+  //   return rep
+  // }).catch(err => err)
+}
+export const getUserFollowingsList = (userID) => {
+  console.log('call get followings list')
+  var config = {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }
+  return client().get(`list-following/`, config).then(rep => {
+    return rep
+  }).catch(err => err)
+}

@@ -1,6 +1,10 @@
 import { createSelector } from 'reselect'
 
 export const selectUser = state => state.user;
+export const selectFollows = createSelector(
+  [selectUser],
+  user => user.follows
+);
 export const selectCurrentUser = createSelector(
   [selectUser],
   user => user.currentUser
@@ -28,4 +32,37 @@ export const selectCurrentUserSettings = createSelector(
 export const selectCurrentUserCategoriesPreferences = createSelector(
   [selectCurrentUser],
   currentUser => currentUser?.profile?.category_favorie?.map(item => item?.name)
+);
+
+
+export const selectCurrentUserReglement = createSelector(
+  [selectCurrentUser],
+  currentUser => currentUser && currentUser.reglement
+);
+
+// follows
+
+export const selectCurrentUserFollowers = createSelector(
+  [selectFollows],
+  follows => follows && follows.followers
+);
+export const selectCurrentUserFollowersCount = createSelector(
+  [selectFollows],
+  follows => follows && follows.followers_count
+);
+export const selectCurrentUserFollowings = createSelector(
+  [selectFollows],
+  follows => follows && follows.followings
+);
+export const selectCurrentUserFollowingsCount = createSelector(
+  [selectFollows],
+  follows => follows && follows.followings_count
+);
+export const selectCurrentUserFollowingsList = createSelector(
+  [selectUser],
+  user => user && user.followings_list
+);
+export const selectCurrentUserFollowersList = createSelector(
+  [selectUser],
+  user => user && user.followers_list
 );

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter, Redirect, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -18,7 +18,7 @@ import { urlParams, getUrlId } from "./helper/functions/getURLParams"
 import './index.scss'
 import './App.scss';
 import { closeConnexionPopup, closePopupCard, openNotificationPopup, setCardsSize, setFirstLoadDone, setRedirectUrl, showPopupCard, toggleThemeAction } from "./redux/layout/layout-actions";
-import { getUserByIdAction } from "./redux/user/user-actions";
+import { getCurrentUserAction, getUserByIdAction } from "./redux/user/user-actions";
 import SignalPopup from "./components/LayoutComponents/SignalPopup/SignalPopup";
 import CardFullPopup from "./components/CardsComponents/CardFullPopup/CardFullPopup";
 import SearchLinkRedirect from "./helper/SearchLinkRedirect";
@@ -50,6 +50,10 @@ function App(props) {
   const popupCardIsOpen = useSelector(selectShowPopupCard);
   const appEl = useRef(null)
   const filterError = useSelector(selectFilterError)
+
+  useEffect(() => {
+    dispatch(getCurrentUserAction())
+  }, [dispatch])
 
   useEffect(() => {
 
@@ -84,7 +88,8 @@ function App(props) {
     if (firstLoadDone === false) {
       dispatch(setFirstLoadDone())
     }
-  }, [cardId, category, currentSearch, currentUser, dispatch, fetchedCards, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, props.history, search, topic, userId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cardId, category, currentSearch, dispatch, fetchedCards, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, props.history, search, topic, userId]);
 
   useEffect(() => {
 
@@ -98,7 +103,7 @@ function App(props) {
   useEffect(() => {
     if (filterError && clickedCard === null) {
 
-      dispatch(openNotificationPopup("error",'Une erreur est survenue. Vous avez été redirigé.'))
+      dispatch(openNotificationPopup("error", 'Une erreur est survenue. Vous avez été redirigé.'))
       dispatch(deleteFilterErrorAction())
       dispatch(closePopupCard())
       dispatch(setRedirectUrl(true))
@@ -162,6 +167,16 @@ function App(props) {
         {signalPopup && <SignalPopup />}
         {clickedCard && <CardFullPopup />}
         <Routes />
+        {locationPathname !== "/feedback_beta" && (
+          <div className="App__beta">
+            <Link className="App__feedback" to="/feedback_beta">
+              Donnez votre avis sur cette version Beta de Swipetuto !
+          </Link>
+            <Link className="App__feedback" to="/next">
+              Et découvrez nos futures fonctionnalités ici <span role="img" aria-label="wink emoji" >😉</span>
+            </Link>
+          </div>
+        )}
         <Footer />
 
       </div>

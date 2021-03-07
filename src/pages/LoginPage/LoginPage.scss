@@ -48,6 +48,7 @@
 
 @media screen and (max-width: $bp-tablet) {
   .LoginPage {
+    padding: 2rem;
     background-image: none;
     display: flex;
     justify-content: center;
@@ -73,5 +74,3 @@
     }
   }
 }
-
-

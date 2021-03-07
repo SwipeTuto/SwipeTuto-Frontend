@@ -77,3 +77,27 @@ export const selectNotificationPopupOpen = createSelector(
   [selectLayout],
   layout => layout.notificationPopupOpen
 );
+export const selectMobileNotifDropdownOpen = createSelector(
+  [selectLayout],
+  layout => layout.mobileNotifDropdownOpen
+);
+export const selectButtonLoaded = createSelector(
+  [selectLayout],
+  layout => layout.buttonIsLoaded
+);
+export const selectFollowersListOpen = createSelector(
+  [selectLayout],
+  layout => layout.followersListOpen
+);
+export const selectFollowingsListOpen = createSelector(
+  [selectLayout],
+  layout => layout.followingsListOpen
+);
+export const selectFollowersLoaded = createSelector(
+  [selectLayout],
+  layout => layout.followersLoaded
+);
+export const selectFollowingsLoaded = createSelector(
+  [selectLayout],
+  layout => layout.followingsLoaded
+);

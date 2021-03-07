@@ -1,7 +1,8 @@
 import { UserActionTypes } from './user-types'
 import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin, updatePrefService, getCurrentUser, resetConfirmPassowrd } from '../../services/userService'
+import { getUserFollowersList, toggleFollowByUserID, getUserFollowingsList } from '../../services/socialService'
 import history from "../../helper/functions/createBrowserHistory"
-import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationPopup } from '../layout/layout-actions';
+import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationPopup, setButtonLoading, setButtonLoaded, setFollowersLoading, setFollowersLoaded, setFollowingsLoading, setFollowingsLoaded } from '../layout/layout-actions';
 
 
 export const rulesAcceptedAction = () => {
@@ -31,17 +32,20 @@ export const setCurrentUser = (user) => ({
 export const loginAction = (username, password) => {
   const currentUrl = window.location.href;
   return dispatch => {
+    dispatch(setButtonLoading())
     return loginManuel(username, password)
       .then(user => {
         dispatch(deleteUserErrors())
         if (!user.data) {
           dispatch(loginErrors("Erreur avec votre compte. Merci d'en essayer un autre."))
           localStorage.removeItem('user')
+          dispatch(setButtonLoaded())
         } else {
           if (currentUrl) {
             window.location.href = currentUrl;
+            dispatch(setButtonLoaded())
           } else {
-            return
+            return dispatch(setButtonLoaded())
           }
         }
       })
@@ -75,6 +79,7 @@ export const loginGoogleAction = () => {
 export const loginFacebookAction = () => {
   const currentUrl = window.location.href;
   return dispatch => {
+
     return LoginProviderFacebook()
       .then(rep => {
         FacebookLogin(rep)
@@ -124,14 +129,17 @@ export const setOtherUser = (otherUser) => ({
 // REGISTER
 export const registerAction = users => {
   return dispatch => {
+    dispatch(setButtonLoading())
     register(users)
       .then(user => {
         dispatch(registerSuccess(user.data.user));
+        dispatch(setButtonLoaded())
         history.push('/search', history.location)
         history.go()
       })
       .catch(err => {
         dispatch(registerErrors(err.response))
+        dispatch(setButtonLoaded())
       })
   }
 }
@@ -172,6 +180,7 @@ const getClickedUserError = error => ({
 
 export const getUserByIdAction = id => {
   return dispatch => {
+    dispatch(setNoClickedUser)
     dispatch(setUserLoading());
     getUserById(id).then(rep => {
       dispatch(setClickedUser(rep.data))
@@ -194,7 +203,12 @@ export const getCurrentUserAction = () => {
   return dispatch => {
     dispatch(setUserLoading());
     getCurrentUser().then(rep => {
+      console.log(rep)
       dispatch(setCurrentUser(rep.data.user))
+      dispatch(updateCurrentUserFollows('followings', rep.data.user?.followings))
+      dispatch(updateCurrentUserFollows('followings_count', rep.data.user?.followings_count))
+      dispatch(updateCurrentUserFollows('followers', rep.data.user?.followers))
+      dispatch(updateCurrentUserFollows('followers_count', rep.data.user?.followers_count))
       dispatch(setUserLoaded())
       dispatch(deleteUserErrors())
       return rep.data
@@ -282,3 +296,82 @@ export const updateUserPasswordAction = (userNewPasswordObj) => {
     dispatch(setLoaded())
   }
 }
+
+
+export const toggleFollowByUserIDAction = (userIDtoFollow) => {
+  return dispatch => {
+    dispatch(setButtonLoading())
+    return (
+      toggleFollowByUserID(userIDtoFollow)
+        .then((rep) => {
+          // console.log(rep)
+          dispatch(updateCurrentUserFollows('followings', rep?.data?.followings))
+          dispatch(updateCurrentUserFollows('followings_count', rep?.data?.followings_count))
+          dispatch(setButtonLoaded())
+          return rep
+        }).catch(err => {
+          dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
+          dispatch(setButtonLoaded())
+          return err
+        })
+    )
+  }
+}
+
+export const updateCurrentUserFollows = (type, data) => ({
+  type: UserActionTypes.UPDATE_CURRENTUSER_FOLLOWS,
+  payload: { type, data }
+})
+
+
+export const getUserFollowingsListAction = (userID, type) => {
+  return dispatch => {
+    dispatch(setFollowingsLoading())
+    dispatch(setFollowingsList([]))
+    return (
+      getUserFollowingsList(userID)
+        .then(rep => {
+          console.log(rep)
+          dispatch(setFollowingsList(rep?.data?.results))
+          dispatch(setFollowingsLoaded())
+          return rep
+        }).catch(err => {
+          dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
+          dispatch(setFollowingsLoaded())
+          return err
+        })
+    )
+  }
+}
+export const setFollowingsList = followings => ({
+  type: UserActionTypes.SET_FOLLOWINGS_LIST,
+  payload: followings
+})
+
+
+
+export const getUserFollowersListAction = (userID) => {
+  return dispatch => {
+    dispatch(setFollowersLoading())
+    dispatch(setFollowersList([]))
+    return (
+      getUserFollowersList(userID)
+        .then(rep => {
+          console.log(rep)
+          dispatch(setFollowersList(rep?.data?.results))
+          dispatch(setFollowersLoaded())
+          return rep
+        }).catch(err => {
+          dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
+          dispatch(setFollowersLoaded())
+          return err
+        })
+    )
+  }
+}
+
+export const setFollowersList = followers => ({
+  type: UserActionTypes.SET_FOLLOWERS_LIST,
+  payload: followers
+})
+

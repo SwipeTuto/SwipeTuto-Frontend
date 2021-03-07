@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from "react";
-import { NavLink, Route, Switch, withRouter } from "react-router-dom";
+import { Link, NavLink, Route, Switch, withRouter } from "react-router-dom";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user-selectors";
@@ -77,6 +77,7 @@ const AccountPage = (props) => {
                 <ContactLogo />
                 Contact
               </NavLink>
+              <Link to="/feedback_beta">Donnez votre avis</Link>
 
               <p
                 className="AccountPage__logout"

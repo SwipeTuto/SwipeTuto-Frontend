@@ -56,12 +56,12 @@ import { ReactComponent as EyeLogo } from "../../../assets/images/eye.svg";
 
 // SCSS
 import "./CardFullPopup.scss";
-import { getCurrentUserAction } from "../../../redux/user/user-actions";
 import VerticalMenu from "../../LayoutComponents/VerticalMenu/VerticalMenu";
 import ShareMenu from "../../LayoutComponents/ShareMenu/ShareMenu";
 import ConfirmationOverlay from "../../LayoutComponents/ConfirmationOverlay/ConfirmationOverlay";
 import { userHasLiked } from "../../../helper/functions/userHasLiked";
 import SearchLinkRedirect from "../../../helper/SearchLinkRedirect";
+import FollowButton from "../../LayoutComponents/FollowButton/FollowButton";
 
 const CardFullPopup = ({ history, location }) => {
   const isFullScreen = useSelector(selectFullscreen);
@@ -179,7 +179,6 @@ const CardFullPopup = ({ history, location }) => {
 
     dispatch(setNoClickedCard());
     dispatch(closePopupCard());
-    // dispatch(getCurrentUserAction(currentUserId));
   };
 
   // LIKE
@@ -358,6 +357,7 @@ const CardFullPopup = ({ history, location }) => {
               <div className={`CardFullPopup__wrapper ${currentTheme}-theme-d`} onClick={(e) => e.stopPropagation()}>
                 <div className="CardFullPopup__user CardFullPopup__section">
                   <UserNameAndAvatar user={clickedCard && clickedCard.user} link={true} />
+                  {clickedCard?.user?.id !== currentUserId && <FollowButton userIDtoFollow={clickedCard?.user?.id} />}
                 </div>
 
                 {clickedCardIsLoaded ? (

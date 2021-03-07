@@ -8,21 +8,17 @@
     padding: 4rem;
     position: relative;
 
-    .custom-button {
-      margin-left: auto;
-    }
+    // .VerticalMenu {
+    //   display: inline-block;
+    //   position: absolute;
+    //   right: 0;
 
-    .VerticalMenu {
-      display: inline-block;
-      position: absolute;
-      right: 0;
-
-      &__logo {
-        svg {
-          @include medium-logo-size;
-        }
-      }
-    }
+    //   &__logo {
+    //     svg {
+    //       @include medium-logo-size;
+    //     }
+    //   }
+    // }
   }
 
   &__error {
@@ -56,7 +52,7 @@
     padding: $inner-component-padding-tablet;
 
     &__wrapper {
-      padding: 0;
+      padding: 2rem 0;
     }
   }
 }

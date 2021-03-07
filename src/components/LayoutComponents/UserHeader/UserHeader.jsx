@@ -8,7 +8,12 @@ import { selectTotalNumberOfResults } from "../../../redux/filter/filter-selecto
 import { closeFollowersListPopup, openFollowersListPopup, showSignalPopup } from "../../../redux/layout/layout-actions";
 import { selectFollowersListOpen, selectIsLoaded, selectTheme, selectUserLoaded } from "../../../redux/layout/layout-selectors";
 import { setNoClickedUser } from "../../../redux/user/user-actions";
-import { selectClickedUser, selectCurrentUser, selectCurrentUserFollowersCount } from "../../../redux/user/user-selectors";
+import {
+  selectClickedUser,
+  selectCurrentUser,
+  selectCurrentUserFollowersCount,
+  selectCurrentUserFollowingsCount,
+} from "../../../redux/user/user-selectors";
 import Loading from "../../Loading/Loading";
 import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 import CustomButton from "../CustomButton/CustomButton";
@@ -31,6 +36,7 @@ const UserHeader = ({ location }) => {
   const currentTheme = useSelector(selectTheme);
   const userId = getUrlId(location.pathname, "user_id");
   const followersListOpen = useSelector(selectFollowersListOpen);
+  const followingsCount = useSelector(selectCurrentUserFollowingsCount);
 
   useEffect(() => {
     if ((userId && userId === currentUser?.id) || (locationPath === "/account/user" && currentUser.id)) {
@@ -71,6 +77,9 @@ const UserHeader = ({ location }) => {
 
             <p className="UserHeader__stats--stat UserHeader__stats--followers" onClick={() => handleShowFollowers()}>
               {followersCount || 0} abonnés
+            </p>
+            <p className="UserHeader__stats--stat UserHeader__stats--followings" onClick={() => handleShowFollowers()}>
+              {followingsCount || 0} abonnements
             </p>
             <VerticalMenu>
               <p onClick={() => dispatch(showSignalPopup(newSignalObject))}>Signaler</p>

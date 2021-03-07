@@ -56,7 +56,6 @@ import { ReactComponent as EyeLogo } from "../../../assets/images/eye.svg";
 
 // SCSS
 import "./CardFullPopup.scss";
-import { getCurrentUserAction } from "../../../redux/user/user-actions";
 import VerticalMenu from "../../LayoutComponents/VerticalMenu/VerticalMenu";
 import ShareMenu from "../../LayoutComponents/ShareMenu/ShareMenu";
 import ConfirmationOverlay from "../../LayoutComponents/ConfirmationOverlay/ConfirmationOverlay";
@@ -179,7 +178,6 @@ const CardFullPopup = ({ history, location }) => {
 
     dispatch(setNoClickedCard());
     dispatch(closePopupCard());
-    // dispatch(getCurrentUserAction(currentUserId));
   };
 
   // LIKE

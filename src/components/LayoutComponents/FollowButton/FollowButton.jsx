@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectButtonLoaded } from "../../../redux/layout/layout-selectors";
 import { getUserFollowersListAction, toggleFollowByUserIDAction } from "../../../redux/user/user-actions";
-import { selectClickedUser, selectCurrentUserFollowers, selectCurrentUserId } from "../../../redux/user/user-selectors";
+import { selectClickedUser, selectCurrentUserFollowers, selectCurrentUserFollowings, selectCurrentUserId } from "../../../redux/user/user-selectors";
 import ButtonLoading from "../../Loading/ButtonLoading";
 import CustomButton from "../CustomButton/CustomButton";
 
@@ -11,7 +11,8 @@ import "./FollowButton.scss";
 const FollowButton = ({ userIDtoFollow }) => {
   const dispatch = useDispatch();
   const buttonLoaded = useSelector(selectButtonLoaded);
-  const followers = useSelector(selectCurrentUserFollowers);
+  // const followers = useSelector(selectCurrentUserFollowers);
+  const followings = useSelector(selectCurrentUserFollowings);
   // const currentUserID = useSelector(selectCurrentUserId);
   const handleToggleFollowUser = () => {
     dispatch(toggleFollowByUserIDAction(userIDtoFollow));
@@ -19,7 +20,7 @@ const FollowButton = ({ userIDtoFollow }) => {
 
   return (
     <>
-      {followers && userIDtoFollow && followers.some((id) => id === userIDtoFollow) ? (
+      {followings && userIDtoFollow && followings.some((id) => id === userIDtoFollow) ? (
         <CustomButton color="dark" onClick={() => handleToggleFollowUser(userIDtoFollow)}>
           {buttonLoaded ? "Abonné" : <ButtonLoading />}
         </CustomButton>

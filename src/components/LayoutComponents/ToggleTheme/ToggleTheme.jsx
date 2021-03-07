@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { ReactComponent as LogoSun } from "../../../assets/images/sunny.svg";
 import { ReactComponent as LogoMoon } from "../../../assets/images/moon.svg";
@@ -15,8 +15,13 @@ const ToggleButton = () => {
   return (
     <button
       onClick={() => {
-        if (currentTheme === "light") dispatch(toggleThemeAction("dark"));
-        if (currentTheme === "dark") dispatch(toggleThemeAction("light"));
+        if (currentTheme === "light") {
+          dispatch(toggleThemeAction("dark"));
+          // setUserPref({ ...userPref, color_theme: "dark" });
+        } else if (currentTheme === "dark") {
+          dispatch(toggleThemeAction("light"));
+          // setUserPref({ ...userPref, color_theme: "light" });
+        }
       }}
       className="ToggleTheme"
     >

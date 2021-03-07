@@ -18,7 +18,7 @@ import { urlParams, getUrlId } from "./helper/functions/getURLParams"
 import './index.scss'
 import './App.scss';
 import { closeConnexionPopup, closePopupCard, openNotificationPopup, setCardsSize, setFirstLoadDone, setRedirectUrl, showPopupCard, toggleThemeAction } from "./redux/layout/layout-actions";
-import { getUserByIdAction } from "./redux/user/user-actions";
+import { getCurrentUserAction, getUserByIdAction } from "./redux/user/user-actions";
 import SignalPopup from "./components/LayoutComponents/SignalPopup/SignalPopup";
 import CardFullPopup from "./components/CardsComponents/CardFullPopup/CardFullPopup";
 import SearchLinkRedirect from "./helper/SearchLinkRedirect";
@@ -52,6 +52,11 @@ function App(props) {
   const filterError = useSelector(selectFilterError)
 
   useEffect(() => {
+    dispatch(getCurrentUserAction())
+  }, [dispatch])
+
+  useEffect(() => {
+
     if (firstLoadDone === false && locationPathname === "/search") { // si params url
       if (topic || category || ordering || search) {
         const currentSearchCopy = {
@@ -83,7 +88,8 @@ function App(props) {
     if (firstLoadDone === false) {
       dispatch(setFirstLoadDone())
     }
-  }, [cardId, category, currentSearch, currentUser, dispatch, fetchedCards, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, props.history, search, topic, userId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cardId, category, currentSearch, dispatch, fetchedCards, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, props.history, search, topic, userId]);
 
   useEffect(() => {
 

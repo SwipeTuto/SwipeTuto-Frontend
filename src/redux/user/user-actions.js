@@ -203,7 +203,12 @@ export const getCurrentUserAction = () => {
   return dispatch => {
     dispatch(setUserLoading());
     getCurrentUser().then(rep => {
+      console.log(rep)
       dispatch(setCurrentUser(rep.data.user))
+      dispatch(updateCurrentUserFollows('followings', rep.data.user?.followings))
+      dispatch(updateCurrentUserFollows('followings_count', rep.data.user?.followings_count))
+      dispatch(updateCurrentUserFollows('followers', rep.data.user?.followers))
+      dispatch(updateCurrentUserFollows('followers_count', rep.data.user?.followers_count))
       dispatch(setUserLoaded())
       dispatch(deleteUserErrors())
       return rep.data
@@ -298,12 +303,10 @@ export const toggleFollowByUserIDAction = (userIDtoFollow) => {
     dispatch(setButtonLoading())
     return (
       toggleFollowByUserID(userIDtoFollow)
-        .then(async (rep) => {
-          // await getCurrentUser().then(rep => {
-          //   console.log(rep)
-          //   dispatch(setCurrentUserFollowings(rep?.data?.user?.followings))
-          // })
-          dispatch(getCurrentUserAction())
+        .then((rep) => {
+          // console.log(rep)
+          dispatch(updateCurrentUserFollows('followings', rep?.data?.followings))
+          dispatch(updateCurrentUserFollows('followings_count', rep?.data?.followings_count))
           dispatch(setButtonLoaded())
           return rep
         }).catch(err => {
@@ -322,7 +325,7 @@ export const getUserFollowingsListAction = (userID, type) => {
         .then(rep => {
           console.log(rep)
           if (type && type === "current") {
-            dispatch(setCurrentUserFollowings(rep?.data?.results))
+            // dispatch(updateCurrentUserFollows(rep?.data?.results))
             dispatch(setFollowingsLoaded())
             return rep
           }
@@ -337,9 +340,9 @@ export const getUserFollowingsListAction = (userID, type) => {
   }
 }
 
-export const setCurrentUserFollowings = followings => ({
-  type: UserActionTypes.SET_CURRENT_USER_FOLLOWINGS,
-  payload: followings
+export const updateCurrentUserFollows = (type, data) => ({
+  type: UserActionTypes.UPDATE_CURRENTUSER_FOLLOWS,
+  payload: { type, data }
 })
 export const setSelectedUserFollowings = followings => ({
   type: UserActionTypes.SET_SELECTED_USER_FOLLOWINGS,

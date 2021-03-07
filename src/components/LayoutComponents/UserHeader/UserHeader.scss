@@ -30,7 +30,8 @@
     display: flex;
     justify-content: flex-end;
 
-    &--followers {
+    &--followers,
+    &--followings {
       cursor: pointer;
     }
 

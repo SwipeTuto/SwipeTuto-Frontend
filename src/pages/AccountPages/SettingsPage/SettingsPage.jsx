@@ -10,6 +10,8 @@ import FormInput from "../../../components/FormInputs/FormInput";
 import FormTextarea from "../../../components/FormInputs/FormTextarea";
 import { resetPassowrd, upDateAvatar } from "../../../services/userService";
 import { openNotificationPopup, setCardsSize, toggleThemeAction } from "../../../redux/layout/layout-actions";
+import Loading from "../../../components/Loading/Loading";
+import ButtonLoading from "../../../components/Loading/ButtonLoading";
 
 const SettingsPage = () => {
   const dispatch = useDispatch();
@@ -21,6 +23,7 @@ const SettingsPage = () => {
   // const [themePref, setThemePref] = useState(null);
   const [newUserInfos, setNewUserInfos] = useState(currentUser);
   const [sendNewInfos, setSendNewInfos] = useState(false);
+  const [resetPWLoading, setResetPWLoading] = useState(false);
   const [inputValid, setInputValid] = useState({
     username: false,
     first_name: false,
@@ -123,11 +126,13 @@ const SettingsPage = () => {
 
   const handleResetPassword = async () => {
     if (currentUser.email) {
+      setResetPWLoading(true);
       try {
         await resetPassowrd(currentUser.email);
-        return dispatch(openNotificationPopup("info", "Un email vous a été envoyé pour changer de mot de passe !"));
+        dispatch(openNotificationPopup("info", "Un email vous a été envoyé pour changer de mot de passe !"));
+        return setResetPWLoading(false);
       } catch (err) {
-        return;
+        return setResetPWLoading(false);
       }
     } else {
       dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer plus tard ou de signaler le problème."));
@@ -307,7 +312,7 @@ const SettingsPage = () => {
             <p>Cliquez sur le bouton ci-contre. Vous recevrez une invitation par mail à votre adresse {currentUser?.email}</p>
           </div>
           <CustomButton name="reset_password" onClick={() => handleResetPassword()} color="dark">
-            Changer de mot de passe
+            {resetPWLoading ? <ButtonLoading /> : "Changer de mot de passe"}
           </CustomButton>
         </div>
       </div>

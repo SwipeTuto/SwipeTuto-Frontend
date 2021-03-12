@@ -1,5 +1,5 @@
 import { UserActionTypes } from './user-types'
-import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin, updatePrefService, getCurrentUser, resetConfirmPassowrd, rulesAccepted } from '../../services/userService'
+import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin, updatePrefService, getCurrentUser, resetConfirmPassowrd, rulesAccepted, getTopUsers } from '../../services/userService'
 import { getUserFollowersList, toggleFollowByUserID, getUserFollowingsList } from '../../services/socialService'
 import history from "../../helper/functions/createBrowserHistory"
 import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationPopup, setButtonLoading, setButtonLoaded, setFollowersLoading, setFollowersLoaded, setFollowingsLoading, setFollowingsLoaded, setFirstLoadDone } from '../layout/layout-actions';
@@ -7,11 +7,10 @@ import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationP
 
 export const rulesAcceptedAction = () => {
   return dispatch => {
-    console.log('le user a accepté les conditions')
     rulesAccepted()
       .then(rep => {
         dispatch(getCurrentUserAction());
-        history.push('/')
+        history.push('/search')
       })
       .catch(err => {
         dispatch(openNotificationPopup('Une erreur est survenue. Nous faisons le nécessaire pour résoudre le problème.'))
@@ -374,4 +373,30 @@ export const setFollowersList = followers => ({
   type: UserActionTypes.SET_FOLLOWERS_LIST,
   payload: followers
 })
+
+
+export const getTopUsersAction = (topXNumber) => {
+  return dispatch => {
+    return (
+      getTopUsers(topXNumber)
+        .then(rep => {
+          // console.log(rep)
+          dispatch(setTopUsers(rep?.data?.data))
+          // dispatch(setFollowersLoaded())
+          return rep
+        }).catch(err => {
+          // dispatch(openNotificationPopup("error", "Une erreur est survenue. Merci de réessayer ou de signaler l'erreur."))
+          // dispatch(setFollowersLoaded())
+          return err
+        })
+    )
+  }
+}
+
+export const setTopUsers = topUsers => ({
+  type: UserActionTypes.SET_TOP_USERS,
+  payload: topUsers
+})
+
+
 

@@ -11,17 +11,18 @@ import { orderArray } from "../../../helper/functions/getQueryOrder";
 import { getCategoriesArray } from "../../../helper/functions/getCategoriesArray";
 import { topicArray } from "../../../helper/functions/getTopicsArray";
 
-import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
-import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";
+// import { ReactComponent as GridLargeLogo } from "../../../assets/images/grid.svg";
+// import { ReactComponent as GridSmallLogo } from "../../../assets/images/apps.svg";
 
 import "./FiltersBar.scss";
 import { selectCardsSize, selectTheme } from "../../../redux/layout/layout-selectors";
+import CardsSizeButton from "../CardsSizeButton/CardsSizeButton";
 
-const FiltersBar = ({ handleClickSize }) => {
+const FiltersBar = () => {
   const dispatch = useDispatch();
   const currentTheme = useSelector(selectTheme);
   const currentSearch = useSelector(selectCurrentSearch);
-  const currentCardSize = useSelector(selectCardsSize);
+  // const currentCardSize = useSelector(selectCardsSize);
   const searchCategory = useSelector(selectSearchCategory);
   const searchTopic = useSelector(selectSearchTopic);
   const searchOrder = useSelector(selectSearchOrder);
@@ -99,7 +100,8 @@ const FiltersBar = ({ handleClickSize }) => {
             </option>
           ))}
         </select>
-        <div
+        <CardsSizeButton />
+        {/* <div
           className={`FiltersBar__size-logo ${currentCardSize === "small" ? "active" : ""}`}
           data-gridsize="small"
           onClick={(e) => handleClickSize(e)}
@@ -109,7 +111,7 @@ const FiltersBar = ({ handleClickSize }) => {
 
         <div className={`FiltersBar__size-logo ${currentCardSize === "big" ? "active" : ""}`} data-gridsize="big" onClick={(e) => handleClickSize(e)}>
           <GridLargeLogo className="grid-size-logo" pointerEvents="none" />
-        </div>
+        </div> */}
       </div>
     </div>
   );

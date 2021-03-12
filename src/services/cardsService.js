@@ -24,9 +24,18 @@ export const getCardAfterfilter = search => {
   }).catch(err => { return err })
 }
 
-export const getCardPrefUser = () => {
+export const getCardsPrefUser = () => {
   return client().get("card/user/").then(rep => {
-    console.log(rep)
+    return rep
+  }).catch(err => { return err })
+}
+export const getCardsByFollowings = () => {
+  return client().get("card/user/followed/").then(rep => {
+    return rep
+  }).catch(err => { return err })
+}
+export const getRandomCards = () => {
+  return client().get("card/random/").then(rep => {
     return rep
   }).catch(err => { return err })
 }

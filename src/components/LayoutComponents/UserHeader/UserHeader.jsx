@@ -86,8 +86,8 @@ const UserHeader = ({ location }) => {
 
   return (
     <>
-      {followersListOpen && <FollowersList />}
-      {followingsListOpen && <FollowingsList />}
+      {followersListOpen && <FollowersList userID={userDatas?.id} />}
+      {followingsListOpen && <FollowingsList userID={userDatas?.id} />}
       <div className={`UserHeader ${currentTheme}-theme-m`}>
         {userIsLoaded && (
           <div className="UserHeader__stats">

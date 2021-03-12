@@ -44,18 +44,18 @@ const SearchPage = ({ location }) => {
 
   const totalNumberOfCardsSearched = getRealNumber(totalNumberOfResults);
 
-  const handleClickSize = (e) => {
-    const newSize = e.target.dataset.gridsize;
-    dispatch(setCardsSize(newSize));
-    updateCardSize(newSize);
-  };
+  // const handleClickSize = (e) => {
+  //   const newSize = e.target.dataset.gridsize;
+  //   dispatch(setCardsSize(newSize));
+  //   updateCardSize(newSize);
+  // };
 
-  const updateCardSize = (newSize) => {
-    const allGridSizeItems = [...document.querySelectorAll(".FiltersBar__size-logo")];
-    allGridSizeItems.map((item) => item.classList.remove("active"));
-    const newActiveSizeEl = [...allGridSizeItems.filter((item) => item.dataset.gridsize === newSize)];
-    if (newActiveSizeEl[0]) newActiveSizeEl[0].classList.add("active");
-  };
+  // const updateCardSize = (newSize) => {
+  //   const allGridSizeItems = [...document.querySelectorAll(".FiltersBar__size-logo")];
+  //   allGridSizeItems.map((item) => item.classList.remove("active"));
+  //   const newActiveSizeEl = [...allGridSizeItems.filter((item) => item.dataset.gridsize === newSize)];
+  //   if (newActiveSizeEl[0]) newActiveSizeEl[0].classList.add("active");
+  // };
 
   return (
     <>
@@ -65,7 +65,7 @@ const SearchPage = ({ location }) => {
             <p className="SearchPage__searchResults">{totalNumberOfCardsSearched ? totalNumberOfCardsSearched : 0} Résultats</p>
           </div>
           <Suspense fallback={<div />}>
-            <FiltersBar handleClickSize={handleClickSize} />
+            <FiltersBar />
             <CardGridList allowInfiniteScroll={true} />
           </Suspense>
         </div>

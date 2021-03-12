@@ -1,67 +1,75 @@
 @import "../../variables.scss";
 
 .UserHomePage {
-  display: flex;
-  height: calc(100vh - #{$navtop-height});
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  gap: 2rem;
+  // height: calc(100vh - #{$navtop-height});
   overflow: hidden;
   width: 100%;
+  padding: 2rem 0;
 
-  h2 {
-    text-align: center;
-    margin-bottom: 4rem;
+  &__center {
+    // width: 75%;
+    // flex-basis: 75%;
+    // flex-grow: 2;
   }
 
-  &__side {
-    width: 33%;
-    max-width: 400px;
-    padding: 2rem 4rem;
+  &__nav {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 100%;
+    padding: 2rem 4rem;
 
-    &--news {
-      margin-top: 4rem;
-      margin-bottom: 1rem;
-      width: 100%;
-      flex-grow: 2;
-      overflow-y: scroll;
-    }
+    &--button {
+      cursor: pointer;
+      margin-right: 2rem;
+      border-bottom: 0.3rem solid transparent;
+      transition: all 0.2s ease;
 
-    p:last-of-type {
-      font-size: 1.2rem;
-      margin-top: auto;
-      text-align: center;
-
-      a {
-        text-decoration: underline;
+      &.active {
+        border-bottom: 0.3rem solid $grey;
       }
     }
-  }
-
-  &__side--news,
-  &__center {
-    &::-webkit-scrollbar {
-      background-color: transparent;
-      width: 0.2rem;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: $grey;
-      width: 0.5rem;
+    .CardsSizeButton {
+      margin-left: auto;
     }
   }
 
-  &__center {
-    overflow: auto;
-    flex-grow: 2;
-    padding: 2rem;
+  &__right {
+    margin: 0 4rem 0 2rem;
+    // flex-shrink: 2;
+    // width: auto;
 
-    .CardGridList {
-      padding: 0;
-      max-width: 1200px;
-      margin: 0 auto;
-      &__wrapper {
-        grid-template-columns: 1fr 1fr 1fr;
+    &--block {
+      width: 100%;
+      padding: 2rem 4rem;
+      border-radius: $card-radius;
+      margin-bottom: 3rem;
+
+      h3.title.title-3 {
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .CardPreviewSmall {
+        margin-bottom: 4rem;
+      }
+
+      .custom-button {
+        font-size: 1.6rem;
+        margin: 0 auto 2rem auto;
+      }
+
+      .UserNameAndAvatar {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+
+        &__avatar {
+          width: 4rem;
+          height: 4rem;
+          margin-right: 1.5rem;
+        }
       }
     }
   }
@@ -69,33 +77,9 @@
 
 @media screen and (max-width: $bp-tablet) {
   .UserHomePage {
-    &__side {
-      padding: 1rem;
-    }
-
-    &__center {
-      padding: 2rem;
-
-      .CardGridList {
-        &__wrapper {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
-    }
   }
 }
 @media screen and (max-width: $bp-phone) {
   .UserHomePage {
-    &__side {
-      display: none;
-    }
-
-    &__center {
-      .CardGridList {
-        &__wrapper {
-          grid-template-columns: 1fr;
-        }
-      }
-    }
   }
 }

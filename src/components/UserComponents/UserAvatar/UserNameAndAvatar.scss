@@ -1,8 +1,10 @@
 @import "../../../variables.scss";
 
 .UserNameAndAvatar {
-  flex: 1;
-  min-width: 0;
+  &__wrapper {
+    flex: 1;
+    min-width: 0;
+  }
 
   &__avatar {
     font-size: 5rem;

@@ -1,0 +1,27 @@
+@import "../../../variables.scss";
+
+.CardsSizeButton {
+  display: flex;
+  &__size-logo {
+    display: block;
+    height: 2.5rem;
+    width: 2.5rem;
+    cursor: pointer;
+    fill: $grey-dark;
+    margin: auto 0 auto 0.5rem;
+    transition: all 0.2s ease;
+
+    .grid-size-logo {
+      width: 100%;
+      height: 100%;
+    }
+
+    &.active {
+      fill: $grey;
+    }
+
+    &:not(.active):hover {
+      fill: $grey;
+    }
+  }
+}

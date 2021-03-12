@@ -21,10 +21,10 @@
   }
 
   &__profile {
+    margin-bottom: 2rem;
     & > a {
       display: flex;
       align-items: center;
-      margin-bottom: 1rem;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;

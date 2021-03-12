@@ -59,6 +59,18 @@
         font-size: 1.6rem;
         margin: 0 auto 2rem auto;
       }
+
+      .UserNameAndAvatar {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+
+        &__avatar {
+          width: 4rem;
+          height: 4rem;
+          margin-right: 1.5rem;
+        }
+      }
     }
   }
 }

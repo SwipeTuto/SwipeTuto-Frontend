@@ -16,17 +16,18 @@ import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 
 import "../FollowersList/FollowersList";
 
-const FollowingsList = () => {
+const FollowingsList = ({ userID }) => {
   const dispatch = useDispatch();
   const currentTheme = useSelector(selectTheme);
   const currentUserID = useSelector(selectCurrentUserId);
   const currentUser = useSelector(selectCurrentUser);
   const followingsLoaded = useSelector(selectFollowingsLoaded);
   const followingsArray = useSelector(selectCurrentUserFollowingsList);
+  console.log(userID);
 
   useEffect(() => {
-    dispatch(getUserFollowingsListAction(currentUserID));
-  }, [currentUserID, dispatch]);
+    userID && dispatch(getUserFollowingsListAction(userID));
+  }, [userID, dispatch]);
 
   const closeList = () => {
     dispatch(closeFollowingsListPopup());
@@ -35,7 +36,7 @@ const FollowingsList = () => {
   return (
     <div className="FollowersList" onClick={() => closeList()}>
       <div className={`FollowersList__wrapper ${currentTheme}-theme-m`} onClick={(e) => e.stopPropagation()}>
-        <h3 className="title title-3">Abonnements de {currentUser?.username}</h3>
+        <h3 className="title title-3">Abonnements</h3>
         <div className="FollowersList__list">
           {followingsLoaded ? (
             followingsArray && followingsArray.length > 0 ? (

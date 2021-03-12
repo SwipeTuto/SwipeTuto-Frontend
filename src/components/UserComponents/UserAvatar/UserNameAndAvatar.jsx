@@ -21,7 +21,7 @@ const UserNameAndAvatar = ({ user, link, changeLink, themed }) => {
   }, [currentUser]);
 
   return (
-    <div className="UserNameAndAvatar">
+    <div className="UserNameAndAvatar__wrapper">
       {isLinked ? (
         <Link
           to={changeLink ? changeLink : `/profile/user_id=${user && user.id}`}

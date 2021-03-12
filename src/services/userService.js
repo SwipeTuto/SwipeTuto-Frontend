@@ -117,6 +117,13 @@ export const getCurrentUser = () => {
 }
 
 
+export const getTopUsers = (number) => {
+  return client().get(`user/top/${number}`).then(rep => {
+    return rep
+  })
+}
+
+
 // Récupérer user par son id
 export const getUserById = id => {
 

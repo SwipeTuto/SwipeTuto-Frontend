@@ -39,9 +39,17 @@ export const selectCurrentUserReglement = createSelector(
   [selectCurrentUser],
   currentUser => currentUser && currentUser.reglement
 );
+export const selectTopUsers = createSelector(
+  [selectUser],
+  user => user && user.topUsers
+);
 
 // follows
 
+// export const selectClickedUserFollowsObj = createSelector(
+//   [selectClickedUser],
+//   clickedUser => clickedUser && clickedUser.followers
+// );
 export const selectCurrentUserFollowers = createSelector(
   [selectFollows],
   follows => follows && follows.followers

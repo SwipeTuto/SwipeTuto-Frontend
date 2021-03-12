@@ -15,7 +15,7 @@ import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
 
 import "./FollowersList.scss";
 
-const FollowersList = () => {
+const FollowersList = ({ userID }) => {
   const dispatch = useDispatch();
   const currentTheme = useSelector(selectTheme);
   const currentUserID = useSelector(selectCurrentUserId);
@@ -25,8 +25,8 @@ const FollowersList = () => {
   const followersArray = useSelector(selectCurrentUserFollowersList);
 
   useEffect(() => {
-    dispatch(getUserFollowersListAction(currentUserID));
-  }, [currentUserID, dispatch]);
+    userID && dispatch(getUserFollowersListAction(userID));
+  }, [userID, dispatch]);
 
   const closeList = () => {
     dispatch(closeFollowersListPopup());
@@ -35,7 +35,7 @@ const FollowersList = () => {
   return (
     <div className="FollowersList" onClick={() => closeList()}>
       <div className={`FollowersList__wrapper ${currentTheme}-theme-m`} onClick={(e) => e.stopPropagation()}>
-        <h3 className="title title-3">Abonnés de {currentUser?.username}</h3>
+        <h3 className="title title-3">Abonnés</h3>
         <div className="FollowersList__list">
           {followersLoaded ? (
             followersArray && followersArray.length > 0 ? (

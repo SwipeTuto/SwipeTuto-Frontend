@@ -200,3 +200,9 @@ export const resetConfirmPassowrd = userNewPasswordObj => {
   })
 }
 
+
+export const rulesAccepted = () => {
+  return client().get(`regulation/validate/`).then(rep => {
+    return rep
+  })
+}

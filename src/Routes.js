@@ -39,7 +39,7 @@ const Routes = () => {
           <Route exact path="/contact" component={ContactUsPage} />
           <Route exact path="/infos" component={InfosPage} />
           <Route exact path="/help" component={HelpPage} />
-          <Route exact path="/first-connexion" component={FirstConnexionPage} />
+          {/* <Route exact path="/first-connexion" component={FirstConnexionPage} /> */}
           <Route path="/profile/user_id=:user_id" component={ProfilePage} />
           <ProtectedRoute path="/account" component={AccountPage} />
           <Route path="/card_id=:card_id" component={SearchPage} />

@@ -9,7 +9,7 @@ import Footer from "./components/LayoutComponents/Footer/Footer";
 
 import { deleteFilterErrorAction, getCardAfterfilterAction, getCardByIdAction } from './redux/filter/filter-actions'
 import { selectConnexionPopup, selectFirstLoadDone, selectIsLoaded, selectRedirectUrl, selectShowPopupCard, selectSignalPopupOpen, selectTheme } from "./redux/layout/layout-selectors"
-import { selectCurrentUser, selectCurrentUserSettings } from "./redux/user/user-selectors"
+import { selectCurrentUser, selectCurrentUserReglement, selectCurrentUserSettings } from "./redux/user/user-selectors"
 import { setCurrentSearch } from "./redux/filter/filter-actions"
 
 import { initialSearchState } from "./helper/constants"
@@ -27,6 +27,8 @@ import { selectCardsFetched, selectClickedCard, selectCurrentSearch, selectFilte
 import { usePrevious } from "./hooks/usePrevious";
 import Routes from "./Routes"
 import NotificationPopup from "./components/LayoutComponents/NotificationPopup/NotificationPopup";
+import FirstConnexionPage from "./pages/FirstConnexionPage/FirstConnexionPage";
+import { checkReglementValid } from "./helper/functions/checkReglement";
 
 function App(props) {
 
@@ -50,10 +52,14 @@ function App(props) {
   const popupCardIsOpen = useSelector(selectShowPopupCard);
   const appEl = useRef(null)
   const filterError = useSelector(selectFilterError)
+  const reglementObj = useSelector(selectCurrentUserReglement)
 
   useEffect(() => {
     dispatch(getCurrentUserAction())
-  }, [dispatch])
+    // if (firstLoadDone === false) {
+    //   dispatch(setFirstLoadDone())
+    // }
+  }, [dispatch, firstLoadDone])
 
   useEffect(() => {
 
@@ -85,9 +91,7 @@ function App(props) {
     ) {
       dispatch(setRedirectUrl(true));
     }
-    if (firstLoadDone === false) {
-      dispatch(setFirstLoadDone())
-    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardId, category, currentSearch, dispatch, fetchedCards, firstLoadDone, isLoaded, locationPathname, ordering, prevSearchState, props.history, search, topic, userId]);
 
@@ -155,6 +159,18 @@ function App(props) {
     }
   }, [currentUserSettings, dispatch])
 
+  useEffect(() => {
+    if (firstLoadDone && currentUser && !reglementObj) {
+      props.history.push('/first-connexion')
+    }
+  }, [currentUser, firstLoadDone, props.history, reglementObj, locationPathname])
+
+  useEffect(() => {
+    if (reglementObj) {
+      checkReglementValid(reglementObj)
+    }
+  }, [reglementObj])
+
 
   return (
     <>
@@ -167,6 +183,7 @@ function App(props) {
         {signalPopup && <SignalPopup />}
         {clickedCard && <CardFullPopup />}
         <Routes />
+        {firstLoadDone && currentUser && !reglementObj && <FirstConnexionPage withPref={true} />}
         {locationPathname !== "/feedback_beta" && (
           <div className="App__beta">
             <Link className="App__feedback" to="/feedback_beta">

@@ -10,7 +10,7 @@ import CustomButton from "../../components/LayoutComponents/CustomButton/CustomB
 import { Link, withRouter } from "react-router-dom";
 import { logoutAction, rulesAcceptedAction } from "../../redux/user/user-actions";
 
-const FirstConnexionPage = ({ history }) => {
+const FirstConnexionPage = ({ history, withPref }) => {
   const dispatch = useDispatch();
   const [step, setStep] = useState(1);
   const [stepIsOk, setStepIsOk] = useState(false);
@@ -27,7 +27,7 @@ const FirstConnexionPage = ({ history }) => {
   };
   const handleValidate = () => {
     // action validate update state user et redirect vers homepage ou search
-    dispatch(rulesAcceptedAction());
+    dispatch(rulesAcceptedAction(history));
     history.push("/");
   };
 
@@ -46,7 +46,7 @@ const FirstConnexionPage = ({ history }) => {
       <div className={`FirstConnexionPage__form ${currentTheme}-theme-m`}>
         {step === 1 && <AFormReglement />}
         {step === 2 && <BFormPolicy />}
-        {step === 3 && <CFormFavourites />}
+        {withPref && step === 3 && <CFormFavourites />}
         <div className="FirstConnexionPage__input">
           {step === 1 ? (
             <>
@@ -77,7 +77,7 @@ const FirstConnexionPage = ({ history }) => {
         </div>
         <div className="FirstConnexionPage__nav">
           {step > 1 && <CustomButton onClick={() => handlePreviousStep()}>&larr; Précédent</CustomButton>}
-          <p>Etape {step} sur 3</p>
+          <p>Etape {step}</p>
           {step < 3 &&
             (stepIsOk ? (
               <CustomButton onClick={() => handleNextStep()}>Suivant &rarr;</CustomButton>
@@ -86,7 +86,7 @@ const FirstConnexionPage = ({ history }) => {
                 Quitter l'inscription
               </CustomButton>
             ))}
-          {step === 3 && <CustomButton onClick={() => handleValidate()}>Valider</CustomButton>}
+          {(!withPref && step === 2) || (withPref && step === 3) ? <CustomButton onClick={() => handleValidate()}>Valider</CustomButton> : null}
         </div>
       </div>
     </div>

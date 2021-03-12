@@ -1,21 +1,21 @@
 import { UserActionTypes } from './user-types'
-import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin, updatePrefService, getCurrentUser, resetConfirmPassowrd } from '../../services/userService'
+import { loginManuel, logout, register, getUserById, updateUserInfos, loginGoogle, login, LoginProviderFacebook, FacebookLogin, updatePrefService, getCurrentUser, resetConfirmPassowrd, rulesAccepted } from '../../services/userService'
 import { getUserFollowersList, toggleFollowByUserID, getUserFollowingsList } from '../../services/socialService'
 import history from "../../helper/functions/createBrowserHistory"
-import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationPopup, setButtonLoading, setButtonLoaded, setFollowersLoading, setFollowersLoaded, setFollowingsLoading, setFollowingsLoaded } from '../layout/layout-actions';
+import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationPopup, setButtonLoading, setButtonLoaded, setFollowersLoading, setFollowersLoaded, setFollowingsLoading, setFollowingsLoaded, setFirstLoadDone } from '../layout/layout-actions';
 
 
 export const rulesAcceptedAction = () => {
   return dispatch => {
     console.log('le user a accepté les conditions')
-    // updateUserInfos()
-    //   .then(rep => {
-    //     console.log(rep)
-    //   })
-    //   .catch(err => {
-    //     // ENVOYER MAIL POUR SIGNALER PB AVEC LE COMPTE
-    //     dispatch(openNotificationPopup('Une erreur est survenue. Nous faisons le nécessaire pour résoudre le problème.'))
-    //   })
+    rulesAccepted()
+      .then(rep => {
+        dispatch(getCurrentUserAction());
+        history.push('/')
+      })
+      .catch(err => {
+        dispatch(openNotificationPopup('Une erreur est survenue. Nous faisons le nécessaire pour résoudre le problème.'))
+      })
   }
 }
 
@@ -203,7 +203,6 @@ export const getCurrentUserAction = () => {
   return dispatch => {
     dispatch(setUserLoading());
     getCurrentUser().then(rep => {
-      console.log(rep)
       dispatch(setCurrentUser(rep.data.user))
       dispatch(updateCurrentUserFollows('followings', rep.data.user?.followings))
       dispatch(updateCurrentUserFollows('followings_count', rep.data.user?.followings_count))
@@ -211,6 +210,7 @@ export const getCurrentUserAction = () => {
       dispatch(updateCurrentUserFollows('followers_count', rep.data.user?.followers_count))
       dispatch(setUserLoaded())
       dispatch(deleteUserErrors())
+      dispatch(setFirstLoadDone())
       return rep.data
     }).catch(err => {
       dispatch(getClickedUserError(err.message))

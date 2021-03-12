@@ -4,6 +4,7 @@ import { initialSearchState } from '../../helper/constants'
 const INITIAL_STATE = {
   currentSearch: initialSearchState,
   cardsFetched: null,
+  randomCards: null,
   lastCardsFetched: null,
   otherCardsByAuthor: null,
   clickedCard: null,
@@ -161,6 +162,10 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: action.payload }
     case FilterActionTypes.DELETE_LAST_PUBLISHED_COMMENT_IN_STORE:
       return { ...state, lastPublishedComment: null }
+    case FilterActionTypes.GET_RANDOM_CARDS_SUCCESS:
+      return { ...state, randomCards: action.payload?.results }
+    case FilterActionTypes.GET_RANDOM_CARDS_FAILURE:
+      return { ...state, randomCards: null }
     default:
       return state;
   }

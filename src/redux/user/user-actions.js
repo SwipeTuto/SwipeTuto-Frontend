@@ -7,11 +7,10 @@ import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationP
 
 export const rulesAcceptedAction = () => {
   return dispatch => {
-    console.log('le user a accepté les conditions')
     rulesAccepted()
       .then(rep => {
         dispatch(getCurrentUserAction());
-        history.push('/')
+        history.push('/search')
       })
       .catch(err => {
         dispatch(openNotificationPopup('Une erreur est survenue. Nous faisons le nécessaire pour résoudre le problème.'))

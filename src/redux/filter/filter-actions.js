@@ -1,6 +1,6 @@
 import { FilterActionTypes } from "./filter-types"
 import { setLoading, setLoaded, setClickedCardLoading, setClickedCardLoaded, setCommentsLoading, setCommentsLoaded, openNotificationPopup, setRedirectUrl } from '../layout/layout-actions'
-import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById, createCardService, deleteCardService, updateCardService, getCardPrefUser } from '../../services/cardsService'
+import { getCardAfterfilter, getCardsByUser, getOtherPageCard, getCardById, createCardService, deleteCardService, updateCardService, getCardsPrefUser, getCardsByFollowings, getRandomCards } from '../../services/cardsService'
 import { toggleLike, toggleCommentLike, addComment, getCardComments, deleteComment, addReply, toggleSave, getCardCommentsNext } from "../../services/socialService"
 import { getUserFavoriesById } from "../../services/userService"
 import { initialSearchState } from "../../helper/constants"
@@ -31,11 +31,11 @@ export const getCardAfterfilterAction = (search) => {
   }
 }
 
-export const getCardPrefUserAction = () => {
+export const getCardsPrefUserAction = () => {
   return dispatch => {
     dispatch(setCardsFetchedInStore(""))
     dispatch(setLoading());
-    return getCardPrefUser()
+    return getCardsPrefUser()
       .then(rep => {
         dispatch(getCardAfterfilterSuccess(rep.data))
         dispatch(setLoaded())
@@ -47,6 +47,47 @@ export const getCardPrefUserAction = () => {
       })
   }
 }
+export const getCardsByFollowingsAction = () => {
+  return dispatch => {
+    dispatch(setCardsFetchedInStore(""))
+    dispatch(setLoading());
+    return getCardsByFollowings()
+      .then(rep => {
+        dispatch(getCardAfterfilterSuccess(rep.data))
+        dispatch(setLoaded())
+        return rep
+      })
+      .catch(err => {
+        dispatch(getCardAfterfilterFailure(err.response))
+        dispatch(setLoaded())
+      })
+  }
+}
+export const getRandomCardsAction = () => {
+  return dispatch => {
+    // dispatch(setLoading());
+    return getRandomCards()
+      .then(rep => {
+        dispatch(getRandomCardsSuccess(rep.data))
+        // dispatch(setLoaded())
+        return rep
+      })
+      .catch(err => {
+        dispatch(getRandomCardsFailure(err.response))
+        // dispatch(setLoaded())
+      })
+  }
+}
+
+const getRandomCardsSuccess = card => ({
+  type: FilterActionTypes.GET_RANDOM_CARDS_SUCCESS,
+  payload: card
+})
+const getRandomCardsFailure = err => ({
+  type: FilterActionTypes.GET_RANDOM_CARDS_FAILURE,
+  payload: err
+})
+
 
 const getCardByIdSuccess = card => ({
   type: FilterActionTypes.GET_CARD_BY_ID_SUCCESS,

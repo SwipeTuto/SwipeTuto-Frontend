@@ -26,6 +26,10 @@ export const selectCardsFetched = createSelector(
   [selectFilter],
   filter => filter.cardsFetched && filter.cardsFetched
 )
+export const selectRandomCards = createSelector(
+  [selectFilter],
+  filter => filter.randomCards && filter.randomCards
+)
 export const selectLastCardsFetched = createSelector(
   [selectFilter],
   filter => filter.lastCardsFetched && filter.lastCardsFetched

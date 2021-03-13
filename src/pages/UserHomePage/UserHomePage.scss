@@ -33,6 +33,7 @@
 
     &--block {
       width: 100%;
+      max-width: 300px;
       padding: 2rem 4rem;
       border-radius: $card-radius;
       margin-bottom: 3rem;
@@ -44,34 +45,6 @@
 
       .CardPreviewSmall {
         margin-bottom: 4rem;
-      }
-
-      .custom-button {
-        font-size: 1.6rem;
-        margin: 0 auto 2rem auto;
-      }
-    }
-  }
-
-  &__topUser {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 2rem;
-
-    .custom-button {
-      font-size: 1rem;
-      margin: 0.6rem auto 0 0;
-    }
-
-    .UserNameAndAvatar {
-      display: flex;
-      align-items: center;
-
-      &__avatar {
-        font-size: 1.6rem;
-        width: 2rem;
-        height: 2rem;
-        margin-right: 1rem;
       }
     }
   }

@@ -17,23 +17,18 @@ import CustomButton from "../../components/LayoutComponents/CustomButton/CustomB
 import { getTopUsersAction } from "../../redux/user/user-actions";
 import UserNameAndAvatar from "../../components/UserComponents/UserAvatar/UserNameAndAvatar";
 import FollowButton from "../../components/LayoutComponents/FollowButton/FollowButton";
+import RandomCards from "../../components/LayoutComponents/RandomCards/RandomCards";
+import TopUsers from "../../components/LayoutComponents/TopUsers/TopUsers";
 
 const UserHomePage = () => {
   const dispatch = useDispatch();
   const currentTheme = useSelector(selectTheme);
-  const currentUser = useSelector(selectCurrentUser);
-  const winWidth = useWinWidth();
   const [view, setView] = useState("selection");
-  const randomCardsArray = useSelector(selectRandomCards);
-  const topUsersArray = useSelector(selectTopUsers);
 
   useEffect(() => {
     dispatch(getRandomCardsAction());
     dispatch(getTopUsersAction(3));
   }, [dispatch]);
-  // useEffect(() => {
-  //   console.log(topUsersArray);
-  // }, [topUsersArray]);
 
   useEffect(() => {
     if (view === "abonnements") {
@@ -42,11 +37,6 @@ const UserHomePage = () => {
       dispatch(getCardsPrefUserAction());
     }
   }, [dispatch, view]);
-
-  const handleFetchRandom = () => {
-    dispatch(getRandomCardsAction());
-    window.scrollTo(0, 0);
-  };
 
   return (
     <div className={`UserHomePage ${currentTheme}-theme-d`}>
@@ -63,25 +53,8 @@ const UserHomePage = () => {
         <CardGridList allowInfiniteScroll={true} />
       </div>
       <div className="UserHomePage__right">
-        <div className={`UserHomePage__right--block random-cards ${currentTheme}-theme-m`}>
-          <CustomButton color="transparent" onClick={handleFetchRandom}>
-            Cartes aléatoires
-          </CustomButton>
-          {randomCardsArray
-            ? randomCardsArray.map((card) => <CardPreviewSmall key={`randomcard-${card?.id}`} card={card} size="small" />)
-            : "Chargement ..."}
-        </div>
-        <div className={`UserHomePage__right--block top-users ${currentTheme}-theme-m`}>
-          <h3 className="title title-3">Comptes à suivre</h3>
-          {topUsersArray
-            ? topUsersArray.map((user) => (
-                <div className="UserHomePage__topUser">
-                  <UserNameAndAvatar key={`topuser-${user?.id}`} user={user} link={true} />
-                  <FollowButton userIDtoFollow={user?.id} />
-                </div>
-              ))
-            : "Chargement ..."}
-        </div>
+        <RandomCards addClass="UserHomePage__right--block" />
+        <TopUsers addClass="UserHomePage__right--block" />
       </div>
     </div>
   );

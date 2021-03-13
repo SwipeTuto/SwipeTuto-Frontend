@@ -5,7 +5,7 @@ import history from "../../helper/functions/createBrowserHistory"
 import { setUserLoading, setUserLoaded, setLoaded, setLoading, openNotificationPopup, setButtonLoading, setButtonLoaded, setFollowersLoading, setFollowersLoaded, setFollowingsLoading, setFollowingsLoaded, setFirstLoadDone } from '../layout/layout-actions';
 
 
-export const rulesAcceptedAction = () => {
+export const rulesAcceptedAction = (history) => {
   return dispatch => {
     rulesAccepted()
       .then(rep => {

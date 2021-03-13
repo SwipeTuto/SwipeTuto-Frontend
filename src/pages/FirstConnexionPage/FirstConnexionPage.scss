@@ -27,6 +27,7 @@
     border-radius: $card-radius;
     display: flex;
     flex-direction: column;
+    padding-bottom: 10rem;
   }
 
   .form-step {
@@ -81,5 +82,28 @@
   &__nav,
   &__input {
     justify-self: flex-end;
+  }
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .FirstConnexionPage {
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    &__form {
+      width: 100%;
+      max-width: unset;
+      height: 60%;
+      max-height: 600px;
+      padding: 0;
+    }
+
+    &__input {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 2rem;
+      margin-top: 2rem;
+    }
   }
 }

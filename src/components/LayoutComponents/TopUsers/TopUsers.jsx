@@ -15,14 +15,16 @@ const TopUsers = ({ addClass }) => {
   return (
     <div className={`${addClass ? addClass : ""} TopUsers  ${currentTheme}-theme-m`}>
       <h3 className="title title-3">Comptes à suivre</h3>
-      {topUsersArray
-        ? topUsersArray.map((user) => (
-            <div className="TopUsers__topUser">
-              <UserNameAndAvatar key={`topuser-${user?.id}`} user={user} link={true} />
-              <FollowButton userIDtoFollow={user?.id} />
-            </div>
-          ))
-        : "Chargement ..."}
+      <div className="TopUsers__list">
+        {topUsersArray
+          ? topUsersArray.map((user) => (
+              <div className="TopUsers__topUser">
+                <UserNameAndAvatar key={`topuser-${user?.id}`} user={user} link={true} />
+                <FollowButton userIDtoFollow={user?.id} />
+              </div>
+            ))
+          : "Chargement ..."}
+      </div>
     </div>
   );
 };

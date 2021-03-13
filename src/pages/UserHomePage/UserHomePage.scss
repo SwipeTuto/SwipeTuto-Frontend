@@ -28,6 +28,11 @@
     }
   }
 
+  &__topUsers--mobileBlock {
+    display: none;
+    visibility: hidden;
+  }
+
   &__right {
     margin: 0 4rem 0 2rem;
 
@@ -52,9 +57,91 @@
 
 @media screen and (max-width: $bp-tablet) {
   .UserHomePage {
+    grid-template-columns: 1fr;
+    gap: 0;
+    &__right {
+      display: none;
+      visibility: hidden;
+    }
+    &__topUsers--btn {
+      h4.title.title-4 {
+        display: flex;
+        align-items: center;
+        padding-left: 4rem;
+        span {
+          display: flex;
+          align-items: center;
+          margin-left: 1rem;
+          svg {
+            @include medium-logo-size;
+            stroke: currentColor;
+            transform: rotate(0deg);
+            transform: all 0.2s ease;
+          }
+
+          &.active {
+            svg {
+              transform: rotate(180deg);
+            }
+          }
+        }
+      }
+    }
+    &__topUsers--mobileBlock {
+      visibility: visible;
+      display: block;
+    }
+    &__topUsers--mobile {
+      // visibility: visible;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 4rem;
+
+      h3.title.title-3 {
+        display: none;
+      }
+
+      .TopUsers {
+        &__topUser {
+          margin-bottom: 0;
+          margin-right: 4rem;
+          &:last-of-type {
+            margin-right: 0;
+          }
+
+          .UserNameAndAvatar {
+            &__avatar {
+              width: 6rem;
+              height: 6rem;
+              font-size: 2rem;
+            }
+          }
+        }
+        &__list {
+          padding: 2rem 0;
+          display: flex;
+          overflow-x: scroll;
+          @include thin-scrollbar;
+        }
+      }
+    }
   }
 }
 @media screen and (max-width: $bp-phone) {
   .UserHomePage {
+    &__nav {
+      padding: 2rem 1rem;
+    }
+
+    &__topUsers--btn {
+      h4.title.title-4 {
+        padding-left: 1rem;
+      }
+    }
+
+    &__topUsers--mobile {
+      padding: 2rem 1rem;
+    }
   }
 }

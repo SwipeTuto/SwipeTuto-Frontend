@@ -12,11 +12,24 @@ export const useColumnsNumber = () => {
   useEffect(() => {
 
     switch (true) {
-      case winWidth < 540:
+      // case winWidth < 540:
+      //   setColNumber(1);
+      //   break;
+      // case winWidth < 680:
+      //   setColNumber(2);
+      //   break;
+
+      case winWidth < 540 && cardsSize === "big":
         setColNumber(1);
         break;
-      case winWidth < 680:
+      case winWidth < 540 && cardsSize === "small":
         setColNumber(2);
+        break;
+      case winWidth < 680 && cardsSize === "big":
+        setColNumber(1);
+        break;
+      case winWidth < 680 && cardsSize === "small":
+        setColNumber(3);
         break;
 
       case winWidth < 960 && cardsSize === "big":

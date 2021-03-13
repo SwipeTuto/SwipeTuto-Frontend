@@ -19,15 +19,17 @@ import UserNameAndAvatar from "../../components/UserComponents/UserAvatar/UserNa
 import FollowButton from "../../components/LayoutComponents/FollowButton/FollowButton";
 import RandomCards from "../../components/LayoutComponents/RandomCards/RandomCards";
 import TopUsers from "../../components/LayoutComponents/TopUsers/TopUsers";
+import { ReactComponent as DropDownLogo } from "../../assets/images/chevron-down.svg";
 
 const UserHomePage = () => {
   const dispatch = useDispatch();
   const currentTheme = useSelector(selectTheme);
   const [view, setView] = useState("selection");
+  const [topUsersMobileOpen, setTopUsersMobileOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getRandomCardsAction());
-    dispatch(getTopUsersAction(3));
+    dispatch(getTopUsersAction(8));
   }, [dispatch]);
 
   useEffect(() => {
@@ -49,6 +51,17 @@ const UserHomePage = () => {
             Abonnements
           </div>
           <CardsSizeButton />
+        </div>
+        <div className="UserHomePage__topUsers--mobileBlock">
+          <div className="UserHomePage__topUsers--btn" onClick={() => setTopUsersMobileOpen(!topUsersMobileOpen)}>
+            <h4 className="title title-4">
+              Suggestions de comptes{" "}
+              <span className={`UserHomePage__topUsers--dropdown ${topUsersMobileOpen === true ? "active" : ""}`}>
+                <DropDownLogo />
+              </span>
+            </h4>
+          </div>
+          {topUsersMobileOpen && <TopUsers addClass="UserHomePage__topUsers--mobile" />}
         </div>
         <CardGridList allowInfiniteScroll={true} />
       </div>

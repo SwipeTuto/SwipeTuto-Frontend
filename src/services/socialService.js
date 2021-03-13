@@ -148,10 +148,10 @@ export const getUserFollowingsList = (userID) => {
       'Content-Type': 'application/json',
     }
   }
-  // return client().get(`list-following/`, config).then(rep => {
-  //   return rep
-  // }).catch(err => err)
-  return client().get(`list-following/${userID}/`, config).then(rep => {
+  return client().get(`list-following/`, config).then(rep => {
     return rep
   }).catch(err => err)
+  // return client().get(`list-following/${userID}/`, config).then(rep => {
+  //   return rep
+  // }).catch(err => err)
 }

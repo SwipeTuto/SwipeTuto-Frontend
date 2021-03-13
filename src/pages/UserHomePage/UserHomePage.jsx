@@ -16,6 +16,7 @@ import CardPreviewSmall from "../../components/CardsComponents/CardPreviewSmall/
 import CustomButton from "../../components/LayoutComponents/CustomButton/CustomButton";
 import { getTopUsersAction } from "../../redux/user/user-actions";
 import UserNameAndAvatar from "../../components/UserComponents/UserAvatar/UserNameAndAvatar";
+import FollowButton from "../../components/LayoutComponents/FollowButton/FollowButton";
 
 const UserHomePage = () => {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ const UserHomePage = () => {
         <CardGridList allowInfiniteScroll={true} />
       </div>
       <div className="UserHomePage__right">
-        <div className={`UserHomePage__right--block ${currentTheme}-theme-m`}>
+        <div className={`UserHomePage__right--block random-cards ${currentTheme}-theme-m`}>
           <CustomButton color="transparent" onClick={handleFetchRandom}>
             Cartes aléatoires
           </CustomButton>
@@ -70,9 +71,16 @@ const UserHomePage = () => {
             ? randomCardsArray.map((card) => <CardPreviewSmall key={`randomcard-${card?.id}`} card={card} size="small" />)
             : "Chargement ..."}
         </div>
-        <div className={`UserHomePage__right--block ${currentTheme}-theme-m`}>
+        <div className={`UserHomePage__right--block top-users ${currentTheme}-theme-m`}>
           <h3 className="title title-3">Comptes à suivre</h3>
-          {topUsersArray ? topUsersArray.map((user) => <UserNameAndAvatar key={`topuser-${user?.id}`} user={user} link={true} />) : "Chargement ..."}
+          {topUsersArray
+            ? topUsersArray.map((user) => (
+                <div className="UserHomePage__topUser">
+                  <UserNameAndAvatar key={`topuser-${user?.id}`} user={user} link={true} />
+                  <FollowButton userIDtoFollow={user?.id} />
+                </div>
+              ))
+            : "Chargement ..."}
         </div>
       </div>
     </div>

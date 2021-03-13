@@ -4,16 +4,9 @@
   display: grid;
   grid-template-columns: 4fr 1fr;
   gap: 2rem;
-  // height: calc(100vh - #{$navtop-height});
   overflow: hidden;
   width: 100%;
   padding: 2rem 0;
-
-  &__center {
-    // width: 75%;
-    // flex-basis: 75%;
-    // flex-grow: 2;
-  }
 
   &__nav {
     display: flex;
@@ -37,8 +30,6 @@
 
   &__right {
     margin: 0 4rem 0 2rem;
-    // flex-shrink: 2;
-    // width: auto;
 
     &--block {
       width: 100%;
@@ -59,17 +50,28 @@
         font-size: 1.6rem;
         margin: 0 auto 2rem auto;
       }
+    }
+  }
 
-      .UserNameAndAvatar {
-        display: flex;
-        align-items: center;
-        margin-bottom: 2rem;
+  &__topUser {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
 
-        &__avatar {
-          width: 4rem;
-          height: 4rem;
-          margin-right: 1.5rem;
-        }
+    .custom-button {
+      font-size: 1rem;
+      margin: 0.6rem auto 0 0;
+    }
+
+    .UserNameAndAvatar {
+      display: flex;
+      align-items: center;
+
+      &__avatar {
+        font-size: 1.6rem;
+        width: 2rem;
+        height: 2rem;
+        margin-right: 1rem;
       }
     }
   }

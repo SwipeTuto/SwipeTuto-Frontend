@@ -257,21 +257,29 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         redirectUrl: action.payload,
       }
     case LayoutActionTypes.OPEN_FOLLOWERS_LIST_POPUP:
+      app.style.position = "fixed";
+      app.style.overflow = "hidden";
       return {
         ...state,
         followersListOpen: true,
       }
     case LayoutActionTypes.CLOSE_FOLLOWERS_LIST_POPUP:
+      app.style.position = "static";
+      app.style.overflow = "visible";
       return {
         ...state,
         followersListOpen: false,
       }
     case LayoutActionTypes.OPEN_FOLLOWINGS_LIST_POPUP:
+      app.style.position = "fixed";
+      app.style.overflow = "hidden";
       return {
         ...state,
         followingsListOpen: true,
       }
     case LayoutActionTypes.CLOSE_FOLLOWINGS_LIST_POPUP:
+      app.style.position = "static";
+      app.style.overflow = "visible";
       return {
         ...state,
         followingsListOpen: false,

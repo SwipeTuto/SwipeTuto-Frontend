@@ -14,6 +14,26 @@
     margin: 2rem auto;
     overflow-y: scroll;
     @include thin-scrollbar;
+  }
+
+  &__header {
+    display: flex;
+    margin-bottom: 2rem;
+
+    &--close {
+      cursor: pointer;
+      border-radius: $round-radius;
+      background-color: $grey;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 3.5rem;
+      width: 3.5rem;
+      margin-left: auto;
+      & svg {
+        @include big-logo-size;
+      }
+    }
 
     h3 {
       margin-bottom: 2rem;
@@ -22,6 +42,14 @@
 
   &__profile {
     margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+
+    .custom-button {
+      font-size: 1.2rem;
+      margin-left: auto;
+    }
+
     & > a {
       display: flex;
       align-items: center;

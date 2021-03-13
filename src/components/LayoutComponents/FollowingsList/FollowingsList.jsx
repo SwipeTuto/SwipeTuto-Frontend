@@ -13,6 +13,8 @@ import {
 } from "../../../redux/user/user-selectors";
 import Loading from "../../Loading/Loading";
 import UserAvatar from "../../UserComponents/UserAvatar/UserAvatar";
+import FollowButton from "../FollowButton/FollowButton";
+import { ReactComponent as CloseLogo } from "../../../assets/images/close.svg";
 
 import "../FollowersList/FollowersList";
 
@@ -23,7 +25,6 @@ const FollowingsList = ({ userID }) => {
   const currentUser = useSelector(selectCurrentUser);
   const followingsLoaded = useSelector(selectFollowingsLoaded);
   const followingsArray = useSelector(selectCurrentUserFollowingsList);
-  console.log(userID);
 
   useEffect(() => {
     userID && dispatch(getUserFollowingsListAction(userID));
@@ -36,16 +37,22 @@ const FollowingsList = ({ userID }) => {
   return (
     <div className="FollowersList" onClick={() => closeList()}>
       <div className={`FollowersList__wrapper ${currentTheme}-theme-m`} onClick={(e) => e.stopPropagation()}>
-        <h3 className="title title-3">Abonnements</h3>
+        <div className="FollowersList__header">
+          <h3 className="title title-3">Abonnements</h3>
+          <div className="FollowersList__header--close">
+            <CloseLogo onClick={() => closeList()} />
+          </div>
+        </div>
         <div className="FollowersList__list">
           {followingsLoaded ? (
             followingsArray && followingsArray.length > 0 ? (
-              followingsArray.map((follower) => (
-                <div className="FollowersList__profile" key={follower?.id} onClick={() => closeList()}>
-                  <Link to={`/profile/user_id=${follower?.id}`}>
-                    <UserAvatar user={follower} />
-                    <p>{follower?.username}</p>
+              followingsArray.map((following) => (
+                <div className="FollowersList__profile" key={following?.id}>
+                  <Link to={`/profile/user_id=${following?.id}`} onClick={() => closeList()}>
+                    <UserAvatar user={following} />
+                    <p>{following?.username}</p>
                   </Link>
+                  <FollowButton userIDtoFollow={following?.id} />
                 </div>
               ))
             ) : (

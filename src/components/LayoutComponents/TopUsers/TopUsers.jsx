@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectTheme } from "../../../redux/layout/layout-selectors";
+import { getTopUsersAction } from "../../../redux/user/user-actions";
 import { selectTopUsers } from "../../../redux/user/user-selectors";
 import UserNameAndAvatar from "../../UserComponents/UserAvatar/UserNameAndAvatar";
 import FollowButton from "../FollowButton/FollowButton";
 
 import "./TopUsers.scss";
 
-const TopUsers = ({ addClass }) => {
+const TopUsers = ({ quantity, addClass }) => {
   const dispatch = useDispatch();
   const currentTheme = useSelector(selectTheme);
   const topUsersArray = useSelector(selectTopUsers);
+
+  useEffect(() => {
+    dispatch(getTopUsersAction(quantity || 6));
+  }, [dispatch, quantity]);
 
   return (
     <div className={`${addClass ? addClass : ""} TopUsers  ${currentTheme}-theme-m`}>

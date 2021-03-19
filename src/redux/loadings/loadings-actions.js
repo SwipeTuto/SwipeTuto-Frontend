@@ -1,3 +1,4 @@
+import { LoadingsActionTypes } from "./loadings-types";
 // export const rulesAcceptedAction = (history) => {
 //   return dispatch => {
 //     rulesAccepted()
@@ -11,10 +12,10 @@
 //   }
 // }
 
-
-// export const deleteUserErrors = () => ({
-//   type: UserActionTypes.DELETE_USER_ERRORS,
-// });
+export const setUpdateAvatarButtonLoading = (status) => ({
+  type: LoadingsActionTypes.UPDATE_AVATAR,
+  payload: status
+});
 
 // export const setCurrentUser = (user) => ({
 //   type: UserActionTypes.SET_CURRENT_USER,

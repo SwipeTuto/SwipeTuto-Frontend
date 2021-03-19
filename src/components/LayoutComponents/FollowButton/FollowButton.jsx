@@ -19,11 +19,6 @@ const FollowButton = ({ adjustFollowers, userIDtoFollow }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    console.log(followed);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [followed]);
-
   const handleToggleFollowUser = () => {
     adjustFollowers(!followed);
     setFollowed((prevState) => !prevState);

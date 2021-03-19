@@ -53,11 +53,6 @@ const UserHeader = ({ location }) => {
   const followingsListOpen = useSelector(selectFollowingsListOpen);
 
   useEffect(() => {
-    console.log(followingsCount);
-    console.log(followersCount);
-  }, [followersCount, followingsCount]);
-
-  useEffect(() => {
     if ((userId && userId === currentUser?.id) || (locationPath === "/account/user" && currentUser.id)) {
       setUserDatas(currentUser);
       // dispatch(setNoClickedUser());

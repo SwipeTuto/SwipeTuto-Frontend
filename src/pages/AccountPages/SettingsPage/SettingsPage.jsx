@@ -12,6 +12,8 @@ import { resetPassowrd, upDateAvatar } from "../../../services/userService";
 import { openNotificationPopup, setCardsSize, toggleThemeAction } from "../../../redux/layout/layout-actions";
 import Loading from "../../../components/Loading/Loading";
 import ButtonLoading from "../../../components/Loading/ButtonLoading";
+import { setUpdateAvatarButtonLoading } from "../../../redux/loadings/loadings-actions";
+import { selectUpdateAvatarLoading } from "../../../redux/loadings/loadings-selectors";
 
 const SettingsPage = () => {
   const dispatch = useDispatch();
@@ -19,8 +21,7 @@ const SettingsPage = () => {
   const currentUserId = useSelector(selectCurrentUserId);
   const currentTheme = useSelector(selectTheme);
   const currentUserSettings = useSelector(selectCurrentUserSettings);
-  // const [cardSizePref, setCardSizePref] = useState(null);
-  // const [themePref, setThemePref] = useState(null);
+  const updateAvatarLoading = useSelector(selectUpdateAvatarLoading);
   const [newUserInfos, setNewUserInfos] = useState(currentUser);
   const [sendNewInfos, setSendNewInfos] = useState(false);
   const [resetPWLoading, setResetPWLoading] = useState(false);
@@ -59,6 +60,7 @@ const SettingsPage = () => {
   }, [sendNewInfos]);
 
   const handleAvatarUpdate = (e) => {
+    dispatch(setUpdateAvatarButtonLoading(true));
     const inputValidCopy = inputValid;
     const newAvatarInput = document.querySelector("#avatar");
     const newAvatarFile = newAvatarInput.files[0];
@@ -69,6 +71,7 @@ const SettingsPage = () => {
     avatarFormData.append("avatar", newAvatarFile, newAvatarFile.name);
     upDateAvatar(avatarFormData).then((rep) => {
       setInputValid({ ...inputValidCopy, avatar: true });
+      dispatch(setUpdateAvatarButtonLoading(false));
     });
 
     setNewUserInfos({
@@ -223,7 +226,7 @@ const SettingsPage = () => {
           </div>
 
           <CustomButton name="avatar" onClick={(e) => handleSubmitInput(e)} color="dark" disabled={inputValid.avatar === false ? "disabled" : ""}>
-            Valider
+            {updateAvatarLoading ? "Chargement..." : "Valider"}
           </CustomButton>
         </form>
         <form className="form__pseudo form">

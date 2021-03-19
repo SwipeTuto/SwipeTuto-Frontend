@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getRandomCardsAction } from "../../../redux/filter/filter-actions";
 import { selectRandomCards } from "../../../redux/filter/filter-selectors";
@@ -12,6 +12,10 @@ const RandomCards = ({ addClass }) => {
   const dispatch = useDispatch();
   const currentTheme = useSelector(selectTheme);
   const randomCardsArray = useSelector(selectRandomCards);
+
+  useEffect(() => {
+    dispatch(getRandomCardsAction());
+  }, [dispatch]);
 
   const handleFetchRandom = () => {
     dispatch(getRandomCardsAction());

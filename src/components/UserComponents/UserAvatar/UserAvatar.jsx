@@ -10,7 +10,7 @@ import { selectCurrentUser } from "../../../redux/user/user-selectors";
 
 const UserAvatar = ({ user, link, addActionOnClick }) => {
   const dispatch = useDispatch();
-  const userImage = user && user.avatar && user.avatar[0] && user.avatar[0].avatar ? `${user.avatar[0].avatar}` : null;
+  const userImage = user && user.avatar && user.avatar[0] && user.avatar[0].url ? `${user.avatar[0].url}` : null;
   const [error, setError] = useState(false);
   const currentUser = useSelector(selectCurrentUser);
   let [isLinked, setIsLinked] = useState(link);
@@ -29,7 +29,6 @@ const UserAvatar = ({ user, link, addActionOnClick }) => {
             addActionOnClick && addActionOnClick();
             dispatch(closePopupCard());
             dispatch(setNoClickedCard());
-            // dispatch(getUserByIdAction(parseInt(user && user.id)));
           }}
         >
           <div className="user_avatar">
@@ -39,7 +38,6 @@ const UserAvatar = ({ user, link, addActionOnClick }) => {
                 src={userImage}
                 alt="user"
                 onError={(e) => {
-                  console.log(e);
                   setError(true);
                 }}
               />

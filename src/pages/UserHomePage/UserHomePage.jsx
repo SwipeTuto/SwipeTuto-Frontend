@@ -27,10 +27,10 @@ const UserHomePage = () => {
   const [view, setView] = useState("selection");
   const [topUsersMobileOpen, setTopUsersMobileOpen] = useState(false);
 
-  useEffect(() => {
-    dispatch(getRandomCardsAction());
-    dispatch(getTopUsersAction(8));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getRandomCardsAction());
+  //   dispatch(getTopUsersAction(8));
+  // }, [dispatch]);
 
   useEffect(() => {
     if (view === "abonnements") {
@@ -61,13 +61,13 @@ const UserHomePage = () => {
               </span>
             </h4>
           </div>
-          {topUsersMobileOpen && <TopUsers addClass="UserHomePage__topUsers--mobile" />}
+          {topUsersMobileOpen && <TopUsers quantity={10} addClass="UserHomePage__topUsers--mobile" />}
         </div>
         <CardGridList allowInfiniteScroll={true} />
       </div>
       <div className="UserHomePage__right">
         <RandomCards addClass="UserHomePage__right--block" />
-        <TopUsers addClass="UserHomePage__right--block" />
+        <TopUsers quantity={3} addClass="UserHomePage__right--block" />
       </div>
     </div>
   );

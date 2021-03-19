@@ -10,7 +10,7 @@ import { selectCurrentUser } from "../../../redux/user/user-selectors";
 
 const UserAvatar = ({ user, link, addActionOnClick }) => {
   const dispatch = useDispatch();
-  const userImage = user && user.avatar && user.avatar[0] && user.avatar[0].url ? `${user.avatar[0].url}` : null;
+  const userImage = user && user.avatar && user.avatar[0] && user.avatar[0].avatar ? `${user.avatar[0].avatar}` : null;
   const [error, setError] = useState(false);
   const currentUser = useSelector(selectCurrentUser);
   let [isLinked, setIsLinked] = useState(link);

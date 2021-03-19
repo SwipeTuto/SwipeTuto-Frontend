@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   errors: null,
 };
 
-const FilterReducer = (state = INITIAL_STATE, action) => {
+const filterReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FilterActionTypes.DELETE_FILTER_ERROR:
       return { ...state, errors: null };
@@ -171,5 +171,5 @@ const FilterReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default FilterReducer;
+export default filterReducer;
 

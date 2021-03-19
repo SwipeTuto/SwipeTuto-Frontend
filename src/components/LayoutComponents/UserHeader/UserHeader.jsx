@@ -42,7 +42,8 @@ const UserHeader = ({ location }) => {
   const [userDatas, setUserDatas] = useState();
   const isLoaded = useSelector(selectIsLoaded);
   const userIsLoaded = useSelector(selectUserLoaded);
-  const followersCount = useSelector(selectCurrentUserFollowersCount);
+  const [followersCount, setFollowersCount] = useState(userDatas?.followers_count || 0);
+  const [followingsCount, setFollowingsCount] = useState(userDatas?.followings_count || 0);
   const totalCardsFetched = useSelector(selectTotalNumberOfResults);
   const currentUser = useSelector(selectCurrentUser);
   const clickedUser = useSelector(selectClickedUser);
@@ -50,7 +51,11 @@ const UserHeader = ({ location }) => {
   const userId = getUrlId(location.pathname, "user_id");
   const followersListOpen = useSelector(selectFollowersListOpen);
   const followingsListOpen = useSelector(selectFollowingsListOpen);
-  const followingsCount = useSelector(selectCurrentUserFollowingsCount);
+
+  useEffect(() => {
+    console.log(followingsCount);
+    console.log(followersCount);
+  }, [followersCount, followingsCount]);
 
   useEffect(() => {
     if ((userId && userId === currentUser?.id) || (locationPath === "/account/user" && currentUser.id)) {
@@ -61,6 +66,13 @@ const UserHeader = ({ location }) => {
       // dispatch(setNoClickedUser());
     }
   }, [clickedUser, currentUser, dispatch, locationPath, userDatas, userId]);
+
+  useEffect(() => {
+    if (userDatas) {
+      setFollowingsCount(userDatas?.followings_count);
+      setFollowersCount(userDatas?.followers_count);
+    }
+  }, [userDatas]);
 
   const newSignalObject = {
     ...initialSignalState,
@@ -81,6 +93,15 @@ const UserHeader = ({ location }) => {
       dispatch(closeFollowingsListPopup());
     } else {
       dispatch(openFollowingsListPopup());
+    }
+  };
+
+  const adjustFollowers = (followed) => {
+    console.log("call");
+    if (followed) {
+      setFollowersCount((prevState) => prevState + 1);
+    } else {
+      setFollowersCount((prevState) => prevState - 1);
     }
   };
 
@@ -123,7 +144,7 @@ const UserHeader = ({ location }) => {
                   </Link>
                 ) : (
                   <>
-                    <FollowButton userIDtoFollow={userId} />
+                    <FollowButton adjustFollowers={adjustFollowers} userIDtoFollow={userId} />
                   </>
                 )}
               </div>
